@@ -9,13 +9,15 @@ import "./ventascalle.css";
 function Ventascalle() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
-  const [TopUrb] = useState([0, 3500]); // ✔️ setter eliminado
-  const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Anual"]);
-  const [Vendedores, setVendedores] = useState(["Vendedores/Todos"]);
+  // 👉 SOLO lo que realmente se usa
+  const [TopUrb] = useState([0, 3500]);
+  const [estadosSeleccionados] = useState(["Anual"]);
+  const [Vendedores] = useState(["Vendedores/Todos"]);
+
   const [Ventasdelanoactual, setVentasdelanoactual] = useState([]);
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
-  const [sumatoriaPrecios, SetsumatoriaPrecios] = useState(0);
+  const [sumatoriaPrecios, setSumatoriaPrecios] = useState(0);
 
   useEffect(() => {
     if (!data) return;
@@ -46,6 +48,11 @@ function Ventascalle() {
     const primerDiaAñoActual = new Date(añoActual, 0, 1);
     const ultimoDiaAñoActual = new Date(añoActual, 11, 31);
 
+    const vendedoresPermitidos = [
+      "Juan", "Barbara", "Eduardo", "Ysvet",
+      "Nelsy", "Alejandro", "Cesar", "Hermary"
+    ];
+
     const ventasFiltradas = data.results.filter((venta) => {
       if (!venta.fecha_instalacion) return false;
 
@@ -67,52 +74,38 @@ function Ventascalle() {
           ventaFecha <= fin
       );
 
-      const vendedoresPermitidos = ["Juan", "Barbara", "Eduardo", "Ysvet", "Nelsy", "Alejandro", "Cesar", "Hermary"];
-
-      const vendedorFiltrado = Vendedores.includes("Vendedores/Todos")
+      const vendedorValido = Vendedores.includes("Vendedores/Todos")
         ? vendedoresPermitidos.includes(venta.usuario_router_wifi)
         : Vendedores.includes(venta.usuario_router_wifi);
 
-      return (filtroAnual || filtroMeses) && vendedorFiltrado;
+      return (filtroAnual || filtroMeses) && vendedorValido;
     });
 
     const agrupado = ventasFiltradas.reduce((acc, curr) => {
       if (!acc[curr.localidad]) {
         acc[curr.localidad] = {
           cantidadClientes: 1,
-          costodeinstalacionTotales: Number(curr.costo_instalacion) || 0,
-          costodePlanesTotales: Number(curr.precio_plan) || 0,
+          instalacion: Number(curr.costo_instalacion) || 0,
+          recurrente: Number(curr.precio_plan) || 0,
         };
       } else {
         acc[curr.localidad].cantidadClientes++;
-        acc[curr.localidad].costodeinstalacionTotales += Number(curr.costo_instalacion) || 0;
-        acc[curr.localidad].costodePlanesTotales += Number(curr.precio_plan) || 0;
+        acc[curr.localidad].instalacion += Number(curr.costo_instalacion) || 0;
+        acc[curr.localidad].recurrente += Number(curr.precio_plan) || 0;
       }
       return acc;
     }, {});
 
     const urbanismos = Object.keys(agrupado)
-      .map((localidad) => ({
-        urbanismo: localidad,
-        ...agrupado[localidad],
-      }))
+      .map((key) => ({ urbanismo: key, ...agrupado[key] }))
       .sort((a, b) => b.cantidadClientes - a.cantidadClientes)
       .slice(TopUrb[0], TopUrb[1]);
 
     setVentasdelanoactual(urbanismos);
-
-    setTotalIngresos(
-      urbanismos.reduce((acc, u) => acc + u.costodeinstalacionTotales, 0)
-    );
-
-    setTotalClientesGlobal(
-      urbanismos.reduce((acc, u) => acc + u.cantidadClientes, 0)
-    );
-
-    SetsumatoriaPrecios(
-      urbanismos.reduce((acc, u) => acc + u.costodePlanesTotales, 0)
-    );
-  }, [data, estadosSeleccionados, Vendedores, TopUrb]);
+    setTotalClientesGlobal(urbanismos.reduce((a, b) => a + b.cantidadClientes, 0));
+    setTotalIngresos(urbanismos.reduce((a, b) => a + b.instalacion, 0));
+    setSumatoriaPrecios(urbanismos.reduce((a, b) => a + b.recurrente, 0));
+  }, [data, TopUrb, estadosSeleccionados, Vendedores]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -127,29 +120,23 @@ function Ventascalle() {
           <DropdownMenu />
           <PageNav />
 
-          <button>Total de Ventas: {totalClientesGlobal}</button>
+          <button>Total Ventas: {totalClientesGlobal}</button>
           <button>Ingreso Recurrente: {sumatoriaPrecios.toFixed(2)}$</button>
           <button>Ingreso Instalación: {totalIngresos.toFixed(2)}$</button>
 
-          <UrbanismoList urbanismos={Ventasdelanoactual} />
+          <ul>
+            {Ventasdelanoactual.map((u, i) => (
+              <li key={i}>
+                <strong>{i + 1}. {u.urbanismo}</strong><br />
+                Ventas: {u.cantidadClientes}<br />
+                Instalación: {u.instalacion}$<br />
+                Recurrente: {u.recurrente.toFixed(2)}$
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </div>
-  );
-}
-
-function UrbanismoList({ urbanismos }) {
-  return (
-    <ul>
-      {urbanismos.map((u, i) => (
-        <li key={i}>
-          <strong>{i + 1}. {u.urbanismo}</strong><br />
-          Ventas: {u.cantidadClientes}<br />
-          Instalación: {Math.round(u.costodeinstalacionTotales)}$<br />
-          Recurrente: {u.costodePlanesTotales.toFixed(2)}$
-        </li>
-      ))}
-    </ul>
   );
 }
 
