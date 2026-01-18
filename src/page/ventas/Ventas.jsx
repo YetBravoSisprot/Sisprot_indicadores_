@@ -5,13 +5,11 @@ import DropdownMenu from "../../Componentes/DropdownMenu";
 import "./ventas.css";
 
 function Ventas() {
-  const [estadosSeleccionados] = useState(["Por instalar"]); // ✔️ setter eliminado
   const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [topUrbanismos, setTopUrbanismos] = useState([]);
 
   useEffect(() => {
-    // lógica simulada o existente
     const dataMock = [
       { urbanismo: "Sector A", clientes: 10, ingresos: 200 },
       { urbanismo: "Sector B", clientes: 5, ingresos: 120 },
