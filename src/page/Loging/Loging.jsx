@@ -7,26 +7,30 @@ import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 
 function Loging() {
-  const { showPasswordState, isAuthenticated, role } = useContext(PasswordContext);
+  const { showPasswordState, isAuthenticated, role } =
+    useContext(PasswordContext);
 
-  if (!showPasswordState) {
-    // Si el usuario está autenticado pero no tiene permisos adecuados, muestra "No autorizado"
-    if (isAuthenticated && role !== "admin" && role !== "ventas") {
-      return (
-        <div>
-          No autorizado
+  // Usuario autenticado pero sin permisos
+  if (!showPasswordState && isAuthenticated && role !== "admin" && role !== "ventas") {
+    return (
+      <div className="login-container">
+        <div className="login-card">
+          <LogoTitulo />
+          <p className="login-error">No autorizado</p>
           <DropdownMenu />
           <LogingForm />
         </div>
-      );
-    }
+      </div>
+    );
   }
 
   return (
-    <div>
-      <LogoTitulo />
+    <div className="login-container">
       {showPasswordState ? (
-        <LogingForm />
+        <div className="login-card">
+          <LogoTitulo />
+          <LogingForm />
+        </div>
       ) : (
         <>
           <PageNav />
