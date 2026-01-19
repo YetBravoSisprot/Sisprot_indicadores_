@@ -1,3 +1,41 @@
+body {
+  background: linear-gradient(180deg, #315dbb 0%, #243f8f 100%);
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* CONTENEDOR GENERAL */
+.indicadores-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+.indicadores-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.conteos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.conteos p {
+  background: rgba(0,0,0,0.25);
+  padding: 14px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+}
+
 .encabezados {
     display: inline-block; /* Hace que los encabezados estén en línea */
     font-size: 1.2em;
@@ -84,35 +122,64 @@
 
 .filtros button {
   margin: 5px;
-  padding: 10px;
+  padding: 10px 14px;
+  border-radius: 20px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  background: #ffffff;
+  color: #1e1e1e;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filtros button:hover {
+  background: #e6ebff;
 }
 
 .filtros button.activo {
-  background-color: #007bff;
+  background: #0d6efd;
   color: white;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }
+
 
 .mostrar-ocultar {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #28a745;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: #0d6efd;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
 }
 
+.mostrar-ocultar:hover {
+  background: #084298;
+}
+
+
 .lista-clientes {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
 }
 
 .lista-clientes li {
-  border: 1px solid #ccc;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 5px;
+  background: rgba(255,255,255,0.95);
+  margin: 15px 0;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.lista-clientes li:hover {
+  transform: translateY(-3px);
+}
+
+.lista-clientes p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #1e1e1e;
 }
