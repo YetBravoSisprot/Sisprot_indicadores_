@@ -1,21 +1,15 @@
 import React from "react";
 import "./LogoTitulo.css";
 
-const LogoTitulo = ({ variant = "default" }) => {
+const LogoTitulo = () => {
   return (
-    <div className={`logo-wrapper ${variant}`}>
-      <img
-        src="/logo_sgf.png"
-        alt="Sisprot Global Fiber"
-        className="logo-img"
-      />
-
-      <div className="logo-text">
-        <h1>Sisprot Global Fiber</h1>
-        <span>App</span>
+    <div className="container">
+      <div className="login-Titulo">
+        <img src="./logo_sgf.png" alt="Logo" className="logo-container" />
+        <h1>Sisprot Global Fiber. App</h1>
       </div>
     </div>
   );
-};
+}
 
 export default LogoTitulo;
