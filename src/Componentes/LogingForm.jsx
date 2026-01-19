@@ -51,7 +51,7 @@ function LogingForm() {
               type="submit"
               onClick={handleLoginClick}
             >
-              Login
+              Entrar
             </button>
           </div>
         </form>
