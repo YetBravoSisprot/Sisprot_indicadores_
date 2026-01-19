@@ -1,30 +1,77 @@
+/* === IDENTIDAD SISPROT === */
+:root {
+  --sisprot-orange: #f47c3c;
+  --sisprot-orange-dark: #e56628;
+  --sisprot-dark: #1f1f1f;
+  --sisprot-gray: #6b6b6b;
+  --sisprot-light: #f9f9f9;
+  --sisprot-white: #ffffff;
+}
+
+/* === CONTENEDOR DEL FORM === */
 .login-form {
-  background-color: #f9f9f9;
-  padding: 40px;
-  border-radius: 45px;
-  width: 180px;
-  margin: 0 auto; /* Esto centrará el formulario horizontalmente */
+  background-color: var(--sisprot-white);
+  padding: 42px 40px;
+  border-radius: 18px;
+  width: 420px;
+  margin: 0 auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
 }
 
+/* === GRUPO DE CAMPOS === */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
+/* === LABELS === */
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sisprot-dark);
 }
 
+/* === INPUTS === */
 .form-group input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
   box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s ease;
 }
 
+.form-group input:focus {
+  border-color: var(--sisprot-orange);
+  box-shadow: 0 0 0 2px rgba(244, 124, 60, 0.15);
+}
+
+/* === BOTÓN LOGIN (asumiendo button dentro del form) === */
+.login-form button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  background-color: var(--sisprot-orange);
+  color: var(--sisprot-white);
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-form button:hover {
+  background-color: var(--sisprot-orange-dark);
+}
+
+/* === RESPONSIVE === */
 @media screen and (max-width: 768px) {
   .login-form {
-    width: 60%;
+    width: 90%;
+    padding: 32px 26px;
   }
 }
