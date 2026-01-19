@@ -1,118 +1,94 @@
-/* =============================
-   CONTENEDOR GENERAL
-============================= */
+/* === FONDO GENERAL === */
 .login-wrapper {
   min-height: 100vh;
-  background: linear-gradient(120deg, #f26a2e, #ff8c42, #f26a2e);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
+  background: radial-gradient(
+    circle at top,
+    #1e3a8a,
+    #0f172a
+  );
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-/* =============================
-   CARD ANIMADA
-============================= */
-.login-animated-card {
-  background: #ffffff;
-  padding: 48px 44px;
-  border-radius: 32px;
+/* === CARD === */
+.login-card {
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 28px 36px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: float 4s ease-in-out infinite;
 }
 
-/* ENTRADA SUAVE */
-.fade-slide {
-  animation: fadeSlideIn 0.9s ease forwards, float 4s ease-in-out infinite;
+/* === LOGO === */
+.login-card img,
+.login-card svg {
+  max-width: 160px;
+  margin-bottom: 16px;
 }
 
-/* SHAKE ERROR */
-.shake {
-  animation: shake 0.4s ease;
+/* === ERROR === */
+.login-error {
+  color: #dc2626;
+  font-weight: 600;
+  margin-bottom: 16px;
 }
 
-/* =============================
-   FORMULARIO
-============================= */
-.login-form {
+/* === FORM === */
+.login-card form {
   width: 100%;
-  margin-top: 24px;
 }
 
-.form-group {
-  margin-bottom: 22px;
-  position: relative;
-}
-
-.form-group input {
+/* === INPUTS === */
+.login-card input {
   width: 100%;
   padding: 14px 16px;
   border-radius: 14px;
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7eb;
   font-size: 15px;
-  transition: all 0.3s ease;
-}
-
-.form-group input:focus {
   outline: none;
-  border-color: #f26a2e;
-  box-shadow: 0 0 0 3px rgba(242, 106, 46, 0.25);
-  transform: scale(1.02);
+  margin-bottom: 16px;
+  transition: all 0.25s ease;
 }
 
-/* =============================
-   BOTÓN
-============================= */
-.login-form button {
+.login-card input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* === BOTÓN === */
+.login-card button {
   width: 100%;
   padding: 14px;
-  border-radius: 16px;
+  border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #0b5ed7, #1a73e8);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-form button:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(26, 115, 232, 0.35);
+.login-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.45);
 }
 
-.login-form button:active {
-  transform: scale(0.97);
+/* === ANIMACIÓN ENTRADA === */
+.animate-in {
+  animation: fadeSlideUp 0.6s ease forwards;
 }
 
-/* =============================
-   MENSAJE ERROR
-============================= */
-.login-error {
-  color: #e53935;
-  font-weight: 600;
-  margin: 14px 0;
-}
-
-/* =============================
-   ANIMACIONES
-============================= */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes fadeSlideIn {
+@keyframes fadeSlideUp {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.95);
+    transform: translateY(30px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -120,26 +96,9 @@
   }
 }
 
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-
-/* =============================
-   RESPONSIVE
-============================= */
-@media (max-width: 768px) {
-  .login-animated-card {
-    padding: 36px 26px;
-    border-radius: 26px;
+/* === RESPONSIVE === */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 26px 20px 30px;
   }
 }
