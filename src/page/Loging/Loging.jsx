@@ -4,17 +4,16 @@ import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import DropdownMenu from "../../Componentes/DropdownMenu";
-import "./login.css";
+import "./Loging.css"; // 👈 IMPORT CORRECTO
 
 function Loging() {
   const { showPasswordState, isAuthenticated, role } =
     useContext(PasswordContext);
 
-  // Usuario autenticado sin permisos
   if (!showPasswordState && isAuthenticated && role !== "admin" && role !== "ventas") {
     return (
       <div className="login-wrapper">
-        <div className="login-animated-card shake">
+        <div className="login-card shake">
           <LogoTitulo />
           <p className="login-error">Acceso no autorizado</p>
           <DropdownMenu />
@@ -27,7 +26,7 @@ function Loging() {
   return (
     <div className="login-wrapper">
       {showPasswordState ? (
-        <div className="login-animated-card fade-slide">
+        <div className="login-card fade-slide">
           <LogoTitulo />
           <LogingForm />
         </div>
