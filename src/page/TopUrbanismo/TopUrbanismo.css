@@ -248,8 +248,8 @@ select option:checked {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;    /* 👈 CLAVE: centra horizontalmente */
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 14px;
 
   padding: 20px 24px;
   background: rgba(255, 255, 255, 0.08);
@@ -257,3 +257,30 @@ select option:checked {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* SELECTS COMPACTOS Y PROFESIONALES */
+.filtros-panel select {
+  width: 200px;              /* 👈 tamaño controlado */
+  min-width: 180px;
+  max-width: 220px;
+
+  height: auto;
+  max-height: 140px;         /* evita que se hagan gigantes */
+  
+  font-size: 13px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  border: 2px solid #1e3fa9;
+
+  padding: 8px 10px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+
+  transition: all 0.25s ease;
+}
+.filtros-panel select::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filtros-panel select::-webkit-scrollbar-thumb {
+  background-color: #1e3fa9;
+  border-radius: 6px;
+}
