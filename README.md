@@ -2,7 +2,7 @@
 
 **Descripción breve:** Este proyecto es una aplicación web diseñada para visualizar indicadores clave de rendimiento (KPIs) de la empresa. Está orientado a medir y evaluar datos importantes que ayudan en la toma de decisiones estratégicas.
 
-🌐 **[Ver el proyecto en línea](https://sisprot-indicadores-bkkk-a54aqat1i.vercel.app/)**
+🌐 **[Ver el proyecto en línea]([https://sisprot-indicadores-bkkk-a54aqat1i.vercel.app/](https://sisprot-indicadores-bkkk.vercel.app/))**
 
 ---
 
