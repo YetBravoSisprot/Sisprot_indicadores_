@@ -4,7 +4,7 @@ import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import DropdownMenu from "../../Componentes/DropdownMenu";
-import "./Loging.css"; // 👈 IMPORT CORRECTO
+import "./Loging.css";
 
 function Loging() {
   const { showPasswordState, isAuthenticated, role } =
@@ -13,7 +13,7 @@ function Loging() {
   if (!showPasswordState && isAuthenticated && role !== "admin" && role !== "ventas") {
     return (
       <div className="login-wrapper">
-        <div className="login-card shake">
+        <div className="login-card animate-in">
           <LogoTitulo />
           <p className="login-error">Acceso no autorizado</p>
           <DropdownMenu />
@@ -26,7 +26,7 @@ function Loging() {
   return (
     <div className="login-wrapper">
       {showPasswordState ? (
-        <div className="login-card fade-slide">
+        <div className="login-card animate-in">
           <LogoTitulo />
           <LogingForm />
         </div>
