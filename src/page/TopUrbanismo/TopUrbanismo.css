@@ -7,6 +7,15 @@
   align-items: center;
   padding: 30px 20px;
 }
+
+.contenedor {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+}
+
 .urbanismos-grid {
   width: 100%;
   max-width: 1400px;
@@ -24,26 +33,47 @@
   color: white
 }
 .urbanismo-item {
-  list-style-type: none;
-  background: rgba(255,255,255,0.08);
+  list-style: none;
+  background: linear-gradient(180deg, #3b67c6 0%, #2f55aa 100%);
+  color: white;
+
   border-radius: 14px;
-  padding: 18px;
-  border: 1px solid rgba(255,255,255,0.25);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 18px 20px;
+  margin: 15px;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  transition: all 0.25s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
 
 .urbanismo-item:hover {
   transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.35);
 }
+.urbanismo-item strong {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: block;
+}
+
 
 
 .urbanismo-item span {
-  display: block;
   font-size: 14px;
+  opacity: 0.95;
   margin-bottom: 6px;
+  display: block;
 }
+.urbanismo-item .buttonIngreso {
+  align-self: flex-end;
+  margin-top: 12px;
+}
+
 
 .button {
   background: linear-gradient(135deg, #2563eb, #1e40af);
