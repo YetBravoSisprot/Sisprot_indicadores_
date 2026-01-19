@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./LogingForm.css";
 import { PasswordContext } from "../PasswordContext/PasswordContext";
 
@@ -8,49 +8,42 @@ function LogingForm() {
     setPassword,
     email,
     password,
-    handleLoginClick,
+    handleLoginClick
   } = useContext(PasswordContext);
 
-  const [showPassword, setShowPassword] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 🚫 evita el refresh
+    handleLoginClick(); // ✅ ejecuta tu login real
+  };
 
   return (
-    <form className="login-form" onSubmit={(e) => e.preventDefault()}>
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="usuario@empresa.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Contraseña</label>
-
-        <div className="password-wrapper">
+    <main className="login-form">
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Email</label>
           <input
-            type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Contraseña</label>
+          <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-            aria-label="Mostrar / ocultar contraseña"
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </button>
         </div>
-      </div>
 
-      <button className="login-button" onClick={handleLoginClick}>
-        Ingresar
-      </button>
-    </form>
+        <button className="login-button" type="submit">
+          Ingresar
+        </button>
+      </form>
+    </main>
   );
 }
 
