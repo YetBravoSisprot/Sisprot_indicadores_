@@ -1,28 +1,22 @@
-.app-header {
-  background: linear-gradient(135deg, #f57c3a, #ff8a50);
-  padding: 14px 32px;
+.login-header {
   display: flex;
-  justify-content: center;
-  border-bottom: 3px solid #0b3ea8;
-}
-
-.app-header-content {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
+  margin-bottom: 28px;
 }
 
-.app-header-content img {
-  height: 42px;
+.login-logo {
+  height: 64px;              /* 👈 CLAVE */
+  max-width: 180px;
   object-fit: contain;
+  margin-bottom: 12px;
 }
 
-.app-header-content h1 {
-  color: #ffffff;
+.login-title {
   font-size: 22px;
   font-weight: 600;
+  color: #ffffff;            /* 👈 BLANCO */
   margin: 0;
   letter-spacing: 0.5px;
+  text-align: center;
 }
