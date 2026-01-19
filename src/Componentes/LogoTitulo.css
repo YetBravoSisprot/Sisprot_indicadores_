@@ -3,21 +3,38 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 28px;
+  background: none;
+  padding: 0;
 }
 
-.logo-wrapper img {
-  width: 110px;
-  margin-bottom: 8px;
+.logo-wrapper.login {
+  margin-bottom: 32px;
 }
 
-.logo-wrapper h1 {
-  font-size: 22px;
+.logo-img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 14px;
+  display: block;
+}
+
+/* TEXTO */
+
+.logo-text h1 {
+  margin: 0;
+  font-size: 26px;
   font-weight: 700;
   color: #0b2c5d;
-  margin: 0;
 }
 
-.logo-wrapper span {
+.logo-text span {
   font-size: 14px;
-  color: #5c6f91;
+  color: #6c7aa0;
+  letter-spacing: 0.5px;
+}
+
+/* 🚫 ELIMINAR CUALQUIER RESTO */
+.logo-wrapper::before,
+.logo-wrapper::after {
+  content: none !important;
 }
