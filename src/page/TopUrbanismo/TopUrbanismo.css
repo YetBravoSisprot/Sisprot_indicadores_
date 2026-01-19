@@ -46,20 +46,28 @@
 }
 
 .button {
-  background: linear-gradient(135deg, #28a745, #1e7e34);
+  background: linear-gradient(135deg, #2563eb, #1e40af);
   border: none;
   color: white;
-  padding: 8px 16px;
-  font-size: 13px;
-  border-radius: 10px;
+
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 999px;
   cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   transition: all 0.25s ease;
 }
 
+
 .button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #1e7e34, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
+
 
 
 .button:hover {
@@ -92,22 +100,25 @@
   margin: 5px;
 }
 .buttonIngreso {
-  background-color:  #ffffff;; /* Verde */
+  background: #22c55e;
+  color: #ffffff;
+
   border: none;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 5px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 25px;
-  transition-duration: 0.4s;
+
+  transition: all 0.25s ease;
 }
+
 .buttonIngreso:hover {
-  background-color: #a9fdb7; /* Verde más oscuro */
+  background: #16a34a;
+  transform: scale(1.05);
 }
+
 .marginbitton{
   margin-bottom: 10px;
 }
@@ -176,19 +187,26 @@ select option:checked {
 }}
 
 .buttonDescargar {
-  background-color: #010201;
-  color: white;
-  padding: 10px 20px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background: #0f172a;
+  color: #ffffff;
+
+  padding: 10px 18px;
   font-size: 14px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
 }
 
+
 .buttonDescargar:hover {
-  background-color: #45a049;
+  background: #020617;
+  transform: translateY(-1px);
 }
+
 
 .filtros-panel {
   width: 100%;
