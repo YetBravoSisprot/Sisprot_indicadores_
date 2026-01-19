@@ -12,8 +12,8 @@ function LogingForm() {
   } = useContext(PasswordContext);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 🚫 evita el refresh
-    handleLoginClick(); // ✅ ejecuta tu login real
+    e.preventDefault();      // 🚫 evita el refresh
+    handleLoginClick();      // ✅ usa TU lógica original
   };
 
   return (
