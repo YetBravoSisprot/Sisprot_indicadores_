@@ -1,40 +1,71 @@
-.logo-wrapper {
+.container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 28px;
-  background: none;
-  padding: 0;
+  padding: 20px;
 }
 
-.logo-wrapper.login {
-  margin-bottom: 32px;
+.login-Titulo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea el contenido a la izquierda */
 }
 
-.logo-img {
-  width: 120px;
-  height: auto;
-  margin-bottom: 14px;
-  display: block;
+.logo-container {
+  width: 70px; /* Ajusta el tamaño del contenedor del logo */
+  margin-right: 10px; /* Espacio entre el logo y el texto */
 }
 
-/* TEXTO */
-
-.logo-text h1 {
+h1 {
+  font-size: 24px;
+  color: #ffffff;
   margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #0b2c5d;
+}
+/* LogoTitulo.css */
+
+.container {
+  display: flex; /* Uso de flexbox para alineación */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  padding: 20px; /* Espacio alrededor del contenido */
 }
 
-.logo-text span {
-  font-size: 14px;
-  color: #6c7aa0;
-  letter-spacing: 0.5px;
+.login-Titulo {
+  display: flex; /* Habilita flexbox para los elementos internos */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+  gap: 10px; /* Espacio entre el logo y el título */
 }
 
-/* 🚫 ELIMINAR CUALQUIER RESTO */
-.logo-wrapper::before,
-.logo-wrapper::after {
-  content: none !important;
+.logo-container {
+  width: 120px; /* Ancho del logo */
+  height: auto; /* Mantiene la proporción del logo */
+}
+
+
+@media (max-width: 768px) {
+  .logo-container {
+    width: 80px; /* Reduce el tamaño del logo para pantallas más pequeñas */
+  }
+
+  h1 {
+    font-size: 18px; /* Reduce el tamaño del texto del título */
+      color: #ffffff; /* Color blanco para el texto */
+      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
+  
+  
+}}
+
+@media (max-width: 480px) {
+  .login-Titulo {
+    flex-direction: column; /* Cambia la disposición a vertical */
+  }
+
+  .logo-container {
+    width: 60px; /* Reduce aún más el tamaño del logo para dispositivos muy pequeños */
+  }
+
+  h1 {
+    font-size: 16px; /* Reduce aún más el tamaño del texto del título */
+    color: #ffffff; /* Color blanco para el texto */
+      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
+  }
 }
