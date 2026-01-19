@@ -242,14 +242,18 @@ select option:checked {
 
 .filtros-panel {
   width: 100%;
-  max-width: 1400px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 20px 22px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  max-width: 1400px;          /* Evita que se estire demasiado */
+  margin: 0 auto 30px auto;   /* 👈 ESTO lo centra */
+  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;    /* 👈 CLAVE: centra horizontalmente */
+  align-items: center;
   gap: 16px;
-  align-items: end;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  margin-bottom: 30px;
+
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
+
