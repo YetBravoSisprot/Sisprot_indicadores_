@@ -1,82 +1,45 @@
 .login-form {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.form-group {
-  margin-bottom: 22px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #0b2c5d;
-  font-weight: 600;
-}
-
-.form-group input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid #d6e0f0;
-  background-color: #f9fbff;
-  font-size: 15px;
-  transition: border 0.2s, box-shadow 0.2s;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #0b5ed7;
-  box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.15);
-}
-
-/* ===== PASSWORD ===== */
-
-.password-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.password-wrapper input {
-  padding-right: 46px;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 18px;
-  opacity: 0.6;
-}
-
-.toggle-password:hover {
-  opacity: 1;
-}
-
-/* ===== BUTTON ===== */
-
-.login-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 16px;
-  border-radius: 18px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  background: linear-gradient(180deg, #0b5ed7, #084298);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.login-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 25px rgba(11, 94, 215, 0.35);
-}
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Limitar el ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+  }
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .login-form input {
+    width: calc(100% - 22px); /* Restar el ancho del padding de 10px en cada lado */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+  }
+  .login-form button {
+    width: calc(50% - 22px);
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: auto;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+  }
+  
+  .login-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media screen and (max-width: 480px) {
+    .login-form {
+      padding: 15px; /* Ajustar el padding para pantallas más pequeñas */
+    }
+  }
+  
