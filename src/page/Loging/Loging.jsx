@@ -1,21 +1,24 @@
 import React, { useContext } from "react";
-import LogingForm from "../../Componentes/LogingForm";
-import PageNav from "../../Componentes/PageNav";
-import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
+
+import LogingForm from "../../Componentes/LogingForm";
+import LogoTitulo from "../../Componentes/LogoTitulo";
+import PageNav from "../../Componentes/PageNav";
 import DropdownMenu from "../../Componentes/DropdownMenu";
+
 import "./Loging.css";
 
 function Loging() {
   const { showPasswordState, isAuthenticated, role } =
     useContext(PasswordContext);
 
+  // 🔐 Usuario autenticado pero sin permisos
   if (!showPasswordState && isAuthenticated && role !== "admin" && role !== "ventas") {
     return (
-      <div className="login-wrapper">
-        <div className="login-card animate-in">
+      <div className="auth-layout">
+        <div className="auth-card animate-enter">
           <LogoTitulo />
-          <p className="login-error">Acceso no autorizado</p>
+          <p className="auth-error">Acceso no autorizado</p>
           <DropdownMenu />
           <LogingForm />
         </div>
@@ -24,10 +27,13 @@ function Loging() {
   }
 
   return (
-    <div className="login-wrapper">
+    <div className="auth-layout">
       {showPasswordState ? (
-        <div className="login-card animate-in">
+        <div className="auth-card animate-enter">
           <LogoTitulo />
+          <p className="auth-subtitle">
+            Acceso interno · Sisprot Global Fiber
+          </p>
           <LogingForm />
         </div>
       ) : (
