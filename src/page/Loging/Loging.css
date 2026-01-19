@@ -1,69 +1,79 @@
-/* === FONDO GENERAL === */
-.login-wrapper {
+/* =========================
+   LAYOUT GENERAL
+========================= */
+.auth-layout {
   min-height: 100vh;
-  background: radial-gradient(
-    circle at top,
-    #1e3a8a,
-    #0f172a
-  );
+  background: linear-gradient(160deg, #0b1d3a, #0f2a5f, #123b8a);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
 
-/* === CARD === */
-.login-card {
+/* =========================
+   CARD PRINCIPAL
+========================= */
+.auth-card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
-  border-radius: 24px;
-  padding: 32px 28px 36px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 22px;
+  padding: 36px 30px 40px;
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* === LOGO === */
-.login-card img,
-.login-card svg {
+/* =========================
+   LOGO / HEADER
+========================= */
+.auth-card img,
+.auth-card svg {
   max-width: 160px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-/* === ERROR === */
-.login-error {
-  color: #dc2626;
-  font-weight: 600;
-  margin-bottom: 16px;
+.auth-subtitle {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 26px;
+  text-align: center;
 }
 
-/* === FORM === */
-.login-card form {
+/* =========================
+   FORMULARIO
+========================= */
+.auth-card form {
   width: 100%;
 }
 
-/* === INPUTS === */
-.login-card input {
+/* Inputs */
+.auth-card input {
   width: 100%;
   padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  font-size: 15px;
-  outline: none;
   margin-bottom: 16px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  font-size: 15px;
+  background: #ffffff;
   transition: all 0.25s ease;
 }
 
-.login-card input:focus {
+.auth-card input:focus {
+  outline: none;
   border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
 }
 
-/* === BOTÓN === */
-.login-card button {
+/* Botón */
+.auth-card button {
   width: 100%;
+  margin-top: 10px;
   padding: 14px;
   border-radius: 14px;
   border: none;
@@ -75,20 +85,37 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-card button:hover {
+.auth-card button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
 }
 
-/* === ANIMACIÓN ENTRADA === */
-.animate-in {
-  animation: fadeSlideUp 0.6s ease forwards;
+.auth-card button:active {
+  transform: translateY(0);
 }
 
-@keyframes fadeSlideUp {
+/* =========================
+   MENSAJES
+========================= */
+.auth-error {
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* =========================
+   ANIMACIONES
+========================= */
+.animate-enter {
+  animation: authFadeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes authFadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.96);
+    transform: translateY(32px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -96,9 +123,11 @@
   }
 }
 
-/* === RESPONSIVE === */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 480px) {
-  .login-card {
-    padding: 26px 20px 30px;
+  .auth-card {
+    padding: 28px 22px 32px;
   }
 }
