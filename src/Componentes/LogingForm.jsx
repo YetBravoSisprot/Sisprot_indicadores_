@@ -12,19 +12,20 @@ function LogingForm() {
   } = useContext(PasswordContext);
 
   const handleSubmit = (e) => {
-    e.preventDefault();      // 🚫 evita el refresh
-    handleLoginClick();      // ✅ usa TU lógica original
+    e.preventDefault();
+    handleLoginClick();
   };
 
   return (
     <main className="login-form">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Email</label>
+          <label>Usuario</label>
           <input
-            type="email"
+            type="text"              // 🔑 CAMBIO CLAVE
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Usuario"
             required
           />
         </div>
@@ -35,6 +36,7 @@ function LogingForm() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
             required
           />
         </div>
