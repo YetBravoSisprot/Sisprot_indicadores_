@@ -153,20 +153,16 @@
   margin-bottom: 10px;
 }
 select {
-  width: 100%;
-  min-height: 44px;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #0b1f44;
-
-  background: #ffffff;
-  border: 2px solid #1f4fbf;
+  height: 140px;
+  padding: 10px;
   border-radius: 12px;
+  border: 2px solid #2f55aa;
 
-  outline: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  background-color: #ffffff;
+  color: #1e1e1e;
+
+  font-size: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
 }
 
 select:hover {
@@ -250,4 +246,29 @@ select option:checked {
   align-items: end;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   margin-bottom: 30px;
+}
+
+.filtros-panel {
+  background: linear-gradient(180deg, #0b3c8a, #082a63);
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filtros-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+/* SELECTS EN GRID */
+.filtros-selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
 }
