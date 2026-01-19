@@ -1,42 +1,57 @@
+/* Contenedor principal del menú */
 .page-nav {
-  background: linear-gradient(135deg, #0b3ea8, #0a2f7a);
-  padding: 12px 0;
+  width: 100%;
+  background: linear-gradient(90deg, #0b3c8a, #0a2f6b);
+  padding: 14px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Lista */
+.page-nav ul {
+  list-style: none;            /* 🔥 quita bullets */
   display: flex;
   justify-content: center;
-}
-
-.page-nav ul {
-  list-style: none;
-  display: flex;
+  align-items: center;
   gap: 48px;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
+/* Items */
 .page-nav li {
-  color: #ffffff;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
-  cursor: pointer;
+}
+
+/* Links */
+.page-nav a {
+  color: #ffffff;              /* 🔥 blanco */
+  text-decoration: none;       /* 🔥 sin subrayado */
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
   position: relative;
-  transition: color 0.2s ease;
 }
 
-.page-nav li:hover {
-  color: #ffd2b3;
-}
-
-.page-nav li::after {
+/* Hover elegante */
+.page-nav a::after {
   content: "";
   position: absolute;
-  bottom: -6px;
   left: 0;
-  width: 0;
+  bottom: -6px;
+  width: 0%;
   height: 2px;
-  background: #ffd2b3;
+  background-color: #f5b942;   /* amarillo corporativo */
   transition: width 0.25s ease;
 }
 
-.page-nav li:hover::after {
+.page-nav a:hover::after {
   width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-nav ul {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 }
