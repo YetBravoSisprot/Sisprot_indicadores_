@@ -6,7 +6,7 @@ const LogoTitulo = () => {
     <div className="container">
       <div className="login-Titulo">
         <img src="./logo_sgf.png" alt="Logo" className="logo-container" />
-        <h1>Sisprot Global Fiber. App</h1>
+        <h1>Sisprot Global Fiber</h1>
       </div>
     </div>
   );
