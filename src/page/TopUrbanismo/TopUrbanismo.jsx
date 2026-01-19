@@ -385,95 +385,130 @@ const urbanismoFiltrado =
         <>
           <DropdownMenu />
           <PageNav />
-<div className="filtros-panel">
+  <div className="filtros-panel">
 
-  {/* FILA 1 — BOTONES TOP */}
-  <div className="filtros-grupo">
+  {/* BOTONES TOP */}
+  <div>
     <button className="button" onClick={handleTop10Urb}>Top 10</button>
     <button className="button" onClick={handleTopUrb}>Top Global</button>
   </div>
 
-  {/* FILA 2 — SELECTS */}
-  <div className="filtros-grupo filtros-selects">
+  {/* ESTADO */}
+  <select
+    id="estadoSelect"
+    size="5"
+    multiple
+    value={estadosSeleccionados}
+    onChange={handleEstadoChange}
+  >
+    <option value="Todos">Todos</option>
+    <option value="Activo">Activos</option>
+    <option value="Suspendido">Suspendidos</option>
+    <option value="Por instalar">Por instalar</option>
+    <option value="Pausado">Pausado</option>
+    <option value="Cancelado">Cancelados</option>
+  </select>
 
-    <select multiple size="5" value={estadosSeleccionados} onChange={handleEstadoChange}>
-      <option value="Todos">Todos</option>
-      <option value="Activo">Activos</option>
-      <option value="Suspendido">Suspendidos</option>
-      <option value="Por instalar">Por instalar</option>
-      <option value="Pausado">Pausado</option>
-      <option value="Cancelado">Cancelados</option>
-    </select>
+  {/* TIPO DE CLIENTE */}
+  <select
+    id="estadoSelect2"
+    size="5"
+    multiple
+    value={estadosSeleccionadosType}
+    onChange={handleEstadoChange2}
+  >
+    <option value="Todos">Tipo de Cliente / Todos</option>
+    <option value="PYME">Pyme</option>
+    <option value="RESIDENCIAL">Residenciales</option>
+    <option value="INTERCAMBIO">Intercambio</option>
+    <option value="EMPLEADO">Empleado</option>
+    <option value="GRATIS">Gratis</option>
+  </select>
 
-    <select multiple size="5" value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
-      <option value="Todos">Tipo de Cliente / Todos</option>
-      <option value="PYME">Pyme</option>
-      <option value="RESIDENCIAL">Residenciales</option>
-      <option value="INTERCAMBIO">Intercambio</option>
-      <option value="EMPLEADO">Empleado</option>
-      <option value="GRATIS">Gratis</option>
-    </select>
+  {/* MIGRADOS */}
+  <select
+    id="migradosSelect"
+    size="2"
+    multiple
+    value={migradosSeleccionados}
+    onChange={handleMigradosChange}
+  >
+    <option value="Todos">Todos</option>
+    <option value="Migrado">Migrados</option>
+    <option value="No migrado">No migrados</option>
+  </select>
 
-    <select multiple size="2" value={migradosSeleccionados} onChange={handleMigradosChange}>
-      <option value="Todos">Migrados</option>
-      <option value="Migrado">Migrados</option>
-      <option value="No migrado">No migrados</option>
-    </select>
+  {/* CICLOS */}
+  <select
+    id="ciclosSelect"
+    size="3"
+    multiple
+    value={ciclosSeleccionados}
+    onChange={handleCiclosChange}
+  >
+    <option value="Todos">Todos</option>
+    <option value="15">Ciclo 15</option>
+    <option value="25">Ciclo 25</option>
+  </select>
 
-    <select multiple size="3" value={ciclosSeleccionados} onChange={handleCiclosChange}>
-      <option value="Todos">Ciclos</option>
-      <option value="15">Ciclo 15</option>
-      <option value="25">Ciclo 25</option>
-    </select>
+  {/* AGENCIAS */}
+  <select
+    id="sectoresSelect"
+    size="5"
+    multiple
+    value={sectoresSeleccionados}
+    onChange={handleSectoresChange}
+  >
+    <option value="Todos">Todas las agencias</option>
+    <option value="NODO PAYA">AGENCIA PAYA</option>
+    <option value="NODO TURMERO">AGENCIA TURMERO</option>
+    <option value="NODO MACARO">AGENCIA MACARO</option>
+  </select>
 
-    <select multiple size="5" value={sectoresSeleccionados} onChange={handleSectoresChange}>
-      <option value="Todos">Agencias</option>
-      <option value="NODO PAYA">AGENCIA PAYA</option>
-      <option value="NODO TURMERO">AGENCIA TURMERO</option>
-      <option value="NODO MACARO">AGENCIA MACARO</option>
-    </select>
+  {/* URBANISMOS */}
+  <select
+    id="urbanismosSelect"
+    size="5"
+    multiple
+    value={urbanismosSeleccionados}
+    onChange={(e) =>
+      setUrbanismosSeleccionados(
+        Array.from(e.target.selectedOptions, (option) => option.value)
+      )
+    }
+  >
+    <option value="Todos">Todos los urbanismos</option>
+    {sectoresSeleccionados.map((sector) =>
+      urbanismosAprobados[sector]?.map((urbanismo) => (
+        <option key={urbanismo} value={urbanismo}>
+          {urbanismo}
+        </option>
+      ))
+    )}
+  </select>
 
-    <select
-      multiple
-      size="5"
-      value={urbanismosSeleccionados}
-      onChange={(e) =>
-        setUrbanismosSeleccionados(
-          Array.from(e.target.selectedOptions, (o) => o.value)
-        )
-      }
-    >
-      <option value="Todos">Urbanismos</option>
-      {sectoresSeleccionados.map((sector) =>
-        urbanismosAprobados[sector]?.map((u) => (
-          <option key={u} value={u}>{u}</option>
-        ))
-      )}
-    </select>
+  {/* TOTALES */}
+  <button className="buttonIngreso">
+    Total de clientes: {totalClientesGlobal}
+  </button>
 
-  </div>
+  <button className="buttonIngreso marginbutton">
+    {estadosSeleccionados.includes("Cancelado")
+      ? `Total de Pérdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
+      : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
+  </button>
 
-  {/* FILA 3 — TOTALES */}
-  <div className="filtros-grupo">
-    <button className="buttonIngreso">
-      Clientes: {totalClientesGlobal}
-    </button>
+  {/* ACCIONES */}
+  <button
+    className={!handleGrafico2 ? "button" : "buttonCerrar"}
+    onClick={toggleGraficos}
+  >
+    {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
+  </button>
 
-    <button className="buttonIngreso">
-      Ingresos: {totalIngresos.toLocaleString()}$
-    </button>
-  </div>
-
-  {/* FILA 4 — ACCIONES */}
-  <div className="filtros-grupo">
-    <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
-      {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-    </button>
-
-    <button className="buttonDescargar" onClick={handleDownloadExcel}>
-      Descargar Excel
-    </button>
-  </div>
+  <button className="buttonDescargar" onClick={handleDownloadExcel}>
+    Descargar Excel
+  </button>
 
 </div>
 
