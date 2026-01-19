@@ -1,38 +1,27 @@
 import React, { useContext } from "react";
+import "./Loging.css";
 
 import LogingForm from "../../Componentes/LogingForm";
-import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
-import DropdownMenu from "../../Componentes/DropdownMenu";
 
 function Loging() {
-  const { showPasswordState, isAuthenticated, role } = useContext(PasswordContext);
+  const { showPasswordState, isAuthenticated, role } =
+    useContext(PasswordContext);
 
+  // Seguridad básica (NO TOCAR)
   if (!showPasswordState) {
-    // Si el usuario está autenticado pero no tiene permisos adecuados, muestra "No autorizado"
     if (isAuthenticated && role !== "admin" && role !== "ventas") {
-      return (
-        <div>
-          No autorizado
-          <DropdownMenu />
-          <LogingForm />
-        </div>
-      );
+      return <div>No autorizado</div>;
     }
   }
 
   return (
-    <div>
-      <LogoTitulo />
-      {showPasswordState ? (
+    <div className="login-page">
+      <div className="login-card">
+        <LogoTitulo />
         <LogingForm />
-      ) : (
-        <>
-          <PageNav />
-          <DropdownMenu />
-        </>
-      )}
+      </div>
     </div>
   );
 }
