@@ -1,41 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import "./LogingForm.css";
-import { PasswordContext } from '../PasswordContext/PasswordContext';
+import { PasswordContext } from "../PasswordContext/PasswordContext";
 
 function LogingForm() {
-  const{setEmail, setPassword, email, password, handleLoginClick} = useContext(PasswordContext)
+  const {
+    setEmail,
+    setPassword,
+    email,
+    password,
+    handleLoginClick,
+  } = useContext(PasswordContext);
+
   return (
-    <div>
-      <main className="login-form">
-        <form>
-          <div className="form-group">
-            <label htmlFor="email"></label>
+    <div className="login-wrapper">
+      <div className="login-card">
+        <h2 className="login-title">Bienvenido</h2>
+        <p className="login-subtitle">
+          Accede al sistema de Sisprot Global Fiber
+        </p>
+
+        <form
+          className="login-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLoginClick();
+          }}
+        >
+          <div className="input-group">
             <input
               type="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
+              required
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
+            <label>Email</label>
           </div>
-          <div className="form-group">
-            <label htmlFor="password"></label>
+
+          <div className="input-group">
             <input
               type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
+              required
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
+            <label>Contraseña</label>
           </div>
-          <div>
-            <button className="login-button" type="submit" onClick={handleLoginClick}>
-              Login
-            </button>
-          </div>
+
+          <button type="submit" className="login-button">
+            Ingresar
+          </button>
         </form>
-      </main>
+      </div>
     </div>
   );
 }
 
 export default LogingForm;
-
