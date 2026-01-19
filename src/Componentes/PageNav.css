@@ -1,61 +1,42 @@
-
-.nav {
+.page-nav {
+  background: linear-gradient(135deg, #0b3ea8, #0a2f7a);
+  padding: 12px 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgb(13, 13, 226);
+  justify-content: center;
 }
 
-.nav ul {
+.page-nav ul {
   list-style: none;
   display: flex;
-  align-items: center;
-  gap: 4rem;
+  gap: 48px;
+  padding: 0;
+  margin: 0;
 }
 
-.nav a:link,
-.nav a:visited {
-  text-decoration: none;
-  color: var(--color-light--2);
-  text-transform: uppercase;
-  font-size: 1.5rem;
+.page-nav li {
+  color: #ffffff;
+  font-size: 16px;
   font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
 }
 
-a.ctaLink:link,
-a.ctaLink:visited {
-  background-color: var(--color-brand--2);
-  color: var(--color-dark--0);
-  padding: 0.8rem 2rem;
-  border-radius: 7px;
-}
-.nav a:hover {
-  color: rgb(0, 255, 30) (0, 255, 128); /* Cambia el color según tus preferencias */
-}
-.horizontal-list {
-  display: flex;
-  background-color: rgb(21, 83, 241);
-  padding: 10px;
-  list-style-type: none;
-  justify-content: space-around;
+.page-nav li:hover {
+  color: #ffd2b3;
 }
 
-.horizontal-list li {
-  margin: 0 10px;
-  font-weight: bold; /* Aplica un tipo de letra más gruesa */
-  color: white; /* Color de texto blanco */
-  font-size: 20px; /* Tamaño de fuente más grande */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombreado sutil */
+.page-nav li::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ffd2b3;
+  transition: width 0.25s ease;
 }
-/* Estilos para el logo */
-.logo-container img {
-  width: 100px; /* Ancho del logo */
-  height: auto;/* Altura automática para mantener la proporción */
-  margin-top: 20px ;
-} 
 
-@media screen and (Max-width: 481px) {
-  .DisplayNotMax481px {
-      display: none;
-    
-  }}
+.page-nav li:hover::after {
+  width: 100%;
+}
