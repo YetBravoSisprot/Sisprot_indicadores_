@@ -1,71 +1,83 @@
-.container {
+/* BASE (NO ROMPE NADA EXISTENTE) */
+.logo-wrapper {
+  width: 100%;
   display: flex;
-  align-items: center;
-  padding: 20px;
+  justify-content: center;
+  padding-top: 40px;
 }
 
-.login-Titulo {
+/* CONTENIDO */
+.logo-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Alinea el contenido a la izquierda */
+  animation: logoFade 0.8s ease-in-out;
 }
 
-.logo-container {
-  width: 70px; /* Ajusta el tamaño del contenedor del logo */
-  margin-right: 10px; /* Espacio entre el logo y el texto */
+.logo-image {
+  width: 120px;
+  height: auto;
+  margin-bottom: 12px;
+  animation: float 4s ease-in-out infinite;
 }
 
-h1 {
-  font-size: 24px;
+.logo-title {
+  font-size: 26px;
+  font-weight: 700;
   color: #ffffff;
   margin: 0;
-}
-/* LogoTitulo.css */
-
-.container {
-  display: flex; /* Uso de flexbox para alineación */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
-  padding: 20px; /* Espacio alrededor del contenido */
+  text-align: center;
 }
 
-.login-Titulo {
-  display: flex; /* Habilita flexbox para los elementos internos */
-  align-items: center; /* Alinea los elementos verticalmente en el centro */
-  gap: 10px; /* Espacio entre el logo y el título */
+.logo-subtitle {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.logo-container {
-  width: 120px; /* Ancho del logo */
-  height: auto; /* Mantiene la proporción del logo */
+/* ===== VARIANTE LOGIN ===== */
+.logo-wrapper.login {
+  padding-top: 0;
+  margin-bottom: 32px;
 }
 
+/* ===== VARIANTE DEFAULT (dashboard) ===== */
+.logo-wrapper.default {
+  background: linear-gradient(135deg, #ff7a18, #ff9a3c);
+  padding: 24px 0;
+}
 
-@media (max-width: 768px) {
-  .logo-container {
-    width: 80px; /* Reduce el tamaño del logo para pantallas más pequeñas */
+/* ANIMACIONES */
+@keyframes logoFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  h1 {
-    font-size: 18px; /* Reduce el tamaño del texto del título */
-      color: #ffffff; /* Color blanco para el texto */
-      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
-  
-  
-}}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
 
+/* MOBILE */
 @media (max-width: 480px) {
-  .login-Titulo {
-    flex-direction: column; /* Cambia la disposición a vertical */
+  .logo-image {
+    width: 90px;
   }
 
-  .logo-container {
-    width: 60px; /* Reduce aún más el tamaño del logo para dispositivos muy pequeños */
-  }
-
-  h1 {
-    font-size: 16px; /* Reduce aún más el tamaño del texto del título */
-    color: #ffffff; /* Color blanco para el texto */
-      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
+  .logo-title {
+    font-size: 22px;
   }
 }
