@@ -112,31 +112,37 @@
   margin-bottom: 10px;
 }
 select {
-  
-  font-size: 8px;
-  border-radius: 20px;
-  background-color: #fffcfce7;
-  border: 10px solid #1335ca;
- padding: 10px;
- 
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0b1f44;
 
- padding-top: 5px;
+  background: #ffffff;
+  border: 2px solid #1f4fbf;
+  border-radius: 12px;
 
-
-}
-.selected {
-  background-color: #4CAF50; /* Verde */
-  color: white;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 select:hover {
-  border-color:   black;
+  border-color: #3b82f6;
 }
 
 select:focus {
-  outline: none;
-  border-color: black
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.35);
 }
+option {
+  font-size: 14px;
+  padding: 6px;
+  background-color: #ffffff;
+  color: #0b1f44;
+}
+
 
 /* Estilos para las opciones */
 option {
@@ -184,3 +190,16 @@ select option:checked {
   background-color: #45a049;
 }
 
+.filtros-panel {
+  width: 100%;
+  max-width: 1400px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  align-items: end;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  margin-bottom: 30px;
+}
