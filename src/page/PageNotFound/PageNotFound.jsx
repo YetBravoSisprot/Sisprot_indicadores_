@@ -13,7 +13,7 @@ function PageNotFound() {
           alt="Logo de la empresa" 
           className="company-logo" 
         />
-        <p className="author-text">Realizado por Ing. Jesus Vasquez</p>
+        <p className="author-text">SISPROT GLOBAL FIBER</p>
       </div>
       <PageNav />
       
