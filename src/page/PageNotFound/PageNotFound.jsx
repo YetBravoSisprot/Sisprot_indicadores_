@@ -19,14 +19,9 @@ function PageNotFound() {
       
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
-
-
-
-
-
-        {/* Nuevo informe agregado al inicio */}
+        {/* Informe 1: Indicadores con API */}
         <iframe 
-          title="indicadores con api"
+          title="Indicadores con API"
           width="100%" 
           height="600" 
           src="https://app.powerbi.com/reportEmbed?reportId=78f2bab4-9a26-4984-ba96-87a16624d95a&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
@@ -35,8 +30,7 @@ function PageNotFound() {
           style={{marginBottom: '20px'}}
         ></iframe>
 
-       
-
+        {/* Informe 2: Ingresos Diarios */}
         <iframe 
           title="Ingresos diarios" // El primer informe original
           width="100%" 
@@ -47,8 +41,9 @@ function PageNotFound() {
           style={{marginBottom: '20px'}}
         ></iframe>
         
+        {/* Informe 3: Activos por día */}
         <iframe 
-          title="activos por dia" // El segundo informe original
+          title="Activos por día" // El segundo informe original
           width="100%" 
           height="600" 
           src="https://app.powerbi.com/reportEmbed?reportId=949df888-de93-4f99-897e-d230226bbfb8&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
@@ -56,9 +51,9 @@ function PageNotFound() {
           allowFullScreen={true}
         ></iframe>
 
- {/* Nuevo iframe insertado: VENTAS */}
+        {/* Informe 4: Ventas Drive */}
         <iframe 
-          title="ventas Drive" 
+          title="Ventas Drive" 
           width="100%" 
           height="600"
           src="https://app.powerbi.com/reportEmbed?reportId=5d6e8d49-786d-451e-826d-2e75442d8faa&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
@@ -67,10 +62,19 @@ function PageNotFound() {
           style={{marginBottom: '20px'}}
         ></iframe>
 
+        {/* Informe 5: Cambio de Plan */}
+        <iframe 
+          title="Cambio de Plan"
+          width="100%" 
+          height="600" 
+          src="https://app.powerbi.com/reportEmbed?reportId=8d5a7776-bfae-4739-9b9c-6d921e6e5803&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          frameBorder="0"
+          allowFullScreen={true}
+          style={{marginBottom: '20px'}}
+        ></iframe>
       </div>
     </div>
   );
 }
 
 export default PageNotFound;
-
