@@ -19,19 +19,22 @@ nav ul {
 
 /* ===== ITEMS ===== */
 nav ul li {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 24px;  /* Aumenta el tamaño de la fuente */
+  font-weight: 600;  /* Mantén el peso de la fuente para hacerlo más llamativo */
 }
+
 
 /* ===== LINKS ===== */
 nav ul li a {
-  color: #ffffff;                /* blanco */
-  text-decoration: none;         /* sin subrayado */
-  letter-spacing: 0.6px;
+  font-size: 22px; /* Aumenta el tamaño del texto del enlace */
+  color: #ffffff;  /* Mantén el color blanco */
+  text-decoration: none; /* Elimina el subrayado */
+  letter-spacing: 1px;  /* Agrega un poco más de separación entre letras para hacerlo más legible */
   position: relative;
-  padding: 4px 0;
+  padding: 10px 20px;  /* Aumenta el padding para dar más espacio alrededor del texto */
   transition: color 0.25s ease;
 }
+
 
 /* Línea animada */
 nav ul li a::after {
@@ -61,6 +64,7 @@ nav ul li a:hover {
   }
 
   nav ul li {
-    font-size: 16px;
+    font-size: 20px;  /* Ajuste el tamaño de la fuente para pantallas más pequeñas */
   }
 }
+
