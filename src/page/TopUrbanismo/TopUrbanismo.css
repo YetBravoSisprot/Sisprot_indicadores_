@@ -294,3 +294,11 @@ select option:checked {
   background-color: #1e3fa9;
   border-radius: 6px;
 }
+.titulo-topurbanismos {
+  width: 100%;
+  max-width: 1400px;     /* mismo ancho que la grilla */
+  margin: 0 auto 24px auto;
+
+  display: flex;
+  justify-content: center; /* 🔥 centra REALMENTE */
+}
