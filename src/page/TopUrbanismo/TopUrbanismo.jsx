@@ -514,7 +514,10 @@ const urbanismoFiltrado =
 
 
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
-          <h3 className="h3">Top Urbanismos</h3>
+          <div className="titulo-topurbanismos">
+  <h3 className="h3">Top Urbanismos</h3>
+</div>
+
 
           <UrbanismoList urbanismos={topUrbanismos} />
         </>
