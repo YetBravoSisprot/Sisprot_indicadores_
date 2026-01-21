@@ -1,7 +1,15 @@
+/* Estilo principal del formulario */
 .login-form {
   width: 100%;
+  max-width: 500px; /* Máxima anchura para evitar que se estire demasiado en pantallas grandes */
+  margin: 0 auto; /* Centramos el formulario */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para las etiquetas de los campos */
 .form-group {
   margin-bottom: 20px;
 }
@@ -14,6 +22,7 @@
   color: #1f2937;
 }
 
+/* Estilo para los inputs (campos de texto) */
 .form-group input {
   width: 100%;
   padding: 12px 14px;
@@ -32,8 +41,7 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* ===== Password toggle ===== */
-
+/* Estilo para el toggle del password */
 .password-wrapper {
   position: relative;
   display: flex;
@@ -59,8 +67,7 @@
   opacity: 1;
 }
 
-/* ===== Button ===== */
-
+/* Estilo para el botón de login */
 .login-button {
   width: 100%;
   padding: 14px;
@@ -81,4 +88,37 @@
 
 .login-button:active {
   transform: translateY(0);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .login-form {
+    max-width: 90%; /* Ajustar el formulario para pantallas más pequeñas */
+    padding: 15px;
+  }
+
+  .form-group input {
+    font-size: 16px; /* Hacer los inputs un poco más grandes para móviles */
+  }
+
+  .login-button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    max-width: 100%; /* Hacer el formulario más ancho en dispositivos muy pequeños */
+    padding: 10px;
+  }
+
+  .form-group input {
+    font-size: 18px; /* Aumentar el tamaño del texto en móviles muy pequeños */
+  }
+
+  .login-button {
+    font-size: 18px;
+    padding: 14px;
+  }
 }
