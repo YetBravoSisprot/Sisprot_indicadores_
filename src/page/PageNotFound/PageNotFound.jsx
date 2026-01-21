@@ -24,7 +24,7 @@ function PageNotFound() {
           title="Indicadores con API"
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=78f2bab4-9a26-4984-ba96-87a16624d95a&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/groups/me/reports/053e174b-9772-43d6-bd34-8e2e2464fce5/d020d82090c61e3905ae?ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
           frameBorder="0" 
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
@@ -35,7 +35,7 @@ function PageNotFound() {
           title="Ingresos diarios" // El primer informe original
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=565040ba-9c50-41cb-9f9a-0a658efff269&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/groups/me/reports/196d76cf-527d-4ca4-ac3b-f7a089c57d88/b52889aa63e70259926e?ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
           frameBorder="0" 
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
@@ -46,7 +46,7 @@ function PageNotFound() {
           title="Activos por día" // El segundo informe original
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=949df888-de93-4f99-897e-d230226bbfb8&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/groups/me/reports/a7a75bb0-7775-43b7-816e-30c792d9fe1d/556eab539e42c5888fa2?ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
           frameBorder="0" 
           allowFullScreen={true}
         ></iframe>
@@ -56,7 +56,7 @@ function PageNotFound() {
           title="Ventas Drive" 
           width="100%" 
           height="600"
-          src="https://app.powerbi.com/reportEmbed?reportId=5d6e8d49-786d-451e-826d-2e75442d8faa&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/groups/me/reports/20ebdb0e-ea7f-4770-b73c-41e0a483e97c/da93fbe7904c9096b4d4?ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
           frameBorder="0" 
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
@@ -67,7 +67,7 @@ function PageNotFound() {
           title="Cambio de Plan"
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=a7a75bb0-7775-43b7-816e-30c792d9fe1d&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/groups/me/reports/38edf0b8-c685-47e1-ac9a-028c722645cb/dbbaccb0c9339d9a957e?ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
           frameBorder="0"
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
