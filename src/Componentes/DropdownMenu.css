@@ -1,47 +1,34 @@
 /* DropdownMenu.css */
+
+/* Elimina el contenedor para el menú desplegable */
 .dropdown-container {
-  position: absolute;
+  display: block; /* Asegura que el menú siempre se vea */
+  position: relative; /* Lo dejamos aquí por si hay otros elementos que se posicionan alrededor */
 }
 
-/* Botón del menú desplegable */c
+/* Elimina el botón del menú */
 .dropdown-button {
-   background-color: #b96a0fcc;
-    color: #eb0c0c;
-    border: 1px solid #ec1414;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex
-;
-    align-items: center;
-    position: absolute;
-    top: 3px;
-    left: auto;
-    right: 153px;
+  display: none; /* No mostrar el botón del menú en ningún momento */
 }
 
-/* Icono del menú */
+/* Elimina el icono */
 .menu-icon {
-  margin-right: 10px;
+  display: none; /* También ocultamos el icono */
 }
 
-/* Contenido del menú desplegable */
+/* Contenido del menú siempre visible */
 .dropdown-content {
-       position: absolute;
-    top: 32px;
-    left: auto;
-    right: -35px;
-    background-color: #0a0a0ecc;
-    border: 1px solid #cccccc;
-    border-top: none;
-    border-radius: 0 0 5px 5px;
-    padding: 10px 0;
-    list-style: none;
-    width: 150px;
-    display: none;
+  position: relative; /* Lo dejamos aquí para que esté bien posicionado en la página */
+  background-color: #0a0a0ecc;
+  border: 1px solid #cccccc;
+  border-radius: 0 0 5px 5px;
+  padding: 10px 0;
+  list-style: none;
+  width: 150px;
+  display: block; /* Siempre visible */
 }
 
-/* Enlaces del menú desplegable */
+/* Estilo de los enlaces dentro del menú */
 .dropdown-link {
   color: #cccccc;
   text-decoration: none;
@@ -55,67 +42,13 @@
   color: rgb(16, 20, 221);
 }
 
-/* Botón del menú */
-.buttonMenu {
-  background-color: #091183; /* Verde */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 16px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition-duration: 0.4s;
-  position: absolute;
-  top: 5%;
-  left: 300px;
-  min-width: 60px;
-  z-index: 1;
-}
-
-/* Hover del botón del menú */
-.buttonMenu:hover {
-  background-color: #1c0cf3; /* Verde más oscuro */
-}
-
-/* Media query para ocultar el menú en pantallas mayores a 450px */
-@media screen and (min-width: 451px) {
-  .dropdown-container {
-    display: none;
-  }
-}
-
-/* Media query para mostrar el botón del menú en pantallas menores a 450px */
+/* Asegúrate de que el menú y el contenido no dependan de las pantallas pequeñas */
 @media screen and (max-width: 450px) {
   .dropdown-container {
-    display: block;
+    display: block; /* Mostrar el contenedor del menú */
   }
 
   .dropdown-content {
-    display: none;
+    display: block; /* Asegura que el contenido del menú esté visible en pantallas pequeñas */
   }
-
-  .dropdown-container.open .dropdown-content {
-    display: block; /* Mostrar el menú desplegable al hacer clic */
-  }
-
-.dropdown-button {
-   background-color: #290fb9cc;
-    color: #cccccc;
-    border: 1px solid #cccccc;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex
-;
-    align-items: center;
-    position: absolute;
-    top: -60px;
-    left: auto;
-    right: -500px;
-}
-
-
-
 }
