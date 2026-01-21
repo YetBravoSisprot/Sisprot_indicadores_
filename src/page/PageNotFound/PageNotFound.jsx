@@ -67,7 +67,7 @@ function PageNotFound() {
           title="Cambio de Plan"
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=8d5a7776-bfae-4739-9b9c-6d921e6e5803&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/reportEmbed?reportId=a7a75bb0-7775-43b7-816e-30c792d9fe1d&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
           frameBorder="0"
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
