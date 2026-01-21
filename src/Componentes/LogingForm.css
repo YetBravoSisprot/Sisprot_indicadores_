@@ -1,12 +1,13 @@
 /* Estilo principal del formulario */
 .login-form {
   width: 100%;
-  max-width: 500px; /* Máxima anchura para evitar que se estire demasiado en pantallas grandes */
+  max-width: 400px; /* Máxima anchura para pantallas pequeñas */
   margin: 0 auto; /* Centramos el formulario */
   padding: 20px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  /* Hacemos que se ajuste mejor a pantallas pequeñas */
 }
 
 /* Estilos para las etiquetas de los campos */
@@ -93,7 +94,7 @@
 /* Media Queries */
 @media (max-width: 768px) {
   .login-form {
-    max-width: 90%; /* Ajustar el formulario para pantallas más pequeñas */
+    max-width: 80%; /* Ajustar el formulario para pantallas más pequeñas */
     padding: 15px;
   }
 
@@ -109,7 +110,7 @@
 
 @media (max-width: 480px) {
   .login-form {
-    max-width: 100%; /* Hacer el formulario más ancho en dispositivos muy pequeños */
+    max-width: 90%; /* Hacer el formulario más ancho en dispositivos muy pequeños */
     padding: 10px;
   }
 
