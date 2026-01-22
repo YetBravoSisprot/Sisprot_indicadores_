@@ -25,7 +25,7 @@ function Ventas() {
           {/* Sección en construcción */}
           <div className="en-construccion">
             <h2>¡Esta sección está en construcción!</h2>
-            <p>Estamos trabajando en la funcionalidad de ventas. Vuelve pronto para más detalles.</p>
+            <p>Estamos trabajando en la funcionalidad de operaciones. Vuelve pronto para más detalles.</p>
             <div className="icono-construccion">🚧</div>
           </div>
         </>
