@@ -25,7 +25,7 @@ function Admin() {
           {/* Sección en construcción */}
           <div className="en-construccion">
             <h2>¡Esta sección está en construcción!</h2>
-            <p>Estamos trabajando en la funcionalidad de administración. Vuelve pronto para más detalles.</p>
+            <p>Estamos trabajando en la funcionalidad de Ingresos. Vuelve pronto para más detalles.</p>
             <div className="icono-construccion">🚧</div>
           </div>
         </>
