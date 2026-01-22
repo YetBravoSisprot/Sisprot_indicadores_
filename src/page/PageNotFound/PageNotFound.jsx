@@ -55,7 +55,7 @@ function PageNotFound() {
         ></iframe>
 
         {/* Informe 4: Ventas Drive */}
-        <h3 className="report-title">Ventas Drive</h3>
+        <h3 className="report-title">Ventas</h3>
         <iframe 
           title="Ventas Drive" 
           width="100%" 
