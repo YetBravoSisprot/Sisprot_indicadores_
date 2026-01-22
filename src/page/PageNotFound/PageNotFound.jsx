@@ -20,6 +20,7 @@ function PageNotFound() {
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
         {/* Informe 1: Indicadores con API */}
+        <h3 className="report-title">Análisis Integral de Clientes, Planes e Ingresos por Segmento</h3>
         <iframe 
           title="Indicadores con API"
           width="100%" 
@@ -31,6 +32,7 @@ function PageNotFound() {
         ></iframe>
 
         {/* Informe 2: Ingresos Diarios */}
+        <h3 className="report-title">Ingresos Diarios</h3>
         <iframe 
           title="Ingresos diarios"
           width="100%" 
@@ -42,6 +44,7 @@ function PageNotFound() {
         ></iframe>
         
         {/* Informe 3: Activos por día */}
+        <h3 className="report-title">Activos por Día</h3>
         <iframe 
           title="Activos por día"
           width="100%" 
@@ -52,6 +55,7 @@ function PageNotFound() {
         ></iframe>
 
         {/* Informe 4: Ventas Drive */}
+        <h3 className="report-title">Ventas Drive</h3>
         <iframe 
           title="Ventas Drive" 
           width="100%" 
@@ -63,6 +67,7 @@ function PageNotFound() {
         ></iframe>
 
         {/* Informe 5: Cambio de Plan */}
+        <h3 className="report-title">Cambio de Plan</h3>
         <iframe 
           title="Cambio de Plan"
           width="100%" 
