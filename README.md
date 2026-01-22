@@ -11,7 +11,7 @@
 Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 
 
-![image](https://github.com/user-attachments/assets/f825a330-deac-4d24-9695-774c20b2a691)
+![image](https://github.com/YetBravoSisprot/Sisprot_indicadores_/blob/5c43314b28335e5d8d74a5872d0e5ec9c898f23a/public/Inicio_sesion.png)
 
 
 ----
