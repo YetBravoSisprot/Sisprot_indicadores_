@@ -8,10 +8,8 @@
 
 ## Credenciales de Acceso
 
-Para iniciar sesión en la aplicación, utiliza las siguientes credenciales:
+Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 
-- **Usuario:** prueba  
-- **Contraseña:** 12345
 
 ![image](https://github.com/user-attachments/assets/f825a330-deac-4d24-9695-774c20b2a691)
 
