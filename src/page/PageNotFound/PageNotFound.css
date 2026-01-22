@@ -104,3 +104,27 @@
     height: 400px;
   }
 }
+
+/* Estilos para los títulos de los informes de Power BI */
+.report-title {
+  font-size: 24px;         /* Tamaño adecuado del título */
+  font-weight: 700;        /* Negrita para destacar */
+  color: #ffffff;         /* Color blanco para el texto */
+  margin-bottom: 15px;     /* Espaciado inferior para separar del iframe */
+  text-align: center;      /* Centrado del título */
+  width: 100%;             /* Asegura que ocupe todo el ancho */
+  max-width: 1200px;       /* Limita el ancho para que no se vea estirado */
+  margin: 0 auto 20px auto; /* Centra el título y agrega un margen inferior */
+}
+
+/* Estilos generales para el contenedor de los informes de Power BI */
+.report-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+  padding: 0 20px; /* Agrega un pequeño relleno en los laterales */
+}
+
