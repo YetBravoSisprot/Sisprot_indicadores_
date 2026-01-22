@@ -59,7 +59,7 @@ function Indicadores() {
           <DropdownMenu />
           <PageNav />
 
-          <h2>Indicadores de Clientes</h2>
+<h2 className="indicadores-titulo">Indicadores de Clientes</h2>
 
           {/* Mostrar el conteo de clientes por estado */}
           <div className="conteos">
