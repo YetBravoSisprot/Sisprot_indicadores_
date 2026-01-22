@@ -1,0 +1,27 @@
+.en-construccion {
+  text-align: center;
+  background-color: #f8f9fa; /* Fondo claro */
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.en-construccion h2 {
+  font-size: 28px;
+  color: #0c4b87; /* Color azul oscuro */
+  margin-bottom: 15px;
+}
+
+.en-construccion p {
+  font-size: 18px;
+  color: #555; /* Color gris para el texto */
+  margin-bottom: 20px;
+}
+
+.icono-construccion {
+  font-size: 40px;
+  color: #f39c12; /* Color amarillo */
+  margin-top: 20px;
+}
+
