@@ -36,7 +36,7 @@ Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 - **Vercel**: Para el despliegue de la aplicación.
 
 ---
-![image](https://github.com/user-attachments/assets/13845cad-b265-4a57-be7a-2508c41d2280)
+![image](https://github.com/YetBravoSisprot/Sisprot_indicadores_/blob/88bc0d81304f4e7accc5407eeb61e129fe803005/public/Lista%20de%20Clientes.png)
 
 
 ## Instalación Local
