@@ -185,6 +185,17 @@ function TopUrbanismo() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
+  
+  // NUEVOS ESTADOS PARA LAS MEDIDAS COMO EN POWER BI
+  const [medidasPowerBI, setMedidasPowerBI] = useState({
+    totalActivos: 0,
+    totalResidencialesActivos: 0,
+    totalPymesActivas: 0,
+    totalIntercambioActivos: 0,
+    totalEmpleadosActivos: 0,
+    totalGratisActivos: 0,
+    totalOtrosActivos: 0
+  });
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
@@ -285,36 +296,113 @@ function TopUrbanismo() {
 
   // Función para normalizar tipos de cliente
   const normalizarTipoCliente = (tipoCliente) => {
-    if (!tipoCliente) return "";
+    if (!tipoCliente || tipoCliente === "" || tipoCliente === null || tipoCliente === undefined) return "OTRO";
     
-    const tipo = tipoCliente.toUpperCase().trim();
+    const tipo = tipoCliente.toString().toUpperCase().trim();
     
     // Mapeo de posibles variaciones a valores estandarizados
-    if (tipo.includes("RESIDENCIAL") || tipo.includes("RESIDENCIAS")) return "RESIDENCIAL";
-    if (tipo.includes("PYME") || tipo.includes("EMPRESA") || tipo.includes("COMERCIAL")) return "PYME";
+    if (tipo.includes("RESIDENCIAL") || tipo.includes("RESIDENCIAS") || tipo === "RESIDENCIALES") return "RESIDENCIAL";
+    if (tipo.includes("PYME") || tipo.includes("EMPRESA") || tipo.includes("COMERCIAL") || tipo.includes("NEGOCIO") || tipo.includes("EMPRESARIAL")) return "PYME";
     if (tipo.includes("INTERCAMBIO") || tipo.includes("EXCHANGE")) return "INTERCAMBIO";
-    if (tipo.includes("EMPLEADO") || tipo.includes("EMPLOYEE") || tipo.includes("STAFF")) return "EMPLEADO";
-    if (tipo.includes("GRATIS") || tipo.includes("FREE") || tipo.includes("CORTESIA")) return "GRATIS";
+    if (tipo.includes("EMPLEADO") || tipo.includes("EMPLOYEE") || tipo.includes("STAFF") || tipo.includes("TRABAJADOR") || tipo.includes("COLABORADOR")) return "EMPLEADO";
+    if (tipo.includes("GRATIS") || tipo.includes("FREE") || tipo.includes("CORTESIA") || tipo.includes("PROMOCIONAL") || tipo.includes("SIN COSTO")) return "GRATIS";
     
-    return tipo;
+    return "OTRO";
+  };
+
+  // Función para calcular todas las medidas como en Power BI
+  const calcularMedidasPowerBI = (servicios) => {
+    if (!servicios || servicios.length === 0) {
+      return {
+        totalActivos: 0,
+        totalResidencialesActivos: 0,
+        totalPymesActivas: 0,
+        totalIntercambioActivos: 0,
+        totalEmpleadosActivos: 0,
+        totalGratisActivos: 0,
+        totalOtrosActivos: 0
+      };
+    }
+
+    // Primero, filtramos solo los clientes activos (excluyendo PRUEBA)
+    const clientesActivos = servicios.filter(servicio => 
+      !servicio.client_name.includes("PRUEBA") && 
+      servicio.status_name === "Activo"
+    );
+
+    // Calculamos cada medida individualmente
+    const medidas = {
+      // Total Activos (como en Power BI)
+      totalActivos: clientesActivos.length,
+      
+      // Residenciales Activos
+      totalResidencialesActivos: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "RESIDENCIAL"
+      ).length,
+      
+      // Pymes Activas
+      totalPymesActivas: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "PYME"
+      ).length,
+      
+      // Intercambio Activos
+      totalIntercambioActivos: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "INTERCAMBIO"
+      ).length,
+      
+      // Empleados Activos
+      totalEmpleadosActivos: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "EMPLEADO"
+      ).length,
+      
+      // Gratis Activos
+      totalGratisActivos: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "GRATIS"
+      ).length,
+      
+      // Otros Activos (todo lo que no entre en las categorías anteriores)
+      totalOtrosActivos: clientesActivos.filter(cliente => 
+        normalizarTipoCliente(cliente.client_type_name) === "OTRO"
+      ).length
+    };
+
+    // Verificación: La suma de todas las categorías debe ser igual al total de activos
+    const sumaCategorias = 
+      medidas.totalResidencialesActivos +
+      medidas.totalPymesActivas +
+      medidas.totalIntercambioActivos +
+      medidas.totalEmpleadosActivos +
+      medidas.totalGratisActivos +
+      medidas.totalOtrosActivos;
+
+    console.log("✅ VERIFICACIÓN POWER BI:");
+    console.log("Total Activos:", medidas.totalActivos);
+    console.log("Suma Categorías:", sumaCategorias);
+    console.log("Diferencia:", medidas.totalActivos - sumaCategorias);
+    console.log("Desglose:", medidas);
+
+    return medidas;
   };
 
   useEffect(() => {
     if (!data) return;
 
-    // DEBUG: Mostrar tipos únicos de clientes
+    // 1. Primero calculamos las medidas como en Power BI
+    const medidasCalculadas = calcularMedidasPowerBI(data.results);
+    setMedidasPowerBI(medidasCalculadas);
+
+    // 2. DEBUG: Mostrar tipos únicos de clientes
     const tiposUnicos = [...new Set(
       data.results
         .filter(s => !s.client_name.includes("PRUEBA"))
-        .map(s => normalizarTipoCliente(s.client_type_name))
-    )].filter(Boolean);
+        .map(s => `${s.client_type_name} -> ${normalizarTipoCliente(s.client_type_name)}`)
+    )];
     
-    console.log("Tipos únicos normalizados:", tiposUnicos);
-    console.log("Total activos:", data.results.filter(s => 
-      !s.client_name.includes("PRUEBA") && 
-      s.status_name === "Activo"
-    ).length);
+    console.log("🔍 Tipos únicos (original -> normalizado):", tiposUnicos);
+    console.log("📊 Total registros (sin PRUEBA):", data.results.filter(s => !s.client_name.includes("PRUEBA")).length);
+    console.log("📊 Total activos (sin PRUEBA):", data.results.filter(s => !s.client_name.includes("PRUEBA") && s.status_name === "Activo").length);
 
+    // 3. Ahora aplicamos los filtros para la tabla principal
     const urbanismosTotales = data.results
       .filter((servicio) => !servicio.client_name.includes("PRUEBA"))
       .filter((servicio) => {
@@ -323,14 +411,17 @@ function TopUrbanismo() {
                               estadosSeleccionados.includes(servicio.status_name);
         if (!estadoFiltrado) return false;
 
-        // 2. Filtro por tipo de cliente - CORRECCIÓN CLAVE
+        // 2. Filtro por tipo de cliente - VERSIÓN CORREGIDA
         const tipoFiltrado = (() => {
           if (estadosSeleccionadosType.includes("Todos")) return true;
           
           const tipoClienteNormalizado = normalizarTipoCliente(servicio.client_type_name);
-          if (!tipoClienteNormalizado) return false;
+          if (!tipoClienteNormalizado || tipoClienteNormalizado === "OTRO") {
+            // Si es "OTRO", solo lo incluimos si "OTRO" está seleccionado
+            return estadosSeleccionadosType.includes("OTRO");
+          }
           
-          // Verificar si el tipo normalizado coincide con alguno de los seleccionados
+          // Para cada tipo seleccionado, verificamos si coincide
           return estadosSeleccionadosType.some(tipoSeleccionado => {
             const tipoSeleccionadoUpper = tipoSeleccionado.toUpperCase().trim();
             return tipoClienteNormalizado === tipoSeleccionadoUpper;
@@ -374,6 +465,7 @@ function TopUrbanismo() {
             ingresosTotales: parseFloat(curr.plan?.cost || 0),
             estado: curr.status_name,
             tipo: curr.client_type_name,
+            tipoNormalizado: normalizarTipoCliente(curr.client_type_name),
             clientes: [curr],
           };
         } else {
@@ -384,8 +476,15 @@ function TopUrbanismo() {
         return acc;
       }, {});
 
-    // DEBUG: Mostrar conteos por tipo
-    const clientesFiltrados = data.results
+    // DEBUG: Verificar conteos
+    const totalFiltrado = Object.keys(urbanismosTotales)
+      .reduce((sum, key) => sum + urbanismosTotales[key].cantidadClientes, 0);
+    
+    console.log("🎯 Total filtrado para tabla:", totalFiltrado);
+    console.log("📈 Medidas Power BI activas:", medidasCalculadas);
+
+    // DEBUG: Verificar filtros aplicados
+    const clientesFiltradosPorTipo = data.results
       .filter((servicio) => !servicio.client_name.includes("PRUEBA"))
       .filter((servicio) => {
         const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
@@ -393,16 +492,14 @@ function TopUrbanismo() {
         return estadoFiltrado;
       });
     
-    const conteoPorTipo = clientesFiltrados.reduce((acc, curr) => {
+    const conteoPorTipoFiltrado = clientesFiltradosPorTipo.reduce((acc, curr) => {
       const tipoNormalizado = normalizarTipoCliente(curr.client_type_name);
       if (!acc[tipoNormalizado]) acc[tipoNormalizado] = 0;
       acc[tipoNormalizado]++;
       return acc;
     }, {});
     
-    console.log("Conteo por tipo (todos los activos):", conteoPorTipo);
-    console.log("Total filtrado:", Object.keys(urbanismosTotales)
-      .reduce((sum, key) => sum + urbanismosTotales[key].cantidadClientes, 0));
+    console.log("🎯 Conteo por tipo (con filtros de estado):", conteoPorTipoFiltrado);
 
     const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
       urbanismo: sector,
@@ -474,6 +571,7 @@ function TopUrbanismo() {
               <option value="INTERCAMBIO">Intercambio</option>
               <option value="EMPLEADO">Empleado</option>
               <option value="GRATIS">Gratis</option>
+              <option value="OTRO">Otros</option>
             </select>
 
             {/* MIGRADOS */}
@@ -562,6 +660,156 @@ function TopUrbanismo() {
             </button>
           </div>
 
+          {/* PANEL DE MEDIDAS POWER BI */}
+          <div style={{
+            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            margin: '15px 0',
+            borderRadius: '8px',
+            border: '1px solid #dee2e6',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}>
+            <h4 style={{marginBottom: '15px', color: '#495057'}}>
+              📊 Medidas como en Power BI (Solo clientes ACTIVOS)
+            </h4>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '10px'
+            }}>
+              <div style={{
+                backgroundColor: '#e7f5ff',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #339af0'
+              }}>
+                <div style={{fontSize: '12px', color: '#1864ab'}}>Total Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#1c7ed6'}}>
+                  {medidasPowerBI.totalActivos}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#fff3bf',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #fcc419'
+              }}>
+                <div style={{fontSize: '12px', color: '#e67700'}}>Residenciales Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#f59f00'}}>
+                  {medidasPowerBI.totalResidencialesActivos}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#d3f9d8',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #51cf66'
+              }}>
+                <div style={{fontSize: '12px', color: '#2b8a3e'}}>Pymes Activas</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#37b24d'}}>
+                  {medidasPowerBI.totalPymesActivas}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#ffe3e3',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #ff6b6b'
+              }}>
+                <div style={{fontSize: '12px', color: '#c92a2a'}}>Intercambio Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#fa5252'}}>
+                  {medidasPowerBI.totalIntercambioActivos}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#f3d9fa',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #cc5de8'
+              }}>
+                <div style={{fontSize: '12px', color: '#862e9c'}}>Empleados Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#da77f2'}}>
+                  {medidasPowerBI.totalEmpleadosActivos}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#e5dbff',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #845ef7'
+              }}>
+                <div style={{fontSize: '12px', color: '#5f3dc4'}}>Gratis Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#7950f2'}}>
+                  {medidasPowerBI.totalGratisActivos}
+                </div>
+              </div>
+              
+              <div style={{
+                backgroundColor: '#d0ebff',
+                padding: '10px',
+                borderRadius: '6px',
+                borderLeft: '4px solid #74c0fc'
+              }}>
+                <div style={{fontSize: '12px', color: '#1971c2'}}>Otros Activos</div>
+                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#339af0'}}>
+                  {medidasPowerBI.totalOtrosActivos}
+                </div>
+              </div>
+            </div>
+            
+            {/* VERIFICACIÓN DE SUMA */}
+            <div style={{
+              marginTop: '15px',
+              padding: '10px',
+              backgroundColor: '#fff',
+              borderRadius: '6px',
+              border: '1px dashed #adb5bd'
+            }}>
+              <div style={{fontSize: '12px', color: '#495057'}}>Verificación de suma:</div>
+              <div style={{fontSize: '14px', fontWeight: 'bold'}}>
+                Residenciales ({medidasPowerBI.totalResidencialesActivos}) + 
+                Pymes ({medidasPowerBI.totalPymesActivas}) + 
+                Intercambio ({medidasPowerBI.totalIntercambioActivos}) + 
+                Empleados ({medidasPowerBI.totalEmpleadosActivos}) + 
+                Gratis ({medidasPowerBI.totalGratisActivos}) + 
+                Otros ({medidasPowerBI.totalOtrosActivos}) = 
+                <span style={{
+                  color: medidasPowerBI.totalActivos === 
+                    (medidasPowerBI.totalResidencialesActivos + 
+                     medidasPowerBI.totalPymesActivas + 
+                     medidasPowerBI.totalIntercambioActivos + 
+                     medidasPowerBI.totalEmpleadosActivos + 
+                     medidasPowerBI.totalGratisActivos + 
+                     medidasPowerBI.totalOtrosActivos) 
+                    ? '#2b8a3e' : '#e03131'
+                }}>
+                  {" "}
+                  {medidasPowerBI.totalResidencialesActivos + 
+                   medidasPowerBI.totalPymesActivas + 
+                   medidasPowerBI.totalIntercambioActivos + 
+                   medidasPowerBI.totalEmpleadosActivos + 
+                   medidasPowerBI.totalGratisActivos + 
+                   medidasPowerBI.totalOtrosActivos}
+                </span>
+                {" "}
+                {medidasPowerBI.totalActivos === 
+                 (medidasPowerBI.totalResidencialesActivos + 
+                  medidasPowerBI.totalPymesActivas + 
+                  medidasPowerBI.totalIntercambioActivos + 
+                  medidasPowerBI.totalEmpleadosActivos + 
+                  medidasPowerBI.totalGratisActivos + 
+                  medidasPowerBI.totalOtrosActivos) 
+                 ? "✅ CORRECTO" : "❌ ERROR"}
+              </div>
+            </div>
+          </div>
+
           {/* DEBUG INFO */}
           <div style={{
             fontSize: '12px', 
@@ -572,11 +820,11 @@ function TopUrbanismo() {
             borderRadius: '4px',
             borderLeft: '4px solid #007bff'
           }}>
-            <strong>📊 Información de Filtros:</strong> 
+            <strong>🔍 Filtros Activos:</strong> 
             <div style={{marginTop: '5px'}}>
               <span>Estados: <strong>{estadosSeleccionados.join(', ')}</strong></span> | 
               <span> Tipos: <strong>{estadosSeleccionadosType.join(', ')}</strong></span> | 
-              <span> Total Clientes: <strong>{totalClientesGlobal}</strong></span>
+              <span> Total Tabla: <strong>{totalClientesGlobal}</strong></span>
             </div>
           </div>
 
@@ -630,7 +878,7 @@ function UrbanismoList({ urbanismos }) {
                   <li key={idx}>
                     <p><strong>Nombre:</strong> {cliente.client_name}</p>
                     <p><strong>Estado:</strong> {cliente.status_name}</p>
-                    <p><strong>Tipo:</strong> {cliente.client_type_name}</p>
+                    <p><strong>Tipo:</strong> {cliente.client_type_name} ({urbanismo.tipoNormalizado})</p>
                     <p><strong>Sector:</strong> {cliente.sector_name}</p>
                     <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
