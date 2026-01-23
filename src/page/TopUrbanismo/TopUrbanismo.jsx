@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
@@ -46,17 +47,58 @@ const sectorAgenciaMap = {
 };
 
 /* ===============================
+   URBANISMOS POR AGENCIA
+================================ */
+const urbanismosAprobados = {
+  "NODO MACARO": [
+    "Villas El Carmen", "El Macaro", "Saman de Guere", "Villa Los Tamarindos",
+    "Saman Tarazonero II", "La Casona II", "Saman Tarazonero I", "La Casona I",
+    "Palmeras II", "La Macarena", "Isaac Oliveira", "La Magdalena",
+    "El Paraiso", "San Sebastian", "Lascenio Guerrero", "Plaza Jardin",
+    "Jabillar", "La Concepcion", "Simon Bolivar", "Palmeras I",
+    "Santa Eduviges", "Villa De San Jose", "Salto Angel", "La Esperanza",
+    "La Concepcion III", "La Julia", "Taguapire", "La Casona II Edificios",
+    "Antonio Jose de Sucre", "Valle del Rosario", "Arturo Luis Berti",
+    "La Casona I Edificios", "Narayola II", "Terrazas de Juan Pablo",
+    "Guerito", "Leocolbo", "Los Caobos", "Santa Barbara",
+    "18 de Septiembre", "Urb. Vista Hermosa La Julia", "19 de Abril"
+  ],
+  "NODO PAYA": [
+    "Mata Caballo", "Pantin", "Rio Seco", "Durpa", "Paya Abajo", "Prados III",
+    "Bicentenario", "Prados II", "Brisas de Paya", "Antigua Hacienda De Paya",
+    "Ppal Paya", "Los Hornos", "Callejon Lim", "Antigua Hacienda De Paya II",
+    "Vallecito", "Prados I", "Las Rurales", "Canaima", "Vista Hermosa",
+    "Valle Verde", "Palma Real", "El Naranjal", "Terrazas de Paya",
+    "La Arboleda", "Luz y Vida", "Los Mangos", "Callejon Los Jabillos",
+    "Dios Es Mi Refugio", "Huerta Los Pajaros", "Betania", "1ro de Mayo Norte",
+    "Payita", "Las Palmas", "1ro de Mayo Sur", "El Cambur", "La Orquidea",
+    "Sector los Mangos", "El Bosque", "Callejon Rosales", "Prados",
+    "Callejon 17", "Polvorin", "Guayabita", "La Marcelota", "Manirito",
+    "Paraguatan", "La Guzman", "Guerrero de Chavez"
+  ],
+  "NODO TURMERO": [
+    "Casco de Turmero", "Ezequiel Zamora", "Guanarito", "Tibisay Guevara",
+    "San Pablo", "Valle Paraiso", "Prados de Cafetal", "La Floresta",
+    "Villeguita", "Terrazas de Turmero", "Haras de San Pablo", "Laguna Plaza",
+    "Villa Caribe", "Residencias Candys", "El Nispero", "Ciudad Bendita",
+    "Residencias Mariño", "San Carlos", "Laguna II", "Marina Caribe",
+    "La Montañita", "La Aduana", "Valle Fresco", "Calle Peñalver",
+    "Los Nisperos", "La Montaña", "Valle lindo", "Edif. El Torreon",
+    "Edif. El Portal", "Villas Del Sur"
+  ]
+};
+
+/* ===============================
    COMPONENTE PRINCIPAL
 ================================ */
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } =
     useContext(PasswordContext);
 
+  // 🔹 Estados principales
   const [TopUrb, setTopUrb] = useState([0, 3500]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Activo"]);
-  const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState([
-    "Todos",
-  ]);
+  const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [topUrbanismos, setTopUrbanismos] = useState([]);
   const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
@@ -66,8 +108,14 @@ function TopUrbanismo() {
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
 
+  // 🔹 Funciones TOP
+  const handleTop10Urb = () => setTopUrb([0, 10]);
+  const handleTopUrb = () => setTopUrb([0, 3500]);
+
+  const toggleGraficos = () => setHandleGrafico2(!handleGrafico2);
+
   /* ===============================
-     USE EFFECT PRINCIPAL
+     CÁLCULO DE URBANISMOS Y ESTADOS
   ================================ */
   useEffect(() => {
     if (!data?.results) return;
@@ -85,9 +133,7 @@ function TopUrbanismo() {
 
         const migradoOK =
           migradosSeleccionados.includes("Todos") ||
-          migradosSeleccionados.includes(
-            c.migrate ? "Migrado" : "No migrado"
-          );
+          migradosSeleccionados.includes(c.migrate ? "Migrado" : "No migrado");
 
         const cicloOK =
           ciclosSeleccionados.includes("Todos") ||
@@ -150,12 +196,8 @@ function TopUrbanismo() {
     );
 
     setTopUrbanismos(arrayFinal.slice(...TopUrb));
-    setTotalIngresos(
-      arrayFinal.reduce((acc, u) => acc + u.ingresosTotales, 0)
-    );
-    setTotalClientesGlobal(
-      arrayFinal.reduce((acc, u) => acc + u.cantidadClientes, 0)
-    );
+    setTotalIngresos(arrayFinal.reduce((acc, u) => acc + u.ingresosTotales, 0));
+    setTotalClientesGlobal(arrayFinal.reduce((acc, u) => acc + u.cantidadClientes, 0));
   }, [
     data,
     TopUrb,
@@ -173,7 +215,6 @@ function TopUrbanismo() {
   return (
     <div>
       <LogoTitulo />
-
       {showPasswordState ? (
         <>
           <h1>Inicia Sesión</h1>
@@ -184,28 +225,35 @@ function TopUrbanismo() {
           <DropdownMenu />
           <PageNav />
 
-          <button className="buttonIngreso">
-            Total de clientes: {totalClientesGlobal}
-          </button>
+          <div className="filtros-panel">
+            <button className="button" onClick={handleTop10Urb}>
+              Top 10
+            </button>
+            <button className="button" onClick={handleTopUrb}>
+              Top Global
+            </button>
 
-          <button className="buttonIngreso">
-            Total ingresos:{" "}
-            {totalIngresos.toLocaleString("es-ES", {
-              minimumFractionDigits: 2,
-            })}
-            $
-          </button>
+            <button className="buttonIngreso">
+              Total de clientes: {totalClientesGlobal}
+            </button>
 
-          <button
-            className="button"
-            onClick={() => setHandleGrafico2(!handleGrafico2)}
-          >
-            {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-          </button>
+            <button className="buttonIngreso">
+              Total ingresos:{" "}
+              {totalIngresos.toLocaleString("es-ES", {
+                minimumFractionDigits: 2,
+              })}
+              $
+            </button>
 
-          {handleGrafico2 && (
-            <ChartComponent urbanismos={topUrbanismos} />
-          )}
+            <button
+              className="button"
+              onClick={() => setHandleGrafico2(!handleGrafico2)}
+            >
+              {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
+            </button>
+          </div>
+
+          {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
 
           <UrbanismoList urbanismos={topUrbanismos} />
         </>
@@ -246,8 +294,7 @@ function UrbanismoList({ urbanismos }) {
             ))}
 
             <p>
-              <strong>Ingreso total:</strong>{" "}
-              {Math.round(u.ingresosTotales)}$
+              <strong>Ingreso total:</strong> {Math.round(u.ingresosTotales)}$
             </p>
           </div>
 
