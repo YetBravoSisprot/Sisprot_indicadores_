@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
@@ -295,7 +295,7 @@ function TopUrbanismo() {
   };
 
   // Función para normalizar tipos de cliente
-  const normalizarTipoCliente = (tipoCliente) => {
+  const normalizarTipoCliente = useCallback((tipoCliente) => {
     if (!tipoCliente || tipoCliente === "" || tipoCliente === null || tipoCliente === undefined) return "OTRO";
     
     const tipo = tipoCliente.toString().toUpperCase().trim();
@@ -308,10 +308,10 @@ function TopUrbanismo() {
     if (tipo.includes("GRATIS") || tipo.includes("FREE") || tipo.includes("CORTESIA") || tipo.includes("PROMOCIONAL") || tipo.includes("SIN COSTO")) return "GRATIS";
     
     return "OTRO";
-  };
+  }, []);
 
   // Función para calcular todas las medidas como en Power BI
-  const calcularMedidasPowerBI = (servicios) => {
+  const calcularMedidasPowerBI = useCallback((servicios) => {
     if (!servicios || servicios.length === 0) {
       return {
         totalActivos: 0,
@@ -382,7 +382,7 @@ function TopUrbanismo() {
     console.log("Desglose:", medidas);
 
     return medidas;
-  };
+  }, [normalizarTipoCliente]);
 
   useEffect(() => {
     if (!data) return;
@@ -515,7 +515,18 @@ function TopUrbanismo() {
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+  }, [
+    data, 
+    TopUrb, 
+    estadosSeleccionados, 
+    estadosSeleccionadosType, 
+    migradosSeleccionados, 
+    ciclosSeleccionados, 
+    sectoresSeleccionados, 
+    urbanismosSeleccionados,
+    calcularMedidasPowerBI,
+    normalizarTipoCliente
+  ]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
