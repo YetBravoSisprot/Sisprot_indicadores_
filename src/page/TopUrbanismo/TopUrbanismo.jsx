@@ -177,202 +177,149 @@ const urbanismosAprobados = {
 };
 
 
+/* =========================
+   NORMALIZACIÓN ÚNICA
+========================= */
+const normalizeService = (s) => ({
+  id: s.id,
+  name: s.client_name,
+  status: s.status_name,
+  type: s.client_type_name,
+  migrated: s.migrate ? "Migrado" : "No migrado",
+  cycle: s.cycle ? String(s.cycle) : null,
+  urbanismo: s.sector_name,
+  agencia: sectorAgenciaMap[s.sector_name] || "SIN_AGENCIA",
+  cost: Number(s.plan?.cost || 0),
+  raw: s,
+});
 
+/* =========================
+   MATCH UNIVERSAL
+========================= */
+const match = (value, selected) => {
+  if (!selected || selected.length === 0) return true;
+  if (selected.includes("Todos")) return true;
+  return selected.includes(value);
+};
+
+/* =========================
+   FILTRO PURO
+========================= */
+const applyFilters = (services, filters) =>
+  services.filter((s) =>
+    match(s.status, filters.status) &&
+    match(s.type, filters.type) &&
+    match(s.migrated, filters.migrated) &&
+    match(s.cycle, filters.cycle) &&
+    match(s.agencia, filters.agencia) &&
+    match(s.urbanismo, filters.urbanismo)
+  );
+
+/* =========================
+   MOTOR DE AGRUPACIÓN
+========================= */
+const groupByUrbanismo = (services) => {
+  const map = {};
+
+  services.forEach((s) => {
+    if (!map[s.urbanismo]) {
+      map[s.urbanismo] = {
+        urbanismo: s.urbanismo,
+        cantidadClientes: 0,
+        ingresosTotales: 0,
+        clientes: [],
+      };
+    }
+
+    map[s.urbanismo].cantidadClientes += 1;
+    map[s.urbanismo].ingresosTotales += s.cost;
+    map[s.urbanismo].clientes.push(s.raw);
+  });
+
+  return Object.values(map).sort(
+    (a, b) => b.ingresosTotales - a.ingresosTotales
+  );
+};
+
+/* =========================
+   COMPONENTE PRINCIPAL
+========================= */
 function TopUrbanismo() {
-  const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
+  const { showPasswordState, data, isLoading, error } =
+    useContext(PasswordContext);
 
   const [TopUrb, setTopUrb] = useState([0, 3500]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Activo"]);
   const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
-  const [totalIngresos, setTotalIngresos] = useState(0);
-  const [topUrbanismos, setTopUrbanismos] = useState([]);
-  const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
-  const [handleGrafico2, setHandleGrafico2] = useState(false);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
 
-  const handleTop10Urb = () => setTopUrb([0, 10]);
-  const handleTopUrb = () => setTopUrb([0, 3500]);
+  const [topUrbanismos, setTopUrbanismos] = useState([]);
+  const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
+  const [totalIngresos, setTotalIngresos] = useState(0);
+  const [handleGrafico2, setHandleGrafico2] = useState(false);
 
-  const handleSectoresChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setSectoresSeleccionados(selectedOptions);
-    setUrbanismosSeleccionados([]); // Resetear la selección de urbanismos
-  };
+  /* =========================
+     NORMALIZAR DATA (UNA VEZ)
+  ========================= */
+  const services = useMemo(() => {
+    if (!data?.results) return [];
+    return data.results
+      .filter((s) => !s.client_name?.includes("PRUEBA"))
+      .map(normalizeService);
+  }, [data]);
 
-  const handleMigradosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setMigradosSeleccionados(selectedOptions);
-  };
-
-  const handleEstadoChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionados(selectedOptions);
-  };
-
-  const toggleGraficos = () => setHandleGrafico2(!handleGrafico2);
-
-  const handleEstadoChange2 = (event) => {
-    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionadosType(selectedOptions2);
-  };
-
-  const handleCiclosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setCiclosSeleccionados(selectedOptions);
-  };
-
-  const handleDownloadExcel = () => {
-  const workbook = XLSX.utils.book_new();
-
-  // Función para calcular días hábiles entre dos fechas
-  function calcularDiasHabiles(fechaInicio, fechaFin) {
-    let count = 0;
-    let current = new Date(fechaInicio);
-
-    while (current <= fechaFin) {
-      const day = current.getDay();
-      if (day !== 0 && day !== 6) {
-        count++;
-      }
-      current.setDate(current.getDate() + 1);
-    }
-
-    return count;
-  }
-
-  const hoy = new Date();
-
-
-
-  const worksheetData = topUrbanismos.flatMap((urbanismo) => {
-  return urbanismo.clientes.map((cliente, clientIndex) => {
-    const service = cliente.service_detail || {};
-    const created_at_raw = cliente.created_at || "";
-    const created_at = created_at_raw ? new Date(created_at_raw) : null;
-    const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
-
-    return {
-  "N° Cliente":
-        clientIndex + 1,
-        id: cliente.id,
-        Cliente: cliente.client_name, 
-        Teléfono: cliente.client_mobile,
-        Dirección: cliente.address,
-        Urbanismo: urbanismo.urbanismo,
-         "Cedula": cliente.client_identification,
-      // "Caja NAP": cliente.nap_box_name || "",
-        IP: service.ip || "",
-        MAC: service.mac || "",
-        "Fecha_Creación": created_at_raw.slice(0, 10),
-        "Días Hábiles": diasHabiles,
-        Tipo_Cliente: cliente.client_type_name,
-      plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
-
-
-      
-    };
-  });
-});
-
-// ✅ Ordenar por días hábiles de mayor a menor
-worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
-
-  // Crear la hoja de trabajo con los datos generados
-  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-
-  // Ajustar el ancho de las columnas
-  const columnWidths = worksheetData.reduce((acc, row) => {
-    Object.keys(row).forEach((key, idx) => {
-      const cellValue = String(row[key]);
-      const currentWidth = acc[idx] || 0;
-      acc[idx] = Math.max(currentWidth, cellValue.length);
+  /* =========================
+     FILTROS ACTIVOS
+  ========================= */
+  const filteredServices = useMemo(() => {
+    return applyFilters(services, {
+      status: estadosSeleccionados,
+      type: estadosSeleccionadosType,
+      migrated: migradosSeleccionados,
+      cycle: ciclosSeleccionados,
+      agencia: sectoresSeleccionados,
+      urbanismo: urbanismosSeleccionados,
     });
-    return acc;
-  }, []);
+  }, [
+    services,
+    estadosSeleccionados,
+    estadosSeleccionadosType,
+    migradosSeleccionados,
+    ciclosSeleccionados,
+    sectoresSeleccionados,
+    urbanismosSeleccionados,
+  ]);
 
-  worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
-
-  // Agregar la hoja al libro
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
-
-  // Nombre del archivo
-  const estadoSeleccionado = estadosSeleccionados.join("_");
-  const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
-
-  // Descargar el archivo
-  XLSX.writeFile(workbook, nombreArchivo);
-};
-
+  /* =========================
+     CÁLCULOS PERFECTOS
+  ========================= */
   useEffect(() => {
-    if (!data) return;
+    const grouped = groupByUrbanismo(filteredServices);
 
-   
+    const sliced = grouped.slice(...TopUrb);
+    const totalClientes = grouped.reduce(
+      (acc, u) => acc + u.cantidadClientes,
+      0
+    );
+    const totalIngresosCalc = grouped.reduce(
+      (acc, u) => acc + u.ingresosTotales,
+      0
+    );
 
-    const urbanismosTotales = data.results
-    .filter((servicio) => !servicio.client_name.includes("PRUEBA")) // Filtra clientes que no incluyan "PRUEBA"
-    .filter((servicio) => {
-    
-        const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
-        const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
-        const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-        const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
-        const sectorFiltrado =
-  sectoresSeleccionados.length === 0 ||
-  sectoresSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-
-const urbanismoFiltrado =
-  urbanismosSeleccionados.length === 0 ||
-  urbanismosSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
-
-       
-
-        return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
-      })
-      .reduce((acc, curr) => {
-        if (!acc[curr.sector_name]) {
-          acc[curr.sector_name] = {
-            cantidadClientes: 1,
-            ingresosTotales: parseFloat(curr.plan.cost),
-            estado: curr.status_name,
-            tipo: curr.client_type_name,
-            clientes: [curr],
-          };
-        } else {
-          acc[curr.sector_name].cantidadClientes++;
-          acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
-          acc[curr.sector_name].clientes.push(curr);
-        }
-        return acc;
-      }, {});
-
-  
-
-    const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
-      urbanismo: sector,
-      ...urbanismosTotales[sector],
-    }));
-
-   
-
-    urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
-
-    const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
-    const ingresosTotalesCalculados = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.ingresosTotales, 0);
-    const totalClientes = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.cantidadClientes, 0);
-
+    setTopUrbanismos(sliced);
     setTotalClientesGlobal(totalClientes);
-    setTotalIngresos(ingresosTotalesCalculados);
-    setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+    setTotalIngresos(totalIngresosCalc);
+  }, [filteredServices, TopUrb]);
 
+  /* =========================
+     UI
+  ========================= */
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  
+
   return (
     <div>
       <LogoTitulo />
@@ -385,139 +332,41 @@ const urbanismoFiltrado =
         <>
           <DropdownMenu />
           <PageNav />
-  <div className="filtros-panel">
 
-  {/* BOTONES TOP */}
-  <div>
-    <button className="button" onClick={handleTop10Urb}>Top 10</button>
-    <button className="button" onClick={handleTopUrb}>Top Global</button>
-  </div>
+          <div className="filtros-panel">
+            <button className="button" onClick={() => setTopUrb([0, 10])}>
+              Top 10
+            </button>
+            <button className="button" onClick={() => setTopUrb([0, 3500])}>
+              Top Global
+            </button>
 
-  {/* ESTADO */}
-  <select
-    id="estadoSelect"
-    size="5"
-    multiple
-    value={estadosSeleccionados}
-    onChange={handleEstadoChange}
-  >
-    <option value="Todos">Todos</option>
-    <option value="Activo">Activos</option>
-    <option value="Suspendido">Suspendidos</option>
-    <option value="Por instalar">Por instalar</option>
-    <option value="Pausado">Pausado</option>
-    <option value="Cancelado">Cancelados</option>
-  </select>
+            {/* TOTALES */}
+            <button className="buttonIngreso">
+              Total de clientes: {totalClientesGlobal}
+            </button>
 
-  {/* TIPO DE CLIENTE */}
-  <select
-    id="estadoSelect2"
-    size="5"
-    multiple
-    value={estadosSeleccionadosType}
-    onChange={handleEstadoChange2}
-  >
-    <option value="Todos">Tipo de Cliente / Todos</option>
-    <option value="PYME">Pyme</option>
-    <option value="RESIDENCIAL">Residenciales</option>
-    <option value="INTERCAMBIO">Intercambio</option>
-    <option value="EMPLEADO">Empleado</option>
-    <option value="GRATIS">Gratis</option>
-  </select>
+            <button className="buttonIngreso marginbutton">
+              Total de Ingresos:{" "}
+              {totalIngresos.toLocaleString("es-ES", {
+                minimumFractionDigits: 2,
+              })}
+              $
+            </button>
 
-  {/* MIGRADOS */}
-  <select
-    id="migradosSelect"
-    size="2"
-    multiple
-    value={migradosSeleccionados}
-    onChange={handleMigradosChange}
-  >
-    <option value="Todos">Todos</option>
-    <option value="Migrado">Migrados</option>
-    <option value="No migrado">No migrados</option>
-  </select>
-
-  {/* CICLOS */}
-  <select
-    id="ciclosSelect"
-    size="3"
-    multiple
-    value={ciclosSeleccionados}
-    onChange={handleCiclosChange}
-  >
-    <option value="Todos">Todos</option>
-    <option value="15">Ciclo 15</option>
-    <option value="25">Ciclo 25</option>
-  </select>
-
-  {/* AGENCIAS */}
-  <select
-    id="sectoresSelect"
-    size="5"
-    multiple
-    value={sectoresSeleccionados}
-    onChange={handleSectoresChange}
-  >
-    <option value="Todos">Todas las agencias</option>
-    <option value="NODO PAYA">AGENCIA PAYA</option>
-    <option value="NODO TURMERO">AGENCIA TURMERO</option>
-    <option value="NODO MACARO">AGENCIA MACARO</option>
-  </select>
-
-  {/* URBANISMOS */}
-  <select
-    id="urbanismosSelect"
-    size="5"
-    multiple
-    value={urbanismosSeleccionados}
-    onChange={(e) =>
-      setUrbanismosSeleccionados(
-        Array.from(e.target.selectedOptions, (option) => option.value)
-      )
-    }
-  >
-    <option value="Todos">Todos los urbanismos</option>
-    {sectoresSeleccionados.map((sector) =>
-      urbanismosAprobados[sector]?.map((urbanismo) => (
-        <option key={urbanismo} value={urbanismo}>
-          {urbanismo}
-        </option>
-      ))
-    )}
-  </select>
-
-  {/* TOTALES */}
-  <button className="buttonIngreso">
-    Total de clientes: {totalClientesGlobal}
-  </button>
-
-  <button className="buttonIngreso marginbutton">
-    {estadosSeleccionados.includes("Cancelado")
-      ? `Total de Pérdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
-      : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
-  </button>
-
-  {/* ACCIONES */}
-  <button
-    className={!handleGrafico2 ? "button" : "buttonCerrar"}
-    onClick={toggleGraficos}
-  >
-    {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-  </button>
-
-  <button className="buttonDescargar" onClick={handleDownloadExcel}>
-    Descargar Excel
-  </button>
-
-</div>
-
+            <button
+              className={!handleGrafico2 ? "button" : "buttonCerrar"}
+              onClick={() => setHandleGrafico2(!handleGrafico2)}
+            >
+              {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
+            </button>
+          </div>
 
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
-          <div className="titulo-topurbanismos">
-  <h3 className="h3">Top Urbanismos</h3>
-</div>
 
+          <div className="titulo-topurbanismos">
+            <h3 className="h3">Top Urbanismos</h3>
+          </div>
 
           <UrbanismoList urbanismos={topUrbanismos} />
         </>
@@ -526,54 +375,38 @@ const urbanismoFiltrado =
   );
 }
 
+/* =========================
+   LISTADO
+========================= */
 function UrbanismoList({ urbanismos }) {
-  const [mostrarLista, setMostrarLista] = useState({});
-
-  const toggleMostrarLista = (index) => {
-    setMostrarLista((prevState) => ({ ...prevState, [index]: !prevState[index] }));
-  };
+  const [mostrar, setMostrar] = useState({});
 
   return (
     <ul>
-      {urbanismos.map((urbanismo, index) => (
-        <li className="urbanismo-item encabezados" key={index}>
-          <span className="urbanismo-nombre">
-            {index + 1}. {urbanismo.urbanismo}
-          </span>
+      {urbanismos.map((u, i) => (
+        <li key={i} className="urbanismo-item">
+          <strong>{i + 1}. {u.urbanismo}</strong>
+          <p>Cantidad: {u.cantidadClientes}</p>
+          <p>Ingreso: {Math.round(u.ingresosTotales)}$</p>
 
-          <br />
-          <div className="encabezados">
-  <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
-  <br />
-  {!(
-    urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
-  ) && (
-    <span><strong>Ingreso total:</strong> { Math.round(urbanismo.ingresosTotales)}$</span>
-  )}
-</div>
-
-
-          <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
-            {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
+          <button
+            className="mostrar-ocultar"
+            onClick={() =>
+              setMostrar((p) => ({ ...p, [i]: !p[i] }))
+            }
+          >
+            {mostrar[i] ? "Ocultar" : "Mostrar"} clientes
           </button>
 
-          <div>
-            {mostrarLista[index] && (
-              <ul className="lista-clientes">
-                {urbanismo.clientes.map((cliente, idx) => (
-                  <li key={idx}>
-                    <p><strong>Nombre:</strong> {cliente.client_name}</p>
-                    <p><strong>Estado:</strong> {cliente.status_name}</p>
-                    <p><strong>Sector:</strong> {cliente.sector_name}</p>
-                    <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
-                    <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
-                    <p><strong>Ciclo:</strong> {cliente.cycle}</p>
-                    <p><strong>Dirección:</strong> {cliente.address}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          {mostrar[i] && (
+            <ul>
+              {u.clientes.map((c, idx) => (
+                <li key={idx}>
+                  {c.client_name} – {c.status_name} – {c.plan?.cost}$
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))}
     </ul>
