@@ -37,8 +37,6 @@ Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 
 ---
 ![image](https://github.com/user-attachments/assets/13845cad-b265-4a57-be7a-2508c41d2280)
-![image](https://github.com/user-attachments/assets/77f6fa46-6f0c-4263-8868-9f0cdfd4ebd9)
-
 
 
 ## Instalación Local
