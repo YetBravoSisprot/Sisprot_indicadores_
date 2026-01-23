@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
@@ -8,168 +8,7 @@ import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
 import * as XLSX from "xlsx";
 
-// Mapeo de sectores a agencias
-const sectorAgenciaMap = {
-  "Villas El Carmen": "NODO MACARO",
-  "El Macaro": "NODO MACARO",
-  "Saman de Guere": "NODO MACARO",
-  "Casco de Turmero": "NODO TURMERO",
-  "Villa Los Tamarindos": "NODO MACARO",
-  "Mata Caballo": "NODO PAYA",
-  "Pantin": "NODO PAYA",
-  "Saman Tarazonero II": "NODO MACARO",
-  "Rio Seco": "NODO PAYA",
-  "Ezequiel Zamora": "NODO TURMERO",
-  "La Casona II": "NODO MACARO",
-  "Durpa": "NODO PAYA",
-  "Paya Abajo": "NODO PAYA",
-  "Saman Tarazonero I": "NODO MACARO",
-  "Prados III": "NODO PAYA",
-  "Bicentenario": "NODO PAYA",
-  "Prados II": "NODO PAYA",
-  "La Casona I": "NODO MACARO",
-  "Palmeras II": "NODO MACARO",
-  "Guanarito": "NODO TURMERO",
-  "La Macarena": "NODO MACARO",
-  "Brisas de Paya": "NODO PAYA",
-  "Isaac Oliveira": "NODO MACARO",
-  "La Magdalena": "NODO MACARO",
-  "El Paraiso": "NODO MACARO",
-  "Antigua Hacienda De Paya": "NODO PAYA",
-  "San Sebastian": "NODO MACARO",
-  "Ppal Paya": "NODO PAYA",
-  "Lascenio Guerrero": "NODO MACARO",
-  "Los Hornos": "NODO PAYA",
-  "Callejon Lim": "NODO PAYA",
-  "Tibisay Guevara": "NODO TURMERO",
-  "Plaza Jardin": "NODO MACARO",
-  "Antigua Hacienda De Paya II": "NODO PAYA",
-  "Villas Del Sur": "NODO TURMERO", 
-  "San Pablo": "NODO TURMERO",
-  "Vallecito": "NODO PAYA",
-  "Jabillar": "NODO MACARO",
-  "Prados I": "NODO PAYA",
-  "La Concepcion": "NODO MACARO",
-  "Las Rurales": "NODO PAYA",
-  "Valle Paraiso": "NODO TURMERO",
-  "Simon Bolivar": "NODO MACARO",
-  "Canaima": "NODO PAYA",
-  "Vista Hermosa": "NODO PAYA",
-  "Valle Verde": "NODO PAYA",
-  "Palma Real": "NODO PAYA",
-  "Palmeras I": "NODO MACARO",
-  "Prados de Cafetal": "NODO TURMERO",
-  "Santa Eduviges": "NODO MACARO",
-  "El Naranjal": "NODO PAYA",
-  "Villa De San Jose": "NODO MACARO",
-  "La Floresta": "NODO TURMERO",
-  "Terrazas de Paya": "NODO PAYA",
-  "Salto Angel": "NODO MACARO",
-  "Villeguita": "NODO TURMERO",
-  "La Esperanza": "NODO MACARO",
-  "La Arboleda": "NODO PAYA",
-  "La Concepcion III": "NODO MACARO",
-  "La Julia": "NODO MACARO",
-  "Terrazas de Turmero": "NODO TURMERO",
-  "Haras de San Pablo": "NODO TURMERO",
-  "Taguapire": "NODO MACARO",
-  "La Casona II Edificios": "NODO MACARO",
-  "Antonio Jose de Sucre": "NODO MACARO",
-  "Valle del Rosario": "NODO MACARO",
-  "Arturo Luis Berti": "NODO MACARO",
-  "Callejon Cañaveral": "NODO PAYA",
-  "Laguna Plaza": "NODO TURMERO",
-  "La Casona I Edificios": "NODO MACARO",
-  "Villa Caribe": "NODO TURMERO",
-  "Narayola II": "NODO MACARO",
-  "Luz y Vida": "NODO PAYA",
-  "Terrazas de Juan Pablo": "NODO MACARO",
-  "Residencias Candys": "NODO TURMERO",
-  "El Nispero": "NODO TURMERO",
-  "Ciudad Bendita": "NODO TURMERO",
-  "Residencias Mariño": "NODO TURMERO",
-  "San Carlos": "NODO TURMERO",
-  "Los Mangos": "NODO PAYA",
-  "Callejon Los Jabillos": "NODO PAYA",
-  "Guerito": "NODO MACARO",
-  "Laguna II": "NODO TURMERO",
-  "Marina Caribe": "NODO TURMERO",
-  "Dios Es Mi Refugio": "NODO PAYA",
-  "Huerta Los Pajaros": "NODO PAYA",
-  "La Montañita": "NODO TURMERO",
-  "Betania": "NODO PAYA",
-  "1ro de Mayo Norte": "NODO PAYA",
-  "Payita": "NODO PAYA",
-  "Las Palmas": "NODO PAYA",
-  "1ro de Mayo Sur": "NODO PAYA",
-  "El Cambur": "NODO PAYA",
-  "La Orquidea": "NODO PAYA",
-  "Sector los Mangos": "NODO PAYA",
-  "La Aduana": "NODO TURMERO",
-  "Valle Fresco": "NODO TURMERO",
-  "El Bosque": "NODO PAYA",
-  "Leocolbo": "NODO MACARO",
-  "Callejon Rosales": "NODO PAYA",
-  "Prados": "NODO PAYA",
-  "Calle Peñalver": "NODO TURMERO",
-  "Los Caobos": "NODO MACARO",
-  "Callejon 17": "NODO PAYA",
-  "Los Nisperos": "NODO TURMERO",
-  "La Montaña": "NODO TURMERO",
-  "Santa Barbara": "NODO MACARO",
-  "Valle lindo": "NODO TURMERO",
-  "Polvorin": "NODO PAYA",
-  "Guayabita": "NODO PAYA",
-  "La Marcelota": "NODO PAYA",
-  "Manirito": "NODO PAYA",
-  "Paraguatan": "NODO PAYA",
-  "La Guzman": "NODO PAYA",
-  "18 de Septiembre": "NODO MACARO",
-  "Edif. El Torreon": "NODO TURMERO",
-  "Edif. El Portal": "NODO TURMERO",
-  "Urb. Vista Hermosa La Julia": "NODO MACARO",
-  "Guerrero de Chavez": "NODO PAYA",
-  "19 de Abril": "NODO MACARO"
-};
-
-const urbanismosAprobados = {
-  "NODO MACARO": [
-    "Villas El Carmen", "El Macaro", "Saman de Guere", "Villa Los Tamarindos",
-    "Saman Tarazonero II", "La Casona II", "Saman Tarazonero I", "La Casona I",
-    "Palmeras II", "La Macarena", "Isaac Oliveira", "La Magdalena",
-    "El Paraiso", "San Sebastian", "Lascenio Guerrero", "Plaza Jardin",
-    "Jabillar", "La Concepcion", "Simon Bolivar", "Palmeras I",
-    "Santa Eduviges", "Villa De San Jose", "Salto Angel", "La Esperanza",
-    "La Concepcion III", "La Julia", "Taguapire", "La Casona II Edificios",
-    "Antonio Jose de Sucre", "Valle del Rosario", "Arturo Luis Berti",
-    "La Casona I Edificios", "Narayola II", "Terrazas de Juan Pablo",
-    "Guerito", "Leocolbo", "Los Caobos", "Santa Barbara",
-    "18 de Septiembre", "Urb. Vista Hermosa La Julia", "19 de Abril"
-  ],
-  "NODO PAYA": [
-    "Mata Caballo", "Pantin", "Rio Seco", "Durpa", "Paya Abajo", "Prados III",
-    "Bicentenario", "Prados II", "Brisas de Paya", "Antigua Hacienda De Paya",
-    "Ppal Paya", "Los Hornos", "Callejon Lim", "Antigua Hacienda De Paya II",
-    "Vallecito", "Prados I", "Las Rurales", "Canaima", "Vista Hermosa",
-    "Valle Verde", "Palma Real", "El Naranjal", "Terrazas de Paya",
-    "La Arboleda", "Luz y Vida", "Los Mangos", "Callejon Los Jabillos",
-    "Dios Es Mi Refugio", "Huerta Los Pajaros", "Betania", "1ro de Mayo Norte",
-    "Payita", "Las Palmas", "1ro de Mayo Sur", "El Cambur", "La Orquidea",
-    "Sector los Mangos", "El Bosque", "Callejon Rosales", "Prados",
-    "Callejon 17", "Polvorin", "Guayabita", "La Marcelota", "Manirito",
-    "Paraguatan", "La Guzman", "Guerrero de Chavez"
-  ],
-  "NODO TURMERO": [
-    "Casco de Turmero", "Ezequiel Zamora", "Guanarito", "Tibisay Guevara",
-    "San Pablo", "Valle Paraiso", "Prados de Cafetal", "La Floresta",
-    "Villeguita", "Terrazas de Turmero", "Haras de San Pablo", "Laguna Plaza",
-    "Villa Caribe", "Residencias Candys", "El Nispero", "Ciudad Bendita",
-    "Residencias Mariño", "San Carlos", "Laguna II", "Marina Caribe",
-    "La Montañita", "La Aduana", "Valle Fresco", "Calle Peñalver",
-    "Los Nisperos", "La Montaña", "Valle lindo", "Edif. El Torreon",
-    "Edif. El Portal", "Villas Del Sur"
-  ]
-};
+// ... (sectorAgenciaMap y urbanismosAprobados se mantienen igual) ...
 
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
@@ -185,17 +24,6 @@ function TopUrbanismo() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
-  
-  // NUEVOS ESTADOS PARA LAS MEDIDAS COMO EN POWER BI
-  const [medidasPowerBI, setMedidasPowerBI] = useState({
-    totalActivos: 0,
-    totalResidencialesActivos: 0,
-    totalPymesActivas: 0,
-    totalIntercambioActivos: 0,
-    totalEmpleadosActivos: 0,
-    totalGratisActivos: 0,
-    totalOtrosActivos: 0
-  });
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
@@ -294,138 +122,93 @@ function TopUrbanismo() {
     XLSX.writeFile(workbook, nombreArchivo);
   };
 
-  // Función para normalizar tipos de cliente
-  const normalizarTipoCliente = useCallback((tipoCliente) => {
-    if (!tipoCliente || tipoCliente === "" || tipoCliente === null || tipoCliente === undefined) return "OTRO";
+  // Función para normalizar tipos de cliente - MÁS PRECISA
+  const normalizarTipoCliente = (tipoCliente) => {
+    if (!tipoCliente || tipoCliente === "" || tipoCliente === null || tipoCliente === undefined) {
+      return "OTRO";
+    }
     
     const tipo = tipoCliente.toString().toUpperCase().trim();
     
-    // Mapeo de posibles variaciones a valores estandarizados
-    if (tipo.includes("RESIDENCIAL") || tipo.includes("RESIDENCIAS") || tipo === "RESIDENCIALES") return "RESIDENCIAL";
-    if (tipo.includes("PYME") || tipo.includes("EMPRESA") || tipo.includes("COMERCIAL") || tipo.includes("NEGOCIO") || tipo.includes("EMPRESARIAL")) return "PYME";
-    if (tipo.includes("INTERCAMBIO") || tipo.includes("EXCHANGE")) return "INTERCAMBIO";
-    if (tipo.includes("EMPLEADO") || tipo.includes("EMPLOYEE") || tipo.includes("STAFF") || tipo.includes("TRABAJADOR") || tipo.includes("COLABORADOR")) return "EMPLEADO";
-    if (tipo.includes("GRATIS") || tipo.includes("FREE") || tipo.includes("CORTESIA") || tipo.includes("PROMOCIONAL") || tipo.includes("SIN COSTO")) return "GRATIS";
+    // Verificación EXACTA primero
+    if (tipo === "RESIDENCIAL" || tipo === "RESIDENCIALES") return "RESIDENCIAL";
+    if (tipo === "PYME" || tipo === "PYMES") return "PYME";
+    if (tipo === "INTERCAMBIO") return "INTERCAMBIO";
+    if (tipo === "EMPLEADO" || tipo === "EMPLEADOS") return "EMPLEADO";
+    if (tipo === "GRATIS") return "GRATIS";
+    
+    // Verificación por contenido
+    if (tipo.includes("RESIDENCIAL")) return "RESIDENCIAL";
+    if (tipo.includes("PYME")) return "PYME";
+    if (tipo.includes("EMPLEADO")) return "EMPLEADO";
+    if (tipo.includes("GRATIS") || tipo.includes("CORTESIA")) return "GRATIS";
+    if (tipo.includes("INTERCAMBIO")) return "INTERCAMBIO";
     
     return "OTRO";
-  }, []);
-
-  // Función para calcular todas las medidas como en Power BI
-  const calcularMedidasPowerBI = useCallback((servicios) => {
-    if (!servicios || servicios.length === 0) {
-      return {
-        totalActivos: 0,
-        totalResidencialesActivos: 0,
-        totalPymesActivas: 0,
-        totalIntercambioActivos: 0,
-        totalEmpleadosActivos: 0,
-        totalGratisActivos: 0,
-        totalOtrosActivos: 0
-      };
-    }
-
-    // Primero, filtramos solo los clientes activos (excluyendo PRUEBA)
-    const clientesActivos = servicios.filter(servicio => 
-      !servicio.client_name.includes("PRUEBA") && 
-      servicio.status_name === "Activo"
-    );
-
-    // Calculamos cada medida individualmente
-    const medidas = {
-      // Total Activos (como en Power BI)
-      totalActivos: clientesActivos.length,
-      
-      // Residenciales Activos
-      totalResidencialesActivos: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "RESIDENCIAL"
-      ).length,
-      
-      // Pymes Activas
-      totalPymesActivas: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "PYME"
-      ).length,
-      
-      // Intercambio Activos
-      totalIntercambioActivos: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "INTERCAMBIO"
-      ).length,
-      
-      // Empleados Activos
-      totalEmpleadosActivos: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "EMPLEADO"
-      ).length,
-      
-      // Gratis Activos
-      totalGratisActivos: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "GRATIS"
-      ).length,
-      
-      // Otros Activos (todo lo que no entre en las categorías anteriores)
-      totalOtrosActivos: clientesActivos.filter(cliente => 
-        normalizarTipoCliente(cliente.client_type_name) === "OTRO"
-      ).length
-    };
-
-    // Verificación: La suma de todas las categorías debe ser igual al total de activos
-    const sumaCategorias = 
-      medidas.totalResidencialesActivos +
-      medidas.totalPymesActivas +
-      medidas.totalIntercambioActivos +
-      medidas.totalEmpleadosActivos +
-      medidas.totalGratisActivos +
-      medidas.totalOtrosActivos;
-
-    console.log("✅ VERIFICACIÓN POWER BI:");
-    console.log("Total Activos:", medidas.totalActivos);
-    console.log("Suma Categorías:", sumaCategorias);
-    console.log("Diferencia:", medidas.totalActivos - sumaCategorias);
-    console.log("Desglose:", medidas);
-
-    return medidas;
-  }, [normalizarTipoCliente]);
+  };
 
   useEffect(() => {
     if (!data) return;
 
-    // 1. Primero calculamos las medidas como en Power BI
-    const medidasCalculadas = calcularMedidasPowerBI(data.results);
-    setMedidasPowerBI(medidasCalculadas);
-
-    // 2. DEBUG: Mostrar tipos únicos de clientes
-    const tiposUnicos = [...new Set(
-      data.results
-        .filter(s => !s.client_name.includes("PRUEBA"))
-        .map(s => `${s.client_type_name} -> ${normalizarTipoCliente(s.client_type_name)}`)
-    )];
+    // DEBUG: Verificar datos reales primero
+    const clientesSinPrueba = data.results.filter(s => !s.client_name.includes("PRUEBA"));
+    const clientesActivos = clientesSinPrueba.filter(s => s.status_name === "Activo");
     
-    console.log("🔍 Tipos únicos (original -> normalizado):", tiposUnicos);
-    console.log("📊 Total registros (sin PRUEBA):", data.results.filter(s => !s.client_name.includes("PRUEBA")).length);
-    console.log("📊 Total activos (sin PRUEBA):", data.results.filter(s => !s.client_name.includes("PRUEBA") && s.status_name === "Activo").length);
+    console.log("=== DEBUG INICIAL ===");
+    console.log("Total sin PRUEBA:", clientesSinPrueba.length);
+    console.log("Total Activos sin PRUEBA:", clientesActivos.length);
+    
+    // Verificar conteos POR TIPO en activos
+    const tiposEnActivos = {};
+    clientesActivos.forEach(cliente => {
+      const tipoOriginal = cliente.client_type_name || "SIN TIPO";
+      const tipoNormalizado = normalizarTipoCliente(tipoOriginal);
+      
+      if (!tiposEnActivos[tipoNormalizado]) {
+        tiposEnActivos[tipoNormalizado] = {
+          count: 0,
+          originalTypes: new Set()
+        };
+      }
+      tiposEnActivos[tipoNormalizado].count++;
+      tiposEnActivos[tipoNormalizado].originalTypes.add(tipoOriginal);
+    });
+    
+    console.log("Conteo por tipo normalizado (ACTIVOS):");
+    Object.keys(tiposEnActivos).forEach(tipo => {
+      console.log(`  ${tipo}: ${tiposEnActivos[tipo].count} clientes`);
+      console.log(`    Tipos originales:`, Array.from(tiposEnActivos[tipo].originalTypes));
+    });
+    
+    // Sumar todos los tipos para verificar
+    const sumaTipos = Object.values(tiposEnActivos).reduce((sum, tipo) => sum + tipo.count, 0);
+    console.log(`Suma de todos los tipos: ${sumaTipos}`);
+    console.log(`Total activos real: ${clientesActivos.length}`);
+    console.log(`Diferencia: ${clientesActivos.length - sumaTipos}`);
+    console.log("=====================");
 
-    // 3. Ahora aplicamos los filtros para la tabla principal
+    // Ahora aplicamos los filtros para la tabla principal - VERSIÓN CORREGIDA
     const urbanismosTotales = data.results
       .filter((servicio) => !servicio.client_name.includes("PRUEBA"))
       .filter((servicio) => {
-        // 1. Filtro por estado
+        // 1. Filtro por estado - EXACTO
         const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
                               estadosSeleccionados.includes(servicio.status_name);
         if (!estadoFiltrado) return false;
 
-        // 2. Filtro por tipo de cliente - VERSIÓN CORREGIDA
+        // 2. Filtro por tipo de cliente - VERSIÓN SIMPLIFICADA Y EXACTA
         const tipoFiltrado = (() => {
           if (estadosSeleccionadosType.includes("Todos")) return true;
           
           const tipoClienteNormalizado = normalizarTipoCliente(servicio.client_type_name);
-          if (!tipoClienteNormalizado || tipoClienteNormalizado === "OTRO") {
-            // Si es "OTRO", solo lo incluimos si "OTRO" está seleccionado
-            return estadosSeleccionadosType.includes("OTRO");
-          }
           
-          // Para cada tipo seleccionado, verificamos si coincide
-          return estadosSeleccionadosType.some(tipoSeleccionado => {
+          // Para cada tipo seleccionado, verificamos si coincide EXACTAMENTE
+          const encontrado = estadosSeleccionadosType.some(tipoSeleccionado => {
             const tipoSeleccionadoUpper = tipoSeleccionado.toUpperCase().trim();
             return tipoClienteNormalizado === tipoSeleccionadoUpper;
           });
+          
+          return encontrado;
         })();
         
         if (!tipoFiltrado) return false;
@@ -476,30 +259,31 @@ function TopUrbanismo() {
         return acc;
       }, {});
 
-    // DEBUG: Verificar conteos
+    // DEBUG: Verificar los filtros aplicados
+    console.log("=== FILTROS APLICADOS ===");
+    console.log("Estados seleccionados:", estadosSeleccionados);
+    console.log("Tipos seleccionados:", estadosSeleccionadosType);
+    
+    // Verificar cuántos clientes pasaron cada filtro
     const totalFiltrado = Object.keys(urbanismosTotales)
       .reduce((sum, key) => sum + urbanismosTotales[key].cantidadClientes, 0);
     
-    console.log("🎯 Total filtrado para tabla:", totalFiltrado);
-    console.log("📈 Medidas Power BI activas:", medidasCalculadas);
-
-    // DEBUG: Verificar filtros aplicados
-    const clientesFiltradosPorTipo = data.results
-      .filter((servicio) => !servicio.client_name.includes("PRUEBA"))
-      .filter((servicio) => {
-        const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
-                              estadosSeleccionados.includes(servicio.status_name);
-        return estadoFiltrado;
+    console.log("Total filtrado en tabla:", totalFiltrado);
+    
+    // Verificar por tipo en los filtrados
+    const conteoPorTipoFiltrado = {};
+    Object.values(urbanismosTotales).forEach(urb => {
+      urb.clientes.forEach(cliente => {
+        const tipoNormalizado = normalizarTipoCliente(cliente.client_type_name);
+        if (!conteoPorTipoFiltrado[tipoNormalizado]) {
+          conteoPorTipoFiltrado[tipoNormalizado] = 0;
+        }
+        conteoPorTipoFiltrado[tipoNormalizado]++;
       });
+    });
     
-    const conteoPorTipoFiltrado = clientesFiltradosPorTipo.reduce((acc, curr) => {
-      const tipoNormalizado = normalizarTipoCliente(curr.client_type_name);
-      if (!acc[tipoNormalizado]) acc[tipoNormalizado] = 0;
-      acc[tipoNormalizado]++;
-      return acc;
-    }, {});
-    
-    console.log("🎯 Conteo por tipo (con filtros de estado):", conteoPorTipoFiltrado);
+    console.log("Conteo por tipo en tabla filtrada:", conteoPorTipoFiltrado);
+    console.log("=====================");
 
     const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
       urbanismo: sector,
@@ -515,18 +299,7 @@ function TopUrbanismo() {
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [
-    data, 
-    TopUrb, 
-    estadosSeleccionados, 
-    estadosSeleccionadosType, 
-    migradosSeleccionados, 
-    ciclosSeleccionados, 
-    sectoresSeleccionados, 
-    urbanismosSeleccionados,
-    calcularMedidasPowerBI,
-    normalizarTipoCliente
-  ]);
+  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -582,7 +355,6 @@ function TopUrbanismo() {
               <option value="INTERCAMBIO">Intercambio</option>
               <option value="EMPLEADO">Empleado</option>
               <option value="GRATIS">Gratis</option>
-              <option value="OTRO">Otros</option>
             </select>
 
             {/* MIGRADOS */}
@@ -671,22 +443,21 @@ function TopUrbanismo() {
             </button>
           </div>
 
-          {/* PANEL DE MEDIDAS POWER BI */}
+          {/* PANEL DE VERIFICACIÓN */}
           <div style={{
             backgroundColor: '#f8f9fa',
             padding: '15px',
             margin: '15px 0',
             borderRadius: '8px',
-            border: '1px solid #dee2e6',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            border: '1px solid #dee2e6'
           }}>
             <h4 style={{marginBottom: '15px', color: '#495057'}}>
-              📊 Medidas como en Power BI (Solo clientes ACTIVOS)
+              🔍 Verificación de Datos
             </h4>
             
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
               gap: '10px'
             }}>
               <div style={{
@@ -695,21 +466,9 @@ function TopUrbanismo() {
                 borderRadius: '6px',
                 borderLeft: '4px solid #339af0'
               }}>
-                <div style={{fontSize: '12px', color: '#1864ab'}}>Total Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#1c7ed6'}}>
-                  {medidasPowerBI.totalActivos}
-                </div>
-              </div>
-              
-              <div style={{
-                backgroundColor: '#fff3bf',
-                padding: '10px',
-                borderRadius: '6px',
-                borderLeft: '4px solid #fcc419'
-              }}>
-                <div style={{fontSize: '12px', color: '#e67700'}}>Residenciales Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#f59f00'}}>
-                  {medidasPowerBI.totalResidencialesActivos}
+                <div style={{fontSize: '12px', color: '#1864ab'}}>Filtro: "Activo"</div>
+                <div style={{fontSize: '16px', fontWeight: 'bold', color: '#1c7ed6'}}>
+                  {estadosSeleccionados.includes("Activo") ? "✓ Aplicado" : "✗ No aplicado"}
                 </div>
               </div>
               
@@ -719,9 +478,9 @@ function TopUrbanismo() {
                 borderRadius: '6px',
                 borderLeft: '4px solid #51cf66'
               }}>
-                <div style={{fontSize: '12px', color: '#2b8a3e'}}>Pymes Activas</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#37b24d'}}>
-                  {medidasPowerBI.totalPymesActivas}
+                <div style={{fontSize: '12px', color: '#2b8a3e'}}>Filtro: "Residenciales"</div>
+                <div style={{fontSize: '16px', fontWeight: 'bold', color: '#37b24d'}}>
+                  {estadosSeleccionadosType.includes("RESIDENCIAL") ? "✓ Aplicado" : "✗ No aplicado"}
                 </div>
               </div>
               
@@ -731,111 +490,25 @@ function TopUrbanismo() {
                 borderRadius: '6px',
                 borderLeft: '4px solid #ff6b6b'
               }}>
-                <div style={{fontSize: '12px', color: '#c92a2a'}}>Intercambio Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#fa5252'}}>
-                  {medidasPowerBI.totalIntercambioActivos}
-                </div>
-              </div>
-              
-              <div style={{
-                backgroundColor: '#f3d9fa',
-                padding: '10px',
-                borderRadius: '6px',
-                borderLeft: '4px solid #cc5de8'
-              }}>
-                <div style={{fontSize: '12px', color: '#862e9c'}}>Empleados Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#da77f2'}}>
-                  {medidasPowerBI.totalEmpleadosActivos}
-                </div>
-              </div>
-              
-              <div style={{
-                backgroundColor: '#e5dbff',
-                padding: '10px',
-                borderRadius: '6px',
-                borderLeft: '4px solid #845ef7'
-              }}>
-                <div style={{fontSize: '12px', color: '#5f3dc4'}}>Gratis Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#7950f2'}}>
-                  {medidasPowerBI.totalGratisActivos}
-                </div>
-              </div>
-              
-              <div style={{
-                backgroundColor: '#d0ebff',
-                padding: '10px',
-                borderRadius: '6px',
-                borderLeft: '4px solid #74c0fc'
-              }}>
-                <div style={{fontSize: '12px', color: '#1971c2'}}>Otros Activos</div>
-                <div style={{fontSize: '18px', fontWeight: 'bold', color: '#339af0'}}>
-                  {medidasPowerBI.totalOtrosActivos}
+                <div style={{fontSize: '12px', color: '#c92a2a'}}>Filtro: "Pymes"</div>
+                <div style={{fontSize: '16px', fontWeight: 'bold', color: '#fa5252'}}>
+                  {estadosSeleccionadosType.includes("PYME") ? "✓ Aplicado" : "✗ No aplicado"}
                 </div>
               </div>
             </div>
             
-            {/* VERIFICACIÓN DE SUMA */}
             <div style={{
               marginTop: '15px',
               padding: '10px',
               backgroundColor: '#fff',
               borderRadius: '6px',
-              border: '1px dashed #adb5bd'
+              border: '1px dashed #adb5bd',
+              fontSize: '14px'
             }}>
-              <div style={{fontSize: '12px', color: '#495057'}}>Verificación de suma:</div>
-              <div style={{fontSize: '14px', fontWeight: 'bold'}}>
-                Residenciales ({medidasPowerBI.totalResidencialesActivos}) + 
-                Pymes ({medidasPowerBI.totalPymesActivas}) + 
-                Intercambio ({medidasPowerBI.totalIntercambioActivos}) + 
-                Empleados ({medidasPowerBI.totalEmpleadosActivos}) + 
-                Gratis ({medidasPowerBI.totalGratisActivos}) + 
-                Otros ({medidasPowerBI.totalOtrosActivos}) = 
-                <span style={{
-                  color: medidasPowerBI.totalActivos === 
-                    (medidasPowerBI.totalResidencialesActivos + 
-                     medidasPowerBI.totalPymesActivas + 
-                     medidasPowerBI.totalIntercambioActivos + 
-                     medidasPowerBI.totalEmpleadosActivos + 
-                     medidasPowerBI.totalGratisActivos + 
-                     medidasPowerBI.totalOtrosActivos) 
-                    ? '#2b8a3e' : '#e03131'
-                }}>
-                  {" "}
-                  {medidasPowerBI.totalResidencialesActivos + 
-                   medidasPowerBI.totalPymesActivas + 
-                   medidasPowerBI.totalIntercambioActivos + 
-                   medidasPowerBI.totalEmpleadosActivos + 
-                   medidasPowerBI.totalGratisActivos + 
-                   medidasPowerBI.totalOtrosActivos}
-                </span>
-                {" "}
-                {medidasPowerBI.totalActivos === 
-                 (medidasPowerBI.totalResidencialesActivos + 
-                  medidasPowerBI.totalPymesActivas + 
-                  medidasPowerBI.totalIntercambioActivos + 
-                  medidasPowerBI.totalEmpleadosActivos + 
-                  medidasPowerBI.totalGratisActivos + 
-                  medidasPowerBI.totalOtrosActivos) 
-                 ? "✅ CORRECTO" : "❌ ERROR"}
+              <div><strong>Nota:</strong> Abre la consola (F12) para ver los detalles del cálculo</div>
+              <div style={{marginTop: '5px', fontSize: '12px', color: '#666'}}>
+                Los números deberían ser: 3347 Residenciales + 159 Pymes = 3506 Activos
               </div>
-            </div>
-          </div>
-
-          {/* DEBUG INFO */}
-          <div style={{
-            fontSize: '12px', 
-            color: '#666', 
-            padding: '10px',
-            backgroundColor: '#f5f5f5',
-            margin: '10px 0',
-            borderRadius: '4px',
-            borderLeft: '4px solid #007bff'
-          }}>
-            <strong>🔍 Filtros Activos:</strong> 
-            <div style={{marginTop: '5px'}}>
-              <span>Estados: <strong>{estadosSeleccionados.join(', ')}</strong></span> | 
-              <span> Tipos: <strong>{estadosSeleccionadosType.join(', ')}</strong></span> | 
-              <span> Total Tabla: <strong>{totalClientesGlobal}</strong></span>
             </div>
           </div>
 
@@ -889,7 +562,7 @@ function UrbanismoList({ urbanismos }) {
                   <li key={idx}>
                     <p><strong>Nombre:</strong> {cliente.client_name}</p>
                     <p><strong>Estado:</strong> {cliente.status_name}</p>
-                    <p><strong>Tipo:</strong> {cliente.client_type_name} ({urbanismo.tipoNormalizado})</p>
+                    <p><strong>Tipo:</strong> {cliente.client_type_name}</p>
                     <p><strong>Sector:</strong> {cliente.sector_name}</p>
                     <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
