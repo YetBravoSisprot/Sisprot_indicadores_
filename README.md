@@ -26,7 +26,7 @@ Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 - Descarga de lista de clientes mediante un archivo de excel
 - Estadísticas avanzadas y mucho más.
 
----![image](https://github.com/user-attachments/assets/d4ba96b5-e3c8-4499-9d89-9c66e2763f37)
+---![image](https://github.com/YetBravoSisprot/Sisprot_indicadores_/blob/bd09147ca22b3568ae2951f3815225f3cbbc9a6e/public/Top%20Urbanismo.png)
 
 
 ## Tecnologías Usadas
