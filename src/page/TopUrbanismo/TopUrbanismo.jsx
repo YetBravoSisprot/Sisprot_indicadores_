@@ -306,69 +306,81 @@ worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
   XLSX.writeFile(workbook, nombreArchivo);
 };
 
-  useEffect(() => {
-    if (!data) return;
+useEffect(() => {
+  if (!data) return;
 
-   
-
-    const urbanismosTotales = data.results
-    .filter((servicio) => !servicio.client_name.includes("PRUEBA")) // Filtra clientes que no incluyan "PRUEBA"
+  const urbanismosTotales = data.results
+    .filter((servicio) => !servicio.client_name.includes("PRUEBA"))
     .filter((servicio) => {
-    
-        const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
-        const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
-        const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-        const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
-        const sectorFiltrado =
-  sectoresSeleccionados.length === 0 ||
-  sectoresSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+      // CORRECIÓN APLICADA AQUÍ:
+      const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
+                           estadosSeleccionados.includes(servicio.status_name);
+      
+      // ANTES (INCORRECTO):
+      // const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || 
+      //                    estadosSeleccionadosType.includes(servicio.client_type_name);
+      
+      // DESPUÉS (CORRECTO):
+      const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || 
+                         estadosSeleccionadosType.some(tipo => 
+                           servicio.client_type_name === tipo
+                         );
+      
+      const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+                            migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+      
+      const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
+                          ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+      
+      const sectorFiltrado =
+        sectoresSeleccionados.length === 0 ||
+        sectoresSeleccionados.includes("Todos") ||
+        (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+      
+      const urbanismoFiltrado =
+        urbanismosSeleccionados.length === 0 ||
+        urbanismosSeleccionados.includes("Todos") ||
+        (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
-const urbanismoFiltrado =
-  urbanismosSeleccionados.length === 0 ||
-  urbanismosSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
+      return estadoFiltrado && 
+             tipoFiltrado && 
+             migradoFiltrado && 
+             cicloFiltrado && 
+             sectorFiltrado && 
+             urbanismoFiltrado;
+    })
+    .reduce((acc, curr) => {
+      if (!acc[curr.sector_name]) {
+        acc[curr.sector_name] = {
+          cantidadClientes: 1,
+          ingresosTotales: parseFloat(curr.plan.cost),
+          estado: curr.status_name,
+          tipo: curr.client_type_name,
+          clientes: [curr],
+        };
+      } else {
+        acc[curr.sector_name].cantidadClientes++;
+        acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
+        acc[curr.sector_name].clientes.push(curr);
+      }
+      return acc;
+    }, {});
 
-       
+  const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
+    urbanismo: sector,
+    ...urbanismosTotales[sector],
+  }));
 
-        return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
-      })
-      .reduce((acc, curr) => {
-        if (!acc[curr.sector_name]) {
-          acc[curr.sector_name] = {
-            cantidadClientes: 1,
-            ingresosTotales: parseFloat(curr.plan.cost),
-            estado: curr.status_name,
-            tipo: curr.client_type_name,
-            clientes: [curr],
-          };
-        } else {
-          acc[curr.sector_name].cantidadClientes++;
-          acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
-          acc[curr.sector_name].clientes.push(curr);
-        }
-        return acc;
-      }, {});
+  urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
 
-  
+  const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
+  const ingresosTotalesCalculados = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.ingresosTotales, 0);
+  const totalClientes = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.cantidadClientes, 0);
 
-    const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
-      urbanismo: sector,
-      ...urbanismosTotales[sector],
-    }));
-
-   
-
-    urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
-
-    const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
-    const ingresosTotalesCalculados = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.ingresosTotales, 0);
-    const totalClientes = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.cantidadClientes, 0);
-
-    setTotalClientesGlobal(totalClientes);
-    setTotalIngresos(ingresosTotalesCalculados);
-    setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+  setTotalClientesGlobal(totalClientes);
+  setTotalIngresos(ingresosTotalesCalculados);
+  setTopUrbanismos(topUrbanismosCalculados);
+}, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
