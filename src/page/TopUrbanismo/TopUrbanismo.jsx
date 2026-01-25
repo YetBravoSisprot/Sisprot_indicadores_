@@ -303,21 +303,13 @@ function TopUrbanismo() {
     return `${estadoMayusculas}_${tipoMayusculas}`;
   }, []);
 
-  // Función para determinar si un servicio pasa los filtros seleccionados
+  // Función para determinar si un servicio pasa los filtros seleccionados (estado + tipo específico)
   const pasaFiltros = useCallback((servicio) => {
     // Primero verificamos que no sea un cliente de prueba
     if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
       return false;
     }
 
-    // Filtro de estado (comparación case-insensitive)
-    const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
-      estadosSeleccionados.some(estado => 
-        estado.toLowerCase() === servicio.status_name.toLowerCase()
-      );
-    
-    if (!estadoFiltrado) return false;
-    
     // Filtro de tipo usando client_subdivision
     let tipoFiltrado = false;
     
@@ -327,31 +319,32 @@ function TopUrbanismo() {
       // Para cada tipo seleccionado, construimos el subdivision correspondiente
       // y comparamos con el client_subdivision del servicio
       tipoFiltrado = estadosSeleccionadosType.some((tipoSeleccionado) => {
-        // Construir el subdivision para la combinación estado + tipo
-        const estadoParaSubdivision = estadosSeleccionados.includes("Todos") 
-          ? servicio.status_name 
-          : estadosSeleccionados[0];
-        
-        const subdivisionEsperada = construirSubdivision(
-          estadoParaSubdivision,
-          tipoSeleccionado
-        );
-        
-        // Verificar si el servicio tiene client_subdivision
-        if (servicio.client_subdivision && servicio.client_subdivision !== "") {
-          // Comparar directamente (ambos en mayúsculas)
-          return servicio.client_subdivision === subdivisionEsperada;
-        } 
-        // Si no tiene client_subdivision, construimos uno a partir de status_name y client_type_name
-        else if (servicio.status_name && servicio.client_type_name) {
-          const subdivisionCalculado = construirSubdivision(
-            servicio.status_name,
-            servicio.client_type_name
+        // Para cada estado seleccionado, construimos el subdivision
+        return estadosSeleccionados.some((estadoSeleccionado) => {
+          // Saltar si es "Todos"
+          if (estadoSeleccionado === "Todos") return false;
+          
+          const subdivisionEsperada = construirSubdivision(
+            estadoSeleccionado,
+            tipoSeleccionado
           );
-          return subdivisionCalculado === subdivisionEsperada;
-        }
-        
-        return false;
+          
+          // Verificar si el servicio tiene client_subdivision
+          if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+            // Comparar directamente (ambos en mayúsculas)
+            return servicio.client_subdivision === subdivisionEsperada;
+          } 
+          // Si no tiene client_subdivision, construimos uno a partir de status_name y client_type_name
+          else if (servicio.status_name && servicio.client_type_name) {
+            const subdivisionCalculado = construirSubdivision(
+              servicio.status_name,
+              servicio.client_type_name
+            );
+            return subdivisionCalculado === subdivisionEsperada;
+          }
+          
+          return false;
+        });
       });
     }
     
@@ -381,18 +374,39 @@ function TopUrbanismo() {
     return urbanismoFiltrado;
   }, [estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados, construirSubdivision]);
 
-  // Función para determinar si un servicio pasa el filtro para totales generales (solo por estado)
+  // Función para determinar si un servicio pasa el filtro para totales generales (basado en client_subdivision)
   const pasaFiltroTotales = useCallback((servicio) => {
     // Primero verificamos que no sea un cliente de prueba
     if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
       return false;
     }
 
-    // Para totales generales (solo estado), verificamos si el estado coincide (case-insensitive)
-    const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
-      estadosSeleccionados.some(estado => 
-        estado.toLowerCase() === servicio.status_name.toLowerCase()
-      );
+    // Para totales generales, verificamos client_subdivision
+    let estadoFiltrado = false;
+    
+    if (estadosSeleccionados.includes("Todos")) {
+      estadoFiltrado = true;
+    } else {
+      // Verificar si el client_subdivision contiene alguno de los estados seleccionados
+      estadoFiltrado = estadosSeleccionados.some((estadoSeleccionado) => {
+        // Saltar si es "Todos"
+        if (estadoSeleccionado === "Todos") return false;
+        
+        const estadoBuscado = estadoSeleccionado.toUpperCase();
+        
+        // Verificar si el servicio tiene client_subdivision
+        if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+          // Verificar si client_subdivision contiene el estado buscado
+          return servicio.client_subdivision.includes(estadoBuscado);
+        } 
+        // Si no tiene client_subdivision, usar status_name como respaldo
+        else if (servicio.status_name) {
+          return servicio.status_name.toLowerCase() === estadoSeleccionado.toLowerCase();
+        }
+        
+        return false;
+      });
+    }
     
     if (!estadoFiltrado) return false;
     
