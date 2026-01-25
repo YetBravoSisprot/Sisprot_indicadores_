@@ -295,12 +295,29 @@ function TopUrbanismo() {
   // Función para determinar si un servicio pasa los filtros seleccionados
   const pasaFiltros = useCallback((servicio) => {
     const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
-    const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
-    const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+    
+    // CORRECCIÓN: Normalizar los valores de tipo de cliente para comparación
+    let tipoClienteNormalizado = "";
+    if (servicio.client_type_name) {
+      // Convertir a mayúsculas para comparar con los valores del filtro
+      tipoClienteNormalizado = servicio.client_type_name.toUpperCase();
+    }
+    
+    const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || 
+      estadosSeleccionadosType.some(tipo => 
+        tipoClienteNormalizado === tipo.toUpperCase()
+      );
+    
+    const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+      migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+    
+    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
+      ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+    
     const sectorFiltrado = sectoresSeleccionados.length === 0 ||
       sectoresSeleccionados.includes("Todos") ||
       (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+    
     const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
       urbanismosSeleccionados.includes("Todos") ||
       (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
