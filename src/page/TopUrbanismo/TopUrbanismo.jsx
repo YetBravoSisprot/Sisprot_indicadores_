@@ -8,9 +8,7 @@ import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
 import * as XLSX from "xlsx";
 
-// ===============================
 // Mapeo de sectores a agencias
-// ===============================
 const sectorAgenciaMap = {
   "Villas El Carmen": "NODO MACARO",
   "El Macaro": "NODO MACARO",
@@ -46,7 +44,7 @@ const sectorAgenciaMap = {
   "Tibisay Guevara": "NODO TURMERO",
   "Plaza Jardin": "NODO MACARO",
   "Antigua Hacienda De Paya II": "NODO PAYA",
-  "Villas Del Sur": "NODO TURMERO",
+  "Villas Del Sur": "NODO TURMERO", 
   "San Pablo": "NODO TURMERO",
   "Vallecito": "NODO PAYA",
   "Jabillar": "NODO MACARO",
@@ -134,51 +132,45 @@ const sectorAgenciaMap = {
   "19 de Abril": "NODO MACARO"
 };
 
-// ===============================
-// Urbanismos aprobados
-// ===============================
 const urbanismosAprobados = {
   "NODO MACARO": [
-    "Villas El Carmen","El Macaro","Saman de Guere","Villa Los Tamarindos",
-    "Saman Tarazonero II","La Casona II","Saman Tarazonero I","La Casona I",
-    "Palmeras II","La Macarena","Isaac Oliveira","La Magdalena","El Paraiso",
-    "San Sebastian","Lascenio Guerrero","Plaza Jardin","Jabillar",
-    "La Concepcion","Simon Bolivar","Palmeras I","Santa Eduviges",
-    "Villa De San Jose","Salto Angel","La Esperanza","La Concepcion III",
-    "La Julia","Taguapire","La Casona II Edificios","Antonio Jose de Sucre",
-    "Valle del Rosario","Arturo Luis Berti","La Casona I Edificios",
-    "Narayola II","Terrazas de Juan Pablo","Guerito","Leocolbo",
-    "Los Caobos","Santa Barbara","18 de Septiembre",
-    "Urb. Vista Hermosa La Julia","19 de Abril"
+    "Villas El Carmen", "El Macaro", "Saman de Guere", "Villa Los Tamarindos",
+    "Saman Tarazonero II", "La Casona II", "Saman Tarazonero I", "La Casona I",
+    "Palmeras II", "La Macarena", "Isaac Oliveira", "La Magdalena",
+    "El Paraiso", "San Sebastian", "Lascenio Guerrero", "Plaza Jardin",
+    "Jabillar", "La Concepcion", "Simon Bolivar", "Palmeras I",
+    "Santa Eduviges", "Villa De San Jose", "Salto Angel", "La Esperanza",
+    "La Concepcion III", "La Julia", "Taguapire", "La Casona II Edificios",
+    "Antonio Jose de Sucre", "Valle del Rosario", "Arturo Luis Berti",
+    "La Casona I Edificios", "Narayola II", "Terrazas de Juan Pablo",
+    "Guerito", "Leocolbo", "Los Caobos", "Santa Barbara",
+    "18 de Septiembre", "Urb. Vista Hermosa La Julia", "19 de Abril"
   ],
   "NODO PAYA": [
-    "Mata Caballo","Pantin","Rio Seco","Durpa","Paya Abajo","Prados III",
-    "Bicentenario","Prados II","Brisas de Paya","Antigua Hacienda De Paya",
-    "Ppal Paya","Los Hornos","Callejon Lim","Antigua Hacienda De Paya II",
-    "Vallecito","Prados I","Las Rurales","Canaima","Vista Hermosa",
-    "Valle Verde","Palma Real","El Naranjal","Terrazas de Paya",
-    "La Arboleda","Luz y Vida","Los Mangos","Callejon Los Jabillos",
-    "Dios Es Mi Refugio","Huerta Los Pajaros","Betania","1ro de Mayo Norte",
-    "Payita","Las Palmas","1ro de Mayo Sur","El Cambur","La Orquidea",
-    "Sector los Mangos","El Bosque","Callejon Rosales","Prados",
-    "Callejon 17","Polvorin","Guayabita","La Marcelota","Manirito",
-    "Paraguatan","La Guzman","Guerrero de Chavez"
+    "Mata Caballo", "Pantin", "Rio Seco", "Durpa", "Paya Abajo", "Prados III",
+    "Bicentenario", "Prados II", "Brisas de Paya", "Antigua Hacienda De Paya",
+    "Ppal Paya", "Los Hornos", "Callejon Lim", "Antigua Hacienda De Paya II",
+    "Vallecito", "Prados I", "Las Rurales", "Canaima", "Vista Hermosa",
+    "Valle Verde", "Palma Real", "El Naranjal", "Terrazas de Paya",
+    "La Arboleda", "Luz y Vida", "Los Mangos", "Callejon Los Jabillos",
+    "Dios Es Mi Refugio", "Huerta Los Pajaros", "Betania", "1ro de Mayo Norte",
+    "Payita", "Las Palmas", "1ro de Mayo Sur", "El Cambur", "La Orquidea",
+    "Sector los Mangos", "El Bosque", "Callejon Rosales", "Prados",
+    "Callejon 17", "Polvorin", "Guayabita", "La Marcelota", "Manirito",
+    "Paraguatan", "La Guzman", "Guerrero de Chavez"
   ],
   "NODO TURMERO": [
-    "Casco de Turmero","Ezequiel Zamora","Guanarito","Tibisay Guevara",
-    "San Pablo","Valle Paraiso","Prados de Cafetal","La Floresta",
-    "Villeguita","Terrazas de Turmero","Haras de San Pablo","Laguna Plaza",
-    "Villa Caribe","Residencias Candys","El Nispero","Ciudad Bendita",
-    "Residencias Mariño","San Carlos","Laguna II","Marina Caribe",
-    "La Montañita","La Aduana","Valle Fresco","Calle Peñalver",
-    "Los Nisperos","La Montaña","Valle lindo","Edif. El Torreon",
-    "Edif. El Portal","Villas Del Sur"
+    "Casco de Turmero", "Ezequiel Zamora", "Guanarito", "Tibisay Guevara",
+    "San Pablo", "Valle Paraiso", "Prados de Cafetal", "La Floresta",
+    "Villeguita", "Terrazas de Turmero", "Haras de San Pablo", "Laguna Plaza",
+    "Villa Caribe", "Residencias Candys", "El Nispero", "Ciudad Bendita",
+    "Residencias Mariño", "San Carlos", "Laguna II", "Marina Caribe",
+    "La Montañita", "La Aduana", "Valle Fresco", "Calle Peñalver",
+    "Los Nisperos", "La Montaña", "Valle lindo", "Edif. El Torreon",
+    "Edif. El Portal", "Villas Del Sur"
   ]
 };
 
-// ===============================
-// COMPONENTE PRINCIPAL
-// ===============================
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
@@ -198,130 +190,176 @@ function TopUrbanismo() {
   const handleTopUrb = () => setTopUrb([0, 3500]);
 
   const handleSectoresChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (o) => o.value);
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setSectoresSeleccionados(selectedOptions);
-    setUrbanismosSeleccionados([]);
+    setUrbanismosSeleccionados([]); // Resetear la selección de urbanismos
   };
 
   const handleMigradosChange = (event) => {
-    setMigradosSeleccionados(
-      Array.from(event.target.selectedOptions, (o) => o.value)
-    );
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setMigradosSeleccionados(selectedOptions);
   };
 
   const handleEstadoChange = (event) => {
-    setEstadosSeleccionados(
-      Array.from(event.target.selectedOptions, (o) => o.value)
-    );
-  };
-
-  const handleEstadoChange2 = (event) => {
-    setEstadosSeleccionadosType(
-      Array.from(event.target.selectedOptions, (o) => o.value)
-    );
-  };
-
-  const handleCiclosChange = (event) => {
-    setCiclosSeleccionados(
-      Array.from(event.target.selectedOptions, (o) => o.value)
-    );
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setEstadosSeleccionados(selectedOptions);
   };
 
   const toggleGraficos = () => setHandleGrafico2(!handleGrafico2);
 
-  // ===============================
-  // FILTRADO PRINCIPAL (client_subdivision)
-  // ===============================
+  const handleEstadoChange2 = (event) => {
+    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
+    setEstadosSeleccionadosType(selectedOptions2);
+  };
+
+  const handleCiclosChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setCiclosSeleccionados(selectedOptions);
+  };
+
+  const handleDownloadExcel = () => {
+    const workbook = XLSX.utils.book_new();
+
+    // Función para calcular días hábiles entre dos fechas
+    function calcularDiasHabiles(fechaInicio, fechaFin) {
+      let count = 0;
+      let current = new Date(fechaInicio);
+
+      while (current <= fechaFin) {
+        const day = current.getDay();
+        if (day !== 0 && day !== 6) {
+          count++;
+        }
+        current.setDate(current.getDate() + 1);
+      }
+
+      return count;
+    }
+
+    const hoy = new Date();
+
+    const worksheetData = topUrbanismos.flatMap((urbanismo) => {
+      return urbanismo.clientes.map((cliente, clientIndex) => {
+        const service = cliente.service_detail || {};
+        const created_at_raw = cliente.created_at || "";
+        const created_at = created_at_raw ? new Date(created_at_raw) : null;
+        const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
+
+        return {
+          "N° Cliente": clientIndex + 1,
+          id: cliente.id,
+          Cliente: cliente.client_name, 
+          Teléfono: cliente.client_mobile,
+          Dirección: cliente.address,
+          Urbanismo: urbanismo.urbanismo,
+          "Cedula": cliente.client_identification,
+          IP: service.ip || "",
+          MAC: service.mac || "",
+          "Fecha_Creación": created_at_raw.slice(0, 10),
+          "Días Hábiles": diasHabiles,
+          Tipo_Cliente: cliente.client_type_name,
+          plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+        };
+      });
+    });
+
+    // ✅ Ordenar por días hábiles de mayor a menor
+    worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
+
+    // Crear la hoja de trabajo con los datos generados
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+
+    // Ajustar el ancho de las columnas
+    const columnWidths = worksheetData.reduce((acc, row) => {
+      Object.keys(row).forEach((key, idx) => {
+        const cellValue = String(row[key]);
+        const currentWidth = acc[idx] || 0;
+        acc[idx] = Math.max(currentWidth, cellValue.length);
+      });
+      return acc;
+    }, []);
+
+    worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
+
+    // Agregar la hoja al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
+
+    // Nombre del archivo
+    const estadoSeleccionado = estadosSeleccionados.join("_");
+    const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
+
+    // Descargar el archivo
+    XLSX.writeFile(workbook, nombreArchivo);
+  };
+
+  // Función para determinar si un servicio pasa los filtros seleccionados
+  const pasaFiltros = (servicio) => {
+    const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
+    const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
+    const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+    const sectorFiltrado = sectoresSeleccionados.length === 0 ||
+      sectoresSeleccionados.includes("Todos") ||
+      (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+    const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
+      urbanismosSeleccionados.includes("Todos") ||
+      (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
+
+    return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
+  };
+
   useEffect(() => {
     if (!data) return;
 
-    const urbanismosTotales = data.results
-      .filter((s) => !s.client_name.includes("PRUEBA"))
-      .filter((s) => {
-        const subdivision = (s.client_subdivision || "").toUpperCase();
+    // Filtrar servicios que no sean de prueba y que pasen los filtros
+    const serviciosFiltrados = data.results.filter((servicio) => 
+      !servicio.client_name.includes("PRUEBA") && pasaFiltros(servicio)
+    );
 
-        const estadoFiltrado =
-          estadosSeleccionados.includes("Todos") ||
-          estadosSeleccionados.some(
-            (e) => subdivision.startsWith(e.toUpperCase() + "_")
-          );
+    // Calcular totales globales
+    const totalClientes = serviciosFiltrados.length;
+    const ingresosTotales = serviciosFiltrados.reduce((acc, curr) => {
+      const costoPlan = parseFloat(curr.plan?.cost || 0);
+      return acc + costoPlan;
+    }, 0);
 
-        const tipoFiltrado =
-          estadosSeleccionadosType.includes("Todos") ||
-          estadosSeleccionadosType.some(
-            (t) => subdivision.endsWith("_" + t.toUpperCase())
-          );
+    setTotalClientesGlobal(totalClientes);
+    setTotalIngresos(ingresosTotales);
 
-        const migradoFiltrado =
-          migradosSeleccionados.includes("Todos") ||
-          migradosSeleccionados.includes(s.migrate ? "Migrado" : "No migrado");
+    // Agrupar por urbanismo para la tabla
+    const urbanismosTotales = serviciosFiltrados.reduce((acc, curr) => {
+      if (!curr.sector_name) return acc;
+      
+      if (!acc[curr.sector_name]) {
+        acc[curr.sector_name] = {
+          cantidadClientes: 1,
+          ingresosTotales: parseFloat(curr.plan?.cost || 0),
+          estado: curr.status_name,
+          tipo: curr.client_type_name,
+          clientes: [curr],
+        };
+      } else {
+        acc[curr.sector_name].cantidadClientes++;
+        acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan?.cost || 0);
+        acc[curr.sector_name].clientes.push(curr);
+      }
+      return acc;
+    }, {});
 
-        const cicloFiltrado =
-          ciclosSeleccionados.includes("Todos") ||
-          ciclosSeleccionados.includes(s.cycle?.toString());
-
-        const sectorFiltrado =
-          sectoresSeleccionados.length === 0 ||
-          sectoresSeleccionados.includes("Todos") ||
-          sectoresSeleccionados.includes(sectorAgenciaMap[s.sector_name]);
-
-        const urbanismoFiltrado =
-          urbanismosSeleccionados.length === 0 ||
-          urbanismosSeleccionados.includes("Todos") ||
-          urbanismosSeleccionados.includes(s.sector_name);
-
-        return (
-          estadoFiltrado &&
-          tipoFiltrado &&
-          migradoFiltrado &&
-          cicloFiltrado &&
-          sectorFiltrado &&
-          urbanismoFiltrado
-        );
-      })
-      .reduce((acc, curr) => {
-        if (!acc[curr.sector_name]) {
-          acc[curr.sector_name] = {
-            cantidadClientes: 1,
-            ingresosTotales: parseFloat(curr.plan.cost),
-            estado: curr.status_name,
-            tipo: curr.client_type_name,
-            clientes: [curr],
-          };
-        } else {
-          acc[curr.sector_name].cantidadClientes++;
-          acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
-          acc[curr.sector_name].clientes.push(curr);
-        }
-        return acc;
-      }, {});
-
-    const urbanismosArray = Object.keys(urbanismosTotales).map((u) => ({
-      urbanismo: u,
-      ...urbanismosTotales[u],
+    const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
+      urbanismo: sector,
+      ...urbanismosTotales[sector],
     }));
 
-    urbanismosArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
+    urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
 
-    setTopUrbanismos(urbanismosArray.slice(...TopUrb));
-    setTotalIngresos(urbanismosArray.reduce((a, c) => a + c.ingresosTotales, 0));
-    setTotalClientesGlobal(
-      urbanismosArray.reduce((a, c) => a + c.cantidadClientes, 0)
-    );
-  }, [
-    data,
-    TopUrb,
-    estadosSeleccionados,
-    estadosSeleccionadosType,
-    migradosSeleccionados,
-    ciclosSeleccionados,
-    sectoresSeleccionados,
-    urbanismosSeleccionados,
-  ]);
+    const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
+    setTopUrbanismos(topUrbanismosCalculados);
+  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
+  
   return (
     <div>
       <LogoTitulo />
@@ -334,29 +372,137 @@ function TopUrbanismo() {
         <>
           <DropdownMenu />
           <PageNav />
-
           <div className="filtros-panel">
-            <button className="button" onClick={handleTop10Urb}>Top 10</button>
-            <button className="button" onClick={handleTopUrb}>Top Global</button>
 
+            {/* BOTONES TOP */}
+            <div>
+              <button className="button" onClick={handleTop10Urb}>Top 10</button>
+              <button className="button" onClick={handleTopUrb}>Top Global</button>
+            </div>
+
+            {/* ESTADO */}
+            <select
+              id="estadoSelect"
+              size="5"
+              multiple
+              value={estadosSeleccionados}
+              onChange={handleEstadoChange}
+            >
+              <option value="Todos">Todos</option>
+              <option value="Activo">Activos</option>
+              <option value="Suspendido">Suspendidos</option>
+              <option value="Por instalar">Por instalar</option>
+              <option value="Pausado">Pausado</option>
+              <option value="Cancelado">Cancelados</option>
+            </select>
+
+            {/* TIPO DE CLIENTE */}
+            <select
+              id="estadoSelect2"
+              size="5"
+              multiple
+              value={estadosSeleccionadosType}
+              onChange={handleEstadoChange2}
+            >
+              <option value="Todos">Tipo de Cliente / Todos</option>
+              <option value="PYME">Pyme</option>
+              <option value="RESIDENCIAL">Residenciales</option>
+              <option value="INTERCAMBIO">Intercambio</option>
+              <option value="EMPLEADO">Empleado</option>
+              <option value="GRATIS">Gratis</option>
+            </select>
+
+            {/* MIGRADOS */}
+            <select
+              id="migradosSelect"
+              size="2"
+              multiple
+              value={migradosSeleccionados}
+              onChange={handleMigradosChange}
+            >
+              <option value="Todos">Todos</option>
+              <option value="Migrado">Migrados</option>
+              <option value="No migrado">No migrados</option>
+            </select>
+
+            {/* CICLOS */}
+            <select
+              id="ciclosSelect"
+              size="3"
+              multiple
+              value={ciclosSeleccionados}
+              onChange={handleCiclosChange}
+            >
+              <option value="Todos">Todos</option>
+              <option value="15">Ciclo 15</option>
+              <option value="25">Ciclo 25</option>
+            </select>
+
+            {/* AGENCIAS */}
+            <select
+              id="sectoresSelect"
+              size="5"
+              multiple
+              value={sectoresSeleccionados}
+              onChange={handleSectoresChange}
+            >
+              <option value="Todos">Todas las agencias</option>
+              <option value="NODO PAYA">AGENCIA PAYA</option>
+              <option value="NODO TURMERO">AGENCIA TURMERO</option>
+              <option value="NODO MACARO">AGENCIA MACARO</option>
+            </select>
+
+            {/* URBANISMOS */}
+            <select
+              id="urbanismosSelect"
+              size="5"
+              multiple
+              value={urbanismosSeleccionados}
+              onChange={(e) =>
+                setUrbanismosSeleccionados(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+            >
+              <option value="Todos">Todos los urbanismos</option>
+              {sectoresSeleccionados.map((sector) =>
+                urbanismosAprobados[sector]?.map((urbanismo) => (
+                  <option key={urbanismo} value={urbanismo}>
+                    {urbanismo}
+                  </option>
+                ))
+              )}
+            </select>
+
+            {/* TOTALES */}
             <button className="buttonIngreso">
               Total de clientes: {totalClientesGlobal}
             </button>
 
             <button className="buttonIngreso marginbutton">
-              Total de Ingresos:{" "}
-              {totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$
+              {estadosSeleccionados.includes("Cancelado")
+                ? `Total de Pérdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
+                : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
             </button>
 
+            {/* ACCIONES */}
             <button
               className={!handleGrafico2 ? "button" : "buttonCerrar"}
               onClick={toggleGraficos}
             >
               {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
             </button>
+
+            <button className="buttonDescargar" onClick={handleDownloadExcel}>
+              Descargar Excel
+            </button>
+
           </div>
 
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
+          <div className="titulo-topurbanismos">
+            <h3 className="h3">Top Urbanismos</h3>
+          </div>
 
           <UrbanismoList urbanismos={topUrbanismos} />
         </>
@@ -365,36 +511,53 @@ function TopUrbanismo() {
   );
 }
 
-// ===============================
-// LISTADO
-// ===============================
 function UrbanismoList({ urbanismos }) {
   const [mostrarLista, setMostrarLista] = useState({});
 
-  const toggleMostrarLista = (i) =>
-    setMostrarLista((p) => ({ ...p, [i]: !p[i] }));
+  const toggleMostrarLista = (index) => {
+    setMostrarLista((prevState) => ({ ...prevState, [index]: !prevState[index] }));
+  };
 
   return (
     <ul>
-      {urbanismos.map((u, i) => (
-        <li key={i}>
-          <strong>{i + 1}. {u.urbanismo}</strong>
-          <p>Cantidad de Clientes: {u.cantidadClientes}</p>
-          <p>Ingreso Total: {Math.round(u.ingresosTotales)}$</p>
+      {urbanismos.map((urbanismo, index) => (
+        <li className="urbanismo-item encabezados" key={index}>
+          <span className="urbanismo-nombre">
+            {index + 1}. {urbanismo.urbanismo}
+          </span>
 
-          <button onClick={() => toggleMostrarLista(i)}>
-            {mostrarLista[i] ? "Ocultar" : "Mostrar"}
+          <br />
+          <div className="encabezados">
+            <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
+            <br />
+            {!(
+              urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
+            ) && (
+              <span><strong>Ingreso total:</strong> { Math.round(urbanismo.ingresosTotales)}$</span>
+            )}
+          </div>
+
+          <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
+            {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
           </button>
 
-          {mostrarLista[i] && (
-            <ul>
-              {u.clientes.map((c, idx) => (
-                <li key={idx}>
-                  {c.client_name} - {c.client_subdivision}
-                </li>
-              ))}
-            </ul>
-          )}
+          <div>
+            {mostrarLista[index] && (
+              <ul className="lista-clientes">
+                {urbanismo.clientes.map((cliente, idx) => (
+                  <li key={idx}>
+                    <p><strong>Nombre:</strong> {cliente.client_name}</p>
+                    <p><strong>Estado:</strong> {cliente.status_name}</p>
+                    <p><strong>Sector:</strong> {cliente.sector_name}</p>
+                    <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
+                    <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
+                    <p><strong>Ciclo:</strong> {cliente.cycle}</p>
+                    <p><strong>Dirección:</strong> {cliente.address}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </li>
       ))}
     </ul>
