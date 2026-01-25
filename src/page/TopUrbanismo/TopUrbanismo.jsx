@@ -188,6 +188,10 @@ function TopUrbanismo() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
+  const [contratoBuscado, setContratoBuscado] = useState("");
+const [clientesPorContrato, setClientesPorContrato] = useState([]);
+const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
+
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
@@ -219,6 +223,16 @@ function TopUrbanismo() {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setCiclosSeleccionados(selectedOptions);
   };
+const buscarPorContrato = () => {
+  if (!contratoBuscado) return;
+
+  const resultado = data.results.filter(
+    (cliente) => String(cliente.id) === String(contratoBuscado)
+  );
+
+  setClientesPorContrato(resultado);
+  setModoBusquedaContrato(true);
+};
 
   const handleDownloadExcel = () => {
     const workbook = XLSX.utils.book_new();
@@ -579,6 +593,19 @@ function TopUrbanismo() {
           <PageNav />
           <div className="filtros-panel">
 
+            {/* BUSQUEDA POR NUMERO DE CONTRATO */}
+<div className="busqueda-contrato">
+  <input
+    type="number"
+    placeholder="Número de contrato"
+    value={contratoBuscado}
+    onChange={(e) => setContratoBuscado(e.target.value)}
+  />
+  <button className="button" onClick={buscarPorContrato}>
+    Buscar
+  </button>
+</div>
+
             {/* BOTONES TOP */}
             <div>
               <button className="button" onClick={handleTop10Urb}>Top 10</button>
@@ -709,7 +736,23 @@ function TopUrbanismo() {
             <h3 className="h3">Top Urbanismos</h3>
           </div>
 
-          <UrbanismoList urbanismos={topUrbanismos} />
+{modoBusquedaContrato ? (
+  <UrbanismoList
+    urbanismos={[
+      {
+        urbanismo: "Resultado de búsqueda",
+        cantidadClientes: clientesPorContrato.length,
+        ingresosTotales: clientesPorContrato.reduce(
+          (acc, c) => acc + Number(c.plan?.cost || 0),
+          0
+        ),
+        clientes: clientesPorContrato,
+      },
+    ]}
+  />
+) : (
+  <UrbanismoList urbanismos={topUrbanismos} />
+)}
         </>
       )}
     </div>
