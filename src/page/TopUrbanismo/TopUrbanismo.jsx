@@ -292,15 +292,15 @@ function TopUrbanismo() {
     XLSX.writeFile(workbook, nombreArchivo);
   };
 
-  // Función para construir el subdivision string basado en estado y tipo
+  // Función para construir el subdivision string en mayúsculas
   const construirSubdivision = useCallback((estado, tipo) => {
-    // Normalizar el estado (capitalizar primera letra)
-    const estadoNormalizado = estado.charAt(0).toUpperCase() + estado.slice(1).toLowerCase();
+    // Convertir estado a mayúsculas
+    const estadoMayusculas = estado.toUpperCase();
     
-    // Normalizar el tipo (todo en mayúsculas)
-    const tipoNormalizado = tipo.toUpperCase();
+    // Convertir tipo a mayúsculas
+    const tipoMayusculas = tipo.toUpperCase();
     
-    return `${estadoNormalizado}_${tipoNormalizado}`;
+    return `${estadoMayusculas}_${tipoMayusculas}`;
   }, []);
 
   // Función para determinar si un servicio pasa los filtros seleccionados
@@ -310,12 +310,15 @@ function TopUrbanismo() {
       return false;
     }
 
-    // Filtro de estado
+    // Filtro de estado (comparación case-insensitive)
     const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
-      estadosSeleccionados.includes(servicio.status_name);
+      estadosSeleccionados.some(estado => 
+        estado.toLowerCase() === servicio.status_name.toLowerCase()
+      );
+    
+    if (!estadoFiltrado) return false;
     
     // Filtro de tipo usando client_subdivision
-    const tieneSubdivision = servicio.client_subdivision && servicio.client_subdivision !== "";
     let tipoFiltrado = false;
     
     if (estadosSeleccionadosType.includes("Todos")) {
@@ -325,77 +328,97 @@ function TopUrbanismo() {
       // y comparamos con el client_subdivision del servicio
       tipoFiltrado = estadosSeleccionadosType.some((tipoSeleccionado) => {
         // Construir el subdivision para la combinación estado + tipo
+        const estadoParaSubdivision = estadosSeleccionados.includes("Todos") 
+          ? servicio.status_name 
+          : estadosSeleccionados[0];
+        
         const subdivisionEsperada = construirSubdivision(
-          estadosSeleccionados.includes("Todos") ? servicio.status_name : estadosSeleccionados[0],
+          estadoParaSubdivision,
           tipoSeleccionado
         );
         
-        // Si el servicio tiene client_subdivision, comparamos directamente
-        if (tieneSubdivision) {
+        // Verificar si el servicio tiene client_subdivision
+        if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+          // Comparar directamente (ambos en mayúsculas)
           return servicio.client_subdivision === subdivisionEsperada;
         } 
         // Si no tiene client_subdivision, construimos uno a partir de status_name y client_type_name
-        else {
+        else if (servicio.status_name && servicio.client_type_name) {
           const subdivisionCalculado = construirSubdivision(
             servicio.status_name,
-            servicio.client_type_name || ""
+            servicio.client_type_name
           );
           return subdivisionCalculado === subdivisionEsperada;
         }
+        
+        return false;
       });
     }
+    
+    if (!tipoFiltrado) return false;
     
     // Filtros adicionales
     const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
       migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
     
+    if (!migradoFiltrado) return false;
+    
     const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
       ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+    
+    if (!cicloFiltrado) return false;
     
     const sectorFiltrado = sectoresSeleccionados.length === 0 ||
       sectoresSeleccionados.includes("Todos") ||
       (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
     
+    if (!sectorFiltrado) return false;
+    
     const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
       urbanismosSeleccionados.includes("Todos") ||
       (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
-    return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
+    return urbanismoFiltrado;
   }, [estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados, construirSubdivision]);
 
-  // Función para determinar si un servicio pasa el filtro para totales generales
+  // Función para determinar si un servicio pasa el filtro para totales generales (solo por estado)
   const pasaFiltroTotales = useCallback((servicio) => {
     // Primero verificamos que no sea un cliente de prueba
     if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
       return false;
     }
 
-    // Para totales generales (solo estado), verificamos si el estado coincide
+    // Para totales generales (solo estado), verificamos si el estado coincide (case-insensitive)
     const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
-      estadosSeleccionados.includes(servicio.status_name);
+      estadosSeleccionados.some(estado => 
+        estado.toLowerCase() === servicio.status_name.toLowerCase()
+      );
     
-    // Si estamos viendo solo el estado (tipo es "Todos"), usar esta función
-    if (estadosSeleccionadosType.includes("Todos")) {
-      // Filtros adicionales
-      const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
-        migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-      
-      const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
-        ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
-      
-      const sectorFiltrado = sectoresSeleccionados.length === 0 ||
-        sectoresSeleccionados.includes("Todos") ||
-        (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-      
-      const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
-        urbanismosSeleccionados.includes("Todos") ||
-        (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
+    if (!estadoFiltrado) return false;
+    
+    // Filtros adicionales
+    const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+      migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+    
+    if (!migradoFiltrado) return false;
+    
+    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
+      ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+    
+    if (!cicloFiltrado) return false;
+    
+    const sectorFiltrado = sectoresSeleccionados.length === 0 ||
+      sectoresSeleccionados.includes("Todos") ||
+      (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+    
+    if (!sectorFiltrado) return false;
+    
+    const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
+      urbanismosSeleccionados.includes("Todos") ||
+      (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
-      return estadoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
-    }
-    
-    return false;
-  }, [estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+    return urbanismoFiltrado;
+  }, [estadosSeleccionados, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   useEffect(() => {
     if (!data) return;
