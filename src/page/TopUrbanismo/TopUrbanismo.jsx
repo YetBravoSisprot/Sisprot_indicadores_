@@ -292,22 +292,60 @@ function TopUrbanismo() {
     XLSX.writeFile(workbook, nombreArchivo);
   };
 
+  // Función para construir el subdivision string basado en estado y tipo
+  const construirSubdivision = useCallback((estado, tipo) => {
+    // Normalizar el estado (capitalizar primera letra)
+    const estadoNormalizado = estado.charAt(0).toUpperCase() + estado.slice(1).toLowerCase();
+    
+    // Normalizar el tipo (todo en mayúsculas)
+    const tipoNormalizado = tipo.toUpperCase();
+    
+    return `${estadoNormalizado}_${tipoNormalizado}`;
+  }, []);
+
   // Función para determinar si un servicio pasa los filtros seleccionados
   const pasaFiltros = useCallback((servicio) => {
-    const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
+    // Primero verificamos que no sea un cliente de prueba
+    if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
+      return false;
+    }
+
+    // Filtro de estado
+    const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
+      estadosSeleccionados.includes(servicio.status_name);
     
-    // CORRECCIÓN: Normalizar los valores de tipo de cliente para comparación
-    let tipoClienteNormalizado = "";
-    if (servicio.client_type_name) {
-      // Convertir a mayúsculas para comparar con los valores del filtro
-      tipoClienteNormalizado = servicio.client_type_name.toUpperCase();
+    // Filtro de tipo usando client_subdivision
+    const tieneSubdivision = servicio.client_subdivision && servicio.client_subdivision !== "";
+    let tipoFiltrado = false;
+    
+    if (estadosSeleccionadosType.includes("Todos")) {
+      tipoFiltrado = true;
+    } else {
+      // Para cada tipo seleccionado, construimos el subdivision correspondiente
+      // y comparamos con el client_subdivision del servicio
+      tipoFiltrado = estadosSeleccionadosType.some((tipoSeleccionado) => {
+        // Construir el subdivision para la combinación estado + tipo
+        const subdivisionEsperada = construirSubdivision(
+          estadosSeleccionados.includes("Todos") ? servicio.status_name : estadosSeleccionados[0],
+          tipoSeleccionado
+        );
+        
+        // Si el servicio tiene client_subdivision, comparamos directamente
+        if (tieneSubdivision) {
+          return servicio.client_subdivision === subdivisionEsperada;
+        } 
+        // Si no tiene client_subdivision, construimos uno a partir de status_name y client_type_name
+        else {
+          const subdivisionCalculado = construirSubdivision(
+            servicio.status_name,
+            servicio.client_type_name || ""
+          );
+          return subdivisionCalculado === subdivisionEsperada;
+        }
+      });
     }
     
-    const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || 
-      estadosSeleccionadosType.some(tipo => 
-        tipoClienteNormalizado === tipo.toUpperCase()
-      );
-    
+    // Filtros adicionales
     const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
       migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
     
@@ -323,14 +361,53 @@ function TopUrbanismo() {
       (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
     return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
+  }, [estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados, construirSubdivision]);
+
+  // Función para determinar si un servicio pasa el filtro para totales generales
+  const pasaFiltroTotales = useCallback((servicio) => {
+    // Primero verificamos que no sea un cliente de prueba
+    if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
+      return false;
+    }
+
+    // Para totales generales (solo estado), verificamos si el estado coincide
+    const estadoFiltrado = estadosSeleccionados.includes("Todos") || 
+      estadosSeleccionados.includes(servicio.status_name);
+    
+    // Si estamos viendo solo el estado (tipo es "Todos"), usar esta función
+    if (estadosSeleccionadosType.includes("Todos")) {
+      // Filtros adicionales
+      const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+        migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+      
+      const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
+        ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+      
+      const sectorFiltrado = sectoresSeleccionados.length === 0 ||
+        sectoresSeleccionados.includes("Todos") ||
+        (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+      
+      const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
+        urbanismosSeleccionados.includes("Todos") ||
+        (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
+
+      return estadoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
+    }
+    
+    return false;
   }, [estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   useEffect(() => {
     if (!data) return;
 
+    // Determinar qué función de filtro usar
+    const usarPasaFiltros = estadosSeleccionadosType.includes("Todos") 
+      ? pasaFiltroTotales 
+      : pasaFiltros;
+
     // Filtrar servicios que no sean de prueba y que pasen los filtros
     const serviciosFiltrados = data.results.filter((servicio) => 
-      !servicio.client_name.includes("PRUEBA") && pasaFiltros(servicio)
+      !servicio.client_name.includes("PRUEBA") && usarPasaFiltros(servicio)
     );
 
     // Calcular totales globales
@@ -372,7 +449,7 @@ function TopUrbanismo() {
 
     const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados, pasaFiltros]);
+  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados, pasaFiltros, pasaFiltroTotales]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
