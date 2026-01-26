@@ -263,6 +263,7 @@ const buscarPorContrato = () => {
         const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
         return {
+          "Contrato": cliente.id,
           Cliente: cliente.client_name, 
           Teléfono: cliente.client_mobile,
           Dirección: cliente.address,
