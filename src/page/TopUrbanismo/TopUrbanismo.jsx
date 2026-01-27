@@ -328,10 +328,6 @@ return "DESCONOCIDO";
 
   // Función para determinar si un servicio pasa los filtros seleccionados (estado + tipo específico)
   const pasaFiltros = useCallback((servicio) => {
-    // Primero verificamos que no sea un cliente de prueba
-    if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
-      return false;
-    }
 
     // Filtro de tipo usando client_subdivision
     let tipoFiltrado = false;
@@ -416,11 +412,6 @@ return "DESCONOCIDO";
 
   // Función para determinar si un servicio pasa el filtro para totales generales (basado en client_subdivision)
   const pasaFiltroTotales = useCallback((servicio) => {
-    // Primero verificamos que no sea un cliente de prueba
-    if (servicio.client_name && servicio.client_name.includes("PRUEBA")) {
-      return false;
-    }
-
     // Verificar el estado usando client_subdivision
     let estadoFiltrado = false;
     
@@ -510,23 +501,10 @@ return "DESCONOCIDO";
       ? pasaFiltroTotales 
       : pasaFiltros;
 
-    // Filtrar servicios que no sean de prueba y que pasen los filtros
-    const serviciosFiltrados = data.results.filter((servicio) => {
-      const esClientePrueba = servicio.client_name && servicio.client_name.includes("PRUEBA");
-      const pasaFiltro = !esClientePrueba && usarPasaFiltros(servicio);
-      
-      // DEBUG: Imprimir información para clientes activos que pasan el filtro
-      if (pasaFiltro && estadosSeleccionados.includes("Activo")) {
-        console.log("Cliente incluido:", {
-          nombre: servicio.client_name,
-          subdivision: servicio.client_subdivision,
-          tipo: servicio.client_type_name,
-          estado: servicio.status_name
-        });
-      }
-      
-      return pasaFiltro;
-    });
+    const serviciosFiltrados = data.results.filter((servicio) =>
+  usarPasaFiltros(servicio)
+);
+
 
     console.log("Total clientes encontrados:", serviciosFiltrados.length);
     
