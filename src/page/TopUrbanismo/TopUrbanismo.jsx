@@ -315,11 +315,15 @@ const buscarPorContrato = () => {
     if (!subdivision) return null;
     
     // Dividir por guión bajo y tomar la segunda parte
-    const partes = subdivision.split('_');
-    if (partes.length >= 2) {
-      return partes[1].toUpperCase(); // Retornar en mayúsculas para comparación
-    }
-    return null;
+  const partes = subdivision.split('_');
+
+if (partes.length >= 2 && partes[1]) {
+  return partes[1].toUpperCase();
+}
+
+// fallback seguro
+return "DESCONOCIDO";
+
   }, []);
 
   // Función para determinar si un servicio pasa los filtros seleccionados (estado + tipo específico)
@@ -537,7 +541,10 @@ const buscarPorContrato = () => {
     console.log("=== FIN FILTRADO ===");
 
     // Calcular totales globales
-    const totalClientes = serviciosFiltrados.length;
+    const totalClientes = serviciosFiltrados.filter(
+  s => s.client_subdivision || s.status_name
+).length;
+
     const ingresosTotales = serviciosFiltrados.reduce((acc, curr) => {
       const costoPlan = parseFloat(curr.plan?.cost || 0);
       return acc + costoPlan;
