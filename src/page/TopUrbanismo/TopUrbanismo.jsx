@@ -401,9 +401,15 @@ if (!tipoServicio && servicio.client_type_name) {
     
     if (!cicloFiltrado) return false;
     
-    const sectorFiltrado = sectoresSeleccionados.length === 0 ||
-      sectoresSeleccionados.includes("Todos") ||
-      (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+    const sectorFiltrado =
+  sectoresSeleccionados.length === 0 ||
+  sectoresSeleccionados.includes("Todos") ||
+  (
+    servicio.sector_name &&
+    sectorAgenciaMap[servicio.sector_name] &&
+    sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name])
+  );
+
     
     if (!sectorFiltrado) return false;
     
