@@ -191,6 +191,8 @@ function TopUrbanismo() {
   const [contratoBuscado, setContratoBuscado] = useState("");
 const [clientesPorContrato, setClientesPorContrato] = useState([]);
 const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
+  const [serviciosParaExportar, setServiciosParaExportar] = useState([]);
+
 
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
@@ -255,32 +257,31 @@ const buscarPorContrato = () => {
 
     const hoy = new Date();
 
-    const worksheetData = topUrbanismos.flatMap((urbanismo) => {
-      return urbanismo.clientes.map((cliente, clientIndex) => {
-        const service = cliente.service_detail || {};
-        const created_at_raw = cliente.created_at || "";
-        const created_at = created_at_raw ? new Date(created_at_raw) : null;
-        const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
+    const worksheetData = serviciosParaExportar.map((cliente) => {
+  const service = cliente.service_detail || {};
+  const created_at_raw = cliente.created_at || "";
+  const created_at = created_at_raw ? new Date(created_at_raw) : null;
+  const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
-        return {
-          "Contrato": cliente.id,
-          Cliente: cliente.client_name, 
-          Teléfono: cliente.client_mobile,
-          Dirección: cliente.address,
-          Urbanismo: urbanismo.urbanismo,
-          "Migrado": cliente.migrate ? "Migrado" : "No migrado",
-          "Ciclo": cliente.cycle || "",
-          "Cedula": cliente.client_identification,
-          IP: service.ip || "",
-          MAC: service.mac || "",
-          "Fecha_Creación": created_at_raw.slice(0, 10),
-          "Días Hábiles": diasHabiles,
-          Tipo_Cliente: cliente.client_type_name,
-          plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
-        };
-      });
-    });
+  return {
+    "Contrato": cliente.id,
+    Cliente: cliente.client_name,
+    Teléfono: cliente.client_mobile,
+    Dirección: cliente.address,
+    Urbanismo: cliente.sector_name || "",
+    "Migrado": cliente.migrate ? "Migrado" : "No migrado",
+    "Ciclo": cliente.cycle || "",
+    "Cedula": cliente.client_identification,
+    IP: service.ip || "",
+    MAC: service.mac || "",
+    "Fecha_Creación": created_at_raw.slice(0,10),
+    "Días Hábiles": diasHabiles,
+Tipo_Cliente: cliente.client_type_name,
+plan: ${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$),
+};
+});
 
+   
     // ✅ Ordenar por días hábiles de mayor a menor
     worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
 
@@ -503,7 +504,9 @@ return "DESCONOCIDO";
 
     const serviciosFiltrados = data.results.filter((servicio) =>
   usarPasaFiltros(servicio)
+
 );
+ setServiciosParaExportar(serviciosFiltrados);
 
 
     console.log("Total clientes encontrados:", serviciosFiltrados.length);
