@@ -396,8 +396,11 @@ if (!tipoServicio && servicio.client_type_name) {
     
     if (!migradoFiltrado) return false;
     
-    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
-      ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+   const cicloFiltrado =
+  ciclosSeleccionados.includes("Todos") ||
+  servicio.cycle == null ||
+  ciclosSeleccionados.includes(String(servicio.cycle));
+
     
     if (!cicloFiltrado) return false;
     
