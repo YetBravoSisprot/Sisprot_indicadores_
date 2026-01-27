@@ -342,19 +342,21 @@ return "DESCONOCIDO";
         // Obtener el tipo del servicio desde client_subdivision
         let tipoServicio = null;
         
-        if (servicio.client_subdivision && servicio.client_subdivision !== "") {
-          tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
-        } 
-        // Si no tiene client_subdivision, usar client_type_name como respaldo
-        else if (servicio.client_type_name) {
-          tipoServicio = servicio.client_type_name.toUpperCase();
-        }
+       if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+  tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
+}
+
+if (!tipoServicio && servicio.client_type_name) {
+  tipoServicio = servicio.client_type_name.trim().toUpperCase();
+}
+
         
         // Si no podemos determinar el tipo del servicio, no pasa el filtro
         if (!tipoServicio) return false;
         
         // Comparar el tipo del servicio con el tipo seleccionado
-        return tipoServicio === tipoSeleccionado.toUpperCase();
+        return tipoServicio === tipoSeleccionado.trim().toUpperCase();
+
       });
     }
     
