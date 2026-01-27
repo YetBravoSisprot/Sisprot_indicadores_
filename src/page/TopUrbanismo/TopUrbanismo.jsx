@@ -257,7 +257,7 @@ const buscarPorContrato = () => {
 
     const hoy = new Date();
 
-    const worksheetData = serviciosParaExportar.map((cliente) => {
+const worksheetData = serviciosParaExportar.map((cliente) => {
   const service = cliente.service_detail || {};
   const created_at_raw = cliente.created_at || "";
   const created_at = created_at_raw ? new Date(created_at_raw) : null;
@@ -266,20 +266,21 @@ const buscarPorContrato = () => {
   return {
     "Contrato": cliente.id,
     Cliente: cliente.client_name,
-    Teléfono: cliente.client_mobile,
-    Dirección: cliente.address,
+    "Teléfono": cliente.client_mobile,
+    "Dirección": cliente.address,
     Urbanismo: cliente.sector_name || "",
     "Migrado": cliente.migrate ? "Migrado" : "No migrado",
     "Ciclo": cliente.cycle || "",
     "Cedula": cliente.client_identification,
     IP: service.ip || "",
     MAC: service.mac || "",
-    "Fecha_Creación": created_at_raw.slice(0,10),
+    "Fecha_Creación": created_at_raw ? created_at_raw.slice(0, 10) : "",
     "Días Hábiles": diasHabiles,
-Tipo_Cliente: cliente.client_type_name,
-plan: ${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$),
-};
+    Tipo_Cliente: cliente.client_type_name,
+    plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+  };
 });
+
 
    
     // ✅ Ordenar por días hábiles de mayor a menor
