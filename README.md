@@ -43,10 +43,10 @@ Para iniciar sesión en la aplicación, utiliza las credenciales personales:
 
 Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
-🌐 **[Ver el proyecto en línea](https://github.com/YetBravoSisprot/Sisprot_indicadores_)**
+🌐 **[Ver el proyecto en línea](https://sisprot-indicadores-bkkk.vercel.app/)**
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/Dashboard-SGF-Empleados.git
+   git clone https://github.com/YetBravoSisprot/Sisprot_indicadores_
 2. npm install
 3. npm start
 4. Luego, abre http://localhost:3000 en tu navegador para ver la aplicación.
