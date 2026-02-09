@@ -1,0 +1,16 @@
+.mouse-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  /* Allows clicks to pass through */
+  z-index: 9999;
+  /* Ensure it is on top, but pointer-events: none handles interactions */
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 230, 0, 0.30),
+      transparent 40%);
+  transition: background 0.15s ease;
+  /* Smooth movement if needed, but direct update is often better */
+}
