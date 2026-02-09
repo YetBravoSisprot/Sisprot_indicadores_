@@ -4,16 +4,22 @@ import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import Loging from "../Loging/Loging";
 import DropdownMenu from "../../Componentes/DropdownMenu";
-import "./Indicadores.css"; // Archivo CSS para los estilos específicos de este componente
+import "./Indicadores.css";
 
 function Indicadores() {
   const { showPasswordState, data } = useContext(PasswordContext);
 
   const [clientesFiltrados, setClientesFiltrados] = useState([]);
-  const [tipoFiltro, setTipoFiltro] = useState("Todos"); // Estado para el filtro
-  const [mostrarLista, setMostrarLista] = useState(true); // Estado para mostrar/ocultar la lista
+  const [tipoFiltro, setTipoFiltro] = useState("Todos");
+  const [mostrarLista, setMostrarLista] = useState(true);
 
-  // Función para filtrar clientes por tipo
+  // Cargar todos los clientes al inicio
+  useEffect(() => {
+    if (data && data.results) {
+      setClientesFiltrados(data.results);
+    }
+  }, [data]);
+
   const filtrarClientes = (tipo) => {
     if (tipo === "Todos") {
       setClientesFiltrados(data.results || []);
@@ -26,7 +32,6 @@ function Indicadores() {
     setTipoFiltro(tipo);
   };
 
-  // Contar clientes por estado
   const contarEstados = () => {
     const conteo = { Todos: data?.results?.length || 0 };
     if (data && data.results) {
@@ -38,13 +43,6 @@ function Indicadores() {
   };
 
   const conteos = contarEstados();
-
-  // Cargar todos los clientes al inicio
-  useEffect(() => {
-    if (data && data.results) {
-      setClientesFiltrados(data.results);
-    }
-  }, [data]);
 
   return (
     <div>
@@ -59,67 +57,79 @@ function Indicadores() {
           <DropdownMenu />
           <PageNav />
 
-<h2 className="indicadores-titulo">Indicadores de Clientes</h2>
+          <div className="indicadores-dashboard animate-slide-up">
+            <h2 className="dashboard-title">Indicadores de Clientes</h2>
 
-          {/* Mostrar el conteo de clientes por estado */}
-          <div className="conteos">
-            <p>Total de clientes: {conteos.Todos}</p>
-            {Object.keys(conteos).map(
-              (estado) =>
+            {/* KPI Grid para los conteos */}
+            <div className="kpi-grid">
+              <div
+                className={`kpi-card glass ${tipoFiltro === 'Todos' ? 'active-filter' : ''}`}
+                onClick={() => filtrarClientes('Todos')}
+                role="button"
+              >
+                <div className="kpi-icon">📋</div>
+                <div className="kpi-info">
+                  <h3>Total Registrados</h3>
+                  <p className="kpi-value">{conteos.Todos}</p>
+                </div>
+              </div>
+
+              {Object.keys(conteos).map((estado) => (
                 estado !== "Todos" && (
-                  <p key={estado}>
-                    {estado}: {conteos[estado]}
-                  </p>
+                  <div
+                    key={estado}
+                    className={`kpi-card glass ${tipoFiltro === estado ? 'active-filter' : ''} ${estado === 'Suspendido' || estado === 'Cortado' ? 'warning' : ''}`}
+                    onClick={() => filtrarClientes(estado)}
+                    role="button"
+                  >
+                    <div className="kpi-icon">
+                      {estado === 'Activo' ? '✅' : estado === 'Suspendido' ? '⚠️' : 'ℹ️'}
+                    </div>
+                    <div className="kpi-info">
+                      <h3>{estado}s</h3>
+                      <p className="kpi-value">{conteos[estado]}</p>
+                    </div>
+                  </div>
                 )
+              ))}
+            </div>
+
+            {/* Controles de Lista */}
+            <div className="controls-bar glass">
+              <span className="filter-status">
+                Viendo: <strong>{tipoFiltro}</strong> ({clientesFiltrados.length})
+              </span>
+              <button
+                onClick={() => setMostrarLista((prev) => !prev)}
+                className="button"
+              >
+                {mostrarLista ? "Ocultar Lista" : "Mostrar Lista"}
+              </button>
+            </div>
+
+            {/* Lista de Clientes */}
+            {mostrarLista && (
+              <ul className="lista-clientes">
+                {clientesFiltrados.map((cliente) => (
+                  <li key={cliente.id} className="client-card glass">
+                    <div className="client-header">
+                      <strong>{cliente.client_name}</strong>
+                      <span className={`status-badge ${cliente.status_name.toLowerCase()}`}>
+                        {cliente.status_name}
+                      </span>
+                    </div>
+
+                    <div className="client-details">
+                      <p><span>Sector:</span> {cliente.sector_name}</p>
+                      <p><span>Plan:</span> {cliente.plan.name}</p>
+                      <p><span>Costo:</span> ${cliente.plan.cost}</p>
+                      <p><span>Móvil:</span> {cliente.client_mobile}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
-
-          {/* Botones de filtro */}
-          <div className="filtros">
-            {Object.keys(conteos).map((estado) => (
-              <button
-                key={estado}
-                onClick={() => filtrarClientes(estado)}
-                className={tipoFiltro === estado ? "activo" : ""}
-              >
-                {estado}
-              </button>
-            ))}
-          </div>
-
-          {/* Botón para mostrar/ocultar lista */}
-          <button
-            onClick={() => setMostrarLista((prev) => !prev)}
-            className="mostrar-ocultar"
-          >
-            {mostrarLista ? "Ocultar Lista" : "Mostrar Lista"}
-          </button>
-
-          {/* Lista de clientes filtrados */}
-          {mostrarLista && (
-            <ul className="lista-clientes">
-              {clientesFiltrados.map((cliente) => (
-                <li key={cliente.id}>
-                  <p>
-                    <strong>Nombre:</strong> {cliente.client_name}
-                  </p>
-                  <p>
-                    <strong>Estado:</strong> {cliente.status_name}
-                  </p>
-                  <p>
-                    <strong>Sector:</strong> {cliente.sector_name}
-                  </p>
-                  <p>
-                    <strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})
-                  </p>
-                  <p>
-  <strong>Teléfono:</strong> {cliente.client_mobile} {/* Aquí se agrega el teléfono */}
-</p>
-
-                </li>
-              ))}
-            </ul>
-          )}
         </>
       )}
     </div>
