@@ -1,26 +1,106 @@
-.en-construccion {
+.admin-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dashboard-title {
+  color: var(--color-text-light);
   text-align: center;
-  background-color: #f8f9fa; /* Fondo claro */
-  padding: 50px;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.en-construccion h2 {
-  font-size: 28px;
-  color: #0c4b87; /* Color azul oscuro */
-  margin-bottom: 15px;
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
-.en-construccion p {
-  font-size: 18px;
-  color: #555; /* Color gris para el texto */
-  margin-bottom: 20px;
+.kpi-card {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform var(--transition-medium);
+  color: var(--color-text-dark);
+  /* Default text color inside cards */
 }
 
-.icono-construccion {
-  font-size: 40px;
-  color: #f39c12; /* Color amarillo */
-  margin-top: 20px;
+/* Override text color inside glass cards if needed */
+.kpi-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.kpi-card:hover {
+  transform: translateY(-5px);
+}
+
+.kpi-icon {
+  font-size: 3rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-dark);
+}
+
+.kpi-trend {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.kpi-trend.positive {
+  color: var(--color-accent);
+  /* Green */
+}
+
+.kpi-subtext {
+  display: block;
+  font-size: 0.85rem;
+  color: #e0e0e0;
+  /* Off-white for better readability on glass */
+  margin-top: 4px;
+}
+
+.kpi-card.warning {
+  border-left: 4px solid var(--color-danger);
+}
+
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.section-card {
+  padding: 30px;
+}
+
+.section-card h3 {
+  color: var(--color-primary-dark);
+  margin-top: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
