@@ -2,7 +2,8 @@
 .contenedor {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(180deg, #0b3c8a 0%, #082a63 100%);
+  background: transparent;
+  /* Background handled by body or index.css for consistency */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +18,9 @@
   display: flex;
   justify-content: center;
   font-size: 24px;
-  color: white;
+  color: var(--color-text-light);
+  /* Variable */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ================= GRID DE URBANISMOS ================= */
@@ -27,50 +30,95 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 20px;
   padding: 0 10px;
+  align-items: start;
+  /* Prevent items from stretching when row height increases */
 }
 
 /* ================= ITEM URBANISMO ================= */
 .urbanismo-item {
   list-style-type: none;
-  background-color: #e9edf5;
-  color: #0b3c8a;
-  margin-bottom: 25px;
-  padding: 18px 20px;
-  border-radius: 12px;
-  border: 1px solid #c7d2e8;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--border-radius-lg);
+
+  color: #ffffff;
+  /* White text */
+  margin-bottom: 0;
+  /* Grid handles spacing */
+  padding: 15px;
+  /* Shorter padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  /* Allow growth */
+  min-height: 140px;
+  /* Minimum height for closed state */
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), grid-column 0.3s ease;
+  /* animation: slideUp 0.5s ease-out forwards; REMOVED to prevent conflict with layout changes */
+}
+
+.urbanismo-item.expanded {
+  grid-column: 1 / -1;
+  /* Span full width of the grid */
+  z-index: 10;
+  /* Bring to front */
+  background: rgba(255, 255, 255, 0.15);
+  /* Slightly clearer background */
+}
+
+.encabezados {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin: 10px 0;
+  color: #e0e0e0;
+}
+
+.encabezados strong {
+  color: #ffffff;
 }
 
 .urbanismo-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .urbanismo-item strong {
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  color: #ffffff;
 }
 
 .urbanismo-item span {
   display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: #0b3c8a;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  color: #e0e0e0;
+  /* Off-white label */
 }
 
 .urbanismo-item .buttonIngreso {
-  align-self: flex-end;
-  margin-top: 12px;
+  align-self: flex-start;
+  /* Better alignment in box */
+  margin-top: auto;
+  /* Push to bottom */
+  padding: 8px 16px;
+  font-size: 0.9rem;
 }
 
 /* ================= BOTONES ================= */
 .button {
-  background: linear-gradient(135deg, #1e90ff, #0047ab);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-text-light);
   padding: 14px 26px;
   font-size: 15px;
   font-weight: 600;
@@ -79,32 +127,32 @@
   margin: 6px;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  filter: brightness(1.1);
 }
 
 .buttonCerrar {
-  background-color: #000000;
-  color: white;
+  background-color: var(--color-text-dark);
+  color: var(--color-text-light);
   padding: 10px 20px;
   font-size: 16px;
   margin: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   position: relative;
 }
 
 .buttonCerrar:hover {
-  background-color: #0f0594;
+  opacity: 0.9;
 }
 
 .buttonIngreso {
-  background-color: #2ecc71;
+  background-color: var(--color-accent);
   padding: 14px 26px;
   font-size: 16px;
   font-weight: 600;
@@ -112,17 +160,18 @@
   border-radius: 30px;
   margin: 6px;
   cursor: default;
+  color: #fff;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .buttonIngreso:hover {
-  background: #16a34a;
+  background: #27ae60;
   transform: scale(1.05);
 }
 
 .buttonDescargar {
   background-color: #111827;
-  color: white;
+  color: var(--color-text-light);
   padding: 14px 26px;
   font-size: 15px;
   font-weight: 600;
@@ -148,33 +197,34 @@ select {
   padding: 8px 12px;
   font-size: 14px;
   font-weight: 500;
-  color: #0b1f44;
-  background: #ffffff;
-  border: 2px solid #1f4fbf;
-  border-radius: 12px;
+  color: var(--color-text-dark);
+  background: rgba(255, 255, 255, 0.9);
+  /* Slightly more opaque for readability */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-md);
   outline: none;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all var(--transition-fast);
 }
 
 select:hover {
-  border-color: #3b82f6;
+  border-color: var(--color-primary);
 }
 
 select:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.35);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.3);
 }
 
 option {
   font-size: 14px;
   padding: 6px;
   background-color: #ffffff;
-  color: #0b1f44;
+  color: var(--color-text-dark);
 }
 
 option:checked {
-  background-color: #333;
+  background-color: var(--color-primary-dark);
   color: white;
 }
 
@@ -194,20 +244,27 @@ option:checked {
   align-items: flex-start;
   gap: 16px;
   padding: 20px 24px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+  /* GLASSMORPHISM */
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--glass-shadow);
+
+  animation: fadeIn 0.8s ease-out;
 }
 
 .filtros-panel select {
   width: 200px;
   font-size: 13px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  border: 2px solid #1e3fa9;
+  border-radius: var(--border-radius-md);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 8px 10px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-fast);
 }
 
 .filtros-panel select::-webkit-scrollbar {
