@@ -44,7 +44,7 @@ const sectorAgenciaMap = {
   "Tibisay Guevara": "NODO TURMERO",
   "Plaza Jardin": "NODO MACARO",
   "Antigua Hacienda De Paya II": "NODO PAYA",
-  "Villas Del Sur": "NODO TURMERO", 
+  "Villas Del Sur": "NODO TURMERO",
   "San Pablo": "NODO TURMERO",
   "Vallecito": "NODO PAYA",
   "Jabillar": "NODO MACARO",
@@ -189,8 +189,8 @@ function TopUrbanismo() {
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
   const [contratoBuscado, setContratoBuscado] = useState("");
-const [clientesPorContrato, setClientesPorContrato] = useState([]);
-const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
+  const [clientesPorContrato, setClientesPorContrato] = useState([]);
+  const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
   const [serviciosParaExportar, setServiciosParaExportar] = useState([]);
 
 
@@ -225,16 +225,16 @@ const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setCiclosSeleccionados(selectedOptions);
   };
-const buscarPorContrato = () => {
-  if (!contratoBuscado) return;
+  const buscarPorContrato = () => {
+    if (!contratoBuscado) return;
 
-  const resultado = data.results.filter(
-    (cliente) => String(cliente.id) === String(contratoBuscado)
-  );
+    const resultado = data.results.filter(
+      (cliente) => String(cliente.id) === String(contratoBuscado)
+    );
 
-  setClientesPorContrato(resultado);
-  setModoBusquedaContrato(true);
-};
+    setClientesPorContrato(resultado);
+    setModoBusquedaContrato(true);
+  };
 
   const handleDownloadExcel = () => {
     const workbook = XLSX.utils.book_new();
@@ -257,32 +257,32 @@ const buscarPorContrato = () => {
 
     const hoy = new Date();
 
-const worksheetData = serviciosParaExportar.map((cliente) => {
-  const service = cliente.service_detail || {};
-  const created_at_raw = cliente.created_at || "";
-  const created_at = created_at_raw ? new Date(created_at_raw) : null;
-  const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
+    const worksheetData = serviciosParaExportar.map((cliente) => {
+      const service = cliente.service_detail || {};
+      const created_at_raw = cliente.created_at || "";
+      const created_at = created_at_raw ? new Date(created_at_raw) : null;
+      const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
-  return {
-    "Contrato": cliente.id,
-    Cliente: cliente.client_name,
-    "Teléfono": cliente.client_mobile,
-    "Dirección": cliente.address,
-    Urbanismo: cliente.sector_name || "",
-    "Migrado": cliente.migrate ? "Migrado" : "No migrado",
-    "Ciclo": cliente.cycle || "",
-    "Cedula": cliente.client_identification,
-    IP: service.ip || "",
-    MAC: service.mac || "",
-    "Fecha_Creación": created_at_raw ? created_at_raw.slice(0, 10) : "",
-    "Días Hábiles": diasHabiles,
-    Tipo_Cliente: cliente.client_type_name,
-    plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
-  };
-});
+      return {
+        "Contrato": cliente.id,
+        Cliente: cliente.client_name,
+        "Teléfono": cliente.client_mobile,
+        "Dirección": cliente.address,
+        Urbanismo: cliente.sector_name || "",
+        "Migrado": cliente.migrate ? "Migrado" : "No migrado",
+        "Ciclo": cliente.cycle || "",
+        "Cedula": cliente.client_identification,
+        IP: service.ip || "",
+        MAC: service.mac || "",
+        "Fecha_Creación": created_at_raw ? created_at_raw.slice(0, 10) : "",
+        "Días Hábiles": diasHabiles,
+        Tipo_Cliente: cliente.client_type_name,
+        plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+      };
+    });
 
 
-   
+
     // ✅ Ordenar por días hábiles de mayor a menor
     worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
 
@@ -315,16 +315,16 @@ const worksheetData = serviciosParaExportar.map((cliente) => {
   // Función para extraer el tipo de cliente de client_subdivision
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
     if (!subdivision) return null;
-    
+
     // Dividir por guión bajo y tomar la segunda parte
-  const partes = subdivision.split('_');
+    const partes = subdivision.split('_');
 
-if (partes.length >= 2 && partes[1]) {
-  return partes[1].toUpperCase();
-}
+    if (partes.length >= 2 && partes[1]) {
+      return partes[1].toUpperCase();
+    }
 
-// fallback seguro
-return "DESCONOCIDO";
+    // fallback seguro
+    return "DESCONOCIDO";
 
   }, []);
 
@@ -333,7 +333,7 @@ return "DESCONOCIDO";
 
     // Filtro de tipo usando client_subdivision
     let tipoFiltrado = false;
-    
+
     if (estadosSeleccionadosType.includes("Todos")) {
       tipoFiltrado = true;
     } else {
@@ -341,81 +341,81 @@ return "DESCONOCIDO";
       tipoFiltrado = estadosSeleccionadosType.some((tipoSeleccionado) => {
         // Obtener el tipo del servicio desde client_subdivision
         let tipoServicio = null;
-        
-       if (servicio.client_subdivision && servicio.client_subdivision !== "") {
-  tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
-}
 
-if (!tipoServicio && servicio.client_type_name) {
-  tipoServicio = servicio.client_type_name.trim().toUpperCase();
-}
+        if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+          tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
+        }
 
-        
+        if (!tipoServicio && servicio.client_type_name) {
+          tipoServicio = servicio.client_type_name.trim().toUpperCase();
+        }
+
+
         // Si no podemos determinar el tipo del servicio, no pasa el filtro
         if (!tipoServicio) return false;
-        
+
         // Comparar el tipo del servicio con el tipo seleccionado
         return tipoServicio === tipoSeleccionado.trim().toUpperCase();
 
       });
     }
-    
+
     if (!tipoFiltrado) return false;
-    
+
     // Ahora verificamos el estado usando client_subdivision
     let estadoFiltrado = false;
-    
+
     if (estadosSeleccionados.includes("Todos")) {
       estadoFiltrado = true;
     } else {
       estadoFiltrado = estadosSeleccionados.some((estadoSeleccionado) => {
         // Saltar si es "Todos"
         if (estadoSeleccionado === "Todos") return false;
-        
+
         const estadoBuscado = estadoSeleccionado.toUpperCase();
-        
+
         // Verificar si el servicio tiene client_subdivision
         if (servicio.client_subdivision && servicio.client_subdivision !== "") {
           // Verificar si client_subdivision contiene el estado buscado
           return servicio.client_subdivision.includes(estadoBuscado);
-        } 
+        }
         // Si no tiene client_subdivision, usar status_name como respaldo
         else if (servicio.status_name) {
           return servicio.status_name.toLowerCase() === estadoSeleccionado.toLowerCase();
         }
-        
+
         return false;
       });
     }
-    
+
     if (!estadoFiltrado) return false;
-    
+
     // Filtros adicionales
-    const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+    const migradoFiltrado = migradosSeleccionados.includes("Todos") ||
       migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-    
+
     if (!migradoFiltrado) return false;
-    
-   const cicloFiltrado =
-  ciclosSeleccionados.includes("Todos") ||
-  servicio.cycle == null ||
-  ciclosSeleccionados.includes(String(servicio.cycle));
 
-    
+    const cicloFiltrado =
+      ciclosSeleccionados.includes("Todos") ||
+      servicio.cycle == null ||
+      ciclosSeleccionados.includes(String(servicio.cycle));
+
+
     if (!cicloFiltrado) return false;
-    
-    const sectorFiltrado =
-  sectoresSeleccionados.length === 0 ||
-  sectoresSeleccionados.includes("Todos") ||
-  (
-    servicio.sector_name &&
-    sectorAgenciaMap[servicio.sector_name] &&
-    sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name])
-  );
 
-    
+    const sectorFiltrado =
+      sectoresSeleccionados.length === 0 ||
+      sectoresSeleccionados.includes("Todos") ||
+      (
+        servicio.sector_name &&
+        sectorAgenciaMap[servicio.sector_name] &&
+        sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name])
+      );
+
+
     if (!sectorFiltrado) return false;
-    
+
     const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
       urbanismosSeleccionados.includes("Todos") ||
       (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
@@ -427,7 +427,7 @@ if (!tipoServicio && servicio.client_type_name) {
   const pasaFiltroTotales = useCallback((servicio) => {
     // Verificar el estado usando client_subdivision
     let estadoFiltrado = false;
-    
+
     if (estadosSeleccionados.includes("Todos")) {
       estadoFiltrado = true;
     } else {
@@ -435,21 +435,21 @@ if (!tipoServicio && servicio.client_type_name) {
       estadoFiltrado = estadosSeleccionados.some((estadoSeleccionado) => {
         // Saltar si es "Todos"
         if (estadoSeleccionado === "Todos") return false;
-        
+
         const estadoBuscado = estadoSeleccionado.toUpperCase();
-        
+
         // Verificar si el servicio tiene client_subdivision
         if (servicio.client_subdivision && servicio.client_subdivision !== "") {
           // Verificar si client_subdivision contiene el estado buscado
           const contieneEstado = servicio.client_subdivision.includes(estadoBuscado);
-          
+
           // DEBUG: Imprimir información para el cliente que podría estar causando problemas
           if (contieneEstado) {
             // Extraer el tipo del servicio
             const tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
             // Verificar si el tipo es válido
             const tipoEsValido = tipoServicio && tiposClienteValidos.includes(tipoServicio);
-            
+
             if (!tipoEsValido && estadoSeleccionado === "Activo") {
               console.log("DEBUG - Cliente con tipo no válido:", {
                 nombre: servicio.client_name,
@@ -459,37 +459,37 @@ if (!tipoServicio && servicio.client_type_name) {
               });
             }
           }
-          
+
           return contieneEstado;
-        } 
+        }
         // Si no tiene client_subdivision, usar status_name como respaldo
         else if (servicio.status_name) {
           return servicio.status_name.toLowerCase() === estadoSeleccionado.toLowerCase();
         }
-        
+
         return false;
       });
     }
-    
+
     if (!estadoFiltrado) return false;
-    
+
     // Filtros adicionales
-    const migradoFiltrado = migradosSeleccionados.includes("Todos") || 
+    const migradoFiltrado = migradosSeleccionados.includes("Todos") ||
       migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-    
+
     if (!migradoFiltrado) return false;
-    
-    const cicloFiltrado = ciclosSeleccionados.includes("Todos") || 
+
+    const cicloFiltrado = ciclosSeleccionados.includes("Todos") ||
       ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
-    
+
     if (!cicloFiltrado) return false;
-    
+
     const sectorFiltrado = sectoresSeleccionados.length === 0 ||
       sectoresSeleccionados.includes("Todos") ||
       (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-    
+
     if (!sectorFiltrado) return false;
-    
+
     const urbanismoFiltrado = urbanismosSeleccionados.length === 0 ||
       urbanismosSeleccionados.includes("Todos") ||
       (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
@@ -510,19 +510,19 @@ if (!tipoServicio && servicio.client_type_name) {
     console.log("- Urbanismos:", urbanismosSeleccionados);
 
     // Determinar qué función de filtro usar
-    const usarPasaFiltros = estadosSeleccionadosType.includes("Todos") 
-      ? pasaFiltroTotales 
+    const usarPasaFiltros = estadosSeleccionadosType.includes("Todos")
+      ? pasaFiltroTotales
       : pasaFiltros;
 
     const serviciosFiltrados = data.results.filter((servicio) =>
-  usarPasaFiltros(servicio)
+      usarPasaFiltros(servicio)
 
-);
- setServiciosParaExportar(serviciosFiltrados);
+    );
+    setServiciosParaExportar(serviciosFiltrados);
 
 
     console.log("Total clientes encontrados:", serviciosFiltrados.length);
-    
+
     // Contar por tipo para depuración
     const conteoPorTipo = {};
     serviciosFiltrados.forEach(servicio => {
@@ -530,13 +530,13 @@ if (!tipoServicio && servicio.client_type_name) {
       conteoPorTipo[tipo] = (conteoPorTipo[tipo] || 0) + 1;
     });
     console.log("Conteo por tipo:", conteoPorTipo);
-    
+
     console.log("=== FIN FILTRADO ===");
 
     // Calcular totales globales
     const totalClientes = serviciosFiltrados.filter(
-  s => s.client_subdivision || s.status_name
-).length;
+      s => s.client_subdivision || s.status_name
+    ).length;
 
     const ingresosTotales = serviciosFiltrados.reduce((acc, curr) => {
       const costoPlan = parseFloat(curr.plan?.cost || 0);
@@ -549,7 +549,7 @@ if (!tipoServicio && servicio.client_type_name) {
     // Agrupar por urbanismo para la tabla
     const urbanismosTotales = serviciosFiltrados.reduce((acc, curr) => {
       if (!curr.sector_name) return acc;
-      
+
       if (!acc[curr.sector_name]) {
         acc[curr.sector_name] = {
           cantidadClientes: 1,
@@ -579,7 +579,7 @@ if (!tipoServicio && servicio.client_type_name) {
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  
+
   return (
     <div>
       <LogoTitulo />
@@ -595,17 +595,17 @@ if (!tipoServicio && servicio.client_type_name) {
           <div className="filtros-panel">
 
             {/* BUSQUEDA POR NUMERO DE CONTRATO */}
-<div className="busqueda-contrato">
-  <input
-    type="number"
-    placeholder="Número de contrato"
-    value={contratoBuscado}
-    onChange={(e) => setContratoBuscado(e.target.value)}
-  />
-  <button className="button" onClick={buscarPorContrato}>
-    Buscar
-  </button>
-</div>
+            <div className="busqueda-contrato">
+              <input
+                type="number"
+                placeholder="Número de contrato"
+                value={contratoBuscado}
+                onChange={(e) => setContratoBuscado(e.target.value)}
+              />
+              <button className="button" onClick={buscarPorContrato}>
+                Buscar
+              </button>
+            </div>
 
             {/* BOTONES TOP */}
             <div>
@@ -737,23 +737,23 @@ if (!tipoServicio && servicio.client_type_name) {
             <h3 className="h3">Top Urbanismos</h3>
           </div>
 
-{modoBusquedaContrato ? (
-  <UrbanismoList
-    urbanismos={[
-      {
-        urbanismo: "Resultado de búsqueda",
-        cantidadClientes: clientesPorContrato.length,
-        ingresosTotales: clientesPorContrato.reduce(
-          (acc, c) => acc + Number(c.plan?.cost || 0),
-          0
-        ),
-        clientes: clientesPorContrato,
-      },
-    ]}
-  />
-) : (
-  <UrbanismoList urbanismos={topUrbanismos} />
-)}
+          {modoBusquedaContrato ? (
+            <UrbanismoList
+              urbanismos={[
+                {
+                  urbanismo: "Resultado de búsqueda",
+                  cantidadClientes: clientesPorContrato.length,
+                  ingresosTotales: clientesPorContrato.reduce(
+                    (acc, c) => acc + Number(c.plan?.cost || 0),
+                    0
+                  ),
+                  clientes: clientesPorContrato,
+                },
+              ]}
+            />
+          ) : (
+            <UrbanismoList urbanismos={topUrbanismos} />
+          )}
         </>
       )}
     </div>
@@ -761,37 +761,40 @@ if (!tipoServicio && servicio.client_type_name) {
 }
 
 function UrbanismoList({ urbanismos }) {
-  const [mostrarLista, setMostrarLista] = useState({});
+  const [urbanismoAbierto, setUrbanismoAbierto] = useState(null);
 
   const toggleMostrarLista = (index) => {
-    setMostrarLista((prevState) => ({ ...prevState, [index]: !prevState[index] }));
+    setUrbanismoAbierto(prev => (prev === index ? null : index));
   };
 
   return (
-    <ul>
+    <ul className="urbanismos-grid">
       {urbanismos.map((urbanismo, index) => (
-        <li className="urbanismo-item encabezados" key={index}>
-          <span className="urbanismo-nombre">
-            {index + 1}. {urbanismo.urbanismo}
-          </span>
+        <li
+          className={`urbanismo-item ${urbanismoAbierto === index ? 'expanded' : ''}`}
+          key={index}
+        >
+          <div className="card-header">
+            <span className="urbanismo-nombre">
+              {index + 1}. {urbanismo.urbanismo}
+            </span>
+          </div>
 
-          <br />
           <div className="encabezados">
-            <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
-            <br />
+            <span><strong>Clientes:</strong> {urbanismo.cantidadClientes}</span>
             {!(
               urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
             ) && (
-              <span><strong>Ingreso total:</strong> { Math.round(urbanismo.ingresosTotales)}$</span>
-            )}
+                <span><strong>Ingreso:</strong> {Math.round(urbanismo.ingresosTotales)}$</span>
+              )}
           </div>
 
           <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
-            {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
+            {urbanismoAbierto === index ? "Ocultar Lista" : "Mostrar Lista"}
           </button>
 
           <div>
-            {mostrarLista[index] && (
+            {urbanismoAbierto === index && (
               <ul className="lista-clientes">
                 {urbanismo.clientes.map((cliente, idx) => (
                   <li key={idx}>
