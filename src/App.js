@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import Loging from "./page/Loging/Loging";
+import MouseSpotlight from "./Componentes/MouseSpotlight/MouseSpotlight";
 import TopUrbanismo from "./page/TopUrbanismo/TopUrbanismo";
 import Indicadores from "./page/Indicadores/Indicadores";
 import Admin from "./page/Admin/Admin";
@@ -25,6 +26,7 @@ function App() {
   return (
     <PasswordProvider>
       <BrowserRouter>
+        <MouseSpotlight />
         <Routes>
           <Route path="/" element={<Loging />} />
 
