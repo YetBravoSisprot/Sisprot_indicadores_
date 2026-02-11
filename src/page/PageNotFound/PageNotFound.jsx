@@ -25,7 +25,7 @@ function PageNotFound() {
           title="Indicadores con API"
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=f294a5a4-0a10-43c8-b212-64521a9e66f1&autoAuth=true&experience=power-bi"
+          src="https://app.powerbi.com/reportEmbed?reportId=1064c211-8d6e-49b5-acae-975603e275a0&autoAuth=true&experience=power-bi"
           frameBorder="0" 
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
