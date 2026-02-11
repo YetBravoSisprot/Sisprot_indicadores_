@@ -20,7 +20,7 @@ function PageNotFound() {
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
         {/* Informe 1: Indicadores con API */}
-        <h3 className="report-title">Análisis Integral de Clientes, Planes e Ingresos por Segmento</h3>
+        <h3 className="report-title">Dashboard SGF — Control Diario de Contratos (Estados, RS/PM y Montos</h3>
         <iframe 
           title="Indicadores con API"
           width="100%" 
