@@ -7,7 +7,6 @@ import Indicadores from "./page/Indicadores/Indicadores";
 import Admin from "./page/Admin/Admin";
 import PageNotFound from "./page/PageNotFound/PageNotFound";
 import Ventas from "./page/ventas/Ventas";
-import Ventascalle2 from "./page/Ventascalle2/ventascalle";
 import { PasswordProvider, PasswordContext } from "./PasswordContext/PasswordContext";
 
 import Chatbot from "./Componentes/Chatbot/Chatbot";
@@ -78,14 +77,6 @@ function AppContent() {
           }
         />
 
-        <Route
-          path="Ventascalle2"
-          element={
-            <ProtectedRoute roles={["admin", "ventas"]}>
-              <Ventascalle2 />
-            </ProtectedRoute>
-          }
-        />
 
         <Route
           path="*"
