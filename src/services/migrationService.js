@@ -69,7 +69,8 @@ export const fetchMigrationData = async () => {
             status: item.status_name,
             cost: item.new_plan_cost,
             previousPlanId: item.previous_plan,
-            newPlanId: item.new_plan
+            newPlanId: item.new_plan,
+            notes: item.notes
         })).sort((a, b) => new Date(b.fullDate) - new Date(a.fullDate));
 
         // Agrupar para el mini-gráfico/timeline
