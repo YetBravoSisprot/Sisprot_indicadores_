@@ -228,14 +228,9 @@ const pageKnowledge = {
     }
 };
 
-// Función para llamar a OpenAI
+// Función para llamar a OpenAI a través de Vercel Serverless Function
 const callOpenAI = async (query, history, currentPage = "") => {
-    const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
     const context = pageKnowledge[currentPage] || null;
-
-    if (!apiKey) {
-        throw new Error("No hay API Key configurada. Por favor declara REACT_APP_OPENAI_API_KEY en tu .env");
-    }
 
     let dynamicContextPrompt = "";
     if (context) {
@@ -292,11 +287,10 @@ Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahor
         { role: "user", content: query }
     ];
 
-    const response = await fetch("https://api.openai-proxy.com/v1/chat/completions", {
+    const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
