@@ -120,27 +120,33 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 0;
+  padding: 15px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 20px;
+  /* Add gap between label and number */
 }
 
 .activity-stat:nth-of-type(2) {
   border-bottom: none;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .stat-label {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: #cbd5e1;
   font-weight: 500;
   letter-spacing: 0.3px;
+  flex: 1;
+  /* Allow label to take available space */
 }
 
 .stat-number {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: #ffffff;
   text-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+  /* Prevent number from wrapping */
 }
 
 .stat-number.highlight {
