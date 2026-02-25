@@ -78,6 +78,13 @@ function PageNav() {
       {showLogoutModal && (
         <div className="custom-logout-modal-overlay">
           <div className="custom-logout-modal">
+            <button
+              className="modal-close-x"
+              onClick={() => setShowLogoutModal(false)}
+              aria-label="Cerrar"
+            >
+              ×
+            </button>
             <div className="logout-modal-content">
               <h3>Cerrando Sesión...</h3>
               <p>{logoutMessage}</p>
