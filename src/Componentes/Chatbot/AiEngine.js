@@ -289,7 +289,11 @@ Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (
 REGLA DE HUMANIZACIÓN:
 - Evita sonar como un robot. No uses siempre la misma estructura.
 - Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONTEXTO ACTUAL DE LA APP" para explicarlo con tus propias palabras, de forma fluida, como si estuvieras viendo la pantalla con él.
-- Si saludan o agradecen, responde de forma variada y cálida.`;
+- Si saludan o agradecen, responde de forma variada y cálida.
+
+REGLA DE EXCLUSIVIDAD DE FILTROS:
+- Si el usuario solicita ver DOS o MÁS estados al mismo tiempo (ej: "activos y suspendidos"), NO elijas uno al azar. Responde amablemente (en el campo "message") explicando que actualmente el sistema solo permite filtrar por un estado a la vez para mantener la precisión, y pregúntale cuál de los dos prefiere ver primero. En este caso, usa intent "UNKNOWN" o uno de clarificación.
+- Esta regla aplica también para tipos de cliente (ej: "residencial y pyme"). Siempre pide al usuario que elija uno solo para proceder.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
