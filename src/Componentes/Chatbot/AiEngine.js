@@ -229,7 +229,7 @@ const pageKnowledge = {
 };
 
 // Función para llamar a OpenAI
-const callOpenAI = async (query, history, currentPage = "") => {
+const callOpenAI = async (query, history, currentPage = "", userName = "") => {
     const apiKey = process.env.REACT_APP_GEMINI_API_KEY || process.env.REACT_APP_OPENAI_API_KEY;
     const context = pageKnowledge[currentPage] || null;
 
@@ -237,16 +237,15 @@ const callOpenAI = async (query, history, currentPage = "") => {
         throw new Error("No hay API Key configurada. Por favor declara REACT_APP_GEMINI_API_KEY en tu .env");
     }
 
-    let dynamicContextPrompt = "";
-    if (context) {
-        dynamicContextPrompt = `\nCONTEXTO ACTUAL DE LA APP:
-        El usuario está en la sección: "${context.name}".
-        - Lo que muestra: ${context.description}
-        - Información visual: ${context.data}
-        - Guía de uso: ${context.guide}
-        
-        Si el usuario pregunta qué ve, cómo usar esta sección o similares, usa esta información para responder de forma amable y precisa.`;
-    }
+    const allSectionsContext = Object.entries(pageKnowledge).map(([path, info]) => {
+        return `- **${info.name}** (Ruta: ${path}): ${info.description} Muestra: ${info.data}`;
+    }).join('\n');
+
+    let dynamicContextPrompt = `\nCONOCIMIENTO DE LAS SECCIONES DE LA APP:
+Aquí tienes lo que hace cada parte del sistema. Úsalo para responder si te preguntan por otras secciones:
+${allSectionsContext}
+
+Actualmente el usuario se encuentra físicamente en la sección: "${context ? context.name : 'Desconocida'}".`;
 
     const systemPrompt = `NO DEBES INVENTAR DATOS NUMÉRICOS. Tu tarea es doble: 
 1. Identificar la intención y parámetros técnicos para que el sistema busque la data.
@@ -288,7 +287,9 @@ Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (
 
 REGLA DE HUMANIZACIÓN:
 - Evita sonar como un robot. No uses siempre la misma estructura.
-- Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONTEXTO ACTUAL DE LA APP" para explicarlo con tus propias palabras, de forma fluida, como si estuvieras viendo la pantalla con él.
+- Llama siempre al usuario por su nombre: **${userName}** (asegurándote de que la primera letra siempre sea mayúscula).
+- **CRÍTICO - SALUDOS**: Solo di "Hola", "Buenos días" o similares si estás iniciando la conversación (si el historial es muy corto o el usuario te saludó). Si la conversación ya está avanzada y estamos intercambiando datos, NO repitas el "Hola" en cada respuesta. Sé directo pero amable.
+- Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONOCIMIENTO DE LAS SECCIONES DE LA APP" para explicarlo de forma fluida.
 - Si saludan o agradecen, responde de forma variada y cálida.
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
@@ -594,7 +595,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
         }
 
         if (!fromClarification) {
-            const openAIResult = await callOpenAI(message, history, currentPage);
+            const openAIResult = await callOpenAI(message, history, currentPage, userName);
             intent = openAIResult.intent;
             parameters = openAIResult.parameters;
 
@@ -682,7 +683,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'GUIA_APP':
                 return {
-                    text: `¡Por supuesto! Esta plataforma es el panel de control maestro. Aquí tienes un resumen de cada sección del menú principal: \n\n` +
+                    text: `¡Por supuesto ${userName}! Esta plataforma es el panel de control maestro. Aquí tienes un resumen de cada sección del menú principal: \n\n` +
                         `📊 **Indicadores**: Un panel general con gráficas y KPIs esenciales como clientes totales, activos, tipos y proyecciones.\n` +
                         `🏘️ **Top Urbanismos**: Te muestra en detalle cuáles son los sectores geográficos que más aportan clientes e ingresos.\n` +
                         `📋 **Lista de Clientes**: Una tabla robusta donde puedes ver a cada cliente, su Plan, Costo y Teléfono de contacto.\n` +
@@ -700,7 +701,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (!context) return { text: "Aquí solo usuarios autorizados pueden ver las métricas. ¿En qué te ayudo?", isCard: false };
 
                 return {
-                    text: `¡Claro! Estamos en **${context.name}**. Básicamente ${context.description} Aquí puedes ver ${context.data}. ${context.guide}`,
+                    text: `¡Claro ${userName}! Estamos en **${context.name}**. Básicamente ${context.description} Aquí puedes ver ${context.data}. ${context.guide}`,
                     isCard: false
                 };
             }
@@ -724,7 +725,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 } else if (!parameters?.status && intent !== 'ESTADOS') {
                     // DISPARAR CLARIFICACIÓN: Si no especifican estado, preguntamos de forma humana
                     return {
-                        text: `He preparado el resumen, pero ¿deseas filtrar por algún estado específico(** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar **) o prefieres verlos ** Todos **? `,
+                        text: `He preparado el resumen ${userName}, pero ¿deseas filtrar por algún estado específico(** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar **) o prefieres verlos ** Todos **? `,
                         isCard: false,
                         contextType: 'clarify_status',
                         cardData: { originalIntent: intent, savedParameters: parameters }
@@ -803,7 +804,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const cancelados = clientes.filter(c => c.status_name === "Cancelado").length;
 
                     return {
-                        text: "Aquí tienes el resumen completo de la base de datos:",
+                        text: `¡Claro ${userName}! Aquí tienes el resumen completo de la base de datos:`,
                         isCard: true,
                         cardData: {
                             title: "Resumen Total",
@@ -824,7 +825,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // Si pidieron un tipo específico o un estado específico, damos resultado directo
                     if (appliedFiltersText.length > 0) {
                         return {
-                            text: `He filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Puedes obtener el reporte detallado en el botón de abajo.**`,
+                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Puedes obtener el reporte detallado en el botón de abajo.**`,
                             isCard: true,
                             offerExcel: true,
                             cardData: {
@@ -854,7 +855,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             }));
 
                         return {
-                            text: "Esta es la vista satelital actual del estado o condición técnica de tus clientes:",
+                            text: `Mira ${userName}, esta es la vista satelital actual del estado o condición técnica de tus clientes:`,
                             isCard: true,
                             cardData: {
                                 title: "Estatus General",
@@ -1070,8 +1071,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const clientesCount = filteredClientes.length;
 
                 const introText = appliedFiltersText.length > 1
-                    ? `He calculado los ingresos aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})`
-                    : "¡Claro! He calculado los ingresos proyectados basados en tu consulta:";
+                    ? `¡Perfecto ${userName}! He calculado los ingresos aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})`
+                    : `¡Claro ${userName}! He calculado los ingresos proyectados basados en tu consulta:`;
 
                 return {
                     text: introText + "\n\n**He preparado un botón de descarga por si necesitas el listado en Excel.**",
@@ -1109,7 +1110,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
 
                 return {
-                    text: `El urbanismo o sector líder dominante actualmente es ** ${maxUrbanismo}**.`,
+                    text: `Mira ${userName}, el urbanismo o sector líder dominante actualmente es ** ${maxUrbanismo}**.`,
                     isCard: true,
                     cardData: {
                         title: "Urbanismo Principal",
@@ -1125,7 +1126,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const totalActivos = clientes.filter(c => c.status_name === "Activo").length;
 
                 return {
-                    text: `He escaneado el nivel de red.De nuestros ${totalActivos} clientes con estatus activo comercial, he detectado lo siguiente: `,
+                    text: `He escaneado el nivel de red ${userName}. De nuestros ${totalActivos} clientes con estatus activo comercial, he detectado lo siguiente: `,
                     isCard: true,
                     cardData: {
                         title: "Fallas de Red Puntos (Offline)",
@@ -1147,7 +1148,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const cliente = clientes.find(c => String(c.id) === String(nro));
                     if (cliente) {
                         return {
-                            text: `¡Búsqueda Exitosa! Este es el perfil del contrato #${nro}: `,
+                            text: `¡Búsqueda Exitosa ${userName}! Este es el perfil del contrato #${nro}: `,
                             isCard: true,
                             contextType: 'viewing_client', // Marcador para seguimientos
                             cardData: {
@@ -1194,7 +1195,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const infoExtra = clientesEncontrados.length > 1 ? ` (Hay ${clientesEncontrados.length - 1} coincidencias más en el motor, te muestro la primera relevante).` : "";
 
                 return {
-                    text: `He analizado la información.Esto es lo que resalta sobre ${cliente.client_name}${infoExtra}: `,
+                    text: `He analizado la información ${userName}. Esto es lo que resalta sobre ${cliente.client_name}${infoExtra}: `,
                     isCard: true,
                     contextType: 'viewing_client',
                     cardData: {
@@ -1212,7 +1213,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'BUSQUEDA_VAGA':
                 return {
-                    text: "Por supuesto, dime el nombre, apellido, o el número de contrato del cliente que necesitas consultar.",
+                    text: `Por supuesto ${userName}, dime el nombre, apellido, o el número de contrato del cliente que necesitas consultar.`,
                     isCard: false
                 };
 
