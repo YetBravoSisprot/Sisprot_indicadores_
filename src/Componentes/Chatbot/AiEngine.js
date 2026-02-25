@@ -200,7 +200,13 @@ const pageKnowledge = {
         name: "Líderes de Sectores (Top Urbanismos)",
         description: "Aquí medimos el rendimiento de cada zona urbana para saber nuestras fortalezas.",
         data: "Muestro el total de clientes, ingresos por sector y tarjetas detalladas por zona (Paya, Turmero, etc.).",
-        guide: "💡 **Tip rápido**: Usa los filtros de arriba y genera el **Excel** para ver datos técnicos avanzados como **IPs y MACs** de los clientes."
+        guide: "💡 **Tip rápido**: Usa los filtros de arriba y genera el **Excel** para ver datos detallados de los clientes."
+    },
+    "*": {
+        name: "Indicadores (Reportes Externos)",
+        description: "Esta es la sección de Indicadores detallados para análisis profundo.",
+        data: "Aquí encontrarás los enlaces directos a los reportes de **PowerBI** y otras métricas avanzadas externas.",
+        guide: "💡 **Tip rápido**: Usa los reportes de PowerBI para ver tendencias históricas y proyecciones."
     },
     "/Indicadores": {
         name: "Directorio Maestro de Clientes",
@@ -215,10 +221,10 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Haz clic en 'Ver Reporte Detallado' para acceder al desglose pormenorizado de la data."
     },
     "/Admin": {
-        name: "Panel de Indicadores (Dashboard)",
-        description: "Centro de control estratégico con KPIs financieros y operativos de alta gerencia.",
-        data: "Aquí ves los Ingresos Estimados, total de Clientes Activos y la alerta de Suspendidos. (Enlace directo a reportes externos de PowerBI).",
-        guide: "💡 **Tip rápido**: Esta sección te da la visión global del negocio en segundos."
+        name: "Admin (Centro de Comando)",
+        description: "Panel de control administrativo con KPIs operativos esenciales.",
+        data: "Aquí ves exclusivamente tres tarjetas principales: Ingresos Mensuales Estimados, Clientes Activos y la alerta de Suspendidos.",
+        guide: "💡 **Tip rápido**: Esta sección te da el estado de salud financiera del sistema de un vistazo rápido."
     }
 };
 
@@ -280,9 +286,9 @@ REGLA SOBRE DATOS TÉCNICOS (IP/MAC):
 Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (en el campo "message") que esa información NO se ve directamente en pantalla por seguridad y espacio, pero que se encuentra en los reportes de EXCEL. Indícale que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. 
 
 REGLA DE HUMANIZACIÓN:
-- Evita sonar como un robot. No uses siempre la misma estructura.
+- Evita sonar como un robot (pero sé breve).
 - Llama siempre al usuario por su nombre: **${userName}** (asegurándote de que la primera letra siempre sea mayúscula).
-- **CRÍTICO - SALUDOS**: Solo di "Hola", "Buenos días" o similares si estás iniciando la conversación (si el historial es muy corto o el usuario te saludó). Si la conversación ya está avanzada y estamos intercambiando datos, NO repitas el "Hola" en cada respuesta. Sé directo pero amable.
+- **PROHIBICIÓN TOTAL DE SALUDOS**: El sistema ya muestra un saludo inicial. Tú **NO** debes decir "Hola", "Buenos días", "¿Cómo estás?", ni nada parecido. Ve directamente al grano con la respuesta. Solo sé amable, pero sin preámbulos de saludo.
 - Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONOCIMIENTO DE LAS SECCIONES DE LA APP" para explicarlo de forma fluida.
 - Si saludan o agradecen, responde de forma variada y cálida.
 
