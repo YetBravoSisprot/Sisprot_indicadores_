@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5272,
+  "count": 5274,
   "results": [
     {
       "id": 3063,
@@ -55584,8 +55584,8 @@ const largeArraydata =
       "id": 5043,
       "client_name": "MARIA TAHIDIS LEOTA FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -55601,16 +55601,7 @@ const largeArraydata =
       "client_identification": "V17043570",
       "nap_box_name": "CTO - 106",
       "created_at": "2024-06-21T13:18:09.574528",
-      "service_detail": {
-        "id": 3219,
-        "ip": "172.30.89.2",
-        "mac": "2012231218007321",
-        "serial": "OEMT3C62624A (87)",
-        "queue": "Plan_161905_30183_WispHub",
-        "interface": "VLAN258_VALLECITO",
-        "created_at": "2024-06-28T09:42:30.272714",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -121083,8 +121074,8 @@ const largeArraydata =
       "id": 7363,
       "client_name": "PRUEBA FREDDY FREDDY",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Calle Peñalver",
@@ -137967,13 +137958,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00225",
       "created_at": "2025-04-29T07:33:10.662910",
       "service_detail": {
-        "id": 10777,
+        "id": 11741,
         "ip": "10.14.44.2",
         "mac": "OEMT3C62035A",
         "serial": "OEMT3C62035A",
         "queue": null,
         "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2025-12-17T15:36:31.919828",
+        "created_at": "2026-02-25T11:47:18.329275",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -152802,11 +152793,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Guayabita",
       "plan": {
-        "id": 43,
-        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
-        "cost": "46.00",
-        "code": "FOR650M",
-        "profile": "650M/650M"
+        "id": 8,
+        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
+        "cost": "49.50",
+        "code": "FOR750M",
+        "profile": "750M/750M"
       },
       "client_mobile": "04149441322",
       "address": "CTRA. VIA POLVORIN, CASA PARCELA #2, SECTOR GUAYABITA. TURMERO - ARAGUA, 2115.",
@@ -161702,7 +161693,16 @@ const largeArraydata =
       "client_identification": "V27820470",
       "nap_box_name": "CTO-00043",
       "created_at": "2026-02-24T13:30:38.475282",
-      "service_detail": null,
+      "service_detail": {
+        "id": 11737,
+        "ip": "10.16.171.2",
+        "mac": "10.16.171.2",
+        "serial": "10.16.171.2",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-02-25T09:20:24.140854",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -161726,6 +161726,63 @@ const largeArraydata =
       "client_identification": "V28249323",
       "nap_box_name": "CTO-0650",
       "created_at": "2026-02-24T16:50:12.613244",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 8993,
+      "client_name": "‎RONVELYS DEL CARMEN ACOSTA PEÑA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "La Esperanza",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "‎04243349302",
+      "address": "‎CALLE 13 CASA NÚMERO 3 SECTOR LA ESPERANZA EL MACARO",
+      "client_identification": "V16851941",
+      "nap_box_name": "RESERVA 3 TRONCAL LA ESPERANZA",
+      "created_at": "2026-02-25T08:41:41.114401",
+      "service_detail": {
+        "id": 11738,
+        "ip": "10.16.172.2",
+        "mac": "10.16.172.2",
+        "serial": "10.16.172.2",
+        "queue": null,
+        "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
+        "created_at": "2026-02-25T09:32:07.088934",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 8994,
+      "client_name": "‎ALINXON MAGDIEL OROPEZA INFANTE",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 8,
+        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
+        "cost": "49.50",
+        "code": "FOR750M",
+        "profile": "750M/750M"
+      },
+      "client_mobile": "0424-3197776",
+      "address": "‎CALLÉ PETION, EDIF. CICPC TURMERO, CASCO DE TURMERO, FRENTE AL CONCEJO MUNICIPAL",
+      "client_identification": "V25920999",
+      "nap_box_name": "CTO-00194 DOS",
+      "created_at": "2026-02-25T09:48:54.199138",
       "service_detail": null,
       "installation_invoice_cost": null
     }
