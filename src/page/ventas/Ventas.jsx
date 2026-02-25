@@ -6,6 +6,7 @@ import DropdownMenu from "../../Componentes/DropdownMenu";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
 import { fetchMigrationData } from "../../services/migrationService";
+import { fixSpellingErrors } from "../../utils/textUtils";
 import "./ventas.css";
 
 const PLAN_MAPPING = {
@@ -212,7 +213,7 @@ function Ventas() {
                                       {STATUS_TRANSLATION[client.status] || client.status}
                                     </span>
                                   </td>
-                                  <td data-label="Motivo" className="notes-cell">{client.notes || "-"}</td>
+                                  <td data-label="Motivo" className="notes-cell">{fixSpellingErrors(client.notes) || "-"}</td>
                                   <td data-label="Integración">
                                     {client.isMigration ? (
                                       <div className="integration-cell">
