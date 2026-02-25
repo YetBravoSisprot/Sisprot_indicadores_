@@ -280,34 +280,40 @@ ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con 
 REGLA DE PERSISTENCIA DE FILTROS:
 Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetro, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.`;
 
-    // Pasamos los últimos 5 mensajes al contexto para no excedernos en tokens
     const recentHistory = history.slice(-5).map(msg => ({
-        role: msg.sender === 'bot' ? 'assistant' : 'user',
-        content: msg.text || "(Mostrando tarjeta de datos UI)"
+        role: msg.sender === 'bot' ? 'model' : 'user',
+        parts: [{ text: msg.text || "(Mostrando tarjeta de datos UI)" }]
     }));
 
-    const messages = [
-        { role: "system", content: systemPrompt },
+    const contents = [
         ...recentHistory,
-        { role: "user", content: query }
+        { role: "user", parts: [{ text: query }] }
     ];
 
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            model: "gemini-1.5-flash",
-            messages: messages,
-            temperature: 0.1
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            contents: contents,
+            generationConfig: {
+                temperature: 0.1,
+                responseMimeType: "application/json"
+            }
         })
     });
 
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error?.message || `Error HTTP: ${response.status}`);
+        const errorText = await response.text();
+        console.error("Gemini API Error Detail:", response.status, errorText);
+        try {
+            const errorData = JSON.parse(errorText);
+            throw new Error(errorData.error?.message || `Error HTTP: ${response.status}. Detalle: ${errorText}`);
+        } catch (e) {
+            throw new Error(`Error HTTP: ${response.status}. Respuesta: ${errorText.substring(0, 100)}`);
+        }
     }
 
     const result = await response.json();
@@ -315,7 +321,11 @@ Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahor
         throw new Error(result.error.message);
     }
 
-    const content = result.choices[0].message.content.trim();
+    if (!result.candidates || result.candidates.length === 0) {
+        throw new Error("No se obtuvo respuesta del modelo");
+    }
+
+    const content = result.candidates[0].content.parts[0].text.trim();
     return JSON.parse(content);
 };
 
