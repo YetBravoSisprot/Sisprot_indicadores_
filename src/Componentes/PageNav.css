@@ -235,12 +235,40 @@ nav ul li a:hover {
   background: linear-gradient(135deg, #1e293b, #0f172a);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 30px 40px;
+  padding: 35px 40px 30px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   text-align: center;
   max-width: 400px;
   width: 90%;
+  position: relative;
+  /* Essential for absolute X button */
   animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.modal-close-x {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.modal-close-x:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
 }
 
 @keyframes modalPopIn {
