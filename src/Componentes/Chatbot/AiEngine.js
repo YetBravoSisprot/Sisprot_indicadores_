@@ -248,12 +248,9 @@ const callOpenAI = async (query, history, currentPage = "") => {
         Si el usuario pregunta qué ve, cómo usar esta sección o similares, usa esta información para responder de forma amable y precisa.`;
     }
 
-    const systemPrompt = `NO DEBES INVENTAR DATOS NUMÉRICOS. Tu tarea es doble: 
-1. Identificar la intención y parámetros técnicos para que el sistema busque la data.
-2. Redactar una respuesta humana, amable y contextualizada en el campo "message".
-
-DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
-{"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
+    const systemPrompt = `Eres el cerebro lógico (Router) de un dashboard analítico llamado Sisprot-AI. Tu única tarea es leer el mensaje del usuario, analizar el historial reciente del chat (contexto), y decidir a cuál de las siguientes "intenciones" corresponde la solicitud.
+NO DEBES INVENTAR RESPUESTAS O DAR TEXTO CONVERSACIONAL. SOLO Y EXCLUSIVAMENTE DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
+{"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
 - TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "25", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
@@ -281,15 +278,10 @@ Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su 
 ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con clientes. Si el usuario menciona: "Isaac Oliveira", "Tibisay Guevara", "Antonio Jose de Sucre", "Arturo Luis Berti", "Santa Eduviges", "Simon Bolivar", "Guerrero de Chavez", "Lascenio Guerrero" o "Salto Angel", clasifícalos como URBANISMO, NO como nombre de cliente o seguimiento.
 
 REGLA DE PERSISTENCIA DE FILTROS:
-Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetros, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.
+Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetro, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.
 
 REGLA SOBRE DATOS TÉCNICOS (IP/MAC):
-Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (en el campo "message") que esa información NO se ve directamente en pantalla por seguridad y espacio, pero que se encuentra en los reportes de EXCEL. Indícale que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. 
-
-REGLA DE HUMANIZACIÓN:
-- Evita sonar como un robot. No uses siempre la misma estructura.
-- Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONTEXTO ACTUAL DE LA APP" para explicarlo con tus propias palabras, de forma fluida, como si estuvieras viendo la pantalla con él.
-- Si saludan o agradecen, responde de forma variada y cálida.`;
+Si el usuario pregunta por la IP o MAC de clientes, explícale que esa información se encuentra en los reportes de EXCEL. Dile que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. NO digas que se ven directamente en las tablas de la pantalla.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
@@ -606,15 +598,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 intent = 'AMBIGUEDAD_METRICA';
             }
 
-            intent = openAIResult.intent;
-            parameters = openAIResult.parameters;
-            const customMessage = openAIResult.message;
-
-            // ... (resto de interceptores locales si existen)
-
-            if (customMessage && (intent === 'SALUDO' || intent === 'AGRADECIMIENTO' || intent === 'GUIA_APP' || intent === 'CONTEXTO_APP' || intent === 'UNKNOWN')) {
-                return { text: customMessage, isCard: false };
-            }
+            console.log("OpenAI Intent Router:", openAIResult);
         }
 
         // --- 1.1 INTERCEPTOR DE DESAMBIGUACIÓN (Nombres que son Sectores) ---
@@ -689,14 +673,22 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 };
 
             case 'CONTEXTO_APP': {
-                // Si por alguna razón no vino el mensaje de la IA, usamos el fallback humano (pero con tus palabras)
+                // Ensure proper routing match, defaulting to generic if exact string doesn't match
                 let contextKey = Object.keys(pageKnowledge).find(k => currentPage.toLowerCase().includes(k.toLowerCase()));
                 const context = contextKey ? pageKnowledge[contextKey] : null;
 
-                if (!context) return { text: "Aquí solo usuarios autorizados pueden ver las métricas. ¿En qué te ayudo?", isCard: false };
-
+                if (!context) {
+                    return {
+                        text: "Aquí solo las personas autorizadas pueden entrar a cada dashboard con un usuario y contraseña.",
+                        isCard: false
+                    };
+                }
                 return {
-                    text: `¡Claro! Estamos en **${context.name}**. Básicamente ${context.description} Aquí puedes ver ${context.data}. ${context.guide}`,
+                    text: `¡Claro! Estás en **${context.name}**. Aquí te explico rápido:\n\n` +
+                        `📌 **¿Para qué sirve?:** ${context.description}\n` +
+                        `📊 **¿Qué datos ves?:** ${context.data}\n\n` +
+                        `${context.guide}\n\n` +
+                        `¿Quieres que busquemos algún dato o contrato en específico aquí?`,
                     isCard: false
                 };
             }
