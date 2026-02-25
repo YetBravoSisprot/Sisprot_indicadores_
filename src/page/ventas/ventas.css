@@ -433,11 +433,14 @@
 
   .directory-row td {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    padding: 8px 10px;
+    align-items: flex-start;
+    /* Align to top to handle multi-line text */
+    padding: 12px 10px;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 15px;
   }
 
   .directory-row td:last-child {
@@ -446,13 +449,40 @@
 
   .directory-row td::before {
     content: attr(data-label);
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.7rem;
+    color: rgba(0, 210, 255, 0.6);
+    /* Use brand color for labels */
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
+    min-width: 90px;
+    /* Fixed width for labels to prevent overlap */
+    flex-shrink: 0;
+    margin-top: 2px;
   }
 
-  .client-info-cell {
-    align-items: flex-end;
+  /* Specific handling for content that might be long */
+  .client-info-cell,
+  .notes-cell,
+  .integration-cell {
+    text-align: right;
+    width: 100%;
+    word-break: break-word;
+    /* Ensure wrapping */
+    align-items: flex-end !important;
+  }
+
+  .client-name-cell {
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+
+  .notes-cell {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.4;
+  }
+
+  .integration-cell .transition-text {
+    justify-content: flex-end;
   }
 }
