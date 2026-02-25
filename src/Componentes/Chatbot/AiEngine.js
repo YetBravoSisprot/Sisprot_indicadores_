@@ -219,12 +219,6 @@ const pageKnowledge = {
         description: "El panel global para la alta gerencia con métricas de desempeño y finanzas.",
         data: "Aquí puedes ver los informes interactivos (como PowerBI), controles de cancelaciones y flujos de ingresos.",
         guide: "💡 **Tip rápido**: Usa los gráficos interactivos del informe para analizar la rentabilidad a fondo."
-    },
-    "/Ventascalle2": {
-        name: "Operaciones de Calle (Ventas Externas)",
-        description: "Panel dedicado al seguimiento de las ventas y operaciones en terreno.",
-        data: "Métricas de captación externa y seguimiento de asesores.",
-        guide: "💡 **Tip rápido**: Monitorea aquí el rendimiento del equipo de promotores de calle."
     }
 };
 
