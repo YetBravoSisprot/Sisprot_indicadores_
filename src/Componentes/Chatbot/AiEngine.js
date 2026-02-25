@@ -203,10 +203,10 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Usa los filtros de arriba y genera el **Excel** para ver datos detallados de los clientes."
     },
     "*": {
-        name: "Indicadores (Reportes Externos)",
-        description: "Esta es la sección de Indicadores detallados para análisis profundo.",
-        data: "Aquí encontrarás los enlaces directos a los reportes de **PowerBI** y otras métricas avanzadas externas.",
-        guide: "💡 **Tip rápido**: Usa los reportes de PowerBI para ver tendencias históricas y proyecciones."
+        name: "Indicadores (Reportes PowerBI)",
+        description: "Sección de análisis avanzado con informes externos detallados.",
+        data: "Aquí encontrarás múltiples tableros de **PowerBI**: Control Diario de Contratos, Cancelaciones, Ingresos Diarios, Activos por Día y Ventas.",
+        guide: "💡 **Tip rápido**: Los datos aquí se alimentan de fuentes externas y son ideales para análisis de tendencias a largo plazo."
     },
     "/Indicadores": {
         name: "Directorio Maestro de Clientes",
@@ -221,10 +221,10 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Haz clic en 'Ver Reporte Detallado' para acceder al desglose pormenorizado de la data."
     },
     "/Admin": {
-        name: "Admin (Centro de Comando)",
-        description: "Panel de control administrativo con KPIs operativos esenciales.",
-        data: "Aquí ves exclusivamente tres tarjetas principales: Ingresos Mensuales Estimados, Clientes Activos y la alerta de Suspendidos.",
-        guide: "💡 **Tip rápido**: Esta sección te da el estado de salud financiera del sistema de un vistazo rápido."
+        name: "Adm. Ingresos (Centro de Comando)",
+        description: "El panel de control administrativo privado para gerencia.",
+        data: "Muestro exclusivamente tres tarjetas críticas: **Ingresos Mensuales**, **Clientes Activos** y **Suspendidos**.",
+        guide: "💡 **Atención**: Esta sección solo es visible para usuarios autorizados/automatizados. Si no ves las tarjetas, es por falta de permisos."
     }
 };
 
