@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5274,
+  "count": 5275,
   "results": [
     {
       "id": 3063,
@@ -109719,8 +109719,8 @@ const largeArraydata =
       "id": 6941,
       "client_name": "LYSANDER ERNESTO DIAZ VIELMA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Durpa",
@@ -135207,8 +135207,8 @@ const largeArraydata =
       "id": 7950,
       "client_name": "FELIX ANTONIO CAMPOS ALVARADO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Los Mangos",
@@ -135224,7 +135224,16 @@ const largeArraydata =
       "client_identification": "V8818105",
       "nap_box_name": "CE-00111",
       "created_at": "2025-04-16T10:37:47.271362",
-      "service_detail": null,
+      "service_detail": {
+        "id": 11742,
+        "ip": "10.13.114.2",
+        "mac": "OEMT3C620862",
+        "serial": "OEMT3C620862",
+        "queue": null,
+        "interface": "VLAN267_LOS_MANGOS_ZTE",
+        "created_at": "2026-02-25T12:44:04.014944",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -147315,8 +147324,8 @@ const largeArraydata =
       "id": 8395,
       "client_name": "IRIS NORA TOVAR LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Las Palmas",
@@ -161709,8 +161718,8 @@ const largeArraydata =
       "id": 8992,
       "client_name": "JENNIBETH MARIA ANDREINA CABRERA SOLORZANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -161726,7 +161735,16 @@ const largeArraydata =
       "client_identification": "V28249323",
       "nap_box_name": "CTO-0650",
       "created_at": "2026-02-24T16:50:12.613244",
-      "service_detail": null,
+      "service_detail": {
+        "id": 11743,
+        "ip": "10.12.141.2",
+        "mac": "OEMT3C620D6A",
+        "serial": "OEMT3C620D6A",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-02-25T15:01:40.547432",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -161783,6 +161801,30 @@ const largeArraydata =
       "client_identification": "V25920999",
       "nap_box_name": "CTO-00194 DOS",
       "created_at": "2026-02-25T09:48:54.199138",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 8995,
+      "client_name": "MARCOS ALFONSO CARRION SANDIA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Los Nisperos",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "0412-8153782",
+      "address": "CONJUNTO RESIDENCIAL \"LOS NÍSPEROS\", TORRE B, PISO 2, APARTAMENTO 21",
+      "client_identification": "V33269237",
+      "nap_box_name": "TORRE B EDIF LOS NISPEROS",
+      "created_at": "2026-02-25T15:15:48.579475",
       "service_detail": null,
       "installation_invoice_cost": null
     }
