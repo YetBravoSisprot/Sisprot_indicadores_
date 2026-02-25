@@ -150,11 +150,11 @@ function Ventas() {
                   <div className="ventas-card glass kpi-card">
                     <h3>📊 Resumen de Actividad</h3>
                     <div className="activity-stat">
-                      <span className="stat-label">Total Clientes</span>
+                      <span className="stat-label">Total Clientes:</span>
                       <span className="stat-number">{stats.total}</span>
                     </div>
                     <div className="activity-stat">
-                      <span className="stat-label">Nuevas Activaciones</span>
+                      <span className="stat-label">Nuevas Activaciones:</span>
                       <span className="stat-number highlight">{stats.nuevos}</span>
                     </div>
                     <button
