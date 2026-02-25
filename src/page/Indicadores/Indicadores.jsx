@@ -131,7 +131,7 @@ function Indicadores() {
 
                       <div className="client-details">
                         <p><span>Sector:</span> {cliente.sector_name}</p>
-                        <p><span>Plan:</span> {cliente.plan.name}</p>
+                        <p><span>Plan: </span>{cliente.plan.name}</p>
                         <p><span>Costo:</span> ${cliente.plan.cost}</p>
                         <p><span>Móvil:</span> {cliente.client_mobile}</p>
                       </div>
