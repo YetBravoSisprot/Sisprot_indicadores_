@@ -200,12 +200,12 @@ const pageKnowledge = {
         name: "Líderes de Sectores (Top Urbanismos)",
         description: "Aquí medimos el rendimiento de cada zona urbana para saber nuestras fortalezas.",
         data: "Muestro el total de clientes, ingresos por sector y tarjetas detalladas por zona (Paya, Turmero, etc.).",
-        guide: "💡 **Tip rápido**: Usa los filtros de arriba (Agencia, Estado, Tipo) o busca un contrato específico para ver datos al instante."
+        guide: "💡 **Tip rápido**: Usa los filtros de arriba y genera el **Excel** para ver datos técnicos avanzados como **IPs y MACs** de los clientes."
     },
     "/Indicadores": {
         name: "Directorio Principal de Clientes",
         description: "Esta es tu base de datos en tiempo real. Un directorio completo para auditorías o soporte.",
-        data: "Tienes contadores rápidos por estado (Activos, Suspendidos, etc.) y la lista completa con IPs, Planes y Costos.",
+        data: "Tienes contadores rápidos por estado (Activos, Suspendidos, etc.) y la lista completa con Nombres, Planes y Costos. (Nota: IPs/MACs solo disponibles en Excel).",
         guide: "💡 **Tip rápido**: Haz clic en las tarjetas de colores arriba para filtrar la lista al instante."
     },
     "/Ventas": {
@@ -278,7 +278,10 @@ Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su 
 ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con clientes. Si el usuario menciona: "Isaac Oliveira", "Tibisay Guevara", "Antonio Jose de Sucre", "Arturo Luis Berti", "Santa Eduviges", "Simon Bolivar", "Guerrero de Chavez", "Lascenio Guerrero" o "Salto Angel", clasifícalos como URBANISMO, NO como nombre de cliente o seguimiento.
 
 REGLA DE PERSISTENCIA DE FILTROS:
-Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetro, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.`;
+Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetro, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.
+
+REGLA SOBRE DATOS TÉCNICOS (IP/MAC):
+Si el usuario pregunta por la IP o MAC de clientes, explícale que esa información se encuentra en los reportes de EXCEL. Dile que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. NO digas que se ven directamente en las tablas de la pantalla.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
@@ -662,7 +665,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     text: `¡Por supuesto! Esta plataforma es el panel de control maestro. Aquí tienes un resumen de cada sección del menú principal: \n\n` +
                         `📊 **Indicadores**: Un panel general con gráficas y KPIs esenciales como clientes totales, activos, tipos y proyecciones.\n` +
                         `🏘️ **Top Urbanismos**: Te muestra en detalle cuáles son los sectores geográficos que más aportan clientes e ingresos.\n` +
-                        `📋 **Lista de Clientes**: Una tabla robusta donde puedes ver a cada cliente, su IP, MAC y si su router está en línea.\n` +
+                        `📋 **Lista de Clientes**: Una tabla robusta donde puedes ver a cada cliente, su Plan, Costo y Teléfono de contacto.\n` +
                         `💼 **Operaciones (Ventas)**: Un módulo destinado a registrar instalaciones nuevas, cobros y monitoreo del personal.\n` +
                         `📈 **Adm. Ingresos**: Sección financiera para balances detallados.\n` +
                         `**Assistant AI (Yo)**: Tu asistente personal lógico para consultar toda esta data.`,
