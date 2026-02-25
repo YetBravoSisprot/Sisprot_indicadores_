@@ -93,7 +93,8 @@ function Ventas() {
         integrationDate: migrationRecord ? migrationRecord.date : "Alta Inicial",
         isMigration: !!migrationRecord,
         previousPlanName: migrationRecord ? (PLAN_MAPPING[migrationRecord.previousPlanId] || "Plan Anterior") : null,
-        newPlanName: migrationRecord ? (PLAN_MAPPING[migrationRecord.newPlanId] || "Plan 200M") : "Plan 200M"
+        newPlanName: migrationRecord ? (PLAN_MAPPING[migrationRecord.newPlanId] || "Plan 200M") : "Plan 200M",
+        notes: migrationRecord ? migrationRecord.notes : ""
       };
     }).sort((a, b) => {
       if (a.integrationDate === "Alta Inicial") return 1;
@@ -190,6 +191,7 @@ function Ventas() {
                               <th>Cédula/RIF</th>
                               <th>ID Contrato</th>
                               <th>Estatus</th>
+                              <th>Motivo</th>
                               <th>Integración</th>
                             </tr>
                           </thead>
@@ -197,20 +199,21 @@ function Ventas() {
                             {masterPlanData.length > 0 ? (
                               masterPlanData.map(client => (
                                 <tr key={client.id} className="directory-row">
-                                  <td>
+                                  <td data-label="Cliente">
                                     <div className="client-info-cell">
                                       <span className="client-name-cell">{client.name}</span>
                                       <span className="client-tel-cell">{client.mobile || "Sin Telf."}</span>
                                     </div>
                                   </td>
-                                  <td>{client.identification}</td>
-                                  <td>{client.id}</td>
-                                  <td>
+                                  <td data-label="Cédula/RIF">{client.identification}</td>
+                                  <td data-label="ID Contrato">{client.id}</td>
+                                  <td data-label="Estatus">
                                     <span className={`status-pill ${client.status?.toLowerCase()}`}>
                                       {STATUS_TRANSLATION[client.status] || client.status}
                                     </span>
                                   </td>
-                                  <td>
+                                  <td data-label="Motivo" className="notes-cell">{client.notes || "-"}</td>
+                                  <td data-label="Integración">
                                     {client.isMigration ? (
                                       <div className="integration-cell">
                                         <span className="transition-text">
