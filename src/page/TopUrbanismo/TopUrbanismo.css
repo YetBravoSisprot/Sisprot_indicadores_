@@ -1,0 +1,397 @@
+/* TopUrbanismo.css */
+
+/* ================= CONTENEDOR PRINCIPAL ================= */
+.contenedor {
+  min-height: 100vh;
+  width: 100%;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+/* ================= TITULO ================= */
+.titulo-topurbanismos {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 24px auto;
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--color-text-light);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= GRID DE URBANISMOS ================= */
+.urbanismos-grid {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+  align-items: start;
+}
+
+/* ================= ITEM URBANISMO ================= */
+.urbanismo-item {
+  list-style-type: none;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--border-radius-lg);
+  color: #ffffff;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  /* Fix: mejor comportamiento al expandir */
+  justify-content: flex-start;
+
+  height: auto;
+  min-height: 140px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), grid-column 0.3s ease;
+}
+
+.urbanismo-item.expanded {
+  grid-column: 1 / -1;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.encabezados {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin: 10px 0;
+  color: #e0e0e0;
+}
+
+.encabezados strong {
+  color: #ffffff;
+}
+
+.urbanismo-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.urbanismo-item strong {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.urbanismo-item span {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  color: #e0e0e0;
+}
+
+/* ================= BOTON MOSTRAR/OCULTAR ================= */
+.mostrar-ocultar {
+  background: rgba(255, 255, 255, 0.10);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+}
+
+.mostrar-ocultar:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* ================= CLIENTES (DENTRO DEL URBANISMO EXPANDIDO) ================= */
+.clientes-wrapper {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  max-height: 560px;
+  overflow: auto;
+}
+
+.clientes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+/* Tarjeta cliente */
+.cliente-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.cliente-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.cliente-nombre {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.25;
+  max-width: 72%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Badge estado */
+.badge-estado {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  white-space: nowrap;
+}
+
+/* Filas label/value */
+.cliente-body {
+  display: grid;
+  gap: 9px;
+}
+
+.cliente-row {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.cliente-label {
+  opacity: 0.85;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.cliente-value {
+  font-size: 12px;
+  line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.cliente-row-direccion .cliente-value {
+  white-space: normal;
+}
+
+/* Colores por estado (opcionales) */
+.badge-activo { background: rgba(0, 200, 120, 0.18); }
+.badge-suspendido { background: rgba(255, 180, 0, 0.18); }
+.badge-por-instalar { background: rgba(0, 170, 255, 0.18); }
+.badge-pausado { background: rgba(160, 160, 160, 0.18); }
+.badge-cancelado { background: rgba(255, 70, 70, 0.18); }
+
+/* ================= BOTONES (TU CSS ORIGINAL) ================= */
+.button {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-text-light);
+  padding: 14px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 30px;
+  border: none;
+  margin: 6px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.1);
+}
+
+.buttonCerrar {
+  background-color: var(--color-text-dark);
+  color: var(--color-text-light);
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  position: relative;
+}
+
+.buttonCerrar:hover {
+  opacity: 0.9;
+}
+
+.buttonIngreso {
+  background-color: var(--color-accent);
+  padding: 14px 26px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  margin: 6px;
+  cursor: default;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.buttonIngreso:hover {
+  background: #27ae60;
+  transform: scale(1.05);
+}
+
+.buttonDescargar {
+  background-color: #111827;
+  color: var(--color-text-light);
+  padding: 14px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 30px;
+  border: none;
+  margin: 6px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.buttonDescargar:hover {
+  background-color: #000;
+}
+
+.marginbitton {
+  margin-bottom: 10px;
+}
+
+/* ================= SELECTS ================= */
+select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-md);
+  outline: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+select:hover {
+  border-color: var(--color-primary);
+}
+
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.3);
+}
+
+option {
+  font-size: 14px;
+  padding: 6px;
+  background-color: #ffffff;
+  color: var(--color-text-dark);
+}
+
+option:checked {
+  background-color: var(--color-primary-dark);
+  color: white;
+}
+
+#sectoresSelect,
+#urbanismosSelect {
+  width: 200px;
+}
+
+/* ================= PANEL DE FILTROS ================= */
+.filtros-panel {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--glass-shadow);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.filtros-panel select {
+  width: 200px;
+  font-size: 13px;
+  border-radius: var(--border-radius-md);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 8px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.filtros-panel select::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filtros-panel select::-webkit-scrollbar-thumb {
+  background-color: #1e3fa9;
+  border-radius: 6px;
+}
+
+/* ================= BUSQUEDA POR CONTRATO ================= */
+.busqueda-contrato {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.busqueda-contrato input {
+  width: 180px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #1e3fa9;
+  font-size: 14px;
+  outline: none;
+}
+
+.busqueda-contrato input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.35);
+}
+
+/* ================= RESPONSIVE ================= */
+@media screen and (max-width: 360px) {
+  body {
+    font-size: 14px;
+  }
+
+  select {
+    font-size: 8px;
+    border-radius: 20px;
+    background-color: #fffcfce7;
+    border: 10px solid #1335ca;
+  }
+}

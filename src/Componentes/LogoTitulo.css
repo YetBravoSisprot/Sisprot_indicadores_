@@ -1,0 +1,57 @@
+/* LogoTitulo.css - Restaurado para fondo azul oscuro */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 30px;
+  /* Espacio con respecto a la tarjeta */
+}
+
+.login-Titulo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-container {
+  width: 120px;
+  height: auto;
+}
+
+h1 {
+  font-size: 32px;
+  color: #ffffff;
+  /* Blanco para resaltar sobre el azul */
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    width: 100px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-Titulo {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .logo-container {
+    width: 80px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}

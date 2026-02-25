@@ -1,0 +1,208 @@
+/* ===== RESET Y BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  /* Fondo transparente para dejar ver el canvas (ParticleBackground) */
+  background: transparent;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== CONTENEDOR DE TODO EL BLOQUE ===== */
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  /* Tamaño máximo de la tarjeta */
+  animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  /* Estar por encima del canvas de partículas */
+  pointer-events: auto;
+}
+
+/* ===== TARJETA DE LOGIN (Solo el formulario) ===== */
+.login-card {
+  background: rgba(255, 255, 255, 0.98);
+  width: 100%;
+  padding: 40px;
+  border-radius: 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== FORMULARIO ===== */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container input {
+  padding-right: 50px !important;
+  /* Espacio para el emoji */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.toggle-password:hover {
+  transform: scale(1.2);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 16px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.login-form input:focus {
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Estado de Error */
+.login-form input.input-error {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.login-form input.input-error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* ===== ERROR CONTAINER ===== */
+.error-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  padding: 12px 16px;
+  border-radius: 12px;
+  animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.error-icon {
+  font-size: 18px;
+}
+
+.error-message {
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ===== BOTÓN ===== */
+.login-button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  background: linear-gradient(to right, #1d4ed8, #1e40af);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    border-radius: 20px;
+    height: auto;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    /* Aumentar opacidad en movil para legibilidad */
+  }
+}
