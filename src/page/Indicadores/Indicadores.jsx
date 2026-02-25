@@ -95,7 +95,7 @@ function Indicadores() {
                       {estado === 'Activo' ? '✅' : estado === 'Suspendido' ? '⚠️' : 'ℹ️'}
                     </div>
                     <div className="kpi-info">
-                      <h3>{estado}s</h3>
+                      <h3>{estado === 'Por instalar' ? estado : `${estado}s`}</h3>
                       <p className="kpi-value">{conteos[estado]}</p>
                     </div>
                   </div>
