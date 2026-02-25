@@ -369,3 +369,90 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .ventas-dashboard {
+    padding: 20px 10px;
+  }
+
+  .kpi-shared-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .kpi-card {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .card-header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-badges {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .badge-total,
+  .badge-revenue {
+    width: fit-content;
+    text-align: left;
+  }
+
+  .dashboard-title {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .directory-table thead {
+    display: none;
+    /* Hide headers on mobile and use labels if needed, or scroll */
+  }
+
+  .directory-table,
+  .directory-table tbody,
+  .directory-row,
+  .directory-row td {
+    display: block;
+    width: 100%;
+  }
+
+  .directory-row {
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .directory-row td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .directory-row td:last-child {
+    border-bottom: none;
+  }
+
+  .directory-row td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .client-info-cell {
+    align-items: flex-end;
+  }
+}
