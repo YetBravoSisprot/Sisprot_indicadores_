@@ -203,22 +203,22 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Usa los filtros de arriba y genera el **Excel** para ver datos técnicos avanzados como **IPs y MACs** de los clientes."
     },
     "/Indicadores": {
-        name: "Directorio Principal de Clientes",
-        description: "Esta es tu base de datos en tiempo real. Un directorio completo para auditorías o soporte.",
-        data: "Tienes contadores rápidos por estado (Activos, Suspendidos, etc.) y la lista completa con Nombres, Planes y Costos. (Nota: IPs/MACs solo disponibles en Excel).",
-        guide: "💡 **Tip rápido**: Haz clic en las tarjetas de colores arriba para filtrar la lista al instante."
+        name: "Directorio Maestro de Clientes",
+        description: "Tu base de datos completa para auditoría y soporte.",
+        data: "Muestro la tabla de clientes con Nombres, Planes, Costos y Contactos.",
+        guide: "💡 **Tip rápido**: Filtra por estado usando las tarjetas superiores."
     },
     "/Ventas": {
-        name: "Monitor de Operaciones Comerciales",
-        description: "El panel táctico para ver el pulso de las instalaciones y ventas.",
-        data: "Muestro el Top 5 de planes más vendidos, activaciones recientes y el 'Directorio Maestro' de Fibra Óptica.",
-        guide: "💡 **Tip rápido**: Revisa el ranking para ver qué plan tiene más éxito o audita las migraciones en la tabla maestra."
+        name: "Monitor de Operaciones",
+        description: "Es el centro de monitoreo en tiempo real de la actividad operativa del sistema.",
+        data: "Muestro el ranking de los 5 Planes más elegidos por los clientes, junto a un Resumen de Actividad que incluye Clientes Totales y Nuevas Activaciones.",
+        guide: "💡 **Tip rápido**: Haz clic en 'Ver Reporte Detallado' para acceder al desglose pormenorizado de la data."
     },
     "/Admin": {
-        name: "Centro de Comando Administrativo (Dashboard)",
-        description: "El panel global para la alta gerencia con métricas de desempeño y finanzas.",
-        data: "Aquí puedes ver los informes interactivos (como PowerBI), controles de cancelaciones y flujos de ingresos.",
-        guide: "💡 **Tip rápido**: Usa los gráficos interactivos del informe para analizar la rentabilidad a fondo."
+        name: "Panel de Indicadores (Dashboard)",
+        description: "Centro de control estratégico con KPIs financieros y operativos de alta gerencia.",
+        data: "Aquí ves los Ingresos Estimados, total de Clientes Activos y la alerta de Suspendidos. (Enlace directo a reportes externos de PowerBI).",
+        guide: "💡 **Tip rápido**: Esta sección te da la visión global del negocio en segundos."
     }
 };
 
@@ -285,6 +285,10 @@ REGLA DE HUMANIZACIÓN:
 - **CRÍTICO - SALUDOS**: Solo di "Hola", "Buenos días" o similares si estás iniciando la conversación (si el historial es muy corto o el usuario te saludó). Si la conversación ya está avanzada y estamos intercambiando datos, NO repitas el "Hola" en cada respuesta. Sé directo pero amable.
 - Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONOCIMIENTO DE LAS SECCIONES DE LA APP" para explicarlo de forma fluida.
 - Si saludan o agradecen, responde de forma variada y cálida.
+
+REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
+- La sección que el usuario llama "**Indicadores**" es la ruta **/Admin** (donde están los KPIs, Ingresos y PowerBI).
+- La ruta **/Indicadores** se llama "**Lista de Clientes**" o "**Directorio**". NUNCA la llames "Sección de Indicadores" para evitar confusiones.
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
 - Si el usuario solicita ver DOS o MÁS estados al mismo tiempo (ej: "activos y suspendidos"), NO elijas uno al azar. Responde amablemente (en el campo "message") explicando que actualmente el sistema solo permite filtrar por un estado a la vez para mantener la precisión, y pregúntale cuál de los dos prefiere ver primero. En este caso, usa intent "UNKNOWN" o uno de clarificación.
