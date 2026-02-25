@@ -228,9 +228,14 @@ const pageKnowledge = {
     }
 };
 
-// Función para llamar a OpenAI a través de Vercel Serverless Function
+// Función para llamar a OpenAI
 const callOpenAI = async (query, history, currentPage = "") => {
+    const apiKey = process.env.REACT_APP_GEMINI_API_KEY || process.env.REACT_APP_OPENAI_API_KEY;
     const context = pageKnowledge[currentPage] || null;
+
+    if (!apiKey) {
+        throw new Error("No hay API Key configurada. Por favor declara REACT_APP_GEMINI_API_KEY en tu .env");
+    }
 
     let dynamicContextPrompt = "";
     if (context) {
@@ -287,13 +292,14 @@ Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahor
         { role: "user", content: query }
     ];
 
-    const response = await fetch("/api/chat", {
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gemini-1.5-flash",
             messages: messages,
             temperature: 0.1
         })
