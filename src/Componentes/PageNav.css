@@ -163,19 +163,32 @@ nav ul li a:hover {
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
-  /* Blanco */
   position: absolute;
   right: 20px;
-  /* Ajusta la posición del lado derecho */
   top: 16px;
-  /* Ajusta la posición desde la parte superior */
   z-index: 10;
-  padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Fondo oscuro para que se vea bien */
+  padding: 8px 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  /* Sombra para darle más visibilidad */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .datetime-display {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin: 10px auto;
+    width: fit-content;
+    display: block;
+    text-align: center;
+  }
+
+  .datetime-display p {
+    text-align: center !important;
+  }
 }
 
 /* Estilos para el texto de la fecha y hora */
