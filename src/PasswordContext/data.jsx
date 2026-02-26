@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5275,
+  "count": 5276,
   "results": [
     {
       "id": 3063,
@@ -2589,8 +2589,8 @@ const largeArraydata =
       "id": 3156,
       "client_name": "PAULO JESUS OVIEDO LARA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "San Sebastian",
@@ -32724,8 +32724,8 @@ const largeArraydata =
       "id": 4223,
       "client_name": "ARGENIS DANIEL FIGUEROA HENRIQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Naranjal",
@@ -48726,7 +48726,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 21,
@@ -75174,8 +75174,8 @@ const largeArraydata =
       "id": 5742,
       "client_name": "AYARIS MILAGROS OROPEZA LAYA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Naranjal",
@@ -117228,8 +117228,8 @@ const largeArraydata =
       "id": 7228,
       "client_name": "ROSA MARIA FIGUEREDO ARTEAGA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
@@ -134103,8 +134103,8 @@ const largeArraydata =
       "id": 7907,
       "client_name": "YENIFFER RINCON COBA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -134538,13 +134538,13 @@ const largeArraydata =
       "nap_box_name": "CTO- 908",
       "created_at": "2025-04-12T13:08:38.742580",
       "service_detail": {
-        "id": 8292,
+        "id": 11748,
         "ip": "10.13.92.2",
         "mac": "HWTC20AAC0AB",
         "serial": "HWTC20AAC0AB",
-        "queue": "Plan_161900_30183_WispHub",
+        "queue": null,
         "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2025-04-17T12:14:43.017702",
+        "created_at": "2026-02-25T20:22:28.080396",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -142926,7 +142926,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Esperanza",
       "plan": {
         "id": 100,
@@ -144540,7 +144540,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Laguna Plaza",
       "plan": {
         "id": 100,
@@ -145719,8 +145719,8 @@ const largeArraydata =
       "id": 8345,
       "client_name": "SAMUEL RICARDO SUAREZ ORTA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Los Caobos",
@@ -146940,7 +146940,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Vallecito",
       "plan": {
         "id": 100,
@@ -148173,7 +148173,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Edif. El Torreon",
       "plan": {
         "id": 100,
@@ -152511,7 +152511,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
         "id": 100,
@@ -152766,7 +152766,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
         "id": 21,
@@ -153093,7 +153093,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Marina Caribe",
       "plan": {
         "id": 100,
@@ -153519,7 +153519,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Vallecito",
       "plan": {
         "id": 100,
@@ -155766,7 +155766,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Arboleda",
       "plan": {
         "id": 100,
@@ -156408,7 +156408,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ezequiel Zamora",
       "plan": {
         "id": 3,
@@ -156555,7 +156555,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
         "id": 21,
@@ -156678,7 +156678,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 104,
@@ -156735,7 +156735,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Valle Verde",
       "plan": {
         "id": 21,
@@ -157653,7 +157653,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
         "id": 100,
@@ -159015,7 +159015,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Magdalena",
       "plan": {
         "id": 101,
@@ -159483,7 +159483,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Taguapire",
       "plan": {
         "id": 100,
@@ -160017,7 +160017,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Casona II",
       "plan": {
         "id": 100,
@@ -160659,7 +160659,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman de Guere",
       "plan": {
         "id": 100,
@@ -160758,7 +160758,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Betania",
       "plan": {
         "id": 100,
@@ -161490,7 +161490,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
@@ -161825,7 +161825,49 @@ const largeArraydata =
       "client_identification": "V33269237",
       "nap_box_name": "TORRE B EDIF LOS NISPEROS",
       "created_at": "2026-02-25T15:15:48.579475",
-      "service_detail": null,
+      "service_detail": {
+        "id": 11744,
+        "ip": "10.16.174.2",
+        "mac": "80D4A5AA8C00",
+        "serial": "HWTC45A04257",
+        "queue": null,
+        "interface": "VLAN218_NISPEROS_OLT1",
+        "created_at": "2026-02-25T17:27:52.393714",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 8996,
+      "client_name": "INVERSIONES IF 1208 CA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "La Concepcion",
+      "plan": {
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
+      },
+      "client_mobile": "04122588118",
+      "address": "CALLE EL CANAL C/C 02 CASA (PARCELA) NÚMERO 1-1 , SECTOR ASENTAMIENTO CAMPESINO LA CONCEPCIÓN TURMERO",
+      "client_identification": "J507033775",
+      "nap_box_name": "503",
+      "created_at": "2026-02-25T16:24:15.406745",
+      "service_detail": {
+        "id": 11746,
+        "ip": "10.16.173.2",
+        "mac": "OEMT3C620FF6",
+        "serial": "OEMT3C620FF6",
+        "queue": null,
+        "interface": "VLAN111_CONCEPCION",
+        "created_at": "2026-02-25T17:47:02.536983",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
