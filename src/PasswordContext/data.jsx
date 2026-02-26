@@ -67113,11 +67113,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Durpa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128931454",
       "address": "CALLE MANZANA 11 CASA NRO 5 URB FUNDA BARRIO ROSARIO DE PAYA",
@@ -67788,11 +67788,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243470557",
       "address": "CALLE RIVAS EDIF TORRE 05-E 01 PISO PB APT 01",
@@ -157569,8 +157569,8 @@ const largeArraydata =
       "id": 8854,
       "client_name": "FLAVIELIS BETZABETH DE SOUSA RONDON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Ciudad Bendita",
@@ -161784,8 +161784,8 @@ const largeArraydata =
       "id": 8994,
       "client_name": "‎ALINXON MAGDIEL OROPEZA INFANTE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -161801,7 +161801,16 @@ const largeArraydata =
       "client_identification": "V25920999",
       "nap_box_name": "CTO-00194 DOS",
       "created_at": "2026-02-25T09:48:54.199138",
-      "service_detail": null,
+      "service_detail": {
+        "id": 11755,
+        "ip": "10.16.176.2",
+        "mac": "OEMT3C6201B2",
+        "serial": "OEMT3C6201B2",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-02-26T16:09:31.733542",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
