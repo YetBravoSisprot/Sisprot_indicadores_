@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5276,
+  "count": 5277,
   "results": [
     {
       "id": 3063,
@@ -2169,8 +2169,8 @@ const largeArraydata =
       "id": 3143,
       "client_name": "CANDELARIA MERCEDES BERROTERAN LIENDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -73641,13 +73641,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00320",
       "created_at": "2024-07-26T13:58:28.700468",
       "service_detail": {
-        "id": 4793,
+        "id": 11749,
         "ip": "172.18.67.2",
         "mac": "VSOL0051FDB1",
         "serial": "VSOL0051FDB1",
-        "queue": "Plan_161891_30183_WispHub",
+        "queue": null,
         "interface": "VLAN240_DURPA",
-        "created_at": "2024-08-12T16:22:19.102393",
+        "created_at": "2026-02-26T08:44:18.624691",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -137967,13 +137967,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00225",
       "created_at": "2025-04-29T07:33:10.662910",
       "service_detail": {
-        "id": 11741,
+        "id": 11750,
         "ip": "10.14.44.2",
         "mac": "OEMT3C62035A",
         "serial": "OEMT3C62035A",
         "queue": null,
         "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2026-02-25T11:47:18.329275",
+        "created_at": "2026-02-26T09:49:48.486206",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -147342,13 +147342,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00098",
       "created_at": "2025-06-16T10:36:40.735210",
       "service_detail": {
-        "id": 8945,
+        "id": 11753,
         "ip": "10.15.52.2",
         "mac": "QXTLCB772363",
-        "serial": "QXTLCB772363(DE07)",
-        "queue": "queue1",
+        "serial": "QXTLCB772363",
+        "queue": null,
         "interface": "VLAN262_LAS_PALMAS_ZTE",
-        "created_at": "2025-06-16T11:18:15.411165",
+        "created_at": "2026-02-26T11:50:31.347540",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -161652,8 +161652,8 @@ const largeArraydata =
       "id": 8990,
       "client_name": "ANYELI ELIZABETH DELGADO SILVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -161683,7 +161683,7 @@ const largeArraydata =
     },
     {
       "id": 8991,
-      "client_name": "JOSE ALEJANDRO MEJIAS RODRÍGUEZ",
+      "client_name": "JOSE ALEJANDRO MEJIAS RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
@@ -161866,6 +161866,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN111_CONCEPCION",
         "created_at": "2026-02-25T17:47:02.536983",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 8997,
+      "client_name": "CERLIDER JT CA",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Callejon Rosales",
+      "plan": {
+        "id": 103,
+        "name": "RECURRENTE PYME PLAN 400M",
+        "cost": "51.74",
+        "code": "FOP400M",
+        "profile": "400Mbps/400Mbps"
+      },
+      "client_mobile": "04243543913",
+      "address": "CALLE ROSALES PARCELA 6-4 LOCAL NRO 8 SECTOR VALLE DE PAYA ROSARIO DE PAYA",
+      "client_identification": "J400636272",
+      "nap_box_name": "319",
+      "created_at": "2026-02-26T09:40:12.843647",
+      "service_detail": {
+        "id": 11751,
+        "ip": "10.16.175.2",
+        "mac": "QXTLP93H6408663",
+        "serial": "QXTLCB938D58",
+        "queue": null,
+        "interface": "VLAN206_ROSALES_OLT2",
+        "created_at": "2026-02-26T09:52:58.284141",
         "created_by_name": null
       },
       "installation_invoice_cost": null
