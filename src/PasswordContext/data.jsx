@@ -1575,13 +1575,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-04-11T08:24:45.134353",
       "service_detail": {
-        "id": 6627,
+        "id": 11821,
         "ip": "172.31.11.2",
         "mac": "TPLGF9CD4533",
         "serial": "TPLGF9CD4533",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-09-17T09:27:09.102436",
+        "created_at": "2026-02-27T11:46:48.841990",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -1608,13 +1608,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-04-11T08:27:27.167132",
       "service_detail": {
-        "id": 4936,
+        "id": 11825,
         "ip": "172.25.83.2",
         "mac": "TPLGF9CD3F42",
         "serial": "TPLGF9CD3F42",
-        "queue": "Plan_148293_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-13T13:14:53.047913",
+        "created_at": "2026-02-27T11:47:42.983218",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -8052,13 +8052,13 @@ const largeArraydata =
       "nap_box_name": "134",
       "created_at": "2024-04-12T08:14:27.725017",
       "service_detail": {
-        "id": 4323,
+        "id": 11810,
         "ip": "172.24.90.2",
         "mac": "TPLGB444A959",
         "serial": "TPLGB444A959",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-09T09:36:25.916645",
+        "created_at": "2026-02-27T11:43:14.702172",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -9513,13 +9513,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-04-12T10:55:35.150091",
       "service_detail": {
-        "id": 4351,
+        "id": 11828,
         "ip": "172.24.139.2",
         "mac": "TPLGF4B1D877",
         "serial": "TPLGF4B1D877",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-09T14:23:50.562661",
+        "created_at": "2026-02-27T11:48:55.465427",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -9849,13 +9849,13 @@ const largeArraydata =
       "nap_box_name": "465",
       "created_at": "2024-04-12T13:29:50.130410",
       "service_detail": {
-        "id": 10973,
+        "id": 11758,
         "ip": "172.25.139.2",
         "mac": "TPLG2ABDC65F",
         "serial": "TPLG2ABDC65F",
         "queue": null,
         "interface": "VLAN122_SAMAN_GUERE",
-        "created_at": "2025-12-27T12:08:25.052968",
+        "created_at": "2026-02-27T09:40:31.554743",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -19812,13 +19812,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00258",
       "created_at": "2024-04-17T10:54:10.842474",
       "service_detail": {
-        "id": 3200,
+        "id": 11820,
         "ip": "172.23.34.2",
         "mac": "TPLGBA687C4C",
         "serial": "TPLGBA687C4C",
-        "queue": "Plan_137942_24341_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-06-27T17:57:59.068243",
+        "created_at": "2026-02-27T11:46:33.532503",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -20424,13 +20424,13 @@ const largeArraydata =
       "nap_box_name": "CE - 393",
       "created_at": "2024-04-18T11:07:32.406685",
       "service_detail": {
-        "id": 3377,
+        "id": 11785,
         "ip": "172.25.73.2",
         "mac": "TPLGB765693A",
         "serial": "TPLGB765693A",
-        "queue": "Plan_131648_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-07-02T17:35:25.404843",
+        "created_at": "2026-02-27T11:12:40.828765",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -20727,13 +20727,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0541",
       "created_at": "2024-04-18T11:40:48.059321",
       "service_detail": {
-        "id": 5823,
+        "id": 11770,
         "ip": "172.26.11.2",
         "mac": "TPLGF9CD4663",
         "serial": "TPLGF9CD4663",
-        "queue": "Plan_142626_24341_WispHub",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-20T10:10:20.082174",
+        "created_at": "2026-02-27T10:43:59.553698",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -22683,13 +22683,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0541",
       "created_at": "2024-04-18T14:41:04.331179",
       "service_detail": {
-        "id": 10020,
+        "id": 11784,
         "ip": "172.26.135.2",
         "mac": "HWTCD661829C",
         "serial": "HWTCD661829C",
         "queue": null,
-        "interface": "VLAN100_OLTs",
-        "created_at": "2025-11-11T15:14:29.851400",
+        "interface": "VLAN110_CASONA_2",
+        "created_at": "2026-02-27T11:03:48.421310",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -25923,13 +25923,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0539",
       "created_at": "2024-04-19T14:22:30.081836",
       "service_detail": {
-        "id": 3875,
+        "id": 11776,
         "ip": "172.24.141.2",
         "mac": "TPLGB446E885",
         "serial": "TPLGB446E885",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-07-16T15:31:02.637198",
+        "created_at": "2026-02-27T10:45:47.536142",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -26439,13 +26439,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-04-20T08:37:31.190973",
       "service_detail": {
-        "id": 9792,
+        "id": 11818,
         "ip": "172.17.127.2",
         "mac": "TPLGB444B5C9",
         "serial": "TPLGB444B5C9",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-11-10T14:07:39.732242",
+        "created_at": "2026-02-27T11:46:01.498174",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -36085,7 +36085,7 @@ const largeArraydata =
     },
     {
       "id": 4350,
-      "client_name": "SENOR TEQUENOS CA",
+      "client_name": "SENOR TEQUEÑOS CA",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -40884,13 +40884,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00258",
       "created_at": "2024-06-08T17:35:35.211761",
       "service_detail": {
-        "id": 10991,
+        "id": 11811,
         "ip": "172.17.153.2",
         "mac": "VSOL00139179",
         "serial": "VSOL00139179",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-12-30T10:42:51.361326",
+        "created_at": "2026-02-27T11:43:26.626146",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -40917,13 +40917,13 @@ const largeArraydata =
       "nap_box_name": "134",
       "created_at": "2024-06-08T17:47:42.480254",
       "service_detail": {
-        "id": 6074,
+        "id": 11816,
         "ip": "172.17.170.2",
         "mac": "VSOL00493B39",
         "serial": "VSOL00493B39",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-22T13:58:25.643850",
+        "created_at": "2026-02-27T11:45:22.966068",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -46125,13 +46125,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0541",
       "created_at": "2024-06-09T17:50:12.837456",
       "service_detail": {
-        "id": 5588,
+        "id": 11774,
         "ip": "172.24.164.2",
         "mac": "TPLGF9CD3F8F",
         "serial": "TPLGF9CD3F8F",
-        "queue": "Plan_148293_24341_WispHub",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-17T09:20:35.537617",
+        "created_at": "2026-02-27T10:44:58.496741",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -51672,13 +51672,13 @@ const largeArraydata =
       "nap_box_name": "139",
       "created_at": "2024-06-13T14:58:11.728143",
       "service_detail": {
-        "id": 5038,
+        "id": 11789,
         "ip": "172.24.100.2",
         "mac": "TPLGB446ECEC",
         "serial": "TPLGB446ECEC",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-13T18:13:16.949385",
+        "created_at": "2026-02-27T11:13:39.444910",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -52584,13 +52584,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0541",
       "created_at": "2024-06-14T14:57:00.866642",
       "service_detail": {
-        "id": 4998,
+        "id": 11779,
         "ip": "172.22.2.2",
         "mac": "TPLGB444B17A",
         "serial": "TPLGB444B17A",
-        "queue": "Plan_131338_24341_WispHub",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-13T16:45:03.496344",
+        "created_at": "2026-02-27T10:47:21.589056",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -53076,13 +53076,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-06-14T16:10:40.773760",
       "service_detail": {
-        "id": 4957,
+        "id": 11831,
         "ip": "172.24.83.2",
         "mac": "TPLGB446EE06",
         "serial": "TPLGB446EE06",
-        "queue": "Plan_132787_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-13T15:09:12.960034",
+        "created_at": "2026-02-27T11:50:20.335623",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -59586,13 +59586,13 @@ const largeArraydata =
       "nap_box_name": "CE - 148",
       "created_at": "2024-07-11T09:57:48.709159",
       "service_detail": {
-        "id": 9721,
+        "id": 11781,
         "ip": "172.28.208.2",
-        "mac": "HWTCOC1E97A1",
-        "serial": "HWTCOC1E97A1",
+        "mac": "HWTC0C1E97A1",
+        "serial": "HWTC0C1E97A1",
         "queue": null,
         "interface": "VLAN116_CAOBOS",
-        "created_at": "2025-11-10T11:03:22.921875",
+        "created_at": "2026-02-27T10:49:30.656488",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -61035,13 +61035,13 @@ const largeArraydata =
       "nap_box_name": "45",
       "created_at": "2024-07-15T15:24:39.193300",
       "service_detail": {
-        "id": 4269,
+        "id": 11794,
         "ip": "172.18.222.2",
         "mac": "TPLGF4EFC13B",
         "serial": "TPLGF4EFC13B",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-08T11:25:37.522359",
+        "created_at": "2026-02-27T11:16:08.182613",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -62316,13 +62316,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0539",
       "created_at": "2024-07-17T09:34:27.231760",
       "service_detail": {
-        "id": 4950,
+        "id": 11775,
         "ip": "172.24.66.2",
         "mac": "VSOL001280C1",
         "serial": "VSOL001280C1",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-13T15:03:25.681671",
+        "created_at": "2026-02-27T10:45:11.697934",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -62649,11 +62649,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124565432",
       "address": "AV ROSARIO DE PAYA CASA NRO 43 URB PANTIN",
@@ -65748,13 +65748,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00257",
       "created_at": "2024-07-19T13:51:15.192942",
       "service_detail": {
-        "id": 10625,
+        "id": 11819,
         "ip": "172.21.42.2",
         "mac": "TPLGF4EFC30F",
         "serial": "TPLGF4EFC30F",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-12-07T14:30:20.302845",
+        "created_at": "2026-02-27T11:46:12.812073",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -69561,13 +69561,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-07-25T10:59:22.365008",
       "service_detail": {
-        "id": 4101,
+        "id": 11807,
         "ip": "172.23.130.2",
         "mac": "VSOL0013ECF1",
         "serial": "VSOL0013ECF1",
-        "queue": "Plan_137942_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-07-25T11:18:47.360756",
+        "created_at": "2026-02-27T11:41:23.593369",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -73239,13 +73239,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-07-26T11:57:09.936089",
       "service_detail": {
-        "id": 10008,
+        "id": 11822,
         "ip": "172.21.161.2",
         "mac": "TPLGB68B5AA0",
         "serial": "TPLGB68B5AA0",
         "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2025-11-11T14:33:14.430562",
+        "created_at": "2026-02-27T11:47:06.052048",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -77691,13 +77691,13 @@ const largeArraydata =
       "nap_box_name": "44",
       "created_at": "2024-07-30T15:21:38.214038",
       "service_detail": {
-        "id": 4519,
+        "id": 11792,
         "ip": "172.20.137.2",
         "mac": "TPLGF5CB0AE5",
         "serial": "TPLGF5CB0AE5",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-10T19:08:20.299936",
+        "created_at": "2026-02-27T11:14:38.221439",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -79182,13 +79182,13 @@ const largeArraydata =
       "nap_box_name": "139",
       "created_at": "2024-07-31T12:52:32.936863",
       "service_detail": {
-        "id": 4510,
+        "id": 11793,
         "ip": "172.21.11.2",
         "mac": "TPLGF5CB0277",
         "serial": "TPLGF5CB0277",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-10T13:31:22.299922",
+        "created_at": "2026-02-27T11:14:52.066630",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83040,13 +83040,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00257",
       "created_at": "2024-08-01T17:39:07.159318",
       "service_detail": {
-        "id": 5183,
+        "id": 11814,
         "ip": "172.21.88.2",
         "mac": "TPLGB954F62B",
         "serial": "TPLGB954F62B",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-15T10:53:11.181193",
+        "created_at": "2026-02-27T11:44:41.079252",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83073,13 +83073,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-08-01T17:42:01.913518",
       "service_detail": {
-        "id": 9993,
+        "id": 11809,
         "ip": "172.20.157.2",
         "mac": "TPLGB954E8AB",
         "serial": "TPLGB954E8AB",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-11-11T13:39:05.527612",
+        "created_at": "2026-02-27T11:42:40.137079",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83106,13 +83106,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-08-01T17:53:02.360605",
       "service_detail": {
-        "id": 5178,
+        "id": 11813,
         "ip": "172.20.155.2",
         "mac": "TPLGB954FB6E",
         "serial": "TPLGB954FB6E",
-        "queue": "Plan_132787_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-15T10:48:53.051819",
+        "created_at": "2026-02-27T11:44:18.616921",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83139,13 +83139,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-08-01T17:54:57.402266",
       "service_detail": {
-        "id": 5176,
+        "id": 11832,
         "ip": "172.20.177.2",
         "mac": "TPLGB954FCF9",
         "serial": "TPLGB954FCF9",
-        "queue": "Plan_132968_24341_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-15T10:45:23.568571",
+        "created_at": "2026-02-27T11:50:31.699022",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83172,13 +83172,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-08-01T17:57:42.341426",
       "service_detail": {
-        "id": 5174,
+        "id": 11823,
         "ip": "172.20.179.2",
         "mac": "TPLGB954F79A",
         "serial": "TPLGB954F79A",
-        "queue": "Plan_138996_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-15T10:42:37.896870",
+        "created_at": "2026-02-27T11:47:24.146179",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -84150,13 +84150,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-08-02T09:45:41.364227",
       "service_detail": {
-        "id": 4689,
+        "id": 11830,
         "ip": "172.18.70.2",
         "mac": "VSOL00522DE9",
         "serial": "VSOL00522DE9",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-12T11:12:38.363687",
+        "created_at": "2026-02-27T11:49:23.342790",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -84183,13 +84183,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0540",
       "created_at": "2024-08-02T09:46:15.502686",
       "service_detail": {
-        "id": 5163,
+        "id": 11795,
         "ip": "172.20.239.2",
         "mac": "TPLGF5CB04F3",
         "serial": "TPLGF5CB04F3",
-        "queue": "Plan_132787_24341_WispHub",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-15T10:18:17.354303",
+        "created_at": "2026-02-27T11:22:52.458748",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -84249,13 +84249,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-08-02T09:48:29.775351",
       "service_detail": {
-        "id": 4691,
+        "id": 11826,
         "ip": "172.17.220.2",
         "mac": "VSOL00521459",
         "serial": "VSOL00521459",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-12T11:14:31.429200",
+        "created_at": "2026-02-27T11:48:08.135501",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -84372,13 +84372,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0540",
       "created_at": "2024-08-02T10:01:36.327386",
       "service_detail": {
-        "id": 5150,
+        "id": 11772,
         "ip": "172.21.59.2",
         "mac": "TPLGB954FCAA",
         "serial": "TPLGB954FCAA",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-08-15T09:38:58.537995",
+        "created_at": "2026-02-27T10:44:15.669002",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -84768,13 +84768,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00257",
       "created_at": "2024-08-02T10:42:33.520177",
       "service_detail": {
-        "id": 4761,
+        "id": 11812,
         "ip": "172.26.32.2",
         "mac": "VSOL00521601",
         "serial": "VSOL00521601",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-12T15:07:50.109609",
+        "created_at": "2026-02-27T11:43:54.595638",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -85863,13 +85863,13 @@ const largeArraydata =
       "nap_box_name": "44",
       "created_at": "2024-08-02T11:58:12.402826",
       "service_detail": {
-        "id": 4776,
+        "id": 11759,
         "ip": "172.17.156.2",
         "mac": "VSOL0051EB71",
         "serial": "VSOL0051EB71",
-        "queue": "Plan_137942_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-12T15:35:26.852625",
+        "created_at": "2026-02-27T09:41:36.333488",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -87318,13 +87318,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00262",
       "created_at": "2024-08-02T15:17:15.931779",
       "service_detail": {
-        "id": 5051,
+        "id": 11824,
         "ip": "172.21.91.2",
         "mac": "TPLGB954FAE7",
         "serial": "TPLGB954FAE7",
-        "queue": "Plan_132787_24341_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-14T09:58:40.731011",
+        "created_at": "2026-02-27T11:47:37.517400",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -88074,13 +88074,13 @@ const largeArraydata =
       "nap_box_name": "139",
       "created_at": "2024-08-02T16:34:07.545614",
       "service_detail": {
-        "id": 9828,
+        "id": 11788,
         "ip": "172.21.126.2",
         "mac": "TPLGB954E8C2",
         "serial": "TPLGB954E8C2",
         "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2025-11-10T17:23:04.686256",
+        "created_at": "2026-02-27T11:13:37.993715",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -88371,13 +88371,13 @@ const largeArraydata =
       "nap_box_name": "45",
       "created_at": "2024-08-02T17:02:12.040863",
       "service_detail": {
-        "id": 5211,
+        "id": 11786,
         "ip": "172.19.56.2",
         "mac": "TPLGF5CB01E0",
         "serial": "TPLGF5CB01E0",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-15T13:43:51.667471",
+        "created_at": "2026-02-27T11:12:54.049301",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -89064,11 +89064,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "San Sebastian",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128902023",
       "address": "CALLE PRIMERA TRNSVERSAL CASA NRO 13 URB SAN SEBASTIAN",
@@ -89109,13 +89109,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00257",
       "created_at": "2024-08-04T14:30:33.454435",
       "service_detail": {
-        "id": 4877,
+        "id": 11833,
         "ip": "172.17.102.2",
         "mac": "VSOL00491CD9",
         "serial": "VSOL00491CD9",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-13T08:00:17.903700",
+        "created_at": "2026-02-27T11:50:51.963602",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -89142,13 +89142,13 @@ const largeArraydata =
       "nap_box_name": "134",
       "created_at": "2024-08-04T14:34:00.175587",
       "service_detail": {
-        "id": 4878,
+        "id": 11827,
         "ip": "172.17.101.2",
         "mac": "VSOL00493AA9",
         "serial": "VSOL00493AA9",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-13T08:02:20.702924",
+        "created_at": "2026-02-27T11:48:32.664231",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -89175,13 +89175,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-08-04T14:35:38.572920",
       "service_detail": {
-        "id": 5524,
-        "ip": "10.10.131.2",
+        "id": 11817,
+        "ip": "172.17.124.2",
         "mac": "VSOL00493B29",
         "serial": "VSOL00493B29",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2024-08-16T20:59:24.518790",
+        "created_at": "2026-02-27T11:45:54.298676",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -90597,13 +90597,13 @@ const largeArraydata =
       "nap_box_name": "CE - 401",
       "created_at": "2024-08-04T21:22:24.799066",
       "service_detail": {
-        "id": 10598,
+        "id": 11790,
         "ip": "10.16.169.2",
         "mac": "TPLGB777B496",
         "serial": "TPLGB777B496",
         "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2025-12-05T09:44:54.426437",
+        "created_at": "2026-02-27T11:13:45.288214",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -91377,13 +91377,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2024-08-06T12:25:56.350501",
       "service_detail": {
-        "id": 4231,
+        "id": 11796,
         "ip": "172.31.46.2",
         "mac": "OEMT3C6232A2",
         "serial": "OEMT3C6232A2",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2024-08-07T13:18:02.769361",
+        "created_at": "2026-02-27T11:29:15.447599",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -92589,13 +92589,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0541",
       "created_at": "2024-08-07T17:37:35.802724",
       "service_detail": {
-        "id": 5509,
+        "id": 11780,
         "ip": "172.18.212.2",
         "mac": "TPLGB954EB99",
         "serial": "TPLGB954EB99",
-        "queue": "Plan_131647_24341_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-16T20:23:58.160466",
+        "created_at": "2026-02-27T10:47:24.201751",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -92712,13 +92712,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0540",
       "created_at": "2024-08-08T10:09:05.969361",
       "service_detail": {
-        "id": 9592,
+        "id": 11769,
         "ip": "172.25.78.2",
         "mac": "TPLGB76566D2",
         "serial": "TPLGB76566D2",
         "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2025-10-09T10:49:41.843777",
+        "created_at": "2026-02-27T10:43:38.234160",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -92868,13 +92868,13 @@ const largeArraydata =
       "nap_box_name": "451",
       "created_at": "2024-08-08T10:48:52.751193",
       "service_detail": {
-        "id": 11521,
+        "id": 11765,
         "ip": "172.30.45.2",
         "mac": "TPLGB765693F",
         "serial": "TPLGB765693F",
         "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2026-02-06T18:54:52.042650",
+        "created_at": "2026-02-27T09:58:22.658389",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -98031,8 +98031,8 @@ const largeArraydata =
       "id": 6517,
       "client_name": "MODAS CARYEL CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -98048,16 +98048,7 @@ const largeArraydata =
       "client_identification": "J316043851",
       "nap_box_name": "CTO-00235",
       "created_at": "2024-08-26T15:08:43.976027",
-      "service_detail": {
-        "id": 6380,
-        "ip": "172.31.130.2",
-        "mac": "OEMT-3C6224D2",
-        "serial": "OEMT-3C6224D2",
-        "queue": "Plan_92036_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-08-27T13:28:40.208333",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -107085,13 +107076,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00371",
       "created_at": "2024-10-24T09:38:57.635141",
       "service_detail": {
-        "id": 6875,
+        "id": 11806,
         "ip": "172.27.49.2",
         "mac": "OEMT3C624B9A",
-        "serial": "OEMT3C624B9A (P33)",
-        "queue": "Plan_142626_24341_WispHub",
+        "serial": "OEMT3C624B9A",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2024-10-24T16:15:42.734506",
+        "created_at": "2026-02-27T11:33:54.088335",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -107985,13 +107976,13 @@ const largeArraydata =
       "nap_box_name": "CE - 408",
       "created_at": "2024-10-28T13:59:49.615594",
       "service_detail": {
-        "id": 6936,
+        "id": 11791,
         "ip": "172.23.121.2",
         "mac": "OEMT3C6245AA",
-        "serial": "OEMT3C6245AA (P66)",
-        "queue": "Plan_131337_24341_WispHub",
+        "serial": "OEMT3C6245AA",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-10-30T16:23:07.102529",
+        "created_at": "2026-02-27T11:14:08.655700",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -113055,13 +113046,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0539",
       "created_at": "2024-11-21T15:36:11.718662",
       "service_detail": {
-        "id": 7173,
+        "id": 11777,
         "ip": "10.12.170.2",
         "mac": "HWTC48080328",
-        "serial": "HWTC48080328 (PW124)",
-        "queue": "Plan_148293_24341_WispHub",
+        "serial": "HWTC48080328",
+        "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-11-25T16:16:00.084541",
+        "created_at": "2026-02-27T10:46:17.222134",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -116160,8 +116151,8 @@ const largeArraydata =
       "id": 7191,
       "client_name": "MIRIAN JOSEFINA LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Luz y Vida",
@@ -121764,13 +121755,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2025-01-16T12:38:18.807913",
       "service_detail": {
-        "id": 7626,
+        "id": 11802,
         "ip": "10.10.142.2",
         "mac": "HWTC48080282",
-        "serial": "HWTC48080282 (PW238)",
-        "queue": "Plan_131337_24341_WispHub",
+        "serial": "HWTC48080282",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-01-16T12:42:38.036935",
+        "created_at": "2026-02-27T11:31:36.867527",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -133005,13 +132996,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-04-05T10:07:12.091259",
       "service_detail": {
-        "id": 8176,
+        "id": 11840,
         "ip": "10.13.32.2",
         "mac": "HWTC49200386",
         "serial": "HWTC49200386",
-        "queue": "Plan_148293_24341_WispHub",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-04-08T11:21:53.115060",
+        "created_at": "2026-02-27T12:07:26.419285",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -133332,13 +133323,13 @@ const largeArraydata =
       "nap_box_name": "49",
       "created_at": "2025-04-07T12:33:19.195420",
       "service_detail": {
-        "id": 8162,
+        "id": 11804,
         "ip": "10.13.41.2",
         "mac": "OEMT3C6209FA",
         "serial": "OEMT3C6209FA",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-04-07T15:15:46.504700",
+        "created_at": "2026-02-27T11:32:20.389017",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -133620,13 +133611,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-04-08T15:29:57.240400",
       "service_detail": {
-        "id": 8183,
+        "id": 11835,
         "ip": "10.13.52.2",
         "mac": "HWTC49200382",
-        "serial": "HWTC49200382(L12PW48)",
-        "queue": "Plan_128612_24341_WispHub",
+        "serial": "HWTC49200382",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-04-08T16:17:54.046152",
+        "created_at": "2026-02-27T12:04:38.475722",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -133686,13 +133677,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-04-08T17:05:05.986392",
       "service_detail": {
-        "id": 11191,
+        "id": 11836,
         "ip": "10.13.54.2",
         "mac": "MONU003C32A9",
         "serial": "MONU003C32A9",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-01-15T18:48:36.087535",
+        "created_at": "2026-02-27T12:05:46.946992",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -133752,13 +133743,13 @@ const largeArraydata =
       "nap_box_name": "CE-00099",
       "created_at": "2025-04-09T08:42:10.307125",
       "service_detail": {
-        "id": 11678,
+        "id": 11842,
         "ip": "10.13.57.2",
         "mac": "HWTC49200902",
         "serial": "HWTC49200902",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-02-19T13:44:57.783568",
+        "created_at": "2026-02-27T12:08:06.437494",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -134373,13 +134364,13 @@ const largeArraydata =
       "nap_box_name": "CE-00099",
       "created_at": "2025-04-11T14:08:43.712709",
       "service_detail": {
-        "id": 8216,
+        "id": 11839,
         "ip": "10.13.81.2",
         "mac": "OEMT3C620D36",
         "serial": "OEMT3C620D36",
-        "queue": "Plan_131341_24341_WispHub",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-04-11T16:06:42.013230",
+        "created_at": "2026-02-27T12:07:09.105143",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -137925,13 +137916,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1220",
       "created_at": "2025-04-29T06:05:55.521470",
       "service_detail": {
-        "id": 8543,
+        "id": 11760,
         "ip": "10.13.196.2",
         "mac": "OEMT3C620CCA",
-        "serial": "OEMT3C620CC9",
-        "queue": "Plan_131341_24341_WispHub",
+        "serial": "OEMT3C620CCA",
+        "queue": null,
         "interface": "VLAN122_SAMAN_GUERE",
-        "created_at": "2025-05-10T14:19:52.878522",
+        "created_at": "2026-02-27T09:41:42.911174",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -138624,13 +138615,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2025-05-01T18:59:03.310526",
       "service_detail": {
-        "id": 10082,
+        "id": 11797,
         "ip": "10.13.225.2",
         "mac": "VSOL00E13ADB",
         "serial": "VSOL00E13ADB",
         "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-11-12T19:36:19.650985",
+        "created_at": "2026-02-27T11:29:53.426783",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -138657,13 +138648,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00371",
       "created_at": "2025-05-01T19:37:43.205908",
       "service_detail": {
-        "id": 8466,
+        "id": 11801,
         "ip": "10.13.230.2",
         "mac": "HWTC48080118",
         "serial": "HWTC48080118",
-        "queue": "Plan_131341_24341_WispHub",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-05-02T16:13:09.307822",
+        "created_at": "2026-02-27T11:31:14.056595",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -138987,13 +138978,13 @@ const largeArraydata =
       "nap_box_name": "CE - 408",
       "created_at": "2025-05-06T11:14:04.204017",
       "service_detail": {
-        "id": 8487,
+        "id": 11761,
         "ip": "10.13.244.2",
         "mac": "OEMT3C62093A",
         "serial": "OEMT3C62093A",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2025-05-06T11:36:42.685315",
+        "created_at": "2026-02-27T09:42:18.549142",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -139152,13 +139143,13 @@ const largeArraydata =
       "nap_box_name": "CAJA NAP EDIF E CASONA 2",
       "created_at": "2025-05-06T14:51:16.070340",
       "service_detail": {
-        "id": 10695,
+        "id": 11764,
         "ip": "10.13.235.2",
         "mac": "OEMT3C621062",
         "serial": "OEMT3C621062",
         "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2025-12-13T15:25:11.750858",
+        "created_at": "2026-02-27T09:43:43.640108",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -139824,13 +139815,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 940",
       "created_at": "2025-05-10T13:55:23.587529",
       "service_detail": {
-        "id": 9436,
+        "id": 11844,
         "ip": "10.13.254.2",
         "mac": "GPON00C420F8",
         "serial": "GPON00C420F8",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-08-28T11:42:42.154721",
+        "created_at": "2026-02-27T12:09:05.354330",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -140061,13 +140052,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 940",
       "created_at": "2025-05-10T15:56:50.598821",
       "service_detail": {
-        "id": 8611,
+        "id": 11843,
         "ip": "10.14.60.2",
         "mac": "OEMT3C6203FE",
         "serial": "OEMT3C6203FE",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-05-14T09:03:19.710341",
+        "created_at": "2026-02-27T12:08:33.046984",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -141636,13 +141627,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2025-05-14T19:20:13.689727",
       "service_detail": {
-        "id": 8631,
+        "id": 11815,
         "ip": "10.14.84.2",
         "mac": "QXTLCB6BCE12",
         "serial": "QXTLCB6BCE12",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-05-15T10:10:56.304979",
+        "created_at": "2026-02-27T11:44:55.613091",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -144153,13 +144144,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 947",
       "created_at": "2025-05-30T12:14:41.692855",
       "service_detail": {
-        "id": 8781,
+        "id": 11845,
         "ip": "10.14.166.2",
         "mac": "QXTLCBF12F7A",
         "serial": "QXTLCBF12F7A",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-05-30T13:03:03.988757",
+        "created_at": "2026-02-27T12:09:18.806874",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -145317,13 +145308,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1220",
       "created_at": "2025-06-05T11:10:23.810932",
       "service_detail": {
-        "id": 8858,
+        "id": 11762,
         "ip": "10.14.215.2",
         "mac": "QXTLCB38FD36",
         "serial": "QXTLCB38FD36",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN122_SAMAN_GUERE",
-        "created_at": "2025-06-05T16:15:10.713642",
+        "created_at": "2026-02-27T09:43:24.014391",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -145884,13 +145875,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0657",
       "created_at": "2025-06-09T08:19:33.760866",
       "service_detail": {
-        "id": 8877,
+        "id": 11846,
         "ip": "10.14.232.2",
         "mac": "QXTLCBF9FCDE",
         "serial": "QXTLCBF9FCDE",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-06-09T08:36:51.102667",
+        "created_at": "2026-02-27T12:09:33.770663",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -146484,13 +146475,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2025-06-11T13:22:47.099274",
       "service_detail": {
-        "id": 8959,
+        "id": 11805,
         "ip": "10.15.5.2",
         "mac": "QXTLCB0C4B56",
         "serial": "QXTLCB0C4B56",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-06-17T07:54:19.275752",
+        "created_at": "2026-02-27T11:32:22.894681",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -147012,13 +147003,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1220",
       "created_at": "2025-06-13T12:17:16.672039",
       "service_detail": {
-        "id": 8934,
+        "id": 11763,
         "ip": "10.15.8.2",
         "mac": "HWTCD62CD39C",
         "serial": "HWTCD62CD39C",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN122_SAMAN_GUERE",
-        "created_at": "2025-06-13T21:17:21.410074",
+        "created_at": "2026-02-27T09:43:39.062757",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -148350,13 +148341,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00371",
       "created_at": "2025-06-23T08:53:45.090703",
       "service_detail": {
-        "id": 9059,
+        "id": 11803,
         "ip": "10.15.14.2",
         "mac": "QXTLCBD50C7A",
         "serial": "QXTLCBD50C7A",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-06-23T16:23:25.140008",
+        "created_at": "2026-02-27T11:32:02.361016",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -150198,13 +150189,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00371",
       "created_at": "2025-07-05T07:28:43.314459",
       "service_detail": {
-        "id": 9150,
+        "id": 11800,
         "ip": "10.15.15.2",
         "mac": "VSOL00533779",
         "serial": "VSOL00533779",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-07-05T16:56:24.034815",
+        "created_at": "2026-02-27T11:31:06.071451",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -153501,13 +153492,13 @@ const largeArraydata =
       "nap_box_name": "CE - 252",
       "created_at": "2025-08-06T14:20:06.063027",
       "service_detail": {
-        "id": 9336,
+        "id": 11847,
         "ip": "10.15.220.2",
         "mac": "MONU00367BFD",
         "serial": "MONU00367BFD",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN288_SAN_MIGUEL",
-        "created_at": "2025-08-07T13:07:56.104498",
+        "created_at": "2026-02-27T12:10:20.081681",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -154656,13 +154647,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00524",
       "created_at": "2025-08-21T09:03:34.099493",
       "service_detail": {
-        "id": 9414,
+        "id": 11849,
         "ip": "10.15.254.2",
         "mac": "MONU003C55AD",
         "serial": "MONU003C55AD",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN288_SAN_MIGUEL",
-        "created_at": "2025-08-22T20:44:59.544878",
+        "created_at": "2026-02-27T12:13:16.076296",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -155649,13 +155640,13 @@ const largeArraydata =
       "nap_box_name": "587",
       "created_at": "2025-09-04T21:59:49.457151",
       "service_detail": {
-        "id": 9478,
+        "id": 11768,
         "ip": "10.16.33.2",
         "mac": "HWTC7B80C17B",
         "serial": "HWTC7B80C17B",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
-        "created_at": "2025-09-05T08:07:42.795199",
+        "created_at": "2026-02-27T10:12:56.819695",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -157185,13 +157176,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00371",
       "created_at": "2025-10-07T16:42:29.902095",
       "service_detail": {
-        "id": 11651,
+        "id": 11799,
         "ip": "10.15.135.2",
         "mac": "MONU00458D45",
         "serial": "MONU00458D45",
         "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2026-02-17T18:52:18.232951",
+        "created_at": "2026-02-27T11:30:45.028097",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -157383,13 +157374,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00258",
       "created_at": "2025-10-15T09:35:34.738849",
       "service_detail": {
-        "id": 9614,
+        "id": 11808,
         "ip": "172.26.250.2",
         "mac": "1CEF03D10662",
         "serial": "VSOL00D10663",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2025-10-15T19:25:37.524634",
+        "created_at": "2026-02-27T11:42:16.848769",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -157701,13 +157692,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2025-10-21T17:29:28.719251",
       "service_detail": {
-        "id": 9639,
+        "id": 11798,
         "ip": "172.31.15.2",
         "mac": "TPLG2ABDC6BC",
         "serial": "TPLG2ABDC6BC",
         "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2025-10-21T17:47:06.769328",
+        "created_at": "2026-02-27T11:30:30.261921",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -158619,13 +158610,13 @@ const largeArraydata =
       "nap_box_name": "CE-00250",
       "created_at": "2025-11-18T09:37:19.892481",
       "service_detail": {
-        "id": 10204,
+        "id": 11766,
         "ip": "10.16.120.2",
         "mac": "8454597EE283",
         "serial": "HWTC5D118391",
         "queue": null,
         "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
-        "created_at": "2025-11-20T12:00:02.444085",
+        "created_at": "2026-02-27T10:10:54.567386",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -159900,13 +159891,13 @@ const largeArraydata =
       "nap_box_name": "CE-00099",
       "created_at": "2025-12-09T15:16:53.216909",
       "service_detail": {
-        "id": 10721,
+        "id": 11841,
         "ip": "10.16.140.2",
         "mac": "HWTCD391A2A7",
         "serial": "HWTCD391A2A7",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-12-15T11:22:54.727849",
+        "created_at": "2026-02-27T12:07:54.776035",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160065,13 +160056,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 947",
       "created_at": "2025-12-15T10:58:46.438457",
       "service_detail": {
-        "id": 10723,
+        "id": 11838,
         "ip": "172.30.152.2",
         "mac": "OEMT3C625832",
         "serial": "OEMT3C625832",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-12-15T11:27:57.780951",
+        "created_at": "2026-02-27T12:06:40.871241",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160098,13 +160089,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00258",
       "created_at": "2025-12-15T16:32:25.370279",
       "service_detail": {
-        "id": 11718,
+        "id": 11829,
         "ip": "10.16.142.2",
         "mac": "VSOL00139591",
         "serial": "VSOL00139591",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2026-02-24T08:45:52.621704",
+        "created_at": "2026-02-27T11:49:20.125791",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160509,13 +160500,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1460",
       "created_at": "2026-01-09T14:02:38.800274",
       "service_detail": {
-        "id": 11634,
+        "id": 11767,
         "ip": "10.16.151.2",
         "mac": "HWTC96894B88",
         "serial": "HWTC96894B88",
         "queue": null,
         "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
-        "created_at": "2026-02-15T22:04:21.630076",
+        "created_at": "2026-02-27T10:11:10.406497",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -161883,8 +161874,8 @@ const largeArraydata =
       "id": 8997,
       "client_name": "CERLIDER JT CA",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Callejon Rosales",
@@ -161901,13 +161892,13 @@ const largeArraydata =
       "nap_box_name": "319",
       "created_at": "2026-02-26T09:40:12.843647",
       "service_detail": {
-        "id": 11751,
+        "id": 11783,
         "ip": "10.16.175.2",
-        "mac": "QXTLP93H6408663",
+        "mac": "QXTLCB938D58",
         "serial": "QXTLCB938D58",
         "queue": null,
         "interface": "VLAN206_ROSALES_OLT2",
-        "created_at": "2026-02-26T09:52:58.284141",
+        "created_at": "2026-02-27T11:03:47.476055",
         "created_by_name": null
       },
       "installation_invoice_cost": null
