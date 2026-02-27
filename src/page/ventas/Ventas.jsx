@@ -7,6 +7,7 @@ import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
 import { fetchMigrationData } from "../../services/migrationService";
 import { fixSpellingErrors } from "../../utils/textUtils";
+import * as XLSX from "xlsx";
 import "./ventas.css";
 
 const PLAN_MAPPING = {
@@ -106,6 +107,25 @@ function Ventas() {
 
   const formatCurrency = (val) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(val);
 
+  const handleExportExcel = () => {
+    if (!masterPlanData || masterPlanData.length === 0) return;
+
+    const exportData = masterPlanData.map(client => ({
+      "Cliente": client.name,
+      "Teléfono": client.mobile || "Sin Telf.",
+      "Cédula/RIF": client.identification,
+      "ID Contrato": client.id,
+      "Estatus": STATUS_TRANSLATION[client.status] || client.status,
+      "Motivo": fixSpellingErrors(client.notes) || "-",
+      "Integración": client.isMigration ? `${client.previousPlanName} -> ${client.newPlanName} (${client.integrationDate})` : "Contrato Original"
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Plan_200M");
+    XLSX.writeFile(workbook, "Plan_200M_Clientes.xlsx");
+  };
+
   return (
     <div>
       {showPasswordState ? (
@@ -174,6 +194,14 @@ function Ventas() {
                     <div className="header-badges">
                       <span className="badge-total">{masterPlanData.length} Clientes Totales</span>
                       <span className="badge-revenue">{formatCurrency(masterPlanData.length * 19)}/mes</span>
+                      <button 
+                        className="button" 
+                        onClick={handleExportExcel}
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', marginLeft: '10px' }}
+                        title="Descargar en Excel"
+                      >
+                        📥 Excel
+                      </button>
                     </div>
                   </div>
 
