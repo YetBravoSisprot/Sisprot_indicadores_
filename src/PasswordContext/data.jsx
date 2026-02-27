@@ -33249,13 +33249,13 @@ const largeArraydata =
       "nap_box_name": "CE-00099",
       "created_at": "2024-05-10T13:32:48.561623",
       "service_detail": {
-        "id": 5338,
+        "id": 11834,
         "ip": "172.26.109.2",
         "mac": "MONU00DB9A31",
         "serial": "MONU00DB9A31",
-        "queue": "Plan_133131_24341_WispHub",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2024-08-16T09:32:58.092252",
+        "created_at": "2026-02-27T12:04:11.550993",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -34542,13 +34542,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2024-05-17T16:04:08.544902",
       "service_detail": {
-        "id": 5752,
+        "id": 11837,
         "ip": "172.28.55.2",
         "mac": "ZICGCE36E4D0",
         "serial": "ZICGCE36E4D0",
-        "queue": "Plan_131337_24341_WispHub",
+        "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2024-08-19T14:59:36.396956",
+        "created_at": "2026-02-27T12:05:56.418028",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -36199,7 +36199,7 @@ const largeArraydata =
     },
     {
       "id": 4354,
-      "client_name": "SISPROT GLOBAL FIBER",
+      "client_name": "AURA ARRIECHI GLOBAL FIBER",
       "client_type_name": "INTERCAMBIO",
       "client_subdivision": "ACTIVO_INTERCAMBIO",
       "status_name": "Activo",
@@ -36219,13 +36219,13 @@ const largeArraydata =
       "nap_box_name": "32",
       "created_at": "2024-06-07T15:28:46.008757",
       "service_detail": {
-        "id": 11603,
+        "id": 11853,
         "ip": "172.18.107.2",
         "mac": "HWTC318A35A1",
         "serial": "HWTC318A35A1",
         "queue": null,
         "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2026-02-13T11:00:26.478302",
+        "created_at": "2026-02-27T12:45:39.672669",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -37926,8 +37926,8 @@ const largeArraydata =
       "id": 4411,
       "client_name": "CENTRO DE APUESTAS LOS 3 HERMANOS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -37943,16 +37943,7 @@ const largeArraydata =
       "client_identification": "J400451256",
       "nap_box_name": "86 DOS",
       "created_at": "2024-06-08T10:36:02.020737",
-      "service_detail": {
-        "id": 5364,
-        "ip": "172.17.73.2",
-        "mac": "VSOL0013D009",
-        "serial": "VSOL0013D009",
-        "queue": "Plan_92033_1574_WispHub",
-        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2024-08-16T11:35:59.062835",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -89175,13 +89166,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00259",
       "created_at": "2024-08-04T14:35:38.572920",
       "service_detail": {
-        "id": 11817,
-        "ip": "172.17.124.2",
+        "id": 11856,
+        "ip": "10.10.131.2",
         "mac": "VSOL00493B29",
         "serial": "VSOL00493B29",
         "queue": null,
         "interface": "VLAN107_ISAAC_O",
-        "created_at": "2026-02-27T11:45:54.298676",
+        "created_at": "2026-02-27T14:40:39.624576",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -116928,13 +116919,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00136",
       "created_at": "2024-12-04T09:38:49.664584",
       "service_detail": {
-        "id": 7307,
+        "id": 11855,
         "ip": "10.11.128.2",
         "mac": "HWTC48080001",
-        "serial": "HWTC48080001 (PW178)",
-        "queue": "Plan_161900_30183_WispHub",
+        "serial": "HWTC48080001",
+        "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2024-12-04T11:59:01.548098",
+        "created_at": "2026-02-27T13:49:28.228820",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -120849,11 +120840,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243096753",
       "address": "CALLE CEDEÑO CASA 16-2 TURMERO",
@@ -133923,8 +133914,8 @@ const largeArraydata =
       "id": 7901,
       "client_name": "MARIANA BELISOL PALMA CHANG",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Ppal Paya",
@@ -154239,7 +154230,7 @@ const largeArraydata =
         "code": "FOR600M",
         "profile": "600M/600M"
       },
-      "client_mobile": "04265336708",
+      "client_mobile": "04242572382",
       "address": "URB VALLE PARAÍSO MANZANA 3 CASA 19 ,CERCA DEL CC MILÁN PLAZA TURMERO EDO ARAGUA",
       "client_identification": "V10312774",
       "nap_box_name": "CTO-00595",
@@ -157455,8 +157446,8 @@ const largeArraydata =
       "id": 8850,
       "client_name": "JOSE MAURICIO DE SOUSA SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -161742,8 +161733,8 @@ const largeArraydata =
       "id": 8993,
       "client_name": "‎RONVELYS DEL CARMEN ACOSTA PEÑA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": false,
       "sector_name": "La Esperanza",
@@ -161760,13 +161751,13 @@ const largeArraydata =
       "nap_box_name": "RESERVA 3 TRONCAL LA ESPERANZA",
       "created_at": "2026-02-25T08:41:41.114401",
       "service_detail": {
-        "id": 11738,
+        "id": 11857,
         "ip": "10.16.172.2",
-        "mac": "10.16.172.2",
-        "serial": "10.16.172.2",
+        "mac": "HWTC4E3A12AD",
+        "serial": "HWTC4E3A12AD",
         "queue": null,
         "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
-        "created_at": "2026-02-25T09:32:07.088934",
+        "created_at": "2026-02-27T15:11:02.804824",
         "created_by_name": null
       },
       "installation_invoice_cost": null
