@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
  * @param {Array} dataset - El conjunto de datos filtrado.
  * @param {Array} appliedFiltersText - Lista de textos de filtros aplicados para el nombre del archivo.
  */
-export const exportToExcel = (dataset, appliedFiltersText = []) => {
+export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns = []) => {
     if (!dataset || dataset.length === 0) {
         console.warn("Dataset vacío, no se puede generar Excel.");
         return;
@@ -28,7 +28,7 @@ export const exportToExcel = (dataset, appliedFiltersText = []) => {
 
     const norm = (v) => (v == null ? "" : String(v).trim());
 
-    const worksheetData = dataset.map((cliente) => {
+    const baseData = dataset.map((cliente) => {
         const service = cliente.service_detail || {};
         const created_at_raw = cliente.created_at || "";
         const created_at = created_at_raw ? new Date(created_at_raw) : null;
@@ -59,7 +59,21 @@ export const exportToExcel = (dataset, appliedFiltersText = []) => {
     });
 
     // Ordenar por días hábiles descendente
-    worksheetData.sort((a, b) => (b["Días Hábiles"] || 0) - (a["Días Hábiles"] || 0));
+    baseData.sort((a, b) => (b["Días Hábiles"] || 0) - (a["Días Hábiles"] || 0));
+
+    const worksheetData = baseData.map((row) => {
+        if (!selectedColumns || selectedColumns.length === 0 || selectedColumns.includes("Todas")) {
+            return row;
+        }
+
+        const filteredColumns = {};
+        selectedColumns.forEach((col) => {
+            if (row[col] !== undefined) {
+                filteredColumns[col] = row[col];
+            }
+        });
+        return filteredColumns;
+    });
 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
