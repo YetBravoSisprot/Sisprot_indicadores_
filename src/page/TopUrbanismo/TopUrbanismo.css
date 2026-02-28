@@ -361,6 +361,25 @@ option:checked {
   border-radius: 6px;
 }
 
+/* ================= TOOLTIP AYUDA FILTROS ================= */
+.filtro-tip {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.3px;
+}
+
+.filtro-tip b {
+  color: #60a5fa;
+  font-weight: 800;
+}
+
 /* ================= BUSQUEDA POR CONTRATO ================= */
 .busqueda-contrato {
   display: flex;
