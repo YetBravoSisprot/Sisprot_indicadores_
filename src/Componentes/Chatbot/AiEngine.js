@@ -595,6 +595,46 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     parameters = lastBotMsg.cardData?.parameters || {};
                     fromClarification = true;
                 }
+
+                // Interceptor 6: Seleccion de Columnas para Excel
+                if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
+                    const reqCols = query.toLowerCase();
+                    const availableColsMap = {
+                        "contrato": "Contrato", "cliente": "Cliente", "telefono": "Teléfono", "direccion": "Dirección",
+                        "urbanismo": "Urbanismo", "estatus": "Estatus", "migrado": "Migrado", "ciclo": "Ciclo",
+                        "cedula": "Cedula", "ip": "IP", "mac": "MAC", "fecha": "Fecha_Creación",
+                        "dias": "Días Hábiles", "tipo": "Tipo_Cliente", "plan": "Plan"
+                    };
+
+                    let matchedCols = [];
+                    if (reqCols.includes("toda") || reqCols.includes("todo")) {
+                        matchedCols = ["Todas"];
+                    } else {
+                        Object.keys(availableColsMap).forEach(key => {
+                            if (reqCols.includes(key)) {
+                                matchedCols.push(availableColsMap[key]);
+                            }
+                        });
+                    }
+
+                    if (matchedCols.length === 0) {
+                        matchedCols = ["Todas"];
+                    }
+
+                    const { savedDataset, savedFiltersText } = lastBotMsg.cardData;
+                    return {
+                        text: `¡Listo! He preparado tu Excel con las columnas: **${matchedCols.join(", ")}**.\n\n**Haz clic en el botón de abajo para descargarlo.**`,
+                        isCard: true,
+                        isDownload: false,
+                        cardData: {
+                            title: "Reporte Generado",
+                            color: "#27ae60",
+                            dataset: savedDataset,
+                            filtersText: savedFiltersText,
+                            selectedColumns: matchedCols
+                        }
+                    };
+                }
             }
         }
 
@@ -1334,13 +1374,14 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'GENERAR_EXCEL': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
+                const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
                 return {
-                    text: `¡Entendido! Estoy preparando el archivo Excel con el listado de clientes (${appliedTexts.join(', ') || 'Global'}).\n\n**Iniciando descarga...**`,
+                    text: `¡Entendido! Antes de entregarte el Excel de (${appliedTexts.join(', ') || 'Global'}), **¿qué columnas requieres que incluya?** \n\nOpciones:\n_${colsList}_\n\n(Puedes decir "Todas" si prefieres el reporte completo).`,
                     isCard: false,
-                    isDownload: true, // Flag para el frontend
+                    contextType: 'clarify_excel_columns',
                     cardData: {
-                        dataset: filtered,
-                        filtersText: appliedTexts
+                        savedDataset: filtered,
+                        savedFiltersText: appliedTexts
                     }
                 };
             }
