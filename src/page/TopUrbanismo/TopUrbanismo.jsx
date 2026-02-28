@@ -834,3 +834,7 @@ function UrbanismoList({ urbanismos }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+export default TopUrbanismo;
