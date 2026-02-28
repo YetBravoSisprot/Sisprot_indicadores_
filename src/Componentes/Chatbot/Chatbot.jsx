@@ -72,7 +72,7 @@ const Chatbot = () => {
             // Si la respuesta indica una descarga, la ejecutamos
             if (aiResponse.isDownload && aiResponse.cardData?.dataset) {
                 setTimeout(() => {
-                    exportToExcel(aiResponse.cardData.dataset, aiResponse.cardData.filtersText);
+                    exportToExcel(aiResponse.cardData.dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"]);
                 }, 1000); // Pequeño delay para que el mensaje se lea
             }
         } catch (error) {
@@ -163,7 +163,7 @@ const Chatbot = () => {
                                     {msg.cardData.dataset && (
                                         <button
                                             className="card-download-btn"
-                                            onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText)}
+                                            onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"])}
                                         >
                                             📥 Descargar Excel
                                         </button>
