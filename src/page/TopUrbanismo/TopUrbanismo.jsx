@@ -273,6 +273,12 @@ const urbanismosAprobados = {
 
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
+const opcionesColumnas = [
+  "Contrato", "Cliente", "Teléfono", "Dirección", "Urbanismo",
+  "Estatus", "Migrado", "Ciclo", "Cedula", "IP", "MAC",
+  "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan"
+];
+
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
@@ -286,6 +292,7 @@ function TopUrbanismo() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
+  const [columnasSeleccionadas, setColumnasSeleccionadas] = useState(["Todas"]);
   const [contratoBuscado, setContratoBuscado] = useState("");
   const [clientesPorContrato, setClientesPorContrato] = useState([]);
   const [modoBusquedaContrato, setModoBusquedaContrato] = useState(false);
@@ -351,7 +358,7 @@ function TopUrbanismo() {
   }, [sectoresSeleccionados]);
 
   const handleDownloadExcel = () => {
-    exportToExcel(serviciosParaExportar, estadosSeleccionados);
+    exportToExcel(serviciosParaExportar, estadosSeleccionados, columnasSeleccionadas);
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -674,6 +681,21 @@ function TopUrbanismo() {
                 <option key={urbanismo} value={urbanismo}>
                   {urbanismo}
                 </option>
+              ))}
+            </select>
+
+            <select
+              id="columnasSelect"
+              size="5"
+              multiple
+              value={columnasSeleccionadas}
+              onChange={(e) =>
+                setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
+              }
+            >
+              <option value="Todas">Todas las columnas Excel</option>
+              {opcionesColumnas.map(col => (
+                <option key={col} value={col}>{col}</option>
               ))}
             </select>
 
