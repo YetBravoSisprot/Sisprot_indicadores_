@@ -44,6 +44,9 @@ function PageNav() {
           <NavLink to="/Ventas">Operaciones</NavLink>
         </li>
         <li>
+          <NavLink to="/VentasGlobales">Ventas 2021-2026</NavLink>
+        </li>
+        <li>
           <NavLink to="/Admin">Adm. Ingresos</NavLink>
         </li>
         <li>
