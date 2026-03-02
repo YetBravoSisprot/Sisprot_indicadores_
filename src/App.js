@@ -7,6 +7,7 @@ import Indicadores from "./page/Indicadores/Indicadores";
 import Admin from "./page/Admin/Admin";
 import PageNotFound from "./page/PageNotFound/PageNotFound";
 import Ventas from "./page/ventas/Ventas";
+import VentasGlobales from "./page/ventas/VentasGlobales";
 import { PasswordProvider, PasswordContext } from "./PasswordContext/PasswordContext";
 
 import Chatbot from "./Componentes/Chatbot/Chatbot";
@@ -73,6 +74,15 @@ function AppContent() {
           element={
             <ProtectedRoute roles={["admin", "ventas"]}>
               <Ventas />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="VentasGlobales"
+          element={
+            <ProtectedRoute roles={["admin", "ventas"]}>
+              <VentasGlobales />
             </ProtectedRoute>
           }
         />
