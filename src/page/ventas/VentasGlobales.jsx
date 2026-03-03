@@ -162,16 +162,24 @@ const VentasGlobales = () => {
     };
     const [q1, q2, q3, q4] = getQuarterData();
 
-    // Proyección 2026
-    const getProjection = () => {
-        if (!salesData?.["2026"]) return 0;
+    // Proyección de Ventas Dinámica
+    const getProjectionData = () => {
+        const defaultData = { total: 0, months: 0, avg: 0, result: 0 };
+        if (!salesData?.["2026"]) return defaultData;
+
         const currentYearData = salesData["2026"];
         const validMonths = currentYearData.filter(v => v > 0);
-        if (validMonths.length === 0) return 0;
-        const avg = validMonths.reduce((a, b) => a + b, 0) / validMonths.length;
-        return Math.round(avg * 12);
+        if (validMonths.length === 0) return defaultData;
+
+        const total = validMonths.reduce((a, b) => a + b, 0);
+        const months = validMonths.length;
+        const avg = total / months;
+        const result = Math.round(avg * 12);
+
+        return { total, months, avg: avg.toFixed(1), result };
     };
-    const projection2026 = getProjection();
+
+    const proj = getProjectionData();
 
     return (
         <div className="ventas-globales-page">
@@ -221,13 +229,17 @@ const VentasGlobales = () => {
                             </div>
                             <div className="stat-card glass projection-card">
                                 <h3>Proyección Ventas 2026</h3>
-                                <div className="projection-val">{projection2026}</div>
+                                <div className="projection-val">{proj.result}</div>
                                 <span className="unit">Total Estimado Anual</span>
                                 <div className="calc-explanation-box">
                                     <p><strong>Metodología de Proyección:</strong></p>
-                                    <p>1. Sumamos las ventas de los meses reales (Ene-Mar: 30).</p>
-                                    <p>2. Dividimos entre los meses transcurridos (3) = Promedio de 10 mensual.</p>
-                                    <p>3. Multiplicamos 10 x 12 meses = 120 proyectadas.</p>
+                                    <p>1. Sumamos las ventas reales: <strong>{proj.total}</strong> uds.</p>
+                                    <p>2. Dividimos entre meses operados: <strong>{proj.months}</strong> meses.</p>
+                                    <p>3. Promedio mensual actual: <strong>{proj.avg}</strong> uds.</p>
+                                    <p>4. Proyección (Promedio x 12): <strong>{proj.result}</strong> uds.</p>
+                                    <div className="dynamic-note">
+                                        ⚠️ <strong>Nota:</strong> Este cálculo es dinámico. A medida que transcurra el año, el estimado ganará mayor precisión.
+                                    </div>
                                 </div>
                             </div>
                         </div>
