@@ -5,7 +5,7 @@
 const DRIVE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTqAF2PzIF-a1_Sc-_uXZ7kraAGc-GU3E9LAUQpOOOoCIljmrYKKcest5wDTqYKXyRBw5hSOWCijoV0/pub?output=csv";
 
 export const HISTORICAL_SALES = {
-    2021: [30, 30, 29, 30, 29, 71, 57, 48, 51, 31, 53, 37],
+    2021: [0, 0, 148, 0, 0, 71, 57, 48, 51, 31, 53, 37],
     2022: [10, 30, 56, 52, 90, 101, 111, 87, 94, 60, 136, 161],
     2023: [27, 47, 136, 248, 189, 78, 69, 80, 112, 133, 130, 62],
     2024: [49, 18, 64, 78, 43, 154, 101, 123, 86, 190, 328, 86],
