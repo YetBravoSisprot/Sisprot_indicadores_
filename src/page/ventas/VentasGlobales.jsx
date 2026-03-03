@@ -306,19 +306,40 @@ const VentasGlobales = () => {
                                                     onClick={() => handleYearSelection(year)}
                                                 >
                                                     <td className="year-cell">{year}</td>
-                                                    {yearData.map((v, i) => (
-                                                        <td
-                                                            key={i}
-                                                            style={{ "--intensity": v / maxSalesVal }}
-                                                            className={`
-                                                                heatmap-cell
-                                                                ${v > 0 ? 'has-value' : 'is-zero'} 
-                                                                ${(isMain && i === selectedMonth) ? 'highlight-cell' : ''}
-                                                            `}
-                                                        >
-                                                            <span className="cell-val">{v}</span>
-                                                        </td>
-                                                    ))}
+                                                    {year === '2021' ? (
+                                                        <>
+                                                            <td
+                                                                colSpan={5}
+                                                                className="heatmap-cell consolidated-cell has-value"
+                                                                style={{ "--intensity": 148 / maxSalesVal, textAlign: 'center' }}
+                                                            >
+                                                                <span className="cell-val">148</span>
+                                                            </td>
+                                                            {yearData.slice(5).map((v, i) => (
+                                                                <td
+                                                                    key={i + 5}
+                                                                    style={{ "--intensity": v / maxSalesVal }}
+                                                                    className={`heatmap-cell ${v > 0 ? 'has-value' : 'is-zero'}`}
+                                                                >
+                                                                    <span className="cell-val">{v}</span>
+                                                                </td>
+                                                            ))}
+                                                        </>
+                                                    ) : (
+                                                        yearData.map((v, i) => (
+                                                            <td
+                                                                key={i}
+                                                                style={{ "--intensity": v / maxSalesVal }}
+                                                                className={`
+                                                                    heatmap-cell
+                                                                    ${v > 0 ? 'has-value' : 'is-zero'} 
+                                                                    ${(isMain && i === selectedMonth) ? 'highlight-cell' : ''}
+                                                                `}
+                                                            >
+                                                                <span className="cell-val">{v}</span>
+                                                            </td>
+                                                        ))
+                                                    )}
                                                     <td className="total-cell">
                                                         {yearData.reduce((a, b) => a + b, 0)}
                                                     </td>
