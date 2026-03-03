@@ -101,10 +101,18 @@
     line-height: 1.2;
 }
 
-.calc-explanation-box strong {
-    color: #f1c40f;
-    display: block;
-    margin-bottom: 5px;
+.dynamic-note {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(241, 196, 15, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #f1c40f;
+    font-size: 0.65rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dynamic-note strong {
+    color: #f1c40f !important;
 }
 
 .stat-card .unit {
