@@ -252,10 +252,16 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Haz clic en 'Ver Reporte Detallado' para acceder al desglose pormenorizado de la data."
     },
     "/Admin": {
-        name: "Adm. Ingresos (Centro de Comando)",
-        description: "El panel de control administrativo privado para gerencia.",
-        data: "Muestro exclusivamente tres tarjetas críticas: **Ingresos Mensuales**, **Clientes Activos** y **Suspendidos**.",
-        guide: "💡 **Atención**: Esta sección solo es visible para usuarios autorizados/automatizados. Si no ves las tarjetas, es por falta de permisos."
+        name: "Adm. Ingresos (Centro de Comando Gerencial)",
+        description: "El panel de control administrativo privado para la toma de decisiones gerenciales.",
+        data: "Muestro tres KPIs críticos: **Ingresos Totales (Mes)**, **Clientes Activos** (comerciales) y **Clientes Suspendidos**. También incluyo un gráfico histórico de ingresos y un estado de carga sincronizado para la data de clientes y Sheets.",
+        guide: "💡 **Atención**: Esta sección es el centro de mando. Si el gráfico no carga de inmediato, es porque estoy sincronizando los datos históricos en tiempo real para darte la cifra más exacta."
+    },
+    "/VentasGlobales": {
+        name: "Ventas Globales (Histórico 2021-2026)",
+        description: "Análisis estratégico de la evolución de ventas y proyecciones anuales.",
+        data: "Muestro la evolución mensual desde 2021, comparativa de crecimiento vs Enero, proyección estimada para el cierre de 2026 y una matriz de calor (heatmap) para identificar picos de éxito.",
+        guide: "💡 **Tip rápido**: Selecciona un año y un mes en la 'Consulta Detallada' para ver el impacto específico y la variación porcentual."
     }
 };
 
