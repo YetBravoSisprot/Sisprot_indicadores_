@@ -17,23 +17,46 @@ const Chatbot = () => {
 
     // Configurar saludo inicial dinámico
     useEffect(() => {
-        if (isAuthenticated) {
-            let greetingText = 'Hola, un gusto saludarte, ¿en qué te puedo ayudar?';
+        if (!isAuthenticated) return;
 
-            if (email) {
-                // Obtener el nombre antes del @
-                const baseName = email.split('@')[0];
-                // Quitar posibles puntos, números o "_" si se desea un nombre más limpio (opcional)
-                const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+        const getGreeting = (name) => {
+            const intro = name
+                ? `Hola **${name}**, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`
+                : `Hola, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`;
 
-                if (cleanName) {
-                    const formattedName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
-                    greetingText = `Hola **${formattedName}**, un gusto saludarte, ¿en qué te puedo ayudar?`;
-                }
+            return `${intro}
+                    
+• **Consultar Ingresos**: Ingresos proyectados por sector o agencia.
+• **Contar Clientes**: Totales, activos, pymes o suspendidos.
+• **Búsqueda Detallada**: Buscar clientes por nombre o contrato.
+• **Reportes Personalizados**: Generar archivos Excel a tu medida.
+• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/25).
+
+¿En qué te puedo ayudar hoy?`;
+        };
+
+        let cleanName = null;
+        if (email) {
+            const baseName = email.split('@')[0];
+            cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+            if (cleanName) {
+                cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
             }
-
-            setMessages(prev => prev.length === 0 ? [{ sender: 'bot', text: greetingText, isCard: false }] : prev);
         }
+
+        const newGreeting = getGreeting(cleanName);
+
+        setMessages(prev => {
+            // Si no hay mensajes, ponemos el saludo
+            if (prev.length === 0) {
+                return [{ sender: 'bot', text: newGreeting, isCard: false }];
+            }
+            // Si el primer mensaje es el saludo genérico (sin nombre) y ahora tenemos nombre, lo actualizamos
+            if (prev.length === 1 && prev[0].sender === 'bot' && !prev[0].text.includes('**')) {
+                return [{ sender: 'bot', text: newGreeting, isCard: false }];
+            }
+            return prev;
+        });
     }, [isAuthenticated, email]);
 
     // Auto-scroll al final cuando hay nuevos mensajes
