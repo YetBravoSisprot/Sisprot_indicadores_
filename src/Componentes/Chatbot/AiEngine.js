@@ -16,6 +16,36 @@ const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(value);
 };
 
+// --- HELPERS DE SIMILITUD (FUZZY MATCHING) ---
+const editDistance = (s1, s2) => {
+    s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
+    let costs = new Array();
+    for (let i = 0; i <= s1.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= s2.length; j++) {
+            if (i == 0) costs[j] = j;
+            else {
+                if (j > 0) {
+                    let newValue = costs[j - 1];
+                    if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+        }
+        if (i > 0) costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+};
+
+const calculateSimilarity = (s1, s2) => {
+    let longer = s1.length > s2.length ? s1 : s2;
+    let shorter = s1.length > s2.length ? s2 : s1;
+    if (longer.length === 0) return 1.0;
+    return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
+};
+
 const findBestUrbanismoMatch = (queryUrb) => {
     if (!queryUrb) return null;
     const normalizedQuery = normalizeText(queryUrb);
@@ -1355,6 +1385,24 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         currentAmbiguous = nameRaw;
                         currentMatches = matches;
                         break; // Paramos para clarificar
+                    } else {
+                        // Si no hay match directo ni por palabras, probamos FUZZY MATCHING
+                        const fuzzyCandidates = clientes.map(c => ({
+                            client: c,
+                            score: calculateSimilarity(nameClean, normalizeText(c.client_name))
+                        }))
+                            .filter(cand => cand.score >= 0.85)
+                            .sort((a, b) => b.score - a.score);
+
+                        if (fuzzyCandidates.length > 0) {
+                            if (fuzzyCandidates[0].score >= 0.9 || fuzzyCandidates.length === 1) {
+                                resolvedInThisStep.push(fuzzyCandidates[0].client);
+                            } else {
+                                currentAmbiguous = nameRaw;
+                                currentMatches = fuzzyCandidates.slice(0, 3).map(c => c.client);
+                                break;
+                            }
+                        }
                     }
                 }
 
