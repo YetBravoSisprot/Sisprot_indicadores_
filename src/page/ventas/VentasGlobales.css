@@ -230,6 +230,14 @@
     color: #51cf66;
 }
 
+.calc-explanation {
+    font-size: 0.75rem;
+    color: #ffffff;
+    opacity: 0.8;
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
 .mini-trend {
     margin-top: 10px;
     font-size: 0.85rem;
