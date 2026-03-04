@@ -1,5 +1,6 @@
 // TopUrbanismo.jsx
 import React, { useState, useEffect, useContext, useCallback, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
@@ -280,6 +281,7 @@ const opcionesColumnas = [
 ];
 
 function TopUrbanismo() {
+  const location = useLocation();
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
   const [TopUrb, setTopUrb] = useState([0, 3500]);
@@ -338,6 +340,13 @@ function TopUrbanismo() {
     setClientesPorContrato(resultado);
     setModoBusquedaContrato(true);
   };
+
+  // ✅ NUEVO: Aplicar filtro inicial si viene de navegacion (ej. desde Admin)
+  useEffect(() => {
+    if (location.state?.initialFilter) {
+      setEstadosSeleccionados(location.state.initialFilter);
+    }
+  }, [location.state]);
 
   // ✅ NUEVO: Urbanismos a mostrar (si "Todos" o sin agencia, mostrar todos)
   const urbanismosParaMostrar = useMemo(() => {
