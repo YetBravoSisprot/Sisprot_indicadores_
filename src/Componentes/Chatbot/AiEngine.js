@@ -3,7 +3,8 @@
  */
 
 const normalizeText = (text) => {
-    return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!text) return "";
+    return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
 };
 
 const extractNumber = (text) => {
@@ -759,26 +760,31 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
         // --- 1.1 INTERCEPTOR DE DESAMBIGUACIÓN (Nombres que son Sectores) ---
         // Si OpenAI cree que es una búsqueda de nombre, pero coincide con un urbanismo conocido, lo corregimos a INGRESOS.
-        if (intent === 'BUSCAR_NOMBRE' && parameters?.nombre) {
-            const matchedUrbanismo = findBestUrbanismoMatch(parameters.nombre);
-            if (matchedUrbanismo) {
-                console.log("Re-clasificando búsqueda de nombre como búsqueda de urbanismo:", matchedUrbanismo);
-                intent = 'INGRESOS';
-                parameters.urbanismo = matchedUrbanismo;
-                delete parameters.nombre;
+        if (intent === 'BUSCAR_NOMBRE') {
+            const listNames = parameters?.nombres || (parameters?.nombre ? [parameters.nombre] : []);
+            // Si el PRIMER nombre que mandó es exactamente un sector, lo tomamos como búsqueda de sector
+            if (listNames.length > 0) {
+                const firstMatch = findBestUrbanismoMatch(listNames[0]);
+                if (firstMatch && !Array.isArray(firstMatch)) {
+                    console.log("Re-clasificando búsqueda de nombre como búsqueda de urbanismo:", firstMatch);
+                    intent = 'INGRESOS';
+                    parameters.urbanismo = firstMatch;
+                    delete parameters.nombre;
+                    delete parameters.nombres;
 
-                // Intentar rescatar otros parámetros de la frase
-                const lowerMsg = message.toLowerCase();
-                if (lowerMsg.includes("activo")) parameters.status = "Activo";
-                if (lowerMsg.includes("residencial")) parameters.tipo = "Residencial";
-                if (lowerMsg.includes("pyme")) parameters.tipo = "Pyme";
-                if (lowerMsg.includes("empleado")) parameters.tipo = "Empleado";
-                if (lowerMsg.includes("intercambio")) parameters.tipo = "Intercambio";
-                if (lowerMsg.includes("gratis")) parameters.tipo = "Gratis";
-                if (lowerMsg.includes("suspendido")) parameters.status = "Suspendido";
-                if (lowerMsg.includes("pausado")) parameters.status = "Pausado";
-                if (lowerMsg.includes("por instalar")) parameters.status = "Por Instalar";
-                if (lowerMsg.includes("cancelado")) parameters.status = "Cancelado";
+                    // Intentar rescatar otros parámetros de la frase
+                    const lowerMsg = message.toLowerCase();
+                    if (lowerMsg.includes("activo")) parameters.status = "Activo";
+                    if (lowerMsg.includes("residencial")) parameters.tipo = "Residencial";
+                    if (lowerMsg.includes("pyme")) parameters.tipo = "Pyme";
+                    if (lowerMsg.includes("empleado")) parameters.tipo = "Empleado";
+                    if (lowerMsg.includes("intercambio")) parameters.tipo = "Intercambio";
+                    if (lowerMsg.includes("gratis")) parameters.tipo = "Gratis";
+                    if (lowerMsg.includes("suspendido")) parameters.status = "Suspendido";
+                    if (lowerMsg.includes("pausado")) parameters.status = "Pausado";
+                    if (lowerMsg.includes("por instalar")) parameters.status = "Por Instalar";
+                    if (lowerMsg.includes("cancelado")) parameters.status = "Cancelado";
+                }
             }
         }
 
@@ -1324,17 +1330,31 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let currentMatches = [];
 
                 while (pendingNames.length > 0) {
-                    const name = pendingNames.shift();
-                    const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(name)));
+                    const nameRaw = pendingNames.shift();
+                    // Limpiar el nombre de palabras que la IA pueda haber incluido por error
+                    let nameClean = normalizeText(nameRaw)
+                        .replace(/^(del\s+cliente|el\s+cliente|cliente|datos\s+de|datos\s+del|la\s+informacion\s+de)\s+/g, "")
+                        .trim();
+
+                    if (!nameClean) continue;
+
+                    let matches = clientes.filter(c => normalizeText(c.client_name).includes(nameClean));
+
+                    // Si no hay match directo, probar buscando palabras individuales (más flexible)
+                    if (matches.length === 0 && nameClean.split(" ").length > 1) {
+                        const words = nameClean.split(" ");
+                        matches = clientes.filter(c => {
+                            const dbName = normalizeText(c.client_name);
+                            return words.every(w => dbName.includes(w));
+                        });
+                    }
 
                     if (matches.length === 1) {
                         resolvedInThisStep.push(matches[0]);
                     } else if (matches.length > 1) {
-                        currentAmbiguous = name;
+                        currentAmbiguous = nameRaw;
                         currentMatches = matches;
                         break; // Paramos para clarificar
-                    } else {
-                        // No encontrado - podríamos notificar pero seguimos por ahora
                     }
                 }
 
