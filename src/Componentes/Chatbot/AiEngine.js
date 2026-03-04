@@ -293,7 +293,6 @@ INTENCIONES DISPONIBLES:
 - BUSCAR_CONTRATO: El usuario te da un NÚMERO EXACTO para buscar el perfil de un único cliente. Ej: "el contrato es 3063", "busca el 4301". Param requerido: {"contrato": "1234"} (EL PARÁMETRO DEBE SER SOLO NUMÉRICO).
 - BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". Si detectas varios nombres, devuélvelos en un array llamado "nombres" en los parámetros. Ej: {"nombres": ["Juan Perez", "Maria Lopez", "Carlos"]}. NO uses esto para nombres de sectores urbanos.
 - ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
-- ROUTERS_OFFLINE: El usuario pregunta por clientes apagados, offline o sin conexión.
 - PLANES: El usuario pregunta por los planes o paquetes más vendidos.
 - TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
 - SALUDO: El usuario solo está saludando ("hola", "buenos días").
@@ -635,19 +634,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
                     const reqCols = query.toLowerCase();
                     const availableColsMap = {
-                        "contrato": "Contrato", "cliente": "Cliente", "telefono": "Teléfono", "direccion": "Dirección",
-                        "urbanismo": "Urbanismo", "estatus": "Estatus", "migrado": "Migrado", "ciclo": "Ciclo",
-                        "cedula": "Cedula", "ip": "IP", "mac": "MAC", "fecha": "Fecha_Creación",
-                        "dias": "Días Hábiles", "tipo": "Tipo_Cliente", "plan": "Plan"
+                        "contrato": "Contrato", "nro": "Contrato", "id": "Contrato",
+                        "cliente": "Cliente", "nombre": "Cliente",
+                        "telefono": "Teléfono", "telfo": "Teléfono", "telf": "Teléfono", "celular": "Teléfono", "movil": "Teléfono",
+                        "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
+                        "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
+                        "estatus": "Estatus", "estado": "Estatus",
+                        "migrado": "Migrado", "tecnologia": "Migrado",
+                        "ciclo": "Ciclo", "fecha": "Fecha_Creación", "creado": "Fecha_Creación",
+                        "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
+                        "ip": "IP", "mac": "MAC",
+                        "dias": "Días Hábiles", "tiempo": "Días Hábiles",
+                        "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
+                        "plan": "Plan", "costo": "Plan", "paquete": "Plan", "renta": "Plan"
                     };
 
                     let matchedCols = [];
-                    if (reqCols.includes("toda") || reqCols.includes("todo")) {
+                    if (reqCols.includes("toda") || reqCols.includes("todo") || reqCols.includes("completo")) {
                         matchedCols = ["Todas"];
                     } else {
                         Object.keys(availableColsMap).forEach(key => {
                             if (reqCols.includes(key)) {
-                                matchedCols.push(availableColsMap[key]);
+                                if (!matchedCols.includes(availableColsMap[key])) {
+                                    matchedCols.push(availableColsMap[key]);
+                                }
                             }
                         });
                     }
@@ -744,7 +754,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 // Interceptor 8: Confirmación final de lista personalizada
                 if (lastBotMsg.contextType === 'multi_client_confirmed' && lastBotMsg.cardData) {
                     const normQuery = query.toLowerCase();
-                    if (normQuery.includes("proceder") || normQuery.includes("excel") || normQuery.includes("si") || normQuery.includes("columnas")) {
+                    // REGLA DE EXCLUSIÓN: Si el usuario incluye un nuevo nombre o dice "otro", NO saltamos a Excel aún.
+                    const isNewSearch = normQuery.includes("otro") || normQuery.includes("nombre") || normQuery.includes("busca") || normQuery.includes("trae") || normQuery.split(" ").length > 3;
+
+                    if (!isNewSearch && (normQuery.includes("proceder") || normQuery.includes("excel") || normQuery.includes("si") || normQuery.includes("columnas"))) {
                         const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
                         return {
                             text: `¡Entendido! Vamos a generar el Excel para tus clientes seleccionados. **¿Qué columnas deseas incluir?**\n\n_${colsList}_\n\n(O escribe "Todas")`,
@@ -756,6 +769,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             }
                         };
                     }
+                    // Si no fue una confirmación de "sí/excel", permitimos que el flujo continúe hacia la IA para detectar el nuevo nombre
                 }
             }
         }
@@ -1292,21 +1306,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 };
             }
 
-            case 'ROUTERS_OFFLINE': {
-                const offlineCount = clientes.filter(c => c.status_name === "Activo" && c.router_status !== "Online").length;
-                const totalActivos = clientes.filter(c => c.status_name === "Activo").length;
 
-                return {
-                    text: `He escaneado el nivel de red ${userName}. De nuestros ${totalActivos} clientes con estatus activo comercial, he detectado lo siguiente: `,
-                    isCard: true,
-                    cardData: {
-                        title: "Fallas de Red Puntos (Offline)",
-                        value: offlineCount,
-                        subtitle: "Equipos que no están reportando conexión correcta",
-                        color: "#e67e22"
-                    }
-                };
-            }
 
             case 'PLANES': {
                 const req = message.toLowerCase(); // OpenAI no me dirá si filtró por activos/suspendidos en planes en este prompt base, pero aplicamos helper si dice 'activo'
