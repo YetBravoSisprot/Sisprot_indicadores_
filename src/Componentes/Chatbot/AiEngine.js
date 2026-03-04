@@ -260,7 +260,7 @@ INTENCIONES DISPONIBLES:
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
 - BUSCAR_CONTRATO: El usuario te da un NÚMERO EXACTO para buscar el perfil de un único cliente. Ej: "el contrato es 3063", "busca el 4301". Param requerido: {"contrato": "1234"} (EL PARÁMETRO DEBE SER SOLO NUMÉRICO).
-- BUSCAR_NOMBRE: El usuario te da un NOMBRE DE PERSONA para buscar el perfil de ese cliente. Ej: "busca a Reyes", "se llama Juan". Param requerido: {"nombre": "Juan"}. NO uses esto para nombres de sectores urbanos.
+- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". Si detectas varios nombres, devuélvelos en un array llamado "nombres" en los parámetros. Ej: {"nombres": ["Juan Perez", "Maria Lopez", "Carlos"]}. NO uses esto para nombres de sectores urbanos.
 - ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
 - ROUTERS_OFFLINE: El usuario pregunta por clientes apagados, offline o sin conexión.
 - PLANES: El usuario pregunta por los planes o paquetes más vendidos.
@@ -298,7 +298,11 @@ REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
 - Si el usuario solicita ver DOS o MÁS estados al mismo tiempo (ej: "activos y suspendidos"), NO elijas uno al azar. Responde amablemente (en el campo "message") explicando que actualmente el sistema solo permite filtrar por un estado a la vez para mantener la precisión, y pregúntale cuál de los dos prefiere ver primero. En este caso, usa intent "UNKNOWN" o uno de clarificación.
-- Esta regla aplica también para tipos de cliente (ej: "residencial y pyme"). Siempre pide al usuario que elija uno solo para proceder.`;
+- Esta regla aplica también para tipos de cliente (ej: "residencial y pyme"). Siempre pide al usuario que elija uno solo para proceder.
+302: 
+303: REGLA DE INGRESOS (PROYECTADOS):
+304: - SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
+305: - Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
@@ -634,6 +638,93 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             selectedColumns: matchedCols
                         }
                     };
+                }
+
+                // Interceptor 7: Clarificación de Múltiples Clientes (Selección por Nombre)
+                if (lastBotMsg.contextType === 'multi_client_clarification' && lastBotMsg.cardData) {
+                    const { pendingNames, confirmedClients, currentName, currentMatches } = lastBotMsg.cardData;
+                    const normQuery = query.toLowerCase();
+                    const choice = parseInt(extractNumber(query));
+
+                    let updatedConfirmed = [...confirmedClients];
+                    let updatedPending = [...pendingNames];
+                    let nextName = null;
+                    let nextMatches = [];
+
+                    // Si el usuario eligió una opción válida
+                    if (!isNaN(choice) && currentMatches && currentMatches[choice - 1]) {
+                        updatedConfirmed.push(currentMatches[choice - 1]);
+                    } else if (normQuery.includes("saltar") || normQuery.includes("ninguno") || normQuery.includes("no")) {
+                        // Saltar este nombre
+                    } else if (currentMatches && currentMatches.length > 0) {
+                        // Si no eligió un número pero hay opciones, re-pedir
+                        return {
+                            text: `Por favor ${userName}, dime el número (1, 2, 3...) de la opción que corresponde a **${currentName}** o escribe 'saltar'.`,
+                            isCard: false,
+                            contextType: 'multi_client_clarification',
+                            cardData: lastBotMsg.cardData
+                        };
+                    }
+
+                    // Intentar procesar el siguiente nombre en la cola
+                    while (updatedPending.length > 0) {
+                        const nameToProcess = updatedPending.shift();
+                        const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(nameToProcess)));
+
+                        if (matches.length === 1) {
+                            updatedConfirmed.push(matches[0]);
+                        } else if (matches.length > 1) {
+                            // Encontramos ambigüedad, pedimos clarificación
+                            nextName = nameToProcess;
+                            nextMatches = matches;
+                            break;
+                        } else {
+                            // No se encontró, informamos y seguimos (podríamos acumular errores pero por ahora directo)
+                        }
+                    }
+
+                    if (nextName) {
+                        const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: #${m.id}, Sector: ${m.sector_name})`).join("\n");
+                        return {
+                            text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál de estos deseas incluir en el Excel?\n\n${optionsList}\n\nResponde con el número de la opción.`,
+                            isCard: false,
+                            contextType: 'multi_client_clarification',
+                            cardData: {
+                                pendingNames: updatedPending,
+                                confirmedClients: updatedConfirmed,
+                                currentName: nextName,
+                                currentMatches: nextMatches
+                            }
+                        };
+                    } else {
+                        // Terminamos de procesar todos los nombres
+                        const confirmedList = updatedConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
+                        return {
+                            text: `¡Listo ${userName}! He confirmado los siguientes clientes para tu reporte:\n\n${confirmedList}\n\n¿Deseas buscar más nombres para agregar a la lista o **procedemos a elegir las columnas del Excel**?`,
+                            isCard: false,
+                            contextType: 'multi_client_confirmed',
+                            cardData: {
+                                confirmedClients: updatedConfirmed
+                            }
+                        };
+                    }
+                }
+
+                // Interceptor 8: Confirmación final de lista personalizada
+                if (lastBotMsg.contextType === 'multi_client_confirmed' && lastBotMsg.cardData) {
+                    const normQuery = query.toLowerCase();
+                    if (normQuery.includes("proceder") || normQuery.includes("excel") || normQuery.includes("si") || normQuery.includes("columnas")) {
+                        const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
+                        return {
+                            text: `¡Entendido! Vamos a generar el Excel para tus clientes seleccionados. **¿Qué columnas deseas incluir?**\n\n_${colsList}_\n\n(O escribe "Todas")`,
+                            isCard: false,
+                            contextType: 'clarify_excel_columns',
+                            cardData: {
+                                savedDataset: lastBotMsg.cardData.confirmedClients,
+                                savedFiltersText: ["Lista Personalizada"]
+                            }
+                        };
+                    }
                 }
             }
         }
@@ -1115,15 +1206,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const clientesCount = filteredClientes.length;
 
                 const introText = appliedFiltersText.length > 1
-                    ? `¡Perfecto ${userName}! He calculado los ingresos aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})`
-                    : `¡Claro ${userName}! He calculado los ingresos proyectados basados en tu consulta:`;
+                    ? `¡Perfecto ${userName}! He calculado los **ingresos mensuales proyectados** aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})\n\n*(Este monto es la suma de los planes de estos clientes)*`
+                    : `¡Claro ${userName}! He calculado los **ingresos mensuales proyectados** basados en tu consulta: \n\n*(Este valor se obtiene sumando los costos de los planes actuales de los clientes en tu base de datos)*`;
 
                 return {
                     text: introText + "\n\n**He preparado un botón de descarga por si necesitas el listado en Excel.**",
                     isCard: true,
                     offerExcel: true,
                     cardData: {
-                        title: "Ingresos Brutos Estimados",
+                        title: "Ingresos Proyectados (Mes)",
                         value: formatCurrency(ingresosTotales),
                         subtitle: `${clientesCount} clientes base`,
                         color: "#f1c40f",
@@ -1214,45 +1305,91 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'BUSCAR_NOMBRE': {
-                const nombreQ = parameters?.nombre ? normalizeText(parameters.nombre) : null;
-                if (!nombreQ) {
-                    return { text: "No logré captar el nombre en tu frase. Por favor dímelo nuevamente.", isCard: false };
+                const nombresReq = parameters?.nombres || (parameters?.nombre ? [parameters.nombre] : []);
+
+                if (nombresReq.length === 0) {
+                    return { text: `Dime los nombres de los clientes que buscas ${userName}.`, isCard: false };
                 }
 
-                const clientesEncontrados = clientes.filter(c => normalizeText(c.client_name).includes(nombreQ));
-
-                if (clientesEncontrados.length === 0) {
-                    return { text: `Consulté la base de datos pero no encontré ninguna coincidencia directa con el nombre o apellido "${parameters.nombre}". ¿Se escribe distinto ? `, isCard: false };
+                // Si hay un historial previo con clientes confirmados, los mantenemos
+                let confirmedClients = [];
+                if (history && history.length > 0) {
+                    const lastBotMsg = history.slice().reverse().find(m => m.sender === 'bot' && m.cardData && m.cardData.confirmedClients);
+                    if (lastBotMsg) confirmedClients = [...lastBotMsg.cardData.confirmedClients];
                 }
 
-                // Si encontramos demasiados y el texto fue muuy corto:
-                if (clientesEncontrados.length > 2 && nombreQ.split(" ").length === 1) {
+                let pendingNames = [...nombresReq];
+                let resolvedInThisStep = [];
+                let currentAmbiguous = null;
+                let currentMatches = [];
+
+                while (pendingNames.length > 0) {
+                    const name = pendingNames.shift();
+                    const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(name)));
+
+                    if (matches.length === 1) {
+                        resolvedInThisStep.push(matches[0]);
+                    } else if (matches.length > 1) {
+                        currentAmbiguous = name;
+                        currentMatches = matches;
+                        break; // Paramos para clarificar
+                    } else {
+                        // No encontrado - podríamos notificar pero seguimos por ahora
+                    }
+                }
+
+                const allConfirmed = [...confirmedClients, ...resolvedInThisStep];
+
+                if (currentAmbiguous) {
+                    const optionsList = currentMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: #${m.id}, Sector: ${m.sector_name})`).join("\n");
+                    const introResolved = resolvedInThisStep.length > 0 ? `He agregado a ${resolvedInThisStep.map(c => c.client_name).join(", ")}. \n\n` : "";
+
                     return {
-                        text: `Hay ${clientesEncontrados.length} clientes en el sistema que coinciden con "${parameters.nombre}".Para ser preciso sin abrumarte, ¿me puedes regalar el nombre completo o número de contrato ? (O escribe "ver la lista" para mostrártelos)`,
+                        text: `${introResolved}Para **${currentAmbiguous}** encontré ${currentMatches.length} registros. ¿Cuál de estos deseas incluir?\n\n${optionsList}\n\nResponde con el número de la opción.`,
                         isCard: false,
-                        contextType: 'multiple_names', // Marcador para que el interceptor local reaccione
-                        cardData: { term: parameters.nombre }
+                        contextType: 'multi_client_clarification',
+                        cardData: {
+                            pendingNames: pendingNames,
+                            confirmedClients: allConfirmed,
+                            currentName: currentAmbiguous,
+                            currentMatches: currentMatches
+                        }
+                    };
+                } else if (allConfirmed.length > 0) {
+                    const confirmedList = allConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
+                    const title = nombresReq.length > 1 ? "Clientes encontrados" : "Cliente encontrado";
+
+                    // Si solo era un nombre y se resolvió directo, mostramos su card pero con opción a excel
+                    if (nombresReq.length === 1 && allConfirmed.length === 1) {
+                        const cliente = allConfirmed[0];
+                        return {
+                            text: `He encontrado a **${cliente.client_name}**. ¿Deseas buscar a alguien más o **generamos el Excel** con sus datos?`,
+                            isCard: true,
+                            contextType: 'multi_client_confirmed',
+                            cardData: {
+                                title: cliente.client_name,
+                                subtitle: `#${cliente.id} | ${cliente.sector_name}`,
+                                stats: [
+                                    { label: "Estado", value: cliente.status_name },
+                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` }
+                                ],
+                                confirmedClients: allConfirmed,
+                                rawData: cliente
+                            }
+                        };
+                    }
+
+                    return {
+                        text: `He preparado la lista con los clientes encontrados:\n\n${confirmedList}\n\n¿Deseas buscar más nombres o **procedemos con el Excel**?`,
+                        isCard: false,
+                        contextType: 'multi_client_confirmed',
+                        cardData: {
+                            confirmedClients: allConfirmed
+                        }
                     };
                 }
 
-                const cliente = clientesEncontrados[0];
-                const infoExtra = clientesEncontrados.length > 1 ? ` (Hay ${clientesEncontrados.length - 1} coincidencias más en el motor, te muestro la primera relevante).` : "";
-
-                return {
-                    text: `He analizado la información ${userName}. Esto es lo que resalta sobre ${cliente.client_name}${infoExtra}: `,
-                    isCard: true,
-                    contextType: 'viewing_client',
-                    cardData: {
-                        title: cliente.client_name,
-                        subtitle: `#${cliente.id} | ${cliente.sector_name} `,
-                        stats: [
-                            { label: "Estado", value: cliente.status_name },
-                            { label: "Teléfono", value: cliente.client_mobile || 'N/A' },
-                            { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` }
-                        ],
-                        rawData: cliente
-                    }
-                };
+                return { text: `Lo siento ${userName}, no encontré ningún cliente que coincida con esos nombres.`, isCard: false };
             }
 
             case 'BUSQUEDA_VAGA':
@@ -1362,7 +1499,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         title: "Resumen Comparativo",
                         stats: [
                             { label: "Total Clientes", value: total, color: "#3498db" },
-                            { label: "Ingresos Proyectados", value: formatCurrency(ingresos), color: "#f1c40f" }
+                            { label: "Ingresos Proyectados (Suma Planes)", value: formatCurrency(ingresos), color: "#f1c40f" }
                         ],
                         color: "#9b59b6",
                         parameters: parameters,
