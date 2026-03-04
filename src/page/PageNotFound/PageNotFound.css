@@ -11,7 +11,8 @@
   font-family: 'Arial', sans-serif;
   text-align: center;
   padding: 20px;
-  padding-top: 120px;
+  padding-top: 40px;
+  /* Reducido de 120px */
   /* Ajuste superior para no cubrir el logo */
   box-sizing: border-box;
   position: relative;
@@ -19,15 +20,15 @@
 
 /* Estilos para el logo y el texto del autor */
 .report-header-info {
-  position: absolute;
-  top: 20px;
-  /* Ajuste de la posición superior */
-  left: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  /* Centrado para mejor flujo */
+  margin-bottom: 20px;
+  /* Espacio antes de la navegación */
   z-index: 10;
   color: white;
+  width: 100%;
 }
 
 .company-logo {
@@ -40,11 +41,10 @@
 
 .author-text {
   font-size: 1rem;
-  /* Tamaño adecuado del texto */
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  text-align: left;
-  padding-left: 10px;
+  text-align: center;
+  /* Centrado */
 }
 
 /* Contenedor para los iframes de Power BI */
