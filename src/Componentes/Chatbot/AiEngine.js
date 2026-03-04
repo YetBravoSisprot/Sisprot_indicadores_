@@ -1256,8 +1256,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const clientesCount = filteredClientes.length;
 
                 const introText = appliedFiltersText.length > 1
-                    ? `¡Perfecto ${userName}! He calculado los **ingresos mensuales proyectados** aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})\n\n*(Este monto es la suma de los planes de estos clientes)*`
-                    : `¡Claro ${userName}! He calculado los **ingresos mensuales proyectados** basados en tu consulta: \n\n*(Este valor se obtiene sumando los costos de los planes actuales de los clientes en tu base de datos)*`;
+                    ? `¡Perfecto ${userName}! He calculado los **ingresos mensuales proyectados** aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})\n\n**Note: Este monto es la suma de los planes proyectados de estos clientes.**`
+                    : `¡Claro ${userName}! He calculado los **ingresos mensuales proyectados** basados en tu consulta: \n\n**Note: Este valor se obtiene sumando los costos de los planes actuales de los clientes en tu base de datos.**`;
 
                 return {
                     text: introText + "\n\n**He preparado un botón de descarga por si necesitas el listado en Excel.**",
