@@ -4,14 +4,14 @@ import largeArraydata from "../PasswordContext/data";
 const PasswordContext = createContext();
 
 function PasswordProvider({ children }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
   const [password, setPassword] = useState("");
-  const [showPasswordState, setShowPasswordState] = useState(true);
+  const [showPasswordState, setShowPasswordState] = useState(localStorage.getItem("isAuthenticated") !== "true");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [role, setRole] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Aquí está setIsAuthenticated
+  const [role, setRole] = useState(localStorage.getItem("userRole") || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
   const token = process.env.REACT_APP_TOKEN_KEY;
   const api = process.env.REACT_APP_API;
 
@@ -49,6 +49,9 @@ function PasswordProvider({ children }) {
     );
 
     if (user) {
+      localStorage.setItem("userEmail", inputEmail);
+      localStorage.setItem("userRole", user.role);
+      localStorage.setItem("isAuthenticated", "true");
       setRole(user.role);
       setShowPasswordState(false);
       setIsAuthenticated(true);
@@ -57,10 +60,16 @@ function PasswordProvider({ children }) {
       setPassword("");
       setError("Credenciales incorrectas");
       setIsAuthenticated(false);
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("isAuthenticated");
     }
   };
 
   const logout = () => {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("isAuthenticated");
     setEmail("");
     setPassword("");
     setRole(null);
