@@ -5,6 +5,7 @@ import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 import { getHistoricalRevenueData } from "../../services/revenueService";
+import { getCycleLabel } from "../../utils/cycleHelper";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -469,7 +470,7 @@ function Admin() {
                       </div>
                       <div className="detail-item">
                         <label>Ciclo / Día Corte</label>
-                        <span>{selectedClient.cycle || selectedClient.cut_off_day || "N/A"}</span>
+                        <span>{getCycleLabel(selectedClient.cycle) || selectedClient.cut_off_day || "N/A"}</span>
                       </div>
                       <div className="detail-item" style={{ gridColumn: 'span 2' }}>
                         <label>Dirección Completa</label>
