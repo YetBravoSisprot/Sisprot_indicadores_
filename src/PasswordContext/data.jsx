@@ -6849,13 +6849,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-04-11T16:23:14.862506",
       "service_detail": {
-        "id": 3806,
+        "id": 11989,
         "ip": "172.22.165.2",
         "mac": "TPLGBA687B3C",
         "serial": "TPLGBA687B3C",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-07-15T16:39:26.937953",
+        "created_at": "2026-03-06T12:57:24.249900",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -7125,13 +7125,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-04-11T16:32:12.508732",
       "service_detail": {
-        "id": 5535,
+        "id": 11980,
         "ip": "172.26.40.2",
         "mac": "TPLGF9CD3D31",
         "serial": "TPLGF9CD3D31",
-        "queue": "Plan_107915_30181_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-16T21:37:07.016469",
+        "created_at": "2026-03-06T12:03:54.855070",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -25848,13 +25848,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00058",
       "created_at": "2024-04-19T14:18:26.248630",
       "service_detail": {
-        "id": 6243,
+        "id": 11981,
         "ip": "172.24.137.2",
         "mac": "TPLGB446F711",
         "serial": "TPLGB446F711",
-        "queue": "Plan_161872_30181_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-23T12:41:45.135987",
+        "created_at": "2026-03-06T12:05:19.902297",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -31473,8 +31473,8 @@ const largeArraydata =
       "id": 4177,
       "client_name": "MI DULCE REFUGIO 2002 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -67614,8 +67614,8 @@ const largeArraydata =
       "id": 5490,
       "client_name": "RONY GABRIEL OLLARVES GRAZIANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -72222,8 +72222,8 @@ const largeArraydata =
       "id": 5646,
       "client_name": "HEYDI COROMOTO ORTEGA BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados I",
@@ -77796,13 +77796,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00058 DOS",
       "created_at": "2024-07-30T16:00:46.125838",
       "service_detail": {
-        "id": 5887,
+        "id": 11985,
         "ip": "172.22.133.2",
         "mac": "TPLGBA687BD2",
         "serial": "TPLGBA687BD2",
-        "queue": "Plan_161905_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T10:10:15.555211",
+        "created_at": "2026-03-06T12:51:02.114152",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -77829,13 +77829,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-07-30T16:17:34.753750",
       "service_detail": {
-        "id": 8522,
+        "id": 11990,
         "ip": "172.22.191.2",
         "mac": "TPLGBA687B89",
         "serial": "TPLGBA687B89",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2025-05-08T10:41:27.403142",
+        "created_at": "2026-03-06T12:58:48.162919",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -77862,13 +77862,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00058",
       "created_at": "2024-07-30T16:19:53.287832",
       "service_detail": {
-        "id": 5891,
+        "id": 11988,
         "ip": "172.22.129.2",
         "mac": "TPLGBA687B83",
         "serial": "TPLGBA687B83",
-        "queue": "Plan_161889_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T10:15:31.845111",
+        "created_at": "2026-03-06T12:56:20.596761",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78051,13 +78051,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-07-30T16:44:28.231362",
       "service_detail": {
-        "id": 5903,
+        "id": 11986,
         "ip": "172.22.130.2",
         "mac": "TPLGBA687678",
         "serial": "TPLGBA687678",
-        "queue": "Plan_161858_30181_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:23:19.556165",
+        "created_at": "2026-03-06T12:52:45.516360",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78117,13 +78117,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-07-30T16:48:24.364940",
       "service_detail": {
-        "id": 5905,
+        "id": 11987,
         "ip": "172.22.138.2",
         "mac": "TPLGBA687B2D",
         "serial": "TPLGBA687B2D",
-        "queue": "Plan_161889_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:26:48.898486",
+        "created_at": "2026-03-06T12:54:41.999896",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78150,13 +78150,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057",
       "created_at": "2024-07-30T16:50:37.152629",
       "service_detail": {
-        "id": 5907,
+        "id": 11991,
         "ip": "172.22.139.2",
         "mac": "TPLGBA6878B7",
         "serial": "TPLGBA6878B7",
-        "queue": "Plan_161893_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:28:27.140597",
+        "created_at": "2026-03-06T13:02:09.187905",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -83283,8 +83283,8 @@ const largeArraydata =
       "id": 6023,
       "client_name": "VERONICA VALENTINA ALVAREZ VALERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -87888,8 +87888,8 @@ const largeArraydata =
       "id": 6173,
       "client_name": "DAYANA ALEXANDRA ARIAS CORONEL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -88341,13 +88341,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057",
       "created_at": "2024-08-03T18:03:27.120850",
       "service_detail": {
-        "id": 4861,
+        "id": 11984,
         "ip": "172.17.70.2",
         "mac": "VSOL001246A9",
         "serial": "VSOL001246A9",
-        "queue": "Plan_161890_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-13T07:29:38.169850",
+        "created_at": "2026-03-06T12:47:04.562358",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -92499,13 +92499,13 @@ const largeArraydata =
       "nap_box_name": "451",
       "created_at": "2024-08-08T10:48:52.751193",
       "service_detail": {
-        "id": 11765,
+        "id": 11983,
         "ip": "172.30.45.2",
         "mac": "TPLGB765693F",
         "serial": "TPLGB765693F",
         "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2026-02-27T09:58:22.658389",
+        "created_at": "2026-03-06T12:29:01.889904",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -152994,8 +152994,8 @@ const largeArraydata =
       "id": 8700,
       "client_name": "JORGE HUMBERTO PEREZ PEÑALOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
