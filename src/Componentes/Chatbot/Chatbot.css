@@ -300,7 +300,6 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    scroll-behavior: smooth;
 }
 
 /* Custom Scrollbar Ultra Fino */
@@ -614,7 +613,8 @@
 
     .chatbot-header {
         padding: 15px 20px;
-        padding-right: 80px; /* Espacio para el botón de cerrar */
+        padding-right: 80px;
+        /* Espacio para el botón de cerrar */
     }
 
     .chatbot-messages {
