@@ -35,10 +35,10 @@ function PageNav() {
           <NavLink to="/TopUrbanismo">Top Urbanismos</NavLink>
         </li>
         <li>
-          <NavLink to="/*">Indicadores</NavLink>
+          <NavLink to="/*">Reportes BI</NavLink>
         </li>
         <li>
-          <NavLink to="/Indicadores">Lista de Clientes</NavLink>
+          <NavLink to="/Indicadores">Indicadores</NavLink>
         </li>
         <li>
           <NavLink to="/Ventas">Operaciones</NavLink>
