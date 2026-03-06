@@ -198,11 +198,25 @@
 }
 
 /* Colores por estado (opcionales) */
-.badge-activo { background: rgba(0, 200, 120, 0.18); }
-.badge-suspendido { background: rgba(255, 180, 0, 0.18); }
-.badge-por-instalar { background: rgba(0, 170, 255, 0.18); }
-.badge-pausado { background: rgba(160, 160, 160, 0.18); }
-.badge-cancelado { background: rgba(255, 70, 70, 0.18); }
+.badge-activo {
+  background: rgba(0, 200, 120, 0.18);
+}
+
+.badge-suspendido {
+  background: rgba(255, 180, 0, 0.18);
+}
+
+.badge-por-instalar {
+  background: rgba(0, 170, 255, 0.18);
+}
+
+.badge-pausado {
+  background: rgba(160, 160, 160, 0.18);
+}
+
+.badge-cancelado {
+  background: rgba(255, 70, 70, 0.18);
+}
 
 /* ================= BOTONES (TU CSS ORIGINAL) ================= */
 .button {
@@ -325,7 +339,7 @@ option:checked {
 .filtros-panel {
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto 30px auto;
+  margin: 40px auto 30px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
