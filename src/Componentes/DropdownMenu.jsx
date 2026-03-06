@@ -13,18 +13,18 @@ function DropdownMenu() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/*" className="dropdown-link">
+            Reportes BI
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/Indicadores" className="dropdown-link">
-            Lista de Clientes
+            Indicadores
           </NavLink>
         </li>
         <li>
           <NavLink to="/Ventas" className="dropdown-link">
             Operaciones
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/*" className="dropdown-link">
-            Equipo de Ventas
           </NavLink>
         </li>
         <li>
