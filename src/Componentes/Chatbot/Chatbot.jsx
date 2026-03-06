@@ -14,6 +14,7 @@ const Chatbot = () => {
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
 
     // Configurar saludo inicial dinámico
     useEffect(() => {
@@ -30,7 +31,7 @@ const Chatbot = () => {
 • **Contar Clientes**: Totales, activos, pymes o suspendidos.
 • **Búsqueda Detallada**: Buscar clientes por nombre o contrato.
 • **Reportes Personalizados**: Generar archivos Excel a tu medida.
-• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/25).
+• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/30).
 
 ¿En qué te puedo ayudar hoy?`;
         };
@@ -65,6 +66,21 @@ const Chatbot = () => {
     };
 
     useEffect(() => {
+        if (!isOpen) return;
+
+        // Si solo está el saludo inicial, forzamos el scroll AL INICIO
+        if (messages.length <= 1) {
+            if (messagesContainerRef.current) {
+                setTimeout(() => {
+                    if (messagesContainerRef.current) {
+                        messagesContainerRef.current.scrollTop = 0;
+                    }
+                }, 100);
+            }
+            return;
+        }
+
+        // Si hay más mensajes (interacción), scroll AL FINAL
         scrollToBottom();
     }, [messages, isOpen]);
 
@@ -149,7 +165,7 @@ const Chatbot = () => {
                     <p>Inteligencia Artificial</p>
                 </div>
 
-                <div className="chatbot-messages">
+                <div className="chatbot-messages" ref={messagesContainerRef}>
                     {messages.map((msg, idx) => (
                         <div key={idx} className={`chat-bubble-wrapper ${msg.sender}`}>
                             {msg.text && (
