@@ -16,6 +16,20 @@ const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(value);
 };
 
+const mapCycleValue = (val) => {
+    if (val === null || val === undefined) return "N/A";
+    const cycle = String(val).trim();
+    if (cycle === "10") return "15";
+    if (cycle === "25") return "30";
+    return cycle;
+};
+
+const getCycleLabel = (val) => {
+    const mapped = mapCycleValue(val);
+    if (mapped === "N/A") return "N/A";
+    return `Ciclo ${mapped}`;
+};
+
 // --- HELPERS DE SIMILITUD (FUZZY MATCHING) ---
 const editDistance = (s1, s2) => {
     s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
@@ -240,10 +254,10 @@ const pageKnowledge = {
         guide: "💡 **Tip rápido**: Los datos aquí se alimentan de fuentes externas y son ideales para análisis de tendencias a largo plazo."
     },
     "/Indicadores": {
-        name: "Directorio Maestro de Clientes",
-        description: "Tu base de datos completa para auditoría y soporte.",
-        data: "Muestro la tabla de clientes con Nombres, Planes, Costos y Contactos.",
-        guide: "💡 **Tip rápido**: Filtra por estado usando las tarjetas superiores."
+        name: "Resumen Estratégico (Dashboard)",
+        description: "Es el panel principal de inteligencia de negocio donde mostramos la salud operativa y económica de la empresa.",
+        data: "Muestro métricas clave: **Efectividad de Cartera** (¿% de clientes pagando?), **Oportunidad en USD** (ingreso potencial), **Sector Líder** y un **Resumen de Clientes** con conteos reales de Activos, Suspendidos y Cancelados.",
+        guide: "💡 **Tip rápido**: Aquí puedes ver si el negocio está creciendo. Si la Efectividad de Cartera es baja, significa que hay muchos clientes suspendidos o cancelados."
     },
     "/Ventas": {
         name: "Monitor de Operaciones",
@@ -292,8 +306,8 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "25", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
-- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Si menciona un lugar o zona (ej: "ingresos de mata caballo"), asígnalo al parámetro "urbanismo" aunque no diga la palabra explícita. Trata de extraer el nombre del sector lo más completo posible. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "25", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Si menciona un lugar o zona (ej: "ingresos de mata caballo"), asígnalo al parámetro "urbanismo" aunque no diga la palabra explícitamente. Trata de extraer el nombre del sector lo más completo posible. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
 - BUSCAR_CONTRATO: El usuario te da un NÚMERO EXACTO para buscar el perfil de un único cliente. Ej: "el contrato es 3063", "busca el 4301". Param requerido: {"contrato": "1234"} (EL PARÁMETRO DEBE SER SOLO NUMÉRICO).
@@ -461,7 +475,7 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     // 2. Ciclo
     if (parameters?.ciclo) {
         const cicloReq = String(parameters.ciclo);
-        filtered = filtered.filter(c => String(c.cycle) === cicloReq);
+        filtered = filtered.filter(c => mapCycleValue(c.cycle) === cicloReq);
         appliedTexts.push(`Ciclo: ${cicloReq}`);
     }
 
@@ -923,18 +937,14 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
-                // 2. Filtrar por Tipo
-                const isTipoIntent = intent === 'TIPOS_CLIENTE' || parameters?.tipo;
-                if (parameters?.tipo) {
-                    const tipoReq = normalizeText(parameters.tipo);
-                    filteredClientes = filteredClientes.filter(c => {
-                        const allInfoStr = normalizeText(`${c.client_subdivision || ''} ${c.client_type_name || ''}`);
-                        return allInfoStr.includes(tipoReq);
-                    });
-                    appliedFiltersText.push(`Tipo: ${parameters.tipo}`);
+                // 2. Ciclo
+                if (parameters?.ciclo) {
+                    const cicloReq = String(parameters.ciclo);
+                    filteredClientes = filteredClientes.filter(c => mapCycleValue(c.cycle) === cicloReq);
+                    appliedFiltersText.push(`Ciclo: ${cicloReq} `);
                 }
 
-                // --- FILTRADO GEOGRÁFICO UNIFICADO (Agencia) ---
+                // 3. Filtrar por Agencia (Prioridad si el usuario dice "agencia de X")
                 if (parameters?.agencia) {
                     let ageReq = normalizeText(parameters.agencia).replace("agencia ", "").replace("nodo ", "").trim();
                     let nodoBuscado = "";
@@ -986,34 +996,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
                 }
 
-                if (intent === 'TOTAL_CLIENTES' && appliedFiltersText.length === 0) {
-                    const total = clientes.length;
-                    const activos = clientes.filter(c => c.status_name === "Activo").length;
-                    const suspendidos = clientes.filter(c => c.status_name === "Suspendido").length;
-                    const pausados = clientes.filter(c => c.status_name === "Pausado").length;
-                    const porInstalar = clientes.filter(c => c.status_name === "Por Instalar").length;
-                    const cancelados = clientes.filter(c => c.status_name === "Cancelado").length;
-
-                    return {
-                        text: `¡Claro ${userName}! Aquí tienes el resumen completo de la base de datos:`,
-                        isCard: true,
-                        cardData: {
-                            title: "Resumen Total",
-                            stats: [
-                                { label: "Total", value: total },
-                                { label: "Activos", value: activos, color: "#27ae60" },
-                                { label: "Suspendidos", value: suspendidos, color: "#f1c40f" },
-                                { label: "Pausados", value: pausados, color: "#3498db" },
-                                { label: "Por Instalar", value: porInstalar, color: "#9b59b6" },
-                                { label: "Cancelados", value: cancelados, color: "#e74c3c" }
-                            ]
-                        }
-                    };
+                // 4. Filtrar por Tipo
+                if (parameters?.tipo) {
+                    const tipoReq = normalizeText(parameters.tipo);
+                    filteredClientes = filteredClientes.filter(c => {
+                        const allInfoStr = normalizeText(`${c.client_subdivision || ''} ${c.client_type_name || ''}`);
+                        return allInfoStr.includes(tipoReq);
+                    });
+                    appliedFiltersText.push(`Tipo: ${parameters.tipo}`);
                 }
 
-                // Si preguntan por tipos especificamente y aplicaron filtros (o es el intent original)
+                const isTipoIntent = intent === 'TIPOS_CLIENTE' || parameters?.tipo;
+                // If asking for types specifically and filters applied (or it's the original intent)
                 if (isTipoIntent || intent === 'ESTADOS' || intent === 'TOTAL_CLIENTES') {
-                    // Si pidieron un tipo específico o un estado específico, damos resultado directo
+                    // If a specific type or status was requested, give direct result
                     if (appliedFiltersText.length > 0) {
                         return {
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Puedes obtener el reporte detallado en el botón de abajo.**`,
@@ -1146,10 +1142,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
-                // 2. Filtrar por Ciclo
+                // 2. Ciclo
                 if (parameters?.ciclo) {
                     const cicloReq = String(parameters.ciclo);
-                    filteredClientes = filteredClientes.filter(c => String(c.cycle) === cicloReq);
+                    filteredClientes = filteredClientes.filter(c => mapCycleValue(c.cycle) === cicloReq);
                     appliedFiltersText.push(`Ciclo: ${cicloReq} `);
                 }
 
@@ -1510,7 +1506,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 if (accion === 'ciclo') {
                     return {
-                        text: `El ciclo de facturación asignado a ** ${rawDataTarget.client_name}** es: \n\n🗓️ ** Día ${rawDataTarget.cycle || 'No definido'}** `,
+                        text: `El ciclo de facturación asignado a ** ${rawDataTarget.client_name}** es: \n\n🗓️ ** ${getCycleLabel(rawDataTarget.cycle)}** `,
                         isCard: false,
                         contextType: 'viewing_client',
                         cardData: { rawData: rawDataTarget }
