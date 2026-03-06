@@ -1,5 +1,7 @@
 import * as XLSX from "xlsx";
 
+import { getCycleLabel } from "./cycleHelper";
+
 /**
  * Genera y descarga un archivo Excel basado en un listado de clientes y filtros aplicados.
  * @param {Array} dataset - El conjunto de datos filtrado.
@@ -47,7 +49,7 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
             Urbanismo: norm(cliente.sector_name),
             Estatus: estatus,
             Migrado: cliente.migrate ? "Migrado" : "No migrado",
-            Ciclo: cliente.cycle || "",
+            Ciclo: getCycleLabel(cliente.cycle),
             Cedula: cliente.client_identification,
             IP: service.ip || "",
             MAC: service.mac || "",
@@ -56,6 +58,11 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
             Tipo_Cliente: cliente.client_type_name,
             Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
         };
+    }).filter(row => {
+        // Omitir si alguna columna contiene la palabra "PRUEBA" (case-insensitive)
+        return !Object.values(row).some(val =>
+            val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
+        );
     });
 
     // Ordenar por días hábiles descendente
