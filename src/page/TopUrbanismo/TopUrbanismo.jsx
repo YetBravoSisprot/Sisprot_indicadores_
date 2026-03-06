@@ -9,6 +9,7 @@ import "./TopUrbanismo.css";
 import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
 import { exportToExcel } from "../../utils/ExcelExport";
+import { mapCycleValue, getCycleLabel } from "../../utils/cycleHelper";
 
 // ===================== HELPERS =====================
 const norm = (v) => (v == null ? "" : String(v).trim());
@@ -432,7 +433,7 @@ function TopUrbanismo() {
       const cicloFiltrado =
         ciclosSeleccionados.includes("Todos") ||
         servicio.cycle == null ||
-        ciclosSeleccionados.includes(String(servicio.cycle));
+        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle));
       if (!cicloFiltrado) return false;
 
       const sectorName = norm(servicio.sector_name);
@@ -512,7 +513,7 @@ function TopUrbanismo() {
 
       const cicloFiltrado =
         ciclosSeleccionados.includes("Todos") ||
-        ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle));
       if (!cicloFiltrado) return false;
 
       const sectorName = norm(servicio.sector_name);
@@ -666,7 +667,7 @@ function TopUrbanismo() {
             <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
               <option value="Todos">Todos</option>
               <option value="15">Ciclo 15</option>
-              <option value="25">Ciclo 25</option>
+              <option value="30">Ciclo 30</option>
             </select>
 
             <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
@@ -824,9 +825,9 @@ function UrbanismoList({ urbanismos }) {
                           <span className="cliente-value">{cliente.client_mobile || "N/A"}</span>
                         </div>
 
-                        <div className="cliente-row">
-                          <span className="cliente-label">Ciclo</span>
-                          <span className="cliente-value">{cliente.cycle ?? "N/A"}</span>
+                        <div className="cliente-data">
+                          <span><strong>ID:</strong> {cliente.id}</span>
+                          <span><strong>Ciclo:</strong> {mapCycleValue(cliente.cycle)}</span>
                         </div>
 
                         <div className="cliente-row cliente-row-direccion">
