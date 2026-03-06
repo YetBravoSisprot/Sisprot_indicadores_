@@ -96,7 +96,25 @@ function PasswordProvider({ children }) {
         // const jsonData = await response.json();
         //               **            //
         // aqui en vez de usar la api usare datos fiticios ya que es informacion privada de la empresa//
-        const jsonData = largeArraydata
+        const jsonData = { ...largeArraydata };
+
+        // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
+        if (jsonData && jsonData.results) {
+          jsonData.results = jsonData.results.filter(cliente => {
+            const searchFields = [
+              cliente.client_name,
+              cliente.address,
+              cliente.sector_name,
+              cliente.client_mobile,
+              cliente.client_identification,
+              cliente.client_type_name,
+              cliente.plan?.name
+            ];
+            return !searchFields.some(val =>
+              val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
+            );
+          });
+        }
 
         setData(jsonData);
         setIsLoading(false);
