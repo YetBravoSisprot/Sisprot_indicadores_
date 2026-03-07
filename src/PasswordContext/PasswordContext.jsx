@@ -127,6 +127,49 @@ function PasswordProvider({ children }) {
     fetchData();
   }, [api, token]);
 
+  // Lógica de Cierre de Sesión Automático por Inactividad (10 minutos)
+  useEffect(() => {
+    // Solo activamos el temporizador si el usuario está autenticado
+    if (!isAuthenticated) return;
+
+    let inactivityTimer;
+    const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutos en milisegundos
+
+    const resetTimer = () => {
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        console.log("Sesión cerrada por inactividad");
+        logout();
+      }, INACTIVITY_LIMIT);
+    };
+
+    // Lista de eventos que se consideran "actividad del usuario"
+    const activityEvents = [
+      'mousedown',
+      'mousemove',
+      'keypress',
+      'scroll',
+      'touchstart',
+      'click'
+    ];
+
+    // Añadir escuchas de eventos al objeto window
+    activityEvents.forEach(event => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    // Iniciar el temporizador inmediatamente
+    resetTimer();
+
+    // Limpiar eventos y temporizador al cerrar sesión o desmontar componente
+    return () => {
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      activityEvents.forEach(event => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [isAuthenticated]);
+
   return (
     <PasswordContext.Provider
       value={{
