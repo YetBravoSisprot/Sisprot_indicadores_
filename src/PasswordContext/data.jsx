@@ -40851,13 +40851,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00059",
       "created_at": "2024-06-08T17:32:11.151877",
       "service_detail": {
-        "id": 6077,
+        "id": 12017,
         "ip": "172.17.243.2",
         "mac": "VSOL001246A1",
         "serial": "VSOL001246A1",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-22T14:02:28.067184",
+        "created_at": "2026-03-09T14:20:12.858853",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -42510,13 +42510,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00060 DOS",
       "created_at": "2024-06-09T11:49:05.772160",
       "service_detail": {
-        "id": 6123,
+        "id": 12013,
         "ip": "172.29.50.2",
         "mac": "HWTC32B845A1",
         "serial": "HWTC32B845A1",
-        "queue": "Plan_161906_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-22T16:40:34.375094",
+        "created_at": "2026-03-09T12:51:47.933080",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -50835,9 +50835,9 @@ const largeArraydata =
       "id": 4865,
       "client_name": "ROSA AMELIA PEDROZA NIEVES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
-      "cycle": 10,
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 25,
       "migrate": true,
       "sector_name": "Las Rurales",
       "plan": {
@@ -72330,8 +72330,8 @@ const largeArraydata =
       "id": 5649,
       "client_name": "MERY APONTE CATARI",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados I",
@@ -77970,13 +77970,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00060 DOS",
       "created_at": "2024-07-30T16:34:31.293737",
       "service_detail": {
-        "id": 5898,
+        "id": 12014,
         "ip": "172.22.137.2",
         "mac": "TPLGBA687B80",
         "serial": "TPLGBA687B80",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T10:29:58.635479",
+        "created_at": "2026-03-09T12:53:22.463117",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78003,13 +78003,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2024-07-30T16:37:35.321897",
       "service_detail": {
-        "id": 5899,
+        "id": 12012,
         "ip": "172.22.134.2",
         "mac": "TPLGBA687BA8",
         "serial": "TPLGBA687BA8",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T10:31:42.525023",
+        "created_at": "2026-03-09T12:47:59.145251",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78036,13 +78036,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00060 DOS",
       "created_at": "2024-07-30T16:40:18.280922",
       "service_detail": {
-        "id": 5902,
+        "id": 12011,
         "ip": "172.22.136.2",
         "mac": "TPLGBA687BD0",
         "serial": "TPLGBA687BD0",
-        "queue": "Plan_161891_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:21:18.958448",
+        "created_at": "2026-03-09T12:46:07.990574",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78102,13 +78102,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00059",
       "created_at": "2024-07-30T16:46:30.633686",
       "service_detail": {
-        "id": 5904,
+        "id": 12016,
         "ip": "172.22.135.2",
         "mac": "TPLGBA687B88",
         "serial": "TPLGBA687B88",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:25:08.127448",
+        "created_at": "2026-03-09T14:16:39.076372",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -78234,13 +78234,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00059",
       "created_at": "2024-07-30T16:54:23.387670",
       "service_detail": {
-        "id": 5910,
+        "id": 12015,
         "ip": "172.22.131.2",
         "mac": "TPLGBA687BC8",
         "serial": "TPLGBA687BC8",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-21T11:32:37.326882",
+        "created_at": "2026-03-09T14:14:00.600807",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -111396,13 +111396,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00059",
       "created_at": "2024-11-18T13:42:25.414611",
       "service_detail": {
-        "id": 7098,
+        "id": 12018,
         "ip": "172.18.11.2",
         "mac": "HWTC48080517",
         "serial": "HWTC48080517",
-        "queue": "Plan_161900_30183_WispHub",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-11-20T09:10:57.489271",
+        "created_at": "2026-03-09T14:22:03.888799",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -161505,8 +161505,8 @@ const largeArraydata =
       "id": 9003,
       "client_name": "JOSE GREGORIO ROJAS SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -161522,7 +161522,16 @@ const largeArraydata =
       "client_identification": "V18262318",
       "nap_box_name": "69",
       "created_at": "2026-03-06T09:13:20.839272",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12020,
+        "ip": "10.16.208.2",
+        "mac": "2012231218007321",
+        "serial": "OEMT3C626249",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-03-09T15:50:34.107175",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -161546,7 +161555,16 @@ const largeArraydata =
       "client_identification": "V25066275",
       "nap_box_name": "406",
       "created_at": "2026-03-09T09:41:08.199621",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12019,
+        "ip": "10.16.207.2",
+        "mac": "2012231218002075",
+        "serial": "OEMT3C621051",
+        "queue": null,
+        "interface": "VLAN271_DIOS_ES_MI_REFUGIO_OLT1",
+        "created_at": "2026-03-09T15:11:07.619960",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
