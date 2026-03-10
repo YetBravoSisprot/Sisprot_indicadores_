@@ -71,18 +71,24 @@
 }
 
 .kpi-amount {
-  font-size: 1.85rem;
+  font-size: 1.95rem; /* Slightly larger */
   font-weight: 800;
   color: #4ade80;
   font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+}
+
+.kpi-amount-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 6px; /* Space between $ and number */
 }
 
 .kpi-currency {
-  font-size: 1.1rem;
-  font-weight: 600;
-  opacity: 0.6;
-  margin-right: 4px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4ade80;
+  opacity: 0.8;
 }
 
 .yearly-breakdown {
@@ -137,9 +143,9 @@
 }
 
 .kpi-total-label {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
