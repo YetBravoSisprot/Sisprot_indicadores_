@@ -85,6 +85,46 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
+    // --- HOJA DE RESUMEN (NUEVO) ---
+    // Calculamos los datos de resumen para la reunión
+    const resumenEstatus = baseData.reduce((acc, row) => {
+        const est = row.Estatus || "N/A";
+        acc[est] = (acc[est] || 0) + 1;
+        return acc;
+    }, {});
+
+    const resumenIngresosUrb = baseData.reduce((acc, row) => {
+        if (row.Estatus === "Activo") {
+            const urb = row.Urbanismo || "Otros";
+            // Extraer el costo del string del Plan: "Plan Name (Cost$)" -> Cost
+            const costMatch = row.Plan.match(/\((\d+)\$\)/);
+            const cost = costMatch ? parseFloat(costMatch[1]) : 0;
+            acc[urb] = (acc[urb] || 0) + cost;
+        }
+        return acc;
+    }, {});
+
+    const totalIngresosActivos = Object.values(resumenIngresosUrb).reduce((sum, val) => sum + val, 0);
+
+    const summaryRows = [
+        ["RESUMEN EJECUTIVO"],
+        ["Fecha de Reporte", hoy.toLocaleDateString()],
+        [""],
+        ["CONTEO POR ESTATUS"],
+        ["Estatus", "Cantidad"],
+        ...Object.entries(resumenEstatus).map(([k, v]) => [k, v]),
+        [""],
+        ["INGRESOS POR URBANISMO (SOLO ACTIVOS)"],
+        ["Urbanismo", "Ingreso Proyectado ($)"],
+        ...Object.entries(resumenIngresosUrb).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, `${v.toFixed(2)}$`]),
+        [""],
+        ["TOTAL INGRESOS ACTIVOS", `${totalIngresosActivos.toFixed(2)}$`]
+    ];
+
+    const summarySheet = XLSX.utils.aoa_to_sheet(summaryRows);
+    XLSX.utils.book_append_sheet(workbook, summarySheet, "Resumen");
+    // --- FIN HOJA DE RESUMEN ---
+
     // Auto-ajuste de columnas
     const columnWidths = worksheetData.reduce((acc, row) => {
         Object.keys(row).forEach((key, idx) => {
