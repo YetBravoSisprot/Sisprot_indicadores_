@@ -465,7 +465,7 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
         const ci = String(parameters.cedula).replace(/\D/g, '');
         filtered = filtered.filter(c => {
             const dbCi = String(c.client_identification || '').replace(/\D/g, '');
-            return dbCi === ci || dbCi.includes(ci);
+            return dbCi === ci;
         });
         appliedTexts.push(`Cédula: ${parameters.cedula}`);
         if (filtered.length > 0) return { filtered, appliedTexts };
@@ -1290,7 +1290,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     if (matches.length === 0) {
                         matches = clientes.filter(c => {
                             const dbCi = String(c.client_identification || '').replace(/\D/g, '');
-                            return dbCi === nroOnlyDigits || (nroOnlyDigits.length >= 6 && dbCi.includes(nroOnlyDigits));
+                            return dbCi === nroOnlyDigits;
                         });
                         foundType = "cédula";
                     }
