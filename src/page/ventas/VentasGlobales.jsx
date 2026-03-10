@@ -110,15 +110,19 @@ const VentasGlobales = () => {
         });
     };
 
+    const isMobile = window.innerWidth <= 768;
+
     const options = {
         responsive: true,
+        maintainAspectRatio: !isMobile,
         plugins: {
             legend: {
-                position: 'top',
+                position: isMobile ? 'bottom' : 'top',
                 labels: {
                     color: '#fff',
                     usePointStyle: true,
-                    padding: 20,
+                    padding: isMobile ? 10 : 20,
+                    font: { size: isMobile ? 11 : 13 },
                     cursor: 'pointer'
                 },
                 onClick: (e, legendItem, legend) => {
@@ -130,7 +134,8 @@ const VentasGlobales = () => {
                 display: true,
                 text: "Evolución de Ventas Mensuales (2021-2026)",
                 color: '#fff',
-                font: { size: 18 }
+                font: { size: isMobile ? 13 : 18 },
+                padding: { bottom: isMobile ? 8 : 16 }
             },
             tooltip: {
                 callbacks: {
@@ -139,8 +144,14 @@ const VentasGlobales = () => {
             }
         },
         scales: {
-            y: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#fff' } },
-            x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#fff' } }
+            y: {
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#fff', font: { size: isMobile ? 10 : 12 } }
+            },
+            x: {
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#fff', font: { size: isMobile ? 10 : 12 } }
+            }
         }
     };
 
