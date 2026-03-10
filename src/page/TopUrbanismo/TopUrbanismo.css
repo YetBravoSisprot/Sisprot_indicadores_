@@ -417,12 +417,19 @@ option:checked {
 
 /* ================= RESPONSIVE MEJORADO ================= */
 
+/* filtros-selects-grid: en desktop es "transparente" al layout
+   sus hijos participan en el flex del panel como si el div no existiera */
+.filtros-selects-grid {
+  display: contents;
+}
+
 /* --- TABLET (max-width: 1024px) --- */
 @media screen and (max-width: 1024px) {
   .filtros-panel {
     gap: 12px;
-    padding: 16px 16px;
+    padding: 16px;
     margin: 24px auto 20px auto;
+    overflow-x: hidden;
   }
 
   .filtros-panel select {
@@ -444,11 +451,15 @@ option:checked {
     padding: 14px 12px;
     margin: 16px auto 14px auto;
     border-radius: 14px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 100%;
   }
 
-  /* Búsqueda de contrato ocupa fila completa */
+  /* Búsqueda de contrato: fila completa */
   .busqueda-contrato {
     width: 100%;
+    box-sizing: border-box;
     gap: 8px;
   }
 
@@ -457,76 +468,63 @@ option:checked {
     width: auto;
     min-width: 0;
     font-size: 14px;
+    box-sizing: border-box;
   }
 
-  .busqueda-contrato .button {
-    flex-shrink: 0;
-    padding: 10px 18px;
-    font-size: 14px;
-  }
-
-  /* Botones Top 10 / Top Global en fila */
-  .filtros-panel>div {
+  /* Botones Top 10 / Top Global: solo afecta al div directo que los contiene */
+  .filtros-panel>div:not(.filtros-selects-grid) {
     display: flex;
     gap: 8px;
     justify-content: center;
+    width: 100%;
   }
 
-  .filtros-panel .button {
+  .filtros-panel>div:not(.filtros-selects-grid) .button {
     flex: 1;
     padding: 10px 12px;
-    font-size: 13px;
+    font-size: 14px;
     margin: 0;
   }
 
-  /* Selects en grid 2 columnas en móvil */
-  .filtros-panel select {
-    width: 100%;
-    font-size: 13px;
-    padding: 6px 8px;
-    border-radius: 10px;
-    /* Reducir altura visible de opciones en móvil */
-    size: 3;
-  }
-
-  /* Los selects se muestran en 2 columnas */
+  /* Grid de filtros: 2 columnas en móvil */
   .filtros-selects-grid {
-    display: grid;
+    display: grid !important;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    width: 100%;
+    width: 100% !important;
+    box-sizing: border-box;
   }
 
-  /* Select de urbanismos ocupa todo el ancho (es el más largo) */
+  /* Todos los selects dentro del grid: ancho completo de su celda */
+  .filtros-selects-grid select {
+    width: 100% !important;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 5px 8px;
+    border-radius: 10px;
+    max-height: 95px;
+    overflow-y: auto;
+  }
+
+  /* Urbanismos y Columnas = fila completa (2 columnas) */
   #urbanismosSelect {
-    grid-column: 1 / -1;
-    width: 100% !important;
-    max-height: 120px;
+    grid-column: 1 / -1 !important;
+    max-height: 115px !important;
   }
 
-  /* Select de columnas también ocupa todo el ancho */
   #columnasSelect {
-    grid-column: 1 / -1;
-    width: 100% !important;
-    max-height: 100px;
+    grid-column: 1 / -1 !important;
+    max-height: 95px !important;
   }
 
-  #sectoresSelect,
-  #estadoSelect,
-  #estadoSelect2,
-  #migradosSelect,
-  #ciclosSelect {
-    width: 100% !important;
-    max-height: 100px;
-  }
-
-  /* Botones de totales ocupan fila completa */
+  /* Botones de totales */
   .buttonIngreso {
     width: 100%;
     text-align: center;
     margin: 0;
     font-size: 14px;
     padding: 12px 10px;
+    box-sizing: border-box;
   }
 
   .buttonDescargar {
@@ -535,21 +533,22 @@ option:checked {
     margin: 0;
     font-size: 14px;
     padding: 12px 10px;
+    box-sizing: border-box;
   }
 
   .filtro-tip {
     font-size: 12px;
     padding: 8px 10px;
+    box-sizing: border-box;
   }
 
-  /* Grid de urbanismos: 1 columna en móvil */
+  /* Grid de top-urbanismos: 1 columna */
   .urbanismos-grid {
     grid-template-columns: 1fr;
     gap: 12px;
     padding: 0 4px;
   }
 
-  /* Cards de clientes: 1 columna */
   .clientes-grid {
     grid-template-columns: 1fr;
   }
@@ -566,29 +565,20 @@ option:checked {
 
   .contenedor {
     padding: 16px 10px;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 }
 
-/* --- SMALL MOBILE (max-width: 400px) --- */
-@media screen and (max-width: 400px) {
+/* --- SMALL MOBILE (max-width: 420px) --- */
+@media screen and (max-width: 420px) {
   .filtros-selects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     /* 1 columna en pantallas muy pequeñas */
   }
 
   #urbanismosSelect,
   #columnasSelect {
-    grid-column: auto;
-  }
-
-  .filtros-panel .button,
-  .busqueda-contrato .button {
-    font-size: 13px;
-    padding: 9px 10px;
-  }
-
-  .button {
-    font-size: 13px;
-    padding: 10px 16px;
+    grid-column: auto !important;
   }
 }
