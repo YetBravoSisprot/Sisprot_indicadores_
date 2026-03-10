@@ -275,9 +275,6 @@ const urbanismoAliases = {
     "durpa": "Durpa",
     "canaima": "Canaima",
     "prados de canaima": "Prados de Canaima",
-    // Caballerizas -> Palma Real porque en la BD su sector_name es 'Palma Real'
-    "caballerizas": "Palma Real",
-    "barrio caballerizas": "Palma Real",
     "la orquidea": "La Orquidea",
     "orquidea": "La Orquidea",
     "brisas de paya": "Brisas de Paya",
@@ -285,6 +282,14 @@ const urbanismoAliases = {
     "palma real": "Palma Real",
     "luz y vida": "Luz y Vida",
     "prados de cafetal": "Prados de Cafetal"
+};
+
+// Sub-Sectores: Barrios que viven DENTRO de un sector en la BD.
+// Se filtran por sector_name + palabra clave en la dirección (address_tax).
+// Formato: { sectorPadre: "nombre en BD", keyword: "palabra en dirección" }
+const subSectorMap = {
+    "caballerizas": { sectorPadre: "Palma Real", keyword: "caballeriza", label: "Caballerizas (en Palma Real)" },
+    "barrio caballerizas": { sectorPadre: "Palma Real", keyword: "caballeriza", label: "Caballerizas (en Palma Real)" }
 };
 
 const pageKnowledge = {
@@ -586,9 +591,20 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             : String(urbParam).split(/,| y /i).map(u => u.trim()).filter(u => u.length > 0);
 
         let finalFilter = [];
+        let subSectorFilters = []; // Filtros especiales por dirección
         let labels = [];
 
         urbList.forEach(u => {
+            const normU = normalizeText(u);
+
+            // PRIORIDAD 0: ¿Es un sub-sector (barrio dentro de un sector)?
+            if (subSectorMap[normU]) {
+                subSectorFilters.push(subSectorMap[normU]);
+                labels.push(subSectorMap[normU].label);
+                return; // No lo procesamos como sector normal
+            }
+
+            // PRIORIDAD 1: ¿Tiene alias?
             const matchedSector = findBestUrbanismoMatch(u);
             if (matchedSector && !Array.isArray(matchedSector)) {
                 finalFilter.push(matchedSector);
@@ -600,10 +616,23 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             }
         });
 
-        filtered = filtered.filter(c => {
-            const sectorNorm = normalizeText(c.sector_name || '');
-            return finalFilter.some(f => c.sector_name === f || sectorNorm.includes(f));
-        });
+        // Filtrar por sectores normales
+        if (finalFilter.length > 0 || subSectorFilters.length > 0) {
+            filtered = filtered.filter(c => {
+                const sectorNorm = normalizeText(c.sector_name || '');
+                const addressNorm = normalizeText(c.address_tax || c.address || '');
+
+                // Match por sector normal
+                const matchSector = finalFilter.some(f => c.sector_name === f || sectorNorm.includes(f));
+
+                // Match por sub-sector (sector_name + keyword en dirección)
+                const matchSubSector = subSectorFilters.some(sf =>
+                    c.sector_name === sf.sectorPadre && addressNorm.includes(normalizeText(sf.keyword))
+                );
+
+                return matchSector || matchSubSector;
+            });
+        }
         appliedTexts.push(`Urbanismos: ${labels.join(", ")}`);
     }
 
