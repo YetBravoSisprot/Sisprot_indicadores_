@@ -36,7 +36,7 @@ ChartJS.register(
 
 function Admin() {
   const navigate = useNavigate();
-  const { showPasswordState, data, isLoading } = useContext(PasswordContext);
+  const { showPasswordState, data, isLoading, email } = useContext(PasswordContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [showNeedsAttention, setShowNeedsAttention] = useState(false);
   const [revenueStats, setRevenueStats] = useState(null);
