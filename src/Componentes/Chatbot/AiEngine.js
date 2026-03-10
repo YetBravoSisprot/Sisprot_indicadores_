@@ -79,6 +79,12 @@ const findBestUrbanismoMatch = (queryUrb) => {
     const normalizedQuery = normalizeText(queryUrb);
     const availableSectors = Object.keys(sectorAgenciaMap);
 
+    // 0. PRIORIDAD MÁXIMA: Consultar el mapa de aliases primero
+    // Convierte "Prados 1" -> "Prados I", "Comunidad Durpa" -> "Durpa", etc.
+    if (urbanismoAliases[normalizedQuery]) {
+        return urbanismoAliases[normalizedQuery];
+    }
+
     // 1. Intento de match exacto
     const exactMatch = availableSectors.find(s => normalizeText(s) === normalizedQuery);
     if (exactMatch) return exactMatch;
@@ -251,7 +257,31 @@ const sectorAgenciaMap = {
     "Polvorin": "NODO PAYA", "Guayabita": "NODO PAYA", "La Marcelota": "NODO PAYA",
     "Manirito": "NODO PAYA", "Paraguatan": "NODO PAYA", "La Guzman": "NODO PAYA",
     "18 de Septiembre": "NODO MACARO", "Edif. El Torreon": "NODO TURMERO", "Edif. El Portal": "NODO TURMERO",
-    "Urb. Vista Hermosa La Julia": "NODO MACARO", "Guerrero de Chavez": "NODO PAYA", "19 de Abril": "NODO MACARO"
+    "Urb. Vista Hermosa La Julia": "NODO MACARO", "Guerrero de Chavez": "NODO PAYA", "19 de Abril": "NODO MACARO",
+    // Sectores adicionales solicitados por el jefe (no estaban en el mapa original)
+    "Caballerizas": "NODO PAYA", "Prados de Canaima": "NODO PAYA"
+};
+
+// Alias de urbanismos: Nombres alternativos que el usuario puede escribir -> nombre oficial en sectorAgenciaMap
+const urbanismoAliases = {
+    "prados 1": "Prados I",
+    "prados i": "Prados I",
+    "prados 2": "Prados II",
+    "prados ii": "Prados II",
+    "prados 3": "Prados III",
+    "prados iii": "Prados III",
+    "comunidad durpa": "Durpa",
+    "durpa": "Durpa",
+    "canaima": "Canaima",
+    "prados de canaima": "Prados de Canaima",
+    "caballerizas": "Caballerizas",
+    "la orquidea": "La Orquidea",
+    "orquidea": "La Orquidea",
+    "brisas de paya": "Brisas de Paya",
+    "bicentenario": "Bicentenario",
+    "palma real": "Palma Real",
+    "luz y vida": "Luz y Vida",
+    "prados de cafetal": "Prados de Cafetal"
 };
 
 const pageKnowledge = {
