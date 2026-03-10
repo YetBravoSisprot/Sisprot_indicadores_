@@ -88,43 +88,51 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // --- HOJA DE RESUMEN (NUEVO) ---
-    // Calculamos los datos de resumen para la reunión
-    const resumenEstatus = baseData.reduce((acc, row) => {
-        const est = row.Estatus || "N/A";
-        acc[est] = (acc[est] || 0) + 1;
-        return acc;
-    }, {});
+    // --- HOJA DE RESUMEN (solo cuando se filtra por urbanismos específicos) ---
+    // Detectamos si el usuario seleccionó urbanismos específicos:
+    // Si el texto de filtro contiene "Urbanismos:" con valores específicos (no vacío y no "Todos")
+    const filtroUrbanismoTexto = appliedFiltersText.find(f => f.startsWith("Urbanismos:"));
+    const tieneUrbanismosEspecificos = !!filtroUrbanismoTexto &&
+        !filtroUrbanismoTexto.includes("Urbanismos: Todos") &&
+        filtroUrbanismoTexto.replace("Urbanismos:", "").trim().length > 0;
 
-    const resumenIngresosUrb = baseData.reduce((acc, row) => {
-        if (row.Estatus === "Activo") {
-            const urb = row.Urbanismo || "Otros";
-            // Usamos el costo real directamente (evita el bug con el regex y decimales)
-            const cost = row._costRaw || 0;
-            acc[urb] = (acc[urb] || 0) + cost;
-        }
-        return acc;
-    }, {});
+    if (tieneUrbanismosEspecificos) {
+        const resumenEstatus = baseData.reduce((acc, row) => {
+            const est = row.Estatus || "N/A";
+            acc[est] = (acc[est] || 0) + 1;
+            return acc;
+        }, {});
 
-    const totalIngresosActivos = Object.values(resumenIngresosUrb).reduce((sum, val) => sum + val, 0);
+        const resumenIngresosUrb = baseData.reduce((acc, row) => {
+            if (row.Estatus === "Activo") {
+                const urb = row.Urbanismo || "Otros";
+                const cost = row._costRaw || 0;
+                acc[urb] = (acc[urb] || 0) + cost;
+            }
+            return acc;
+        }, {});
 
-    const summaryRows = [
-        ["RESUMEN EJECUTIVO"],
-        ["Fecha de Reporte", hoy.toLocaleDateString()],
-        [""],
-        ["CONTEO POR ESTATUS"],
-        ["Estatus", "Cantidad"],
-        ...Object.entries(resumenEstatus).map(([k, v]) => [k, v]),
-        [""],
-        ["INGRESOS POR URBANISMO (SOLO ACTIVOS)"],
-        ["Urbanismo", "Ingreso Proyectado ($)"],
-        ...Object.entries(resumenIngresosUrb).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, `${v.toFixed(2)}$`]),
-        [""],
-        ["TOTAL INGRESOS ACTIVOS", `${totalIngresosActivos.toFixed(2)}$`]
-    ];
+        const totalIngresosActivos = Object.values(resumenIngresosUrb).reduce((sum, val) => sum + val, 0);
 
-    const summarySheet = XLSX.utils.aoa_to_sheet(summaryRows);
-    XLSX.utils.book_append_sheet(workbook, summarySheet, "Resumen");
+        const summaryRows = [
+            ["RESUMEN EJECUTIVO"],
+            ["Fecha de Reporte", hoy.toLocaleDateString()],
+            ["Urbanismos analizados", filtroUrbanismoTexto.replace("Urbanismos:", "").trim()],
+            [""],
+            ["CONTEO POR ESTATUS"],
+            ["Estatus", "Cantidad"],
+            ...Object.entries(resumenEstatus).map(([k, v]) => [k, v]),
+            [""],
+            ["INGRESOS POR URBANISMO (SOLO ACTIVOS)"],
+            ["Urbanismo", "Ingreso Proyectado ($)"],
+            ...Object.entries(resumenIngresosUrb).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, `${v.toFixed(2)}$`]),
+            [""],
+            ["TOTAL INGRESOS ACTIVOS", `${totalIngresosActivos.toFixed(2)}$`]
+        ];
+
+        const summarySheet = XLSX.utils.aoa_to_sheet(summaryRows);
+        XLSX.utils.book_append_sheet(workbook, summarySheet, "Resumen");
+    }
     // --- FIN HOJA DE RESUMEN ---
 
     // Auto-ajuste de columnas
