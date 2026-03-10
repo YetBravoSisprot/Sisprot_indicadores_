@@ -462,9 +462,12 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     }
 
     if (parameters?.cedula) {
-        const ci = String(parameters.cedula);
-        filtered = filtered.filter(c => String(c.client_identification).includes(ci));
-        appliedTexts.push(`Cédula: ${ci}`);
+        const ci = String(parameters.cedula).replace(/\D/g, '');
+        filtered = filtered.filter(c => {
+            const dbCi = String(c.client_identification || '').replace(/\D/g, '');
+            return dbCi === ci || dbCi.includes(ci);
+        });
+        appliedTexts.push(`Cédula: ${parameters.cedula}`);
         if (filtered.length > 0) return { filtered, appliedTexts };
     }
 
@@ -1274,19 +1277,26 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'BUSCAR_CEDULA':
             case 'BUSCAR_CONTRATO': {
-                const nro = parameters?.contrato || parameters?.cedula || extractNumber(message);
-                if (nro) {
-                    // Primero buscar por Contrato
-                    let cliente = clientes.find(c => String(c.id) === String(nro));
+                const nroRaw = parameters?.contrato || parameters?.cedula || extractNumber(message);
+                if (nroRaw) {
+                    const nro = String(nroRaw);
+                    const nroOnlyDigits = nro.replace(/\D/g, '');
+
+                    // 1. Intentar Contrato EXACTO
+                    let matches = clientes.filter(c => String(c.id) === nro);
                     let foundType = "contrato";
 
-                    // Si no se encuentra por contrato, buscar por Cédula automáticamente (Inteligente)
-                    if (!cliente) {
-                        cliente = clientes.find(c => String(c.client_identification) === String(nro));
+                    // 2. Si no hay contrato, intentar Cédula (Normalizada sin letras V, E, J...)
+                    if (matches.length === 0) {
+                        matches = clientes.filter(c => {
+                            const dbCi = String(c.client_identification || '').replace(/\D/g, '');
+                            return dbCi === nroOnlyDigits || (nroOnlyDigits.length >= 6 && dbCi.includes(nroOnlyDigits));
+                        });
                         foundType = "cédula";
                     }
 
-                    if (cliente) {
+                    if (matches.length === 1) {
+                        const cliente = matches[0];
                         return {
                             text: `¡Búsqueda Exitosa ${userName}! Este es el perfil encontrado por ** ${foundType} **: `,
                             isCard: true,
@@ -1302,8 +1312,22 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 ],
                                 parameters: { contrato: cliente.id, cedula: cliente.client_identification },
                                 dataset: [cliente],
-                                filtersText: [foundType === "contrato" ? `Contrato: #${nro}` : `Cédula: ${nro}`],
+                                filtersText: [foundType === "contrato" ? `Contrato: #${cliente.id}` : `Cédula: ${nro}`],
                                 rawData: cliente
+                            }
+                        };
+                    } else if (matches.length > 1) {
+                        // Caso: Una cédula con varios contratos
+                        const optionsList = matches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
+                        return {
+                            text: `He encontrado **${matches.length} contratos** asociados a la cédula "${nro}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}\n\nResponde con el número de la opción para ver el detalle.`,
+                            isCard: false,
+                            contextType: 'multi_client_clarification',
+                            cardData: {
+                                currentName: `Cédula ${nro}`,
+                                currentMatches: matches,
+                                confirmedClients: [],
+                                pendingNames: []
                             }
                         };
                     } else {
