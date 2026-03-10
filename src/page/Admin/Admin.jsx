@@ -13,6 +13,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -20,6 +21,7 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useNavigate } from "react-router-dom";
+import { Doughnut } from "react-chartjs-2";
 import "./Admin.css";
 
 ChartJS.register(
@@ -27,6 +29,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -44,7 +47,15 @@ function Admin() {
   const [isRevenueLoading, setIsRevenueLoading] = useState(true);
   const [showTrainingLog, setShowTrainingLog] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
   const isPageLoading = isLoading || isRevenueLoading;
 
   // Fetch historical revenue data
@@ -173,7 +184,7 @@ function Admin() {
     };
   }, [revenueStats]);
 
-  const chartOptions = {
+  const chartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -184,24 +195,33 @@ function Admin() {
         }
       },
       datalabels: {
-        display: true,
+        display: (context) => {
+          if (isMobile) {
+             // Only show the last label on mobile to avoid clumping
+             return context.dataIndex === chartData.datasets[0].data.length - 1;
+          }
+          return true;
+        },
         color: '#fff',
         align: 'top',
         anchor: 'end',
         offset: 8,
         font: {
           weight: 'bold',
-          size: 11,
+          size: isMobile ? 10 : 11,
           family: "'Outfit', sans-serif"
         },
-        formatter: (value) => `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        formatter: (value) => `$${value.toLocaleString('en-US', { 
+          minimumFractionDigits: isMobile ? 0 : 2, 
+          maximumFractionDigits: isMobile ? 0 : 2 
+        })}`,
         padding: 4
       }
     },
     layout: {
       padding: {
-        top: 30,
-        right: 15,
+        top: 35,
+        right: isMobile ? 25 : 15,
         left: 5,
         bottom: 5
       }
@@ -210,11 +230,65 @@ function Admin() {
       y: {
         beginAtZero: true,
         grid: { color: "rgba(255, 255, 255, 0.1)" },
-        ticks: { color: "#94a3b8", callback: (val) => `$${val.toLocaleString()}` }
+        ticks: { 
+          color: "#94a3b8", 
+          callback: (val) => `$${val.toLocaleString()}`,
+          display: !isMobile // Hide y labels on very small screens to save space
+        }
       },
       x: {
         grid: { display: false },
-        ticks: { color: "#94a3b8" }
+        ticks: { 
+          color: "#94a3b8",
+          font: { size: isMobile ? 9 : 12 },
+          maxRotation: isMobile ? 45 : 0,
+          autoSkip: true,
+          maxTicksLimit: isMobile ? 6 : 12 
+        }
+      }
+    }
+  }), [isMobile, chartData]);
+
+  const doughnutData = useMemo(() => {
+    if (!processedData?.revenueByType) return null;
+    const entries = Object.entries(processedData.revenueByType);
+    return {
+      labels: entries.map(([type]) => type),
+      datasets: [{
+        data: entries.map(([, amount]) => amount),
+        backgroundColor: [
+          'rgba(56, 189, 248, 0.8)',
+          'rgba(168, 85, 247, 0.8)',
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(245, 158, 11, 0.8)',
+          'rgba(16, 185, 129, 0.8)'
+        ],
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)'
+      }]
+    };
+  }, [processedData?.revenueByType]);
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#e2e8f0',
+          padding: 20,
+          font: { size: 10 }
+        }
+      },
+      datalabels: {
+        display: true,
+        color: '#fff',
+        formatter: (value, ctx) => {
+          const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+          return `${((value / total) * 100).toFixed(0)}%`;
+        },
+        font: { weight: 'bold', size: 10 }
       }
     }
   };
@@ -360,20 +434,26 @@ function Admin() {
                   <div className="insights-grid">
                     <div className="chart-card glass">
                       <h3>Ingresos por Tipo</h3>
-                      <div className="bar-chart">
-                        {Object.entries(processedData.revenueByType).map(([type, amount]) => (
-                          <div key={type} className="bar-row">
-                            <span className="bar-label">{type}</span>
-                            <div className="bar-container">
-                              <div
-                                className="bar-fill"
-                                style={{ width: `${(amount / kpis.ingresosTotales) * 100}%` }}
-                              ></div>
+                      {isMobile && doughnutData ? (
+                        <div className="doughnut-container" style={{ height: '300px' }}>
+                           <Doughnut data={doughnutData} options={doughnutOptions} />
+                        </div>
+                      ) : (
+                        <div className="bar-chart">
+                          {Object.entries(processedData.revenueByType).map(([type, amount]) => (
+                            <div key={type} className="bar-row">
+                              <span className="bar-label">{type}</span>
+                              <div className="bar-container">
+                                <div
+                                  className="bar-fill"
+                                  style={{ width: `${(amount / kpis.ingresosTotales) * 100}%` }}
+                                ></div>
+                              </div>
+                              <span className="bar-value">${amount.toLocaleString()}</span>
                             </div>
-                            <span className="bar-value">${amount.toLocaleString()}</span>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     <div className="chart-card glass">
