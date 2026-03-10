@@ -345,7 +345,7 @@ function Indicadores() {
               <div className="kpi-card card-cancelado">
                 <div className="kpi-icon">🛑</div>
                 <div className="kpi-content">
-                  <span className="kpi-label">Cancelados</span>
+                  <span className="kpi-label">Cancelados Tasa General</span>
                   <p className="kpi-value">{(conteos.Cancelado || 0).toLocaleString("es-ES")}</p>
                   <span className="bi-hint">{fmtMonto(montosPorEstado.Cancelado)} pérdida mensual</span>
                 </div>
