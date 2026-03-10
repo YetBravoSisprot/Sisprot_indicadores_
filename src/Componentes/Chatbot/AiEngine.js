@@ -545,15 +545,30 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
 
     // 4. Urbanismo
     if (parameters?.urbanismo) {
-        const matchedSector = findBestUrbanismoMatch(parameters.urbanismo);
-        if (matchedSector && !Array.isArray(matchedSector)) {
-            filtered = filtered.filter(c => c.sector_name === matchedSector);
-            appliedTexts.push(`Urbanismo: ${matchedSector}`);
-        } else {
-            const urbReq = normalizeText(parameters.urbanismo);
-            filtered = filtered.filter(c => normalizeText(c.sector_name || '').includes(urbReq));
-            appliedTexts.push(`Urbanismo: ${parameters.urbanismo}`);
-        }
+        // Soporte para múltiples urbanismos (Array o Comas)
+        const urbParam = parameters.urbanismo;
+        const urbList = Array.isArray(urbParam) ? urbParam : String(urbParam).split(",").map(u => u.trim());
+
+        let finalFilter = [];
+        let labels = [];
+
+        urbList.forEach(u => {
+            const matchedSector = findBestUrbanismoMatch(u);
+            if (matchedSector && !Array.isArray(matchedSector)) {
+                finalFilter.push(matchedSector);
+                labels.push(matchedSector);
+            } else {
+                const urbReq = normalizeText(u);
+                finalFilter.push(urbReq); // Vago
+                labels.push(u);
+            }
+        });
+
+        filtered = filtered.filter(c => {
+            const sectorNorm = normalizeText(c.sector_name || '');
+            return finalFilter.some(f => c.sector_name === f || sectorNorm.includes(f));
+        });
+        appliedTexts.push(`Urbanismos: ${labels.join(", ")}`);
     }
 
     // 5. Tipo
@@ -1617,8 +1632,29 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const total = filtered.length;
                 const ingresos = filtered.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
 
+                // Cálculo de Desglose para la reunión (Recomendado por la IA)
+                const desglosado = filtered.reduce((acc, curr) => {
+                    const sector = curr.sector_name || "Otros";
+                    if (!acc[sector]) acc[sector] = { activos: 0, suspendidos: 0, ingresos: 0 };
+                    if (curr.status_name === "Activo") {
+                        acc[sector].activos++;
+                        acc[sector].ingresos += parseFloat(curr.plan?.cost || 0);
+                    } else if (curr.status_name === "Suspendido") {
+                        acc[sector].suspendidos++;
+                    }
+                    return acc;
+                }, {});
+
+                let tableMsg = "\n\n📊 **Desglose para tu Reunión:**\n";
+                tableMsg += "| Urbanismo | Activos | Susp. | Ingresos (Activos) |\n";
+                tableMsg += "| :--- | :---: | :---: | :---: |\n";
+
+                Object.entries(desglosado).sort((a, b) => b[1].ingresos - a[1].ingresos).forEach(([name, data]) => {
+                    tableMsg += `| ${name} | ${data.activos} | ${data.suspendidos} | $${data.ingresos.toFixed(2)} |\n`;
+                });
+
                 return {
-                    text: `Aquí tienes la comparativa completa para el segmento solicitado:\n(${appliedTexts.join(', ')})\n\n**Si necesitas los datos, abajo tienes el botón para descargar el Excel.**`,
+                    text: `Aquí tienes la comparativa completa para el segmento requested:\n(${appliedTexts.join(', ')})\n${tableMsg}\n\n**Abajo tienes el botón para descargar el Excel completo con el detalle de cada cliente.**`,
                     isCard: true,
                     offerExcel: true,
                     cardData: {
