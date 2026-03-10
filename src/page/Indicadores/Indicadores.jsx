@@ -202,7 +202,6 @@ function Indicadores() {
   };
 
   const contarEstados = () => {
-    // Contamos sobre agencia y sector filtrado para que los KPIs sean coherentes
     let baseParaConteo = data?.results || [];
 
     if (agenciaFiltro !== "Todos") {
@@ -213,11 +212,23 @@ function Indicadores() {
     }
 
     const conteo = { Todos: baseParaConteo.length };
+    const montos = { Todos: 0 };
+
     baseParaConteo.forEach((cliente) => {
-      conteo[cliente.status_name] = (conteo[cliente.status_name] || 0) + 1;
+      const est = cliente.status_name;
+      const costo = parseFloat(cliente.plan?.cost || 0);
+      conteo[est] = (conteo[est] || 0) + 1;
+      montos[est] = (montos[est] || 0) + costo;
+      montos.Todos += costo;
     });
-    return conteo;
+
+    return { conteo, montos };
   };
+
+  const { conteo: conteos, montos: montosPorEstado } = contarEstados();
+
+  const fmtMonto = (val) =>
+    `$${(val || 0).toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   const biMetrics = useMemo(() => {
     if (!clientesFiltrados.length) return { salud: 0, fuga: 0, recuperable: 0, totalActivos: 0 };
@@ -237,7 +248,7 @@ function Indicadores() {
     return { salud, fuga, recuperable, totalActivos: activos };
   }, [clientesFiltrados]);
 
-  const conteos = contarEstados();
+
 
   return (
     <div>
@@ -304,6 +315,7 @@ function Indicadores() {
                 <div className="kpi-content">
                   <span className="kpi-label">Total Clientes</span>
                   <p className="kpi-value">{conteos.Todos.toLocaleString("es-ES")}</p>
+                  <span className="bi-hint">{fmtMonto(montosPorEstado.Todos)} facturación total</span>
                 </div>
               </div>
 
@@ -312,6 +324,7 @@ function Indicadores() {
                 <div className="kpi-content">
                   <span className="kpi-label">Activos</span>
                   <p className="kpi-value">{(conteos.Activo || 0).toLocaleString("es-ES")}</p>
+                  <span className="bi-hint">{fmtMonto(montosPorEstado.Activo)} ingreso mensual</span>
                 </div>
               </div>
 
@@ -320,6 +333,7 @@ function Indicadores() {
                 <div className="kpi-content">
                   <span className="kpi-label">Suspendidos</span>
                   <p className="kpi-value">{(conteos.Suspendido || 0).toLocaleString("es-ES")}</p>
+                  <span className="bi-hint">{fmtMonto(montosPorEstado.Suspendido)} recuperable</span>
                 </div>
               </div>
 
@@ -328,6 +342,7 @@ function Indicadores() {
                 <div className="kpi-content">
                   <span className="kpi-label">Cancelados</span>
                   <p className="kpi-value">{(conteos.Cancelado || 0).toLocaleString("es-ES")}</p>
+                  <span className="bi-hint">{fmtMonto(montosPorEstado.Cancelado)} pérdida mensual</span>
                 </div>
               </div>
             </div>
