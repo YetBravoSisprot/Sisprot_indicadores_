@@ -24,6 +24,20 @@ const mapCycleValue = (val) => {
     return cycle;
 };
 
+// Función para enviar logs a n8n de forma centralizada
+const sendToN8nLog = async (logData) => {
+    const N8N_WEBHOOK_URL = "https://n8n.sisprottaurus.com/webhook/ai-training-log";
+    try {
+        fetch(N8N_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(logData)
+        }).catch(e => console.warn("Log centralizado (n8n) no disponible aún."));
+    } catch (e) {
+        console.error("Error enviando a n8n:", e);
+    }
+};
+
 const getCycleLabel = (val) => {
     const mapped = mapCycleValue(val);
     if (mapped === "N/A") return "N/A";
@@ -826,11 +840,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 stats: [
                                     { label: "Estado", value: cliente.status_name },
                                     { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
+                                    { label: "Teléfono", value: cliente.client_mobile || "N/A" },
+                                    { label: "Ciclo", value: cliente.cycle || "N/A" },
+                                    { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
+                                    { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
+                                    { label: "Dirección", value: cliente.address || "N/A" },
                                     { label: "Cédula", value: cliente.client_identification }
                                 ],
                                 confirmedClients: updatedConfirmed,
-                                rawData: cliente, // Persistir contexto para preguntas de seguimiento
-                                dataset: updatedConfirmed, // Por si quiere el excel ya mismo
+                                rawData: cliente,
+                                dataset: updatedConfirmed, // Solo los confirmados
                                 filtersText: ["Selección Manual de Lista"]
                             }
                         };
@@ -1317,13 +1336,17 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 title: cliente.client_name,
                                 subtitle: `${cliente.sector_name} | #${cliente.id}`,
                                 stats: [
-                                    { label: "Cédula", value: cliente.client_identification || 'N/A' },
                                     { label: "Estado", value: cliente.status_name },
-                                    { label: "Plan", value: `${cliente.plan?.name} (${cliente.plan?.cost}$)` },
-                                    { label: "Teléfono", value: cliente.client_mobile }
+                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
+                                    { label: "Teléfono", value: cliente.client_mobile || "N/A" },
+                                    { label: "Ciclo", value: cliente.cycle || "N/A" },
+                                    { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
+                                    { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
+                                    { label: "Dirección", value: cliente.address || "N/A" },
+                                    { label: "Cédula", value: cliente.client_identification }
                                 ],
                                 parameters: { contrato: cliente.id, cedula: cliente.client_identification },
-                                dataset: [cliente],
+                                dataset: [cliente], // Solo este cliente
                                 filtersText: [foundType === "contrato" ? `Contrato: #${cliente.id}` : `Cédula: ${nro}`],
                                 rawData: cliente
                             }
@@ -1431,10 +1454,18 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 subtitle: `#${cliente.id} | ${cliente.sector_name}`,
                                 stats: [
                                     { label: "Estado", value: cliente.status_name },
-                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` }
+                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
+                                    { label: "Teléfono", value: cliente.client_mobile || "N/A" },
+                                    { label: "Ciclo", value: cliente.cycle || "N/A" },
+                                    { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
+                                    { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
+                                    { label: "Dirección", value: cliente.address || "N/A" },
+                                    { label: "Cédula", value: cliente.client_identification }
                                 ],
                                 confirmedClients: allConfirmed,
-                                rawData: cliente
+                                rawData: cliente,
+                                dataset: [cliente], // Solo este cliente
+                                filtersText: [`Nombre: ${cliente.client_name}`]
                             }
                         };
                     }
@@ -1496,6 +1527,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             stats: [
                                 { label: "Estado", value: rawDataTarget.status_name },
                                 { label: "Plan", value: `${rawDataTarget.plan?.name} ($${rawDataTarget.plan?.cost})` },
+                                { label: "Teléfono", value: rawDataTarget.client_mobile || "N/A" },
+                                { label: "Ciclo", value: rawDataTarget.cycle || "N/A" },
+                                { label: "IP/MAC", value: `${rawDataTarget.service_detail?.ip || "N/A"} / ${rawDataTarget.service_detail?.mac || "N/A"}` },
+                                { label: "Caja NAP", value: rawDataTarget.nap_box_name || "N/A" },
+                                { label: "Dirección", value: rawDataTarget.address || "N/A" },
                                 { label: "Cédula", value: rawDataTarget.client_identification }
                             ],
                             rawData: rawDataTarget,
@@ -1639,11 +1675,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'UNKNOWN':
-            default:
+            default: {
+                // Registrar consulta no respondida (LOG DE ENTRENAMIENTO sugerido por el jefe)
+                const logEntry = {
+                    pregunta: query,
+                    fecha: new Date().toLocaleString(),
+                    usuario: userName,
+                    seccion: currentPage || "Chatbot"
+                };
+
+                // 1. Guardar localmente
+                try {
+                    const unansweredLog = JSON.parse(localStorage.getItem('ai_training_log') || '[]');
+                    unansweredLog.push(logEntry);
+                    localStorage.setItem('ai_training_log', JSON.stringify(unansweredLog.slice(-50)));
+                } catch (e) { console.error("Error saving local log", e); }
+
+                // 2. Enviar a n8n para Base de Datos centralizada
+                sendToN8nLog(logEntry);
+
                 return {
-                    text: "Lamento la confusión, mi Inteligencia Artificial no logró deducir con exactitud qué métrica de la base de datos buscas. 😔\n\nIntenta ser más directo como: 'Muéstrame los ingresos globales', 'Búscame al cliente Luis Silva' o '¿Cuántos morosos tenemos?'.",
+                    text: `Lo siento Sr. ${userName}, mi Inteligencia Artificial no logró procesar esa solicitud específica sobre "${query}". He anotado tu consulta en mi **log de entrenamiento** para que mis desarrolladores puedan enseñarme a responderla pronto.\n\n¿Deseas intentar con una búsqueda de cliente, sector o ver los indicadores generales?`,
                     isCard: false
                 };
+            }
         }
 
     } catch (error) {
