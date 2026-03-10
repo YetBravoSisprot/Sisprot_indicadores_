@@ -189,7 +189,8 @@ function Admin() {
     if (!revenueStats || !revenueStats.rawData) return [];
     
     const byYear = {};
-    const monthNamesShort = ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+    const monthNamesShort = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const currentYear = new Date().getFullYear().toString();
     
     revenueStats.rawData.forEach(item => {
       const dateParts = item.date.split('-');
@@ -207,9 +208,14 @@ function Admin() {
       const info = byYear[year];
       info.months.sort((a, b) => a - b);
       const start = monthNamesShort[info.months[0]];
-      const end = monthNamesShort[info.months[info.months.length - 1]];
+      const isCurrentYear = year === currentYear;
+      const end = isCurrentYear ? "Hoy" : monthNamesShort[info.months[info.months.length - 1]];
+      
+      const prefix = isCurrentYear ? "Gestión" : "Cierre";
+      
       return {
-        label: `${year} — ${start} — ${end}`,
+        label: `${prefix} ${year}`,
+        subLabel: `(${start} — ${end})`,
         amount: info.amount
       };
     });
@@ -372,9 +378,12 @@ function Admin() {
                       </div>
                       
                       <div className="yearly-breakdown">
-                         {yearlyTotals.map(yt => (
-                           <div key={yt.label} className="yearly-line">
-                              <span className="yt-label">{yt.label}</span>
+                         {yearlyTotals.map((yt, idx) => (
+                           <div key={idx} className="yearly-line">
+                              <div className="yt-label-group">
+                                <span className="yt-label">{yt.label}</span>
+                                <span className="yt-sublabel">{yt.subLabel}</span>
+                              </div>
                               <span className="yt-amount">${yt.amount.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
                            </div>
                          ))}
