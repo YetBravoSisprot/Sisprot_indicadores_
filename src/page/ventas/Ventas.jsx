@@ -194,10 +194,9 @@ function Ventas() {
                     <div className="header-badges">
                       <span className="badge-total">{masterPlanData.length} Clientes Totales</span>
                       <span className="badge-revenue">{formatCurrency(masterPlanData.length * 19)}/mes</span>
-                      <button 
-                        className="button" 
+                      <button
+                        className="button"
                         onClick={handleExportExcel}
-                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', marginLeft: '10px' }}
                         title="Descargar en Excel"
                       >
                         📥 Excel
