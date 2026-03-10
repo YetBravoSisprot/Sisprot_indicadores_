@@ -870,6 +870,7 @@
 .animate-slide-up {
   animation: slideUp 0.6s ease-out forwards;
 }
+
 .search-item-info {
   display: flex;
   flex-direction: column;
@@ -943,6 +944,7 @@
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -953,5 +955,125 @@
   animation: slideInRight 0.3s ease-out forwards;
 }
 
-.related-contract-item:nth-child(2) { animation-delay: 0.1s; }
-.related-contract-item:nth-child(3) { animation-delay: 0.2s; }
+.related-contract-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.related-contract-item:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.training-log-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.training-log-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+/* Training Modal Styles */
+.training-modal {
+  width: 100%;
+  max-width: 850px;
+  max-height: 85vh;
+  border-radius: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.brain-icon {
+  font-size: 1.75rem;
+}
+
+.training-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.training-table-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.training-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.training-table th {
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #3b82f6;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.training-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.log-query {
+  font-style: italic;
+  color: #38bdf8;
+  max-width: 400px;
+}
+
+.log-date {
+  font-family: 'Inter', monospace;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.log-user {
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.no-logs {
+  text-align: center;
+  padding: 3rem !important;
+  color: #64748b;
+  font-style: italic;
+}
+
+.action-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: auto;
+}
+
+.action-danger:hover {
+  background: #ef4444;
+  color: #fff;
+}
