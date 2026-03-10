@@ -57,9 +57,9 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
             "Días Hábiles": diasHabiles,
             Tipo_Cliente: cliente.client_type_name,
             Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+            _costRaw: parseFloat(cliente.plan?.cost || 0),  // Campo interno para cálculos
         };
     }).filter(row => {
-        // Omitir si alguna columna contiene la palabra "PRUEBA" (case-insensitive)
         return !Object.values(row).some(val =>
             val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
         );
@@ -69,14 +69,17 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     baseData.sort((a, b) => (b["Días Hábiles"] || 0) - (a["Días Hábiles"] || 0));
 
     const worksheetData = baseData.map((row) => {
+        // Excluir campo interno _costRaw de las columnas exportadas
+        const { _costRaw, ...exportRow } = row;
+
         if (!selectedColumns || selectedColumns.length === 0 || selectedColumns.includes("Todas")) {
-            return row;
+            return exportRow;
         }
 
         const filteredColumns = {};
         selectedColumns.forEach((col) => {
-            if (row[col] !== undefined) {
-                filteredColumns[col] = row[col];
+            if (exportRow[col] !== undefined) {
+                filteredColumns[col] = exportRow[col];
             }
         });
         return filteredColumns;
@@ -96,9 +99,8 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     const resumenIngresosUrb = baseData.reduce((acc, row) => {
         if (row.Estatus === "Activo") {
             const urb = row.Urbanismo || "Otros";
-            // Extraer el costo del string del Plan: "Plan Name (Cost$)" -> Cost
-            const costMatch = row.Plan.match(/\((\d+)\$\)/);
-            const cost = costMatch ? parseFloat(costMatch[1]) : 0;
+            // Usamos el costo real directamente (evita el bug con el regex y decimales)
+            const cost = row._costRaw || 0;
             acc[urb] = (acc[urb] || 0) + cost;
         }
         return acc;
