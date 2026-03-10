@@ -173,6 +173,26 @@
   margin-top: 2px;
 }
 
+/* BI EXPLANATION - descripción ampliada (usada en Oportunidad) */
+.bi-explanation {
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.75);
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--accent-green);
+  border-radius: 0 8px 8px 0;
+  text-align: left;
+}
+
+.bi-explanation strong {
+  color: var(--accent-green);
+  font-style: normal;
+  font-weight: 700;
+}
+
 /* TOP META */
 .top-meta {
   display: flex;
