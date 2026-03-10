@@ -450,6 +450,151 @@
     color: #fff !important;
 }
 
+/* ============================================================
+   VISTA ALTERNATIVA MÓVIL — BARRAS INTERACTIVAS
+   ============================================================ */
+.mobile-chart-alt {
+    padding: 8px 4px;
+}
+
+.mobile-chart-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #00d2ff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 14px 0;
+}
+
+/* ── Barras horizontales por año ── */
+.year-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.year-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.year-bar-row:hover,
+.year-bar-row.selected {
+    background: rgba(0, 210, 255, 0.08);
+}
+
+.year-bar-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 38px;
+}
+
+.year-bar-row.selected .year-bar-label {
+    color: #00d2ff;
+}
+
+.year-bar-track {
+    flex: 1;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.year-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 210, 255, 0.4), #00d2ff);
+    border-radius: 99px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.year-bar-row.selected .year-bar-fill {
+    background: linear-gradient(90deg, #00d2ff, #60efff);
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
+}
+
+.year-bar-total {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    min-width: 32px;
+    text-align: right;
+}
+
+/* ── Barras verticales por mes ── */
+.month-bars {
+    display: flex;
+    gap: 5px;
+    align-items: flex-end;
+    height: 120px;
+    padding: 0 4px 0 4px;
+}
+
+.month-bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+}
+
+.month-bar-wrap {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+}
+
+.month-bar-fill {
+    width: 100%;
+    background: linear-gradient(180deg, #00d2ff88, #00d2ff44);
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.month-bar-col.active .month-bar-fill {
+    background: linear-gradient(180deg, #00d2ff, #00d2ff88);
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+}
+
+.month-bar-val {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.month-bar-col.active .month-bar-val {
+    color: #00d2ff;
+}
+
+.month-bar-label {
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+.month-bar-col.active .month-bar-label {
+    color: #00d2ff;
+}
+
+.mobile-chart-hint {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    margin-top: 14px;
+    font-style: italic;
+}
+
 @media (max-width: 768px) {
 
     /* Contenedor principal */
