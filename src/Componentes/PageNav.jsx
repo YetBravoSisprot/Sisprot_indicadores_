@@ -46,7 +46,7 @@ function PageNav() {
   const navLinks = [
     { to: "/TopUrbanismo", label: "Top Urbanismos" },
     { to: "/*", label: "Reportes BI" },
-    { to: "/Indicadores", label: "Indicadores" },
+    { to: "/Indicadores", label: "Resumen BI" },
     { to: "/Ventas", label: "Operaciones" },
     { to: "/VentasGlobales", label: "Ventas 2021-2026" },
     { to: "/Admin", label: "Adm. Ingresos" },
