@@ -676,8 +676,8 @@ function TopUrbanismo() {
 
               <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
                 <option value="Todos">Todos</option>
-                <option value="15">Ciclo 15</option>
-                <option value="30">Ciclo 30</option>
+                <option value="15">🗓️ Ciclo de Corte 15</option>
+                <option value="30">🗓️ Ciclo de Corte 30</option>
               </select>
 
               <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
