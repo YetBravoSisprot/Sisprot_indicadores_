@@ -390,11 +390,13 @@ function Admin() {
                       </div>
 
                       <div className="kpi-value-box-total">
-                        <span className="kpi-total-label">Total Gral</span>
-                        <span className="kpi-amount">
+                        <span className="kpi-total-label">Total Acumulado</span>
+                        <div className="kpi-amount-wrapper">
                           <span className="kpi-currency">$</span>
-                          {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                        </span>
+                          <span className="kpi-amount">
+                            {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   )}
