@@ -310,8 +310,11 @@ INTENCIONES DISPONIBLES:
 - INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Si menciona un lugar o zona (ej: "ingresos de mata caballo"), asígnalo al parámetro "urbanismo" aunque no diga la palabra explícitamente. Trata de extraer el nombre del sector lo más completo posible. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
-- BUSCAR_CONTRATO: El usuario te da un NÚMERO EXACTO para buscar el perfil de un único cliente. Ej: "el contrato es 3063", "busca el 4301". Param requerido: {"contrato": "1234"} (EL PARÁMETRO DEBE SER SOLO NUMÉRICO).
-- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". Si detectas varios nombres, devuélvelos en un array llamado "nombres" en los parámetros. Ej: {"nombres": ["Juan Perez", "Maria Lopez", "Carlos"]}. NO uses esto para nombres de sectores urbanos.
+- BUSCAR_CONTRATO: El usuario te da un NÚMERO DE CONTRATO (ID) para buscar un perfil. Parámetro: {"contrato": "1234"}.
+- BUSCAR_CEDULA: El usuario te da un NÚMERO DE CÉDULA o IDENTIDAD para buscar un perfil. Parámetro: {"cedula": "12345678"}.
+- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". 
+  * REGLA: Si el usuario da nombre y apellido (Ej: "Juan Perez"), trátalo como UN SOLO NOMBRE. No los separes por comas a menos que sean personas distintas.
+  * Parámetros: Devuélvelos en un array llamado "nombres". Ej: {"nombres": ["Juan Perez", "Maria Lopez"]}. NO uses esto para nombres de sectores urbanos.
 - ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
 - PLANES: El usuario pregunta por los planes o paquetes más vendidos.
 - TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
@@ -449,6 +452,30 @@ const getPlanesResponse = (filtroTxt, clientes) => {
 const getFilteredDataset = (clientes, parameters, query = "") => {
     let filtered = clientes;
     let appliedTexts = [];
+
+    // 0. Búsqueda Directa (Contrato, Cédula o Nombre) - NUEVO
+    if (parameters?.contrato) {
+        const nro = String(parameters.contrato);
+        filtered = filtered.filter(c => String(c.id) === nro);
+        appliedTexts.push(`Contrato: #${nro}`);
+        if (filtered.length > 0) return { filtered, appliedTexts };
+    }
+
+    if (parameters?.cedula) {
+        const ci = String(parameters.cedula);
+        filtered = filtered.filter(c => String(c.client_identification).includes(ci));
+        appliedTexts.push(`Cédula: ${ci}`);
+        if (filtered.length > 0) return { filtered, appliedTexts };
+    }
+
+    if (parameters?.nombres || parameters?.nombre) {
+        const names = parameters.nombres || [parameters.nombre];
+        filtered = filtered.filter(c => {
+            const dbName = normalizeText(c.client_name);
+            return names.some(n => dbName.includes(normalizeText(n)));
+        });
+        appliedTexts.push(`Clientes: ${names.join(", ")}`);
+    }
 
     // Pre-procesamiento: ¿Agencia es en realidad un Urbanismo?
     if (parameters?.agencia && !parameters?.urbanismo) {
@@ -606,7 +633,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     if (chosenStatus) {
                         const { originalIntent, savedParameters } = lastBotMsg.cardData;
                         intent = originalIntent;
-                        parameters = { ...savedParameters, status: chosenStatus }; // Guardamos el string ('Todos', 'Activo', etc.)
+                        const newParams = { ...savedParameters, status: chosenStatus };
+                        parameters = newParams;
                         fromClarification = true;
                     }
                 }
@@ -646,6 +674,23 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 // Interceptor 5: Aceptación de Excel
                 if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
                     intent = 'GENERAR_EXCEL';
+                    // Persistencia de datos previos: Priorizamos dataset si ya existe filtrado
+                    if (lastBotMsg.cardData?.dataset) {
+                        parameters = lastBotMsg.cardData.parameters || {};
+                        // Inyectamos el dataset directamente para saltar getFilteredDataset si ya lo tenemos
+                        fromClarification = true;
+
+                        const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
+                        return {
+                            text: `¡Entendido! Vamos a preparar el archivo con la información que acabamos de ver. **¿Qué columnas deseas incluir?** \n\nOpciones:\n_${colsList}_\n\n(Dime "Todas" para el reporte completo).`,
+                            isCard: false,
+                            contextType: 'clarify_excel_columns',
+                            cardData: {
+                                savedDataset: lastBotMsg.cardData.dataset,
+                                savedFiltersText: lastBotMsg.cardData.filtersText || ["Selección previa"]
+                            }
+                        };
+                    }
                     parameters = lastBotMsg.cardData?.parameters || {};
                     fromClarification = true;
                 }
@@ -703,24 +748,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 // Interceptor 7: Clarificación de Múltiples Clientes (Selección por Nombre)
                 if (lastBotMsg.contextType === 'multi_client_clarification' && lastBotMsg.cardData) {
-                    const { pendingNames, confirmedClients, currentName, currentMatches } = lastBotMsg.cardData;
                     const normQuery = query.toLowerCase();
-                    const choice = parseInt(extractNumber(query));
+                    const currentMatches = lastBotMsg.cardData.currentMatches;
 
-                    let updatedConfirmed = [...confirmedClients];
+                    const optionMatch = query.match(/\b([1-9]|10)\b/);
+                    const contractMatch = query.match(/\b(\d{4,6})\b/);
+                    const choiceIdx = optionMatch ? parseInt(optionMatch[0]) - 1 : -1;
+                    const matchedByContract = contractMatch ? currentMatches.find(m => String(m.id).includes(contractMatch[0])) : null;
+
+                    const currentName = lastBotMsg.cardData.currentName;
+                    const pendingNames = lastBotMsg.cardData.pendingNames;
+                    const updatedConfirmed = [...(lastBotMsg.cardData.confirmedClients || [])];
                     let updatedPending = [...pendingNames];
                     let nextName = null;
                     let nextMatches = [];
 
-                    // Si el usuario eligió una opción válida
-                    if (!isNaN(choice) && currentMatches && currentMatches[choice - 1]) {
-                        updatedConfirmed.push(currentMatches[choice - 1]);
+                    if (matchedByContract) {
+                        updatedConfirmed.push(matchedByContract);
+                    } else if (choiceIdx >= 0 && currentMatches && currentMatches[choiceIdx]) {
+                        updatedConfirmed.push(currentMatches[choiceIdx]);
                     } else if (normQuery.includes("saltar") || normQuery.includes("ninguno") || normQuery.includes("no")) {
-                        // Saltar este nombre
+                        // Salta
                     } else if (currentMatches && currentMatches.length > 0) {
-                        // Si no eligió un número pero hay opciones, re-pedir
                         return {
-                            text: `Por favor ${userName}, dime el número (1, 2, 3...) de la opción que corresponde a **${currentName}** o escribe 'saltar'.`,
+                            text: `Por favor ${userName}, indícame el número de la opción (1, 2, 3...) o el contrato específico para **${currentName}**.`,
                             isCard: false,
                             contextType: 'multi_client_clarification',
                             cardData: lastBotMsg.cardData
@@ -745,9 +796,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     if (nextName) {
-                        const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: #${m.id}, Sector: ${m.sector_name})`).join("\n");
+                        const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
                         return {
-                            text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál de estos deseas incluir en el Excel?\n\n${optionsList}\n\nResponde con el número de la opción.`,
+                            text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál de estos deseas incluir?\n\n${optionsList}\n\nResponde con el número de la opción.`,
                             isCard: false,
                             contextType: 'multi_client_clarification',
                             cardData: {
@@ -914,20 +965,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'TOTAL_CLIENTES':
             case 'ESTADOS':
             case 'TIPOS_CLIENTE': {
-                let filteredClientes = clientes;
-                let appliedFiltersText = [];
+                // Prioridad 0: Filtrado Unificado (Soporta nombres y contratos)
+                const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, message);
+                let filteredClientes = filtered;
+                let appliedFiltersText = appliedTexts;
 
-                // 1. Filtrar por Estado (NUEVO: Soporte para 'Todos' explicito)
-                if (parameters?.status && parameters.status !== 'Todos') {
-                    const statusStr = normalizeText(parameters.status);
-                    filteredClientes = filteredClientes.filter(c => {
-                        const allInfoStr = normalizeText(`${c.client_subdivision || ''} ${c.status_name || ''} `);
-                        return allInfoStr.includes(statusStr);
-                    });
-                    appliedFiltersText.push(`Estado: ${parameters.status} `);
-                } else if (parameters?.status === 'Todos') {
-                    appliedFiltersText.push(`Estado: Todos`);
-                } else if (!parameters?.status && intent !== 'ESTADOS') {
+                // 1. Clarificación de Estado (Solo si no hay otros filtros de identidad ya aplicados)
+                if (!parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE') {
                     // DISPARAR CLARIFICACIÓN: Si no especifican estado, preguntamos de forma humana
                     return {
                         text: `He preparado el resumen ${userName}, pero ¿deseas filtrar por algún estado específico(** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar **) o prefieres verlos ** Todos **? `,
@@ -937,35 +981,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
-                // 2. Ciclo
-                if (parameters?.ciclo) {
-                    const cicloReq = String(parameters.ciclo);
-                    filteredClientes = filteredClientes.filter(c => mapCycleValue(c.cycle) === cicloReq);
-                    appliedFiltersText.push(`Ciclo: ${cicloReq} `);
-                }
-
-                // 3. Filtrar por Agencia (Prioridad si el usuario dice "agencia de X")
-                if (parameters?.agencia) {
-                    let ageReq = normalizeText(parameters.agencia).replace("agencia ", "").replace("nodo ", "").trim();
-                    let nodoBuscado = "";
-                    if (ageReq.includes("turmero")) nodoBuscado = "NODO TURMERO";
-                    else if (ageReq.includes("macaro") || ageReq.includes("mácaro")) nodoBuscado = "NODO MACARO";
-                    else if (ageReq.includes("paya")) nodoBuscado = "NODO PAYA";
-
-                    filteredClientes = filteredClientes.filter(c => {
-                        const p1 = normalizeText(c.agency_name || '').includes(ageReq) || normalizeText(c.client_agency || '').includes(ageReq);
-                        let p2 = false;
-                        if (c.sector_name && sectorAgenciaMap[c.sector_name]) {
-                            const mapUrb = normalizeText(sectorAgenciaMap[c.sector_name]);
-                            p2 = nodoBuscado ? sectorAgenciaMap[c.sector_name] === nodoBuscado : new RegExp(`(^|\\b|\\s)${ageReq}(\\b|\\s|$)`, 'i').test(mapUrb);
-                        }
-                        return p1 || p2;
-                    });
-                    appliedFiltersText.push(`Agencia: ${nodoBuscado ? nodoBuscado.replace('NODO ', '') : parameters.agencia}`);
-                }
-
-                // --- FILTRADO GEOGRÁFICO UNIFICADO (Urbanismo) ---
-                if (parameters?.urbanismo) {
+                // Si se usó getFilteredDataset, ya tenemos el resultado base. 
+                // Solo mantenemos la lógica de clarificación de urbanismo si no hubo match único arriba.
+                if (parameters?.urbanismo && !appliedFiltersText.some(t => t.includes("Urbanismo:"))) {
                     const matchedSector = findBestUrbanismoMatch(parameters.urbanismo);
                     if (Array.isArray(matchedSector)) {
                         return {
@@ -977,33 +995,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             cardData: { originalIntent: intent, savedParameters: parameters }
                         };
                     }
-
-                    if (matchedSector) {
-                        filteredClientes = filteredClientes.filter(c => c.sector_name === matchedSector);
-                        appliedFiltersText.push(`Urbanismo: ${matchedSector}`);
-                    } else {
-                        const suggestion = getFuzzyUrbanismoSuggestion(parameters.urbanismo);
-                        if (suggestion.match && suggestion.score >= 0.6) { // Bajé a 0.6 para ser menos estricto con errores de tipeo
-                            filteredClientes = filteredClientes.filter(c => c.sector_name === suggestion.match);
-                            appliedFiltersText.push(`Urbanismo: ${suggestion.match}`);
-                        } else {
-                            // FALLBACK SEGURO: Si no se parece a nada que exista en la DB, abortamos y pedimos precisión
-                            return {
-                                text: `Disculpa, pero no encuentro ningún urbanismo o sector llamado "${parameters.urbanismo}" en mis registros. ¿Podrías indicarme el nombre exacto o verificar si está bien escrito?`,
-                                isCard: false
-                            };
-                        }
-                    }
-                }
-
-                // 4. Filtrar por Tipo
-                if (parameters?.tipo) {
-                    const tipoReq = normalizeText(parameters.tipo);
-                    filteredClientes = filteredClientes.filter(c => {
-                        const allInfoStr = normalizeText(`${c.client_subdivision || ''} ${c.client_type_name || ''}`);
-                        return allInfoStr.includes(tipoReq);
-                    });
-                    appliedFiltersText.push(`Tipo: ${parameters.tipo}`);
                 }
 
                 const isTipoIntent = intent === 'TIPOS_CLIENTE' || parameters?.tipo;
@@ -1092,47 +1083,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'INGRESOS': {
-                let filteredClientes = clientes;
-                let appliedFiltersText = [];
-
-                // Pre-procesamiento: ¿El usuario llamó "agencia" a lo que realmente es un "urbanismo"?
-                if (parameters?.agencia && !parameters?.urbanismo) {
-                    const matchedAsUrbanismo = findBestUrbanismoMatch(parameters.agencia);
-                    const isBaseAgency = /turmero|macaro|paya/i.test(normalizeText(parameters.agencia));
-                    if (matchedAsUrbanismo && !isBaseAgency) {
-                        parameters.urbanismo = parameters.agencia;
-                        delete parameters.agencia;
-                    }
-                }
-
-                // NUEVO: Resolución de conflictos entre Agencia y Urbanismo redundantes (evita sobre-filtrado)
-                if (parameters?.agencia && parameters?.urbanismo) {
-                    const normAgencia = normalizeText(parameters.agencia);
-                    const normUrbanismo = normalizeText(parameters.urbanismo);
-                    const isBaseAgency = /turmero|macaro|paya/i.test(normAgencia);
-
-                    if (isBaseAgency) {
-                        // Si el urbanismo parece ser solo un sub-nombre de la agencia (ej: "El Macaro" vs "Macaro")
-                        // y el usuario NO mencionó específicamente el nombre completo del urbanismo en el query,
-                        // asumimos que OpenAI lo auto-completó por error.
-                        const queryNorm = normalizeText(query);
-                        // Si el query dice "agencia macaro" pero NO dice "el macaro" específicamente...
-                        if (!queryNorm.includes(normUrbanismo) && queryNorm.includes("agencia")) {
-                            delete parameters.urbanismo;
-                        }
-                    }
-                }
+                // Prioridad 0: Filtrado Unificado
+                const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, message);
+                let filteredClientes = filtered;
+                let appliedFiltersText = appliedTexts;
 
                 // 1. Filtrar por Status (Flujo Humano: Preguntar si no existe)
-                if (parameters?.status) {
-                    if (parameters.status !== 'Todos') {
-                        const statusStr = normalizeText(parameters.status);
-                        filteredClientes = filteredClientes.filter(c => normalizeText(c.status_name).includes(statusStr));
-                        appliedFiltersText.push(`Estado: ${parameters.status} `);
-                    } else {
-                        appliedFiltersText.push(`Estado: Todos`);
-                    }
-                } else {
+                if (!parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato) {
                     // Si no especifican estado, preguntamos de forma humana antes de calcular
                     return {
                         text: `He detectado tu consulta sobre ingresos. ¿Deseas ver los resultados para clientes ** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar ** o de ** Todos los estados ** combinado ? `,
@@ -1315,31 +1272,45 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 return getPlanesResponse(req, clientes);
             }
 
+            case 'BUSCAR_CEDULA':
             case 'BUSCAR_CONTRATO': {
-                const nro = parameters?.contrato || extractNumber(message);
+                const nro = parameters?.contrato || parameters?.cedula || extractNumber(message);
                 if (nro) {
-                    const cliente = clientes.find(c => String(c.id) === String(nro));
+                    // Primero buscar por Contrato
+                    let cliente = clientes.find(c => String(c.id) === String(nro));
+                    let foundType = "contrato";
+
+                    // Si no se encuentra por contrato, buscar por Cédula automáticamente (Inteligente)
+                    if (!cliente) {
+                        cliente = clientes.find(c => String(c.client_identification) === String(nro));
+                        foundType = "cédula";
+                    }
+
                     if (cliente) {
                         return {
-                            text: `¡Búsqueda Exitosa ${userName}! Este es el perfil del contrato #${nro}: `,
+                            text: `¡Búsqueda Exitosa ${userName}! Este es el perfil encontrado por ** ${foundType} **: `,
                             isCard: true,
-                            contextType: 'viewing_client', // Marcador para seguimientos
+                            contextType: 'viewing_client',
                             cardData: {
                                 title: cliente.client_name,
-                                subtitle: cliente.sector_name,
+                                subtitle: `${cliente.sector_name} | #${cliente.id}`,
                                 stats: [
+                                    { label: "Cédula", value: cliente.client_identification || 'N/A' },
                                     { label: "Estado", value: cliente.status_name },
                                     { label: "Plan", value: `${cliente.plan?.name} (${cliente.plan?.cost}$)` },
                                     { label: "Teléfono", value: cliente.client_mobile }
                                 ],
+                                parameters: { contrato: cliente.id, cedula: cliente.client_identification },
+                                dataset: [cliente],
+                                filtersText: [foundType === "contrato" ? `Contrato: #${nro}` : `Cédula: ${nro}`],
                                 rawData: cliente
                             }
                         };
                     } else {
-                        return { text: `El sistema indica que el contrato #${nro} no existe o no tiene datos indexados.`, isCard: false };
+                        return { text: `El sistema indica que el número **${nro}** no coincide con ningún Contrato o Cédula en nuestros registros.`, isCard: false };
                     }
                 }
-                return { text: "Clasifiqué que buscas un contrato, pero no logré detectar cuál es el número.", isCard: false };
+                return { text: "Clasifiqué que buscas un perfil, pero no logré detectar el número de identificación.", isCard: false };
             }
 
             case 'BUSCAR_NOMBRE': {
@@ -1363,21 +1334,21 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 while (pendingNames.length > 0) {
                     const nameRaw = pendingNames.shift();
-                    // Limpiar el nombre de palabras que la IA pueda haber incluido por error
                     let nameClean = normalizeText(nameRaw)
                         .replace(/^(del\s+cliente|el\s+cliente|cliente|datos\s+de|datos\s+del|la\s+informacion\s+de)\s+/g, "")
                         .trim();
 
-                    if (!nameClean) continue;
+                    if (!nameClean || nameClean.length < 3) continue;
 
-                    let matches = clientes.filter(c => normalizeText(c.client_name).includes(nameClean));
+                    // Evitar procesar el mismo registro si ya está confirmado
+                    const alreadyResolvedIds = resolvedInThisStep.map(c => c.id);
+                    let matches = clientes.filter(c => normalizeText(c.client_name).includes(nameClean) && !alreadyResolvedIds.includes(c.id));
 
-                    // Si no hay match directo, probar buscando palabras individuales (más flexible)
                     if (matches.length === 0 && nameClean.split(" ").length > 1) {
                         const words = nameClean.split(" ");
                         matches = clientes.filter(c => {
                             const dbName = normalizeText(c.client_name);
-                            return words.every(w => dbName.includes(w));
+                            return words.every(w => dbName.includes(w)) && !alreadyResolvedIds.includes(c.id);
                         });
                     }
 
@@ -1386,36 +1357,18 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     } else if (matches.length > 1) {
                         currentAmbiguous = nameRaw;
                         currentMatches = matches;
-                        break; // Paramos para clarificar
-                    } else {
-                        // Si no hay match directo ni por palabras, probamos FUZZY MATCHING
-                        const fuzzyCandidates = clientes.map(c => ({
-                            client: c,
-                            score: calculateSimilarity(nameClean, normalizeText(c.client_name))
-                        }))
-                            .filter(cand => cand.score >= 0.85)
-                            .sort((a, b) => b.score - a.score);
-
-                        if (fuzzyCandidates.length > 0) {
-                            if (fuzzyCandidates[0].score >= 0.9 || fuzzyCandidates.length === 1) {
-                                resolvedInThisStep.push(fuzzyCandidates[0].client);
-                            } else {
-                                currentAmbiguous = nameRaw;
-                                currentMatches = fuzzyCandidates.slice(0, 3).map(c => c.client);
-                                break;
-                            }
-                        }
+                        break;
                     }
                 }
 
                 const allConfirmed = [...confirmedClients, ...resolvedInThisStep];
 
                 if (currentAmbiguous) {
-                    const optionsList = currentMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: #${m.id}, Sector: ${m.sector_name})`).join("\n");
+                    const optionsList = currentMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
                     const introResolved = resolvedInThisStep.length > 0 ? `He agregado a ${resolvedInThisStep.map(c => c.client_name).join(", ")}. \n\n` : "";
 
                     return {
-                        text: `${introResolved}Para **${currentAmbiguous}** encontré ${currentMatches.length} registros. ¿Cuál de estos deseas incluir?\n\n${optionsList}\n\nResponde con el número de la opción.`,
+                        text: `${introResolved}He encontrado **${currentMatches.length} contratos** asociados a "${currentAmbiguous}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}\n\nResponde con el número de la opción (1, 2, 3...) para ver el perfil detallado.`,
                         isCard: false,
                         contextType: 'multi_client_clarification',
                         cardData: {
@@ -1425,7 +1378,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             currentMatches: currentMatches
                         }
                     };
-                } else if (allConfirmed.length > 0) {
+                }
+                else if (allConfirmed.length > 0) {
                     const confirmedList = allConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
                     const title = nombresReq.length > 1 ? "Clientes encontrados" : "Cliente encontrado";
 
@@ -1580,7 +1534,32 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'GENERAR_EXCEL': {
-                const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
+                // Buscamos si el último mensaje tenía un dataset relevante (contexto)
+                let targetDataset = null;
+                let targetFilters = null;
+                let targetParams = parameters;
+
+                if (history && history.length >= 2) {
+                    const lastBot = history[history.length - 2];
+                    if (lastBot.sender === 'bot' && lastBot.cardData) {
+                        if (lastBot.cardData.dataset) {
+                            targetDataset = lastBot.cardData.dataset;
+                            targetFilters = lastBot.cardData.filtersText;
+                            targetParams = lastBot.cardData.parameters || parameters;
+                        } else if (lastBot.cardData.confirmedClients) {
+                            targetDataset = lastBot.cardData.confirmedClients;
+                            targetFilters = ["Lista Personalizada"];
+                        } else if (lastBot.cardData.rawData) {
+                            targetDataset = [lastBot.cardData.rawData];
+                            targetFilters = [`Cliente: ${lastBot.cardData.rawData.client_name}`];
+                        }
+                    }
+                }
+
+                const { filtered, appliedTexts } = targetDataset
+                    ? { filtered: targetDataset, appliedTexts: targetFilters }
+                    : getFilteredDataset(clientes, targetParams, query);
+
                 const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
                 return {
                     text: `¡Entendido! Antes de entregarte el Excel de (${appliedTexts.join(', ') || 'Global'}), **¿qué columnas requieres que incluya?** \n\nOpciones:\n_${colsList}_\n\n(Puedes decir "Todas" si prefieres el reporte completo).`,
