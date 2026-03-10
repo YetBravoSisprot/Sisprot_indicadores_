@@ -368,7 +368,16 @@ function TopUrbanismo() {
   }, [sectoresSeleccionados]);
 
   const handleDownloadExcel = () => {
-    exportToExcel(serviciosParaExportar, estadosSeleccionados, columnasSeleccionadas);
+    // Construir el array de filtros aplicados
+    const filtroTextos = [...estadosSeleccionados];
+
+    // Si hay urbanismos específicos seleccionados (no "Todos" ni vacío), incluirlos
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+    }
+
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas);
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
