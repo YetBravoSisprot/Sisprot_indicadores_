@@ -257,6 +257,17 @@
 .line-chart-container {
   height: 350px;
   width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .line-chart-container {
+    height: 300px;
+  }
+  
+  .historical-chart-section {
+    padding: 1rem 0.5rem;
+  }
 }
 
 /* Insights Grid */
@@ -280,6 +291,13 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: #f1f5f9;
+}
+
+.doughnut-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
 }
 
 /* Custom Bar Chart - Fix Clumping */
