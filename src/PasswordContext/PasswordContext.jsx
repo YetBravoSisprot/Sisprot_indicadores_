@@ -100,7 +100,13 @@ function PasswordProvider({ children }) {
 
         // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
         if (jsonData && jsonData.results) {
+          const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
           jsonData.results = jsonData.results.filter(cliente => {
+            // Si el cliente está en la whitelist, mostrarlo aunque tenga la palabra "PRUEBA"
+            const name = (cliente.client_name || "").toUpperCase();
+            const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase()));
+            if (isWhitelisted) return true;
+
             const searchFields = [
               cliente.client_name,
               cliente.address,
