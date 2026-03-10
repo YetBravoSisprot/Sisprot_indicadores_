@@ -321,7 +321,7 @@ INTENCIONES DISPONIBLES:
 - SALUDO: El usuario solo está saludando ("hola", "buenos días").
 - AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
 - GUIA_APP: El usuario pregunta para qué sirve la app.
-- SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda"}
+- SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE, O VER EL DETALLE/PERFIL) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?", "muestrame su detalle". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda" | "perfil"}
   * MÁXIMA REGLA: Frases iniciales vagas como "necesito saber informacion de un cliente", "buscame a alguien", o "quiero saber un dato" NO SON SEGUIMIENTO. Si no te pregunta expresamente por el plan, el ciclo, el teléfono, la dirección, la deuda o la red, elije BUSQUEDA_VAGA u otro.
   * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
@@ -813,13 +813,25 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         };
                     } else {
                         // Terminamos de procesar todos los nombres
+                        const cliente = updatedConfirmed[updatedConfirmed.length - 1]; // Tomamos el que acaba de seleccionar
                         const confirmedList = updatedConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
+
                         return {
-                            text: `¡Listo ${userName}! He confirmado los siguientes clientes para tu reporte:\n\n${confirmedList}\n\n¿Deseas buscar más nombres para agregar a la lista o **procedemos a elegir las columnas del Excel**?`,
-                            isCard: false,
+                            text: `¡Excelente selección ${userName}! Aquí tienes el detalle de **${cliente.client_name}** (#${cliente.id}).\n\nHe guardado este y los otros contratos en tu lista de reporte (${updatedConfirmed.length} en total). ¿Deseas buscar más nombres o **procedemos con el Excel**?`,
+                            isCard: true,
                             contextType: 'multi_client_confirmed',
                             cardData: {
-                                confirmedClients: updatedConfirmed
+                                title: cliente.client_name,
+                                subtitle: `${cliente.sector_name} | #${cliente.id}`,
+                                stats: [
+                                    { label: "Estado", value: cliente.status_name },
+                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
+                                    { label: "Cédula", value: cliente.client_identification }
+                                ],
+                                confirmedClients: updatedConfirmed,
+                                rawData: cliente, // Persistir contexto para preguntas de seguimiento
+                                dataset: updatedConfirmed, // Por si quiere el excel ya mismo
+                                filtersText: ["Selección Manual de Lista"]
                             }
                         };
                     }
@@ -1458,10 +1470,40 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
 
                 if (!rawDataTarget) {
+                    // Intento de rescate de contexto desde confirmedClients si existe
+                    for (let i = history.length - 1; i >= 0; i--) {
+                        if (history[i].cardData?.confirmedClients?.length > 0) {
+                            rawDataTarget = history[i].cardData.confirmedClients[history[i].cardData.confirmedClients.length - 1];
+                            break;
+                        }
+                    }
+                }
+
+                if (!rawDataTarget) {
                     return { text: "Me pides un dato adicional, pero he perdido el hilo del cliente que estábamos analizando. ¿Me recuerdas su nombre o número?", isCard: false };
                 }
 
                 const accion = parameters?.accion;
+                // Caso especial: Ver el perfil o detalle completo
+                if (accion === 'perfil' || accion === 'detalle' || query.includes("detalle") || query.includes("perfil") || query.includes("vuelve a mostrar")) {
+                    return {
+                        text: `¡Claro ${userName}! Aquí tienes de nuevo el perfil detallado de **${rawDataTarget.client_name}**:`,
+                        isCard: true,
+                        contextType: 'viewing_client',
+                        cardData: {
+                            title: rawDataTarget.client_name,
+                            subtitle: `${rawDataTarget.sector_name} | #${rawDataTarget.id}`,
+                            stats: [
+                                { label: "Estado", value: rawDataTarget.status_name },
+                                { label: "Plan", value: `${rawDataTarget.plan?.name} ($${rawDataTarget.plan?.cost})` },
+                                { label: "Cédula", value: rawDataTarget.client_identification }
+                            ],
+                            rawData: rawDataTarget,
+                            dataset: [rawDataTarget],
+                            filtersText: [`Contrato: #${rawDataTarget.id}`]
+                        }
+                    };
+                }
                 if (accion === 'direccion') {
                     const dir = rawDataTarget.address || rawDataTarget.direction || 'No registrada en sistema';
                     const detail = rawDataTarget.direction_detail ? ', ' + rawDataTarget.direction_detail : '';
