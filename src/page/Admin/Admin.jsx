@@ -111,17 +111,18 @@ function Admin() {
       return acc;
     }, {});
 
-    // Top Sectores
     const sectorStats = clientes.reduce((acc, curr) => {
       if (curr.status_name === "Activo") {
         const sector = curr.sector_name || "Sin Sector";
-        acc[sector] = (acc[sector] || 0) + 1;
+        if (!acc[sector]) acc[sector] = { count: 0, revenue: 0 };
+        acc[sector].count += 1;
+        acc[sector].revenue += parseFloat(curr.plan?.cost || 0);
       }
       return acc;
     }, {});
 
     const topSectores = Object.entries(sectorStats)
-      .sort(([, a], [, b]) => b - a)
+      .sort(([, a], [, b]) => b.revenue - a.revenue)
       .slice(0, 5);
 
     return {
@@ -196,9 +197,14 @@ function Admin() {
       },
       datalabels: {
         display: (context) => {
+          const data = context.dataset.data;
+          const currentVal = data[context.dataIndex];
+          const isLatest = context.dataIndex === data.length - 1;
+          
           if (isMobile) {
-             // Only show the last label on mobile to avoid clumping
-             return context.dataIndex === chartData.datasets[0].data.length - 1;
+            // Show if it's the latest point OR a significant peak
+            const isPeak = currentVal >= Math.max(...data) * 0.95; 
+            return isLatest || isPeak;
           }
           return true;
         },
@@ -211,10 +217,15 @@ function Admin() {
           size: isMobile ? 10 : 11,
           family: "'Outfit', sans-serif"
         },
-        formatter: (value) => `$${value.toLocaleString('en-US', { 
-          minimumFractionDigits: isMobile ? 0 : 2, 
-          maximumFractionDigits: isMobile ? 0 : 2 
-        })}`,
+        formatter: (value) => {
+          if (isMobile && value >= 1000) {
+            return `$${(value / 1000).toFixed(1)}k`; // Compact format for mobile if values are large
+          }
+          return `$${value.toLocaleString('en-US', { 
+            minimumFractionDigits: isMobile ? 0 : 2, 
+            maximumFractionDigits: isMobile ? 0 : 2 
+          })}`;
+        },
         padding: 4
       }
     },
@@ -325,11 +336,19 @@ function Admin() {
 
                 <div className="header-actions">
                   {revenueStats && (
-                    <div className="accumulated-kpi glass animate-fade-in">
-                      <span className="accumulated-label">Recaudación Total (2025 - 2026) ----&gt;</span>
-                      <span className="accumulated-value">
-                        ${revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                      </span>
+                    <div className="accumulated-kpi-v2 glass animate-fade-in">
+                      <div className="kpi-label-group">
+                        <span className="kpi-main-title">Recaudación Total</span>
+                        <span className="kpi-period-subtitle">
+                          Periodo: {revenueStats.chartLabels[0]} — {revenueStats.chartLabels[revenueStats.chartLabels.length - 1]}
+                        </span>
+                      </div>
+                      <div className="kpi-value-box">
+                        <span className="kpi-amount">
+                          <span className="kpi-currency">$</span>
+                          {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
+                        </span>
+                      </div>
                     </div>
                   )}
 
@@ -395,9 +414,9 @@ function Admin() {
                     <div className="kpi-card glass secondary">
                       <div className="kpi-icon">📊</div>
                       <div className="kpi-info">
-                        <h3>Ingreso Promedio</h3>
+                        <h3>ARPU</h3>
                         <p className="kpi-value">${kpis.ticketPromedio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                        <span className="kpi-subtext">Ingreso medio por cliente</span>
+                        <span className="kpi-subtext">Ingreso promedio por usuario activo</span>
                       </div>
                     </div>
 
@@ -415,7 +434,7 @@ function Admin() {
                       <div className="kpi-info">
                         <h3>Tasa de Baja</h3>
                         <p className="kpi-value">{kpis.churnRate.toFixed(1)}%</p>
-                        <span className="unit">Clientes suspendidos o cancelados</span>
+                        <span className="kpi-subtext">((Susp. + Canc.) / Total Clientes)</span>
                       </div>
                     </div>
                   </div>
@@ -459,11 +478,14 @@ function Admin() {
                     <div className="chart-card glass">
                       <h3>Top 5 Sectores (Activos)</h3>
                       <div className="ranking-list">
-                        {processedData.topSectores.map(([sector, count], index) => (
+                        {processedData.topSectores.map(([sector, stats], index) => (
                           <div key={sector} className="ranking-item">
                             <span className="ranking-pos">{index + 1}</span>
-                            <span className="ranking-name">{sector}</span>
-                            <span className="ranking-count">{count} cl.</span>
+                            <div className="ranking-info">
+                              <span className="ranking-name">{sector}</span>
+                              <span className="ranking-amount">${stats.revenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
+                            </div>
+                            <span className="ranking-count">{stats.count} cl.</span>
                           </div>
                         ))}
                       </div>
