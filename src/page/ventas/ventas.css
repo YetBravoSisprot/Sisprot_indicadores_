@@ -556,9 +556,19 @@
 
 /* ---- MUY PEQUEÑO (≤ 420px) ---- */
 @media (max-width: 420px) {
+
+  /* Los badges y botón siguen en fila pero se permiten envolver si no caben */
   .header-badges {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .badge-total,
+  .badge-revenue,
+  .header-badges .button {
+    font-size: 0.73rem;
+    padding: 4px 9px;
   }
 
   .ventas-card h3 {
