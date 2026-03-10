@@ -7,77 +7,105 @@ function PageNav() {
   const { logout, email } = useContext(PasswordContext);
   const navigate = useNavigate();
 
-  // Estado para almacenar la hora y fecha actual
   const [currentDateTime, setCurrentDateTime] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Función para actualizar la hora y la fecha
-  const updateDateTime = () => {
-    const now = new Date();
-    const formattedDate = now.toLocaleString(); // Formato por defecto de la fecha y hora
-    setCurrentDateTime(formattedDate);
-  };
-
-  // useEffect para actualizar la fecha y hora cada segundo
   useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      setCurrentDateTime(now.toLocaleString());
+    };
     updateDateTime();
-    const interval = setInterval(updateDateTime, 1000); // Actualizar cada segundo
-
-    // Limpiar el intervalo cuando el componente se desmonte
+    const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
   }, []);
 
+  // Cerrar menú al hacer clic en un link
+  const handleLinkClick = () => setMenuOpen(false);
+
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    const hour = new Date().getHours();
+    let timeGreeting = "día";
+    if (hour >= 12 && hour < 19) timeGreeting = "tarde";
+    else if (hour >= 19 || hour < 5) timeGreeting = "noche";
+
+    const userNameMatch = email.match(/^([^@.]+)/);
+    let rawUserName = userNameMatch ? userNameMatch[1] : "";
+    rawUserName = rawUserName.replace(/[\d._]+$/, "").trim();
+    const userName = rawUserName.charAt(0).toUpperCase() + rawUserName.slice(1).toLowerCase();
+    const nameToUse = userName ? ` ${userName}` : "";
+
+    setLogoutMessage(`¡Gracias por su trabajo${nameToUse}! Que tenga feliz ${timeGreeting}.`);
+    setShowLogoutModal(true);
+  };
+
+  const navLinks = [
+    { to: "/TopUrbanismo", label: "Top Urbanismos" },
+    { to: "/*", label: "Reportes BI" },
+    { to: "/Indicadores", label: "Indicadores" },
+    { to: "/Ventas", label: "Operaciones" },
+    { to: "/VentasGlobales", label: "Ventas 2021-2026" },
+    { to: "/Admin", label: "Adm. Ingresos" },
+  ];
+
   return (
-    <nav className="nav , DisplayNotMax481px ">
-      <ul className="horizontal-list">
-        <li>
-          <NavLink to="/TopUrbanismo">Top Urbanismos</NavLink>
-        </li>
-        <li>
-          <NavLink to="/*">Reportes BI</NavLink>
-        </li>
-        <li>
-          <NavLink to="/Indicadores">Indicadores</NavLink>
-        </li>
-        <li>
-          <NavLink to="/Ventas">Operaciones</NavLink>
-        </li>
-        <li>
-          <NavLink to="/VentasGlobales">Ventas 2021-2026</NavLink>
-        </li>
-        <li>
-          <NavLink to="/Admin">Adm. Ingresos</NavLink>
-        </li>
-        <li>
-          <a href="#" className="logout-btn" onClick={(e) => {
-            e.preventDefault();
-            const hour = new Date().getHours();
-            let timeGreeting = "día";
-            if (hour >= 12 && hour < 19) timeGreeting = "tarde";
-            else if (hour >= 19 || hour < 5) timeGreeting = "noche";
+    <>
+      <nav className="DisplayNotMax481px">
+        {/* ===== MENÚ DESKTOP ===== */}
+        <ul className="horizontal-list">
+          {navLinks.map((link) => (
+            <li key={link.to}>
+              <NavLink to={link.to}>{link.label}</NavLink>
+            </li>
+          ))}
+          <li>
+            <a href="#" className="logout-btn" onClick={handleLogoutClick}>
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
 
-            // Extract the user name logic (similar to Chatbot)
-            const userNameMatch = email.match(/^([^@.]+)/);
-            let rawUserName = userNameMatch ? userNameMatch[1] : "";
-            rawUserName = rawUserName.replace(/[\d._]+$/, "").trim();
-            const userName = rawUserName.charAt(0).toUpperCase() + rawUserName.slice(1).toLowerCase();
-            const nameToUse = userName ? ` ${userName}` : "";
+        {/* Reloj en desktop */}
+        <div className="datetime-display">
+          <p>{currentDateTime}</p>
+        </div>
 
-            setLogoutMessage(`¡Gracias por su trabajo${nameToUse}! Que tenga feliz ${timeGreeting}.`);
-            setShowLogoutModal(true);
-          }}>
-            Cerrar Sesión
-          </a>
-        </li>
-      </ul>
+        {/* ===== BOTÓN HAMBURGUESA (solo mobile) ===== */}
+        <button
+          className={`nav-hamburger ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menú"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-      {/* Mostrar la fecha y hora actual */}
-      <div className="datetime-display">
-        <p>{currentDateTime}</p> {/* Aquí se mostrará la fecha y hora */}
-      </div>
+        {/* ===== MENÚ DESPLEGABLE MÓVIL ===== */}
+        <div className={`nav-mobile-menu ${menuOpen ? "open" : ""}`}>
+          <ul>
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <NavLink to={link.to} onClick={handleLinkClick}>
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+            <li>
+              <a href="#" className="logout-btn" onClick={handleLogoutClick}>
+                Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+          <div className="nav-mobile-datetime">{currentDateTime}</div>
+        </div>
+      </nav>
 
-      {/* MODAL DE CERRAR SESIÓN */}
+      {/* ===== MODAL DE CERRAR SESIÓN ===== */}
       {showLogoutModal && (
         <div className="custom-logout-modal-overlay">
           <div className="custom-logout-modal">
@@ -105,7 +133,7 @@ function PageNav() {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
 
