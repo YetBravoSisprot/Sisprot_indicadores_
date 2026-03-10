@@ -1,772 +1,1211 @@
-import React, { useContext, useMemo, useState, useEffect } from "react";
-import PageNav from "../../Componentes/PageNav";
-import LogoTitulo from "../../Componentes/LogoTitulo";
-import { PasswordContext } from "../../PasswordContext/PasswordContext";
-import LogingForm from "../../Componentes/LogingForm";
-import DropdownMenu from "../../Componentes/DropdownMenu";
-import { getHistoricalRevenueData } from "../../services/revenueService";
-import { getCycleLabel } from "../../utils/cycleHelper";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-} from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { useNavigate } from "react-router-dom";
-import { Doughnut } from "react-chartjs-2";
-import "./Admin.css";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  ChartDataLabels
-);
-
-function Admin() {
-  const navigate = useNavigate();
-  const { showPasswordState, data, isLoading, email } = useContext(PasswordContext);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showNeedsAttention, setShowNeedsAttention] = useState(false);
-  const [revenueStats, setRevenueStats] = useState(null);
-  const [selectedClient, setSelectedClient] = useState(null);
-  const [isRevenueLoading, setIsRevenueLoading] = useState(true);
-  const [showTrainingLog, setShowTrainingLog] = useState(false);
-  const [trainingData, setTrainingData] = useState([]);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 768;
-  const isPageLoading = isLoading || isRevenueLoading;
-
-  // Fetch historical revenue data
-  useEffect(() => {
-    const loadRevenue = async () => {
-      setIsRevenueLoading(true);
-      try {
-        const stats = await getHistoricalRevenueData();
-        setRevenueStats(stats);
-      } finally {
-        setIsRevenueLoading(false);
-      }
-    };
-    if (!showPasswordState) {
-      loadRevenue();
-      // Cargar log de entrenamiento
-      const log = JSON.parse(localStorage.getItem('ai_training_log') || '[]');
-      setTrainingData(log.reverse());
-    }
-  }, [showPasswordState]);
-
-  // Calcular KPIs y datos procesados
-  const { kpis, processedData } = useMemo(() => {
-    if (!data || !data.results) return { kpis: null, processedData: null };
-
-    const clientes = data.results;
-    const totalClientes = clientes.length;
-    const activos = clientes.filter(c => c.status_name === "Activo").length;
-    const suspendidos = clientes.filter(c => c.status_name === "Suspendido").length;
-    const pausados = clientes.filter(c => c.status_name === "Pausado").length;
-    const cancelados = clientes.filter(c => c.status_name === "Cancelado").length;
-
-    const needsAttention = clientes.filter(c =>
-      c.status_name === "Suspendido"
-    );
-
-    const ingresosTotales = clientes.reduce((acc, curr) => {
-      if (curr.status_name === "Activo") {
-        return acc + parseFloat(curr.plan?.cost || 0);
-      }
-      return acc;
-    }, 0);
-
-    const ticketPromedio = activos > 0 ? ingresosTotales / activos : 0;
-    const churnRate = totalClientes > 0 ? ((suspendidos + cancelados) / totalClientes) * 100 : 0;
-
-    // Desglose por tipo de cliente (Solo tipos válidos/definidos)
-    const revenueByType = clientes.reduce((acc, curr) => {
-      if (curr.status_name === "Activo" && curr.client_type_name) {
-        const type = curr.client_type_name;
-        acc[type] = (acc[type] || 0) + parseFloat(curr.plan?.cost || 0);
-      }
-      return acc;
-    }, {});
-
-    const sectorStats = clientes.reduce((acc, curr) => {
-      if (curr.status_name === "Activo") {
-        const sector = curr.sector_name || "Sin Sector";
-        if (!acc[sector]) acc[sector] = { count: 0, revenue: 0 };
-        acc[sector].count += 1;
-        acc[sector].revenue += parseFloat(curr.plan?.cost || 0);
-      }
-      return acc;
-    }, {});
-
-    const topSectores = Object.entries(sectorStats)
-      .sort(([, a], [, b]) => b.revenue - a.revenue)
-      .slice(0, 5);
-
-    return {
-      kpis: {
-        totalClientes,
-        activos,
-        suspendidos,
-        pausados,
-        cancelados,
-        ingresosTotales,
-        ticketPromedio,
-        churnRate
-      },
-      processedData: {
-        revenueByType,
-        topSectores,
-        needsAttention,
-        clientes
-      }
-    };
-  }, [data]);
-
-  const filteredClientes = useMemo(() => {
-    if (!processedData?.clientes) return [];
-    if (!searchTerm) return [];
-    return processedData.clientes.filter(c =>
-      c.client_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(c.client_identification || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(c.id).includes(searchTerm)
-    ).slice(0, 15);
-  }, [processedData?.clientes, searchTerm]);
-
-  const otherContracts = useMemo(() => {
-    if (!selectedClient || !data?.results) return [];
-    const ci = selectedClient.client_identification;
-    if (!ci) return [];
-    return data.results.filter(c =>
-      c.client_identification === ci &&
-      c.id !== selectedClient.id
-    );
-  }, [selectedClient, data?.results]);
-
-  const chartData = useMemo(() => {
-    if (!revenueStats) return null;
-    return {
-      labels: revenueStats.chartLabels,
-      datasets: [
-        {
-          label: "Ingreso Mensual",
-          data: revenueStats.chartValues,
-          fill: true,
-          borderColor: "#00d2ff",
-          backgroundColor: "rgba(0, 210, 255, 0.2)",
-          tension: 0.4,
-          pointRadius: 4,
-          pointBackgroundColor: "#00d2ff",
-          borderWidth: 3,
-        }
-      ]
-    };
-  }, [revenueStats]);
-
-  const yearlyTotals = useMemo(() => {
-    if (!revenueStats || !revenueStats.rawData) return [];
-    
-    const byYear = {};
-    const monthNamesShort = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-    const currentYear = new Date().getFullYear().toString();
-    
-    revenueStats.rawData.forEach(item => {
-      const dateParts = item.date.split('-');
-      const year = dateParts[0];
-      const monthIdx = parseInt(dateParts[1]) - 1;
-      
-      if (!byYear[year]) {
-        byYear[year] = { year, amount: 0, months: [] };
-      }
-      byYear[year].amount += parseFloat(item.amount);
-      if (!byYear[year].months.includes(monthIdx)) byYear[year].months.push(monthIdx);
-    });
-
-    return Object.keys(byYear).sort().map(year => {
-      const info = byYear[year];
-      info.months.sort((a, b) => a - b);
-      const start = monthNamesShort[info.months[0]];
-      const isCurrentYear = year === currentYear;
-      const end = isCurrentYear ? "Hoy" : monthNamesShort[info.months[info.months.length - 1]];
-      
-      const prefix = isCurrentYear ? "Gestión" : "Cierre";
-      
-      return {
-        label: `${prefix} ${year}`,
-        subLabel: `(${start} — ${end})`,
-        amount: info.amount
-      };
-    });
-  }, [revenueStats]);
-
-  const chartOptions = useMemo(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (context) => `$${context.raw.toLocaleString()}`
-        }
-      },
-      datalabels: {
-        display: (context) => {
-          const data = context.dataset.data;
-          const currentVal = data[context.dataIndex];
-          const isLatest = context.dataIndex === data.length - 1;
-          
-          if (isMobile) {
-            // Show if it's the latest point OR a significant peak
-            const isPeak = currentVal >= Math.max(...data) * 0.95; 
-            return isLatest || isPeak;
-          }
-          return true;
-        },
-        color: '#fff',
-        align: 'top',
-        anchor: 'end',
-        offset: 8,
-        font: {
-          weight: 'bold',
-          size: isMobile ? 10 : 11,
-          family: "'Outfit', sans-serif"
-        },
-        formatter: (value) => {
-          if (isMobile && value >= 1000) {
-            return `$${(value / 1000).toFixed(1)}k`; // Compact format for mobile if values are large
-          }
-          return `$${value.toLocaleString('en-US', { 
-            minimumFractionDigits: isMobile ? 0 : 2, 
-            maximumFractionDigits: isMobile ? 0 : 2 
-          })}`;
-        },
-        padding: 4
-      }
-    },
-    layout: {
-      padding: {
-        top: 35,
-        right: isMobile ? 25 : 15,
-        left: 5,
-        bottom: 5
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        grid: { color: "rgba(255, 255, 255, 0.1)" },
-        ticks: { 
-          color: "#94a3b8", 
-          callback: (val) => `$${val.toLocaleString()}`,
-          display: !isMobile // Hide y labels on very small screens to save space
-        }
-      },
-      x: {
-        grid: { display: false },
-        ticks: { 
-          color: "#94a3b8",
-          font: { size: isMobile ? 9 : 12 },
-          maxRotation: isMobile ? 45 : 0,
-          autoSkip: true,
-          maxTicksLimit: isMobile ? 6 : 12 
-        }
-      }
-    }
-  }), [isMobile, chartData]);
-
-  const doughnutData = useMemo(() => {
-    if (!processedData?.revenueByType) return null;
-    const entries = Object.entries(processedData.revenueByType);
-    return {
-      labels: entries.map(([type]) => type),
-      datasets: [{
-        data: entries.map(([, amount]) => amount),
-        backgroundColor: [
-          'rgba(56, 189, 248, 0.8)',
-          'rgba(168, 85, 247, 0.8)',
-          'rgba(59, 130, 246, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-          'rgba(16, 185, 129, 0.8)'
-        ],
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.1)'
-      }]
-    };
-  }, [processedData?.revenueByType]);
-
-  const doughnutOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          color: '#e2e8f0',
-          padding: 20,
-          font: { size: 10 }
-        }
-      },
-      datalabels: {
-        display: true,
-        color: '#fff',
-        formatter: (value, ctx) => {
-          const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-          return `${((value / total) * 100).toFixed(0)}%`;
-        },
-        font: { weight: 'bold', size: 10 }
-      }
-    }
-  };
-
-  const handleClientClick = (client) => {
-    setSelectedClient(client);
-  };
-
-  return (
-    <div className="admin-page">
-      {showPasswordState ? (
-        <div className="login-container animate-fade-in">
-          <h1>Inicia Sesión</h1>
-          <LogingForm />
-        </div>
-      ) : (
-        <>
-          <LogoTitulo />
-          <DropdownMenu />
-          <PageNav />
-
-          {isPageLoading ? (
-            <div className="dashboard-loading animate-fade-in">
-              <div className="loading-content glass">
-                <div className="spinner"></div>
-                <h3>Cargando Panel Administrativo...</h3>
-                <p>Estamos preparando las métricas y gráficos para ti.</p>
-              </div>
-            </div>
-          ) : (
-            <div className="admin-dashboard animate-slide-up">
-              <header className="dashboard-header">
-                <h2 className="dashboard-title">Panel Administrativo</h2>
-
-                <div className="header-actions">
-                  {revenueStats && (
-                    <div className="accumulated-kpi-v2 glass animate-fade-in">
-                      <div className="kpi-label-group">
-                        <span className="kpi-main-title">Recaudación Total</span>
-                      </div>
-                      
-                      <div className="yearly-breakdown">
-                         {yearlyTotals.map((yt, idx) => (
-                           <div key={idx} className="yearly-line">
-                              <div className="yt-label-group">
-                                <span className="yt-label">{yt.label}</span>
-                                <span className="yt-sublabel">{yt.subLabel}</span>
-                              </div>
-                              <span className="yt-amount">${yt.amount.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
-                           </div>
-                         ))}
-                      </div>
-
-                      <div className="kpi-value-box-total">
-                        <span className="kpi-total-label">Total Acumulado</span>
-                        <div className="kpi-amount-wrapper">
-                          <span className="kpi-currency">$</span>
-                          <span className="kpi-amount">
-                            {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="search-container glass">
-                    <input
-                      type="text"
-                      placeholder="Buscar cliente (nombre o ID)..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="search-input"
-                    />
-                    {/* Solo Yetzabrm puede ver el botón de inteligencia de entrenamiento */}
-                    {email?.toLowerCase().includes("yetzabrm") && (
-                      <button
-                        className="training-log-btn glass"
-                        onClick={() => setShowTrainingLog(true)}
-                        title="Ver Log de Entrenamiento IA"
-                      >
-                        🤖
-                      </button>
-                    )}
-                    {searchTerm && (
-                      <div className="search-results glass-dark animate-fade-in">
-                        {filteredClientes.length > 0 ? (
-                          filteredClientes.map(c => (
-                            <div
-                              key={c.id}
-                              className="search-item"
-                              onClick={() => {
-                                handleClientClick(c);
-                                setSearchTerm("");
-                              }}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              <div className="search-item-info">
-                                <span className="search-name">{c.client_name}</span>
-                                <span className="search-id">#{c.id}</span>
-                              </div>
-                              <span className={`search-status ${c.status_name.toLowerCase()}`}>{c.status_name}</span>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="search-no-results">No se encontraron clientes</div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </header>
-
-              {kpis ? (
-                <div className="dashboard-content">
-                  <div className="kpi-grid">
-                    <div className="kpi-card glass primary">
-                      <div className="kpi-icon">💰</div>
-                      <div className="kpi-info">
-                        <h3>Ingresos Mensuales</h3>
-                        <p className="kpi-value">${kpis.ingresosTotales.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</p>
-                        <span className="kpi-trend positive">+5.2% vs mes anterior</span>
-                      </div>
-                    </div>
-
-                    <div className="kpi-card glass secondary">
-                      <div className="kpi-icon">📊</div>
-                      <div className="kpi-info">
-                        <h3>ARPU</h3>
-                        <p className="kpi-value">${kpis.ticketPromedio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                        <span className="kpi-subtext">Ingreso promedio por usuario activo</span>
-                      </div>
-                    </div>
-
-                    <div className="kpi-card glass info">
-                      <div className="kpi-icon">👥</div>
-                      <div className="kpi-info">
-                        <h3>Clientes Activos</h3>
-                        <p className="kpi-value">{kpis.activos}</p>
-                        <span className="kpi-subtext">De {kpis.totalClientes} registrados</span>
-                      </div>
-                    </div>
-
-                    <div className="kpi-card glass danger">
-                      <div className="kpi-icon">📉</div>
-                      <div className="kpi-info">
-                        <h3>Tasa de Baja</h3>
-                        <p className="kpi-value">{kpis.churnRate.toFixed(1)}%</p>
-                        <span className="kpi-subtext">((Susp. + Canc.) / Total Clientes)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {chartData && (
-                    <div className="historical-chart-section glass animate-slide-up">
-                      <div className="chart-header">
-                        <h3>Ingreso Mensual (Tendencia Histórica)</h3>
-                      </div>
-                      <div className="line-chart-container">
-                        <Line data={chartData} options={chartOptions} />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="insights-grid">
-                    <div className="chart-card glass">
-                      <h3>Ingresos por Tipo</h3>
-                      {isMobile && doughnutData ? (
-                        <div className="doughnut-container" style={{ height: '300px' }}>
-                           <Doughnut data={doughnutData} options={doughnutOptions} />
-                        </div>
-                      ) : (
-                        <div className="bar-chart">
-                          {Object.entries(processedData.revenueByType).map(([type, amount]) => (
-                            <div key={type} className="bar-row">
-                              <span className="bar-label">{type}</span>
-                              <div className="bar-container">
-                                <div
-                                  className="bar-fill"
-                                  style={{ width: `${(amount / kpis.ingresosTotales) * 100}%` }}
-                                ></div>
-                              </div>
-                              <span className="bar-value">${amount.toLocaleString()}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="chart-card glass">
-                      <h3>Top 5 Sectores (Activos)</h3>
-                      <div className="ranking-list">
-                        {processedData.topSectores.map(([sector, stats], index) => (
-                          <div key={sector} className="ranking-item">
-                            <span className="ranking-pos">{index + 1}</span>
-                            <div className="ranking-info">
-                              <span className="ranking-name">{sector}</span>
-                              <span className="ranking-amount">${stats.revenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
-                            </div>
-                            <span className="ranking-count">{stats.count} cl.</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="action-section">
-                    <button
-                      className={`action-btn glass ${showNeedsAttention ? 'active' : ''}`}
-                      onClick={() => setShowNeedsAttention(!showNeedsAttention)}
-                    >
-                      {showNeedsAttention ? "Ocultar Suspendidos" : "Ver Clientes Suspendidos"}
-                      <span className="alert-badge">{processedData.needsAttention.length}</span>
-                    </button>
-
-                    {showNeedsAttention && (
-                      <div className="attention-list glass animate-slide-up">
-                        {processedData.needsAttention.slice(0, 10).map(c => (
-                          <div
-                            key={c.id}
-                            className="attention-item"
-                            onClick={() => handleClientClick(c)}
-                            style={{ cursor: 'pointer' }}
-                          >
-                            <div className="attention-info">
-                              <strong>{c.client_name}</strong>
-                              <span>{c.sector_name}</span>
-                            </div>
-                            <span className={`status-pill ${c.status_name.toLowerCase()}`}>{c.status_name}</span>
-                          </div>
-                        ))}
-                        {processedData.needsAttention.length > 10 && (
-                          <p
-                            className="more-entries clickable"
-                            onClick={() => navigate('/TopUrbanismo', { state: { initialFilter: ['Suspendido'] } })}
-                            title="Ver todos los suspendidos en Top Urbanismo"
-                          >
-                            ...y {processedData.needsAttention.length - 10} más (Ver lista completa)
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="loading-container glass">
-                  <div className="loader"></div>
-                  <p>Procesando inteligencia de datos...</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Client Detail Modal */}
-          {selectedClient && (
-            <div className="modal-overlay animate-fade-in" onClick={() => setSelectedClient(null)}>
-              <div className="client-modal glass animate-slide-up" onClick={e => e.stopPropagation()}>
-                <header className="modal-header">
-                  <div className="modal-title-group">
-                    <span className={`status-indicator ${selectedClient.status_name.toLowerCase()}`}></span>
-                    <h2>{selectedClient.client_name}</h2>
-                  </div>
-                  <button className="close-btn" onClick={() => setSelectedClient(null)}>×</button>
-                </header>
-
-                <div className="modal-body">
-                  <div className="detail-section">
-                    <h3>Información General</h3>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <label>Contrato</label>
-                        <span className="accent-text">#{selectedClient.id}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Cédula / ID</label>
-                        <span>{selectedClient.client_identification}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Tipo de Cliente</label>
-                        <span>{selectedClient.client_type_name}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Teléfono</label>
-                        <span>{selectedClient.client_mobile || "N/A"}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="detail-section">
-                    <h3>Suscripción y Estatus</h3>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <label>Plan Contratado</label>
-                        <span>{selectedClient.plan?.name || "N/A"}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Costo Mensual</label>
-                        <span className="price">${selectedClient.plan?.cost || 0}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Estado</label>
-                        <span className={`status-pill ${selectedClient.status_name.toLowerCase()}`}>{selectedClient.status_name}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Migrado</label>
-                        <span>{selectedClient.migrate ? "Sí" : "No"}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="detail-section">
-                    <h3>Ubicación</h3>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <label>Urbanismo / Sector</label>
-                        <span>{selectedClient.sector_name}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Ciclo / Día Corte</label>
-                        <span>{getCycleLabel(selectedClient.cycle) || selectedClient.cut_off_day || "N/A"}</span>
-                      </div>
-                      <div className="detail-item" style={{ gridColumn: 'span 2' }}>
-                        <label>Dirección Completa</label>
-                        <span>{selectedClient.address || selectedClient.address_detail || "N/A"}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {otherContracts.length > 0 && (
-                    <div className="detail-section related-contracts">
-                      <h3>Otros Contratos de este Cliente ({otherContracts.length})</h3>
-                      <div className="contracts-list">
-                        {otherContracts.map(oc => (
-                          <div
-                            key={oc.id}
-                            className="related-contract-item glass"
-                            onClick={() => setSelectedClient(oc)}
-                          >
-                            <div className="oc-main-info">
-                              <span className="oc-id">#{oc.id}</span>
-                              <span className="oc-plan">{oc.plan?.name || "Sin Plan"}</span>
-                            </div>
-                            <span className={`status-pill mini ${oc.status_name.toLowerCase()}`}>{oc.status_name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="detail-section">
-                    <h3>Detalles Técnicos (Red)</h3>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <label>IP de Servicio</label>
-                        <span className="mono-text">{selectedClient.service_detail?.ip || selectedClient.ip || "N/A"}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>MAC / Serial</label>
-                        <span className="mono-text">{selectedClient.service_detail?.mac || selectedClient.service_detail?.serial || selectedClient.onu_serial || "N/A"}</span>
-                      </div>
-                      <div className="detail-item">
-                        <label>Fecha Creación</label>
-                        <span>{selectedClient.created_at ? new Date(selectedClient.created_at).toLocaleDateString() : "N/A"}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <footer className="modal-footer">
-                  <button className="action-primary" onClick={() => setSelectedClient(null)}>Cerrar Detalle</button>
-                </footer>
-              </div>
-            </div>
-          )}
-
-          {/* AI Training Log Modal */}
-          {showTrainingLog && (
-            <div className="modal-overlay animate-fade-in" onClick={() => setShowTrainingLog(false)}>
-              <div className="training-modal glass animate-slide-up" onClick={e => e.stopPropagation()}>
-                <header className="modal-header">
-                  <div className="modal-title-group">
-                    <span className="brain-icon">🧠</span>
-                    <h2>Centro de Entrenamiento IA</h2>
-                  </div>
-                  <button className="close-btn" onClick={() => setShowTrainingLog(false)}>×</button>
-                </header>
-
-                <div className="modal-body">
-                  <p className="training-desc">Lista de consultas que la Inteligencia Artificial no pudo responder por falta de contexto o datos.</p>
-
-                  <div className="training-table-container">
-                    <table className="training-table">
-                      <thead>
-                        <tr>
-                          <th>Pregunta / Solicitud</th>
-                          <th>Fecha</th>
-                          <th>Usuario</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {trainingData.length > 0 ? (
-                          trainingData.map((log, i) => (
-                            <tr key={i}>
-                              <td className="log-query">"{log.pregunta}"</td>
-                              <td className="log-date">{log.fecha}</td>
-                              <td className="log-user">{log.usuario}</td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="3" className="no-logs">No hay consultas registradas aún (¡La IA está bien entrenada!)</td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <footer className="modal-footer">
-                  <button className="action-danger" onClick={() => {
-                    localStorage.removeItem('ai_training_log');
-                    setTrainingData([]);
-                  }}>Limpiar Log</button>
-                  <button className="action-primary" onClick={() => setShowTrainingLog(false)}>Cerrar</button>
-                </footer>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+.admin-page {
+  min-height: 100vh;
+  padding-bottom: 4rem;
+  background: radial-gradient(circle at top right, #0f172a, #020617);
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-export default Admin;
+.admin-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  gap: 2rem;
+  position: relative;
+  z-index: 100;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.accumulated-kpi-v2 {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  min-width: 320px;
+  gap: 0.5rem;
+}
+
+.kpi-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-main-title {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.kpi-period-subtitle {
+  color: #fbbf24; /* Amber for the period */
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.kpi-value-box {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.kpi-amount {
+  font-size: 1.95rem; /* Slightly larger */
+  font-weight: 800;
+  color: #4ade80;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.kpi-amount-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 6px; /* Space between $ and number */
+}
+
+.kpi-currency {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4ade80;
+  opacity: 0.8;
+}
+
+.yearly-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.yearly-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.yt-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.yt-label {
+  color: #fbbf24;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+}
+
+.yt-sublabel {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.8;
+}
+
+.yt-amount {
+  color: #e2e8f0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.kpi-value-box-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.kpi-total-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 640px) {
+  .accumulated-kpi-v2 {
+    width: 100%;
+    min-width: unset;
+    padding: 1.25rem;
+    align-items: stretch;
+  }
+}
+
+.dashboard-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  background: linear-gradient(to right, #38bdf8, #3b82f6, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+}
+
+/* Search Container Styles */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border-radius: 1rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.search-input:focus {
+  outline: none;
+  background: rgba(30, 41, 59, 0.8);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+}
+
+.search-item {
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.75rem;
+  transition: background 0.15s ease;
+  margin-bottom: 0.25rem;
+}
+
+.search-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.search-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.search-status {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.kpi-card.primary::before {
+  background: #38bdf8;
+}
+
+.kpi-card.secondary::before {
+  background: #a855f7;
+}
+
+.kpi-card.info::before {
+  background: #3b82f6;
+}
+
+.kpi-card.danger::before {
+  background: #ef4444;
+}
+
+.kpi-icon {
+  font-size: 2.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  flex-shrink: 0;
+}
+
+.kpi-info {
+  flex: 1;
+}
+
+.kpi-info h3 {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.kpi-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.kpi-trend {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.kpi-trend.positive {
+  color: #4ade80;
+}
+
+.kpi-subtext {
+  font-size: 0.8125rem;
+  opacity: 0.4;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Secciones de Gráficos e Insights */
+.historical-chart-section {
+  padding: 1.5rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.chart-header h3 {
+  font-size: 1.4rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.line-chart-container {
+  height: 350px;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .line-chart-container {
+    height: 300px;
+  }
+  
+  .historical-chart-section {
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* Insights Grid */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  padding: 2.5rem;
+  border-radius: 2rem;
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chart-card h3 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.doughnut-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Custom Bar Chart - Fix Clumping */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.bar-label {
+  width: 120px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.bar-container {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2dd4bf);
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-value {
+  width: 100px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: right;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Ranking List - Fix Clumping */
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.ranking-pos {
+  width: 32px;
+  height: 32px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.ranking-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ranking-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.ranking-amount {
+  font-size: 0.875rem;
+  color: #4ade80;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+}
+
+.ranking-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #38bdf8;
+  padding: 0.25rem 0.75rem;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 0.5rem;
+}
+
+/* Action Sections */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.action-btn {
+  width: fit-content;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.action-btn.active {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+
+.alert-badge {
+  background: #ef4444;
+  color: #fff;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.attention-list {
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.attention-item {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(239, 68, 68, 0.03);
+  border-radius: 1rem;
+  border-left: 4px solid #ef4444;
+}
+
+.attention-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.attention-info strong {
+  font-size: 1rem;
+  color: #f1f5f9;
+}
+
+.attention-info span {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.status-pill {
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.status-pill.activo {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-pill.suspendido {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-pill.pausado {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.status-pill.cancelado {
+  background: rgba(100, 116, 139, 0.1);
+  color: #94a3b8;
+}
+
+.search-status.activo {
+  color: #4ade80;
+}
+
+.search-status.suspendido {
+  color: #f87171;
+}
+
+.search-status.pausado {
+  color: #fbbf24;
+}
+
+/* Glassmorphism primitives */
+.glass {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Animations */
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Loading */
+.loading-container {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.loader {
+  width: 64px;
+  height: 64px;
+  border: 4px solid rgba(59, 130, 246, 0.1);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-dashboard {
+    padding: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: 2.25rem;
+  }
+
+  .kpi-value {
+    font-size: 1.75rem;
+  }
+
+  .bar-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .bar-label,
+  .bar-value {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.detail-item .accent-text {
+  color: #ff9d00;
+  font-weight: 700;
+}
+
+.detail-item .mono-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 2rem;
+}
+
+.client-modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  border-radius: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-title-group h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.status-indicator.activo {
+  color: #10b981;
+  background: #10b981;
+}
+
+.status-indicator.suspendido {
+  color: #ef4444;
+  background: #ef4444;
+}
+
+.status-indicator.pausado {
+  color: #f59e0b;
+  background: #f59e0b;
+}
+
+.status-indicator.cancelado {
+  color: #94a3b8;
+  background: #94a3b8;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-section h3 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #3b82f6;
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.detail-item span {
+  font-size: 1rem;
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+.detail-item .price {
+  font-family: 'Inter', monospace;
+  font-weight: 700;
+  color: #4ade80;
+  font-size: 1.25rem;
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.action-primary {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-primary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.more-entries {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+/* Navigation Improvements */
+.more-entries.clickable {
+  cursor: pointer !important;
+  color: #00d2ff !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+}
+
+.more-entries.clickable:hover {
+  color: #00f2fe !important;
+  transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+}
+
+/* Loading Screen Styles */
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.loading-content {
+  padding: 3rem;
+  text-align: center;
+  max-width: 500px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loading-content h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loading-content p {
+  color: #94a3b8;
+  margin: 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 210, 255, 0.1);
+  border-left-color: #00d2ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.search-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-id {
+  font-size: 0.75rem;
+  color: #3b82f6;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Related Contracts in Modal */
+.related-contracts {
+  margin-top: 0.5rem;
+}
+
+.contracts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.related-contract-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.related-contract-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateX(8px);
+}
+
+.oc-main-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.oc-id {
+  font-weight: 800;
+  color: #3b82f6;
+  font-size: 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.oc-plan {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.status-pill.mini {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.related-contract-item {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.related-contract-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.related-contract-item:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.training-log-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.training-log-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+/* Training Modal Styles */
+.training-modal {
+  width: 100%;
+  max-width: 850px;
+  max-height: 85vh;
+  border-radius: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.brain-icon {
+  font-size: 1.75rem;
+}
+
+.training-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.training-table-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.training-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.training-table th {
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #3b82f6;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.training-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.log-query {
+  font-style: italic;
+  color: #38bdf8;
+  max-width: 400px;
+}
+
+.log-date {
+  font-family: 'Inter', monospace;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.log-user {
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.no-logs {
+  text-align: center;
+  padding: 3rem !important;
+  color: #64748b;
+  font-style: italic;
+}
+
+.action-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: auto;
+}
+
+.action-danger:hover {
+  background: #ef4444;
+  color: #fff;
+}
