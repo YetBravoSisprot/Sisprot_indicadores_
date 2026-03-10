@@ -378,47 +378,74 @@
 
 @media (max-width: 768px) {
   .ventas-dashboard {
-    padding: 20px 10px;
+    padding: 16px 10px;
+    box-sizing: border-box;
   }
 
+  .dashboard-title {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* KPI cards apiladas */
   .kpi-shared-row {
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    align-items: stretch;
+    gap: 16px;
   }
 
   .kpi-card {
-    min-width: 100%;
+    min-width: unset;
     max-width: 100%;
+    width: 100%;
   }
 
+  .ventas-card {
+    padding: 20px 16px;
+  }
+
+  /* Widget maestro: menos padding en móvil */
+  .master-directory-widget {
+    padding: 18px 14px !important;
+    border-radius: 14px;
+  }
+
+  /* Header del directorio: apilado */
   .card-header-main {
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+    gap: 12px;
   }
 
+  .card-header-main h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Badges + botón en fila */
   .header-badges {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
     width: 100%;
-    gap: 10px;
+    align-items: center;
   }
 
   .badge-total,
   .badge-revenue {
-    width: fit-content;
-    text-align: left;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
-  .dashboard-title {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
+  /* Tabla en modo tarjeta (1 fila = 1 card) */
   .directory-table thead {
     display: none;
-    /* Hide headers on mobile and use labels if needed, or scroll */
   }
 
   .directory-table,
@@ -427,68 +454,107 @@
   .directory-row td {
     display: block;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .directory-row {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 10px;
+    padding: 12px;
     background: rgba(255, 255, 255, 0.02);
   }
 
+  /* Cada celda: etiqueta arriba, valor abajo */
   .directory-row td {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    /* ← CLAVE: label encima, valor abajo */
     align-items: flex-start;
-    /* Align to top to handle multi-line text */
-    padding: 12px 10px;
+    padding: 8px 6px;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    gap: 15px;
+    gap: 4px;
   }
 
   .directory-row td:last-child {
     border-bottom: none;
   }
 
+  /* Etiqueta (data-label) estilizada */
   .directory-row td::before {
     content: attr(data-label);
-    font-size: 0.7rem;
-    color: rgba(0, 210, 255, 0.6);
-    /* Use brand color for labels */
+    font-size: 0.65rem;
+    color: rgba(0, 210, 255, 0.7);
     text-transform: uppercase;
     font-weight: 800;
-    min-width: 90px;
-    /* Fixed width for labels to prevent overlap */
-    flex-shrink: 0;
-    margin-top: 2px;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
   }
 
-  /* Specific handling for content that might be long */
+  /* Celdas de contenido: alineadas a la izquierda */
   .client-info-cell,
   .notes-cell,
   .integration-cell {
-    text-align: right;
+    text-align: left;
     width: 100%;
     word-break: break-word;
-    /* Ensure wrapping */
-    align-items: flex-end !important;
+    align-items: flex-start !important;
   }
 
   .client-name-cell {
     font-size: 0.95rem;
+    font-weight: 700;
     line-height: 1.3;
   }
 
+  .client-tel-cell {
+    font-size: 0.78rem;
+  }
+
+  /* MOTIVO: texto bien visible */
   .notes-cell {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #e2e8f0;
-    line-height: 1.4;
+    line-height: 1.5;
+  }
+
+  /* INTEGRACIÓN: columna clara */
+  .integration-cell {
+    gap: 4px;
   }
 
   .integration-cell .transition-text {
-    justify-content: flex-end;
+    justify-content: flex-start;
+    /* alineado a la izquierda */
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+  }
+
+  .date-text {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* status-pill más pequeño */
+  .status-pill {
+    font-size: 0.68rem;
+    padding: 3px 10px;
+  }
+}
+
+/* ---- MUY PEQUEÑO (≤ 420px) ---- */
+@media (max-width: 420px) {
+  .header-badges {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ventas-card h3 {
+    font-size: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
   }
 }
