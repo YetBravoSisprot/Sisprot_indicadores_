@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5284,
+  "count": 5285,
   "results": [
     {
       "id": 3063,
@@ -80433,9 +80433,9 @@ const largeArraydata =
       "id": 5945,
       "client_name": "HERMINIA LISBETH GOMEZ LINARES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
-      "cycle": 25,
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 15,
       "migrate": true,
       "sector_name": "Palmeras II",
       "plan": {
@@ -91521,8 +91521,8 @@ const largeArraydata =
       "id": 6316,
       "client_name": "SHIRLEY MONTES HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -148200,11 +148200,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman de Guere",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243006353",
       "address": "CALLE LINARES ALCANTARA, CASA NRO 16, SECTOR SAMAN DE GUERE, EL MACARO, ARAGUA, ZONA POSTAL 2115",
@@ -160602,6 +160602,30 @@ const largeArraydata =
         "created_at": "2026-03-09T17:35:20.463374",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9005,
+      "client_name": "‎YONNATAN AGUSTIN CRIOLLO BRICEÑO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Residencias Mariño",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127993589",
+      "address": "CALLE MARIÑO EDIFICIO TORRE C PISO 2 APTO C-21URB RESIDENCIAS MARIÑO",
+      "client_identification": "V14627867",
+      "nap_box_name": "CTO-0520",
+      "created_at": "2026-03-10T10:34:49.871305",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
