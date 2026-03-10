@@ -288,6 +288,11 @@ function Indicadores() {
                   <span className="kpi-label">Oportunidad (USD)</span>
                   <p className="kpi-value">${biMetrics.recuperable.toLocaleString("es-ES", { minimumFractionDigits: 2 })}</p>
                   <span className="bi-hint">Ingreso potencial mensual</span>
+                  <span className="bi-explanation">
+                    💡 Es la suma de los planes de todos los clientes <strong>Suspendidos</strong>.
+                    Representa lo que la empresa podría recuperar mensualmente
+                    si se reactivan esos servicios.
+                  </span>
                 </div>
               </div>
 
