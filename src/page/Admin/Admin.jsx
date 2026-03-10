@@ -130,11 +130,23 @@ function Admin() {
 
   const filteredClientes = useMemo(() => {
     if (!processedData?.clientes) return [];
+    if (!searchTerm) return [];
     return processedData.clientes.filter(c =>
       c.client_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.client_identification.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(0, 10); // Limitar a 10 resultados para no sobrecargar
+      String(c.client_identification || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(c.id).includes(searchTerm)
+    ).slice(0, 15);
   }, [processedData?.clientes, searchTerm]);
+
+  const otherContracts = useMemo(() => {
+    if (!selectedClient || !data?.results) return [];
+    const ci = selectedClient.client_identification;
+    if (!ci) return [];
+    return data.results.filter(c =>
+      c.client_identification === ci &&
+      c.id !== selectedClient.id
+    );
+  }, [selectedClient, data?.results]);
 
   const chartData = useMemo(() => {
     if (!revenueStats) return null;
@@ -257,10 +269,16 @@ function Admin() {
                             <div
                               key={c.id}
                               className="search-item"
-                              onClick={() => handleClientClick(c)}
+                              onClick={() => {
+                                handleClientClick(c);
+                                setSearchTerm("");
+                              }}
                               style={{ cursor: 'pointer' }}
                             >
-                              <span className="search-name">{c.client_name}</span>
+                              <div className="search-item-info">
+                                <span className="search-name">{c.client_name}</span>
+                                <span className="search-id">#{c.id}</span>
+                              </div>
                               <span className={`search-status ${c.status_name.toLowerCase()}`}>{c.status_name}</span>
                             </div>
                           ))
@@ -478,6 +496,27 @@ function Admin() {
                       </div>
                     </div>
                   </div>
+
+                  {otherContracts.length > 0 && (
+                    <div className="detail-section related-contracts">
+                      <h3>Otros Contratos de este Cliente ({otherContracts.length})</h3>
+                      <div className="contracts-list">
+                        {otherContracts.map(oc => (
+                          <div
+                            key={oc.id}
+                            className="related-contract-item glass"
+                            onClick={() => setSelectedClient(oc)}
+                          >
+                            <div className="oc-main-info">
+                              <span className="oc-id">#{oc.id}</span>
+                              <span className="oc-plan">{oc.plan?.name || "Sin Plan"}</span>
+                            </div>
+                            <span className={`status-pill mini ${oc.status_name.toLowerCase()}`}>{oc.status_name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="detail-section">
                     <h3>Detalles Técnicos (Red)</h3>
