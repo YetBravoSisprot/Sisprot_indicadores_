@@ -185,6 +185,36 @@ function Admin() {
     };
   }, [revenueStats]);
 
+  const yearlyTotals = useMemo(() => {
+    if (!revenueStats || !revenueStats.rawData) return [];
+    
+    const byYear = {};
+    const monthNamesShort = ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+    
+    revenueStats.rawData.forEach(item => {
+      const dateParts = item.date.split('-');
+      const year = dateParts[0];
+      const monthIdx = parseInt(dateParts[1]) - 1;
+      
+      if (!byYear[year]) {
+        byYear[year] = { year, amount: 0, months: [] };
+      }
+      byYear[year].amount += parseFloat(item.amount);
+      if (!byYear[year].months.includes(monthIdx)) byYear[year].months.push(monthIdx);
+    });
+
+    return Object.keys(byYear).sort().map(year => {
+      const info = byYear[year];
+      info.months.sort((a, b) => a - b);
+      const start = monthNamesShort[info.months[0]];
+      const end = monthNamesShort[info.months[info.months.length - 1]];
+      return {
+        label: `${year} — ${start} — ${end}`,
+        amount: info.amount
+      };
+    });
+  }, [revenueStats]);
+
   const chartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
@@ -339,11 +369,19 @@ function Admin() {
                     <div className="accumulated-kpi-v2 glass animate-fade-in">
                       <div className="kpi-label-group">
                         <span className="kpi-main-title">Recaudación Total</span>
-                        <span className="kpi-period-subtitle">
-                          Periodo: {revenueStats.chartLabels[0]} — {revenueStats.chartLabels[revenueStats.chartLabels.length - 1]}
-                        </span>
                       </div>
-                      <div className="kpi-value-box">
+                      
+                      <div className="yearly-breakdown">
+                         {yearlyTotals.map(yt => (
+                           <div key={yt.label} className="yearly-line">
+                              <span className="yt-label">{yt.label}</span>
+                              <span className="yt-amount">${yt.amount.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
+                           </div>
+                         ))}
+                      </div>
+
+                      <div className="kpi-value-box-total">
+                        <span className="kpi-total-label">Total Gral</span>
                         <span className="kpi-amount">
                           <span className="kpi-currency">$</span>
                           {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
