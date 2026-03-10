@@ -451,14 +451,176 @@
 }
 
 @media (max-width: 768px) {
+
+    /* Contenedor principal */
+    .ventas-globales-container {
+        padding: 12px 10px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* Encabezado */
     .ventas-header {
         text-align: center;
         justify-content: center;
+        padding: 10px 0 0 0;
+    }
+
+    .ventas-header h1 {
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+
+    .ventas-header p {
+        font-size: 0.85rem;
+    }
+
+    /* Stat cards: 1 columna */
+    .analysis-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .stat-card {
+        padding: 18px 16px;
+        min-height: unset;
+    }
+
+    .stat-card .result-val,
+    .stat-card .variation-val {
+        font-size: 2.2rem;
+    }
+
+    .projection-val {
+        font-size: 2rem;
+    }
+
+    /* Selectores en fila */
+    .selectors {
+        flex-direction: row;
+        max-width: 100%;
+        gap: 8px;
+    }
+
+    .selectors select {
+        flex: 1;
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    /* Trimestral: 2 columnas */
+    .quarterly-analysis {
+        padding: 16px;
+        margin-bottom: 18px;
+    }
+
+    .quarterly-analysis h3 {
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+    }
+
+    .quarters-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .q-item {
+        padding: 12px 8px;
+    }
+
+    .q-label {
+        font-size: 0.75rem;
+    }
+
+    .q-val {
+        font-size: 1.6rem;
+    }
+
+    /* Gráfico: altura garantizada + scroll horizontal si es necesario */
+    .chart-wrapper {
+        padding: 16px 10px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        min-height: 280px;
+        overflow-x: auto;
+    }
+
+    /* Guía de uso: no desborde */
+    .info-guide-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+        margin-bottom: 18px;
+        border-radius: 14px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .guide-icon {
+        font-size: 1.6rem;
+    }
+
+    .guide-text h4 {
+        font-size: 0.95rem;
+    }
+
+    .guide-text p {
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    /* Tabla comparativa */
+    .data-table-container {
+        padding: 16px 10px;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .premium-table-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        /* Scroll horizontal en lugar de desborde */
+        -webkit-overflow-scrolling: touch;
     }
 
     .sales-table th,
     .sales-table td {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         padding: 8px 4px;
+        white-space: nowrap;
+    }
+
+    .year-cell {
+        font-size: 0.9rem !important;
+    }
+
+    .cell-val {
+        font-size: 0.7rem;
+    }
+}
+
+/* ── MUY PEQUEÑO (≤ 420px) ── */
+@media (max-width: 420px) {
+    .ventas-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .selectors {
+        flex-direction: column;
+    }
+
+    .stat-card .result-val,
+    .stat-card .variation-val {
+        font-size: 1.8rem;
+    }
+
+    .q-val {
+        font-size: 1.4rem;
     }
 }
