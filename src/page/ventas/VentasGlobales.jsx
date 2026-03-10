@@ -34,8 +34,15 @@ const VentasGlobales = () => {
     const [selectedYear, setSelectedYear] = useState("2026");
     const [comparisonYears, setComparisonYears] = useState(["2026"]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
 
     const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 900);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const loadData = async () => {
@@ -110,7 +117,6 @@ const VentasGlobales = () => {
         });
     };
 
-    const isMobile = window.innerWidth <= 768;
 
     const options = {
         responsive: true,
@@ -278,7 +284,71 @@ const VentasGlobales = () => {
                         </div>
 
                         <div className="chart-wrapper glass">
-                            <Line data={getChartData()} options={options} />
+                            {isMobile ? (
+                                /* ── VISTA MÓVIL: barras horizontales ── */
+                                <div className="mobile-chart-alt">
+                                    <h4 className="mobile-chart-title">📊 Comparativo por Año</h4>
+                                    <div className="year-bars">
+                                        {Object.entries(salesData)
+                                            .sort(([a], [b]) => b - a)
+                                            .map(([year, data]) => {
+                                                const total = data.reduce((a, b) => a + b, 0);
+                                                const maxTotal = Math.max(
+                                                    ...Object.values(salesData).map(d => d.reduce((a, b) => a + b, 0))
+                                                );
+                                                const isSelected = year === selectedYear;
+                                                const pct = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
+                                                return (
+                                                    <div
+                                                        key={year}
+                                                        className={`year-bar-row ${isSelected ? 'selected' : ''}`}
+                                                        onClick={() => handleYearSelection(year)}
+                                                    >
+                                                        <span className="year-bar-label">{year}</span>
+                                                        <div className="year-bar-track">
+                                                            <div
+                                                                className="year-bar-fill"
+                                                                style={{ width: `${pct}%` }}
+                                                            />
+                                                        </div>
+                                                        <span className="year-bar-total">{total}</span>
+                                                    </div>
+                                                );
+                                            })}
+                                    </div>
+
+                                    <h4 className="mobile-chart-title" style={{ marginTop: '22px' }}>
+                                        📅 Mensual — {selectedYear}
+                                    </h4>
+                                    <div className="month-bars">
+                                        {meses.map((mes, i) => {
+                                            const val = (salesData[selectedYear] || [])[i] || 0;
+                                            const maxVal = Math.max(...(salesData[selectedYear] || []));
+                                            const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
+                                            const isActive = i === selectedMonth;
+                                            return (
+                                                <div
+                                                    key={mes}
+                                                    className={`month-bar-col ${isActive ? 'active' : ''}`}
+                                                    onClick={() => setSelectedMonth(i)}
+                                                >
+                                                    <div className="month-bar-wrap">
+                                                        <div
+                                                            className="month-bar-fill"
+                                                            style={{ height: `${Math.max(pct, 3)}%` }}
+                                                        />
+                                                    </div>
+                                                    <span className="month-bar-val">{val || '-'}</span>
+                                                    <span className="month-bar-label">{mes}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <p className="mobile-chart-hint">Toca un año para seleccionarlo · Toca un mes para el detalle</p>
+                                </div>
+                            ) : (
+                                <Line data={getChartData()} options={options} />
+                            )}
                         </div>
 
                         {/* Tarjeta de Guía Interactiva */}
