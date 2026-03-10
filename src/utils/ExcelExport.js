@@ -46,7 +46,7 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
             Cliente: cliente.client_name,
             Teléfono: cliente.client_mobile,
             Dirección: cliente.address,
-            Urbanismo: norm(cliente.sector_name),
+            Urbanismo: norm(cliente._displaySector || cliente.sector_name),
             Estatus: estatus,
             Migrado: cliente.migrate ? "Migrado" : "No migrado",
             Ciclo: getCycleLabel(cliente.cycle),
