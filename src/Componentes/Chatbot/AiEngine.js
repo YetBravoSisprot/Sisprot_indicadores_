@@ -616,22 +616,30 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             }
         });
 
-        // Filtrar por sectores normales
+        // Filtrar y etiquetar por sub-sector para que el Excel los distinga
         if (finalFilter.length > 0 || subSectorFilters.length > 0) {
-            filtered = filtered.filter(c => {
-                const sectorNorm = normalizeText(c.sector_name || '');
-                const addressNorm = normalizeText(c.address_tax || c.address || '');
-
-                // Match por sector normal
-                const matchSector = finalFilter.some(f => c.sector_name === f || sectorNorm.includes(f));
-
-                // Match por sub-sector (sector_name + keyword en dirección)
-                const matchSubSector = subSectorFilters.some(sf =>
-                    c.sector_name === sf.sectorPadre && addressNorm.includes(normalizeText(sf.keyword))
-                );
-
-                return matchSector || matchSubSector;
-            });
+            filtered = filtered
+                .filter(c => {
+                    const sectorNorm = normalizeText(c.sector_name || '');
+                    const addressNorm = normalizeText(c.address_tax || c.address || '');
+                    const matchSector = finalFilter.some(f => c.sector_name === f || sectorNorm.includes(f));
+                    const matchSubSector = subSectorFilters.some(sf =>
+                        c.sector_name === sf.sectorPadre && addressNorm.includes(normalizeText(sf.keyword))
+                    );
+                    return matchSector || matchSubSector;
+                })
+                .map(c => {
+                    // Si este cliente pertenece a un sub-sector, le ponemos una etiqueta especial
+                    const addressNorm = normalizeText(c.address_tax || c.address || '');
+                    const matchedSubSector = subSectorFilters.find(sf =>
+                        c.sector_name === sf.sectorPadre && addressNorm.includes(normalizeText(sf.keyword))
+                    );
+                    if (matchedSubSector) {
+                        // Clonamos el cliente con el sector visual correcto
+                        return { ...c, _displaySector: matchedSubSector.label };
+                    }
+                    return c;
+                });
         }
         appliedTexts.push(`Urbanismos: ${labels.join(", ")}`);
     }
