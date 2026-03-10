@@ -42,6 +42,8 @@ function Admin() {
   const [revenueStats, setRevenueStats] = useState(null);
   const [selectedClient, setSelectedClient] = useState(null);
   const [isRevenueLoading, setIsRevenueLoading] = useState(true);
+  const [showTrainingLog, setShowTrainingLog] = useState(false);
+  const [trainingData, setTrainingData] = useState([]);
 
   const isPageLoading = isLoading || isRevenueLoading;
 
@@ -58,6 +60,9 @@ function Admin() {
     };
     if (!showPasswordState) {
       loadRevenue();
+      // Cargar log de entrenamiento
+      const log = JSON.parse(localStorage.getItem('ai_training_log') || '[]');
+      setTrainingData(log.reverse());
     }
   }, [showPasswordState]);
 
@@ -262,6 +267,16 @@ function Admin() {
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="search-input"
                     />
+                    {/* Solo Yetzabrm puede ver el botón de inteligencia de entrenamiento */}
+                    {email?.toLowerCase().includes("yetzabrm") && (
+                      <button
+                        className="training-log-btn glass"
+                        onClick={() => setShowTrainingLog(true)}
+                        title="Ver Log de Entrenamiento IA"
+                      >
+                        🤖
+                      </button>
+                    )}
                     {searchTerm && (
                       <div className="search-results glass-dark animate-fade-in">
                         {filteredClientes.length > 0 ? (
@@ -539,6 +554,60 @@ function Admin() {
 
                 <footer className="modal-footer">
                   <button className="action-primary" onClick={() => setSelectedClient(null)}>Cerrar Detalle</button>
+                </footer>
+              </div>
+            </div>
+          )}
+
+          {/* AI Training Log Modal */}
+          {showTrainingLog && (
+            <div className="modal-overlay animate-fade-in" onClick={() => setShowTrainingLog(false)}>
+              <div className="training-modal glass animate-slide-up" onClick={e => e.stopPropagation()}>
+                <header className="modal-header">
+                  <div className="modal-title-group">
+                    <span className="brain-icon">🧠</span>
+                    <h2>Centro de Entrenamiento IA</h2>
+                  </div>
+                  <button className="close-btn" onClick={() => setShowTrainingLog(false)}>×</button>
+                </header>
+
+                <div className="modal-body">
+                  <p className="training-desc">Lista de consultas que la Inteligencia Artificial no pudo responder por falta de contexto o datos.</p>
+
+                  <div className="training-table-container">
+                    <table className="training-table">
+                      <thead>
+                        <tr>
+                          <th>Pregunta / Solicitud</th>
+                          <th>Fecha</th>
+                          <th>Usuario</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {trainingData.length > 0 ? (
+                          trainingData.map((log, i) => (
+                            <tr key={i}>
+                              <td className="log-query">"{log.pregunta}"</td>
+                              <td className="log-date">{log.fecha}</td>
+                              <td className="log-user">{log.usuario}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="3" className="no-logs">No hay consultas registradas aún (¡La IA está bien entrenada!)</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <footer className="modal-footer">
+                  <button className="action-danger" onClick={() => {
+                    localStorage.removeItem('ai_training_log');
+                    setTrainingData([]);
+                  }}>Limpiar Log</button>
+                  <button className="action-primary" onClick={() => setShowTrainingLog(false)}>Cerrar</button>
                 </footer>
               </div>
             </div>
