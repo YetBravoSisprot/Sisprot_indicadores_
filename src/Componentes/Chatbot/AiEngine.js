@@ -320,8 +320,9 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
-- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Si menciona un lugar o zona (ej: "ingresos de mata caballo"), asígnalo al parámetro "urbanismo" aunque no diga la palabra explícitamente. Trata de extraer el nombre del sector lo más completo posible. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre del sector", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- AMBOS_METRICAS: El usuario pide VER TODO, o pide "conteo e ingresos", o "cuantos clientes y cuanta plata". Es el intent ideal para reportes de gerencia. Parámetros: los mismos de INGRESOS.
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
 - BUSCAR_CONTRATO: El usuario te da un NÚMERO DE CONTRATO (ID) para buscar un perfil. Parámetro: {"contrato": "1234"}.
@@ -545,9 +546,11 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
 
     // 4. Urbanismo
     if (parameters?.urbanismo) {
-        // Soporte para múltiples urbanismos (Array o Comas)
+        // Soporte para múltiples urbanismos (Array, Comas o conjunción 'y')
         const urbParam = parameters.urbanismo;
-        const urbList = Array.isArray(urbParam) ? urbParam : String(urbParam).split(",").map(u => u.trim());
+        const urbList = Array.isArray(urbParam)
+            ? urbParam
+            : String(urbParam).split(/,| y /i).map(u => u.trim()).filter(u => u.length > 0);
 
         let finalFilter = [];
         let labels = [];
@@ -620,6 +623,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
     const clientes = data.results;
     const query = normalizeText(message);
+
+    // --- DETECTOR DE RESPALDO (Force Detection for Reunion Sectors) ---
+    // Si la IA no extrajo urbanismos pero el mensaje los tiene, los forzamos
+    const knownSectors = Object.keys(sectorAgenciaMap);
+    const mentionedSectors = knownSectors.filter(s => query.includes(normalizeText(s)));
 
     try {
         let intent = null;
@@ -897,7 +905,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
         if (!fromClarification) {
             const openAIResult = await callOpenAI(message, history, currentPage, userName);
             intent = openAIResult.intent;
-            parameters = openAIResult.parameters;
+            parameters = openAIResult.parameters || {};
+
+            // FALLBACK: Inyectar sectores detectados si Gemini falló en extraerlos
+            if ((!parameters.urbanismo || (Array.isArray(parameters.urbanismo) && parameters.urbanismo.length === 0)) && mentionedSectors.length > 0) {
+                parameters.urbanismo = mentionedSectors;
+                if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
+            }
 
             // --- INTERCEPTOR LOCAL DE EMERGENCIA PARA MÉTRICAS ---
             // Si OpenAI devuelve una métrica pero el usuario no pidió explícitamente "cuántos" o "dinero"
@@ -911,8 +925,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 intent = 'AMBIGUEDAD_METRICA';
             }
 
-            intent = openAIResult.intent;
-            parameters = openAIResult.parameters;
             const customMessage = openAIResult.message;
 
             // ... (resto de interceptores locales si existen)
