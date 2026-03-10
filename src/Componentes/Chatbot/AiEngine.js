@@ -1629,39 +1629,52 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'AMBOS_METRICAS': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
-                const total = filtered.length;
-                const ingresos = filtered.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
 
-                // Cálculo de Desglose para la reunión (Recomendado por la IA)
+                // Cálculos Globales para la reunión
+                const totalActivos = filtered.filter(c => c.status_name === "Activo").length;
+                const totalSuspendidos = filtered.filter(c => c.status_name === "Suspendido").length;
+                const totalCancelados = filtered.filter(c => c.status_name === "Cancelado").length;
+
+                // IMPORTANTE: Solo ingresos de activos según lo pedido por el jefe
+                const ingresosActivos = filtered
+                    .filter(c => c.status_name === "Activo")
+                    .reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+
+                // Cálculo Desglosado por Urbanismo
                 const desglosado = filtered.reduce((acc, curr) => {
                     const sector = curr.sector_name || "Otros";
-                    if (!acc[sector]) acc[sector] = { activos: 0, suspendidos: 0, ingresos: 0 };
+                    if (!acc[sector]) acc[sector] = { activos: 0, suspendidos: 0, cancelados: 0, ingresos: 0 };
+
                     if (curr.status_name === "Activo") {
                         acc[sector].activos++;
                         acc[sector].ingresos += parseFloat(curr.plan?.cost || 0);
                     } else if (curr.status_name === "Suspendido") {
                         acc[sector].suspendidos++;
+                    } else if (curr.status_name === "Cancelado") {
+                        acc[sector].cancelados++;
                     }
                     return acc;
                 }, {});
 
-                let tableMsg = "\n\n📊 **Desglose para tu Reunión:**\n";
-                tableMsg += "| Urbanismo | Activos | Susp. | Ingresos (Activos) |\n";
-                tableMsg += "| :--- | :---: | :---: | :---: |\n";
+                let tableMsg = "\n\n📊 **REPORTE DE REUNIÓN (INGRESOS):**\n";
+                tableMsg += "| Urbanismo | Activos | Susp. | Canc. | Ingresos (Activos) |\n";
+                tableMsg += "| :--- | :---: | :---: | :---: | :---: |\n";
 
                 Object.entries(desglosado).sort((a, b) => b[1].ingresos - a[1].ingresos).forEach(([name, data]) => {
-                    tableMsg += `| ${name} | ${data.activos} | ${data.suspendidos} | $${data.ingresos.toFixed(2)} |\n`;
+                    tableMsg += `| ${name} | ${data.activos} | ${data.suspendidos} | ${data.cancelados} | $${data.ingresos.toFixed(2)} |\n`;
                 });
 
                 return {
-                    text: `Aquí tienes la comparativa completa para el segmento requested:\n(${appliedTexts.join(', ')})\n${tableMsg}\n\n**Abajo tienes el botón para descargar el Excel completo con el detalle de cada cliente.**`,
+                    text: `Aquí tienes los datos exactos solicitados para la reunión:\n(${appliedTexts.join(', ')})\n${tableMsg}\n\n*Nota: Los ingresos solo sumaron clientes con estatus 'Activo'.*`,
                     isCard: true,
                     offerExcel: true,
                     cardData: {
-                        title: "Resumen Comparativo",
+                        title: "Resumen Estratégico",
                         stats: [
-                            { label: "Total Clientes", value: total, color: "#3498db" },
-                            { label: "Ingresos Proyectados (Suma Planes)", value: formatCurrency(ingresos), color: "#f1c40f" }
+                            { label: "Activos", value: totalActivos, color: "#2ecc71" },
+                            { label: "Suspendidos", value: totalSuspendidos, color: "#f1c40f" },
+                            { label: "Cancelados", value: totalCancelados, color: "#e74c3c" },
+                            { label: "Ingresos (Activos)", value: formatCurrency(ingresosActivos), color: "#3498db" }
                         ],
                         color: "#9b59b6",
                         parameters: parameters,
