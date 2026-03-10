@@ -640,74 +640,76 @@ function TopUrbanismo() {
               </button>
             </div>
 
-            <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
-              <option value="Todos">Todos</option>
-              <option value="Activo">Activos</option>
-              <option value="Suspendido">Suspendidos</option>
-              <option value="Por instalar">Por instalar</option>
-              <option value="Pausado">Pausado</option>
-              <option value="Cancelado">Cancelados</option>
-            </select>
+            <div className="filtros-selects-grid">
+              <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
+                <option value="Todos">Todos</option>
+                <option value="Activo">Activos</option>
+                <option value="Suspendido">Suspendidos</option>
+                <option value="Por instalar">Por instalar</option>
+                <option value="Pausado">Pausado</option>
+                <option value="Cancelado">Cancelados</option>
+              </select>
 
-            <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
-              <option value="Todos">Tipo de Cliente / Todos</option>
-              <option value="PYME">Pyme</option>
-              <option value="RESIDENCIAL">Residenciales</option>
-              <option value="INTERCAMBIO">Intercambio</option>
-              <option value="EMPLEADO">Empleado</option>
-              <option value="GRATIS">Gratis</option>
-            </select>
+              <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
+                <option value="Todos">Tipo de Cliente / Todos</option>
+                <option value="PYME">Pyme</option>
+                <option value="RESIDENCIAL">Residenciales</option>
+                <option value="INTERCAMBIO">Intercambio</option>
+                <option value="EMPLEADO">Empleado</option>
+                <option value="GRATIS">Gratis</option>
+              </select>
 
-            <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
-              <option value="Todos">Todos</option>
-              <option value="Migrado">Migrados</option>
-              <option value="No migrado">No migrados</option>
-            </select>
+              <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
+                <option value="Todos">Todos</option>
+                <option value="Migrado">Migrados</option>
+                <option value="No migrado">No migrados</option>
+              </select>
 
-            <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
-              <option value="Todos">Todos</option>
-              <option value="15">Ciclo 15</option>
-              <option value="30">Ciclo 30</option>
-            </select>
+              <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
+                <option value="Todos">Todos</option>
+                <option value="15">Ciclo 15</option>
+                <option value="30">Ciclo 30</option>
+              </select>
 
-            <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-              <option value="Todos">Todas las agencias</option>
-              <option value="NODO PAYA">AGENCIA PAYA</option>
-              <option value="NODO TURMERO">AGENCIA TURMERO</option>
-              <option value="NODO MACARO">AGENCIA MACARO</option>
-            </select>
+              <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+                <option value="Todos">Todas las agencias</option>
+                <option value="NODO PAYA">AGENCIA PAYA</option>
+                <option value="NODO TURMERO">AGENCIA TURMERO</option>
+                <option value="NODO MACARO">AGENCIA MACARO</option>
+              </select>
 
-            <select
-              id="urbanismosSelect"
-              size="5"
-              multiple
-              value={urbanismosSeleccionados}
-              onChange={(e) =>
-                setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))
-              }
-            >
-              <option value="Todos">Todos los urbanismos</option>
-              {urbanismosParaMostrar.map((urbanismo) => (
-                <option key={urbanismo} value={urbanismo}>
-                  {urbanismo}
-                </option>
-              ))}
-            </select>
+              <select
+                id="urbanismosSelect"
+                size="5"
+                multiple
+                value={urbanismosSeleccionados}
+                onChange={(e) =>
+                  setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))
+                }
+              >
+                <option value="Todos">Todos los urbanismos</option>
+                {urbanismosParaMostrar.map((urbanismo) => (
+                  <option key={urbanismo} value={urbanismo}>
+                    {urbanismo}
+                  </option>
+                ))}
+              </select>
 
-            <select
-              id="columnasSelect"
-              size="5"
-              multiple
-              value={columnasSeleccionadas}
-              onChange={(e) =>
-                setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
-              }
-            >
-              <option value="Todas">Todas las columnas Excel</option>
-              {opcionesColumnas.map(col => (
-                <option key={col} value={col}>{col}</option>
-              ))}
-            </select>
+              <select
+                id="columnasSelect"
+                size="5"
+                multiple
+                value={columnasSeleccionadas}
+                onChange={(e) =>
+                  setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
+                }
+              >
+                <option value="Todas">Todas las columnas Excel</option>
+                {opcionesColumnas.map(col => (
+                  <option key={col} value={col}>{col}</option>
+                ))}
+              </select>
+            </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
 
@@ -716,7 +718,6 @@ function TopUrbanismo() {
                 ? `Total de Perdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
                 : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
             </button>
-
 
             <button className="buttonDescargar" onClick={handleDownloadExcel}>
               Descargar Excel
