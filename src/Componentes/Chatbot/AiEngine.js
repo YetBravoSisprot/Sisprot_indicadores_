@@ -724,6 +724,63 @@ export const processQuery = async (message, data, history = [], userName = "", c
         let parameters = null;
         let fromClarification = false;
 
+        // --- INTERCEPTOR PRIORITARIO: "Cuántos contratos tiene [nombre]" ---
+        // Este interceptor corre ANTES que todo para evitar que el contexto previo
+        // haga que el bot muestre el último cliente visto en vez de buscar todos los contratos.
+        const contractCountPatterns = [
+            /cu[aá]ntos?\s+contratos?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
+            /cuantas?\s+cuentas?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
+            /contratos?\s+(?:de|tiene|para)\s+(.+)/i,
+        ];
+        let contractCountName = null;
+        for (const pat of contractCountPatterns) {
+            const m = message.match(pat);
+            if (m && m[1]) { contractCountName = m[1].replace(/\s+y\s+dame\s+.*$/i, "").trim(); break; }
+        }
+
+        if (contractCountName && contractCountName.length >= 3) {
+            const nameNorm = normalizeText(contractCountName);
+            const matches = clientes.filter(c => normalizeText(c.client_name).includes(nameNorm));
+
+            if (matches.length === 0) {
+                registerUnansweredQuery(query, userName, currentPage);
+                return {
+                    text: `Revisé la base de datos ${userName} y no encontré ningún registro asociado a **"${contractCountName}"**. Puede ser que el nombre esté escrito diferente o que aún no esté cargado en el sistema. ¿Quieres que intente con otro nombre o número de cédula?`,
+                    isCard: false
+                };
+            }
+
+            const nameDisplay = matches[0].client_name;
+            const intro = matches.length === 1
+                ? `Claro ${userName}, revisé el sistema y **${nameDisplay}** tiene registrado **1 contrato** actualmente:`
+                : `Claro ${userName}, revisé el sistema y en la base de datos aparecen **${matches.length} contratos** a nombre de **${nameDisplay}**. Aquí los tienes:`;
+
+            const listText = matches.map((m, i) =>
+                `${i + 1}) Contrato **#${m.id}** · ${m.status_name} · ${m.sector_name} · Plan: ${m.plan?.name || 'Sin plan'} ($${m.plan?.cost || 0})`
+            ).join("\n");
+
+            const closing = matches.length === 1
+                ? `¿Deseas ver el perfil completo de este contrato o lo exportamos al **Excel**?`
+                : `¿Quieres que te muestre el detalle de alguno en específico? Solo dime el número de la opción. También puedo generarte el **Excel** con todos ellos si lo prefieres.`;
+
+            return {
+                text: `${intro}\n\n${listText}\n\n${closing}`,
+                isCard: true,
+                offerExcel: true,
+                contextType: 'multi_client_confirmed',
+                cardData: {
+                    title: "Contratos Encontrados",
+                    value: matches.length,
+                    subtitle: `registros de ${nameDisplay}`,
+                    color: "#3498db",
+                    confirmedClients: matches,
+                    savedDataset: matches,
+                    filtersText: [`Nombre: ${nameDisplay}`],
+                    parameters: { nombres: [contractCountName] }
+                }
+            };
+        }
+
         // --- 0. INTERCEPTOR LOCAL PARA MEMORIA DE CONTEXTO ESTRICTA ---
         if (history && history.length > 0) {
             const lastBotMsg = history.length >= 2 ? history[history.length - 2] : null;
