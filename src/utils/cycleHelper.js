@@ -13,7 +13,7 @@ export const mapCycleValue = (val) => {
 };
 
 export const getCycleLabel = (val) => {
+    if (val === null || val === undefined) return "N/A";
     const mapped = mapCycleValue(val);
-    if (mapped === "15" || mapped === "30") return `Ciclo ${mapped}`;
-    return null;
+    return `Ciclo ${mapped}`;
 };
