@@ -38,6 +38,57 @@ const sendToN8nLog = async (logData) => {
     }
 };
 
+// ─── PAGOS BANCARIOS: Fetch de cobros del día actual ───────────────────────
+const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) => {
+    const PAYMENTS_URL = "https://api.sisprotgf.com/api/public/payments/payment_company/";
+    const TOKEN = process.env.REACT_APP_PAYMENTS_API_KEY;
+
+    // Fecha local en formato YYYY-MM-DD (Venezuela UTC-4)
+    const nowLocal = new Date();
+    const today = nowLocal.toLocaleDateString('en-CA'); // Ej: "2026-03-11"
+
+    let allTodayPayments = [];
+    let nextUrl = `${PAYMENTS_URL}?page_size=500`;
+    let iterations = 0;
+
+    while (nextUrl && iterations < 8) {
+        const response = await fetch(nextUrl, {
+            headers: {
+                'X-API-KEY': `Bearer ${TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error consultando pagos bancarios: HTTP ${response.status}`);
+        }
+
+        const raw = await response.json();
+        // La API puede devolver un array con un objeto o el objeto directamente
+        const pageData = Array.isArray(raw) ? raw[0] : raw;
+        const results = pageData.results || [];
+
+        // Filtramos solo los pagos de hoy
+        const todayResults = results.filter(p => p.amount_data?.date === today);
+
+        // Aplicar filtro opcional por banco
+        const filtered = todayResults.filter(p => {
+            const bankOk = !bankFilter || normalizeText(p.bank_name || '').includes(normalizeText(bankFilter));
+            const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
+            return bankOk && methodOk;
+        });
+
+        allTodayPayments = [...allTodayPayments, ...filtered];
+
+        // Si encontramos registros de días anteriores, ya no hay más de hoy en páginas siguientes
+        const hitsPastDate = results.some(p => (p.amount_data?.date || '') < today);
+        nextUrl = (!hitsPastDate && pageData.next) ? pageData.next : null;
+        iterations++;
+    }
+
+    return { payments: allTodayPayments, date: today };
+};
+
 // Nueva función unificada para registrar en local y n8n
 const registerUnansweredQuery = (query, userName, currentPage) => {
     const logEntry = {
@@ -399,6 +450,7 @@ INTENCIONES DISPONIBLES:
   * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
+- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos HOY por banco, movimientos bancarios del día, o ingresos reales registrados en el sistema de cobros. Palabras clave: "bancos", "cobros de hoy", "pagos de hoy", "ingresos por banco", "cuánto entraron hoy", "movimientos". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE"}. IMPORTANTE: Este intent es para pagos REALES ya registrados (no proyectados). Es DIFERENTE al intent INGRESOS que es para ingresos PROYECTADOS por planes.
 - UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
 
 REGLA DE ORO PARA URBANISMOS: 
@@ -1881,6 +1933,79 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         savedFiltersText: appliedTexts
                     }
                 };
+            }
+
+            case 'INGRESOS_BANCOS': {
+                try {
+                    const bankFilter  = parameters?.banco  || null;
+                    const methodFilter = parameters?.metodo || null;
+
+                    const { payments, date } = await fetchTodayBankPayments(bankFilter, methodFilter);
+
+                    const fechaFormateada = new Date(date + 'T12:00:00').toLocaleDateString('es-VE', {
+                        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                    });
+
+                    if (payments.length === 0) {
+                        const filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
+                        return {
+                            text: `Revisé el sistema de cobros ${userName} y por el momento no hay pagos registrados hoy${filtroMsg} *(${fechaFormateada})*.\n\nEs posible que los estados de cuenta aún no se hayan cargado. ¿Deseas que consulte otra cosa?`,
+                            isCard: false
+                        };
+                    }
+
+                    // --- Agrupar por banco ---
+                    const byBank = payments.reduce((acc, p) => {
+                        const banco = p.bank_name || 'Desconocido';
+                        if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
+                        acc[banco].count++;
+                        acc[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
+                        acc[banco].totalBs  += parseFloat(p.amount_data?.amount_bs  || 0);
+                        const m = p.method_name || 'Otro';
+                        acc[banco].methods[m] = (acc[banco].methods[m] || 0) + 1;
+                        return acc;
+                    }, {});
+
+                    // --- Totales globales ---
+                    const totalPagos = payments.length;
+                    const totalUsd   = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
+                    const totalBs    = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs  || 0), 0);
+
+                    // --- Texto del desglose ---
+                    const bancosSorted = Object.entries(byBank).sort((a, b) => b[1].totalUsd - a[1].totalUsd);
+                    let desglose = '';
+                    bancosSorted.forEach(([banco, d]) => {
+                        const metodos = Object.entries(d.methods).map(([m, c]) => `${m} × ${c}`).join(', ');
+                        desglose += `\n🏦 **${banco}**: $${d.totalUsd.toFixed(2)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} *(${d.count} pago(s) — ${metodos})*`;
+                    });
+
+                    // --- Stats para la tarjeta visual (máx 5 bancos) ---
+                    const stats = bancosSorted.slice(0, 5).map(([banco, d]) => ({
+                        label: banco.replace('Banco ', '').replace(' Banco Universal', '').substring(0, 22),
+                        value: `$${d.totalUsd.toFixed(2)} (${d.count})`
+                    }));
+                    stats.push({ label: '📊 Total de pagos', value: totalPagos });
+
+                    const filtroResumen = bankFilter ? ` — Filtro: ${bankFilter}` : '';
+
+                    return {
+                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos hoy *(${fechaFormateada})*${filtroResumen}:\n${desglose}\n\n💰 **Total del día: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**\n\n*Nota: Este reporte refleja los pagos cargados en el sistema hasta este momento.*`,
+                        isCard: true,
+                        cardData: {
+                            title: '💳 Ingresos del Día por Banco',
+                            value: `$${totalUsd.toFixed(2)} USD`,
+                            subtitle: `${totalPagos} pagos registrados hoy`,
+                            color: '#2ecc71',
+                            stats
+                        }
+                    };
+                } catch (bankErr) {
+                    console.error('Error INGRESOS_BANCOS:', bankErr);
+                    return {
+                        text: `Lo siento ${userName}, ocurrió un error al consultar los cobros bancarios del día: *${bankErr.message}*.\n\nVerifica la conexión o intenta de nuevo en unos minutos.`,
+                        isCard: false
+                    };
+                }
             }
 
             case 'UNKNOWN':
