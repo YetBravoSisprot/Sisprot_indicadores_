@@ -807,6 +807,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
+  white-space: nowrap;
 }
 
 .status-indicator {
@@ -1194,6 +1195,13 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
 
+@media (max-width: 768px) {
+  .training-modal {
+    max-height: 90vh;
+    border-radius: 1.5rem;
+  }
+}
+
 .brain-icon {
   font-size: 1.75rem;
 }
@@ -1207,7 +1215,7 @@
 .training-table-container {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
-  overflow-y: auto;
+  overflow: auto; /* Allow both vertical and horizontal scroll */
   max-height: 450px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -1380,4 +1388,44 @@
 .confirm-danger:hover {
   background: #dc2626;
   transform: translateY(-1px);
+}
+/* Responsividad para el modal de entrenamiento */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 1rem;
+  }
+
+  .modal-title-group h2 {
+    font-size: 1rem;
+    white-space: normal;
+  }
+
+  .brain-icon {
+    font-size: 1.1rem;
+  }
+
+  .training-table th, 
+  .training-table td {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .log-query {
+    min-width: 180px;
+    white-space: normal !important;
+  }
+
+  .training-footer {
+    padding: 0.75rem !important;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  .action-danger, 
+  .action-blue-premium {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
 }
