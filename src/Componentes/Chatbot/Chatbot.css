@@ -447,13 +447,28 @@
 .stat-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* Align to top for multi-line values */
+    gap: 12px;
     font-size: 0.85rem;
     color: #cbd5e1;
     background: rgba(255, 255, 255, 0.04);
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.stat-item span {
+    color: #94a3b8;
+    font-weight: 500;
+    flex-shrink: 0; /* Label stays fixed */
+    padding-top: 2px;
+}
+
+.stat-item strong {
+    text-align: right;
+    word-break: break-word; /* Wrap long plan names */
+    max-width: 70%;
+    color: #fff;
 }
 
 .card-download-btn {
