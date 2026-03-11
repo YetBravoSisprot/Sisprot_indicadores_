@@ -89,6 +89,12 @@ const Chatbot = () => {
 
     const handleToggle = () => setIsOpen(!isOpen);
 
+    const handleResetChat = () => {
+        if (window.confirm("¿Estás seguro de que quieres reiniciar la conversación? Se borrará todo el historial actual.")) {
+            setMessages([]);
+        }
+    };
+
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!inputValue.trim()) return;
@@ -161,8 +167,17 @@ const Chatbot = () => {
             {/* Ventana de Chat */}
             <div className={`chatbot-window glass ${isOpen ? 'active' : ''}`}>
                 <div className="chatbot-header">
-                    <h4>Sisprot-AI</h4>
-                    <p>Inteligencia Artificial</p>
+                    <div className="header-info">
+                        <h4>Sisprot-AI</h4>
+                        <p>Inteligencia Artificial</p>
+                    </div>
+                    <button 
+                        className="reset-chat-btn" 
+                        onClick={handleResetChat}
+                        title="Reiniciar conversación"
+                    >
+                        🔄
+                    </button>
                 </div>
 
                 <div className="chatbot-messages" ref={messagesContainerRef}>
