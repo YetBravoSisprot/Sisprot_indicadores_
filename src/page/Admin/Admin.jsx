@@ -753,12 +753,14 @@ function Admin() {
                   </div>
                 </div>
 
-                <footer className="modal-footer">
+                <footer className="modal-footer training-footer">
                   <button className="action-danger" onClick={() => {
-                    localStorage.removeItem('ai_training_log');
-                    setTrainingData([]);
-                  }}>Limpiar Log</button>
-                  <button className="action-primary" onClick={() => setShowTrainingLog(false)}>Cerrar</button>
+                    if (window.confirm("¿Estás seguro de que deseas limpiar todo el historial de entrenamiento? Esta acción no se puede deshacer.")) {
+                      localStorage.removeItem('ai_training_log');
+                      setTrainingData([]);
+                    }
+                  }}>Limpiar Log Local</button>
+                  <button className="action-blue-premium" onClick={() => setShowTrainingLog(false)}>Cerrar</button>
                 </footer>
               </div>
             </div>
