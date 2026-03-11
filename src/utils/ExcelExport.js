@@ -152,11 +152,32 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     worksheet["!cols"] = columnWidths.map((width) => ({ wpx: Math.max(80, width * 6) }));
     XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes");
 
-    // Nombre de archivo basado en filtros o genérico
-    const filterStamp = appliedFiltersText.length > 0
-        ? appliedFiltersText.join("_").replace(/\s+/g, "_").toLowerCase()
-        : "reporte_general";
-    const nombreArchivo = `reporte_${filterStamp}_${hoy.toISOString().split('T')[0]}.xlsx`;
+    // --- LÓGICA DE NOMBRE DE ARCHIVO INTELIGENTE ---
+    let nameParts = [];
+    
+    appliedFiltersText.forEach(f => {
+        const text = f.toLowerCase();
+        if (text.includes("agencia:")) {
+            nameParts.push(text.replace("agencia:", "").replace("nodo", "").trim());
+        } else if (text.includes("urbanismos:")) {
+            const urb = text.replace("urbanismos:", "").trim();
+            if (!urb.includes("todos")) nameParts.push(urb.split(",")[0].trim()); // Solo el primer urbanismo si hay muchos
+        } else if (text.includes("estado:")) {
+            const est = text.replace("estado:", "").trim();
+            if (est !== "todos") nameParts.push(est);
+        } else if (text.includes("ciclo:")) {
+            nameParts.push("c" + text.replace("ciclo:", "").trim());
+        } else if (text.includes("tipo:")) {
+            nameParts.push(text.replace("tipo:", "").trim());
+        }
+    });
+
+    const baseName = nameParts.length > 0 
+        ? nameParts.join("_").replace(/\s+/g, "_") 
+        : "general";
+
+    const nombreArchivo = `reporte_${baseName}_${hoy.toISOString().split('T')[0]}.xlsx`;
+    // --- FIN LÓGICA NOMBRE ---
 
     XLSX.writeFile(workbook, nombreArchivo);
 };
