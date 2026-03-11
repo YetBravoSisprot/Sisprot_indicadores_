@@ -1458,7 +1458,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                     { label: "Estado", value: cliente.status_name },
                                     { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
                                     { label: "Teléfono", value: cliente.client_mobile || "N/A" },
-                                    { label: "Ciclo", value: cliente.cycle || "N/A" },
+                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle) },
                                     { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
                                     { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
                                     { label: "Dirección", value: cliente.address || "N/A" },
