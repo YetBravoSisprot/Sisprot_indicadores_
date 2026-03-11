@@ -760,7 +760,7 @@ function Admin() {
                           ))
                         ) : (
                           <tr>
-                            <td colSpan="3" className="no-logs">No hay consultas registradas aún (¡La IA está bien entrenada!)</td>
+                            <td colSpan="3" className="no-logs">No hay consultas registradas aún</td>
                           </tr>
                         )}
                       </tbody>
