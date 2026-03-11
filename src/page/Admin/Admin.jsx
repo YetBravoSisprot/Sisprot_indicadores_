@@ -409,16 +409,6 @@ function Admin() {
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="search-input"
                     />
-                    {/* Solo Yetzabrm puede ver el botón de inteligencia de entrenamiento */}
-                    {email?.toLowerCase().includes("yetzabrm") && (
-                      <button
-                        className="training-log-btn glass"
-                        onClick={() => setShowTrainingLog(true)}
-                        title="Ver Log de Entrenamiento IA"
-                      >
-                        🤖
-                      </button>
-                    )}
                     {searchTerm && (
                       <div className="search-results glass-dark animate-fade-in">
                         {filteredClientes.length > 0 ? (
@@ -764,6 +754,19 @@ function Admin() {
                 </footer>
               </div>
             </div>
+          )}
+
+          {/* Botón flotante de entrenamiento (Solo Yetzabrm) */}
+          {email?.toLowerCase().includes("yetzabrm") && (
+            <button
+              className="training-floating-btn"
+              onClick={() => setShowTrainingLog(true)}
+              title="Centro de Entrenamiento IA"
+            >
+              <div className="floating-orbit"></div>
+              <span className="floating-icon">🤖</span>
+              <span className="floating-label">Entrenamiento</span>
+            </button>
           )}
         </>
       )}
