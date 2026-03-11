@@ -1155,16 +1155,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // If a specific type or status was requested, give direct result
                     if (appliedFiltersText.length > 0) {
                         return {
-                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Puedes obtener el reporte detallado en el botón de abajo.**`,
+                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
-                            offerExcel: true,
                             cardData: {
                                 title: "Total Encontrados",
                                 value: filteredClientes.length,
                                 subtitle: "clientes exactos",
                                 color: "#3498db",
                                 parameters: parameters,
-                                dataset: filteredClientes,
+                                savedDataset: filteredClientes,
                                 filtersText: appliedFiltersText
                             }
                         };
@@ -1372,16 +1371,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     : `¡Claro ${userName}! He calculado los **ingresos mensuales proyectados** basados en tu consulta: \n\n**Note: Este valor se obtiene sumando los costos de los planes actuales de los clientes en tu base de datos.**`;
 
                 return {
-                    text: introText + "\n\n**He preparado un botón de descarga por si necesitas el listado en Excel.**",
+                    text: introText + "\n\n**Si necesitas descargar el listado oficial en Excel, solo pídeme el reporte.**",
                     isCard: true,
-                    offerExcel: true,
                     cardData: {
                         title: "Ingresos Proyectados (Mes)",
                         value: formatCurrency(ingresosTotales),
                         subtitle: `${clientesCount} clientes base`,
                         color: "#f1c40f",
                         parameters: parameters,
-                        dataset: filteredClientes,
+                        savedDataset: filteredClientes,
                         filtersText: appliedFiltersText
                     }
                 };
@@ -1465,7 +1463,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                     { label: "Cédula", value: cliente.client_identification }
                                 ],
                                 parameters: { contrato: cliente.id, cedula: cliente.client_identification },
-                                dataset: [cliente], // Solo este cliente
+                                savedDataset: [cliente], // Solo este cliente
                                 filtersText: [foundType === "contrato" ? `Contrato: #${cliente.id}` : `Cédula: ${nro}`],
                                 rawData: cliente
                             }
@@ -1584,7 +1582,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 ],
                                 confirmedClients: allConfirmed,
                                 rawData: cliente,
-                                dataset: [cliente], // Solo este cliente
+                                savedDataset: [cliente], // Solo este cliente
                                 filtersText: [`Nombre: ${cliente.client_name}`]
                             }
                         };
@@ -1656,7 +1654,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 { label: "Cédula", value: rawDataTarget.client_identification }
                             ],
                             rawData: rawDataTarget,
-                            dataset: [rawDataTarget],
+                            savedDataset: [rawDataTarget],
                             filtersText: [`Contrato: #${rawDataTarget.id}`]
                         }
                     };
@@ -1773,7 +1771,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 return {
                     text: `Aquí tienes los datos exactos solicitados para la reunión:\n(${appliedTexts.join(', ')})\n${tableMsg}\n\n*Nota: Los ingresos solo sumaron clientes con estatus 'Activo'.*`,
                     isCard: true,
-                    offerExcel: true,
                     cardData: {
                         title: "Resumen Estratégico",
                         stats: [
@@ -1784,7 +1781,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         ],
                         color: "#9b59b6",
                         parameters: parameters,
-                        dataset: filtered,
+                        savedDataset: filtered,
                         filtersText: appliedTexts
                     }
                 };
@@ -1799,11 +1796,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (history && history.length >= 2) {
                     const lastBot = history[history.length - 2];
                     if (lastBot.sender === 'bot' && lastBot.cardData) {
-                        if (lastBot.cardData.dataset) {
-                            targetDataset = lastBot.cardData.dataset;
+                        if (lastBot.cardData.savedDataset || lastBot.cardData.dataset) {
+                            targetDataset = lastBot.cardData.savedDataset || lastBot.cardData.dataset;
                             targetFilters = lastBot.cardData.filtersText;
                             targetParams = lastBot.cardData.parameters || parameters;
-                        } else if (lastBot.cardData.confirmedClients) {
+                        } else if (lastBot.cardData.confirmedClients && lastBot.cardData.confirmedClients.length > 0) {
                             targetDataset = lastBot.cardData.confirmedClients;
                             targetFilters = ["Lista Personalizada"];
                         } else if (lastBot.cardData.rawData) {
