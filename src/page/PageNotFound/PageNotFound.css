@@ -55,59 +55,63 @@
   width: 100%;
   max-width: 1200px;
   margin-top: 20px;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
-/* Estilos para los iframes individuales */
-.report-container iframe {
-  width: 95%;
-  height: 600px;
-  border: 2px solid #fff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-  margin-bottom: 30px;
+/* Títulos de los reportes */
+.report-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 30px auto 15px auto;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Técnica de Proporción Responsiva para Iframes */
+.iframe-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  margin-bottom: 40px;
+  background: rgba(0,0,0,0.2);
+}
+
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 /* Media queries para responsividad */
 @media (max-width: 768px) {
-  .report-header-info {
-    top: 30px;
-    left: 15px;
+  .report-title {
+    font-size: 1.2rem;
+    padding: 0 10px;
   }
-
-  .company-logo {
-    max-width: 120px;
-    /* Ajuste para pantallas pequeñas */
-  }
-
-  .author-text {
-    font-size: 0.9rem;
-  }
-
-  .report-container {
-    width: 95%;
-  }
-
-  .report-container iframe {
-    height: 500px;
+  
+  .iframe-wrapper {
+    padding-bottom: 75%; /* Un poco más alto en tablets */
   }
 }
 
 @media (max-width: 480px) {
-  .report-header-info {
-    top: 15px;
-    left: 10px;
+  .report-title {
+    font-size: 1.1rem;
   }
-
-  .company-logo {
-    max-width: 100px;
-  }
-
-  .author-text {
-    font-size: 0.8rem;
-  }
-
-  .report-container iframe {
-    height: 400px;
+  
+  .iframe-wrapper {
+    padding-bottom: 150%; /* Alta para compensar el formato vertical de los celulares */
+    border-radius: 8px;
   }
 }
 
