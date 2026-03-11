@@ -13,29 +13,12 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [showResetModal, setShowResetModal] = useState(false);
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
 
-    // Configurar saludo inicial dinámico
-    useEffect(() => {
-        if (!isAuthenticated) return;
-
-        const getGreeting = (name) => {
-            const intro = name
-                ? `Hola **${name}**, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`
-                : `Hola, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`;
-
-            return `${intro}
-                    
-• **Consultar Ingresos**: Ingresos proyectados por sector o agencia.
-• **Contar Clientes**: Totales, activos, pymes o suspendidos.
-• **Búsqueda Detallada**: Buscar clientes por nombre o contrato.
-• **Reportes Personalizados**: Generar archivos Excel a tu medida.
-• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/30).
-
-¿En qué te puedo ayudar hoy?`;
-        };
-
+    // ── Función de saludo reutilizable (useEffect + confirmReset) ──
+    const buildGreetingMessage = () => {
         let cleanName = null;
         if (email) {
             const baseName = email.split('@')[0];
@@ -44,15 +27,29 @@ const Chatbot = () => {
                 cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
             }
         }
+        const intro = cleanName
+            ? `Hola **${cleanName}**, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`
+            : `Hola, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`;
 
-        const newGreeting = getGreeting(cleanName);
+        return `${intro}
 
+• **Consultar Ingresos**: Ingresos proyectados por sector o agencia.
+• **Contar Clientes**: Totales, activos, pymes o suspendidos.
+• **Búsqueda Detallada**: Buscar clientes por nombre o contrato.
+• **Reportes Personalizados**: Generar archivos Excel a tu medida.
+• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/30).
+
+¿En qué te puedo ayudar hoy?`;
+    };
+
+    // Configurar saludo inicial dinámico
+    useEffect(() => {
+        if (!isAuthenticated) return;
+        const newGreeting = buildGreetingMessage();
         setMessages(prev => {
-            // Si no hay mensajes, ponemos el saludo
             if (prev.length === 0) {
                 return [{ sender: 'bot', text: newGreeting, isCard: false }];
             }
-            // Si el primer mensaje es el saludo genérico (sin nombre) y ahora tenemos nombre, lo actualizamos
             if (prev.length === 1 && prev[0].sender === 'bot' && !prev[0].text.includes('**')) {
                 return [{ sender: 'bot', text: newGreeting, isCard: false }];
             }
@@ -90,9 +87,18 @@ const Chatbot = () => {
     const handleToggle = () => setIsOpen(!isOpen);
 
     const handleResetChat = () => {
-        if (window.confirm("¿Estás seguro de que quieres reiniciar la conversación? Se borrará todo el historial actual.")) {
-            setMessages([]);
-        }
+        setShowResetModal(true);
+    };
+
+    const confirmReset = () => {
+        // Reinicia el chat pero restaura el mensaje de bienvenida inicial
+        const welcomeBack = buildGreetingMessage();
+        setMessages([{ sender: 'bot', text: welcomeBack, isCard: false }]);
+        setShowResetModal(false);
+    };
+
+    const cancelReset = () => {
+        setShowResetModal(false);
     };
 
     const handleSendMessage = async (e) => {
@@ -146,6 +152,20 @@ const Chatbot = () => {
 
     return (
         <>
+            {/* Modal de Confirmación: Reiniciar Conversación */}
+            {showResetModal && (
+                <div className="reset-modal-overlay" onClick={cancelReset}>
+                    <div className="reset-modal-box" onClick={e => e.stopPropagation()}>
+                        <div className="reset-modal-icon">🔄</div>
+                        <h3 className="reset-modal-title">¿Reiniciar conversación?</h3>
+                        <p className="reset-modal-desc">Se borrará todo el historial del chat actual. Esta acción no se puede deshacer.</p>
+                        <div className="reset-modal-actions">
+                            <button className="reset-modal-btn cancel" onClick={cancelReset}>Cancelar</button>
+                            <button className="reset-modal-btn confirm" onClick={confirmReset}>Sí, reiniciar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {/* Avatar Flotante del Robot */}
             <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
                 {!isOpen ? (
