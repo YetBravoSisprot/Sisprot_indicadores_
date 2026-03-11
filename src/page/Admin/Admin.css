@@ -1197,15 +1197,41 @@
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.2);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  margin-right: auto;
+  transition: all 0.2s ease;
 }
 
 .action-danger:hover {
-  background: #ef4444;
-  color: #fff;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+
+.action-blue-premium {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.action-blue-premium:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.training-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  padding: 1.5rem 2rem !important;
+  background: rgba(15, 23, 42, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
