@@ -89,46 +89,49 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // --- HOJA DE RESUMEN (solo cuando se filtra por urbanismos específicos) ---
-    // Detectamos si el usuario seleccionó urbanismos específicos:
-    // Si el texto de filtro contiene "Urbanismos:" con valores específicos (no vacío y no "Todos")
+    // --- HOJA DE RESUMEN (solo cuando hay filtros de Agencia o Urbanismos específicos) ---
     const filtroUrbanismoTexto = appliedFiltersText.find(f => f.startsWith("Urbanismos:"));
-    const tieneUrbanismosEspecificos = !!filtroUrbanismoTexto &&
-        !filtroUrbanismoTexto.includes("Urbanismos: Todos") &&
-        filtroUrbanismoTexto.replace("Urbanismos:", "").trim().length > 0;
+    const filtroAgenciaTexto = appliedFiltersText.find(f => f.startsWith("Agencia:"));
+    
+    const tieneUrbanismosEspecificos = (!!filtroUrbanismoTexto && 
+        !filtroUrbanismoTexto.includes("Urbanismos: Todos") && 
+        filtroUrbanismoTexto.replace("Urbanismos:", "").trim().length > 0) || (!!filtroAgenciaTexto);
 
     if (tieneUrbanismosEspecificos) {
-        const resumenEstatus = baseData.reduce((acc, row) => {
-            const est = row.Estatus || "N/A";
-            acc[est] = (acc[est] || 0) + 1;
-            return acc;
-        }, {});
+        const analizados = filtroUrbanismoTexto 
+            ? filtroUrbanismoTexto.replace("Urbanismos:", "").trim() 
+            : (filtroAgenciaTexto ? filtroAgenciaTexto.trim() : "Varios");
+        // Cálculo Desglosado Unificado (Igual que en el Chatbot)
+        const desglose = baseData.reduce((acc, row) => {
+            const urb = row.Urbanismo || "Otros";
+            if (!acc[urb]) acc[urb] = { activos: 0, suspendidos: 0, cancelados: 0, ingresos: 0 };
 
-        const resumenIngresosUrb = baseData.reduce((acc, row) => {
-            if (row.Estatus === "Activo") {
-                const urb = row.Urbanismo || "Otros";
-                const cost = row._costRaw || 0;
-                acc[urb] = (acc[urb] || 0) + cost;
+            const est = (row.Estatus || "").toLowerCase();
+            if (est.includes("activo")) {
+                acc[urb].activos++;
+                acc[urb].ingresos += row._costRaw || 0;
+            } else if (est.includes("suspendido")) {
+                acc[urb].suspendidos++;
+            } else if (est.includes("cancelado")) {
+                acc[urb].cancelados++;
             }
             return acc;
         }, {});
 
-        const totalIngresosActivos = Object.values(resumenIngresosUrb).reduce((sum, val) => sum + val, 0);
+        const totalIngresosGral = Object.values(desglose).reduce((sum, d) => sum + d.ingresos, 0);
 
         const summaryRows = [
-            ["RESUMEN EJECUTIVO"],
+            ["RESUMEN EJECUTIVO DE CARTERA"],
             ["Fecha de Reporte", hoy.toLocaleDateString()],
-            ["Urbanismos analizados", filtroUrbanismoTexto.replace("Urbanismos:", "").trim()],
+            ["Grupo Analizado", analizados],
             [""],
-            ["CONTEO POR ESTATUS"],
-            ["Estatus", "Cantidad"],
-            ...Object.entries(resumenEstatus).map(([k, v]) => [k, v]),
+            ["CUADRO ESTRATÉGICO POR SECTOR"],
+            ["Urbanismo", "Activos", "Susp.", "Canc.", "Ingresos Proyectados ($)"],
+            ...Object.entries(desglose)
+                .sort((a, b) => b[1].ingresos - a[1].ingresos)
+                .map(([name, d]) => [name, d.activos, d.suspendidos, d.cancelados, `${d.ingresos.toFixed(2)}$`]),
             [""],
-            ["INGRESOS POR URBANISMO (SOLO ACTIVOS)"],
-            ["Urbanismo", "Ingreso Proyectado ($)"],
-            ...Object.entries(resumenIngresosUrb).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, `${v.toFixed(2)}$`]),
-            [""],
-            ["TOTAL INGRESOS ACTIVOS", `${totalIngresosActivos.toFixed(2)}$`]
+            ["TOTAL INGRESOS (SOLO ACTIVOS)", `${totalIngresosGral.toFixed(2)}$`]
         ];
 
         const summarySheet = XLSX.utils.aoa_to_sheet(summaryRows);
