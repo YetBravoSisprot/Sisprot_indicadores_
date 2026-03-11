@@ -6,7 +6,7 @@ import LogingForm from "../../Componentes/LogingForm";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 import { getHistoricalRevenueData } from "../../services/revenueService";
 import { getCycleLabel } from "../../utils/cycleHelper";
-import { Line } from "react-chartjs-2";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +14,7 @@ import {
   PointElement,
   LineElement,
   ArcElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -21,7 +22,6 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useNavigate } from "react-router-dom";
-import { Doughnut } from "react-chartjs-2";
 import "./Admin.css";
 
 ChartJS.register(
@@ -29,6 +29,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   ArcElement,
   Title,
   Tooltip,
@@ -175,15 +176,16 @@ function Admin() {
           data: revenueStats.chartValues,
           fill: true,
           borderColor: "#00d2ff",
-          backgroundColor: "rgba(0, 210, 255, 0.2)",
+          backgroundColor: isMobile ? "rgba(0, 210, 255, 0.4)" : "rgba(0, 210, 255, 0.2)",
           tension: 0.4,
-          pointRadius: 4,
+          pointRadius: isMobile ? 0 : 4,
           pointBackgroundColor: "#00d2ff",
-          borderWidth: 3,
+          borderWidth: isMobile ? 1 : 3,
+          borderRadius: 4,
         }
       ]
     };
-  }, [revenueStats]);
+  }, [revenueStats, isMobile]);
 
   const yearlyTotals = useMemo(() => {
     if (!revenueStats || !revenueStats.rawData) return [];
@@ -371,35 +373,53 @@ function Admin() {
                 <h2 className="dashboard-title">Panel Administrativo</h2>
 
                 <div className="header-actions">
-                  {revenueStats && (
-                    <div className="accumulated-kpi-v2 glass animate-fade-in">
-                      <div className="kpi-label-group">
-                        <span className="kpi-main-title">Recaudación Total</span>
-                      </div>
-                      
-                      <div className="yearly-breakdown">
-                         {yearlyTotals.map((yt, idx) => (
-                           <div key={idx} className="yearly-line">
-                              <div className="yt-label-group">
-                                <span className="yt-label">{yt.label}</span>
-                                <span className="yt-sublabel">{yt.subLabel}</span>
-                              </div>
-                              <span className="yt-amount">${yt.amount.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
-                           </div>
-                         ))}
-                      </div>
+                    {revenueStats && (
+                      <div className="accumulated-kpi-v2 glass animate-fade-in">
+                        <div className="kpi-label-group">
+                          <span className="kpi-main-title">Recaudación Total</span>
+                        </div>
+                        
+                        <div className="yearly-breakdown">
+                           {yearlyTotals.map((yt, idx) => (
+                             <div key={idx} className="yearly-line">
+                                <div className="yt-label-group">
+                                  <span className="yt-label">{yt.label}</span>
+                                  <span className="yt-sublabel">{yt.subLabel}</span>
+                                </div>
+                                <span className="yt-amount">${yt.amount.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
+                             </div>
+                           ))}
+                        </div>
 
-                      <div className="kpi-value-box-total">
-                        <span className="kpi-total-label">Total Acumulado</span>
-                        <div className="kpi-amount-wrapper">
-                          <span className="kpi-currency">$</span>
-                          <span className="kpi-amount">
-                            {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                          </span>
+                        <div className="kpi-value-box-total">
+                          <span className="kpi-total-label">Total Acumulado</span>
+                          <div className="kpi-amount-wrapper">
+                            <span className="kpi-currency">$</span>
+                            <span className="kpi-amount">
+                              {revenueStats.totalAccumulated.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                    {/* Nueva ubicación integrada para el Centro de Entrenamiento */}
+                    {email?.toLowerCase().includes("yetzabrm") && (
+                      <div 
+                        className="admin-tool-card glass animate-fade-in" 
+                        onClick={() => setShowTrainingLog(true)}
+                        title="Abrir Centro de Entrenamiento IA"
+                      >
+                         <div className="tool-icon-wrapper">
+                            <span className="tool-icon">🤖</span>
+                            <div className="pulse-dot"></div>
+                         </div>
+                         <div className="tool-details">
+                            <span className="tool-name">IA Training</span>
+                            <span className="tool-status">Optimizar</span>
+                         </div>
+                      </div>
+                    )}
 
                   <div className="search-container glass">
                     <input
@@ -484,7 +504,11 @@ function Admin() {
                         <h3>Ingreso Mensual (Tendencia Histórica)</h3>
                       </div>
                       <div className="line-chart-container">
-                        <Line data={chartData} options={chartOptions} />
+                        {isMobile ? (
+                          <Bar data={chartData} options={chartOptions} />
+                        ) : (
+                          <Line data={chartData} options={chartOptions} />
+                        )}
                       </div>
                     </div>
                   )}
@@ -754,19 +778,6 @@ function Admin() {
                 </footer>
               </div>
             </div>
-          )}
-
-          {/* Botón flotante de entrenamiento (Solo Yetzabrm) */}
-          {email?.toLowerCase().includes("yetzabrm") && (
-            <button
-              className="training-floating-btn"
-              onClick={() => setShowTrainingLog(true)}
-              title="Centro de Entrenamiento IA"
-            >
-              <div className="floating-orbit"></div>
-              <span className="floating-icon">🤖</span>
-              <span className="floating-label">Entrenamiento</span>
-            </button>
           )}
         </>
       )}
