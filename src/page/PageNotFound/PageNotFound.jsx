@@ -19,6 +19,15 @@ function PageNotFound() {
 
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
+        
+        {/* Aviso de Rotación para Móviles */}
+        <div className="mobile-rotation-notice">
+          <span className="notice-icon">📱🔄</span>
+          <p className="notice-text">
+            <strong>Tip de visualización:</strong> Para una mejor experiencia y ver los gráficos en detalle, te recomendamos colocar tu dispositivo en <strong>posición horizontal</strong>.
+          </p>
+        </div>
+
         {/* Informe 1: Indicadores con API */}
         <h3 className="report-title">
           Dashboard SGF — Control Diario de Contratos (Estados, RS/PM y Montos)
