@@ -16658,16 +16658,7 @@ const largeArraydata =
       "client_identification": "V3848330",
       "nap_box_name": "29",
       "created_at": "2024-04-16T11:28:13.620532",
-      "service_detail": {
-        "id": 3293,
-        "ip": "172.23.207.2",
-        "mac": "TPLGB446EA94",
-        "serial": "TPLGB446EA94",
-        "queue": "Plan_92034_1574_WispHub",
-        "interface": "VLAN102_ARTURO_BERTI",
-        "created_at": "2024-07-01T12:52:39.717359",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -23544,11 +23535,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Las Rurales",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243621052",
       "address": "CALLE 105 CASA NRO 86 SECTOR LAS RURALES DE PAYA ARAGUA ZONA POSTAL 2115",
@@ -26171,16 +26162,7 @@ const largeArraydata =
       "client_identification": "V26213260",
       "nap_box_name": "CTO-0637",
       "created_at": "2024-04-20T08:35:38.003761",
-      "service_detail": {
-        "id": 3705,
-        "ip": "172.31.7.2",
-        "mac": "TPLGB446E907",
-        "serial": "TPLGB446E907",
-        "queue": "Plan_128612_15811_WispHub",
-        "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2024-07-11T21:21:53.309261",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -72951,8 +72933,8 @@ const largeArraydata =
       "id": 5689,
       "client_name": "JOSE JOSE CASTILLO BARRIOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -137673,13 +137655,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-05-06T11:57:12.389940",
       "service_detail": {
-        "id": 10209,
+        "id": 12034,
         "ip": "10.13.236.2",
         "mac": "VSOL00A6E512",
         "serial": "VSOL00A6E512",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2025-11-20T16:04:41.459979",
+        "created_at": "2026-03-11T16:12:55.335296",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160305,13 +160287,13 @@ const largeArraydata =
       "nap_box_name": "TORRE B EDIF LOS NISPEROS",
       "created_at": "2026-02-25T15:15:48.579475",
       "service_detail": {
-        "id": 11861,
+        "id": 12030,
         "ip": "10.16.174.2",
-        "mac": "80D4A5AA8C00",
-        "serial": "HWTC45A04257",
+        "mac": "08D4A5A42600",
+        "serial": "HWTC49200608",
         "queue": null,
-        "interface": "VLAN218_NISPEROS_OLT1",
-        "created_at": "2026-02-27T17:49:45.141243",
+        "interface": "VLAN208_NISPERO_OLT1",
+        "created_at": "2026-03-11T15:03:58.119039",
         "created_by_name": null
       },
       "installation_invoice_cost": null
