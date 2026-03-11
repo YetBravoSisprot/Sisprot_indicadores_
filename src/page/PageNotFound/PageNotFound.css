@@ -153,58 +153,78 @@
   align-items: center;
   margin-bottom: 12px;
   background: rgba(0, 0, 0, 0.2);
-  padding: 10px 15px;
+  padding: 12px 15px;
   border-radius: 10px;
+  gap: 10px;
 }
 
 .credential-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #94a3b8;
   text-transform: uppercase;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .credential-value {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #fff;
   font-weight: 600;
+  word-break: break-all; /* Rompe el texto si es muy largo (ej. el correo) */
+  text-align: right;
 }
 
-.access-note {
-  font-size: 0.8rem;
-  color: #60a5fa;
-  margin-top: 15px;
-  font-style: italic;
-  display: block;
+@media (max-width: 480px) {
+  .access-credentials-card {
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+
+  .credentials-header h4 {
+    font-size: 1rem;
+  }
+
+  .credential-item {
+    flex-direction: column; /* Apila el label y el valor */
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .credential-value {
+    text-align: left;
+    width: 100%;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
 }
 
 /* Banner de Aviso para Móviles (Rotación) */
 .mobile-rotation-notice {
   display: none; /* Oculto por defecto en PC */
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05); /* Más sutil */
   backdrop-filter: blur(10px);
-  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
   padding: 15px;
   border-radius: 12px;
   margin: 10px auto 25px auto;
   width: 90%;
   max-width: 500px;
+  display: none; /* Se maneja en media queries */
   align-items: center;
-  gap: 12px;
-  animation: pulse-border 2s infinite;
+  gap: 15px;
 }
 
-.notice-icon {
-  font-size: 1.5rem;
-}
+@media (max-width: 768px) {
+  .mobile-rotation-notice {
+    display: flex; /* Se muestra en móviles y tablets */
+  }
 
-.notice-text {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: #e2e8f0;
-  margin: 0;
-  text-align: left;
+  .notice-text {
+    font-size: 0.85rem;
+  }
 }
 
 @keyframes pulse-border {
