@@ -385,3 +385,32 @@ nav::before {
 .logout-modal-btn:active {
   transform: translateY(0);
 }
+/* OPTIMIZACIÓN LANDSCAPE PARA MÓVILES */
+@media (max-height: 500px) and (orientation: landscape) {
+  nav {
+    padding: 6px 15px;
+  }
+  
+  nav::before {
+    display: none;
+  }
+
+  nav ul.horizontal-list {
+    gap: 8px;
+  }
+
+  nav ul li a {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .datetime-display {
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+
+  .datetime-display p {
+    font-size: 10px;
+  }
+}
+
