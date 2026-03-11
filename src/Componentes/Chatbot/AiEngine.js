@@ -54,7 +54,7 @@ const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) =>
     while (nextUrl && iterations < 8) {
         const response = await fetch(nextUrl, {
             headers: {
-                'Authorization': `Bearer ${TOKEN}`,
+                'X-API-KEY': `Bearer ${TOKEN}`,
                 'Content-Type': 'application/json'
             }
         });
