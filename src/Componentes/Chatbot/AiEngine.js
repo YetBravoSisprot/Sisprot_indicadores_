@@ -26,7 +26,7 @@ const mapCycleValue = (val) => {
 
 // Función para enviar logs a n8n de forma centralizada
 const sendToN8nLog = async (logData) => {
-    const N8N_WEBHOOK_URL = "https://n8n.sisprottaurus.com/webhook/ai-training-log";
+    const N8N_WEBHOOK_URL = "https://n8n.sisprottaurus.com/webhook/ai-training-log-sisprot-v2";
     try {
         fetch(N8N_WEBHOOK_URL, {
             method: "POST",
