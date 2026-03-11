@@ -47,6 +47,7 @@ function Admin() {
   const [selectedClient, setSelectedClient] = useState(null);
   const [isRevenueLoading, setIsRevenueLoading] = useState(true);
   const [showTrainingLog, setShowTrainingLog] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -768,14 +769,28 @@ function Admin() {
                 </div>
 
                 <footer className="modal-footer training-footer">
-                  <button className="action-danger" onClick={() => {
-                    if (window.confirm("¿Estás seguro de que deseas limpiar todo el historial de entrenamiento? Esta acción no se puede deshacer.")) {
-                      localStorage.removeItem('ai_training_log');
-                      setTrainingData([]);
-                    }
-                  }}>Limpiar Log Local</button>
+                  <button className="action-danger" onClick={() => setShowClearConfirm(true)}>Limpiar Log Local</button>
                   <button className="action-blue-premium" onClick={() => setShowTrainingLog(false)}>Cerrar</button>
                 </footer>
+
+                {/* Confirmación personalizada de limpieza */}
+                {showClearConfirm && (
+                  <div className="inner-modal-overlay animate-fade-in">
+                    <div className="confirm-modal glass animate-slide-up">
+                      <span className="warning-icon">⚠️</span>
+                      <h3>¿Limpiar historial?</h3>
+                      <p>Esta acción eliminará todas las consultas guardadas localmente. No se puede deshacer.</p>
+                      <div className="confirm-actions">
+                         <button className="confirm-cancel" onClick={() => setShowClearConfirm(false)}>Cancelar</button>
+                         <button className="confirm-danger" onClick={() => {
+                           localStorage.removeItem('ai_training_log');
+                           setTrainingData([]);
+                           setShowClearConfirm(false);
+                         }}>Eliminar Todo</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
