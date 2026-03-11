@@ -71,9 +71,29 @@ const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) =>
         // Filtramos solo los pagos de hoy
         const todayResults = results.filter(p => p.amount_data?.date === today);
 
+        // Mapa de siglas → nombre completo para resolver filtros por acrónimo
+        const bankAcronymMap = {
+            'BNC': 'banco nacional de credito',
+            'BDV': 'banco de venezuela',
+            'BFC': 'banco fondo comun',
+            'BBP': 'banco bicentenario',
+            'BANPLUS': 'banplus',
+            'BANESCO': 'banesco',
+            'MERCANTIL': 'mercantil',
+            'PROVINCIAL': 'provincial',
+            'EXTERIOR': 'exterior',
+            'SOFITASA': 'sofitasa',
+            'CARONI': 'caroni',
+            'ZELLE': 'zelle',
+            'CHASE': 'chase',
+        };
+        const resolvedBank = bankFilter
+            ? (bankAcronymMap[normalizeText(bankFilter).toUpperCase()] || normalizeText(bankFilter))
+            : null;
+
         // Aplicar filtro opcional por banco
         const filtered = todayResults.filter(p => {
-            const bankOk = !bankFilter || normalizeText(p.bank_name || '').includes(normalizeText(bankFilter));
+            const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
             const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
             return bankOk && methodOk;
         });
@@ -1937,7 +1957,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'INGRESOS_BANCOS': {
                 try {
-                    const bankFilter  = parameters?.banco  || null;
+                    const bankFilter = parameters?.banco || null;
                     const methodFilter = parameters?.metodo || null;
 
                     const { payments, date } = await fetchTodayBankPayments(bankFilter, methodFilter);
@@ -1949,7 +1969,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     if (payments.length === 0) {
                         const filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
                         return {
-                            text: `Revisé el sistema de cobros ${userName} y por el momento no hay pagos registrados hoy${filtroMsg} *(${fechaFormateada})*.\n\nEs posible que los estados de cuenta aún no se hayan cargado. ¿Deseas que consulte otra cosa?`,
+                            text: `Revisé el sistema de cobros ${userName} y por el momento no hay pagos registrados hoy${filtroMsg} (**${fechaFormateada}**).\n\nEs posible que los estados de cuenta aún no se hayan cargado. ¿Deseas que consulte otra cosa?`,
                             isCard: false
                         };
                     }
@@ -1960,7 +1980,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
                         acc[banco].count++;
                         acc[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
-                        acc[banco].totalBs  += parseFloat(p.amount_data?.amount_bs  || 0);
+                        acc[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
                         const m = p.method_name || 'Otro';
                         acc[banco].methods[m] = (acc[banco].methods[m] || 0) + 1;
                         return acc;
@@ -1968,15 +1988,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                     // --- Totales globales ---
                     const totalPagos = payments.length;
-                    const totalUsd   = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
-                    const totalBs    = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs  || 0), 0);
+                    const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
+                    const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
+
+                    // --- Nombres legibles para métodos de pago ---
+                    const methodLabel = (m) => {
+                        const map = {
+                            'PAGO MOVIL': 'Pago Móvil',
+                            'TRANSFERENCIA': 'Transferencia',
+                            'DEBITO INMEDIATO': 'Débito Inmediato',
+                            'EFECTIVO': 'Efectivo',
+                            'ZELLE': 'Zelle',
+                            'DEPOSITO': 'Depósito'
+                        };
+                        return map[m] || m;
+                    };
 
                     // --- Texto del desglose ---
                     const bancosSorted = Object.entries(byBank).sort((a, b) => b[1].totalUsd - a[1].totalUsd);
                     let desglose = '';
                     bancosSorted.forEach(([banco, d]) => {
-                        const metodos = Object.entries(d.methods).map(([m, c]) => `${m} × ${c}`).join(', ');
-                        desglose += `\n🏦 **${banco}**: $${d.totalUsd.toFixed(2)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} *(${d.count} pago(s) — ${metodos})*`;
+                        const metodos = Object.entries(d.methods)
+                            .map(([m, c]) => `${methodLabel(m)}: ${c}`)
+                            .join(' | ');
+                        desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${d.totalUsd.toFixed(2)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
                     });
 
                     // --- Stats para la tarjeta visual (máx 5 bancos) ---
@@ -1986,10 +2021,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }));
                     stats.push({ label: '📊 Total de pagos', value: totalPagos });
 
-                    const filtroResumen = bankFilter ? ` — Filtro: ${bankFilter}` : '';
+                    const filtroResumen = bankFilter ? ` — Filtro: **${bankFilter}**` : '';
 
                     return {
-                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos hoy *(${fechaFormateada})*${filtroResumen}:\n${desglose}\n\n💰 **Total del día: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**\n\n*Nota: Este reporte refleja los pagos cargados en el sistema hasta este momento.*`,
+                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos hoy **${fechaFormateada}**${filtroResumen}:\n${desglose}\n\n💰 **Total del día: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**\n\n**Nota:** Este reporte refleja los pagos cargados en el sistema hasta este momento.`,
                         isCard: true,
                         cardData: {
                             title: '💳 Ingresos del Día por Banco',
