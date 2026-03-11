@@ -38,6 +38,26 @@ const sendToN8nLog = async (logData) => {
     }
 };
 
+// Nueva función unificada para registrar en local y n8n
+const registerUnansweredQuery = (query, userName, currentPage) => {
+    const logEntry = {
+        pregunta: query,
+        fecha: new Date().toLocaleString(),
+        usuario: userName || "Usuario",
+        seccion: currentPage || "Chatbot"
+    };
+
+    // 1. Guardar localmente
+    try {
+        const unansweredLog = JSON.parse(localStorage.getItem('ai_training_log') || '[]');
+        unansweredLog.push(logEntry);
+        localStorage.setItem('ai_training_log', JSON.stringify(unansweredLog.slice(-50)));
+    } catch (e) { console.error("Error saving local log", e); }
+
+    // 2. Enviar a n8n
+    sendToN8nLog(logEntry);
+};
+
 const getCycleLabel = (val) => {
     const mapped = mapCycleValue(val);
     if (mapped === "N/A") return "N/A";
@@ -999,9 +1019,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             // ... (resto de interceptores locales si existen)
 
-            if (customMessage && (intent === 'SALUDO' || intent === 'AGRADECIMIENTO' || intent === 'GUIA_APP' || intent === 'CONTEXTO_APP' || intent === 'UNKNOWN')) {
+            if (customMessage && (intent === 'SALUDO' || intent === 'AGRADECIMIENTO' || intent === 'GUIA_APP' || intent === 'CONTEXTO_APP')) {
                 return { text: customMessage, isCard: false };
             }
+            // Si es UNKNOWN y hay customMessage, dejamos que siga para que se registre en el log al final
         }
 
         // --- 1.1 INTERCEPTOR DE DESAMBIGUACIÓN (Nombres que son Sectores) ---
@@ -1301,6 +1322,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             };
                         } else {
                             // FALLBACK SEGURO: BAJA CONFIANZA -> Abortar en vez de buscar amplio
+                            registerUnansweredQuery(query, userName, currentPage);
                             return {
                                 text: `Disculpa, pero no encuentro ningún urbanismo o sector llamado "${parameters.urbanismo}" en mis registros. ¿Podrías indicarme el nombre exacto o verificar si está bien escrito?`,
                                 isCard: false
@@ -1463,6 +1485,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             }
                         };
                     } else {
+                        registerUnansweredQuery(query, userName, currentPage);
                         return { text: `El sistema indica que el número **${nro}** no coincide con ningún Contrato o Cédula en nuestros registros.`, isCard: false };
                     }
                 }
@@ -1577,6 +1600,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
+                registerUnansweredQuery(query, userName, currentPage);
                 return { text: `Lo siento ${userName}, no encontré ningún cliente que coincida con esos nombres.`, isCard: false };
             }
 
@@ -1808,22 +1832,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'UNKNOWN':
             default: {
                 // Registrar consulta no respondida (LOG DE ENTRENAMIENTO sugerido por el jefe)
-                const logEntry = {
-                    pregunta: query,
-                    fecha: new Date().toLocaleString(),
-                    usuario: userName,
-                    seccion: currentPage || "Chatbot"
-                };
-
-                // 1. Guardar localmente
-                try {
-                    const unansweredLog = JSON.parse(localStorage.getItem('ai_training_log') || '[]');
-                    unansweredLog.push(logEntry);
-                    localStorage.setItem('ai_training_log', JSON.stringify(unansweredLog.slice(-50)));
-                } catch (e) { console.error("Error saving local log", e); }
-
-                // 2. Enviar a n8n para Base de Datos centralizada
-                sendToN8nLog(logEntry);
+                registerUnansweredQuery(query, userName, currentPage);
 
                 return {
                     text: `Lo siento Sr. ${userName}, mi Inteligencia Artificial no logró procesar esa solicitud específica sobre "${query}". He anotado tu consulta en mi **log de entrenamiento** para que mis desarrolladores puedan enseñarme a responderla pronto.\n\n¿Deseas intentar con una búsqueda de cliente, sector o ver los indicadores generales?`,
