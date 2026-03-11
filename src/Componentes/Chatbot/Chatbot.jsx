@@ -134,20 +134,62 @@ const Chatbot = () => {
         }
     };
 
-    // Helper para renderizar negritas (**) y saltos de línea (\n)
+    // Helper para renderizar negritas (**), saltos de línea (\n) y TABLAS markdown
     const renderFormattedText = (text) => {
         if (!text) return null;
-        return text.split("\n").map((line, i) => (
-            <React.Fragment key={i}>
-                {line.split(/(\*\*.*?\*\*)/).map((part, j) => {
-                    if (part.startsWith("**") && part.endsWith("**")) {
-                        return <strong key={j}>{part.slice(2, -2)}</strong>;
-                    }
-                    return part;
-                })}
-                {i < text.split("\n").length - 1 && <br />}
-            </React.Fragment>
-        ));
+
+        // Detectar si hay una tabla en el texto (| col | col |)
+        const parts = text.split(/(\|[^\n]+\|\n\|[ \-:|]+\|\n(?:\|[^\n]+\|\n?)+)/);
+
+        return parts.map((part, i) => {
+            // Si es una tabla, la procesamos
+            if (part.startsWith('|') && part.includes('\n|')) {
+                const lines = part.trim().split('\n');
+                const header = lines[0].split('|').filter(cell => cell.trim().length > 0);
+                const body = lines.slice(2).map(line => line.split('|').filter(cell => cell.trim().length > 0));
+
+                return (
+                    <div className="chat-table-container" key={i}>
+                        <table>
+                            <thead>
+                                <tr>
+                                    {header.map((h, index) => <th key={index}>{h.trim()}</th>)}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {body.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        {row.map((cell, cellIndex) => (
+                                            <td key={cellIndex}>
+                                                {cell.trim().split(/(\*\*.*?\*\*)/).map((p, k) => {
+                                                    if (p.startsWith("**") && p.endsWith("**")) {
+                                                        return <strong key={k}>{p.slice(2, -2)}</strong>;
+                                                    }
+                                                    return p;
+                                                })}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            }
+
+            // Si es texto normal, procesamos negritas y saltos de línea
+            return part.split("\n").map((line, j) => (
+                <React.Fragment key={`${i}-${j}`}>
+                    {line.split(/(\*\*.*?\*\*)/).map((segment, k) => {
+                        if (segment.startsWith("**") && segment.endsWith("**")) {
+                            return <strong key={k}>{segment.slice(2, -2)}</strong>;
+                        }
+                        return segment;
+                    })}
+                    {j < part.split("\n").length - 1 && <br />}
+                </React.Fragment>
+            ));
+        });
     };
 
     return (
