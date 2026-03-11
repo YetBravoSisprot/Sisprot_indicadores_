@@ -249,48 +249,64 @@
   }
 }
 
-/* OPTIMIZACIÓN PARA MODO HORIZONTAL (LANDSCAPE) EN MÓVILES */
-@media (max-height: 500px) and (orientation: landscape) {
+/* OPTIMIZACIÓN AGRESIVA PARA MODO HORIZONTAL (LANDSCAPE) EN MÓVILES */
+@media (max-height: 600px) and (orientation: landscape) {
   .page-not-found {
-    padding-top: 10px;
+    padding-top: 5px !important;
   }
 
   .report-header-info {
-    margin-bottom: 5px;
+    margin-bottom: 2px !important;
+    flex-direction: row !important;
+    gap: 15px !important;
+  }
+
+  .author-text {
+    display: none !important; /* Ocultar texto para ganar espacio */
   }
 
   .company-logo {
-    max-width: 80px; /* Logo miniatura en horizontal */
-    margin-bottom: 5px;
+    max-width: 60px !important; /* Logo miniatura */
+    margin-bottom: 0 !important;
   }
 
   .report-title {
-    font-size: 1rem;
-    margin: 10px auto;
+    font-size: 0.9rem !important;
+    margin: 5px auto !important;
   }
 
   .access-credentials-card {
-    padding: 10px 15px;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    padding: 8px 12px !important;
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+    border-radius: 10px !important;
   }
 
   .credentials-header {
-    margin-bottom: 10px;
-    padding-bottom: 5px;
+    margin-bottom: 5px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .credentials-header h4 {
+    font-size: 0.9rem !important;
   }
 
   .credential-item {
-    margin-bottom: 5px;
-    padding: 5px 10px;
-    flex-direction: row !important; /* Volvemos a fila porque hay ancho */
-    justify-content: space-between;
+    margin-bottom: 3px !important;
+    padding: 4px 8px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  .credential-value {
+    font-size: 0.8rem !important;
   }
 
   .iframe-wrapper {
-    min-height: 320px; /* Más altura aprovechando el ancho */
+    min-height: 380px !important; /* Más altura aprovechando el ancho */
   }
 }
+
 
 /* Estilos para los títulos de los informes de Power BI */
 .report-title {
