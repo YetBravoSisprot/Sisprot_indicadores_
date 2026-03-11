@@ -20,6 +20,25 @@ function PageNotFound() {
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
         
+        {/* Sección de Credenciales de Acceso */}
+        <div className="access-credentials-card">
+          <div className="credentials-header">
+            <span style={{ fontSize: '1.5rem' }}>🔐</span>
+            <h4>Credenciales de Acceso Corporativo</h4>
+          </div>
+          <div className="credential-item">
+            <span className="credential-label">Usuario:</span>
+            <span className="credential-value">ybravo@sisprotgf.com</span>
+          </div>
+          <div className="credential-item">
+            <span className="credential-label">Contraseña:</span>
+            <span className="credential-value">Qwerty#2501.</span>
+          </div>
+          <span className="access-note">
+            * Use estos datos si el sistema solicita inicio de sesión para visualizar los tableros.
+          </span>
+        </div>
+
         {/* Aviso de Rotación para Móviles */}
         <div className="mobile-rotation-notice">
           <span className="notice-icon">📱🔄</span>
