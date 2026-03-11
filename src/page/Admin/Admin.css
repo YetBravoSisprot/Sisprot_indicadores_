@@ -1109,66 +1109,75 @@
   animation-delay: 0.2s;
 }
 
-.training-floating-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 1000;
+.admin-tool-card {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 50px;
-  color: #fff;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(59, 130, 246, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 180px;
 }
 
-.training-floating-btn:hover {
-  transform: translateY(-5px) scale(1.05);
-  border-color: #3b82f6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
+.admin-tool-card:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.3);
 }
 
-.floating-icon {
+.tool-icon-wrapper {
+  position: relative;
   font-size: 1.8rem;
-  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.floating-label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #94a3b8;
-  transition: color 0.3s ease;
-}
-
-.training-floating-btn:hover .floating-label {
-  color: #3b82f6;
-}
-
-.floating-orbit {
+.pulse-dot {
   position: absolute;
-  top: -2px;
-  left: -2px;
+  top: 0;
   right: -2px;
-  bottom: -2px;
-  border-radius: 50px;
-  border: 2px solid transparent;
-  border-top-color: #3b82f6;
-  border-bottom-color: #9333ea;
-  animation: spin 3s linear infinite;
-  opacity: 0.5;
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse 2s infinite;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.tool-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.tool-status {
+  font-size: 0.7rem;
+  color: #3b82f6;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 640px) {
+  .admin-tool-card {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Training Modal Styles */
