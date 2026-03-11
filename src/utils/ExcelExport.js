@@ -53,16 +53,17 @@ export const exportToExcel = (dataset, appliedFiltersText = [], selectedColumns 
             Cedula: cliente.client_identification,
             IP: service.ip || "",
             MAC: service.mac || "",
-            Fecha_Creación: created_at_raw ? created_at_raw.slice(0, 10) : "",
+            "Caja NAP": cliente.nap_box_name || "N/A",
+            Fecha_Creación: created_at_raw ? created_at_raw.slice(0, 10) : "N/A",
             "Días Hábiles": diasHabiles,
             Tipo_Cliente: cliente.client_type_name,
             Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
             _costRaw: parseFloat(cliente.plan?.cost || 0),  // Campo interno para cálculos
         };
     }).filter(row => {
-        return !Object.values(row).some(val =>
-            val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
-        );
+        // Solo excluir si el nombre del cliente explícitamente dice "PRUEBA"
+        const name = String(row.Cliente || "").toUpperCase();
+        return !name.includes("PRUEBA");
     });
 
     // Ordenar por días hábiles descendente
