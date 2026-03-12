@@ -403,7 +403,7 @@
     border-radius: 16px;
     padding: 20px;
     margin-top: 10px;
-    width: 260px;
+    width: 300px; /* Increased from 260px */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -449,14 +449,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 12px; /* Slightly reduced gap */
     font-size: 0.9rem;
     color: #e2e8f0;
     background: rgba(255, 255, 255, 0.05);
-    padding: 12px 16px;
+    padding: 10px 14px; /* Slightly reduced padding */
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: background 0.2s ease;
+    flex-wrap: wrap; /* Allow wrapping for long values */
 }
 
 .stat-item:hover {
@@ -473,9 +474,10 @@
     text-align: right;
     font-weight: 800;
     color: #fff;
-    font-size: 1rem;
-    white-space: nowrap; /* Evita que el símbolo $ se baje */
+    font-size: 0.95rem; /* Slightly reduced */
+    white-space: normal; /* Allow wrapping if needed */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    word-break: break-all;
 }
 
 .card-download-btn {
