@@ -436,6 +436,7 @@ ${allSectionsContext}
 
 Actualmente el usuario se encuentra físicamente en la sección: "${context ? context.name : 'Desconocida'}".`;
 
+    const todayDate = new Date().toLocaleDateString('en-CA');
     const systemPrompt = `NO DEBES INVENTAR DATOS NUMÉRICOS. Tu tarea es doble: 
 1. Identificar la intención y parámetros técnicos para que el sistema busque la data.
 2. Redactar una respuesta humana, amable y contextualizada en el campo "message".
@@ -465,8 +466,28 @@ INTENCIONES DISPONIBLES:
   * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
-- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "bnc_account": "Juridica" | "Personal"}. 
+- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "bnc_account": "Juridica" | "Personal"}. 
   * REGLA BNC: Si preguntan por "BNC" sin especificar si es Jurídica o Personal, el sistema deberá clarificar.
+  * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${todayDate}). Si dicen un rango, extrae ambas fechas.
+- UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
+- AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
+- BUSCAR_CONTRATO: El usuario te da un NÚMERO DE CONTRATO (ID) para buscar un perfil. Parámetro: {"contrato": "1234"}.
+- BUSCAR_CEDULA: El usuario te da un NÚMERO DE CÉDULA o IDENTIDAD para buscar un perfil. Parámetro: {"cedula": "12345678"}.
+- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". 
+  * REGLA: Si el usuario da nombre y apellido (Ej: "Juan Perez"), trátalo como UN SOLO NOMBRE. No los separes por comas a menos que sean personas distintas.
+  * Parámetros: Devuélvelos en un array llamado "nombres". Ej: {"nombres": ["Juan Perez", "Maria Lopez"]}. NO uses esto para nombres de sectores urbanos.
+- ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
+- PLANES: El usuario pregunta por los planes o paquetes más vendidos.
+- TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
+- SALUDO: El usuario solo está saludando ("hola", "buenos días").
+- AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
+- GUIA_APP: El usuario pregunta para qué sirve la app.
+- SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE, O VER EL DETALLE/PERFIL) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?", "muestrame su detalle". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda" | "perfil"}
+  * MÁXIMA REGLA: Frases iniciales vagas como "necesito saber informacion de un cliente", "buscame a alguien", o "quiero saber un dato" NO SON SEGUIMIENTO. Si no te pregunta expresamente por el plan, el ciclo, el teléfono, la dirección, la deuda o la red, elije BUSQUEDA_VAGA u otro.
+  * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
+- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
+- CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
+- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD"}. 
   * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${new Date().toLocaleDateString('en-CA')}). Si dicen un rango, extrae ambas fechas.
 - UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
 
@@ -923,20 +944,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     } else if (normQuery.includes("ambos") || normQuery.includes("los dos") || normQuery.includes("todo")) {
                         intent = 'AMBOS_METRICAS';
                         parameters = savedParameters;
-                        fromClarification = true;
-                    }
-                }
-
-                // Interceptor 4.1: Clarificación de Cuenta BNC
-                if (lastBotMsg.contextType === 'clarify_bnc_account' && lastBotMsg.cardData) {
-                    const normQuery = query.toLowerCase();
-                    let chosenAccount = null;
-                    if (normQuery.includes("juridica") || normQuery.includes("empresa") || normQuery.includes("negocio")) chosenAccount = "Juridica";
-                    else if (normQuery.includes("personal") || normQuery.includes("propia") || normQuery.includes("natural")) chosenAccount = "Personal";
-
-                    if (chosenAccount) {
-                        intent = 'INGRESOS_BANCOS';
-                        parameters = { ...lastBotMsg.cardData.savedParameters, bnc_account: chosenAccount };
                         fromClarification = true;
                     }
                 }
@@ -1972,26 +1979,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const methodFilter = parameters?.metodo || null;
                     const startDate = parameters?.startDate || null;
                     const endDate = parameters?.endDate || null;
-                    const bncAccount = parameters?.bnc_account || null;
-
-                    // --- REGLA DE CLARIFICACIÓN BNC ---
-                    if (bankFilter && normalizeText(bankFilter).includes("bnc") && !bncAccount) {
-                        return {
-                            text: `He detectado que buscas información del **BNC**, ${userName}. Tenemos 3 cuentas registradas hoy. \n\n¿Deseas consultar la cuenta **Jurídica** o la **Personal**?`,
-                            isCard: false,
-                            contextType: 'clarify_bnc_account',
-                            cardData: { savedParameters: parameters }
-                        };
-                    }
 
                     const { payments, startDate: sDate, endDate: eDate } = await fetchBankPayments(bankFilter, methodFilter, startDate, endDate);
-
-                    // Filtrar localmente por cuenta de BNC si aplica (esto asume que el nombre del banco en la API indica el tipo de cuenta)
-                    let filteredPayments = payments;
-                    if (bncAccount) {
-                        const accountTerm = normalizeText(bncAccount);
-                        filteredPayments = payments.filter(p => normalizeText(p.bank_name || '').includes(accountTerm));
-                    }
 
                     const formatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
                     const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
@@ -2001,9 +1990,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         ? `el **${startLabel}**` 
                         : `desde el **${startLabel}** hasta el **${endLabel}**`;
 
-                    if (filteredPayments.length === 0) {
+                    if (payments.length === 0) {
                         let filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
-                        if (bncAccount) filtroMsg += ` (${bncAccount})`;
                         return {
                             text: `Revisé el sistema de cobros ${userName} y no encontré pagos registrados ${labelFecha}${filtroMsg}.\n\n¿Deseas que consulte otro banco o fecha?`,
                             isCard: false
@@ -2011,7 +1999,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     // --- Agrupar por banco ---
-                    const byBank = filteredPayments.reduce((acc, p) => {
+                    const byBank = payments.reduce((acc, p) => {
                         const banco = p.bank_name || 'Desconocido';
                         if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
                         acc[banco].count++;
@@ -2023,9 +2011,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }, {});
 
                     // --- Totales globales ---
-                    const totalPagos = filteredPayments.length;
-                    const totalUsd = filteredPayments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
-                    const totalBs = filteredPayments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
+                    const totalPagos = payments.length;
+                    const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
+                    const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
 
                     // --- Nombres legibles para métodos de pago ---
                     const methodLabel = (m) => {
@@ -2057,10 +2045,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }));
                     stats.push({ label: '📊 Total de pagos', value: totalPagos });
 
-                    const bncSuffix = bncAccount ? ` (${bncAccount})` : '';
-
                     return {
-                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos ${labelFecha}${bncSuffix}:\n${desglose}\n\n💰 **Total: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**`,
+                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos ${labelFecha}:\n${desglose}\n\n💰 **Total: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**`,
                         isCard: true,
                         cardData: {
                             title: `💳 Ingresos Bancarios`,
