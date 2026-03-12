@@ -38,20 +38,23 @@ const sendToN8nLog = async (logData) => {
     }
 };
 
-// ─── PAGOS BANCARIOS: Fetch de cobros del día actual ───────────────────────
-const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) => {
+// ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
+const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDate = null, endDate = null) => {
     const PAYMENTS_URL = "https://api.sisprotgf.com/api/public/payments/payment_company/";
     const TOKEN = process.env.REACT_APP_PAYMENTS_API_KEY;
 
-    // Fecha local en formato YYYY-MM-DD (Venezuela UTC-4)
+    // Si no hay fecha, usamos hoy por defecto (retrocompatibilidad)
     const nowLocal = new Date();
-    const today = nowLocal.toLocaleDateString('en-CA'); // Ej: "2026-03-11"
+    const today = nowLocal.toLocaleDateString('en-CA'); 
 
-    let allTodayPayments = [];
-    let nextUrl = `${PAYMENTS_URL}?page_size=500`;
+    const start = startDate || today;
+    const end = endDate || today;
+
+    let allPayments = [];
+    let nextUrl = `${PAYMENTS_URL}?page_size=500&created_at_after=${start}&created_at_before=${end}`;
     let iterations = 0;
 
-    while (nextUrl && iterations < 8) {
+    while (nextUrl && iterations < 15) { // Aumentamos iteraciones para rangos más largos
         const response = await fetch(nextUrl, {
             headers: {
                 'x-api-key': TOKEN,
@@ -64,14 +67,10 @@ const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) =>
         }
 
         const raw = await response.json();
-        // La API puede devolver un array con un objeto o el objeto directamente
         const pageData = Array.isArray(raw) ? raw[0] : raw;
         const results = pageData.results || [];
 
-        // Filtramos solo los pagos de hoy
-        const todayResults = results.filter(p => p.amount_data?.date === today);
-
-        // Mapa de siglas → nombre completo para resolver filtros por acrónimo
+        // Mapa de siglas → nombre completo
         const bankAcronymMap = {
             'BNC': 'banco nacional de credito',
             'BDV': 'banco de venezuela',
@@ -91,22 +90,18 @@ const fetchTodayBankPayments = async (bankFilter = null, methodFilter = null) =>
             ? (bankAcronymMap[normalizeText(bankFilter).toUpperCase()] || normalizeText(bankFilter))
             : null;
 
-        // Aplicar filtro opcional por banco
-        const filtered = todayResults.filter(p => {
+        const filtered = results.filter(p => {
             const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
             const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
             return bankOk && methodOk;
         });
 
-        allTodayPayments = [...allTodayPayments, ...filtered];
-
-        // Si encontramos registros de días anteriores, ya no hay más de hoy en páginas siguientes
-        const hitsPastDate = results.some(p => (p.amount_data?.date || '') < today);
-        nextUrl = (!hitsPastDate && pageData.next) ? pageData.next : null;
+        allPayments = [...allPayments, ...filtered];
+        nextUrl = pageData.next || null;
         iterations++;
     }
 
-    return { payments: allTodayPayments, date: today };
+    return { payments: allPayments, startDate: start, endDate: end };
 };
 
 // Nueva función unificada para registrar en local y n8n
@@ -470,7 +465,9 @@ INTENCIONES DISPONIBLES:
   * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
-- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos HOY por banco, movimientos bancarios del día, o ingresos reales registrados en el sistema de cobros. Palabras clave: "bancos", "cobros de hoy", "pagos de hoy", "ingresos por banco", "cuánto entraron hoy", "movimientos". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE"}. IMPORTANTE: Este intent es para pagos REALES ya registrados (no proyectados). Es DIFERENTE al intent INGRESOS que es para ingresos PROYECTADOS por planes.
+- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "bnc_account": "Juridica" | "Personal"}. 
+  * REGLA BNC: Si preguntan por "BNC" sin especificar si es Jurídica o Personal, el sistema deberá clarificar.
+  * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${new Date().toLocaleDateString('en-CA')}). Si dicen un rango, extrae ambas fechas.
 - UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
 
 REGLA DE ORO PARA URBANISMOS: 
@@ -926,6 +923,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     } else if (normQuery.includes("ambos") || normQuery.includes("los dos") || normQuery.includes("todo")) {
                         intent = 'AMBOS_METRICAS';
                         parameters = savedParameters;
+                        fromClarification = true;
+                    }
+                }
+
+                // Interceptor 4.1: Clarificación de Cuenta BNC
+                if (lastBotMsg.contextType === 'clarify_bnc_account' && lastBotMsg.cardData) {
+                    const normQuery = query.toLowerCase();
+                    let chosenAccount = null;
+                    if (normQuery.includes("juridica") || normQuery.includes("empresa") || normQuery.includes("negocio")) chosenAccount = "Juridica";
+                    else if (normQuery.includes("personal") || normQuery.includes("propia") || normQuery.includes("natural")) chosenAccount = "Personal";
+
+                    if (chosenAccount) {
+                        intent = 'INGRESOS_BANCOS';
+                        parameters = { ...lastBotMsg.cardData.savedParameters, bnc_account: chosenAccount };
                         fromClarification = true;
                     }
                 }
@@ -1959,23 +1970,48 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 try {
                     const bankFilter = parameters?.banco || null;
                     const methodFilter = parameters?.metodo || null;
+                    const startDate = parameters?.startDate || null;
+                    const endDate = parameters?.endDate || null;
+                    const bncAccount = parameters?.bnc_account || null;
 
-                    const { payments, date } = await fetchTodayBankPayments(bankFilter, methodFilter);
-
-                    const fechaFormateada = new Date(date + 'T12:00:00').toLocaleDateString('es-VE', {
-                        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-                    });
-
-                    if (payments.length === 0) {
-                        const filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
+                    // --- REGLA DE CLARIFICACIÓN BNC ---
+                    if (bankFilter && normalizeText(bankFilter).includes("bnc") && !bncAccount) {
                         return {
-                            text: `Revisé el sistema de cobros ${userName} y por el momento no hay pagos registrados hoy${filtroMsg} (**${fechaFormateada}**).\n\nEs posible que los estados de cuenta aún no se hayan cargado. ¿Deseas que consulte otra cosa?`,
+                            text: `He detectado que buscas información del **BNC**, ${userName}. Tenemos 3 cuentas registradas hoy. \n\n¿Deseas consultar la cuenta **Jurídica** o la **Personal**?`,
+                            isCard: false,
+                            contextType: 'clarify_bnc_account',
+                            cardData: { savedParameters: parameters }
+                        };
+                    }
+
+                    const { payments, startDate: sDate, endDate: eDate } = await fetchBankPayments(bankFilter, methodFilter, startDate, endDate);
+
+                    // Filtrar localmente por cuenta de BNC si aplica (esto asume que el nombre del banco en la API indica el tipo de cuenta)
+                    let filteredPayments = payments;
+                    if (bncAccount) {
+                        const accountTerm = normalizeText(bncAccount);
+                        filteredPayments = payments.filter(p => normalizeText(p.bank_name || '').includes(accountTerm));
+                    }
+
+                    const formatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                    const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    
+                    const labelFecha = sDate === eDate 
+                        ? `el **${startLabel}**` 
+                        : `desde el **${startLabel}** hasta el **${endLabel}**`;
+
+                    if (filteredPayments.length === 0) {
+                        let filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
+                        if (bncAccount) filtroMsg += ` (${bncAccount})`;
+                        return {
+                            text: `Revisé el sistema de cobros ${userName} y no encontré pagos registrados ${labelFecha}${filtroMsg}.\n\n¿Deseas que consulte otro banco o fecha?`,
                             isCard: false
                         };
                     }
 
                     // --- Agrupar por banco ---
-                    const byBank = payments.reduce((acc, p) => {
+                    const byBank = filteredPayments.reduce((acc, p) => {
                         const banco = p.bank_name || 'Desconocido';
                         if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
                         acc[banco].count++;
@@ -1987,9 +2023,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }, {});
 
                     // --- Totales globales ---
-                    const totalPagos = payments.length;
-                    const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
-                    const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
+                    const totalPagos = filteredPayments.length;
+                    const totalUsd = filteredPayments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
+                    const totalBs = filteredPayments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
 
                     // --- Nombres legibles para métodos de pago ---
                     const methodLabel = (m) => {
@@ -2021,15 +2057,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }));
                     stats.push({ label: '📊 Total de pagos', value: totalPagos });
 
-                    const filtroResumen = bankFilter ? ` — Filtro: **${bankFilter}**` : '';
+                    const bncSuffix = bncAccount ? ` (${bncAccount})` : '';
 
                     return {
-                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos hoy **${fechaFormateada}**${filtroResumen}:\n${desglose}\n\n💰 **Total del día: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**\n\n**Nota:** Este reporte refleja los pagos cargados en el sistema hasta este momento.`,
+                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos ${labelFecha}${bncSuffix}:\n${desglose}\n\n💰 **Total: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**`,
                         isCard: true,
                         cardData: {
-                            title: '💳 Ingresos del Día por Banco',
+                            title: `💳 Ingresos Bancarios`,
                             value: `$${totalUsd.toFixed(2)} USD`,
-                            subtitle: `${totalPagos} pagos registrados hoy`,
+                            subtitle: `${totalPagos} pagos registrados`,
                             color: '#2ecc71',
                             stats
                         }
@@ -2037,7 +2073,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 } catch (bankErr) {
                     console.error('Error INGRESOS_BANCOS:', bankErr);
                     return {
-                        text: `Lo siento ${userName}, ocurrió un error al consultar los cobros bancarios del día: *${bankErr.message}*.\n\nVerifica la conexión o intenta de nuevo en unos minutos.`,
+                        text: `Lo siento ${userName}, ocurrió un error al consultar los cobros: *${bankErr.message}*.`,
                         isCard: false
                     };
                 }
