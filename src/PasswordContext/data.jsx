@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5286,
+  "count": 5287,
   "results": [
     {
       "id": 3063,
@@ -4935,8 +4935,8 @@ const largeArraydata =
       "id": 3235,
       "client_name": "NERIO ANTONIO BARRETO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "El Paraiso",
@@ -26162,7 +26162,16 @@ const largeArraydata =
       "client_identification": "V26213260",
       "nap_box_name": "CTO-0637",
       "created_at": "2024-04-20T08:35:38.003761",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12039,
+        "ip": "172.31.7.2",
+        "mac": "TPLGB446E907",
+        "serial": "TPLGB446E907",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-03-11T18:35:58.579284",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -93855,8 +93864,8 @@ const largeArraydata =
       "id": 6399,
       "client_name": "LUIS ALEXANDER PEREZ GUZMAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Prados I",
@@ -116868,13 +116877,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1118",
       "created_at": "2024-12-04T17:26:31.610939",
       "service_detail": {
-        "id": 7360,
+        "id": 12036,
         "ip": "10.11.177.2",
         "mac": "HWTC48080120",
-        "serial": "HWTC48080120 (PW155)",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
+        "serial": "HWTC48080120",
+        "queue": null,
         "interface": "VLAN283_PARAGUATAN",
-        "created_at": "2024-12-05T18:06:32.020307",
+        "created_at": "2026-03-11T16:28:13.365912",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -137655,13 +137664,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-05-06T11:57:12.389940",
       "service_detail": {
-        "id": 12034,
+        "id": 12038,
         "ip": "10.13.236.2",
         "mac": "VSOL00A6E512",
         "serial": "VSOL00A6E512",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-03-11T16:12:55.335296",
+        "created_at": "2026-03-11T16:58:01.501376",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -148230,7 +148239,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04243268236",
+      "client_mobile": "04124599892",
       "address": "URB VISTA HERMOSA CALLE D, CASA D12, CALLE CONCEPCION, SECTOR LA JULIA, ZONA POSTAL 2115",
       "client_identification": "V15032487",
       "nap_box_name": "503",
@@ -160641,6 +160650,39 @@ const largeArraydata =
       "nap_box_name": "CTO-00021",
       "created_at": "2026-03-10T15:19:53.992636",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9007,
+      "client_name": "YORGLEIDER MARQUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Valle Paraiso",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243101822",
+      "address": "‎URBANIZACIÓN VALLE PARAISO, LOTE 5, CASA 5, TURMERO, MUNICIPIO MARIÑO, ESTADO",
+      "client_identification": "V15926496",
+      "nap_box_name": "CTO-00598",
+      "created_at": "2026-03-11T16:41:25.980680",
+      "service_detail": {
+        "id": 12037,
+        "ip": "10.16.209.2",
+        "mac": "4C46d15C94A1",
+        "serial": "VSOL005C94A1",
+        "queue": null,
+        "interface": "VLAN227_V_PARAISO_OLT1",
+        "created_at": "2026-03-11T16:48:42.656705",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
