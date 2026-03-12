@@ -71,6 +71,17 @@ function PageNotFound() {
           ></iframe>
         </div>
 
+        {/* Informe NUEVO: Encuesta de Satisfacción */}
+        <h3 className="report-title">Encuesta de Satisfacción</h3>
+        <div className="iframe-wrapper">
+          <iframe
+            title="Encuesta de Satisfacción"
+            src="https://app.powerbi.com/reportEmbed?reportId=d33fc88a-e54a-4419-b7da-1842085483c9&pageName=f13b3b732a3cecbf2ef9&autoAuth=true&experience=power-bi"
+            frameBorder="0"
+            allowFullScreen={true}
+          ></iframe>
+        </div>
+
         {/* Informe 2: Ingresos Diarios */}
         <h3 className="report-title">Ingresos Diarios</h3>
         <div className="iframe-wrapper">
