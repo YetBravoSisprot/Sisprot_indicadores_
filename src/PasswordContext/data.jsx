@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5287,
+  "count": 5291,
   "results": [
     {
       "id": 3063,
@@ -46263,11 +46263,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243786155",
       "address": "AV 1 CASA NRO 676 URB MATA CABALLO ROSARIO DE PAYA TURMERO",
@@ -50013,11 +50013,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Vallecito",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124696164",
       "address": "CALLE LA CEIBA CASA NRO. 04 URBANIZACIÓN COLINAS DE VALLECITO ROSARIO DE PAYA",
@@ -58782,13 +58782,13 @@ const largeArraydata =
       "nap_box_name": "299",
       "created_at": "2024-07-09T16:19:52.462185",
       "service_detail": {
-        "id": 12010,
+        "id": 12044,
         "ip": "172.30.184.2",
-        "mac": "OEMT3c620712",
-        "serial": "OEMT3c620712",
+        "mac": "OEMT3C620712",
+        "serial": "OEMT3C620712",
         "queue": null,
         "interface": "VLAN132_VALLE_ROSARIO",
-        "created_at": "2026-03-09T10:14:17.896454",
+        "created_at": "2026-03-12T14:44:41.633406",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -90606,13 +90606,13 @@ const largeArraydata =
       "nap_box_name": "88",
       "created_at": "2024-08-07T09:37:46.117157",
       "service_detail": {
-        "id": 4334,
+        "id": 12043,
         "ip": "172.31.53.2",
         "mac": "OEMT3C622FFE",
         "serial": "OEMT3C622FFE",
-        "queue": "Plan_92036_15811_WispHub",
+        "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2024-08-09T11:10:10.354816",
+        "created_at": "2026-03-12T14:07:22.111975",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -102159,8 +102159,8 @@ const largeArraydata =
       "id": 6695,
       "client_name": "OJAIRA ADONIS HERNANDEZ CANALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -135183,8 +135183,8 @@ const largeArraydata =
       "id": 7999,
       "client_name": "DORA DEL VALLE BARRIOS RIVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Los Nisperos",
@@ -137664,13 +137664,13 @@ const largeArraydata =
       "nap_box_name": "CE - 771",
       "created_at": "2025-05-06T11:57:12.389940",
       "service_detail": {
-        "id": 12038,
+        "id": 12041,
         "ip": "10.13.236.2",
         "mac": "VSOL00A6E512",
         "serial": "VSOL00A6E512",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-03-11T16:58:01.501376",
+        "created_at": "2026-03-12T13:15:41.340290",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160683,6 +160683,102 @@ const largeArraydata =
         "created_at": "2026-03-11T16:48:42.656705",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9008,
+      "client_name": "PRUEBA FREDDY FREDDY",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129950904",
+      "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
+      "client_identification": "V28458411",
+      "nap_box_name": "CTO-00038",
+      "created_at": "2026-03-12T13:39:22.144561",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9009,
+      "client_name": "PRUEBA FREDDY FREDDY",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129950904",
+      "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
+      "client_identification": "V28458411",
+      "nap_box_name": "CTO-00038",
+      "created_at": "2026-03-12T13:44:12.357970",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9010,
+      "client_name": "PRUEBA FREDDY FREDDY",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129950904",
+      "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
+      "client_identification": "V28458411",
+      "nap_box_name": "CTO-00038",
+      "created_at": "2026-03-12T14:55:53.750468",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9011,
+      "client_name": "PRUEBA FREDDY FREDDY",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129950904",
+      "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
+      "client_identification": "V28458411",
+      "nap_box_name": "CTO-00038",
+      "created_at": "2026-03-12T14:56:46.314020",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
