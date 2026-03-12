@@ -2041,7 +2041,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // --- Stats para la tarjeta visual (máx 5 bancos) ---
                     const stats = bancosSorted.slice(0, 5).map(([banco, d]) => ({
                         label: banco.replace('Banco ', '').replace(' Banco Universal', '').substring(0, 22),
-                        value: `$${d.totalUsd.toFixed(2)} (${d.count})`
+                        value: `$${d.totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${d.count})`
                     }));
                     stats.push({ label: '📊 Total de pagos', value: totalPagos });
 
