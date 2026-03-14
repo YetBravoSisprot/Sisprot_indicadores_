@@ -114261,13 +114261,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1001",
       "created_at": "2024-11-28T14:37:14.053155",
       "service_detail": {
-        "id": 7279,
+        "id": 12051,
         "ip": "10.11.97.2",
         "mac": "HWTC48220042",
-        "serial": "HWTC48220042 (PW66)",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
+        "serial": "HWTC48220042",
+        "queue": null,
         "interface": "VLAN280_POLVORIN",
-        "created_at": "2024-12-02T07:50:31.651705",
+        "created_at": "2026-03-14T10:48:36.306453",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -146472,8 +146472,8 @@ const largeArraydata =
       "id": 8457,
       "client_name": "MARIBEL HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
