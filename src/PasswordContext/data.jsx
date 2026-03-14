@@ -34002,11 +34002,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Jabillar",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04243674171",
       "address": "JABILLAR CALLE 8 CASA NRO 15 TURMERO ARAGUA ZONA POSTAL 2115",
@@ -109890,19 +109890,19 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04128658677",
+      "client_mobile": "04144500366",
       "address": "CALLE JOSE ANTONIO PAEZ CRUCE CON CALLEJON BOLIVAR CASA NRO 6-A SECTOR EL BOSQUE ROSARIO DE PAYA ZONA POSTAL 2115",
       "client_identification": "V10753125",
       "nap_box_name": "CTO-00241",
       "created_at": "2024-11-11T13:53:08.992842",
       "service_detail": {
-        "id": 9966,
+        "id": 12052,
         "ip": "172.19.55.2",
         "mac": "HWTC48080530",
         "serial": "HWTC48080530",
         "queue": null,
         "interface": "VLAN266_EL_BOSQUE_ZTE",
-        "created_at": "2025-11-11T11:19:36.540699",
+        "created_at": "2026-03-14T13:32:51.723008",
         "created_by_name": null
       },
       "installation_invoice_cost": null
