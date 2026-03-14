@@ -445,9 +445,9 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
+- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado" | ["Status1", "Status2"], "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
   * REGLA ESPECIAL: Si el usuario pide "activos reales" o "clientes que pagan", usa status: "Activo" y tipo: ["Pyme", "Residencial"].
-- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
+- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado" | ["S1", "S2"], "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
 - AMBOS_METRICAS: El usuario pide VER TODO, o pide "conteo e ingresos", o "cuantos clientes y cuanta plata". Es el intent ideal para reportes de gerencia. Parámetros: los mismos de INGRESOS.
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
@@ -514,8 +514,7 @@ REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
 - La ruta **/Indicadores** se llama "**Lista de Clientes**" o "**Directorio**". NUNCA la llames "Sección de Indicadores" para evitar confusiones.
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
-- Si el usuario solicita ver DOS o MÁS estados al mismo tiempo (ej: "activos y suspendidos"), NO elijas uno al azar. Responde amablemente (en el campo "message") explicando que actualmente el sistema solo permite filtrar por un estado a la vez para mantener la precisión, y pregúntale cuál de los dos prefiere ver primero. En este caso, usa intent "UNKNOWN" o uno de clarificación.
-- **EXCEPCIÓN PARA TIPOS**: El sistema SI permite ver "Pyme y Residencial" (o "activos reales") al mismo tiempo si el usuario lo solicita. En este caso, el bot debe proporcionar el total sumado y, si es posible, el desglose en el mensaje.
+- **EXCEPCIÓN PARA FILTROS**: El sistema SI permite ver múltiples estados (ej: "activos y suspendidos") o múltiples tipos (ej: "pyme y residencial") al mismo tiempo si el usuario lo solicita. En estos casos, el bot debe proporcionar el total sumado y, si es posible, el desglose en el mensaje.
 REGLA DE INGRESOS (PROYECTADOS):
 - SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
 - Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.`;
@@ -655,12 +654,15 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
 
     // 1. Status
     if (parameters?.status && parameters.status !== 'Todos') {
-        const statusStr = normalizeText(parameters.status);
+        const statusParams = Array.isArray(parameters.status) ? parameters.status : [parameters.status];
+        const normalizedStatus = statusParams.map(s => normalizeText(s));
+
         filtered = filtered.filter(c => {
             const allInfoStr = normalizeText(`${c.client_subdivision || ''} ${c.status_name || ''} `);
-            return allInfoStr.includes(statusStr);
+            return normalizedStatus.some(target => allInfoStr.includes(target));
         });
-        appliedTexts.push(`Estado: ${parameters.status}`);
+
+        appliedTexts.push(`Estado: ${statusParams.join(" y ")}`);
     } else if (parameters?.status === 'Todos') {
         appliedTexts.push(`Estado: Todos`);
     }
