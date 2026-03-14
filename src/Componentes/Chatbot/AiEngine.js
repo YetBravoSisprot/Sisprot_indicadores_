@@ -445,8 +445,9 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
-- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis", "migrado": "Migrado" | "No migrado"}
+- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
+  * REGLA ESPECIAL: Si el usuario pide "activos reales" o "clientes que pagan", usa status: "Activo" y tipo: ["Pyme", "Residencial"].
+- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado", "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
 - AMBOS_METRICAS: El usuario pide VER TODO, o pide "conteo e ingresos", o "cuantos clientes y cuanta plata". Es el intent ideal para reportes de gerencia. Parámetros: los mismos de INGRESOS.
 - TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
 - AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
@@ -455,7 +456,7 @@ INTENCIONES DISPONIBLES:
 - BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". 
   * REGLA: Si el usuario da nombre y apellido (Ej: "Juan Perez"), trátalo como UN SOLO NOMBRE. No los separes por comas a menos que sean personas distintas.
   * Parámetros: Devuélvelos en un array llamado "nombres". Ej: {"nombres": ["Juan Perez", "Maria Lopez"]}. NO uses esto para nombres de sectores urbanos.
-- ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
+- ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"]}
 - PLANES: El usuario pregunta por los planes o paquetes más vendidos.
 - TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
 - SALUDO: El usuario solo está saludando ("hola", "buenos días").
@@ -514,11 +515,10 @@ REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
 - Si el usuario solicita ver DOS o MÁS estados al mismo tiempo (ej: "activos y suspendidos"), NO elijas uno al azar. Responde amablemente (en el campo "message") explicando que actualmente el sistema solo permite filtrar por un estado a la vez para mantener la precisión, y pregúntale cuál de los dos prefiere ver primero. En este caso, usa intent "UNKNOWN" o uno de clarificación.
-- Esta regla aplica también para tipos de cliente (ej: "residencial y pyme"). Siempre pide al usuario que elija uno solo para proceder.
-302: 
-303: REGLA DE INGRESOS (PROYECTADOS):
-304: - SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
-305: - Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.`;
+- **EXCEPCIÓN PARA TIPOS**: El sistema SI permite ver "Pyme y Residencial" (o "activos reales") al mismo tiempo si el usuario lo solicita. En este caso, el bot debe proporcionar el total sumado y, si es posible, el desglose en el mensaje.
+REGLA DE INGRESOS (PROYECTADOS):
+- SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
+- Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
@@ -763,9 +763,8 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     };
 
     if (parameters?.tipo) {
-        let tipoReq = normalizeText(parameters.tipo);
-        // Estandarizar "residenciales" a "residencial" para asegurar match local
-        if (tipoReq.includes('residencial')) tipoReq = 'residencial';
+        const tipoParams = Array.isArray(parameters.tipo) ? parameters.tipo : [parameters.tipo];
+        const normalizedReqs = tipoParams.map(t => normalizeText(t));
 
         filtered = filtered.filter(c => {
             let tipoCliente = null;
@@ -773,12 +772,17 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             if (!tipoCliente && c.client_type_name) tipoCliente = c.client_type_name.trim().toUpperCase();
             if (!tipoCliente) tipoCliente = "OTROS";
 
-            // Re-chequeo para asegurar estandarización en data origen
             const rawClientType = normalizeText(tipoCliente);
-            return rawClientType.includes(tipoReq);
+            // Si el requerimiento es "residencial" o similar, buscamos coincidencia parcial
+            return normalizedReqs.some(req => {
+                let r = req;
+                if (r.includes('residencial')) r = 'residencial';
+                if (r.includes('pyme')) r = 'pyme';
+                return rawClientType.includes(r);
+            });
         });
 
-        appliedTexts.push(`Tipo: ${parameters.tipo}`);
+        appliedTexts.push(`Tipo: ${tipoParams.join(" y ")}`);
     }
 
     // 6. Migrado
@@ -1301,6 +1305,48 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (isTipoIntent || intent === 'ESTADOS' || intent === 'TOTAL_CLIENTES') {
                     // If a specific type or status was requested, give direct result
                     if (appliedFiltersText.length > 0) {
+                        // CASO ESPECIAL: Desglose para reporte diario sumado (Pyme + Residencial)
+                        const isCombinedReport = Array.isArray(parameters?.tipo) && 
+                                               parameters.tipo.some(t => normalizeText(t).includes('pyme')) && 
+                                               parameters.tipo.some(t => normalizeText(t).includes('residencial'));
+
+                        if (isCombinedReport && intent === 'TOTAL_CLIENTES') {
+                            const pymes = filteredClientes.filter(c => {
+                                const t = normalizeText(c.client_subdivision || c.client_type_name || '');
+                                return t.includes('pyme');
+                            });
+                            const residenciales = filteredClientes.filter(c => {
+                                const t = normalizeText(c.client_subdivision || c.client_type_name || '');
+                                return t.includes('residencial');
+                            });
+                            
+                            const pymeRevenue = pymes.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                            const resRevenue = residenciales.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+
+                            const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                            return {
+                                text: `Claro ${userName}, aquí tienes el **Reporte Consolidado** que solicitaste para clientes activos: \n\n` +
+                                      `• **Pyme**: ${pymes.length} | ${formatCurrencyLoc(pymeRevenue)}\n` +
+                                      `• **Residencial**: ${residenciales.length} | ${formatCurrencyLoc(resRevenue)}\n\n` +
+                                      `El total de **activos reales (pagantes)** es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(pymeRevenue + resRevenue)}**.`,
+                                isCard: true,
+                                cardData: {
+                                    title: "Activos Reales (SGF)",
+                                    value: filteredClientes.length,
+                                    subtitle: "Pymes + Residenciales",
+                                    color: "#2ecc71",
+                                    stats: [
+                                        { label: "Pyme", value: `${pymes.length} (${formatCurrencyLoc(pymeRevenue)})` },
+                                        { label: "Residencial", value: `${residenciales.length} (${formatCurrencyLoc(resRevenue)})` }
+                                    ],
+                                    parameters: parameters,
+                                    savedDataset: filteredClientes,
+                                    filtersText: appliedFiltersText
+                                }
+                            };
+                        }
+
                         return {
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
