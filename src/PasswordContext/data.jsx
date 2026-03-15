@@ -10146,8 +10146,8 @@ const largeArraydata =
       "id": 3425,
       "client_name": "DARIANA CRUZELYS TOVAR BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Durpa",
@@ -10163,7 +10163,16 @@ const largeArraydata =
       "client_identification": "V19032891",
       "nap_box_name": "377",
       "created_at": "2024-04-12T14:27:02.222529",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12065,
+        "ip": "172.18.81.2",
+        "mac": "VSOL00522CF9",
+        "serial": "VSOL00522CF9",
+        "queue": null,
+        "interface": "VLAN240_DURPA",
+        "created_at": "2026-03-15T10:16:50.113004",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -84618,8 +84627,8 @@ const largeArraydata =
       "id": 6084,
       "client_name": "HEBERLYN ADRIANA MENDOZA TANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -93987,8 +93996,8 @@ const largeArraydata =
       "id": 6403,
       "client_name": "ORIANNYS GERAMEEL DE CASTRO BRITO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "La Arboleda",
@@ -94004,7 +94013,16 @@ const largeArraydata =
       "client_identification": "V31001253",
       "nap_box_name": "CTO-00236",
       "created_at": "2024-08-13T10:37:19.391947",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12066,
+        "ip": "172.31.74.2",
+        "mac": "HWTC30237493",
+        "serial": "HWTC30237493",
+        "queue": null,
+        "interface": "VLAN257_ARBOLEDA",
+        "created_at": "2026-03-15T11:02:32.924131",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
