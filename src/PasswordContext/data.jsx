@@ -4032,24 +4032,33 @@ const largeArraydata =
       "id": 3206,
       "client_name": "EDITH ANDREINA PERDOMO CONTRERAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Canaima",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124608540",
       "address": "CALLE 03 CASA 36 URB CANAIMA ROSARIO DE PAYA",
       "client_identification": "V18852999",
       "nap_box_name": "CTO-00058",
       "created_at": "2024-04-11T14:18:07.009845",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12060,
+        "ip": "172.24.54.2",
+        "mac": "VSOL0013F091",
+        "serial": "VSOL0013F091",
+        "queue": null,
+        "interface": "VLAN237_CANAIMA",
+        "created_at": "2026-03-14T18:29:22.809852",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -23949,13 +23958,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00307",
       "created_at": "2024-04-19T00:35:45.178148",
       "service_detail": {
-        "id": 11562,
+        "id": 12053,
         "ip": "172.23.90.2",
         "mac": "OEMT3C620C72",
         "serial": "OEMT3C620C72",
         "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-02-09T16:39:35.838760",
+        "interface": "VLAN231_PAYABAJO",
+        "created_at": "2026-03-14T17:40:10.885906",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -32763,13 +32772,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00307",
       "created_at": "2024-05-10T11:38:56.668160",
       "service_detail": {
-        "id": 11564,
+        "id": 12059,
         "ip": "172.23.81.2",
         "mac": "OEMT3C620F76",
         "serial": "OEMT3C620F76",
         "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-02-09T17:01:43.193522",
+        "interface": "VLAN231_PAYABAJO",
+        "created_at": "2026-03-14T18:19:24.707536",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -52587,11 +52596,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Isaac Oliveira",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04140489115",
       "address": "CALLE 2 CASA NRO 76 URB ISAAC OLIVEIRA TURMERO",
@@ -63120,13 +63129,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00301",
       "created_at": "2024-07-18T13:51:03.048003",
       "service_detail": {
-        "id": 10047,
+        "id": 12064,
         "ip": "172.18.17.2",
         "mac": "TPLGF4EFC27A",
         "serial": "TPLGF4EFC27A",
         "queue": null,
         "interface": "VLAN243_BICENTENARIO",
-        "created_at": "2025-11-11T19:26:19.574557",
+        "created_at": "2026-03-14T19:51:09.571049",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -119202,8 +119211,8 @@ const largeArraydata =
       "id": 7337,
       "client_name": "YELISMAR DEL VALLE VIRGUEZ MELENDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -119219,7 +119228,16 @@ const largeArraydata =
       "client_identification": "V26935807",
       "nap_box_name": "CTO-00408",
       "created_at": "2024-12-17T16:43:25.948991",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12063,
+        "ip": "10.10.86.2",
+        "mac": "HWTC45A04487",
+        "serial": "HWTC45A04487",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-03-14T19:39:53.077776",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
