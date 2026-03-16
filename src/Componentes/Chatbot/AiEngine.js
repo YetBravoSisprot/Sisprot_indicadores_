@@ -1349,6 +1349,39 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             };
                         }
 
+                        // CASO: Desglose por múltiples estados (Ej: Activos y Suspendidos)
+                        const statusParams = Array.isArray(parameters.status) ? parameters.status : [parameters.status];
+                        const showBreakdown = statusParams.length > 1;
+
+                        if (showBreakdown) {
+                            const statsByStatus = statusParams.map(s => {
+                                const count = filteredClientes.filter(c => normalizeText(c.status_name).includes(normalizeText(s))).length;
+                                // Color basado en el estado
+                                let color = "#bdc3c7";
+                                if (normalizeText(s).includes("activo")) color = "#2ecc71";
+                                else if (normalizeText(s).includes("suspendido")) color = "#f1c40f";
+                                else if (normalizeText(s).includes("cancelado")) color = "#e74c3c";
+                                else if (normalizeText(s).includes("pausado")) color = "#3498db";
+
+                                return { label: s, value: count, color };
+                            });
+
+                            return {
+                                text: `Claro ${userName}, aquí tienes el desglose detallado por estado según tu consulta: \n(${appliedFiltersText.join(', ')})\n\n¿Quieres que profundicemos en alguno o exportamos el **Excel**?`,
+                                isCard: true,
+                                cardData: {
+                                    title: "Distribución por Estado",
+                                    value: filteredClientes.length,
+                                    subtitle: "Clientes totales en la selección",
+                                    color: "#3498db",
+                                    stats: statsByStatus,
+                                    parameters: parameters,
+                                    savedDataset: filteredClientes,
+                                    filtersText: appliedFiltersText
+                                }
+                            };
+                        }
+
                         return {
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
@@ -1561,6 +1594,25 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 const ingresosTotales = filteredClientes.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
                 const clientesCount = filteredClientes.length;
 
+                // CASO: Desglose financiero por estado (Recuperado vs Pendiente)
+                const statusParamsIngresos = Array.isArray(parameters.status) ? parameters.status : [parameters.status];
+                const showFinancialBreakdown = statusParamsIngresos.length > 1;
+                let statsFinancial = [];
+
+                if (showFinancialBreakdown) {
+                    statsFinancial = statusParamsIngresos.map(s => {
+                        const subDataset = filteredClientes.filter(c => normalizeText(c.status_name).includes(normalizeText(s)));
+                        const amount = subDataset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                        
+                        let label = s;
+                        let color = "#bdc3c7";
+                        if (normalizeText(s).includes("activo")) { label = "Recuperado (Activos)"; color = "#2ecc71"; }
+                        else if (normalizeText(s).includes("suspendido")) { label = "Pendiente (Susp.)"; color = "#f1c40f"; }
+
+                        return { label, value: formatCurrency(amount), color };
+                    });
+                }
+
                 const introText = appliedFiltersText.length > 1
                     ? `¡Perfecto ${userName}! He calculado los **ingresos mensuales proyectados** aplicando los filtros solicitados: \n(${appliedFiltersText.join(', ')})\n\n**Note: Este monto es la suma de los planes proyectados de estos clientes.**`
                     : `¡Claro ${userName}! He calculado los **ingresos mensuales proyectados** basados en tu consulta: \n\n**Note: Este valor se obtiene sumando los costos de los planes actuales de los clientes en tu base de datos.**`;
@@ -1569,10 +1621,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     text: introText + "\n\n**Si necesitas descargar el listado oficial en Excel, solo pídeme el reporte.**",
                     isCard: true,
                     cardData: {
-                        title: "Ingresos Proyectados (Mes)",
+                        title: showFinancialBreakdown ? "Balance de Ingresos" : "Ingresos Proyectados (Mes)",
                         value: formatCurrency(ingresosTotales),
                         subtitle: `${clientesCount} clientes base`,
                         color: "#f1c40f",
+                        stats: statsFinancial,
                         parameters: parameters,
                         savedDataset: filteredClientes,
                         filtersText: appliedFiltersText
