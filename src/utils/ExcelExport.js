@@ -3,20 +3,20 @@ import { saveAs } from "file-saver";
 
 const norm = (v) => (v == null ? "" : String(v).trim());
 
-const normalizeText = (text) => {
-    if (!text) return "";
-    return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-};
-
-const mapCycleValue = (val) => {
+function mapCycleValue(val) {
     if (val === null || val === undefined) return "N/A";
     const cycle = String(val).trim();
     if (cycle === "10") return "15";
     if (cycle === "25") return "30";
     return cycle;
-};
+}
 
 export const exportToExcel = async (dataset, appliedFiltersText = []) => {
+    const normalizeText = (text) => {
+        if (!text) return "";
+        return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+    };
+
     if (!dataset || dataset.length === 0) {
         console.warn("Dataset vacío, no se puede generar Excel.");
         return;
