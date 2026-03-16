@@ -1307,44 +1307,34 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (isTipoIntent || intent === 'ESTADOS' || intent === 'TOTAL_CLIENTES') {
                     // If a specific type or status was requested, give direct result
                     if (appliedFiltersText.length > 0) {
-                        // CASO ESPECIAL: Desglose para reporte diario sumado (Pyme + Residencial)
-                        const isCombinedReport = Array.isArray(parameters?.tipo) && 
-                                               parameters.tipo.some(t => normalizeText(t).includes('pyme')) && 
-                                               parameters.tipo.some(t => normalizeText(t).includes('residencial'));
+                        // CASO: Desglose Dinámico por Tipos (Ej: Residencial + Empleado + Pyme)
+                        const tipoParams = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
+                        const isMultipleTypes = tipoParams.length > 1;
 
-                        if (isCombinedReport && intent === 'TOTAL_CLIENTES') {
-                            const pymes = filteredClientes.filter(c => {
-                                const t = normalizeText(c.client_subdivision || c.client_type_name || '');
-                                return t.includes('pyme');
+                        if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
+                            const statsByType = tipoParams.map(t => {
+                                const subDataset = filteredClientes.filter(c => {
+                                    const clientType = normalizeText(c.client_subdivision || c.client_type_name || 'OTROS');
+                                    return clientType.includes(normalizeText(t));
+                                });
+                                const revenue = subDataset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                                return { label: t, count: subDataset.length, revenue };
                             });
-                            const residenciales = filteredClientes.filter(c => {
-                                const t = normalizeText(c.client_subdivision || c.client_type_name || '');
-                                return t.includes('residencial');
-                            });
-                            
-                            const pymeRevenue = pymes.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-                            const resRevenue = residenciales.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
 
+                            const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.join(" y ") : parameters.status) : "clientes";
                             const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-                            const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.join(" y ") : parameters.status) : "activos";
-                            const isActivo = normalizeText(statusLabel).includes("activo");
-
                             return {
-                                text: `Claro ${userName}, aquí tienes el **Reporte Consolidado** que solicitaste para clientes ${statusLabel.toLowerCase()}: \n\n` +
-                                      `• **Pyme**: ${pymes.length} | ${formatCurrencyLoc(pymeRevenue)}\n` +
-                                      `• **Residencial**: ${residenciales.length} | ${formatCurrencyLoc(resRevenue)}\n\n` +
-                                      `El total de **${isActivo ? 'activos reales (pagantes)' : 'clientes ' + statusLabel.toLowerCase()}** es de **${filteredClientes.length}** con una facturación proyectada de **${formatCurrencyLoc(pymeRevenue + resRevenue)}**.`,
+                                text: `Claro ${userName}, aquí tienes el desglose por tipo para los clientes **${statusLabel.toLowerCase()}** de tu consulta:\n\n` +
+                                      statsByType.map(s => `• **${s.label}**: ${s.count} | ${formatCurrencyLoc(s.revenue)}`).join("\n") +
+                                      `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(statsByType.reduce((a,b)=>a+b.revenue,0))}**.`,
                                 isCard: true,
                                 cardData: {
-                                    title: isActivo ? "Activos Reales (SGF)" : `Clientes ${statusLabel}`,
+                                    title: `Reporte de ${statusLabel}`,
                                     value: filteredClientes.length,
-                                    subtitle: appliedFiltersText.join(" | "), // Dinámico con todos los filtros
-                                    color: isActivo ? "#2ecc71" : "#f1c40f",
-                                    stats: [
-                                        { label: "Pyme", value: `${pymes.length} (${formatCurrencyLoc(pymeRevenue)})` },
-                                        { label: "Residencial", value: `${residenciales.length} (${formatCurrencyLoc(resRevenue)})` }
-                                    ],
+                                    subtitle: appliedFiltersText.join(" | "),
+                                    color: "#3498db",
+                                    stats: statsByType.map(s => ({ label: s.label, value: `${s.count} (${formatCurrencyLoc(s.revenue)})` })),
                                     parameters: parameters,
                                     savedDataset: filteredClientes,
                                     filtersText: appliedFiltersText
@@ -1985,51 +1975,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'AMBOS_METRICAS': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
 
-                // Cálculos Globales para la reunión
-                const totalActivos = filtered.filter(c => c.status_name === "Activo").length;
-                const totalSuspendidos = filtered.filter(c => c.status_name === "Suspendido").length;
-                const totalCancelados = filtered.filter(c => c.status_name === "Cancelado").length;
+                // Armar las estadísticas visuales dinámicamente según lo que haya en el dataset filtrado
+                const finalStats = [];
+                
+                // Si hay varios tipos, los desglosamos en la tarjeta
+                const tipoParamsAmb = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
+                if (tipoParamsAmb.length > 1) {
+                    tipoParamsAmb.forEach(t => {
+                        const count = filtered.filter(c => normalizeText(c.client_subdivision || c.client_type_name || '').includes(normalizeText(t))).length;
+                        finalStats.push({ label: `Tipo: ${t}`, value: count });
+                    });
+                } else {
+                    if (totalActivos > 0 || !parameters?.status) finalStats.push({ label: "Activos", value: totalActivos, color: "#2ecc71" });
+                    if (totalSuspendidos > 0 || !parameters?.status) finalStats.push({ label: "Suspendidos", value: totalSuspendidos, color: "#f1c40f" });
+                    if (totalCancelados > 0 || !parameters?.status) finalStats.push({ label: "Cancelados", value: totalCancelados, color: "#e74c3c" });
+                }
 
-                // IMPORTANTE: Solo ingresos de activos según lo pedido por el jefe
-                const ingresosActivos = filtered
-                    .filter(c => c.status_name === "Activo")
-                    .reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-
-                // Cálculo Desglosado por Urbanismo
-                const desglosado = filtered.reduce((acc, curr) => {
-                    const sector = curr.sector_name || "Otros";
-                    if (!acc[sector]) acc[sector] = { activos: 0, suspendidos: 0, cancelados: 0, ingresos: 0 };
-
-                    if (curr.status_name === "Activo") {
-                        acc[sector].activos++;
-                        acc[sector].ingresos += parseFloat(curr.plan?.cost || 0);
-                    } else if (curr.status_name === "Suspendido") {
-                        acc[sector].suspendidos++;
-                    } else if (curr.status_name === "Cancelado") {
-                        acc[sector].cancelados++;
-                    }
-                    return acc;
-                }, {});
-
-                let tableMsg = "\n\n📊 **REPORTE DE REUNIÓN (INGRESOS):**\n";
-                tableMsg += "| Urbanismo | Activos | Susp. | Canc. | Ingresos (Activos) |\n";
-                tableMsg += "| :--- | :---: | :---: | :---: | :---: |\n";
-
-                Object.entries(desglosado).sort((a, b) => b[1].ingresos - a[1].ingresos).forEach(([name, data]) => {
-                    tableMsg += `| ${name} | ${data.activos} | ${data.suspendidos} | ${data.cancelados} | $${data.ingresos.toFixed(2)} |\n`;
-                });
+                finalStats.push({ label: "Ingresos Proyectados", value: formatCurrency(ingresosActivos), color: "#3498db" });
 
                 return {
-                    text: `Aquí tienes los datos exactos solicitados para la reunión:\n(${appliedTexts.join(', ')})\n${tableMsg}\n\n*Nota: Los ingresos solo sumaron clientes con estatus 'Activo'.*`,
+                    text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedFiltersText.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
                     isCard: true,
                     cardData: {
-                        title: "Resumen Estratégico",
-                        stats: [
-                            { label: "Activos", value: totalActivos, color: "#2ecc71" },
-                            { label: "Suspendidos", value: totalSuspendidos, color: "#f1c40f" },
-                            { label: "Cancelados", value: totalCancelados, color: "#e74c3c" },
-                            { label: "Ingresos (Activos)", value: formatCurrency(ingresosActivos), color: "#3498db" }
-                        ],
+                        title: "Resumen de Selección",
+                        stats: finalStats,
                         color: "#9b59b6",
                         parameters: parameters,
                         savedDataset: filtered,
