@@ -1327,17 +1327,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                             const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
+                            const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.join(" y ") : parameters.status) : "activos";
+                            const isActivo = normalizeText(statusLabel).includes("activo");
+
                             return {
-                                text: `Claro ${userName}, aquí tienes el **Reporte Consolidado** que solicitaste para clientes activos: \n\n` +
+                                text: `Claro ${userName}, aquí tienes el **Reporte Consolidado** que solicitaste para clientes ${statusLabel.toLowerCase()}: \n\n` +
                                       `• **Pyme**: ${pymes.length} | ${formatCurrencyLoc(pymeRevenue)}\n` +
                                       `• **Residencial**: ${residenciales.length} | ${formatCurrencyLoc(resRevenue)}\n\n` +
-                                      `El total de **activos reales (pagantes)** es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(pymeRevenue + resRevenue)}**.`,
+                                      `El total de **${isActivo ? 'activos reales (pagantes)' : 'clientes ' + statusLabel.toLowerCase()}** es de **${filteredClientes.length}** con una facturación proyectada de **${formatCurrencyLoc(pymeRevenue + resRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
-                                    title: "Activos Reales (SGF)",
+                                    title: isActivo ? "Activos Reales (SGF)" : `Clientes ${statusLabel}`,
                                     value: filteredClientes.length,
-                                    subtitle: "Pymes + Residenciales",
-                                    color: "#2ecc71",
+                                    subtitle: appliedFiltersText.join(" | "), // Dinámico con todos los filtros
+                                    color: isActivo ? "#2ecc71" : "#f1c40f",
                                     stats: [
                                         { label: "Pyme", value: `${pymes.length} (${formatCurrencyLoc(pymeRevenue)})` },
                                         { label: "Residencial", value: `${residenciales.length} (${formatCurrencyLoc(resRevenue)})` }
@@ -1386,9 +1389,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
-                                title: "Total Encontrados",
+                                title: appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes",
                                 value: filteredClientes.length,
-                                subtitle: "clientes exactos",
+                                subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : "clientes totales",
                                 color: "#3498db",
                                 parameters: parameters,
                                 savedDataset: filteredClientes,
@@ -1621,9 +1624,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     text: introText + "\n\n**Si necesitas descargar el listado oficial en Excel, solo pídeme el reporte.**",
                     isCard: true,
                     cardData: {
-                        title: showFinancialBreakdown ? "Balance de Ingresos" : "Ingresos Proyectados (Mes)",
+                        title: showFinancialBreakdown ? "Balance de Ingresos" : "Ingresos Proyectados",
                         value: formatCurrency(ingresosTotales),
-                        subtitle: `${clientesCount} clientes base`,
+                        subtitle: appliedFiltersText.join(" | "), // Dinámico
                         color: "#f1c40f",
                         stats: statsFinancial,
                         parameters: parameters,
