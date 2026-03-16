@@ -289,6 +289,31 @@
   background-color: #000;
 }
 
+/* ================= GRUPO DE BOTONES EXCEL ================= */
+.button-group-excel {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 6px;
+}
+
+.button-group-excel .buttonDescargar {
+  margin: 0;
+  flex: 1;
+  min-width: 180px;
+}
+
+.buttonDescargar.general {
+  background: linear-gradient(135deg, #1e3fa9, #1d4b8f);
+  box-shadow: 0 6px 16px rgba(30, 63, 169, 0.3);
+}
+
+.buttonDescargar.general:hover {
+  background: #1d4b8f;
+  filter: brightness(1.2);
+}
+
 .marginbitton {
   margin-bottom: 10px;
 }
