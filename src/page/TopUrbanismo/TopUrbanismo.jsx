@@ -367,17 +367,22 @@ function TopUrbanismo() {
       .sort((a, b) => a.localeCompare(b, "es"));
   }, [sectoresSeleccionados]);
 
-  const handleDownloadExcel = () => {
-    // Construir el array de filtros aplicados
+  const handleDownloadExcelOperaciones = () => {
     const filtroTextos = [...estadosSeleccionados];
-
-    // Si hay urbanismos específicos seleccionados (no "Todos" ni vacío), incluirlos
     const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations");
+  };
 
-    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas);
+  const handleDownloadExcelGeneral = () => {
+    const filtroTextos = [...estadosSeleccionados];
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+    }
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "general");
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -728,9 +733,15 @@ function TopUrbanismo() {
                 : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
             </button>
 
-            <button className="buttonDescargar" onClick={handleDownloadExcel}>
-              Descargar Excel
-            </button>
+            <div className="button-group-excel">
+              <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones}>
+                Excel Operaciones
+              </button>
+
+              <button className="buttonDescargar general" onClick={handleDownloadExcelGeneral}>
+                Excel General
+              </button>
+            </div>
 
             <span className="filtro-tip">
               💡 <b>Tip mágico:</b> Puedes mantener presionada la tecla <b>Ctrl</b> (o <b>Cmd ⌘</b> en Mac) y hacer clic para elegir <b>varias opciones</b> al mismo tiempo en los filtros de arriba.
