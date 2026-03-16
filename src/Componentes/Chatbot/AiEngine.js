@@ -1975,6 +1975,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'AMBOS_METRICAS': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
 
+                // Cálculos Globales para la reunión
+                const totalActivos = filtered.filter(c => c.status_name === "Activo").length;
+                const totalSuspendidos = filtered.filter(c => c.status_name === "Suspendido").length;
+                const totalCancelados = filtered.filter(c => c.status_name === "Cancelado").length;
+
+                // Solo ingresos de activos
+                const ingresosActivos = filtered
+                    .filter(c => c.status_name === "Activo")
+                    .reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+
                 // Armar las estadísticas visuales dinámicamente según lo que haya en el dataset filtrado
                 const finalStats = [];
                 
@@ -1994,7 +2004,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 finalStats.push({ label: "Ingresos Proyectados", value: formatCurrency(ingresosActivos), color: "#3498db" });
 
                 return {
-                    text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedFiltersText.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
+                    text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedTexts.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
                     isCard: true,
                     cardData: {
                         title: "Resumen de Selección",
