@@ -3,6 +3,11 @@ import { saveAs } from "file-saver";
 
 const norm = (v) => (v == null ? "" : String(v).trim());
 
+const normalizeText = (text) => {
+    if (!text) return "";
+    return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+};
+
 const mapCycleValue = (val) => {
     if (val === null || val === undefined) return "N/A";
     const cycle = String(val).trim();
