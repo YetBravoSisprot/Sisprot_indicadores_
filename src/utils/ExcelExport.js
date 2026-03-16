@@ -108,66 +108,76 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
             row.getCell('motivo_cierre').dataValidation = { type: 'list', formulae: [`'Validaciones'!$A$2:$A$${motivos.length + 1}`] };
         });
 
-    // --- 3. HOJA ESTADISTICA (Imagen 1) ---
+    // --- 3. HOJA ESTADISTICA (Dinámica con Fórmulas) ---
     const statsSheet = workbook.addWorksheet("ESTADISTICA");
     
-    // Cálculos para las tablas
-    const countByEstado = {};
-    const countByMigrado = { "si": 0, "No": 0 };
-    let totalCostoStats = 0;
-
-    dataset.forEach(c => {
-        const est = norm(c.status_name) || "Sin Estado";
-        countByEstado[est] = (countByEstado[est] || 0) + 1;
-        const migr = c.migrate ? "si" : "No";
-        countByMigrado[migr]++;
-        totalCostoStats += parseFloat(c.plan?.cost || 0);
-    });
+    // Nombres de las hojas para las fórmulas
+    const mainSheetName = "'REPORTE GENERAL'";
+    const lastRowRef = 2000; // Referencia máxima para las fórmulas
 
     // DISEÑO: TABLA ESTADO DEL CLIENTE (Izquierda)
     statsSheet.getCell('B2').value = "ESTADO DEL CLIENTE";
     statsSheet.getCell('C2').value = "Cantidad";
     statsSheet.getRow(2).font = { bold: true, color: { argb: 'FFFFFF' } };
-    statsSheet.getCell('B2').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-    statsSheet.getCell('C2').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+    statsSheet.getRow(2).eachCell(c => { if(c.column >= 2 && c.column <= 3) c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } } });
 
-    let currentRow = 3;
-    Object.entries(countByEstado).forEach(([est, count]) => {
-        statsSheet.getCell(`B${currentRow}`).value = est;
-        statsSheet.getCell(`C${currentRow}`).value = count;
-        currentRow++;
+    const tableEstados = ["Activo", "Cancelado", "Pausado", "Suspendido", "(en blanco)"];
+    tableEstados.forEach((est, i) => {
+        const row = i + 3;
+        statsSheet.getCell(`B${row}`).value = est;
+        // FÓRMULA: Contar clientes según su "ESTADO ACTUALIZADO" (Columna O en Reporte)
+        const formulaRef = est === "(en blanco)" ? `=""` : `B${row}`;
+        statsSheet.getCell(`C${row}`).value = { 
+            formula: `COUNTIF(${mainSheetName}!$O$2:$O$${lastRowRef}, ${formulaRef})`, 
+            result: 0 
+        };
     });
-    statsSheet.getCell(`B${currentRow}`).value = "TOTAL GENERAL DE CLIENTES";
-    statsSheet.getCell(`C${currentRow}`).value = dataset.length;
-    statsSheet.getRow(currentRow).font = { bold: true, color: { argb: 'FFFFFF' } };
-    statsSheet.getRow(currentRow).eachCell(c => c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } });
 
-    // DISEÑO: CUADRO CENTRAL (Resumen)
-    const cicloText = dataset[0]?.cycle ? `CICLO ${dataset[0].cycle} DE ${mesActual}` : `TOTAL ${mesActual}`;
+    const totalRow = tableEstados.length + 3;
+    statsSheet.getCell(`B${totalRow}`).value = "TOTAL GENERAL DE CLIENTES";
+    statsSheet.getCell(`C${totalRow}`).value = { formula: `SUM(C3:C${totalRow-1})`, result: 0 };
+    statsSheet.getRow(totalRow).font = { bold: true, color: { argb: 'FFFFFF' } };
+    statsSheet.getRow(totalRow).eachCell(c => { if(c.column >= 2 && c.column <= 3) c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } } });
+
+    // DISEÑO: CUADRO CENTRAL (Resumen Dinámico)
+    const cicloHeader = dataset[0]?.cycle ? `CICLO ${dataset[0].cycle} DE ${mesActual}` : `TOTAL ${mesActual}`;
     statsSheet.mergeCells('E4:I4');
-    statsSheet.getCell('E4').value = cicloText.toUpperCase();
+    statsSheet.getCell('E4').value = cicloHeader.toUpperCase();
     statsSheet.getCell('E4').font = { bold: true, size: 14 };
     statsSheet.getCell('E4').alignment = { horizontal: 'center' };
 
-    // Cuadros de Montos (Verde, Naranja, Gris imitando imagen)
-    statsSheet.getCell('F6').value = totalCostoStats * 0.4; // Ejemplo de distribución
-    statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '70AD47' } }; // Verde
+    // Cuadro VERDE (Recuperado - Clientes que ya están Activos)
+    statsSheet.getCell('F6').value = { 
+        formula: `SUMIF(${mainSheetName}!$O$2:$O$${lastRowRef}, "Activo", ${mainSheetName}!$K$2:$K$${lastRowRef})`, 
+        result: 0 
+    };
+    statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '70AD47' } }; 
     statsSheet.getCell('F6').numFmt = '"$ "#,##0.00';
+    statsSheet.getCell('F6').font = { bold: true, size: 12 };
     
-    statsSheet.getCell('H10').value = totalCostoStats * 0.3;
-    statsSheet.getCell('H10').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } }; // Naranja
+    // Cuadro NARANJA (Pendiente - Clientes que siguen Suspendidos)
+    statsSheet.getCell('H10').value = { 
+        formula: `SUMIF(${mainSheetName}!$O$2:$O$${lastRowRef}, "Suspendido", ${mainSheetName}!$K$2:$K$${lastRowRef})`, 
+        result: 0 
+    };
+    statsSheet.getCell('H10').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } }; 
     statsSheet.getCell('H10').numFmt = '"$ "#,##0.00';
 
-    statsSheet.getCell('J11').value = totalCostoStats * 0.1;
-    statsSheet.getCell('J11').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'A5A5A5' } }; // Gris
+    // Cuadro GRIS (Otros)
+    statsSheet.getCell('J11').value = { 
+        formula: `SUMIFS(${mainSheetName}!$K$2:$K$${lastRowRef}, ${mainSheetName}!$O$2:$O$${lastRowRef}, "<>Activo", ${mainSheetName}!$O$2:$O$${lastRowRef}, "<>Suspendido")`, 
+        result: 0 
+    };
+    statsSheet.getCell('J11').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'A5A5A5' } }; 
     statsSheet.getCell('J11').numFmt = '"$ "#,##0.00';
 
+    // Total General en el centro
     statsSheet.getCell('E14').value = "TOTAL GENERAL DE CLIENTES";
     statsSheet.getCell('E14').font = { bold: true };
     statsSheet.getCell('E15').value = "Total";
-    statsSheet.getCell('I15').value = totalCostoStats;
+    statsSheet.getCell('I15').value = { formula: `SUM(${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
     statsSheet.getCell('I15').numFmt = '"$ "#,##0.00';
-    statsSheet.getCell('I15').font = { bold: true };
+    statsSheet.getCell('I15').font = { bold: true, size: 12 };
 
     // DISEÑO: TABLA MIGRADO (Derecha)
     statsSheet.getCell('L2').value = "MIGRADO / NO MIGRADO";
@@ -175,19 +185,18 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
     statsSheet.getRow(2).eachCell((c, i) => { if(i >= 12) { c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; c.font = { color: { argb: 'FFFFFF'}, bold: true }; } });
 
     statsSheet.getCell('L3').value = "si";
-    statsSheet.getCell('M3').value = totalCostoStats * 0.8; 
+    statsSheet.getCell('M3').value = { formula: `SUMIF(${mainSheetName}!$H$2:$H$${lastRowRef}, "si", ${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
     statsSheet.getCell('L4').value = "No";
-    statsSheet.getCell('M4').value = totalCostoStats * 0.2;
+    statsSheet.getCell('M4').value = { formula: `SUMIF(${mainSheetName}!$H$2:$H$${lastRowRef}, "No", ${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
+    
     statsSheet.getCell('L5').value = "Total general";
-    statsSheet.getCell('M5').value = totalCostoStats;
+    statsSheet.getCell('M5').value = { formula: `SUM(M3:M4)`, result: 0 };
     statsSheet.getCell('M5').numFmt = '"$ "#,##0.00';
-    statsSheet.getCell('L5').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-    statsSheet.getCell('M5').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-    statsSheet.getCell('L5').font = { color: { argb: 'FFFFFF'}, bold: true };
-    statsSheet.getCell('M5').font = { color: { argb: 'FFFFFF'}, bold: true };
+    statsSheet.getRow(5).eachCell((c, i) => { if(i >= 12) { c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; c.font = { color: { argb: 'FFFFFF'}, bold: true }; } });
 
+    // Ajustes finales de ancho de columna para estética
     // --- GENERAR Y DESCARGAR ---
     const buffer = await workbook.xlsx.writeBuffer();
-    const nombreArchivo = `reporte_sisprot_${hoy.toISOString().split('T')[0]}.xlsx`;
+    const nombreArchivo = `reporte_sisprot_INTELIGENTE_${hoy.toISOString().split('T')[0]}.xlsx`;
     saveAs(new Blob([buffer]), nombreArchivo);
 };
