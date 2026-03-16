@@ -3,6 +3,14 @@ import { saveAs } from "file-saver";
 
 const norm = (v) => (v == null ? "" : String(v).trim());
 
+const mapCycleValue = (val) => {
+    if (val === null || val === undefined) return "N/A";
+    const cycle = String(val).trim();
+    if (cycle === "10") return "15";
+    if (cycle === "25") return "30";
+    return cycle;
+};
+
 export const exportToExcel = async (dataset, appliedFiltersText = []) => {
     if (!dataset || dataset.length === 0) {
         console.warn("Dataset vacío, no se puede generar Excel.");
@@ -54,14 +62,14 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
         { header: "MIGRADO", key: "migrado", width: 10 },
         { header: "CICLO", key: "ciclo", width: 8 },
         { header: "PLAN", key: "plan", width: 25 },
-        { header: "COSTO", key: "costo", width: 12 },
+        { header: "COSTO", key: "costo", width: 14 },
         { header: "CONTACTADO POR", key: "contactado_por", width: 22 },
         { header: "¿CONTESTO LA LLAMADA?", key: "contesto", width: 22 },
         { header: "ULTIMA FECHA DE CONTACTO", key: "ultima_fecha", width: 25 },
         { header: "ESTADO ACTUALIZADO", key: "estado_actualizado", width: 22 },
-        { header: "CONVERSACION DETALLADA CON EL CLIENTE", key: "conversacion", width: 45 },
-        { header: "MOTIVO (CIERRE)", key: "motivo_cierre", width: 30 },
-        { header: "ADVERTENCIA", key: "advertencia", width: 30 }
+        { header: "CONVERSACION DETALLADA CON EL CLIENTE", key: "conversacion", width: 50 },
+        { header: "MOTIVO (CIERRE)", key: "motivo_cierre", width: 35 },
+        { header: "ADVERTENCIA", key: "advertencia", width: 35 }
     ];
 
     // Estilo Cabecera Reporte
@@ -83,7 +91,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
                 telefono: cliente.client_mobile,
                 sector: norm(cliente._displaySector || cliente.sector_name),
                 migrado: cliente.migrate ? "si" : "No",
-                ciclo: cliente.cycle || "N/A",
+                ciclo: mapCycleValue(cliente.cycle),
                 plan: cliente.plan?.name || "N/A",
                 costo: parseFloat(cliente.plan?.cost || 0),
                 contactado_por: "",
@@ -96,9 +104,32 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
             });
 
             row.eachCell((cell, colIndex) => {
-                cell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+                cell.border = { 
+                    top: {style:'thin', color: {argb: '000000'}}, 
+                    left: {style:'thin', color: {argb: '000000'}}, 
+                    bottom: {style:'thin', color: {argb: '000000'}}, 
+                    right: {style:'thin', color: {argb: '000000'}} 
+                };
                 cell.alignment = { vertical: 'middle' };
-                if (colIndex === 11) cell.numFmt = '"$"#,##0.00';
+                
+                // Formato de Costo
+                if (colIndex === 11) {
+                    cell.numFmt = '"$ "#,##0.00';
+                    cell.alignment = { horizontal: 'right', vertical: 'middle' };
+                }
+
+                // Coloreo de Estado Inicial (Columna B)
+                if (colIndex === 2) { 
+                    const status = normalizeText(cliente.status_name);
+                    if (status.includes("suspendido")) {
+                        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } }; // Naranja como la imagen
+                    } else if (status.includes("activo")) {
+                        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '92D050' } }; // Verde suave
+                    } else if (status.includes("cancelado")) {
+                        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0000' } }; // Rojo
+                        cell.font = { color: { argb: 'FFFFFF' } };
+                    }
+                }
             });
 
             // Validaciones
@@ -108,91 +139,167 @@ export const exportToExcel = async (dataset, appliedFiltersText = []) => {
             row.getCell('motivo_cierre').dataValidation = { type: 'list', formulae: [`'Validaciones'!$A$2:$A$${motivos.length + 1}`] };
         });
 
-    // --- 3. HOJA ESTADISTICA (Dinámica con Fórmulas) ---
-    const statsSheet = workbook.addWorksheet("ESTADISTICA");
-    
-    // Nombres de las hojas para las fórmulas
-    const mainSheetName = "'REPORTE GENERAL'";
-    const lastRowRef = 2000; // Referencia máxima para las fórmulas
+    // Añadir fila de TOTAL al final del reporte general
+    const lastRow = mainSheet.rowCount + 1;
+    mainSheet.getCell(`J${lastRow}`).value = "TOTAL";
+    mainSheet.getCell(`J${lastRow}`).font = { bold: true };
+    mainSheet.getCell(`J${lastRow}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+    mainSheet.getCell(`J${lastRow}`).alignment = { horizontal: 'center' };
+    mainSheet.getCell(`J${lastRow}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-    // DISEÑO: TABLA ESTADO DEL CLIENTE (Izquierda)
+    mainSheet.getCell(`K${lastRow}`).value = { formula: `SUM(K2:K${lastRow - 1})`, result: 0 };
+    mainSheet.getCell(`K${lastRow}`).font = { bold: true };
+    mainSheet.getCell(`K${lastRow}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+    mainSheet.getCell(`K${lastRow}`).numFmt = '"$ "#,##0.00';
+    mainSheet.getCell(`K${lastRow}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+
+    // --- 3. HOJA ESTADISTICA (Clon de Imagen 1) ---
+    const statsSheet = workbook.addWorksheet("ESTADISTICA");
+    const mainSheetName = "'REPORTE GENERAL'";
+    const lastRowRef = mainSheet.rowCount;
+
+    // Ajuste de anchos para evitar #########
+    statsSheet.getColumn('A').width = 2;
+    statsSheet.getColumn('B').width = 32;
+    statsSheet.getColumn('C').width = 15;
+    statsSheet.getColumn('D').width = 5;
+    statsSheet.getColumn('E').width = 30;
+    statsSheet.getColumn('F').width = 15;
+    statsSheet.getColumn('G').width = 15;
+    statsSheet.getColumn('H').width = 15;
+    statsSheet.getColumn('I').width = 15;
+    statsSheet.getColumn('J').width = 15;
+    statsSheet.getColumn('K').width = 15;
+    statsSheet.getColumn('L').width = 32;
+    statsSheet.getColumn('M').width = 22;
+
+    const currencyFormat = '"$ "#.##0,00';
+
+    // --- TABLA IZQUIERDA: ESTADO DEL CLIENTE ---
     statsSheet.getCell('B2').value = "ESTADO DEL CLIENTE";
     statsSheet.getCell('C2').value = "Cantidad";
     statsSheet.getRow(2).font = { bold: true, color: { argb: 'FFFFFF' } };
-    statsSheet.getRow(2).eachCell(c => { if(c.column >= 2 && c.column <= 3) c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } } });
+    statsSheet.getRow(2).eachCell((c, i) => { 
+        if(i >= 2 && i <= 3) {
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        }
+    });
 
     const tableEstados = ["Activo", "Cancelado", "Pausado", "Suspendido", "(en blanco)"];
     tableEstados.forEach((est, i) => {
-        const row = i + 3;
-        statsSheet.getCell(`B${row}`).value = est;
-        // FÓRMULA: Contar clientes según su "ESTADO ACTUALIZADO" (Columna O en Reporte)
-        const formulaRef = est === "(en blanco)" ? `=""` : `B${row}`;
-        statsSheet.getCell(`C${row}`).value = { 
+        const rowNum = i + 3;
+        statsSheet.getCell(`B${rowNum}`).value = est;
+        const formulaRef = est === "(en blanco)" ? `=""` : `B${rowNum}`;
+        statsSheet.getCell(`C${rowNum}`).value = { 
             formula: `COUNTIF(${mainSheetName}!$O$2:$O$${lastRowRef}, ${formulaRef})`, 
             result: 0 
         };
+        statsSheet.getCell(`B${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        statsSheet.getCell(`C${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
     });
 
-    const totalRow = tableEstados.length + 3;
-    statsSheet.getCell(`B${totalRow}`).value = "TOTAL GENERAL DE CLIENTES";
-    statsSheet.getCell(`C${totalRow}`).value = { formula: `SUM(C3:C${totalRow-1})`, result: 0 };
-    statsSheet.getRow(totalRow).font = { bold: true, color: { argb: 'FFFFFF' } };
-    statsSheet.getRow(totalRow).eachCell(c => { if(c.column >= 2 && c.column <= 3) c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } } });
+    const footerRow = tableEstados.length + 3;
+    statsSheet.getCell(`B${footerRow}`).value = "TOTAL GENERAL DE CLIENTES";
+    statsSheet.getCell(`C${footerRow}`).value = { formula: `SUM(C3:C${footerRow-1})`, result: 0 };
+    statsSheet.getRow(footerRow).font = { bold: true, color: { argb: 'FFFFFF' } };
+    statsSheet.getRow(footerRow).eachCell((c, i) => { 
+        if(i >= 2 && i <= 3) {
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        }
+    });
 
-    // DISEÑO: CUADRO CENTRAL (Resumen Dinámico)
-    const cicloHeader = dataset[0]?.cycle ? `CICLO ${dataset[0].cycle} DE ${mesActual}` : `TOTAL ${mesActual}`;
+    // --- CENTRO: CUADROS Y DASHBOARD ---
+    const cicloStr = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle)} DE ${mesActual}` : `REPORTE DE ${mesActual}`;
     statsSheet.mergeCells('E4:I4');
-    statsSheet.getCell('E4').value = cicloHeader.toUpperCase();
-    statsSheet.getCell('E4').font = { bold: true, size: 14 };
+    statsSheet.getCell('E4').value = cicloStr;
+    statsSheet.getCell('E4').font = { bold: true, size: 16 };
     statsSheet.getCell('E4').alignment = { horizontal: 'center' };
 
-    // Cuadro VERDE (Recuperado - Clientes que ya están Activos)
+    // Cuadro VERDE (Recuperado) en F6
     statsSheet.getCell('F6').value = { 
         formula: `SUMIF(${mainSheetName}!$O$2:$O$${lastRowRef}, "Activo", ${mainSheetName}!$K$2:$K$${lastRowRef})`, 
         result: 0 
     };
-    statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '70AD47' } }; 
-    statsSheet.getCell('F6').numFmt = '"$ "#,##0.00';
-    statsSheet.getCell('F6').font = { bold: true, size: 12 };
-    
-    // Cuadro NARANJA (Pendiente - Clientes que siguen Suspendidos)
+    statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '92D050' } }; 
+    statsSheet.getCell('F6').numFmt = currencyFormat;
+    statsSheet.getCell('F6').font = { bold: true };
+    statsSheet.getCell('F6').alignment = { horizontal: 'center' };
+    statsSheet.getCell('F6').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+
+    // Cuadro AMARILLO (Pendiente) en H10
     statsSheet.getCell('H10').value = { 
         formula: `SUMIF(${mainSheetName}!$O$2:$O$${lastRowRef}, "Suspendido", ${mainSheetName}!$K$2:$K$${lastRowRef})`, 
         result: 0 
     };
     statsSheet.getCell('H10').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } }; 
-    statsSheet.getCell('H10').numFmt = '"$ "#,##0.00';
+    statsSheet.getCell('H10').numFmt = currencyFormat;
+    statsSheet.getCell('H10').font = { bold: true };
+    statsSheet.getCell('H10').alignment = { horizontal: 'center' };
+    statsSheet.getCell('H10').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-    // Cuadro GRIS (Otros)
+    // Cuadro GRIS (Otros) en J11
     statsSheet.getCell('J11').value = { 
         formula: `SUMIFS(${mainSheetName}!$K$2:$K$${lastRowRef}, ${mainSheetName}!$O$2:$O$${lastRowRef}, "<>Activo", ${mainSheetName}!$O$2:$O$${lastRowRef}, "<>Suspendido")`, 
         result: 0 
     };
     statsSheet.getCell('J11').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'A5A5A5' } }; 
-    statsSheet.getCell('J11').numFmt = '"$ "#,##0.00';
+    statsSheet.getCell('J11').numFmt = currencyFormat;
+    statsSheet.getCell('J11').font = { bold: true, color: { argb: 'FFFFFF' } };
+    statsSheet.getCell('J11').alignment = { horizontal: 'center' };
+    statsSheet.getCell('J11').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-    // Total General en el centro
+    // Total en el centro (Bajo cuadros)
     statsSheet.getCell('E14').value = "TOTAL GENERAL DE CLIENTES";
     statsSheet.getCell('E14').font = { bold: true };
     statsSheet.getCell('E15').value = "Total";
     statsSheet.getCell('I15').value = { formula: `SUM(${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
-    statsSheet.getCell('I15').numFmt = '"$ "#,##0.00';
-    statsSheet.getCell('I15').font = { bold: true, size: 12 };
+    statsSheet.getCell('I15').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+    statsSheet.getCell('I15').font = { color: { argb: 'FFFFFF' }, bold: true };
+    statsSheet.getCell('I15').numFmt = currencyFormat;
+    statsSheet.getCell('I15').alignment = { horizontal: 'center' };
+    statsSheet.getCell('I15').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-    // DISEÑO: TABLA MIGRADO (Derecha)
+    // --- TABLA DERECHA: MIGRADO / NO MIGRADO ---
     statsSheet.getCell('L2').value = "MIGRADO / NO MIGRADO";
     statsSheet.getCell('M2').value = "Monto Total";
-    statsSheet.getRow(2).eachCell((c, i) => { if(i >= 12) { c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; c.font = { color: { argb: 'FFFFFF'}, bold: true }; } });
+    statsSheet.getRow(2).eachCell((c, i) => { 
+        if(i >= 12) { 
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; 
+            c.font = { color: { argb: 'FFFFFF'}, bold: true }; 
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        } 
+    });
 
     statsSheet.getCell('L3').value = "si";
     statsSheet.getCell('M3').value = { formula: `SUMIF(${mainSheetName}!$H$2:$H$${lastRowRef}, "si", ${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
     statsSheet.getCell('L4').value = "No";
     statsSheet.getCell('M4').value = { formula: `SUMIF(${mainSheetName}!$H$2:$H$${lastRowRef}, "No", ${mainSheetName}!$K$2:$K$${lastRowRef})`, result: 0 };
     
+    [3, 4].forEach(r => {
+        statsSheet.getCell(`L${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        statsSheet.getCell(`M${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        statsSheet.getCell(`M${r}`).numFmt = currencyFormat;
+    });
+
     statsSheet.getCell('L5').value = "Total general";
     statsSheet.getCell('M5').value = { formula: `SUM(M3:M4)`, result: 0 };
-    statsSheet.getCell('M5').numFmt = '"$ "#,##0.00';
-    statsSheet.getRow(5).eachCell((c, i) => { if(i >= 12) { c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; c.font = { color: { argb: 'FFFFFF'}, bold: true }; } });
+    statsSheet.getRow(5).eachCell((c, i) => { 
+        if(i >= 12) { 
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; 
+            c.font = { color: { argb: 'FFFFFF'}, bold: true }; 
+            c.numFmt = currencyFormat;
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        } 
+    });
+
+    // AUTO-FILTROS (Las flechitas de la Imagen 1)
+    statsSheet.autoFilter = {
+        from: { row: 2, column: 2 },
+        to: { row: footerRow, column: 3 }
+    };
+    // No se pueden poner múltiples autoFilters por hoja en ExcelJS, pero cubrimos la principal
 
     // Ajustes finales de ancho de columna para estética
     // --- GENERAR Y DESCARGAR ---
