@@ -483,10 +483,10 @@ INTENCIONES DISPONIBLES:
 - SALUDO: El usuario solo está saludando ("hola", "buenos días").
 - AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
 - GUIA_APP: El usuario pregunta para qué sirve la app.
-- SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE, O VER EL DETALLE/PERFIL) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?", "muestrame su detalle". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda" | "perfil"}
-  * MÁXIMA REGLA: Frases iniciales vagas como "necesito saber informacion de un cliente", "buscame a alguien", o "quiero saber un dato" NO SON SEGUIMIENTO. Si no te pregunta expresamente por el plan, el ciclo, el teléfono, la dirección, la deuda o la red, elije BUSQUEDA_VAGA u otro.
-  * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
-- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
+- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). 
+  * Parámetros opcionales: {"reportType": "operations" | "general"}. 
+  * REGLA: Si el usuario menciona "operaciones", "seguimiento de suspendidos" o similar, usa reportType: "operations". Por defecto usa "general".
+  * NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
 - INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD"}. 
   * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${new Date().toLocaleDateString('en-CA')}). Si dicen un rango, extrae ambas fechas.
@@ -2040,14 +2040,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     ? { filtered: targetDataset, appliedTexts: targetFilters }
                     : getFilteredDataset(clientes, targetParams, query);
 
-                const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
+                const reportType = parameters?.reportType || 'general';
+                const reportName = reportType === 'operations' ? 'Operaciones (Seguimiento)' : 'General';
+
                 return {
-                    text: `¡Entendido! Antes de entregarte el Excel de (${appliedTexts.join(', ') || 'Global'}), **¿qué columnas requieres que incluya?** \n\nOpciones:\n_${colsList}_\n\n(Puedes decir "Todas" si prefieres el reporte completo).`,
-                    isCard: false,
-                    contextType: 'clarify_excel_columns',
+                    text: `¡Entendido ${userName}! He preparado el **Excel ${reportName}** con los datos de: (${appliedTexts.join(', ') || 'Global'}).\n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`,
+                    isCard: true,
+                    contextType: 'excel_ready',
                     cardData: {
+                        title: `Excel ${reportName} listo`,
+                        subtitle: appliedTexts.join(" | "),
+                        color: "#27ae60",
+                        parameters: { ...targetParams, reportType },
                         savedDataset: filtered,
-                        savedFiltersText: appliedTexts
+                        filtersText: appliedTexts
                     }
                 };
             }
