@@ -120,11 +120,11 @@ const Chatbot = () => {
             const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname);
             setMessages(prev => [...prev, { sender: 'bot', ...aiResponse }]);
 
-            // Si la respuesta indica una descarga, la ejecutamos
+            // Si la respuesta indica una descarga, la ejecutamos (Por defecto General o la que prefiera el sistema)
             if (aiResponse.isDownload && aiResponse.cardData?.dataset) {
                 setTimeout(() => {
-                    exportToExcel(aiResponse.cardData.dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"]);
-                }, 1000); // Pequeño delay para que el mensaje se lea
+                    exportToExcel(aiResponse.cardData.dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], "general");
+                }, 1000); 
             }
         } catch (error) {
             console.error("Error AI:", error);
@@ -275,14 +275,22 @@ const Chatbot = () => {
                                         </div>
                                     )}
 
-                                    {/* Botón de descarga si la tarjeta tiene dataset */}
+                                    {/* Botones de descarga si la tarjeta tiene dataset */}
                                     {msg.cardData.dataset && (
-                                        <button
-                                            className="card-download-btn"
-                                            onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"])}
-                                        >
-                                            📥 Descargar Excel
-                                        </button>
+                                        <div className="card-download-group">
+                                            <button
+                                                className="card-download-btn operations"
+                                                onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "operations")}
+                                            >
+                                                📥 Excel Operaciones
+                                            </button>
+                                            <button
+                                                className="card-download-btn general"
+                                                onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "general")}
+                                            >
+                                                📥 Excel General
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             )}
