@@ -1,4 +1,4 @@
-import ExcelJS from "exceljs/dist/exceljs.min.js";
+import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 
 const norm = (v) => (v == null ? "" : String(v).trim());
