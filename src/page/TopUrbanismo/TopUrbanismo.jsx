@@ -373,7 +373,23 @@ function TopUrbanismo() {
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
-    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations");
+
+    // Lógica para nombre personalizado solicitado: "reporte de suspendidos ciclo X y la fecha [fecha]"
+    let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
+    
+    let cicloParaNombre = "";
+    if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
+        const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
+        cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
+    }
+
+    const hoy = new Date();
+    const dia = hoy.getDate();
+    const mes = hoy.toLocaleString('es-ES', { month: 'long' });
+    const anio = hoy.getFullYear();    
+    const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${dia} de ${mes} del ${anio}.xlsx`;
+
+    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
   };
 
   const handleDownloadExcelGeneral = () => {
