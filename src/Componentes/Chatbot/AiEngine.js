@@ -1318,29 +1318,39 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const isMultipleTypes = tipoParams.length > 1;
 
                         if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
+                            const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" y ") : parameters.status.charAt(0).toUpperCase() + parameters.status.slice(1)) : "Clientes";
+                            const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
                             const statsByType = tipoParams.map(t => {
                                 const subDataset = filteredClientes.filter(c => {
                                     const clientType = normalizeText(c.client_subdivision || c.client_type_name || 'OTROS');
                                     return clientType.includes(normalizeText(t));
                                 });
                                 const revenue = subDataset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-                                return { label: t, count: subDataset.length, revenue };
+                                
+                                // Asignar colores por tipo
+                                let color = "#bdc3c7";
+                                const tNorm = normalizeText(t);
+                                if (tNorm.includes("pyme")) color = "#9b59b6";
+                                else if (tNorm.includes("residencial")) color = "#3498db";
+                                else if (tNorm.includes("empleado")) color = "#2ecc71";
+
+                                return { label: t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(), value: `${subDataset.length} (${formatCurrencyLoc(revenue)})`, color, rawRevenue: revenue };
                             });
 
-                            const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.join(" y ") : parameters.status) : "clientes";
-                            const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                            const totalRevenue = statsByType.reduce((a, b) => a + b.rawRevenue, 0);
 
                             return {
-                                text: `Claro ${userName}, aquí tienes el desglose por tipo para los clientes **${statusLabel.toLowerCase()}** de tu consulta:\n\n` +
-                                      statsByType.map(s => `• **${s.label}**: ${s.count} | ${formatCurrencyLoc(s.revenue)}`).join("\n") +
-                                      `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(statsByType.reduce((a,b)=>a+b.revenue,0))}**.`,
+                                text: `**${userName}**, aquí tienes el balance detallado por tipo para los clientes **${statusLabel}** de tu consulta:\n\n` +
+                                      statsByType.map(s => `• **${s.label}**: ${s.value}`).join("\n") +
+                                      `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
-                                    title: `Reporte de ${statusLabel}`,
+                                    title: `Dashboard de ${statusLabel}`,
                                     value: filteredClientes.length,
                                     subtitle: appliedFiltersText.join(" | "),
                                     color: "#3498db",
-                                    stats: statsByType.map(s => ({ label: s.label, value: `${s.count} (${formatCurrencyLoc(s.revenue)})` })),
+                                    stats: statsByType,
                                     parameters: parameters,
                                     savedDataset: filteredClientes,
                                     filtersText: appliedFiltersText
@@ -1995,7 +2005,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (tipoParamsAmb.length > 1) {
                     tipoParamsAmb.forEach(t => {
                         const count = filtered.filter(c => normalizeText(c.client_subdivision || c.client_type_name || '').includes(normalizeText(t))).length;
-                        finalStats.push({ label: `Tipo: ${t}`, value: count });
+                        let color = "#bdc3c7";
+                        const tNorm = normalizeText(t);
+                        if (tNorm.includes("pyme")) color = "#9b59b6";
+                        else if (tNorm.includes("residencial")) color = "#3498db";
+                        
+                        finalStats.push({ 
+                            label: `Tipo: ${t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()}`, 
+                            value: count, 
+                            color 
+                        });
                     });
                 } else {
                     if (countActivos > 0 || !parameters?.status) finalStats.push({ label: "Activos", value: countActivos, color: "#2ecc71" });
