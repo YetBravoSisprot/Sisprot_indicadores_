@@ -262,11 +262,19 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         tableEstados.forEach((est, i) => {
             const rowNum = i + 3;
             statsSheet.getCell(`B${rowNum}`).value = est;
-            const formulaRef = est === "(en blanco)" ? `=""` : `B${rowNum}`;
-            statsSheet.getCell(`C${rowNum}`).value = { 
-                formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, ${formulaRef})`, 
-                result: 0 
-            };
+            
+            if (est === "(en blanco)") {
+                statsSheet.getCell(`C${rowNum}`).value = { 
+                    formula: `COUNTBLANK(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef})`, 
+                    result: 0 
+                };
+            } else {
+                statsSheet.getCell(`C${rowNum}`).value = { 
+                    formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum})`, 
+                    result: 0 
+                };
+            }
+
             // Sin bordes para datos, como tabla dinamica nativa
             statsSheet.getCell(`B${rowNum}`).border = {};
             statsSheet.getCell(`C${rowNum}`).border = {};
@@ -353,7 +361,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             statsSheet.getCell(`I${currentRow}`).value = `[-] ${migradoStatus}`;
             statsSheet.getCell(`I${currentRow}`).font = { bold: true };
             statsSheet.getCell(`J${currentRow}`).value = { 
-                formula: `SUMIF(${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
+                formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
                 result: 0 
             };
             statsSheet.getCell(`J${currentRow}`).font = { bold: true };
@@ -370,7 +378,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 statsSheet.getCell(`I${currentRow}`).value = `   [-] ${cycle}`; 
                 statsSheet.getCell(`I${currentRow}`).font = { color: { argb: '000000' } }; 
                 statsSheet.getCell(`J${currentRow}`).value = { 
-                    formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}")`, 
+                    formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
                     result: 0 
                 };
                 statsSheet.getCell(`J${currentRow}`).font = { color: { argb: '000000' } };
@@ -384,7 +392,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
         // Total General
         statsSheet.getCell(`I${currentRow}`).value = "Total general";
-        statsSheet.getCell(`J${currentRow}`).value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell(`J${currentRow}`).value = { formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, result: 0 };
         [ `I${currentRow}`, `J${currentRow}` ].forEach(cell => {
             statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
             statsSheet.getCell(cell).font = { color: { argb: '000000' }, bold: true };
