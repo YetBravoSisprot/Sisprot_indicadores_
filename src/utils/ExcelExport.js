@@ -413,7 +413,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             mainRowsJ.push(`J${mainRowIndex}`);
             mainRowsK.push(`K${mainRowIndex}`);
 
-            statsSheet.getCell(`I${currentRow}`).value = `[-] ${migradoStatus === "si" ? "MIGRADOS (Fibra)" : "NO MIGRADOS (Antena)"}`;
+            statsSheet.getCell(`I${currentRow}`).value = `[-] ${migradoStatus === "si" ? "MIGRADOS" : "NO MIGRADOS"}`;
             statsSheet.getCell(`I${currentRow}`).font = { bold: true };
             
             // Formula Pendiente
