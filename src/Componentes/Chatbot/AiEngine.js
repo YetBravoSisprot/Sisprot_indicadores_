@@ -2107,6 +2107,18 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const pendingAmount = Math.max(0, totalExpectedAmount - totalUsd);
                     const pendingClients = Math.max(0, totalExpectedClients - totalPagos);
 
+                    // --- Agrupar por banco ---
+                    const byBank = payments.reduce((acc, p) => {
+                        const banco = p.bank_name || 'Desconocido';
+                        if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
+                        acc[banco].count++;
+                        acc[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
+                        acc[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
+                        const m = p.method_name || 'Otro';
+                        acc[banco].methods[m] = (acc[banco].methods[m] || 0) + 1;
+                        return acc;
+                    }, {});
+
                     // --- Nombres legibles para métodos de pago ---
                     const methodLabel = (m) => {
                         const map = {
