@@ -257,7 +257,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             }
         });
 
-        const footerRowStats = tableEstados.length + 3;
+        let footerRowStats = tableEstados.length + 3;
         statsSheet.getCell(`B${footerRowStats}`).value = "TOTAL GENERAL DE CLIENTES";
         statsSheet.getCell(`C${footerRowStats}`).value = { formula: `SUM(C3:C${footerRowStats-1})`, result: 0 };
         statsSheet.getRow(footerRowStats).font = { bold: true, color: { argb: 'FFFFFF' } };
@@ -302,15 +302,21 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getCell('H12').alignment = { horizontal: 'center' };
         statsSheet.getCell('H12').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        statsSheet.getCell('E15').value = "TOTAL GENERAL DE CLIENTES";
+        statsSheet.getCell('E15').value = "Total";
         statsSheet.getCell('E15').font = { bold: true };
-        statsSheet.getCell('E16').value = "Total";
-        statsSheet.getCell('H16').value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
-        statsSheet.getCell('H16').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-        statsSheet.getCell('H16').font = { bold: true, color: { argb: 'FFFFFF' } };
-        statsSheet.getCell('H16').numFmt = currencyFormat;
-        statsSheet.getCell('H16').alignment = { horizontal: 'center' };
-        statsSheet.getCell('H16').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        
+        // ESTADO ACTUALIZADO Header con Filtro simulado (como en la imagen 2da)
+        statsSheet.getCell('E16').value = "ESTADO ACTUALIZADO";
+        statsSheet.getCell('E16').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+        statsSheet.getCell('E16').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+
+        // El Total General al lado
+        statsSheet.getCell('G16').value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('G16').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+        statsSheet.getCell('G16').font = { bold: true, color: { argb: 'FFFFFF' } };
+        statsSheet.getCell('G16').numFmt = currencyFormat;
+        statsSheet.getCell('G16').alignment = { horizontal: 'center' };
+        statsSheet.getCell('G16').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
         // --- TABLA DERECHA: MIGRADO / NO MIGRADO ---
         const migradoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'migrado') + 1);
