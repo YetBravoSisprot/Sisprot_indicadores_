@@ -40,18 +40,44 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
     const contactados = [
-        "Yetzareth Bravo", "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
+        "Alejandro Velasco", "Derwing Acevedo", "Eglyma Romero", "Luis Castellanos", 
+        "Ricardo Hernandez", "Yhossellyn Perez", "Lidia Mendoza"
     ];
     const siNo = ["SI", "NO"];
 
-    validSheet.getCell('A1').value = "Motivos";
-    motivos.forEach((m, i) => validSheet.getCell(`A${i + 2}`).value = m);
-    validSheet.getCell('B1').value = "Estados";
-    estados.forEach((e, i) => validSheet.getCell(`B${i + 2}`).value = e);
-    validSheet.getCell('C1').value = "Contactados";
-    contactados.forEach((c, i) => validSheet.getCell(`C${i + 2}`).value = c);
-    validSheet.getCell('D1').value = "SiNo";
-    siNo.forEach((s, i) => validSheet.getCell(`D${i + 2}`).value = s);
+    validSheet.getColumn('A').width = 45;
+    validSheet.getColumn('B').width = 20;
+    validSheet.getColumn('C').width = 30;
+    validSheet.getColumn('D').width = 15;
+
+    validSheet.getCell('A1').value = "Motivo";
+    validSheet.getCell('B1').value = "Estado";
+    validSheet.getCell('C1').value = "Contactado Por";
+    validSheet.getCell('D1').value = "Condicional";
+
+    validSheet.getRow(1).font = { bold: true };
+    validSheet.getRow(1).alignment = { horizontal: 'center' };
+
+    motivos.forEach((m, i) => {
+        const cell = validSheet.getCell(`A${i + 2}`);
+        cell.value = m;
+        cell.alignment = { horizontal: 'center' };
+    });
+    estados.forEach((e, i) => {
+        const cell = validSheet.getCell(`B${i + 2}`);
+        cell.value = e;
+        cell.alignment = { horizontal: 'center' };
+    });
+    contactados.forEach((c, i) => {
+        const cell = validSheet.getCell(`C${i + 2}`);
+        cell.value = c;
+        cell.alignment = { horizontal: 'center' };
+    });
+    siNo.forEach((s, i) => {
+        const cell = validSheet.getCell(`D${i + 2}`);
+        cell.value = s;
+        cell.alignment = { horizontal: 'center' };
+    });
 
     // --- 2. HOJA REPORTE GENERAL ---
     const mainSheet = workbook.addWorksheet("REPORTE GENERAL");
