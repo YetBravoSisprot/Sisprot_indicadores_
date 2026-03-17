@@ -210,8 +210,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         mainSheet.getCell(`${costLetter}${lastRow}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
     }
 
-    // --- 3. HOJA ESTADISTICA (Solo para reporte general) ---
-    if (reportType === "general") {
+    // --- 3. HOJA ESTADISTICA (Solo para reporte operaciones) ---
+    if (reportType === "operations") {
         const statsSheet = workbook.addWorksheet("ESTADISTICA");
         const mainSheetName = "'REPORTE GENERAL'";
         const lastRowRef = mainSheet.rowCount;
