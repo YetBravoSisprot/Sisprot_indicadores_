@@ -2048,9 +2048,17 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 const reportType = parameters?.reportType || 'general';
                 const reportName = reportType === 'operations' ? 'Operaciones (Seguimiento)' : 'General';
+                const filtersMsg = appliedTexts.join(', ') || 'Global';
+
+                let responseText = "";
+                if (reportType === 'operations') {
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel de Operaciones** con el Dashboard Estadístico y el balance de recaudación para: **${filtersMsg}**.\n\n¿Deseas descargarlo ahora para iniciar el seguimiento?`;
+                } else {
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel General** con los datos de: **${filtersMsg}**.\n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
+                }
 
                 return {
-                    text: `¡Entendido ${userName}! He preparado el **Excel ${reportName}** con los datos de: (${appliedTexts.join(', ') || 'Global'}).\n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`,
+                    text: responseText,
                     isCard: true,
                     contextType: 'excel_ready',
                     cardData: {
@@ -2059,7 +2067,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         color: "#27ae60",
                         parameters: { ...targetParams, reportType },
                         savedDataset: filtered,
-                        filtersText: appliedTexts
+                        filtersText: appliedTexts,
+                        reportType: reportType
                     }
                 };
             }
