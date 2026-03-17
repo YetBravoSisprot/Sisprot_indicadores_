@@ -2164,7 +2164,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const cycleText = cicloFilter ? ` del **Ciclo ${cicloFilter}**` : '';
 
                     return {
-                        text: `Sr. **${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${totalUsd.toFixed(2)}** (${totalPagos} pagos)\n- Pendiente: **$${pendingAmount.toFixed(2)}** (~${pendingClients} clientes)`,
+                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${totalUsd.toFixed(2)}** (${totalPagos} pagos)\n- Pendiente: **$${pendingAmount.toFixed(2)}** (~${pendingClients} clientes)`,
                         isCard: true,
                         cardData: {
                             title: `💳 Balance de Ingresos`,
@@ -2189,7 +2189,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 registerUnansweredQuery(query, userName, currentPage);
 
                 return {
-                    text: `Lo siento Sr. ${userName}, mi Inteligencia Artificial no logró procesar esa solicitud específica sobre "${query}". He anotado tu consulta en mi **log de entrenamiento** para que mis desarrolladores puedan enseñarme a responderla pronto.\n\n¿Deseas intentar con una búsqueda de cliente, sector o ver los indicadores generales?`,
+                    text: `Lo siento **${userName}**, mi Inteligencia Artificial no logró procesar esa solicitud específica sobre "${query}". He anotado tu consulta en mi **log de entrenamiento** para que mis desarrolladores puedan enseñarme a responderla pronto.\n\n¿Deseas intentar con una búsqueda de cliente, sector o ver los indicadores generales?`,
                     isCard: false
                 };
             }
