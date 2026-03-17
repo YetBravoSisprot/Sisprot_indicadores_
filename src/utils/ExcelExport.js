@@ -427,10 +427,6 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             if(cell.startsWith('J')) statsSheet.getCell(cell).numFmt = currencyFormat;
         });
 
-        statsSheet.autoFilter = {
-            from: { row: 2, column: 2 },
-            to: { row: footerRowStats, column: 3 }
-        };
     }
     // No se pueden poner múltiples autoFilters por hoja en ExcelJS, pero cubrimos la principal
 
