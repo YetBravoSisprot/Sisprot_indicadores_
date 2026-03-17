@@ -120,10 +120,12 @@ const Chatbot = () => {
             const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname);
             setMessages(prev => [...prev, { sender: 'bot', ...aiResponse }]);
 
-            // Si la respuesta indica una descarga, la ejecutamos (Por defecto General o la que prefiera el sistema)
-            if (aiResponse.isDownload && aiResponse.cardData?.dataset) {
+            // Si la respuesta indica una descarga, la ejecutamos con el tipo detectado (General u Operaciones)
+            if (aiResponse.isDownload && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
+                const dataset = aiResponse.cardData.dataset || aiResponse.cardData.savedDataset;
+                const rType = aiResponse.cardData.reportType || (aiResponse.cardData.parameters?.reportType) || "general";
                 setTimeout(() => {
-                    exportToExcel(aiResponse.cardData.dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], "general");
+                    exportToExcel(dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], rType);
                 }, 1000); 
             }
         } catch (error) {
