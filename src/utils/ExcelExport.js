@@ -191,6 +191,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             });
 
             // Validaciones
+            row.getCell('estado_inicial').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
+            
             if (rowData.contactado_por !== undefined) {
                 row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$${contactados.length + 1}`] };
                 row.getCell('contesto').dataValidation = { type: 'list', formulae: [`'Validaciones'!$D$2:$D$3`] };
