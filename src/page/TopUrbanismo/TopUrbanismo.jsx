@@ -373,7 +373,7 @@ function TopUrbanismo() {
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
-    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations");
+    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations");
   };
 
   const handleDownloadExcelGeneral = () => {
@@ -382,7 +382,7 @@ function TopUrbanismo() {
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
-    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "general");
+    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "general");
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -709,20 +709,6 @@ function TopUrbanismo() {
                 ))}
               </select>
 
-              <select
-                id="columnasSelect"
-                size="5"
-                multiple
-                value={columnasSeleccionadas}
-                onChange={(e) =>
-                  setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
-                }
-              >
-                <option value="Todas">Todas las columnas Excel</option>
-                {opcionesColumnas.map(col => (
-                  <option key={col} value={col}>{col}</option>
-                ))}
-              </select>
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
