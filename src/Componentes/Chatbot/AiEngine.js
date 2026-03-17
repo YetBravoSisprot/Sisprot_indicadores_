@@ -104,6 +104,21 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
     return { payments: allPayments, startDate: start, endDate: end };
 };
 
+// --- DATA HISTÓRICA (RESPALDO GITHUB): Fetch de snapshot del día anterior ---
+const fetchHistoricalClients = async () => {
+    const RAW_URL = "https://raw.githubusercontent.com/YetBravoSisprot/data_json_dia_ayer/main/data%20empresa%2010-2.json.json";
+    try {
+        const response = await fetch(RAW_URL);
+        if (!response.ok) throw new Error("Error HTTP al recuperar histórico");
+        const rawJson = await response.json();
+        // El JSON de GitHub es un array directo de clientes
+        return Array.isArray(rawJson) ? rawJson : (rawJson.results || []);
+    } catch (e) {
+        console.error("Fallo al cargar data histórica de GitHub:", e);
+        return null;
+    }
+};
+
 // Nueva función unificada para registrar en local y n8n
 const registerUnansweredQuery = (query, userName, currentPage) => {
     const logEntry = {
@@ -808,13 +823,61 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     return { filtered, appliedTexts };
 };
 
+const getLastUpdateTime = () => {
+    const now = new Date();
+    const hrs = now.getHours();
+    if (hrs < 8) return "ayer (4:00 PM)";
+    if (hrs < 12) return "8:00 AM";
+    if (hrs < 16) return "12:00 PM";
+    return "4:00 PM";
+};
+
 export const processQuery = async (message, data, history = [], userName = "", currentPage = "") => {
     if (!data || !data.results) {
         return { text: "Aún no tengo datos cargados para analizar. Por favor, asegúrate de haber iniciado sesión.", isCard: false };
     }
 
-    const clientes = data.results;
-    const query = normalizeText(message);
+    const lastBotMsg = history.length > 0 ? history[history.length - 1] : null;
+    let intent = null;
+    let parameters = null;
+    let fromClarification = false;
+    let query = normalizeText(message);
+    let clientes = data.results;
+    let dataLabel = "Hoy";
+    let isTodayQuery = !query.includes("ayer") && !query.includes("de ayer") && !query.includes("16");
+    
+    // --- DETECTOR DE FECHAS NO DISPONIBLES (Semanas/Meses) ---
+    const isOtherPastDate = (query.includes("semana") || query.includes("mes") || query.includes("pasado") || query.includes("antier") || query.includes("hace")) && !query.includes("ayer") && !query.includes("16");
+    if (isOtherPastDate) {
+        return {
+            text: `Lo siento ${userName}, en el chatbot solo tengo visibilidad de la data de **Hoy** y el cierre de **Ayer (16 de Marzo)**. No cuento con históricos de semanas o meses anteriores por ahora.`,
+            isCard: false
+        };
+    }
+
+    // --- INTERCEPTOR: Clarificación Hoy/Ayer ---
+    if (lastBotMsg?.contextType === 'clarify_data_source' && (query.includes("hoy") || query.includes("ayer") || query.includes("16"))) {
+        intent = lastBotMsg.cardData.originalIntent;
+        parameters = lastBotMsg.cardData.savedParameters;
+        fromClarification = true;
+        
+        if (query.includes("ayer") || query.includes("16")) {
+            isTodayQuery = false;
+        } else {
+            isTodayQuery = true;
+        }
+    }
+
+    // --- CARGA DE DATA SEGÚN SELECCIÓN ---
+    if (!isTodayQuery) {
+        const histData = await fetchHistoricalClients();
+        if (histData && histData.length > 0) {
+            clientes = histData;
+            dataLabel = "Corte Ayer (16 Mar)";
+        }
+    } else {
+        dataLabel = `Hoy (Actualizado: ${getLastUpdateTime()})`;
+    }
 
     // --- DETECTOR DE RESPALDO (Force Detection for Reunion Sectors) ---
     // Si la IA no extrajo urbanismos pero el mensaje los tiene, los forzamos
@@ -822,9 +885,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
     const mentionedSectors = knownSectors.filter(s => query.includes(normalizeText(s)));
 
     try {
-        let intent = null;
-        let parameters = null;
-        let fromClarification = false;
+        if (!fromClarification) {
 
         // --- INTERCEPTOR PRIORITARIO: "Cuántos contratos tiene [nombre]" ---
         // Este interceptor corre ANTES que todo para evitar que el contexto previo
@@ -1162,19 +1223,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
             }
 
-            // --- INTERCEPTOR LOCAL DE EMERGENCIA PARA MÉTRICAS ---
-            // Si OpenAI devuelve una métrica pero el usuario no pidió explícitamente "cuántos" o "dinero"
-            const queryLower = normalizeText(message);
-            const actionWords = ["cuanto", "total", "numero", "cantidad", "ingreso", "venta", "plata", "dinero", "factura", "conteo", "suma", "busca", "perfil"];
-            const hasActionWord = actionWords.some(w => queryLower.includes(w));
-            const hasFileWord = queryLower.includes("excel") || queryLower.includes("archivo") || queryLower.includes("documento") || queryLower.includes("xlsx");
-
-            if ((intent === 'TOTAL_CLIENTES' || intent === 'INGRESOS' || intent === 'ESTADOS' || (intent === 'GENERAR_EXCEL' && !hasFileWord)) && !hasActionWord) {
-                console.log("Interceptor Local: Detectada ambigüedad métrica.");
-                intent = 'AMBIGUEDAD_METRICA';
-            }
-
             const customMessage = openAIResult.message;
+
+            // --- NUEVO INTERCEPTOR: CLARIFICACIÓN DATA SOURCE (Hoy vs Ayer) ---
+            const metricIntents = ['TOTAL_CLIENTES', 'AMBOS_METRICAS', 'ESTADOS', 'TIPOS_CLIENTE'];
+            const hasDateKeyword = query.includes("ayer") || query.includes("hoy") || query.includes("16") || query.includes("17") || query.includes("respaldo") || query.includes("pasado");
+            
+            if (metricIntents.includes(intent) && !hasDateKeyword && !fromClarification) {
+                return {
+                    text: `Perfecto ${userName}, ¿Deseas ver los resultados de **Hoy** o el cierre de **Ayer**?`,
+                    isCard: false,
+                    contextType: 'clarify_data_source',
+                    cardData: { originalIntent: intent, savedParameters: parameters }
+                };
+            }
 
             // ... (resto de interceptores locales si existen)
 
@@ -1213,6 +1275,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
             }
         }
+
+        } // Fin de !fromClarification (Bloque General de Detección)
 
         // --- 2. EJECUCIÓN DEL FILTRADO/LOGICA LOCAL SEGÚN INTENT ---
         switch (intent) {
@@ -1340,13 +1404,14 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                             const totalRevenue = statsByType.reduce((a, b) => a + b.rawRevenue, 0);
 
+                            const cardTitle = dataLabel.startsWith("Hoy") ? `Dashboard de ${statusLabel}` : `Dashboard (${dataLabel})`;
                             return {
                                 text: `**${userName}**, aquí tienes el balance detallado por tipo para los clientes **${statusLabel}** de tu consulta:\n\n` +
                                       statsByType.map(s => `• **${s.label}**: ${s.value}`).join("\n") +
                                       `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
-                                    title: `Dashboard de ${statusLabel}`,
+                                    title: cardTitle,
                                     value: filteredClientes.length,
                                     subtitle: appliedFiltersText.join(" | "),
                                     color: "#3498db",
@@ -1395,9 +1460,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
-                                title: appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes",
+                                title: dataLabel.startsWith("Hoy") ? (appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes") : `Reporte: ${dataLabel}`,
                                 value: filteredClientes.length,
-                                subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : "clientes totales",
+                                subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : (dataLabel.startsWith("Hoy") ? "clientes totales" : "Snapshot histórico"),
                                 color: "#3498db",
                                 parameters: parameters,
                                 savedDataset: filteredClientes,
@@ -1991,20 +2056,18 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'AMBOS_METRICAS': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, parameters, query);
 
-                // Cálculos Globales
-                const countActivos = filtered.filter(c => c.status_name === "Activo").length;
-                const countSuspendidos = filtered.filter(c => c.status_name === "Suspendido").length;
-                const countCancelados = filtered.filter(c => c.status_name === "Cancelado").length;
-                const sumaIngresosActivos = filtered
-                    .filter(c => c.status_name === "Activo")
-                    .reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                // Cálculos unificados (Mejora solicitada: mostrar en mismo renglón)
+                const calculateRevenue = (subset) => subset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                const formatVal = (count, rev) => `${count} (${formatCurrency(rev)})`;
 
                 const finalStats = [];
                 const tipoParamsAmb = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
                 
                 if (tipoParamsAmb.length > 1) {
                     tipoParamsAmb.forEach(t => {
-                        const count = filtered.filter(c => normalizeText(c.client_subdivision || c.client_type_name || '').includes(normalizeText(t))).length;
+                        const subset = filtered.filter(c => normalizeText(c.client_subdivision || c.client_type_name || '').includes(normalizeText(t)));
+                        const revenue = calculateRevenue(subset);
+                        
                         let color = "#bdc3c7";
                         const tNorm = normalizeText(t);
                         if (tNorm.includes("pyme")) color = "#9b59b6";
@@ -2012,23 +2075,35 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         
                         finalStats.push({ 
                             label: `Tipo: ${t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()}`, 
-                            value: count, 
+                            value: formatVal(subset.length, revenue), 
                             color 
                         });
                     });
                 } else {
-                    if (countActivos > 0 || !parameters?.status) finalStats.push({ label: "Activos", value: countActivos, color: "#2ecc71" });
-                    if (countSuspendidos > 0 || !parameters?.status) finalStats.push({ label: "Suspendidos", value: countSuspendidos, color: "#f1c40f" });
-                    if (countCancelados > 0 || !parameters?.status) finalStats.push({ label: "Cancelados", value: countCancelados, color: "#e74c3c" });
+                    // Si no hay tipos, mostramos desglose por estado con sus montos reales
+                    const statusList = Array.isArray(parameters?.status) ? parameters.status : ["Activo", "Suspendido", "Cancelado"];
+                    statusList.forEach(s => {
+                        const subset = filtered.filter(c => normalizeText(c.status_name).includes(normalizeText(s)));
+                        if (subset.length > 0 || parameters?.status) {
+                             let color = "#bdc3c7";
+                             const sNorm = normalizeText(s);
+                             if (sNorm.includes("activo")) color = "#2ecc71";
+                             else if (sNorm.includes("suspendido")) color = "#f1c40f";
+                             else if (sNorm.includes("cancelado")) color = "#e74c3c";
+
+                             finalStats.push({ label: s, value: formatVal(subset.length, calculateRevenue(subset)), color });
+                        }
+                    });
                 }
 
-                finalStats.push({ label: "Ingresos Proyectados", value: formatCurrency(sumaIngresosActivos), color: "#3498db" });
+                const totalRev = calculateRevenue(filtered);
+                finalStats.push({ label: "Total Proyectado", value: formatCurrency(totalRev), color: "#3498db" });
 
                 return {
                     text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedTexts.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
                     isCard: true,
                     cardData: {
-                        title: "Resumen de Selección",
+                        title: dataLabel.startsWith("Hoy") ? "Resumen de Selección" : `Resumen: ${dataLabel}`,
                         stats: finalStats,
                         color: "#9b59b6",
                         parameters: parameters,
