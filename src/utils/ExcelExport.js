@@ -388,13 +388,13 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         const migradoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'migrado') + 1);
         const cicloColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'ciclo') + 1);
         
-        statsSheet.getCell('I2').value = "Etiquetas de fila";
-        statsSheet.getCell('J2').value = "Suma PENDIENTE";
-        statsSheet.getCell('K2').value = "Suma COBRADO";
+        statsSheet.getCell('I2').value = "MIGRADO / NO MIGRADO";
+        statsSheet.getCell('J2').value = "Total PENDIENTE";
+        statsSheet.getCell('K2').value = "Total RECAUDADO";
         
         [statsSheet.getCell('I2'), statsSheet.getCell('J2'), statsSheet.getCell('K2')].forEach(c => {
-            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
-            c.font = { color: { argb: '000000' }, bold: true };
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.font = { color: { argb: 'FFFFFF' }, bold: true };
             c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
             c.alignment = { horizontal: 'center' };
         });
