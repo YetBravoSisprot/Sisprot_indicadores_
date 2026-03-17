@@ -271,18 +271,19 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
         const currencyFormat = '"$ "#,##0.00';
 
-        // --- TABLA IZQUIERDA: ESTADO DEL CLIENTE ---
+        // --- TABLA IZQUIERDA: RESUMEN OPERATIVO TOTAL ---
         statsSheet.getCell('B2').value = "ESTADO DEL CLIENTE";
-        statsSheet.getCell('C2').value = "Cuenta de ESTADO INICIAL";
-        statsSheet.getRow(2).font = { bold: true, color: { argb: '000000' } };
-        statsSheet.getRow(2).eachCell((c, i) => { 
-            if(i >= 2 && i <= 3) {
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
-                c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
-            }
+        statsSheet.getCell('C2').value = "CANTIDAD";
+        statsSheet.getCell('D2').value = "IMPORTE TOTAL";
+        
+        [statsSheet.getCell('B2'), statsSheet.getCell('C2'), statsSheet.getCell('D2')].forEach(c => {
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.font = { color: { argb: 'FFFFFF' }, bold: true };
+            c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
+            c.alignment = { horizontal: 'center' };
         });
 
-        const tableEstados = ["Activo", "Cancelado", "Pausado", "Suspendido", "(en blanco)"];
+        const tableEstados = ["Activo", "Suspendido", "Cancelado", "Pausado", "Por Instalar"];
         const estadoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'estado_inicial') + 1);
         const costColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'costo') + 1);
 
@@ -290,36 +291,36 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             const rowNum = i + 3;
             statsSheet.getCell(`B${rowNum}`).value = est;
             
-            if (est === "(en blanco)") {
-                statsSheet.getCell(`C${rowNum}`).value = { 
-                    formula: `COUNTBLANK(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef})`, 
-                    result: 0 
-                };
-            } else {
-                statsSheet.getCell(`C${rowNum}`).value = { 
-                    formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum})`, 
-                    result: 0 
-                };
-            }
+            // Cantidad
+            statsSheet.getCell(`C${rowNum}`).value = { 
+                formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum})`, 
+                result: 0 
+            };
+            
+            // Monto $
+            statsSheet.getCell(`D${rowNum}`).value = { 
+                formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum}, ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
+                result: 0 
+            };
 
-            // Sin bordes para datos, como tabla dinamica nativa
             statsSheet.getCell(`B${rowNum}`).border = {};
-            statsSheet.getCell(`C${rowNum}`).border = {};
-            if (est === "(en blanco)") {
-                statsSheet.getCell(`B${rowNum}`).font = { italic: true };
-            }
+            statsSheet.getCell(`C${rowNum}`).alignment = { horizontal: 'center' };
+            statsSheet.getCell(`D${rowNum}`).numFmt = currencyFormat;
+            statsSheet.getCell(`D${rowNum}`).border = {};
         });
 
         let footerRowStats = tableEstados.length + 3;
-        statsSheet.getCell(`B${footerRowStats}`).value = "Total general";
+        statsSheet.getCell(`B${footerRowStats}`).value = "TOTAL GENERAL";
         statsSheet.getCell(`C${footerRowStats}`).value = { formula: `SUM(C3:C${footerRowStats-1})`, result: 0 };
-        statsSheet.getRow(footerRowStats).font = { bold: true, color: { argb: '000000' } };
-        statsSheet.getRow(footerRowStats).eachCell((c, i) => { 
-            if(i >= 2 && i <= 3) {
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
-                c.border = { top: {style:'thin'}, bottom: {style:'double'} };
-            }
+        statsSheet.getCell(`D${footerRowStats}`).value = { formula: `SUM(D3:D${footerRowStats-1})`, result: 0 };
+        
+        [statsSheet.getCell(`B${footerRowStats}`), statsSheet.getCell(`C${footerRowStats}`), statsSheet.getCell(`D${footerRowStats}`)].forEach(c => {
+            c.font = { bold: true };
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
+            c.border = { top: {style:'thin'}, bottom: {style:'double'} };
+            if(c.address.startsWith('D')) c.numFmt = currencyFormat;
         });
+        statsSheet.getCell(`C${footerRowStats}`).alignment = { horizontal: 'center' };
 
         // --- CENTRO: DASHBOARD DE ALTO IMPACTO (DASHBOARD) ---
         const cicloLabel = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle)} DE ${mesActual}` : `CICLO DE ${mesActual}`;
