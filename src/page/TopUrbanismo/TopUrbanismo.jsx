@@ -382,7 +382,7 @@ function TopUrbanismo() {
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
-    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "general");
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "general");
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -709,6 +709,20 @@ function TopUrbanismo() {
                 ))}
               </select>
 
+              <select
+                id="columnasSelect"
+                size="5"
+                multiple
+                value={columnasSeleccionadas}
+                onChange={(e) =>
+                  setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
+                }
+              >
+                <option value="Todas">Todas las columnas Excel</option>
+                {opcionesColumnas.map(col => (
+                  <option key={col} value={col}>{col}</option>
+                ))}
+              </select>
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
@@ -718,6 +732,14 @@ function TopUrbanismo() {
                 ? `Total de Perdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
                 : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
             </button>
+
+            <div style={{ backgroundColor: '#eef2f5', padding: '15px', borderRadius: '8px', marginBottom: '20px', fontSize: '0.9rem', color: '#333', border: '1px solid #cce5ff', textAlign: 'left' }}>
+              <p style={{ margin: '0 0 8px 0', color: '#004085' }}><strong>📌 Guía para exportar reporte en Excel:</strong></p>
+              <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                <li style={{ marginBottom: '6px' }}><strong>Para Excel Operaciones:</strong> Solo debes seleccionar el <strong>Estatus del Ciente</strong> (ej. Suspendidos) y el <strong>Ciclo</strong>. No necesitas elegir las columnas.</li>
+                <li><strong>Para Excel General:</strong> Puedes seleccionar las <strong>Columnas</strong> del Excel específicas que deseas generar, o filtrar información detallada por agencias, urbanismos, etc.</li>
+              </ul>
+            </div>
 
             <div className="button-group-excel">
               <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones}>
