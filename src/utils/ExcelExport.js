@@ -261,7 +261,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getColumn('A').width = 2;
         statsSheet.getColumn('B').width = 35;
         statsSheet.getColumn('C').width = 15;
-        statsSheet.getColumn('D').width = 2;
+        statsSheet.getColumn('D').width = 20;
         statsSheet.getColumn('E').width = 18;
         statsSheet.getColumn('F').width = 18;
         statsSheet.getColumn('G').width = 18;
