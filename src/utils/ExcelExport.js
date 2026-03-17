@@ -62,11 +62,17 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "CLIENTE", key: "cliente", width: 35, ui: "Cliente" },
         { header: "CIVIL", key: "ci_rif", width: 15, ui: "Cedula" },
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
+        { header: "DIRECCIÓN", key: "direccion", width: 35, ui: "Dirección" },
         { header: "SECTOR", key: "sector", width: 20, ui: "Urbanismo" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
         { header: "PLAN", key: "plan", width: 25, ui: "Plan" },
-        { header: "COSTO", key: "costo", width: 14, ui: "Costo" }
+        { header: "COSTO", key: "costo", width: 14, ui: "Costo" },
+        { header: "IP", key: "ip", width: 15, ui: "IP" },
+        { header: "MAC", key: "mac", width: 20, ui: "MAC" },
+        { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
+        { header: "DÍAS HÁBILES", key: "dias_habiles", width: 15, ui: "Días Hábiles" },
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
     ];
 
     const followUpColumns = [
@@ -81,32 +87,41 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     let finalColumns = [{ header: "N°", key: "num", width: 5 }];
 
+    const standardOrder = [
+        "estado_inicial", "contrato", "cliente", "ci_rif", "telefono", 
+        "sector", "migrado", "ciclo", "plan", "costo"
+    ];
+
     if (reportType === "operations") {
-        // En el de operaciones, las seleccionadas van al principio
-        const isAll = selectedColumns.includes("Todas");
-        const baseOrder = ["estado_inicial", "contrato", "cliente", "ci_rif", "telefono", "sector", "migrado", "ciclo", "plan", "costo"];
-        
-        const selected = isAll ? allPossibleColumns.filter(c => baseOrder.includes(c.key)) : allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
-        const rest = allPossibleColumns.filter(c => !selected.some(sc => sc.key === c.key) && !followUpColumns.some(fc => fc.key === c.key));
-        
-        finalColumns = [...finalColumns, ...selected, ...followUpColumns, ...rest];
-    } else {
-        // En el general, usamos el orden estándar de la imagen
-        const standardOrder = [
-            "estado_inicial", "contrato", "cliente", "ci_rif", "telefono", 
-            "sector", "migrado", "ciclo", "plan", "costo"
-        ];
+        // En el de operaciones, usamos SIEMPRE el orden estándar y agregamos las de seguimiento. NO seleccionables.
         const base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
             .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
-        const rest = allPossibleColumns.filter(c => !standardOrder.includes(c.key));
-
-        finalColumns = [...finalColumns, ...base, ...followUpColumns, ...rest];
+        
+        finalColumns = [...finalColumns, ...base, ...followUpColumns];
+    } else {
+        // En el general, SI respetamos las columnas seleccionadas por el usuario
+        const isAll = selectedColumns.includes("Todas");
+        
+        if (isAll) {
+            const base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
+                .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
+            finalColumns = [...finalColumns, ...base];
+        } else {
+            const selected = allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
+            finalColumns = [...finalColumns, ...selected];
+        }
     }
 
     mainSheet.columns = finalColumns;
 
     // Estilo Cabecera Reporte
     mainSheet.getRow(1).height = 35;
+    // Añadir AutoFiltro a todas las columnas usando el número total de columnas
+    mainSheet.autoFilter = {
+        from: { row: 1, column: 1 },
+        to: { row: 1, column: finalColumns.length }
+    };
+
     mainSheet.getRow(1).eachCell(cell => {
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
         cell.font = { color: { argb: 'FFFFFF' }, bold: true, size: 10 };
@@ -214,7 +229,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     if (reportType === "operations") {
         const statsSheet = workbook.addWorksheet("ESTADISTICA");
         const mainSheetName = "'REPORTE GENERAL'";
-        const lastRowRef = mainSheet.rowCount;
+        const lastRowRef = mainSheet.rowCount - 1; // Excluir la fila de TOTAL al final
 
         statsSheet.getColumn('A').width = 2;
         statsSheet.getColumn('B').width = 35;
@@ -231,12 +246,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
         // --- TABLA IZQUIERDA: ESTADO DEL CLIENTE ---
         statsSheet.getCell('B2').value = "ESTADO DEL CLIENTE";
-        statsSheet.getCell('C2').value = "Cantidad";
-        statsSheet.getRow(2).font = { bold: true, color: { argb: 'FFFFFF' } };
+        statsSheet.getCell('C2').value = "Cuenta de ESTADO INICIAL";
+        statsSheet.getRow(2).font = { bold: true, color: { argb: '000000' } };
         statsSheet.getRow(2).eachCell((c, i) => { 
             if(i >= 2 && i <= 3) {
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-                c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
+                c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
             }
         });
 
@@ -252,21 +267,22 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, ${formulaRef})`, 
                 result: 0 
             };
-            statsSheet.getCell(`B${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-            statsSheet.getCell(`C${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            // Sin bordes para datos, como tabla dinamica nativa
+            statsSheet.getCell(`B${rowNum}`).border = {};
+            statsSheet.getCell(`C${rowNum}`).border = {};
             if (est === "(en blanco)") {
                 statsSheet.getCell(`B${rowNum}`).font = { italic: true };
             }
         });
 
         let footerRowStats = tableEstados.length + 3;
-        statsSheet.getCell(`B${footerRowStats}`).value = "TOTAL GENERAL DE CLIENTES";
+        statsSheet.getCell(`B${footerRowStats}`).value = "Total general";
         statsSheet.getCell(`C${footerRowStats}`).value = { formula: `SUM(C3:C${footerRowStats-1})`, result: 0 };
-        statsSheet.getRow(footerRowStats).font = { bold: true, color: { argb: 'FFFFFF' } };
+        statsSheet.getRow(footerRowStats).font = { bold: true, color: { argb: '000000' } };
         statsSheet.getRow(footerRowStats).eachCell((c, i) => { 
             if(i >= 2 && i <= 3) {
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-                c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
+                c.border = { top: {style:'thin'}, bottom: {style:'double'} };
             }
         });
 
@@ -321,12 +337,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         const migradoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'migrado') + 1);
         const cicloColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'ciclo') + 1);
         
-        statsSheet.getCell('I2').value = "MIGRADO / NO MIGRADO";
-        statsSheet.getCell('J2').value = "Monto Total";
+        statsSheet.getCell('I2').value = "Etiquetas de fila";
+        statsSheet.getCell('J2').value = "Suma de COSTO";
         [statsSheet.getCell('I2'), statsSheet.getCell('J2')].forEach(c => {
-            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-            c.font = { color: { argb: 'FFFFFF' }, bold: true };
-            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
+            c.font = { color: { argb: '000000' }, bold: true };
+            c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
         });
 
         let currentRow = 3;
@@ -343,8 +359,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             statsSheet.getCell(`J${currentRow}`).font = { bold: true };
             
             [ `I${currentRow}`, `J${currentRow}` ].forEach(cell => {
-                statsSheet.getCell(cell).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-                statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E6EBF5' } }; 
+                statsSheet.getCell(cell).border = {};
+                // Sin fondo para datos, estilo nativo
                 if(cell.startsWith('J')) statsSheet.getCell(cell).numFmt = currencyFormat;
             });
             currentRow++;
@@ -352,28 +368,14 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             // Cycle subrows
             uniqueCycles.forEach(cycle => {
                 statsSheet.getCell(`I${currentRow}`).value = `   [-] ${cycle}`; 
-                statsSheet.getCell(`I${currentRow}`).font = { color: { argb: '7F7F7F' } }; 
+                statsSheet.getCell(`I${currentRow}`).font = { color: { argb: '000000' } }; 
                 statsSheet.getCell(`J${currentRow}`).value = { 
                     formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}")`, 
                     result: 0 
                 };
-                statsSheet.getCell(`J${currentRow}`).font = { color: { argb: '7F7F7F' } };
+                statsSheet.getCell(`J${currentRow}`).font = { color: { argb: '000000' } };
                 [ `I${currentRow}`, `J${currentRow}` ].forEach(cell => {
-                    statsSheet.getCell(cell).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-                    statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F2F2F2' } }; 
-                    if(cell.startsWith('J')) statsSheet.getCell(cell).numFmt = currencyFormat;
-                });
-                currentRow++;
-
-                // En blanco sub-subrow
-                statsSheet.getCell(`I${currentRow}`).value = `      (en blanco)`; 
-                statsSheet.getCell(`J${currentRow}`).value = { 
-                    formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}")`, 
-                    result: 0 
-                };
-                [ `I${currentRow}`, `J${currentRow}` ].forEach(cell => {
-                    statsSheet.getCell(cell).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-                    statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F2F2F2' } };
+                    statsSheet.getCell(cell).border = {};
                     if(cell.startsWith('J')) statsSheet.getCell(cell).numFmt = currencyFormat;
                 });
                 currentRow++;
@@ -384,9 +386,9 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getCell(`I${currentRow}`).value = "Total general";
         statsSheet.getCell(`J${currentRow}`).value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
         [ `I${currentRow}`, `J${currentRow}` ].forEach(cell => {
-            statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-            statsSheet.getCell(cell).font = { color: { argb: 'FFFFFF' }, bold: true };
-            statsSheet.getCell(cell).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            statsSheet.getCell(cell).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
+            statsSheet.getCell(cell).font = { color: { argb: '000000' }, bold: true };
+            statsSheet.getCell(cell).border = { top: {style:'thin'}, bottom: {style:'double'} };
             if(cell.startsWith('J')) statsSheet.getCell(cell).numFmt = currencyFormat;
         });
 
