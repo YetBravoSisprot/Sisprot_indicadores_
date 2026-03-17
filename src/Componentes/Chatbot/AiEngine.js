@@ -480,7 +480,7 @@ INTENCIONES DISPONIBLES:
 - SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE, O VER EL DETALLE/PERFIL) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?", "muestrame su detalle". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda" | "perfil"}
   * MÁXIMA REGLA: Frases iniciales vagas como "necesito saber informacion de un cliente", "buscame a alguien", o "quiero saber un dato" NO SON SEGUIMIENTO. Si no te pregunta expresamente por el plan, el ciclo, el teléfono, la dirección, la deuda o la red, elije BUSQUEDA_VAGA u otro.
   * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
-- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
+- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel". NO uses esto para frases como "dame la de ayer", "pásame la info", "muestrame los clientes" o "listado de...". Si el usuario pide "la de ayer", muestra el reporte en pantalla (Dashboard) y NO actives esta intención de Excel.
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
 - INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "bnc_account": "Juridica" | "Personal"}. 
   * REGLA BNC: Si preguntan por "BNC" sin especificar si es Jurídica o Personal, el sistema deberá clarificar.
@@ -500,7 +500,7 @@ INTENCIONES DISPONIBLES:
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). 
   * Parámetros opcionales: {"reportType": "operations" | "general"}. 
   * REGLA OPERACIONES: Si el usuario menciona "operaciones", "seguimiento de cobranza", "dashboard estadistico", "ver recaudacion", o "analisis de suspendidos", usa reportType: "operations". Explícale que este reporte incluye un PANEL DE CONTROL inteligente con indicadores de recuperación.
-  * NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
+  * NO uses esto para frases como "dame la de ayer", "pásame los datos" o "muestrame los clientes". El usuario debe mencionar explícitamente la palabra "Excel" o "Archivo".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
 - INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas. También para ANALISIS DE COBRANZA (pago vs deuda).
   * Parámetros opcionales: {"banco": "nombre", "metodo": "PAGO MOVIL" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "ciclo": "15" | "30"}.
@@ -875,7 +875,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
         const histData = await fetchHistoricalClients();
         if (histData && histData.length > 0) {
             clientes = histData;
-            dataLabel = "Corte Ayer (16 Mar)";
+            dataLabel = "Corte Ayer (8:00 PM)";
         }
     } else {
         dataLabel = `Hoy (Actualizado: ${getLastUpdateTime()})`;
@@ -2144,13 +2144,14 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 const reportType = parameters?.reportType || 'general';
                 const reportName = reportType === 'operations' ? 'Operaciones (Seguimiento)' : 'General';
-                const filtersMsg = appliedTexts.join(', ') || 'Global';
+                const currentSource = dataLabel.startsWith("Hoy") ? "" : ` de **${dataLabel}**`;
+                const filtersMsg = appliedTexts.join(', ') || (currentSource ? `Toda la data` : 'Global');
 
                 let responseText = "";
                 if (reportType === 'operations') {
-                    responseText = `¡Entendido **${userName}**! He preparado el **Excel de Operaciones** con el Dashboard Estadístico y el balance de recaudación para: **${filtersMsg}**.\n\n¿Deseas descargarlo ahora para iniciar el seguimiento?`;
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel de Operaciones** con los datos${currentSource} para: **${filtersMsg}**.`;
                 } else {
-                    responseText = `¡Entendido **${userName}**! He preparado el **Excel General** con los datos de: **${filtersMsg}**.\n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel General** con los datos${currentSource} de: **${filtersMsg}**. \n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
                 }
 
                 return {
