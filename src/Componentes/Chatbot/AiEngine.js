@@ -536,9 +536,11 @@ REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
 
 REGLA DE EXCLUSIVIDAD DE FILTROS:
 - **EXCEPCIÓN PARA FILTROS**: El sistema SI permite ver múltiples estados (ej: "activos y suspendidos") o múltiples tipos (ej: "pyme y residencial") al mismo tiempo si el usuario lo solicita. En estos casos, el bot debe proporcionar el total sumado y, si es posible, el desglose en el mensaje.
-REGLA DE INGRESOS (PROYECTADOS):
 - SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
-- Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.`;
+- Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.
+REGLA DE HORARIOS DE ACTUALIZACIÓN:
+- La data de 'Hoy' se actualiza automáticamente tres veces al día: **8:00 AM, 12:00 PM y 4:00 PM**.
+- Si el usuario pregunta por la hora de los datos, infórmale estos horarios y dile que los datos reflejan el último corte realizado. NO inventes otras horas como las 6:00 AM.`;
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
