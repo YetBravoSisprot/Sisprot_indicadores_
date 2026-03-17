@@ -36,13 +36,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         "Número equivocado", "Pagó, pero aun presenta estado suspendido", "Pagó, pero no sabía reportar su pago",
         "Por Contactar", "Cliente con proceso Administrativo (Convenio)", "Suspension temporal por mudanza",
         "Visita programada para evaluación", "Estado en verificación", "Cambio de Proveedor (FIBEX)",
-        "Cambio de Proveedor (NETCOM)", "Cambio de Proveedor (WISP)", "Cliente se encuentra de Vacaciones",
-        "Suspension temporal por Viaje", "Baja por descontento del Servicio.", "En Espera de Servicio Técnico",
-        "Solicita cancelacion por asuntos personales", "Cambio de Proveedor", "Cambio de Proveedor (NETUNO)",
-        "Familiar quedo en mandar Recado."
+        "Cambio de Proveedor (NETCOM)"
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
-    const contactados = ["Yetzareth Bravo", "Derwing Acevedo", "Maria Moreno", "Khaloa Serrano"];
+    const contactados = [
+        "Yetzareth Bravo", "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
+    ];
     const siNo = ["SI", "NO"];
 
     validSheet.getCell('A1').value = "Motivos";
@@ -57,14 +56,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     // --- 2. HOJA REPORTE GENERAL ---
     const mainSheet = workbook.addWorksheet("REPORTE GENERAL");
 
-    // Mapeo de columnas disponibles
     const allPossibleColumns = [
         { header: "ESTADO INICIAL", key: "estado_inicial", width: 18, ui: "Estatus" },
         { header: "CONTRATO", key: "contrato", width: 12, ui: "Contrato" },
         { header: "CLIENTE", key: "cliente", width: 35, ui: "Cliente" },
-        { header: "CI/RIF", key: "ci_rif", width: 15, ui: "Cedula" },
+        { header: "CIVIL", key: "ci_rif", width: 15, ui: "Cedula" },
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
-        { header: "DIRECCION", key: "direccion", width: 40, ui: "Dirección" },
         { header: "SECTOR", key: "sector", width: 20, ui: "Urbanismo" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
@@ -74,15 +71,16 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "MAC", key: "mac", width: 20, ui: "MAC" },
         { header: "FECHA CREACION", key: "fecha_creacion", width: 18, ui: "Fecha_Creación" },
         { header: "DIAS HABILES", key: "dias_habiles", width: 12, ui: "Días Hábiles" },
-        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" },
+        { header: "DIRECCION", key: "direccion", width: 40, ui: "Dirección" }
     ];
 
     const followUpColumns = [
         { header: "CONTACTADO POR", key: "contactado_por", width: 22 },
         { header: "¿CONTESTO LA LLAMADA?", key: "contesto", width: 22 },
         { header: "ULTIMA FECHA DE CONTACTO", key: "ultima_fecha", width: 25 },
-        { header: "ESTADO ACTUALIZADO", key: "estado_actualizado", width: 22 },
-        { header: "CONVERSACION DETALLADA CON EL CLIENTE", key: "conversacion", width: 50 },
+        { header: "TRABAJO ACTUAL", key: "estado_actualizado", width: 22 },
+        { header: "ESTACION DETALLADA CON EL CLIENTE", key: "conversacion", width: 50 },
         { header: "MOTIVO (CIERRE)", key: "motivo_cierre", width: 35 },
         { header: "ADVERTENCIA", key: "advertencia", width: 35 }
     ];
@@ -92,12 +90,14 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     if (reportType === "operations") {
         // En el de operaciones, las seleccionadas van al principio
         const isAll = selectedColumns.includes("Todas");
-        const selected = isAll ? allPossibleColumns : allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
-        const rest = isAll ? [] : allPossibleColumns.filter(c => !selectedColumns.includes(c.ui));
+        const baseOrder = ["estado_inicial", "contrato", "cliente", "ci_rif", "telefono", "sector", "migrado", "ciclo", "plan", "costo"];
+        
+        const selected = isAll ? allPossibleColumns.filter(c => baseOrder.includes(c.key)) : allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
+        const rest = allPossibleColumns.filter(c => !selected.some(sc => sc.key === c.key) && !followUpColumns.some(fc => fc.key === c.key));
         
         finalColumns = [...finalColumns, ...selected, ...followUpColumns, ...rest];
     } else {
-        // En el general, usamos el orden estándar que siempre hemos sacado
+        // En el general, usamos el orden estándar de la imagen
         const standardOrder = [
             "estado_inicial", "contrato", "cliente", "ci_rif", "telefono", 
             "sector", "migrado", "ciclo", "plan", "costo"
@@ -222,22 +222,16 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         const mainSheetName = "'REPORTE GENERAL'";
         const lastRowRef = mainSheet.rowCount;
 
-        // Ajuste de anchos
         statsSheet.getColumn('A').width = 2;
-        statsSheet.getColumn('B').width = 32;
+        statsSheet.getColumn('B').width = 35;
         statsSheet.getColumn('C').width = 15;
         statsSheet.getColumn('D').width = 5;
         statsSheet.getColumn('E').width = 30;
         statsSheet.getColumn('F').width = 15;
-        statsSheet.getColumn('G').width = 15;
+        statsSheet.getColumn('G').width = 30;
         statsSheet.getColumn('H').width = 15;
-        statsSheet.getColumn('I').width = 15;
-        statsSheet.getColumn('J').width = 15;
-        statsSheet.getColumn('K').width = 15;
-        statsSheet.getColumn('L').width = 32;
-        statsSheet.getColumn('M').width = 22;
 
-        const currencyFormat = '"$ "#.##0,00';
+        const currencyFormat = '"$ "#,##0.00';
 
         // --- TABLA IZQUIERDA: ESTADO DEL CLIENTE ---
         statsSheet.getCell('B2').value = "ESTADO DEL CLIENTE";
@@ -251,8 +245,6 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         });
 
         const tableEstados = ["Activo", "Cancelado", "Pausado", "Suspendido", "(en blanco)"];
-        
-        // Buscamos la columna ESTADO INICIAL en el reporte general
         const estadoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'estado_inicial') + 1);
         const costColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'costo') + 1);
 
@@ -266,6 +258,9 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             };
             statsSheet.getCell(`B${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
             statsSheet.getCell(`C${rowNum}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            if (est === "(en blanco)") {
+                statsSheet.getCell(`B${rowNum}`).font = { italic: true };
+            }
         });
 
         const footerRowStats = tableEstados.length + 3;
@@ -279,89 +274,78 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             }
         });
 
-        // --- CENTRO: CUADROS Y DASHBOARD ---
-        const cicloStr = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle)} DE ${mesActual}` : `REPORTE DE ${mesActual}`;
-        statsSheet.mergeCells('E4:I4');
-        statsSheet.getCell('E4').value = cicloStr;
+        // --- CENTRO: DASHBOARD (Boxes) ---
+        const cicloLabel = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle)} DE ${mesActual}` : `CICLO DE ${mesActual}`;
+        statsSheet.mergeCells('E4:H4');
+        statsSheet.getCell('E4').value = cicloLabel;
         statsSheet.getCell('E4').font = { bold: true, size: 16 };
         statsSheet.getCell('E4').alignment = { horizontal: 'center' };
 
-        // Cuadro VERDE (Recuperado) en F6
-        statsSheet.getCell('F6').value = { 
-            formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
-            result: 0 
-        };
-        statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '92D050' } }; 
-        statsSheet.getCell('F6').numFmt = currencyFormat;
-        statsSheet.getCell('F6').font = { bold: true };
-        statsSheet.getCell('F6').alignment = { horizontal: 'center' };
-        statsSheet.getCell('F6').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        // Box Recuperado
+        statsSheet.getCell('E6').value = { formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('E6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '92D050' } };
+        statsSheet.getCell('E6').font = { bold: true };
+        statsSheet.getCell('E6').numFmt = currencyFormat;
+        statsSheet.getCell('E6').alignment = { horizontal: 'center' };
+        statsSheet.getCell('E6').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        // Cuadro AMARILLO (Pendiente) en H10
-        statsSheet.getCell('H10').value = { 
-            formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Suspendido", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
-            result: 0 
-        };
-        statsSheet.getCell('H10').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } }; 
-        statsSheet.getCell('H10').numFmt = currencyFormat;
-        statsSheet.getCell('H10').font = { bold: true };
-        statsSheet.getCell('H10').alignment = { horizontal: 'center' };
-        statsSheet.getCell('H10').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        // Box Pendiente
+        statsSheet.getCell('G10').value = { formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Suspendido", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('G10').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } };
+        statsSheet.getCell('G10').font = { bold: true };
+        statsSheet.getCell('G10').numFmt = currencyFormat;
+        statsSheet.getCell('G10').alignment = { horizontal: 'center' };
+        statsSheet.getCell('G10').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        // Cuadro GRIS (Otros) en J11
-        statsSheet.getCell('J11').value = { 
+        // Box Otros
+        statsSheet.getCell('H12').value = { 
             formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Suspendido")`, 
             result: 0 
         };
-        statsSheet.getCell('J11').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'A5A5A5' } }; 
-        statsSheet.getCell('J11').numFmt = currencyFormat;
-        statsSheet.getCell('J11').font = { bold: true, color: { argb: 'FFFFFF' } };
-        statsSheet.getCell('J11').alignment = { horizontal: 'center' };
-        statsSheet.getCell('J11').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        statsSheet.getCell('H12').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'A5A5A5' } };
+        statsSheet.getCell('H12').font = { bold: true, color: { argb: 'FFFFFF' } };
+        statsSheet.getCell('H12').numFmt = currencyFormat;
+        statsSheet.getCell('H12').alignment = { horizontal: 'center' };
+        statsSheet.getCell('H12').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        // Total en el centro
-        statsSheet.getCell('E14').value = "TOTAL GENERAL DE CLIENTES";
-        statsSheet.getCell('E14').font = { bold: true };
-        statsSheet.getCell('E15').value = "Total";
-        statsSheet.getCell('I15').value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
-        statsSheet.getCell('I15').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-        statsSheet.getCell('I15').font = { color: { argb: 'FFFFFF' }, bold: true };
-        statsSheet.getCell('I15').numFmt = currencyFormat;
-        statsSheet.getCell('I15').alignment = { horizontal: 'center' };
-        statsSheet.getCell('I15').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        statsSheet.getCell('E15').value = "TOTAL GENERAL DE CLIENTES";
+        statsSheet.getCell('E15').font = { bold: true };
+        statsSheet.getCell('E16').value = "Total";
+        statsSheet.getCell('H16').value = { formula: `SUM(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('H16').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+        statsSheet.getCell('H16').font = { bold: true, color: { argb: 'FFFFFF' } };
+        statsSheet.getCell('H16').numFmt = currencyFormat;
+        statsSheet.getCell('H16').alignment = { horizontal: 'center' };
+        statsSheet.getCell('H16').border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
         // --- TABLA DERECHA: MIGRADO / NO MIGRADO ---
         const migradoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'migrado') + 1);
-        statsSheet.getCell('L2').value = "MIGRADO / NO MIGRADO";
-        statsSheet.getCell('M2').value = "Monto Total";
-        statsSheet.getRow(2).eachCell((c, i) => { 
-            if(i >= 12) { 
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; 
-                c.font = { color: { argb: 'FFFFFF'}, bold: true }; 
-                c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-            } 
+        statsSheet.getCell('G2').value = "MIGRADO / NO MIGRADO";
+        statsSheet.getCell('H2').value = "Monto Total";
+        [statsSheet.getCell('G2'), statsSheet.getCell('H2')].forEach(c => {
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.font = { color: { argb: 'FFFFFF' }, bold: true };
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
         });
 
-        statsSheet.getCell('L3').value = "si";
-        statsSheet.getCell('M3').value = { formula: `SUMIF(${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "si", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
-        statsSheet.getCell('L4').value = "No";
-        statsSheet.getCell('M4').value = { formula: `SUMIF(${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "No", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('G3').value = "si";
+        statsSheet.getCell('H3').value = { formula: `SUMIF(${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "si", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('G4').value = "No";
+        statsSheet.getCell('H4').value = { formula: `SUMIF(${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "No", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
         
         [3, 4].forEach(r => {
-            statsSheet.getCell(`L${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-            statsSheet.getCell(`M${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-            statsSheet.getCell(`M${r}`).numFmt = currencyFormat;
+            statsSheet.getCell(`G${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            statsSheet.getCell(`H${r}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            statsSheet.getCell(`H${r}`).numFmt = currencyFormat;
         });
 
-        statsSheet.getCell('L5').value = "Total general";
-        statsSheet.getCell('M5').value = { formula: `SUM(M3:M4)`, result: 0 };
-        statsSheet.getRow(5).eachCell((c, i) => { 
-            if(i >= 12) { 
-                c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } }; 
-                c.font = { color: { argb: 'FFFFFF'}, bold: true }; 
-                c.numFmt = currencyFormat;
-                c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-            } 
+        statsSheet.getCell('G5').value = "Total general";
+        statsSheet.getCell('H5').value = { formula: `SUM(H3:H4)`, result: 0 };
+        [statsSheet.getCell('G5'), statsSheet.getCell('H5')].forEach(c => {
+            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+            c.font = { color: { argb: 'FFFFFF' }, bold: true };
+            c.numFmt = currencyFormat;
+            c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
         });
 
         statsSheet.autoFilter = {
