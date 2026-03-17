@@ -403,11 +403,17 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getColumn('K').width = 15;
 
         let currentRow = 3;
+        const mainRowsJ = [];
+        const mainRowsK = [];
         const uniqueCycles = [...new Set(dataset.map(c => mapCycleValue(c.cycle)))].filter(c => c !== "N/A");
 
         ["si", "No"].forEach(migradoStatus => {
             // Main row
-            statsSheet.getCell(`I${currentRow}`).value = `[-] ${migradoStatus}`;
+            const mainRowIndex = currentRow;
+            mainRowsJ.push(`J${mainRowIndex}`);
+            mainRowsK.push(`K${mainRowIndex}`);
+
+            statsSheet.getCell(`I${currentRow}`).value = `[-] ${migradoStatus === "si" ? "MIGRADOS (Fibra)" : "NO MIGRADOS (Antena)"}`;
             statsSheet.getCell(`I${currentRow}`).font = { bold: true };
             
             // Formula Pendiente
@@ -415,7 +421,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
                 result: 0 
             };
-            // Formula Cobrado
+            // Formula Recaudado
             statsSheet.getCell(`K${currentRow}`).value = { 
                 formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo")`, 
                 result: 0 
@@ -431,7 +437,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
             // Cycle subrows
             uniqueCycles.forEach(cycle => {
-                statsSheet.getCell(`I${currentRow}`).value = `   [-] ${cycle}`; 
+                statsSheet.getCell(`I${currentRow}`).value = `   • Ciclo ${cycle}`; 
                 
                 statsSheet.getCell(`J${currentRow}`).value = { 
                     formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
@@ -444,6 +450,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
                 [ `I${currentRow}`, `J${currentRow}`, `K${currentRow}` ].forEach(cell => {
                     const c = statsSheet.getCell(cell);
+                    c.font = { color: { argb: '666666' } }; // Gris para los detalles
                     c.border = {};
                     if(cell.startsWith('J') || cell.startsWith('K')) c.numFmt = currencyFormat;
                 });
@@ -451,18 +458,23 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             });
         });
 
-        // Total General
-        statsSheet.getCell(`I${currentRow}`).value = "Total general";
-        statsSheet.getCell(`J${currentRow}`).value = { formula: `SUM(J3:J${currentRow-1})`, result: 0 };
-        statsSheet.getCell(`K${currentRow}`).value = { formula: `SUM(K3:K${currentRow-1})`, result: 0 };
+        // Total General (Corregido para no duplicar)
+        statsSheet.getCell(`I${currentRow}`).value = "TOTAL CALCULADO";
+        statsSheet.getCell(`J${currentRow}`).value = { formula: mainRowsJ.join('+'), result: 0 };
+        statsSheet.getCell(`K${currentRow}`).value = { formula: mainRowsK.join('+'), result: 0 };
         
-        [ `I${currentRow}`, `J${currentRow}`, `K${currentRow}` ].forEach(cell => {
-            const c = statsSheet.getCell(cell);
-            c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'DCE6F1' } };
-            c.font = { color: { argb: '000000' }, bold: true };
-            c.border = { top: {style:'thin'}, bottom: {style:'double'} };
-            if(!cell.startsWith('I')) c.numFmt = currencyFormat;
-        });
+        // Notas Aclaratorias para Operaciones
+        statsSheet.mergeCells('B11:D12');
+        statsSheet.getCell('B11').value = "NOTA: Esta tabla refleja el ESTADO ACTUAL de los clientes en este reporte específico.";
+        statsSheet.getCell('B11').font = { italic: true, size: 9, color: { argb: '444444' } };
+        statsSheet.getCell('B11').alignment = { vertical: 'top', wrapText: true };
+
+        statsSheet.mergeCells('I9:K10');
+        statsSheet.getCell('I9').value = "NOTA: Este desglose muestra el RENDIMIENTO por tecnología. Pendiente (lo que falta) vs Recaudado (lo que ya pagaron).";
+        statsSheet.getCell('I9').font = { italic: true, size: 9, color: { argb: '444444' } };
+        statsSheet.getCell('I9').alignment = { vertical: 'top', wrapText: true };
+
+        statsSheet.getColumn('K').width = 20; // Asegurar que RECAUDADO se vea bien
 
     }
     // No se pueden poner múltiples autoFilters por hoja en ExcelJS, pero cubrimos la principal
