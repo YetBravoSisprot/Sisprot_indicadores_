@@ -485,7 +485,7 @@ INTENCIONES DISPONIBLES:
 - GUIA_APP: El usuario pregunta para qué sirve la app.
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). 
   * Parámetros opcionales: {"reportType": "operations" | "general"}. 
-  * REGLA: Si el usuario menciona "operaciones", "seguimiento de suspendidos" o similar, usa reportType: "operations". Por defecto usa "general".
+  * REGLA OPERACIONES: Si el usuario menciona "operaciones", "seguimiento de cobranza", "dashboard estadistico", "ver recaudacion", o "analisis de suspendidos", usa reportType: "operations". Explícale que este reporte incluye un PANEL DE CONTROL inteligente con indicadores de recuperación.
   * NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
 - INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD"}. 
