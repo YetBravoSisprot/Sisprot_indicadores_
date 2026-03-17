@@ -482,14 +482,20 @@ INTENCIONES DISPONIBLES:
 - TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
 - SALUDO: El usuario solo está saludando ("hola", "buenos días").
 - AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
-- GUIA_APP: El usuario pregunta para qué sirve la app.
 - GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). 
   * Parámetros opcionales: {"reportType": "operations" | "general"}. 
   * REGLA OPERACIONES: Si el usuario menciona "operaciones", "seguimiento de cobranza", "dashboard estadistico", "ver recaudacion", o "analisis de suspendidos", usa reportType: "operations". Explícale que este reporte incluye un PANEL DE CONTROL inteligente con indicadores de recuperación.
   * NO uses esto para frases como "dame la data", "muestrame los clientes" o "listado de...".
 - CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
-- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Palabras clave: "bancos", "cobros de ayer", "pagos del lunes", "ingresos del mes", "cuánto entró entre tal y tal fecha". Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD"}. 
-  * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${new Date().toLocaleDateString('en-CA')}). Si dicen un rango, extrae ambas fechas.
+- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas. También para ANALISIS DE COBRANZA (pago vs deuda).
+  * Parámetros opcionales: {"banco": "nombre", "metodo": "PAGO MOVIL" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "ciclo": "15" | "30"}.
+  * REGLA DE COBRANZA: Si el jefe pregunta "¿cuantos faltan por pagar?", "¿quien falta?" o "balance del ciclo", el bot debe calcular: (Clientes Activos del Ciclo) MINUS (Pagos registrados). 
+  * REGLA FECHAS: 
+    - "este mes": desde el primer día del mes actual hasta hoy.
+    - "ayer": fecha de ayer.
+    - "rango": fecha inicio y fin. (HOY es ${todayDate}).
+  * REGLA DE RESPUESTA: Menciona siempre: 1. Total recaudado ($), 2. Cuántos ya pagaron (#), 3. Cuánto falta por cobrar ($) y 4. Cuántos clientes quedan pendientes (#).
+  * Tu respuesta debe ser EJECUTIVA y orientada a resultados como en el ejemplo del Sr. Elisaul. 🚀
 - UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
 
 REGLA DE ORO PARA URBANISMOS: 
@@ -2084,21 +2090,22 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     // --- Agrupar por banco ---
-                    const byBank = payments.reduce((acc, p) => {
-                        const banco = p.bank_name || 'Desconocido';
-                        if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
-                        acc[banco].count++;
-                        acc[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
-                        acc[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
-                        const m = p.method_name || 'Otro';
-                        acc[banco].methods[m] = (acc[banco].methods[m] || 0) + 1;
-                        return acc;
-                    }, {});
-
-                    // --- Totales globales ---
-                    const totalPagos = payments.length;
+                    const introLabel = labelFecha;
+                    const cicloFilter = parameters?.ciclo || null;
+                    
+                    // --- CALCULO DE META vs REAL (Solicitado por Sr. Elisaul) ---
+                    let activeClientsInSelection = clientes.filter(c => c.status_name === "Activo");
+                    if(cicloFilter) activeClientsInSelection = activeClientsInSelection.filter(c => mapCycleValue(c.cycle) === String(cicloFilter));
+                    
+                    const totalExpectedAmount = activeClientsInSelection.reduce((s, c) => s + parseFloat(c.plan?.cost || 0), 0);
+                    const totalExpectedClients = activeClientsInSelection.length;
+                    
                     const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
                     const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
+                    const totalPagos = payments.length;
+
+                    const pendingAmount = Math.max(0, totalExpectedAmount - totalUsd);
+                    const pendingClients = Math.max(0, totalExpectedClients - totalPagos);
 
                     // --- Nombres legibles para métodos de pago ---
                     const methodLabel = (m) => {
@@ -2123,20 +2130,25 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${d.totalUsd.toFixed(2)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
                     });
 
-                    // --- Stats para la tarjeta visual (máx 5 bancos) ---
-                    const stats = bancosSorted.slice(0, 5).map(([banco, d]) => ({
-                        label: banco.replace('Banco ', '').replace(' Banco Universal', '').substring(0, 22),
-                        value: `$${d.totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${d.count})`
-                    }));
-                    stats.push({ label: '📊 Total de pagos', value: totalPagos });
+                    // --- Stats para la tarjeta visual ---
+                    const stats = [
+                        { label: '💰 Monto Recaudado', value: `$${totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#2ecc71' },
+                        { label: '💳 Pendiente por Cobrar', value: `$${pendingAmount.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#f1c40f' },
+                        { label: '👥 Clientes Pendientes', value: pendingClients, color: '#e74c3c' }
+                    ];
+
+                    // El indicador especial que pidió el jefe (badge inferior)
+                    stats.push({ label: '📊 Total de pagos registrados', value: totalPagos, color: '#3498db' });
+
+                    const cycleText = cicloFilter ? ` del **Ciclo ${cicloFilter}**` : '';
 
                     return {
-                        text: `Claro ${userName}, aquí tienes el resumen de cobros recibidos ${labelFecha}:\n${desglose}\n\n💰 **Total: $${totalUsd.toFixed(2)} USD | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}**`,
+                        text: `Sr. **${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${totalUsd.toFixed(2)}** (${totalPagos} pagos)\n- Pendiente: **$${pendingAmount.toFixed(2)}** (~${pendingClients} clientes)`,
                         isCard: true,
                         cardData: {
-                            title: `💳 Ingresos Bancarios`,
+                            title: `💳 Balance de Ingresos`,
                             value: `$${totalUsd.toFixed(2)} USD`,
-                            subtitle: `${totalPagos} pagos registrados`,
+                            subtitle: cicloFilter ? `Ciclo ${cicloFilter} | ${totalPagos} pagos` : `${totalPagos} pagos registrados`,
                             color: '#2ecc71',
                             stats
                         }
