@@ -472,6 +472,11 @@ INTENCIONES DISPONIBLES:
 - CONTEXTO_APP: Para qué sirve esta pantalla específica.
 - SALUDO / AGRADECIMIENTO / GUIA_APP / UNKNOWN.
 
+REGLA DE PARÁMETROS:
+- "ciclo": Solo puede ser "15" o "30". NUNCA uses "ayer", "hoy" o fechas aquí.
+- "status": Solo puede ser "Activo", "Suspendido", "Pausado", "Cancelado" o "Por Instalar".
+- "urbanismo": Nombre del sector. Si el usuario dice "ayer" o "hoy", NO los pongas en ningún parámetro técnico. El sistema detecta el tiempo automáticamente.
+
 REGLA DE ORO PARA URBANISMOS: 
 Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su versión más cercana. Ej: "Paya abajo", "Prados II", "Antigua Hacienda de Paya", "Salto Angel". No inventes sufijos si el usuario no los dice.
 ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con clientes. Si el usuario menciona: "Isaac Oliveira", "Tibisay Guevara", "Antonio Jose de Sucre", "Arturo Luis Berti", "Santa Eduviges", "Simon Bolivar", "Guerrero de Chavez", "Lascenio Guerrero" o "Salto Angel", clasifícalos como URBANISMO, NO como nombre de cliente o seguimiento.
@@ -1081,139 +1086,113 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
-                // Interceptor 7: Clarificación de Múltiples Clientes (Selección por Nombre)
+                // Interceptor 7: Clarificación de Múltiples Clientes
                 if (lastBotMsg.contextType === 'multi_client_clarification' && lastBotMsg.cardData) {
                     const normQuery = query.toLowerCase();
                     const currentMatches = lastBotMsg.cardData.currentMatches;
-
-                    const optionMatch = query.match(/\b([1-9]|10)\b/);
                     const contractMatch = query.match(/\b(\d{4,6})\b/);
-                    const choiceIdx = optionMatch ? parseInt(optionMatch[0]) - 1 : -1;
                     const matchedByContract = contractMatch ? currentMatches.find(m => String(m.id).includes(contractMatch[0])) : null;
+                    const optionMatch = query.match(/\b([1-9]|10)\b/);
+                    const choiceIdx = optionMatch ? parseInt(optionMatch[0]) - 1 : -1;
+                    const isNewSearch = contractMatch && !matchedByContract;
+                    const isComplex = normQuery.split(" ").length > 3;
 
-                    const currentName = lastBotMsg.cardData.currentName;
-                    const pendingNames = lastBotMsg.cardData.pendingNames;
-                    const updatedConfirmed = [...(lastBotMsg.cardData.confirmedClients || [])];
-                    let updatedPending = [...pendingNames];
-                    let nextName = null;
-                    let nextMatches = [];
+                    if (!isNewSearch && !isComplex) {
+                        const { currentName, pendingNames = [], confirmedClients = [] } = lastBotMsg.cardData;
+                        const updatedConfirmed = [...confirmedClients];
+                        let updatedPending = [...pendingNames];
+                        let nextName = null;
+                        let nextMatches = [];
 
-                    if (matchedByContract) {
-                        updatedConfirmed.push(matchedByContract);
-                    } else if (choiceIdx >= 0 && currentMatches && currentMatches[choiceIdx]) {
-                        updatedConfirmed.push(currentMatches[choiceIdx]);
-                    } else if (normQuery.includes("saltar") || normQuery.includes("ninguno") || normQuery.includes("no")) {
-                        // Salta
-                    } else if (currentMatches && currentMatches.length > 0) {
-                        return {
-                            text: `Por favor ${userName}, indícame el número de la opción (1, 2, 3...) o el contrato específico para **${currentName}**.`,
-                            isCard: false,
-                            contextType: 'multi_client_clarification',
-                            cardData: lastBotMsg.cardData
-                        };
-                    }
-
-                    // Intentar procesar el siguiente nombre en la cola
-                    while (updatedPending.length > 0) {
-                        const nameToProcess = updatedPending.shift();
-                        const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(nameToProcess)));
-
-                        if (matches.length === 1) {
-                            updatedConfirmed.push(matches[0]);
-                        } else if (matches.length > 1) {
-                            // Encontramos ambigüedad, pedimos clarificación
-                            nextName = nameToProcess;
-                            nextMatches = matches;
-                            break;
-                        } else {
-                            // No se encontró, informamos y seguimos (podríamos acumular errores pero por ahora directo)
+                        if (matchedByContract) updatedConfirmed.push(matchedByContract);
+                        else if (choiceIdx >= 0 && currentMatches && currentMatches[choiceIdx]) updatedConfirmed.push(currentMatches[choiceIdx]);
+                        else if (normQuery.includes("saltar") || normQuery.includes("ninguno")) { /* salta */ }
+                        else if (currentMatches && currentMatches.length > 0) {
+                            return {
+                                text: `Disculpa ${userName}, esa opción no me figura para **${currentName}**. ¿Podrías indicarme el número correcto?\n\nSi quieres buscar otro contrato distinto, dímelo directamente.`,
+                                isCard: false,
+                                contextType: 'multi_client_clarification',
+                                cardData: lastBotMsg.cardData
+                            };
                         }
-                    }
 
-                    if (nextName) {
-                        const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
-                        return {
-                            text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál de estos deseas incluir?\n\n${optionsList}\n\nResponde con el número de la opción.`,
-                            isCard: false,
-                            contextType: 'multi_client_clarification',
-                            cardData: {
-                                pendingNames: updatedPending,
-                                confirmedClients: updatedConfirmed,
-                                currentName: nextName,
-                                currentMatches: nextMatches
-                            }
-                        };
-                    } else {
-                        // Terminamos de procesar todos los nombres
-                        const cliente = updatedConfirmed[updatedConfirmed.length - 1]; // Tomamos el que acaba de seleccionar
-                        const confirmedList = updatedConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
+                        while (updatedPending.length > 0) {
+                            const nameToProcess = updatedPending.shift();
+                            const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(nameToProcess)));
+                            if (matches.length === 1) updatedConfirmed.push(matches[0]);
+                            else if (matches.length > 1) { nextName = nameToProcess; nextMatches = matches; break; }
+                        }
 
-                        return {
-                            text: `¡Excelente selección ${userName}! Aquí tienes el detalle de **${cliente.client_name}** (#${cliente.id}).\n\nHe guardado este y los otros contratos en tu lista de reporte (${updatedConfirmed.length} en total). ¿Deseas buscar más nombres o **procedemos con el Excel**?`,
-                            isCard: true,
-                            contextType: 'multi_client_confirmed',
-                            cardData: {
-                                title: cliente.client_name,
-                                subtitle: `${cliente.sector_name} | #${cliente.id}`,
-                                stats: [
-                                    { label: "Estado", value: cliente.status_name },
-                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
-                                    { label: "Teléfono", value: cliente.client_mobile || "N/A" },
-                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle) },
-                                    { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
-                                    { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
-                                    { label: "Dirección", value: cliente.address || "N/A" },
-                                    { label: "Cédula", value: cliente.client_identification }
-                                ],
-                                confirmedClients: updatedConfirmed,
-                                rawData: cliente,
-                                dataset: updatedConfirmed, // Solo los confirmados
-                                filtersText: ["Selección Manual de Lista"]
-                            }
-                        };
+                        if (nextName) {
+                            const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (#${m.id}, ${m.sector_name})`).join("\n");
+                            return {
+                                text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál incluyo?\n\n${optionsList}`,
+                                isCard: false,
+                                contextType: 'multi_client_clarification',
+                                cardData: { pendingNames: updatedPending, confirmedClients: updatedConfirmed, currentName: nextName, currentMatches: nextMatches }
+                            };
+                        } else if (updatedConfirmed.length > 0) {
+                            const cliente = updatedConfirmed[updatedConfirmed.length - 1];
+                            return {
+                                text: `¡Listo ${userName}! Detalle de **${cliente.client_name}** (#${cliente.id}).\n\nGuardado junto a los otros ${updatedConfirmed.length} contratos. ¿Deseas buscar más o **descargamos el Excel**?`,
+                                isCard: true,
+                                contextType: 'multi_client_confirmed',
+                                cardData: {
+                                    title: cliente.client_name,
+                                    subtitle: `${cliente.sector_name} | #${cliente.id}`,
+                                    stats: [
+                                        { label: "Estado", value: cliente.status_name },
+                                        { label: "Plan", value: cliente.plan?.name },
+                                        { label: "ID", value: cliente.client_identification }
+                                    ],
+                                    confirmedClients: updatedConfirmed,
+                                    rawData: cliente,
+                                    dataset: updatedConfirmed,
+                                    filtersText: ["Búsqueda múltiple"]
+                                }
+                            };
+                        }
                     }
                 }
 
-                // Interceptor 8: Confirmación final de lista personalizada
+                // Interceptor 8: Confirmación de lista personalizada
                 if (lastBotMsg.contextType === 'multi_client_confirmed' && lastBotMsg.cardData) {
-                    const normQuery = query.toLowerCase();
-                    // REGLA DE EXCLUSIÓN: Si el usuario incluye un nuevo nombre o dice "otro", NO saltamos a Excel aún.
-                    const isNewSearch = normQuery.includes("otro") || normQuery.includes("nombre") || normQuery.includes("busca") || normQuery.includes("trae") || normQuery.split(" ").length > 3;
-
-                    if (!isNewSearch && (normQuery.includes("proceder") || normQuery.includes("excel") || normQuery.includes("si") || normQuery.includes("columnas"))) {
-                        const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
+                    const normQ = query.toLowerCase();
+                    if (!normQ.includes("otro") && (normQ.includes("excel") || normQ.includes("si") || normQ.includes("proceder"))) {
                         return {
-                            text: `¡Entendido! Vamos a generar el Excel para tus clientes seleccionados. **¿Qué columnas deseas incluir?**\n\n_${colsList}_\n\n(O escribe "Todas")`,
+                            text: `¡Entendido! Generando Excel para los seleccionados. **¿Qué columnas incluyo?**\n\n(Escribe "Todas" o los nombres de las columnas)`,
                             isCard: false,
                             contextType: 'clarify_excel_columns',
-                            cardData: {
-                                savedDataset: lastBotMsg.cardData.confirmedClients,
-                                savedFiltersText: ["Lista Personalizada"]
-                            }
+                            cardData: { savedDataset: lastBotMsg.cardData.confirmedClients, savedFiltersText: ["Lista Personalizada"] }
                         };
                     }
-                    // Si no fue una confirmación de "sí/excel", permitimos que el flujo continúe hacia la IA para detectar el nuevo nombre
                 }
             }
         }
 
+        // --- LLAMADA PRINCIPAL A IA ---
         if (!fromClarification) {
             const openAIResult = await callOpenAI(message, history, currentPage, userName);
             intent = openAIResult.intent;
             parameters = openAIResult.parameters || {};
 
-            // FALLBACK: Inyectar sectores detectados si Gemini falló en extraerlos
+            // Sanitización
+            ['ciclo', 'urbanismo', 'tipo', 'agencia'].forEach(key => {
+                if (parameters[key] && typeof parameters[key] === 'string') {
+                    const val = parameters[key].toLowerCase();
+                    if (val.includes('ayer') || val.includes('hoy') || val.includes('16') || val.includes('17')) delete parameters[key];
+                }
+            });
+
+            // Fallback sectores
             if ((!parameters.urbanismo || (Array.isArray(parameters.urbanismo) && parameters.urbanismo.length === 0)) && mentionedSectors.length > 0) {
                 parameters.urbanismo = mentionedSectors;
                 if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
             }
 
-            const customMessage = openAIResult.message;
-
-            // --- NUEVO INTERCEPTOR: CLARIFICACIÓN DATA SOURCE (Hoy vs Ayer) ---
+            // Interceptor Data Source (Hoy vs Ayer)
             const metricIntents = ['TOTAL_CLIENTES', 'AMBOS_METRICAS', 'ESTADOS', 'TIPOS_CLIENTE'];
-            const hasDateKeyword = query.includes("ayer") || query.includes("hoy") || query.includes("16") || query.includes("17") || query.includes("respaldo") || query.includes("pasado");
-            
+            const hasDateKeyword = query.includes("ayer") || query.includes("hoy") || query.includes("16") || query.includes("respaldo");
             if (metricIntents.includes(intent) && !hasDateKeyword && !fromClarification && !periodKnownFromHistory) {
                 return {
                     text: `Perfecto ${userName}, ¿Deseas ver los resultados de **Hoy** o el cierre de **Ayer**?`,
@@ -1223,49 +1202,12 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 };
             }
 
-            // ... (resto de interceptores locales si existen)
-
-            if (customMessage && (intent === 'SALUDO' || intent === 'AGRADECIMIENTO' || intent === 'GUIA_APP' || intent === 'CONTEXTO_APP')) {
-                return { text: customMessage, isCard: false };
-            }
-            // Si es UNKNOWN y hay customMessage, dejamos que siga para que se registre en el log al final
         }
+    }
 
-        // --- 1.1 INTERCEPTOR DE DESAMBIGUACIÓN (Nombres que son Sectores) ---
-        // Si OpenAI cree que es una búsqueda de nombre, pero coincide con un urbanismo conocido, lo corregimos a INGRESOS.
-        if (intent === 'BUSCAR_NOMBRE') {
-            const listNames = parameters?.nombres || (parameters?.nombre ? [parameters.nombre] : []);
-            // Si el PRIMER nombre que mandó es exactamente un sector, lo tomamos como búsqueda de sector
-            if (listNames.length > 0) {
-                const firstMatch = findBestUrbanismoMatch(listNames[0]);
-                if (firstMatch && !Array.isArray(firstMatch)) {
-                    console.log("Re-clasificando búsqueda de nombre como búsqueda de urbanismo:", firstMatch);
-                    intent = 'INGRESOS';
-                    parameters.urbanismo = firstMatch;
-                    delete parameters.nombre;
-                    delete parameters.nombres;
-
-                    // Intentar rescatar otros parámetros de la frase
-                    const lowerMsg = message.toLowerCase();
-                    if (lowerMsg.includes("activo")) parameters.status = "Activo";
-                    if (lowerMsg.includes("residencial")) parameters.tipo = "Residencial";
-                    if (lowerMsg.includes("pyme")) parameters.tipo = "Pyme";
-                    if (lowerMsg.includes("empleado")) parameters.tipo = "Empleado";
-                    if (lowerMsg.includes("intercambio")) parameters.tipo = "Intercambio";
-                    if (lowerMsg.includes("gratis")) parameters.tipo = "Gratis";
-                    if (lowerMsg.includes("suspendido")) parameters.status = "Suspendido";
-                    if (lowerMsg.includes("pausado")) parameters.status = "Pausado";
-                    if (lowerMsg.includes("por instalar")) parameters.status = "Por Instalar";
-                    if (lowerMsg.includes("cancelado")) parameters.status = "Cancelado";
-                }
-            }
-        }
-
-        } // Fin de !fromClarification (Bloque General de Detección)
-
-        // --- 2. EJECUCIÓN DEL FILTRADO/LOGICA LOCAL SEGÚN INTENT ---
-        switch (intent) {
-            case 'SALUDO': {
+    // --- 2. EJECUCIÓN DE LOGICA (POST-IA & INTERCEPTORES) ---
+    switch (intent) {
+        case 'SALUDO': {
                 const hour = new Date().getHours();
                 let timeGreeting = "Hola";
                 if (hour >= 5 && hour < 12) timeGreeting = "Buenos días";
