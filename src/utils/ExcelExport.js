@@ -83,6 +83,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const allPossibleColumns = [
         { header: "ESTADO INICIAL", key: "estado_inicial", width: 18, ui: "Estatus" },
+        { header: "ESTADO FINAL (OPERACIÓN)", key: "estado_final", width: 22, ui: "Estado Final" },
         { header: "CONTRATO", key: "contrato", width: 12, ui: "Contrato" },
         { header: "CLIENTE", key: "cliente", width: 35, ui: "Cliente" },
         { header: "CIVIL", key: "ci_rif", width: 15, ui: "Cedula" },
@@ -113,7 +114,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     let finalColumns = [{ header: "N°", key: "num", width: 5 }];
 
     const standardOrder = [
-        "estado_inicial", "contrato", "cliente", "ci_rif", "telefono", 
+        "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
         "sector", "migrado", "ciclo", "plan", "costo"
     ];
 
@@ -158,6 +159,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             const rowData = {
                 num: index + 1,
                 estado_inicial: norm(cliente.status_name) || "N/A",
+                estado_final: norm(cliente.status_name) || "N/A",
                 contrato: cliente.id,
                 cliente: cliente.client_name,
                 ci_rif: cliente.client_identification,
@@ -201,9 +203,10 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                     cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 }
 
-                // Coloreo de Estado Inicial
-                if (columnKey === 'estado_inicial') { 
-                    const status = normalizeText(cliente.status_name);
+                // Coloreo de Estado Inicial y Estado Final
+                if (columnKey === 'estado_inicial' || columnKey === 'estado_final') { 
+                    const statusValue = columnKey === 'estado_inicial' ? cliente.status_name : (rowData.estado_final || cliente.status_name);
+                    const status = normalizeText(statusValue);
                     if (status.includes("suspendido")) {
                         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } };
                     } else if (status.includes("activo")) {
@@ -217,6 +220,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
             // Validaciones
             row.getCell('estado_inicial').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
+            row.getCell('estado_final').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
             
             if (rowData.contactado_por !== undefined) {
                 row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$${contactados.length + 1}`] };
@@ -284,7 +288,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         });
 
         const tableEstados = ["Activo", "Suspendido", "Cancelado", "Pausado", "Por Instalar"];
-        const estadoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'estado_inicial') + 1);
+        const estadoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1);
         const costColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'costo') + 1);
 
         tableEstados.forEach((est, i) => {
