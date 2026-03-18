@@ -460,65 +460,26 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: El usuario quiere saber cuántos clientes hay registrados/totales o conteos específicos. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado" | ["Status1", "Status2"], "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
-  * REGLA ESPECIAL: Si el usuario pide "activos reales" o "clientes que pagan", usa status: "Activo" y tipo: ["Pyme", "Residencial"].
-- INGRESOS: El usuario pregunta por ingresos, ventas, ganancias o facturación. Parámetros opcionales: {"status": "Activo" | "Suspendido" | "Pausado" | "Por Instalar" | "Cancelado" | ["S1", "S2"], "ciclo": "15" | "30", "urbanismo": "nombre" | ["n1", "n2"], "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"], "migrado": "Migrado" | "No migrado"}
-- AMBOS_METRICAS: El usuario pide VER TODO, o pide "conteo e ingresos", o "cuantos clientes y cuanta plata". Es el intent ideal para reportes de gerencia. Parámetros: los mismos de INGRESOS.
-- TOP_URBANISMO: El usuario pregunta por el mejor sector, urbanismo líder o con más clientes.
-- AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
-- BUSCAR_CONTRATO: El usuario te da un NÚMERO DE CONTRATO (ID) para buscar un perfil. Parámetro: {"contrato": "1234"}.
-- BUSCAR_CEDULA: El usuario te da un NÚMERO DE CÉDULA o IDENTIDAD para buscar un perfil. Parámetro: {"cedula": "12345678"}.
-- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". 
-  * REGLA: Si el usuario da nombre y apellido (Ej: "Juan Perez"), trátalo como UN SOLO NOMBRE. No los separes por comas a menos que sean personas distintas.
-  * Parámetros: Devuélvelos en un array llamado "nombres". Ej: {"nombres": ["Juan Perez", "Maria Lopez"]}. NO uses esto para nombres de sectores urbanos.
-- ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis" | ["Pyme", "Residencial"]}
-- PLANES: El usuario pregunta por los planes o paquetes más vendidos.
-- TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
-- SALUDO: El usuario solo está saludando ("hola", "buenos días").
-- AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
-- GUIA_APP: El usuario pregunta para qué sirve la app.
-- SEGUIMIENTO_CLIENTE: ¡ATENCIÓN! ESTE ES SOLO SI EL USUARIO PIDE UN DATO (CUAL ES SU PLAN, DONDE VIVE, SU TELEFONO, DE QUE CICLO ES, CUANTO DEBE, O VER EL DETALLE/PERFIL) PERO NO INGRESA NINGÚN NOMBRE NI NÚMERO DE CONTRATO NUEVO EN LA FRASE. Ej: "¿en qué ciclo está?", "¿cuanto debe?", "muestrame su detalle". Parámetros permitidos: {"accion": "direccion" | "ciclo" | "telefono" | "red" | "plan" | "deuda" | "perfil"}
-  * MÁXIMA REGLA: Frases iniciales vagas como "necesito saber informacion de un cliente", "buscame a alguien", o "quiero saber un dato" NO SON SEGUIMIENTO. Si no te pregunta expresamente por el plan, el ciclo, el teléfono, la dirección, la deuda o la red, elije BUSQUEDA_VAGA u otro.
-  * REGLA ESTRICTA 2: Si el usuario dice "es el numero 3063" o "se llama Reyes", eso es BUSCAR_CONTRATO o BUSCAR_NOMBRE, NUNCA es seguimiento. 
-- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel". NO uses esto para frases como "dame la de ayer", "pásame la info", "muestrame los clientes" o "listado de...". Si el usuario pide "la de ayer", muestra el reporte en pantalla (Dashboard) y NO actives esta intención de Excel.
-- CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
-- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas por banco, movimientos bancarios o ingresos reales registrados. Parámetros opcionales: {"banco": "nombre del banco", "metodo": "PAGO MOVIL" | "TRANSFERENCIA" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "bnc_account": "Juridica" | "Personal"}. 
-  * REGLA BNC: Si preguntan por "BNC" sin especificar si es Jurídica o Personal, el sistema deberá clarificar.
-  * REGLA FECHAS: Si dicen "ayer", calcula la fecha restando 1 día a hoy (HOY es ${todayDate}). Si dicen un rango, extrae ambas fechas.
-- UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
-- AMBIGUEDAD_METRICA: ¡SÚPER CRÍTICO! Usa esto si el usuario menciona cualquier filtro (sector, estatus, tipo, agencia) o dice simplemente "clientes [filtro]" (ej: "clientes activos", "los de paya", "pymes", "residenciales de turmero") pero NO incluye una palabra de acción métrica clara (cuantos, total, ingresos, plata). Frases como "activos de paya", "pymes de turmero", "quisiera los residenciales", "buscame los suspendidos" DEBEN ser categorizadas aquí.
-- BUSCAR_CONTRATO: El usuario te da un NÚMERO DE CONTRATO (ID) para buscar un perfil. Parámetro: {"contrato": "1234"}.
-- BUSCAR_CEDULA: El usuario te da un NÚMERO DE CÉDULA o IDENTIDAD para buscar un perfil. Parámetro: {"cedula": "12345678"}.
-- BUSCAR_NOMBRE: El usuario te da uno o VARIOS NOMBRES DE PERSONA para buscar perfiles. Ej: "busca a Reyes", "quiero ver a Juan Perez, Maria Lopez y Carlos". 
-  * REGLA: Si el usuario da nombre y apellido (Ej: "Juan Perez"), trátalo como UN SOLO NOMBRE. No los separes por comas a menos que sean personas distintas.
-  * Parámetros: Devuélvelos en un array llamado "nombres". Ej: {"nombres": ["Juan Perez", "Maria Lopez"]}. NO uses esto para nombres de sectores urbanos.
-- ESTADOS: El usuario pregunta por la distribución o estado de los clientes (activos, suspendidos, etc.). Parámetros opcionales: {"urbanismo": "nombre", "agencia": "nombre", "tipo": "Pyme" | "Residencial" | "Intercambio" | "Empleado" | "Gratis"}
-- PLANES: El usuario pregunta por los planes o paquetes más vendidos.
-- TIPOS_CLIENTE: El usuario pregunta por la distribución de pymes, residenciales, etc.
-- SALUDO: El usuario solo está saludando ("hola", "buenos días").
-- AGRADECIMIENTO: El usuario solo está dando las gracias ("gracias", "muchas gracias").
-- GENERAR_EXCEL: SOLO si el usuario pide específicamente un ARCHIVO, EXCEL o DOCUMENTO. Ej: "generame un excel", "descargar archivo", "bájame el excel", "claro", "si por favor" (si el bot acaba de ofrecer un excel). 
-  * Parámetros opcionales: {"reportType": "operations" | "general"}. 
-  * REGLA OPERACIONES: Si el usuario menciona "operaciones", "seguimiento de cobranza", "dashboard estadistico", "ver recaudacion", o "analisis de suspendidos", usa reportType: "operations". Explícale que este reporte incluye un PANEL DE CONTROL inteligente con indicadores de recuperación.
-  * NO uses esto para frases como "dame la de ayer", "pásame los datos" o "muestrame los clientes". El usuario debe mencionar explícitamente la palabra "Excel" o "Archivo".
-- CONTEXTO_APP: Usa esta intención si el usuario pregunta específicamente sobre la página actual, qué información hay en pantalla, para qué sirve esta sección o pide que lo guíes en la vista donde se encuentra actualmente.
-- INGRESOS_BANCOS: El usuario pregunta por los pagos o cobros recibidos hoy, en un día específico o en un rango de fechas. También para ANALISIS DE COBRANZA (pago vs deuda).
-  * Parámetros opcionales: {"banco": "nombre", "metodo": "PAGO MOVIL" | "ZELLE", "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD", "ciclo": "15" | "30"}.
-  * REGLA DE COBRANZA: Si el jefe pregunta "¿cuantos faltan por pagar?", "¿quien falta?" o "balance del ciclo", el bot debe calcular: (Clientes Activos del Ciclo) MINUS (Pagos registrados). 
-  * REGLA FECHAS: 
-    - "este mes": desde el primer día del mes actual hasta hoy.
-    - "ayer": fecha de ayer.
-    - "rango": fecha inicio y fin. (HOY es ${todayDate}).
-  * REGLA DE RESPUESTA: Menciona siempre: 1. Total recaudado ($), 2. Cuántos ya pagaron (#), 3. Cuánto falta por cobrar ($) y 4. Cuántos clientes quedan pendientes (#).
-  * Tu respuesta debe ser EJECUTIVA y orientada a resultados como en el ejemplo del Sr. Elisaul. 🚀
-- UNKNOWN: Si la intención no coincide con ninguna de las opciones anteriores.
+- TOTAL_CLIENTES: Conteo de clientes. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
+- INGRESOS: Dinero proyectado. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
+- AMBOS_METRICAS: Conteo + Ingresos (Reporte Gerencial). Parámetros: los de INGRESOS.
+- AMBIGUEDAD_METRICA: Si el usuario da un filtro (ej: "activos de paya") pero NO pide acción (cuantos/plata).
+- BUSCAR_CONTRATO / BUSCAR_CEDULA: Búsqueda por ID numérico.
+- BUSCAR_NOMBRE: Búsqueda por nombre de persona. Array: {"nombres": ["Juan"]}.
+- ESTADOS / TIPOS_CLIENTE: Reportes de distribución/desglose.
+- INGRESOS_BANCOS: Pagos recibidos por bancos. Parámetros: {"banco", "metodo", "startDate", "endDate", "ciclo", "bnc_account"}.
+- GENERAR_EXCEL: SOLO si pide ARCHIVO o EXCEL. Parámetro: {"reportType": "operations" | "general"}.
+- CONTEXTO_APP: Para qué sirve esta pantalla específica.
+- SALUDO / AGRADECIMIENTO / GUIA_APP / UNKNOWN.
 
 REGLA DE ORO PARA URBANISMOS: 
 Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su versión más cercana. Ej: "Paya abajo", "Prados II", "Antigua Hacienda de Paya", "Salto Angel". No inventes sufijos si el usuario no los dice.
 ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con clientes. Si el usuario menciona: "Isaac Oliveira", "Tibisay Guevara", "Antonio Jose de Sucre", "Arturo Luis Berti", "Santa Eduviges", "Simon Bolivar", "Guerrero de Chavez", "Lascenio Guerrero" o "Salto Angel", clasifícalos como URBANISMO, NO como nombre de cliente o seguimiento.
 
 REGLA DE PERSISTENCIA DE FILTROS:
-Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el mensaje anterior como parámetros, cambiando solo el "status" o el filtro solicitado. Solo limpia los filtros si el usuario cambia drásticamente de tema o menciona un nuevo sector explícitamente.
+Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el historial como parámetros.
+REGLA DE MEMORIA DE PERIODO:
+NO olvides si el usuario ya eligió "Hoy" o "Ayer". Si en el historial ves que ya se estableció esta preferencia, úsala por defecto sin volver a preguntar.
 
 REGLA SOBRE DATOS TÉCNICOS (IP/MAC):
 Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (en el campo "message") que esa información NO se ve directamente en pantalla por seguridad y espacio, pero que se encuentra en los reportes de EXCEL. Indícale que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. 
@@ -845,8 +806,30 @@ export const processQuery = async (message, data, history = [], userName = "", c
     let fromClarification = false;
     let query = normalizeText(message);
     let clientes = data.results;
-    let dataLabel = "Hoy";
-    let isTodayQuery = !query.includes("ayer") && !query.includes("de ayer") && !query.includes("16");
+    // --- DETECTOR DE PERIODO (Persistencia) ---
+    const explicitlyHoy = query.includes("hoy") || query.includes("17");
+    const explicitlyAyer = query.includes("ayer") || query.includes("16") || query.includes("de ayer");
+    
+    let isTodayQuery = true;
+    let periodKnownFromHistory = false;
+    
+    if (explicitlyAyer) {
+        isTodayQuery = false;
+    } else if (explicitlyHoy) {
+        isTodayQuery = true;
+    } else {
+        // MEMORIA A LARGO PLAZO: Buscamos en todo el historial disponible si ya se eligió un día
+        const fullHistory = [...history].reverse();
+        for (const msg of fullHistory) {
+            if (msg.sender === 'bot' && msg.cardData?.periodPreference) {
+                isTodayQuery = msg.cardData.periodPreference === "Hoy";
+                periodKnownFromHistory = true;
+                break;
+            }
+        }
+    }
+    
+    let dataLabel = isTodayQuery ? "Hoy" : "Ayer";
     
     // --- DETECTOR DE FECHAS NO DISPONIBLES (Semanas/Meses) ---
     const isOtherPastDate = (query.includes("semana") || query.includes("mes") || query.includes("pasado") || query.includes("antier") || query.includes("hace")) && !query.includes("ayer") && !query.includes("16");
@@ -1231,7 +1214,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
             const metricIntents = ['TOTAL_CLIENTES', 'AMBOS_METRICAS', 'ESTADOS', 'TIPOS_CLIENTE'];
             const hasDateKeyword = query.includes("ayer") || query.includes("hoy") || query.includes("16") || query.includes("17") || query.includes("respaldo") || query.includes("pasado");
             
-            if (metricIntents.includes(intent) && !hasDateKeyword && !fromClarification) {
+            if (metricIntents.includes(intent) && !hasDateKeyword && !fromClarification && !periodKnownFromHistory) {
                 return {
                     text: `Perfecto ${userName}, ¿Deseas ver los resultados de **Hoy** o el cierre de **Ayer**?`,
                     isCard: false,
@@ -1413,6 +1396,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                       `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
+                                    periodPreference: isTodayQuery ? "Hoy" : "Ayer",
                                     title: cardTitle,
                                     value: filteredClientes.length,
                                     subtitle: appliedFiltersText.join(" | "),
@@ -1446,6 +1430,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 text: `Claro ${userName}, aquí tienes el desglose detallado por estado según tu consulta: \n(${appliedFiltersText.join(', ')})\n\n¿Quieres que profundicemos en alguno o exportamos el **Excel**?`,
                                 isCard: true,
                                 cardData: {
+                                    periodPreference: isTodayQuery ? "Hoy" : "Ayer",
                                     title: "Distribución por Estado",
                                     value: filteredClientes.length,
                                     subtitle: "Clientes totales en la selección",
@@ -1462,6 +1447,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
+                                periodPreference: isTodayQuery ? "Hoy" : "Ayer",
                                 title: dataLabel.startsWith("Hoy") ? (appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes") : `Reporte: ${dataLabel}`,
                                 value: filteredClientes.length,
                                 subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : (dataLabel.startsWith("Hoy") ? "clientes totales" : "Snapshot histórico"),
@@ -2051,7 +2037,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         `🔹 ¿O prefieres ver **Ambos** datos?`,
                     isCard: false,
                     contextType: 'clarify_metric',
-                    cardData: { savedParameters: parameters }
+                    cardData: { 
+                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                        savedParameters: parameters 
+                    }
                 };
             }
 
@@ -2105,6 +2094,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedTexts.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
                     isCard: true,
                     cardData: {
+                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
                         title: dataLabel.startsWith("Hoy") ? "Resumen de Selección" : `Resumen: ${dataLabel}`,
                         stats: finalStats,
                         color: "#9b59b6",
@@ -2159,6 +2149,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     isCard: true,
                     contextType: 'excel_ready',
                     cardData: {
+                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
                         title: `Excel ${reportName} listo`,
                         subtitle: appliedTexts.join(" | "),
                         color: "#27ae60",
