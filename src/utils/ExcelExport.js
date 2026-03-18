@@ -105,8 +105,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "CONTACTADO POR", key: "contactado_por", width: 22 },
         { header: "¿CONTESTO LA LLAMADA?", key: "contesto", width: 22 },
         { header: "ULTIMA FECHA DE CONTACTO", key: "ultima_fecha", width: 25 },
-        { header: "TRABAJO ACTUAL", key: "estado_actualizado", width: 22 },
-        { header: "ESTACION DETALLADA CON EL CLIENTE", key: "conversacion", width: 50 },
+        { header: "ESTADO ACTUALIZADO", key: "estado_actualizado", width: 22 },
+        { header: "CONVERSACION DETALLADA POR EL CLIENTE", key: "conversacion", width: 50 },
         { header: "MOTIVO (CIERRE)", key: "motivo_cierre", width: 35 },
         { header: "ADVERTENCIA", key: "advertencia", width: 35 }
     ];
@@ -203,10 +203,9 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                     cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 }
 
-                // Coloreo de Estado Inicial y Estado Final
-                if (columnKey === 'estado_inicial' || columnKey === 'estado_final') { 
-                    const statusValue = columnKey === 'estado_inicial' ? cliente.status_name : (rowData.estado_final || cliente.status_name);
-                    const status = normalizeText(statusValue);
+                // Coloreo de Estado Inicial (Estático)
+                if (columnKey === 'estado_inicial') { 
+                    const status = normalizeText(cliente.status_name);
                     if (status.includes("suspendido")) {
                         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC000' } };
                     } else if (status.includes("activo")) {
@@ -216,10 +215,15 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                         cell.font = { color: { argb: 'FFFFFF' } };
                     }
                 }
+                
+                // El coloreo del Estado Final se hará por formato condicional (dinámico) al final
+                if (columnKey === 'estado_final') {
+                    // Quitamos cualquier fill previo para que el formato condicional mande
+                    cell.fill = { type: 'pattern', pattern: 'none' };
+                }
             });
 
             // Validaciones
-            row.getCell('estado_inicial').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
             row.getCell('estado_final').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
             
             if (rowData.contactado_por !== undefined) {
@@ -481,6 +485,38 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getColumn('K').width = 20; // Asegurar que RECAUDADO se vea bien
 
     }
+    // --- 4. FORMATO CONDICIONAL PARA ESTADO FINAL (Dinámico) ---
+    const finalColIndex = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
+    if (finalColIndex > 0) {
+        const colLetter = String.fromCharCode(64 + finalColIndex);
+        const range = `${colLetter}2:${colLetter}${mainSheet.rowCount}`;
+        
+        mainSheet.addConditionalFormatting({
+            ref: range,
+            rules: [
+                {
+                    type: 'cellIs', operator: 'equal', formulae: ['"Activo"'],
+                    style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FF92D050' } } }
+                },
+                {
+                    type: 'cellIs', operator: 'equal', formulae: ['"Suspendido"'],
+                    style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFFC000' } } }
+                },
+                {
+                    type: 'cellIs', operator: 'equal', formulae: ['"Cancelado"'],
+                    style: { 
+                        fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFF0000' } },
+                        font: { color: { argb: 'FFFFFFFF' } }
+                    }
+                },
+                {
+                    type: 'cellIs', operator: 'equal', formulae: ['"Pausado"'],
+                    style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFD9D9D9' } } }
+                }
+            ]
+        });
+    }
+
     // No se pueden poner múltiples autoFilters por hoja en ExcelJS, pero cubrimos la principal
 
     // Ajustes finales de ancho de columna para estética
