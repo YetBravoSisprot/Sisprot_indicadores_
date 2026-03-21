@@ -1,6 +1,8 @@
 /**
  * Motor Híbrido: NLP por Gemini + Filtrado y Cálculos Locales
  */
+import { getFullSalesData } from '../../services/salesService';
+
 
 const normalizeText = (text) => {
     if (!text) return "";
@@ -468,6 +470,7 @@ INTENCIONES DISPONIBLES:
 - BUSCAR_NOMBRE: Búsqueda por nombre de persona. Array: {"nombres": ["Juan"]}.
 - ESTADOS / TIPOS_CLIENTE: Reportes de distribución/desglose.
 - INGRESOS_BANCOS: Pagos recibidos por bancos. Parámetros: {"banco", "metodo", "startDate", "endDate", "ciclo", "bnc_account"}.
+- HISTORICO_VENTAS: Evolución de ventas por año y mes (2021-2026). Parámetros: {"year", "month"}.
 - GENERAR_EXCEL: SOLO si pide ARCHIVO o EXCEL. Parámetro: {"reportType": "operations" | "general"}.
 - CONTEXTO_APP: Para qué sirve esta pantalla específica.
 - SALUDO / AGRADECIMIENTO / GUIA_APP / UNKNOWN.
@@ -836,11 +839,24 @@ export const processQuery = async (message, data, history = [], userName = "", c
     
     let dataLabel = isTodayQuery ? "Hoy" : "Ayer";
     
+    // --- CÁLCULO DINÁMICO DE AYER (Para evitar hardcoding) ---
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    const yesterdayLabel = yesterday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+
     // --- DETECTOR DE FECHAS NO DISPONIBLES (Semanas/Meses) ---
-    const isOtherPastDate = (query.includes("semana") || query.includes("mes") || query.includes("pasado") || query.includes("antier") || query.includes("hace")) && !query.includes("ayer") && !query.includes("16");
-    if (isOtherPastDate) {
+    // Mejoramos el detector para evitar falsos positivos con "pymes"
+    const pastKeywords = ["semana", "mes", "pasado", "antier", "hace", "historico", "2024", "2023", "2022"];
+    const isOtherPastDate = pastKeywords.some(w => {
+        // Usamos regex para asegurar límites de palabra y evitar "pymes" -> "mes"
+        const regex = new RegExp(`\\b${w}\\b`, "i");
+        return regex.test(query);
+    }) && !query.includes("ayer") && !query.includes(yesterday.getDate().toString());
+
+    if (isOtherPastDate && !query.includes("ventas") && !query.includes("historico")) {
         return {
-            text: `Lo siento ${userName}, en el chatbot solo tengo visibilidad de la data de **Hoy** y el cierre de **Ayer (16 de Marzo)**. No cuento con históricos de semanas o meses anteriores por ahora.`,
+            text: `Lo siento ${userName}, en el chatbot actualmente tengo visibilidad total de la data de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. No cuento con acceso directo a históricos de semanas o meses anteriores para clientes específicos por ahora, pero puedo darte un resumen de hoy muy detallado.`,
             isCard: false
         };
     }
@@ -1338,7 +1354,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                       `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
-                                    periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                                    periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                                     title: cardTitle,
                                     value: filteredClientes.length,
                                     subtitle: appliedFiltersText.join(" | "),
@@ -1372,7 +1388,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 text: `Claro ${userName}, aquí tienes el desglose detallado por estado según tu consulta: \n(${appliedFiltersText.join(', ')})\n\n¿Quieres que profundicemos en alguno o exportamos el **Excel**?`,
                                 isCard: true,
                                 cardData: {
-                                    periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                                    periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                                     title: "Distribución por Estado",
                                     value: filteredClientes.length,
                                     subtitle: "Clientes totales en la selección",
@@ -1389,7 +1405,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
-                                periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                                periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                                 title: dataLabel.startsWith("Hoy") ? (appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes") : `Reporte: ${dataLabel}`,
                                 value: filteredClientes.length,
                                 subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : (dataLabel.startsWith("Hoy") ? "clientes totales" : "Snapshot histórico"),
@@ -1633,6 +1649,35 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         parameters: parameters,
                         savedDataset: filteredClientes,
                         filtersText: appliedFiltersText
+                    }
+                };
+            }
+
+            case 'HISTORICO_VENTAS': {
+                const salesData = await getFullSalesData();
+                const year = parameters?.year ? String(parameters.year) : new Date().getFullYear().toString();
+                const monthIdx = parameters?.month ? parseInt(parameters.month) - 1 : new Date().getMonth();
+                const yearData = salesData[year] || new Array(12).fill(0);
+                const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                const monthName = mesesNombres[monthIdx] || mesesNombres[new Date().getMonth()];
+                const value = yearData[monthIdx] || 0;
+                
+                const totalYear = yearData.reduce((a, b) => a + b, 0);
+                const avgMonth = totalYear / 12;
+
+                return {
+                    text: `Claro ${userName}, he consultado el histórico global de ventas. En **${monthName} de ${year}** cerramos con un total de **${value} ventas** reales.\n\n` +
+                          `En todo el año **${year}** logramos acumular **${totalYear} ventas** (un promedio mensual de ${avgMonth.toFixed(1)}).`,
+                    isCard: true,
+                    cardData: {
+                        title: `Ventas en ${monthName}`,
+                        value: value,
+                        subtitle: `Año ${year}`,
+                        color: "#e67e22",
+                        stats: [
+                            { label: `Total ${year}`, value: totalYear },
+                            { label: "Promedio", value: avgMonth.toFixed(1) }
+                        ]
                     }
                 };
             }
@@ -1980,7 +2025,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     isCard: false,
                     contextType: 'clarify_metric',
                     cardData: { 
-                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                        periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                         savedParameters: parameters 
                     }
                 };
@@ -2036,7 +2081,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     text: `He procesado el resumen estratégico para la reunión con los filtros indicados: \n(${appliedTexts.join(', ')})\n\n**Los detalles por urbanismo están listos para ser exportados al Excel.**`,
                     isCard: true,
                     cardData: {
-                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                        periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                         title: dataLabel.startsWith("Hoy") ? "Resumen de Selección" : `Resumen: ${dataLabel}`,
                         stats: finalStats,
                         color: "#9b59b6",
@@ -2091,7 +2136,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     isCard: true,
                     contextType: 'excel_ready',
                     cardData: {
-                        periodPreference: isTodayQuery ? "Hoy" : "Ayer",
+                        periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                         title: `Excel ${reportName} listo`,
                         subtitle: appliedTexts.join(" | "),
                         color: "#27ae60",
