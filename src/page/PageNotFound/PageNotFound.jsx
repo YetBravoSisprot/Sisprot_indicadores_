@@ -125,6 +125,17 @@ function PageNotFound() {
             allowFullScreen={true}
           ></iframe>
         </div>
+
+        {/* Informe NUEVO: Dashboard de Rendimiento: Pyme vs. Residencial */}
+        <h3 className="report-title">Dashboard de Rendimiento — Pyme vs. Residencial</h3>
+        <div className="iframe-wrapper">
+          <iframe
+            title="Dashboard de Rendimiento: Pyme vs. Residencial"
+            src="https://app.powerbi.com/reportEmbed?reportId=bf9d8fb0-4fcc-467d-8cec-045d9a4b2c45&pageName=f527d7ab2d8601b15bd3&autoAuth=true&experience=power-bi"
+            frameBorder="0"
+            allowFullScreen={true}
+          ></iframe>
+        </div>
       </div>
     </div>
   );
