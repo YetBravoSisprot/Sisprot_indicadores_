@@ -53,7 +53,9 @@ function Ventas() {
 
     // Agrupación por plan con detalles de ingresos
     const planesData = clientes.reduce((acc, curr) => {
-      const planName = curr.plan?.name || "Sin Plan";
+      let planName = curr.plan?.name || "Sin Plan";
+      // Limpiar prefijos ruidosos
+      planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
       const planCost = parseFloat(curr.plan?.cost) || 0;
       
       if (!acc[planName]) {
@@ -70,6 +72,7 @@ function Ventas() {
       acc[planName].revenue += planCost;
       return acc;
     }, {});
+
 
     const topPlanes = Object.values(planesData)
       .sort((a, b) => b.count - a.count)
