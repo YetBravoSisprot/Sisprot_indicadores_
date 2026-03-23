@@ -14,8 +14,21 @@ const Chatbot = () => {
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
+    const [isListening, setIsListening] = useState(false);
+    const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
+
+    // ── CONFIGURACIÓN DE VOZ (Texto a Voz) ──
+    const speakInitial = (text) => {
+        if (!isVoiceEnabled || !window.speechSynthesis) return;
+        window.speechSynthesis.cancel(); // Detener cualquier lectura previa
+        const cleanText = text.replace(/\*\*/g, '').replace(/•/g, ''); // Limpiar markdown para que no lea "asterisco"
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'es-ES';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+    };
 
     // ── Función de saludo reutilizable (useEffect + confirmReset) ──
     const buildGreetingMessage = () => {
@@ -100,6 +113,41 @@ const Chatbot = () => {
     const cancelReset = () => {
         setShowResetModal(false);
     };
+
+    // ── RECONOCIMIENTO DE VOZ (Voz a Texto) ──
+    const handleVoiceInput = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome o Edge.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'es-ES';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => setIsListening(true);
+        recognition.onend = () => setIsListening(false);
+        recognition.onerror = () => setIsListening(false);
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setInputValue(transcript);
+        };
+
+        recognition.start();
+    };
+
+    // Auto-leer mensajes del bot si la voz está activa
+    useEffect(() => {
+        if (isVoiceEnabled && messages.length > 0) {
+            const lastMsg = messages[messages.length - 1];
+            if (lastMsg.sender === 'bot') {
+                speakInitial(lastMsg.text);
+            }
+        }
+    }, [messages, isVoiceEnabled]);
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
@@ -320,13 +368,33 @@ const Chatbot = () => {
 
                 <form className="chatbot-input-area" onSubmit={handleSendMessage}>
                     <div className="chatbot-input-container">
+                        <button 
+                            type="button" 
+                            className={`voice-toggle-btn ${isVoiceEnabled ? 'active' : ''}`}
+                            onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
+                            title={isVoiceEnabled ? "Desactivar voz" : "Activar lectura de voz (Accesibilidad)"}
+                        >
+                            {isVoiceEnabled ? '🔊' : '🔈'}
+                        </button>
+                        
                         <input
                             type="text"
-                            placeholder="Mensaje a Sisprot-AI..."
+                            placeholder={isListening ? "Escuchando..." : "Mensaje a Sisprot-AI..."}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
+                            className={isListening ? 'listening' : ''}
                         />
-                        <button type="submit">Enviar</button>
+
+                        <button 
+                            type="button" 
+                            className={`mic-btn ${isListening ? 'listening' : ''}`}
+                            onClick={handleVoiceInput}
+                            title="Hablar (Dictar mensaje)"
+                        >
+                            {isListening ? '🛑' : '🎤'}
+                        </button>
+
+                        <button type="submit" className="send-btn">Enviar</button>
                     </div>
                 </form>
             </div>
