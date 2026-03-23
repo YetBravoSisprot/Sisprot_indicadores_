@@ -143,6 +143,16 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         }
     }
 
+    const getColumnLetter = (colIdx) => {
+        let letter = "";
+        while (colIdx > 0) {
+            let temp = (colIdx - 1) % 26;
+            letter = String.fromCharCode(65 + temp) + letter;
+            colIdx = Math.floor((colIdx - temp) / 26);
+        }
+        return letter || "A";
+    };
+
     mainSheet.columns = finalColumns;
 
     // Estilo Cabecera Reporte
@@ -239,30 +249,29 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             }
         });
 
-    // Añadir fila de TOTAL al final del reporte general
+    // Añadir fila de TOTAL al final del reporte
     const lastRow = mainSheet.rowCount + 1;
-    // Buscamos la columna COSTO para el total
     const costoColIndex = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
-    const numColIndex = mainSheet.columns.findIndex(c => c.key === 'num') + 1;
     const contratoColIndex = mainSheet.columns.findIndex(c => c.key === 'contrato') + 1;
-    const letter = String.fromCharCode(64 + costoColIndex); // Simplificación, assuming < 26 columns
 
     if (costoColIndex > 0) {
         const totalLabelCol = contratoColIndex > 0 ? contratoColIndex : (costoColIndex > 1 ? costoColIndex - 1 : 1);
-        const totalLabelLetter = String.fromCharCode(64 + (totalLabelCol <= 26 ? totalLabelCol : 1)); 
-        const costLetter = String.fromCharCode(64 + (costoColIndex <= 26 ? costoColIndex : 1));
+        const totalLabelLetter = getColumnLetter(totalLabelCol);
+        const costLetter = getColumnLetter(costoColIndex);
 
-        mainSheet.getCell(`${totalLabelLetter}${lastRow}`).value = "TOTAL";
-        mainSheet.getCell(`${totalLabelLetter}${lastRow}`).font = { bold: true };
-        mainSheet.getCell(`${totalLabelLetter}${lastRow}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
-        mainSheet.getCell(`${totalLabelLetter}${lastRow}`).alignment = { horizontal: 'center' };
-        mainSheet.getCell(`${totalLabelLetter}${lastRow}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        const labelCell = mainSheet.getCell(`${totalLabelLetter}${lastRow}`);
+        labelCell.value = "TOTAL";
+        labelCell.font = { bold: true };
+        labelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+        labelCell.alignment = { horizontal: 'center' };
+        labelCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        mainSheet.getCell(`${costLetter}${lastRow}`).value = { formula: `SUM(${costLetter}2:${costLetter}${lastRow - 1})`, result: 0 };
-        mainSheet.getCell(`${costLetter}${lastRow}`).font = { bold: true };
-        mainSheet.getCell(`${costLetter}${lastRow}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
-        mainSheet.getCell(`${costLetter}${lastRow}`).numFmt = '"$ "#,##0.00';
-        mainSheet.getCell(`${costLetter}${lastRow}`).border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        const totalCell = mainSheet.getCell(`${costLetter}${lastRow}`);
+        totalCell.value = { formula: `SUM(${costLetter}2:${costLetter}${lastRow - 1})`, result: 0 };
+        totalCell.font = { bold: true };
+        totalCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+        totalCell.numFmt = '"$ "#,##0.00';
+        totalCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
     }
 
     // --- 3. HOJA ESTADISTICA (Solo para reporte operaciones) ---
@@ -297,7 +306,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         });
 
         const tableEstados = ["Activo", "Suspendido", "Cancelado", "Pausado", "Por Instalar"];
-        const estadoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1);
+        const estadoFinalIdx = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
+        const estadoColLetter = getColumnLetter(estadoFinalIdx > 0 ? estadoFinalIdx : 1);
         const costColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'costo') + 1);
 
         tableEstados.forEach((est, i) => {
@@ -493,7 +503,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     // --- 4. FORMATO CONDICIONAL PARA ESTADO FINAL (Dinámico) ---
     const finalColIndex = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
     if (finalColIndex > 0) {
-        const colLetter = String.fromCharCode(64 + finalColIndex);
+        const colLetter = getColumnLetter(finalColIndex);
         const range = `${colLetter}2:${colLetter}${mainSheet.rowCount}`;
         
         mainSheet.addConditionalFormatting({
