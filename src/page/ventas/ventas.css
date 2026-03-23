@@ -115,6 +115,88 @@
   box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
 }
 
+.plan-details {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.plan-meta {
+  font-weight: 700;
+  color: #00d2ff;
+  font-size: 0.85rem;
+  background: rgba(0, 210, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.plan-revenue-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -4px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.plan-revenue-label {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.plan-revenue-value {
+  color: #00ff88;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.category-summary {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-stat.total {
+  margin-top: 8px;
+  padding-top: 15px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.cat-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cat-value {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.category-stat.total .cat-label {
+  color: #ffffff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.category-stat.total .cat-value {
+  color: #00ff88;
+  font-size: 1.4rem;
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+
 /* Activity Stat Styles */
 .activity-stat {
   display: flex;
