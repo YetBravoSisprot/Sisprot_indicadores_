@@ -473,9 +473,17 @@ INTENCIONES DISPONIBLES:
 - ESTADOS / TIPOS_CLIENTE: Reportes de distribución/desglose.
 - INGRESOS_BANCOS: Pagos recibidos por bancos. Parámetros: {"banco", "metodo", "startDate", "endDate", "ciclo", "bnc_account"}.
 - HISTORICO_VENTAS: Evolución de ventas por año y mes (2021-2026). Parámetros: {"year", "month"}.
+- DATA_MAESTRA: Reporte del universo completo (Todos los estatus, tipos, ciclos, migrados/no migrados). Úsalo si piden "todo", "data maestra", "universo completo", "base completa".
 - GENERAR_EXCEL: SOLO si pide ARCHIVO o EXCEL. Parámetro: {"reportType": "operations" | "general"}.
 - CONTEXTO_APP: Para qué sirve esta pantalla específica.
 - SALUDO / AGRADECIMIENTO / GUIA_APP / UNKNOWN.
+
+DEFINICIÓN TÉCNICA DE DATA MAESTRA:
+- La "Data Maestra" incluye a **TODOS** los clientes sin excepción: Activos, Suspendidos, Pausados, Cancelados y Por Instalar.
+- Incluye todos los tipos (Residencial, Pyme, Empleado, etc.).
+- Incluye ambos ciclos (15 y 30).
+- Incluye migrados y no migrados.
+- **Si el usuario te pide la "Data Maestra", no le preguntes por estatus ni filtros, entrégale el resumen total directamente.**
 
 REGLA DE PARÁMETROS:
 - "ciclo": Solo puede ser "15" o "30". NUNCA uses "ayer", "hoy" o fechas aquí.
@@ -650,6 +658,11 @@ const getPlanesResponse = (filtroTxt, clientes) => {
 
 // Función auxiliar para aplicar filtros comunes
 const getFilteredDataset = (clientes, parameters, query = "") => {
+    // 0. Soporte para Data Maestra (Sin filtros)
+    if (parameters?.dataMaestra || normalizeText(query).includes("data maestra") || (normalizeText(query).includes("todo") && !parameters?.urbanismo && !parameters?.agencia && !parameters?.nombre)) {
+        return { filtered: clientes, appliedTexts: ["Universo Total (Data Maestra)"] };
+    }
+
     let filtered = clientes;
     let appliedTexts = [];
 
@@ -1107,13 +1120,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
                         "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
                         "estatus": "Estatus", "estado": "Estatus",
+                        "estado final": "Estado Final", "operacion": "Estado Final",
                         "migrado": "Migrado", "tecnologia": "Migrado",
                         "ciclo": "Ciclo", "fecha": "Fecha_Creación", "creado": "Fecha_Creación",
                         "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
                         "ip": "IP", "mac": "MAC",
                         "dias": "Días Hábiles", "tiempo": "Días Hábiles",
                         "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
-                        "plan": "Plan", "costo": "Plan", "paquete": "Plan", "renta": "Plan"
+                        "plan": "Plan", "paquete": "Plan", "renta": "Plan",
+                        "costo": "Costo", "precio": "Costo", "valor": "Costo"
                     };
 
                     let matchedCols = [];
@@ -1334,8 +1349,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let filteredClientes = filtered;
                 let appliedFiltersText = appliedTexts;
 
-                // 1. Clarificación de Estado (Solo si no hay otros filtros de identidad ya aplicados)
-                if (!parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE') {
+                // 1. Clarificación de Estado (Solo si no hay otros filtros de identidad ya aplicados y NO es DATA MAESTRA)
+                const isDataMaestra = parameters?.dataMaestra || appliedFiltersText.includes("Universo Total (Data Maestra)");
+                
+                if (!isDataMaestra && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE') {
                     // DISPARAR CLARIFICACIÓN: Si no especifican estado, preguntamos de forma humana
                     return {
                         text: `He preparado el resumen ${userName}, pero ¿deseas filtrar por algún estado específico(** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar **) o prefieres verlos ** Todos **? `,
@@ -1533,8 +1550,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let filteredClientes = filtered;
                 let appliedFiltersText = appliedTexts;
 
-                // 1. Filtrar por Status (Flujo Humano: Preguntar si no existe)
-                if (!parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato) {
+                // 1. Filtrar por Status (Flujo Humano: Preguntar si no existe, a menos que sea DATA MAESTRA)
+                const isDataMaestraIng = parameters?.dataMaestra || appliedFiltersText.includes("Universo Total (Data Maestra)");
+
+                if (!isDataMaestraIng && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato) {
                     // Si no especifican estado, preguntamos de forma humana antes de calcular
                     return {
                         text: `He detectado tu consulta sobre ingresos. ¿Deseas ver los resultados para clientes ** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar ** o de ** Todos los estados ** combinado ? `,
@@ -2073,6 +2092,44 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     cardData: { 
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                         savedParameters: parameters 
+                    }
+                };
+            }
+
+            case 'DATA_MAESTRA': {
+                const { filtered, appliedTexts } = getFilteredDataset(clientes, { dataMaestra: true }, query);
+                
+                // Conteo por estados para el resumen visual
+                const counts = filtered.reduce((acc, c) => {
+                    const st = c.status_name || 'Otros';
+                    acc[st] = (acc[st] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                const calculateRevenue = (subset) => subset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                
+                const stats = [
+                    { label: "Activos", value: `${counts.Activo || 0} (${formatCurrencyLoc(calculateRevenue(filtered.filter(c => c.status_name === "Activo")))})`, color: "#2ecc71" },
+                    { label: "Suspendidos", value: `${counts.Suspendido || 0} (${formatCurrencyLoc(calculateRevenue(filtered.filter(c => c.status_name === "Suspendido")))})`, color: "#f1c40f" },
+                    { label: "Cancelados", value: `${counts.Cancelado || 0}`, color: "#e74c3c" },
+                    { label: "Universo Total", value: filtered.length, color: "#3498db" },
+                    { label: "Monto Proyectado", value: formatCurrencyLoc(calculateRevenue(filtered)), color: "#9b59b6" }
+                ];
+
+                return {
+                    text: `¡Entendido ${userName}! Aquí tienes el reporte de la **Data Maestra** (Universo Total). He incluido todos los estados, tipos de clientes, ciclos y tecnologías.\n\n¿Deseas descargar el **archivo Excel completo** para un análisis más profundo?`,
+                    isCard: true,
+                    offerExcel: true,
+                    cardData: {
+                        title: "Reporte: Data Maestra",
+                        value: filtered.length,
+                        subtitle: "Universo total de clientes",
+                        color: "#9b59b6",
+                        stats: stats,
+                        savedDataset: filtered,
+                        filtersText: ["Universo Total (Data Maestra)"],
+                        parameters: { dataMaestra: true }
                     }
                 };
             }
