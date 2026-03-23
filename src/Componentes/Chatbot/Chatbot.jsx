@@ -394,7 +394,7 @@ const Chatbot = () => {
                             {isListening ? '🛑' : '🎤'}
                         </button>
 
-                        <button type="submit" className="send-btn">Enviar</button>
+                        <button type="submit" className="send-btn" title="Enviar">➤</button>
                     </div>
                 </form>
             </div>
