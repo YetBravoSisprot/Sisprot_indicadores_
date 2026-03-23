@@ -276,7 +276,7 @@ const urbanismosAprobados = {
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
 const opcionesColumnas = [
-  "Contrato", "Cliente", "Teléfono", "Dirección", "Urbanismo",
+  "Todas", "Contrato", "Cliente", "Teléfono", "Dirección", "Urbanismo",
   "Estatus", "Estado Final", "Migrado", "Ciclo", "Cedula", "IP", "MAC",
   "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan", "Costo"
 ];
@@ -746,9 +746,8 @@ function TopUrbanismo() {
                   setColumnasSeleccionadas(Array.from(e.target.selectedOptions, (option) => option.value))
                 }
               >
-                <option value="Todas">Todas las columnas Excel</option>
                 {opcionesColumnas.map(col => (
-                  <option key={col} value={col}>{col}</option>
+                  <option key={col} value={col}>{col === "Todas" ? "Todas las columnas Excel" : col}</option>
                 ))}
               </select>
             </div>
