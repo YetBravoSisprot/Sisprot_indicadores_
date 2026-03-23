@@ -176,31 +176,33 @@ function Ventas() {
                 <div className="kpi-shared-row">
                   {/* Widget: Distribución de Planes */}
                   <div className="ventas-card glass kpi-card">
-                    <h3>🏆 Planes Más Vendidos</h3>
-                    <div className="plans-list">
-                      {stats.topPlanes.map((plan, index) => (
-                        <div key={plan.name} className="plan-item">
-                          <div className="plan-info">
-                            <span className="plan-name">{index + 1}. {plan.name}</span>
-                            <div className="plan-details">
-                              <span className="plan-meta">${plan.cost}</span>
-                              <span className="plan-count">{plan.count} cl.</span>
+                    <h3>💰 Ingresos por Plan</h3>
+                    <div className="plans-scroll-container">
+                      <div className="plans-list">
+                        {stats.topPlanes.map((plan, index) => (
+                          <div key={plan.name} className="plan-item">
+                            <div className="plan-info">
+                              <span className="plan-name">{index + 1}. {plan.name}</span>
+                              <div className="plan-details">
+                                <span className="plan-meta">${plan.cost}</span>
+                                <span className="plan-count">{plan.count} cl.</span>
+                              </div>
+                            </div>
+                            
+                            <div className="plan-revenue-row">
+                              <span className="plan-revenue-label">Ingresos:</span>
+                              <span className="plan-revenue-value">{formatCurrency(plan.revenue)}</span>
+                            </div>
+
+                            <div className="progress-bar-bg">
+                              <div
+                                className="progress-bar-fill"
+                                style={{ width: `${(plan.count / stats.total) * 100}%` }}
+                              ></div>
                             </div>
                           </div>
-                          
-                          <div className="plan-revenue-row">
-                            <span className="plan-revenue-label">Ingresos:</span>
-                            <span className="plan-revenue-value">{formatCurrency(plan.revenue)}</span>
-                          </div>
-
-                          <div className="progress-bar-bg">
-                            <div
-                              className="progress-bar-fill"
-                              style={{ width: `${(plan.count / stats.total) * 100}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
 
                     <div className="category-summary">
@@ -218,6 +220,7 @@ function Ventas() {
                       </div>
                     </div>
                   </div>
+
 
 
                   {/* Widget: Resumen de Actividad */}
