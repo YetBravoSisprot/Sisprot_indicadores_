@@ -51,23 +51,48 @@ function Ventas() {
     if (!data || !data.results) return null;
     const clientes = data.results;
 
-    // Conteo por tipo de plan (Top 5)
-    const planes = clientes.reduce((acc, curr) => {
+    // Agrupación por plan con detalles de ingresos
+    const planesData = clientes.reduce((acc, curr) => {
       const planName = curr.plan?.name || "Sin Plan";
-      acc[planName] = (acc[planName] || 0) + 1;
+      const planCost = parseFloat(curr.plan?.cost) || 0;
+      
+      if (!acc[planName]) {
+        acc[planName] = {
+          name: planName,
+          count: 0,
+          cost: planCost,
+          revenue: 0,
+          category: planName.toUpperCase().includes("PYME") ? "PYME" : "RESIDENCIAL"
+        };
+      }
+      
+      acc[planName].count += 1;
+      acc[planName].revenue += planCost;
       return acc;
     }, {});
 
-    const topPlanes = Object.entries(planes)
-      .sort(([, a], [, b]) => b - a)
+    const topPlanes = Object.values(planesData)
+      .sort((a, b) => b.count - a.count)
       .slice(0, 5);
 
-    // Nuevos ingresos (Simulado con status 'Activo' vs Total)
-    const nuevos = clientes.filter(c => c.status_name === "Activo").length;
     const total = clientes.length;
+    const nuevos = clientes.filter(c => c.status_name === "Activo").length;
+    
+    const categoryStats = Object.values(planesData).reduce((acc, curr) => {
+      if (curr.category === "PYME") {
+        acc.pymeRevenue += curr.revenue;
+        acc.pymeCount += curr.count;
+      } else {
+        acc.residencialRevenue += curr.revenue;
+        acc.residencialCount += curr.count;
+      }
+      acc.totalRevenue += curr.revenue;
+      return acc;
+    }, { pymeRevenue: 0, pymeCount: 0, residencialRevenue: 0, residencialCount: 0, totalRevenue: 0 });
 
-    return { topPlanes, nuevos, total };
+    return { topPlanes, nuevos, total, ...categoryStats };
   }, [data]);
+
 
   const masterPlanData = useMemo(() => {
     if (!data || !data.results) return [];
@@ -150,22 +175,47 @@ function Ventas() {
                   <div className="ventas-card glass kpi-card">
                     <h3>🏆 Planes Más Vendidos</h3>
                     <div className="plans-list">
-                      {stats.topPlanes.map(([plan, count], index) => (
-                        <div key={plan} className="plan-item">
+                      {stats.topPlanes.map((plan, index) => (
+                        <div key={plan.name} className="plan-item">
                           <div className="plan-info">
-                            <span className="plan-name">{index + 1}. {plan}</span>
-                            <span className="plan-count">{count} clientes</span>
+                            <span className="plan-name">{index + 1}. {plan.name}</span>
+                            <div className="plan-details">
+                              <span className="plan-meta">${plan.cost}</span>
+                              <span className="plan-count">{plan.count} cl.</span>
+                            </div>
                           </div>
+                          
+                          <div className="plan-revenue-row">
+                            <span className="plan-revenue-label">Ingresos:</span>
+                            <span className="plan-revenue-value">{formatCurrency(plan.revenue)}</span>
+                          </div>
+
                           <div className="progress-bar-bg">
                             <div
                               className="progress-bar-fill"
-                              style={{ width: `${(count / stats.total) * 100}%` }}
+                              style={{ width: `${(plan.count / stats.total) * 100}%` }}
                             ></div>
                           </div>
                         </div>
                       ))}
                     </div>
+
+                    <div className="category-summary">
+                      <div className="category-stat">
+                        <span className="cat-label">Residencial:</span>
+                        <span className="cat-value">{formatCurrency(stats.residencialRevenue)}</span>
+                      </div>
+                      <div className="category-stat">
+                        <span className="cat-label">PYME:</span>
+                        <span className="cat-value">{formatCurrency(stats.pymeRevenue)}</span>
+                      </div>
+                      <div className="category-stat total">
+                        <span className="cat-label">Ingreso Total:</span>
+                        <span className="cat-value">{formatCurrency(stats.totalRevenue)}</span>
+                      </div>
+                    </div>
                   </div>
+
 
                   {/* Widget: Resumen de Actividad */}
                   <div className="ventas-card glass kpi-card">
