@@ -368,37 +368,28 @@ function TopUrbanismo() {
       .sort((a, b) => a.localeCompare(b, "es"));
   }, [sectoresSeleccionados]);
 
-  const handleDownloadExcelOperaciones = async () => {
-    setIsExporting(true);
-    try {
-      const filtroTextos = [...estadosSeleccionados];
-      const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
-      if (urbanismosEspecificos.length > 0) {
-        filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
-      }
-
-      // Lógica para nombre personalizado solicitado
-      let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
-      
-      let cicloParaNombre = "";
-      if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
-          const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
-          cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
-      }
-
-      const hoy = new Date();
-      const dia = hoy.getDate();
-      const mes = hoy.toLocaleString('es-ES', { month: 'long' });
-      const anio = hoy.getFullYear();    
-      const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${dia} de ${mes} del ${anio}.xlsx`;
-
-      await exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
-    } finally {
-      setIsExporting(false);
+  const handleDownloadExcelOperaciones = () => {
+    const filtroTextos = [...estadosSeleccionados];
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
+
+    let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
+    let cicloParaNombre = "";
+    if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
+        const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
+        cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
+    }
+
+    const hoy = new Date();
+    const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${hoy.getDate()} de ${hoy.toLocaleString('es-ES', { month: 'long' })} del ${hoy.getFullYear()}.xlsx`;
+
+    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
   };
 
-  const handleDownloadExcelGeneral = async () => {
+  const handleDownloadExcelGeneral = () => {
+    alert("Generando reporte Excel... por favor espera un momento.");
     const datasetParaExportar = modoBusquedaContrato ? clientesPorContrato : serviciosParaExportar;
     
     if (!datasetParaExportar || datasetParaExportar.length === 0) {
@@ -406,22 +397,17 @@ function TopUrbanismo() {
       return;
     }
 
-    setIsExporting(true);
-    try {
-      const filtroTextos = [...estadosSeleccionados];
-      const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
-      if (urbanismosEspecificos.length > 0) {
-        filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
-      }
-
-      if (modoBusquedaContrato) {
-        filtroTextos.push(`Búsqueda: Contrato ${contratoBuscado}`);
-      }
-
-      await exportToExcel(datasetParaExportar, filtroTextos, columnasSeleccionadas, "general");
-    } finally {
-      setIsExporting(false);
+    const filtroTextos = [...estadosSeleccionados];
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
+
+    if (modoBusquedaContrato) {
+      filtroTextos.push(`Búsqueda: Contrato ${contratoBuscado}`);
+    }
+
+    exportToExcel(datasetParaExportar, filtroTextos, columnasSeleccionadas, "general");
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -798,20 +784,12 @@ function TopUrbanismo() {
             </div>
 
             <div className="button-group-excel">
-              <button 
-                className={`buttonDescargar ${isExporting ? 'exporting' : ''}`} 
-                onClick={handleDownloadExcelOperaciones}
-                disabled={isExporting}
-              >
-                {isExporting ? "⏳ Generando..." : "Excel Operaciones"}
+              <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones}>
+                Excel Operaciones
               </button>
 
-              <button 
-                className={`buttonDescargar general ${isExporting ? 'exporting' : ''}`} 
-                onClick={handleDownloadExcelGeneral}
-                disabled={isExporting}
-              >
-                {isExporting ? "⏳ Generando..." : "Excel General"}
+              <button className="buttonDescargar general" onClick={handleDownloadExcelGeneral}>
+                Excel General
               </button>
             </div>
 
