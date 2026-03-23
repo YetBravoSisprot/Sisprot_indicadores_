@@ -528,5 +528,6 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     // --- GENERAR Y DESCARGAR ---
     const buffer = await workbook.xlsx.writeBuffer();
     const nombreArchivo = customFileName || `reporte_sisprot_INTELIGENTE_${hoy.toISOString().split('T')[0]}.xlsx`;
-    saveAs(new Blob([buffer]), nombreArchivo);
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, nombreArchivo);
 };
