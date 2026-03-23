@@ -417,9 +417,10 @@ const pageKnowledge = {
     "/Ventas": {
         name: "Monitor de Operaciones",
         description: "Es el centro de monitoreo en tiempo real de la actividad operativa del sistema.",
-        data: "Muestro el ranking de los 5 Planes más elegidos por los clientes, junto a un Resumen de Actividad que incluye Clientes Totales y Nuevas Activaciones.",
-        guide: "💡 **Tip rápido**: Haz clic en 'Ver Reporte Detallado' para acceder al desglose pormenorizado de la data."
+        data: "Muestro el ranking de los 5 Planes más vendidos, detallando su costo unitario, cantidad de clientes e ingresos generados por cada plan. También incluyo un resumen financiero segmentado por categorías: Total Residenciales y Total PYMEs, junto al Ingreso Total Global.",
+        guide: "💡 **Tip rápido**: Aquí puedes ver qué planes son más rentables y cuánto aporta cada segmento (Pyme/Residencial) al negocio."
     },
+
     "/Admin": {
         name: "Adm. Ingresos (Centro de Comando Gerencial)",
         description: "El panel de control administrativo privado para la toma de decisiones gerenciales.",
@@ -509,7 +510,11 @@ REGLA DE EXCLUSIVIDAD DE FILTROS:
 - Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.
 REGLA DE HORARIOS DE ACTUALIZACIÓN:
 - La data de 'Hoy' se actualiza automáticamente tres veces al día: **8:00 AM, 12:00 PM y 4:00 PM**.
-- Si el usuario pregunta por la hora de los datos, infórmale estos horarios y dile que los datos reflejan el último corte realizado. NO inventes otras horas como las 6:00 AM.`;
+- Si el usuario pregunta por la hora de los datos, infórmale estos horarios y dile que los datos reflejan el último corte realizado. NO inventes otras horas como las 6:00 AM.
+REGLA DE MÉTRICAS OPERATIVAS:
+- En la sección de Monitor de Operaciones (/Ventas), ahora tenemos acceso a: **Costo de cada Plan**, **Ingresos por Plan** cuantificados y cantidad de clientes per plan.
+- También contamos con resúmenes detallados por **Total Residencial** y **Total PYME**, así como el **Ingreso Total Global**. Menciona esto si el usuario te pregunta qué se mide en Operaciones o sobre la rentabilidad de los planes.`;
+
 
     const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
