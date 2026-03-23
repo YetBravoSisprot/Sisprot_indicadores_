@@ -620,12 +620,10 @@ const getPlanesResponse = (filtroTxt, clientes) => {
     }, { pymeRevenue: 0, pymeCount: 0, residencialRevenue: 0, residencialCount: 0, totalRevenue: 0 });
 
     const statsArray = topPlanes.map(p => {
-        // Limpiamos el nombre del plan para que quepa mejor (Ej: RECURRENTE RESIDENCIAL PLAN 450M -> RESIDENCIAL 450M)
         const cleanName = p.name.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
-        
         return {
             label: cleanName,
-            value: `${formatCurrency(p.revenue)}\n(${p.count} cl. x $${p.cost})`,
+            value: `${formatCurrency(p.revenue)}|(${p.count} cl. x $${p.cost})`,
             color: p.category === "PYME" ? "#9b59b6" : "#3498db"
         };
     });
