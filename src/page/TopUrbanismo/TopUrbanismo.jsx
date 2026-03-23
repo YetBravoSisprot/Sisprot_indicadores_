@@ -277,8 +277,8 @@ const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "
 
 const opcionesColumnas = [
   "Contrato", "Cliente", "Teléfono", "Dirección", "Urbanismo",
-  "Estatus", "Migrado", "Ciclo", "Cedula", "IP", "MAC",
-  "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan"
+  "Estatus", "Estado Final", "Migrado", "Ciclo", "Cedula", "IP", "MAC",
+  "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan", "Costo"
 ];
 
 function TopUrbanismo() {
@@ -393,12 +393,24 @@ function TopUrbanismo() {
   };
 
   const handleDownloadExcelGeneral = () => {
+    const datasetParaExportar = modoBusquedaContrato ? clientesPorContrato : serviciosParaExportar;
+    
+    if (!datasetParaExportar || datasetParaExportar.length === 0) {
+      alert("No hay datos para exportar con los filtros seleccionados.");
+      return;
+    }
+
     const filtroTextos = [...estadosSeleccionados];
     const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
     if (urbanismosEspecificos.length > 0) {
       filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
     }
-    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "general");
+
+    if (modoBusquedaContrato) {
+      filtroTextos.push(`Búsqueda: Contrato ${contratoBuscado}`);
+    }
+
+    exportToExcel(datasetParaExportar, filtroTextos, columnasSeleccionadas, "general");
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
