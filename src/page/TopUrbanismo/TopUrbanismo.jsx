@@ -276,9 +276,9 @@ const urbanismosAprobados = {
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
 const opcionesColumnas = [
-  "Todas", "Contrato", "Cliente", "Teléfono", "Dirección", "Urbanismo",
-  "Estatus", "Estado Final", "Migrado", "Ciclo", "Cedula", "IP", "MAC",
-  "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan", "Costo"
+  "Todas", "Contrato", "Cliente", "Cedula", "Teléfono", "Dirección", "Urbanismo",
+  "Estatus", "Estado Final", "Migrado", "Ciclo", "Costo", "IP", "MAC",
+  "Fecha_Creación", "Días Hábiles", "Tipo_Cliente", "Plan"
 ];
 
 function TopUrbanismo() {
@@ -368,28 +368,34 @@ function TopUrbanismo() {
       .sort((a, b) => a.localeCompare(b, "es"));
   }, [sectoresSeleccionados]);
 
-  const handleDownloadExcelOperaciones = () => {
-    const filtroTextos = [...estadosSeleccionados];
-    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
-    if (urbanismosEspecificos.length > 0) {
-      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+  const handleDownloadExcelOperaciones = async () => {
+    setIsExporting(true);
+    try {
+      const filtroTextos = [...estadosSeleccionados];
+      const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+      if (urbanismosEspecificos.length > 0) {
+        filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+      }
+
+      let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
+      let cicloParaNombre = "";
+      if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
+          const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
+          cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
+      }
+
+      const hoy = new Date();
+      const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${hoy.getDate()} de ${hoy.toLocaleString('es-ES', { month: 'long' })} del ${hoy.getFullYear()}.xlsx`;
+
+      await exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
+    } catch (err) {
+      alert("Error al descargar Excel: " + err.message);
+    } finally {
+      setIsExporting(false);
     }
-
-    let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
-    let cicloParaNombre = "";
-    if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
-        const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
-        cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
-    }
-
-    const hoy = new Date();
-    const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${hoy.getDate()} de ${hoy.toLocaleString('es-ES', { month: 'long' })} del ${hoy.getFullYear()}.xlsx`;
-
-    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
   };
 
-  const handleDownloadExcelGeneral = () => {
-    alert("Generando reporte Excel... por favor espera un momento.");
+  const handleDownloadExcelGeneral = async () => {
     const datasetParaExportar = modoBusquedaContrato ? clientesPorContrato : serviciosParaExportar;
     
     if (!datasetParaExportar || datasetParaExportar.length === 0) {
@@ -397,17 +403,24 @@ function TopUrbanismo() {
       return;
     }
 
-    const filtroTextos = [...estadosSeleccionados];
-    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
-    if (urbanismosEspecificos.length > 0) {
-      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
-    }
+    setIsExporting(true);
+    try {
+      const filtroTextos = [...estadosSeleccionados];
+      const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+      if (urbanismosEspecificos.length > 0) {
+        filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+      }
 
-    if (modoBusquedaContrato) {
-      filtroTextos.push(`Búsqueda: Contrato ${contratoBuscado}`);
-    }
+      if (modoBusquedaContrato) {
+        filtroTextos.push(`Búsqueda: Contrato ${contratoBuscado}`);
+      }
 
-    exportToExcel(datasetParaExportar, filtroTextos, columnasSeleccionadas, "general");
+      await exportToExcel(datasetParaExportar, filtroTextos, columnasSeleccionadas, "general");
+    } catch (err) {
+      alert("Error al generar Excel General: " + err.message);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -735,36 +748,22 @@ function TopUrbanismo() {
               </select>
             </div>
 
-            <div className="columnas-checkbox-panel">
-              <label className="label-select-general">Seleccionar Columnas (Excel General):</label>
-              <div className="checkbox-grid">
-                {opcionesColumnas.map(col => {
-                  const isChecked = columnasSeleccionadas.includes(col);
-                  return (
-                    <label key={col} className={`checkbox-item ${isChecked ? 'active' : ''}`}>
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={(e) => {
-                          let newCols = [...columnasSeleccionadas];
-                          if (col === "Todas") {
-                            newCols = e.target.checked ? ["Todas"] : [];
-                          } else {
-                            if (e.target.checked) {
-                              newCols = newCols.filter(c => c !== "Todas");
-                              newCols.push(col);
-                            } else {
-                              newCols = newCols.filter(c => c !== col);
-                            }
-                          }
-                          setColumnasSeleccionadas(newCols);
-                        }}
-                      />
-                      {col === "Todas" ? "Todas las columnas" : col}
-                    </label>
-                  );
-                })}
-              </div>
+            <div className="select-container column-select">
+              <label className="label-select-general">Columnas del Excel:</label>
+              <select
+                id="columnasSelect"
+                size="10"
+                multiple
+                value={columnasSeleccionadas}
+                onChange={(e) => {
+                  const values = Array.from(e.target.selectedOptions, (option) => option.value);
+                  setColumnasSeleccionadas(values);
+                }}
+              >
+                {opcionesColumnas.map(col => (
+                  <option key={col} value={col}>{col === "Todas" ? "Todas las columnas Excel" : col}</option>
+                ))}
+              </select>
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
@@ -784,12 +783,20 @@ function TopUrbanismo() {
             </div>
 
             <div className="button-group-excel">
-              <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones}>
-                Excel Operaciones
+              <button 
+                className={`buttonDescargar ${isExporting ? 'exporting' : ''}`} 
+                onClick={handleDownloadExcelOperaciones}
+                disabled={isExporting}
+              >
+                {isExporting ? "⏳ Generando..." : "Excel Operaciones"}
               </button>
 
-              <button className="buttonDescargar general" onClick={handleDownloadExcelGeneral}>
-                Excel General
+              <button 
+                className={`buttonDescargar general ${isExporting ? 'exporting' : ''}`} 
+                onClick={handleDownloadExcelGeneral}
+                disabled={isExporting}
+              >
+                {isExporting ? "⏳ Generando..." : "Excel General"}
               </button>
             </div>
 
