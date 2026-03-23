@@ -466,6 +466,7 @@ INTENCIONES DISPONIBLES:
 - TOTAL_CLIENTES: Conteo de clientes. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
 - INGRESOS: Dinero proyectado. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
 - AMBOS_METRICAS: Conteo + Ingresos (Reporte Gerencial). Parámetros: los de INGRESOS.
+- PLANES: Análisis de rentabilidad, costos, conteos e ingresos detalle por planes de internet (Pymes/Residenciales).
 - AMBIGUEDAD_METRICA: Si el usuario da un filtro (ej: "activos de paya") pero NO pide acción (cuantos/plata).
 - BUSCAR_CONTRATO / BUSCAR_CEDULA: Búsqueda por ID numérico.
 - BUSCAR_NOMBRE: Búsqueda por nombre de persona. Array: {"nombres": ["Juan"]}.
@@ -480,6 +481,9 @@ REGLA DE PARÁMETROS:
 - "ciclo": Solo puede ser "15" o "30". NUNCA uses "ayer", "hoy" o fechas aquí.
 - "status": Solo puede ser "Activo", "Suspendido", "Pausado", "Cancelado" o "Por Instalar".
 - "urbanismo": Nombre del sector. Si el usuario dice "ayer" o "hoy", NO los pongas en ningún parámetro técnico. El sistema detecta el tiempo automáticamente.
+
+REGLA DE ORO PARA PLANES:
+Si el usuario pregunta por "ingresos por planes", "costos", "cuánto genera cada paquete" o "rentabilidad de pyme vs residencial", usa SIEMPRE el intent 'PLANES'. Ahora tenemos visibilidad detallada de cuánto aporta cada tipo de plan al ingreso total global.
 
 REGLA DE ORO PARA URBANISMOS: 
 Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su versión más cercana. Ej: "Paya abajo", "Prados II", "Antigua Hacienda de Paya", "Salto Angel". No inventes sufijos si el usuario no los dice.
