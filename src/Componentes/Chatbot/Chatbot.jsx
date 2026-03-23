@@ -255,7 +255,7 @@ const Chatbot = () => {
 
                             {/* Renderizado de una Data Card si la respuesta de IA lo incluye */}
                             {msg.isCard && msg.cardData && (
-                                <div className="chat-data-card animate-slide-up">
+                                <div className={`chat-data-card animate-slide-up ${msg.contextType || ''}`}>
                                     <h5 style={{ color: msg.cardData.color || '#1e90ff' }}>{msg.cardData.title}</h5>
 
                                     {msg.cardData.value && (
@@ -271,7 +271,14 @@ const Chatbot = () => {
                                             {msg.cardData.stats.map((stat, i) => (
                                                 <div key={i} className="stat-item">
                                                     <span>{stat.label}</span>
-                                                    <strong style={{ color: stat.color || '#fff' }}>{stat.value}</strong>
+                                                    <strong style={{ color: stat.color || '#fff' }}>
+                                                        {typeof stat.value === 'string' && stat.value.includes('|') ? (
+                                                            <div className="stat-value-split">
+                                                                <span className="main-val">{stat.value.split('|')[0]}</span>
+                                                                <span className="sub-val">{stat.value.split('|')[1]}</span>
+                                                            </div>
+                                                        ) : stat.value}
+                                                    </strong>
                                                 </div>
                                             ))}
                                         </div>
