@@ -248,9 +248,9 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     const letter = String.fromCharCode(64 + costoColIndex); // Simplificación, assuming < 26 columns
 
     if (costoColIndex > 0) {
-        const totalLabelCol = contratoColIndex > 0 ? contratoColIndex : (costoColIndex - 1);
-        const totalLabelLetter = String.fromCharCode(64 + totalLabelCol);
-        const costLetter = String.fromCharCode(64 + costoColIndex);
+        const totalLabelCol = contratoColIndex > 0 ? contratoColIndex : (costoColIndex > 1 ? costoColIndex - 1 : 1);
+        const totalLabelLetter = String.fromCharCode(64 + (totalLabelCol <= 26 ? totalLabelCol : 1)); 
+        const costLetter = String.fromCharCode(64 + (costoColIndex <= 26 ? costoColIndex : 1));
 
         mainSheet.getCell(`${totalLabelLetter}${lastRow}`).value = "TOTAL";
         mainSheet.getCell(`${totalLabelLetter}${lastRow}`).font = { bold: true };
@@ -526,8 +526,13 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     // Ajustes finales de ancho de columna para estética
     // --- GENERAR Y DESCARGAR ---
-    const buffer = await workbook.xlsx.writeBuffer();
-    const nombreArchivo = customFileName || `reporte_sisprot_INTELIGENTE_${hoy.toISOString().split('T')[0]}.xlsx`;
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    saveAs(blob, nombreArchivo);
+    try {
+        const buffer = await workbook.xlsx.writeBuffer();
+        const nombreArchivo = customFileName || `reporte_sisprot_INTELIGENTE_${hoy.toISOString().split('T')[0]}.xlsx`;
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, nombreArchivo);
+    } catch (error) {
+        console.error("Error crítico en exportToExcel:", error);
+        throw new Error("No se pudo generar el archivo Excel (Error de memoria o proceso). " + error.message);
+    }
 };
