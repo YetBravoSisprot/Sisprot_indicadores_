@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5294,
+  "count": 5295,
   "results": [
     {
       "id": 3063,
@@ -38280,8 +38280,8 @@ const largeArraydata =
       "id": 4433,
       "client_name": "DAYANA CAROLINA MEJIA PADILLA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "La Macarena",
@@ -49998,8 +49998,8 @@ const largeArraydata =
       "id": 4848,
       "client_name": "JORGE ANDRES ZEGHEN BARRIOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Residencias Candys",
@@ -105231,13 +105231,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00282",
       "created_at": "2024-10-21T18:17:01.476347",
       "service_detail": {
-        "id": 6860,
+        "id": 12167,
         "ip": "172.29.147.2",
         "mac": "OEMT3C624B7E",
-        "serial": "OEMT3C624B7E (P27)",
-        "queue": "queue1",
+        "serial": "OEMT3C624B7E",
+        "queue": null,
         "interface": "VLAN259_LA_ORQUIDEA",
-        "created_at": "2024-10-22T16:27:16.733694",
+        "created_at": "2026-03-23T15:22:38.949577",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -107721,13 +107721,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0610",
       "created_at": "2024-10-30T12:56:03.501512",
       "service_detail": {
-        "id": 11870,
+        "id": 12165,
         "ip": "172.22.117.2",
         "mac": "OEMT3C6245C6",
         "serial": "OEMT3C6245C6",
         "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2026-02-28T19:40:15.831564",
+        "created_at": "2026-03-23T15:12:10.688041",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -142860,13 +142860,13 @@ const largeArraydata =
       "nap_box_name": "269",
       "created_at": "2025-05-30T11:43:23.602766",
       "service_detail": {
-        "id": 9276,
+        "id": 12161,
         "ip": "10.14.175.2",
         "mac": "OEMT3C6254C6",
-        "serial": "OEMT3C6254C6 (221)",
-        "queue": "queue1",
+        "serial": "OEMT3C6254C6",
+        "queue": null,
         "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2025-07-31T09:02:59.198911",
+        "created_at": "2026-03-23T13:28:10.223940",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -149568,8 +149568,8 @@ const largeArraydata =
       "id": 8595,
       "client_name": "CHOYGU YELITZA ROJAS SEIJAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -161069,7 +161069,16 @@ const largeArraydata =
       "client_identification": "V20547234",
       "nap_box_name": "CTO-00001",
       "created_at": "2026-03-17T16:05:30.700599",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12163,
+        "ip": "10.16.177.2",
+        "mac": "10.16.177.2",
+        "serial": "10.16.177.2",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-03-23T14:49:42.533436",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -161103,6 +161112,30 @@ const largeArraydata =
         "created_at": "2026-03-18T17:34:15.187965",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9038,
+      "client_name": "ZORGEILYS MICHELLE COUSIN FRANCESCHI",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "La Casona II Edificios",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243281825",
+      "address": "URBANISMO LA CASONA 2, EDIFICIO 12, PLANTA BAJA APTO 5",
+      "client_identification": "V27036892",
+      "nap_box_name": "CE - 279",
+      "created_at": "2026-03-23T15:59:48.127820",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
