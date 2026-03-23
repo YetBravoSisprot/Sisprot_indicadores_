@@ -69,94 +69,116 @@
 
 /* Plan List Styles */
 .plan-item {
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.plan-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 210, 255, 0.3);
+  transform: translateX(5px);
 }
 
 .plan-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  gap: 15px;
 }
 
 .plan-name {
-  font-weight: 600;
+  font-weight: 700;
   color: #f8fafc;
-  letter-spacing: 0.3px;
-  text-transform: capitalize;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  flex: 1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.plan-details {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.plan-meta {
+  font-weight: 800;
+  color: #00d2ff;
+  font-size: 0.8rem;
+  background: rgba(0, 210, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 210, 255, 0.1);
 }
 
 .plan-count {
   font-weight: 700;
   color: #94a3b8;
   background: rgba(255, 255, 255, 0.06);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 10px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-  border-radius: 10px;
-  transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
-}
-
-.plan-details {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.plan-meta {
-  font-weight: 700;
-  color: #00d2ff;
-  font-size: 0.85rem;
-  background: rgba(0, 210, 255, 0.1);
-  padding: 2px 8px;
-  border-radius: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .plan-revenue-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: -4px;
-  margin-bottom: 8px;
-  font-size: 0.85rem;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 255, 136, 0.04);
+  border-radius: 10px;
+  border-left: 3px solid #00ff88;
 }
 
 .plan-revenue-label {
-  color: #94a3b8;
-  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .plan-revenue-value {
   color: #00ff88;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
 }
 
 .category-summary {
   margin-top: 30px;
-  padding-top: 25px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .category-stat {
@@ -166,20 +188,20 @@
 }
 
 .category-stat.total {
-  margin-top: 8px;
+  margin-top: 10px;
   padding-top: 15px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 .cat-label {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .cat-value {
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1rem;
 }
 
@@ -192,9 +214,11 @@
 
 .category-stat.total .cat-value {
   color: #00ff88;
-  font-size: 1.4rem;
-  text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
 }
+
 
 
 /* Activity Stat Styles */
@@ -202,61 +226,60 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 22px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   gap: 20px;
-  /* Add gap between label and number */
 }
 
 .activity-stat:nth-of-type(2) {
   border-bottom: none;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .stat-label {
   font-size: 1rem;
-  color: #cbd5e1;
-  font-weight: 500;
+  color: #94a3b8;
+  font-weight: 600;
   letter-spacing: 0.3px;
   flex: 1;
-  /* Allow label to take available space */
 }
 
 .stat-number {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 900;
   color: #ffffff;
-  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
   white-space: nowrap;
-  /* Prevent number from wrapping */
 }
 
 .stat-number.highlight {
   color: #00ff88;
-  text-shadow: 0 4px 20px rgba(0, 255, 136, 0.35);
+  text-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
 }
 
 .full-width {
   width: 100%;
   margin-top: auto;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  padding: 18px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   background: linear-gradient(135deg, #0052D4, #4364F7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   color: white;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 82, 212, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 25px rgba(0, 82, 212, 0.3);
 }
 
 .full-width:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 82, 212, 0.6);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 82, 212, 0.5);
   background: linear-gradient(135deg, #0062ff, #5374ff);
 }
+
 
 
 /* Master Directory Unified Styles */
