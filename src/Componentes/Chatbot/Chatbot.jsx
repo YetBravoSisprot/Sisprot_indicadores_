@@ -333,17 +333,17 @@ const Chatbot = () => {
                                     )}
 
                                     {/* Botones de descarga si la tarjeta tiene dataset */}
-                                    {msg.cardData.dataset && (
+                                    {(msg.cardData.dataset || msg.cardData.savedDataset) && (
                                         <div className="card-download-group">
                                             <button
                                                 className="card-download-btn operations"
-                                                onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "operations")}
+                                                onClick={() => exportToExcel(msg.cardData.dataset || msg.cardData.savedDataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "operations")}
                                             >
                                                 📥 Excel Operaciones
                                             </button>
                                             <button
                                                 className="card-download-btn general"
-                                                onClick={() => exportToExcel(msg.cardData.dataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "general")}
+                                                onClick={() => exportToExcel(msg.cardData.dataset || msg.cardData.savedDataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "general")}
                                             >
                                                 📥 Excel General
                                             </button>
