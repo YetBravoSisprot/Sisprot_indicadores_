@@ -475,9 +475,8 @@
     font-weight: 800;
     color: #fff;
     font-size: 0.95rem; /* Slightly reduced */
-    white-space: normal; /* Allow wrapping if needed */
+    white-space: pre-line; /* Permite saltos de línea \n */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    word-break: break-all;
 }
 
 .card-download-group {
