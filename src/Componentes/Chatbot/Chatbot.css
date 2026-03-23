@@ -445,6 +445,19 @@
     margin-top: 15px;
 }
 
+/* Estilos específicos para la tarjeta de PLANES (Contextual) */
+.chat-data-card.planes .stat-item {
+    padding: 12px 15px;
+    margin-bottom: 2px;
+}
+
+.chat-data-card.planes .stat-item span {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
 .stat-item {
     display: flex;
     justify-content: space-between;
@@ -474,10 +487,28 @@
     text-align: right;
     font-weight: 800;
     color: #fff;
-    font-size: 0.95rem; /* Slightly reduced */
-    white-space: pre-line; /* Permite saltos de línea \n */
+    font-size: 0.95rem;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
+
+.stat-value-split {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+}
+
+.main-val {
+    font-size: 0.95rem;
+    color: inherit;
+}
+
+.sub-val {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    opacity: 0.8;
+}
+
 
 .card-download-group {
     display: flex;
