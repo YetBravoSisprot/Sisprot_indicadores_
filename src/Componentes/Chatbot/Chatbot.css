@@ -650,22 +650,28 @@
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
     border: none;
     color: white;
-    padding: 0 20px !important;
-    height: 36px;
-    border-radius: 18px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-left: 4px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(-10deg);
+    margin-left: 5px;
 }
 
 .send-btn:hover {
     filter: brightness(1.2);
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+    transform: scale(1.1) rotate(0deg);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
 }
 
 @keyframes pulse-mic {
@@ -720,7 +726,7 @@
     /* Color azul al subir */
 }
 
-/* Responsividad */
+/* Responsividad Móvil Extrema */
 @media (max-width: 480px) {
     .chatbot-window {
         width: 100% !important;
@@ -730,54 +736,79 @@
         right: 0 !important;
         border-radius: 0 !important;
         border: none !important;
-        backdrop-filter: blur(25px) saturate(150%) !important;
+        backdrop-filter: blur(30px) saturate(160%) !important;
+        z-index: 9999;
     }
 
-    /* Reposicionar el botón de cerrar a la parte superior derecha cuando está abierto */
+    /* Botón de cerrar (X) en móviles: Sutil y elegante arriba a la derecha */
     .chatbot-toggle-wrapper.open {
-        top: 20px !important;
-        right: 20px !important;
+        top: 15px !important;
+        right: 15px !important;
         bottom: auto !important;
-        width: 50px !important;
-        height: 50px !important;
-        z-index: 10000 !important;
-        background: rgba(231, 76, 60, 0.9) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+        left: auto !important;
+        width: 38px !important;
+        height: 38px !important;
+        z-index: 10001 !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
     }
 
-    .chatbot-toggle-wrapper {
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-    }
-
-    .chatbot-input-area {
-        padding: 12px 15px;
-        padding-bottom: 20px;
-        background: rgba(15, 23, 42, 0.9);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .chatbot-toggle-wrapper.open .close-btn {
+        font-size: 1.2rem !important;
+        color: white !important;
     }
 
     .chatbot-header {
-        padding: 15px 20px;
-        padding-right: 80px;
-        /* Espacio para el botón de cerrar */
+        padding: 20px 15px;
+        padding-right: 70px; /* Espacio para la X */
+        background: rgba(15, 23, 42, 0.5);
     }
 
+    .chatbot-header h4 { font-size: 1.1rem; }
+
     .chatbot-messages {
-        padding: 15px;
+        padding: 12px;
+        padding-bottom: 80px; /* Espacio para el input */
+    }
+
+    .chatbot-input-area {
+        padding: 10px;
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+        background: rgba(15, 23, 42, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chatbot-input-container {
+        height: 44px;
+        border-radius: 22px;
+        gap: 2px;
+    }
+
+    /* Hacer iconos de voz más visibles en móvil */
+    .mic-btn, .voice-toggle-btn {
+        opacity: 0.8 !important;
+        width: 32px;
+        height: 32px;
+    }
+
+    .send-btn {
+        padding: 0 14px !important;
+        min-width: 70px;
+        font-size: 0.75rem;
     }
 
     .chat-bubble {
-        font-size: 0.9rem;
-        padding: 10px 14px;
+        font-size: 0.88rem;
+        max-width: 90%;
     }
 
     .chat-data-card {
-        width: 100%;
-        max-width: 280px;
-        padding: 15px;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
