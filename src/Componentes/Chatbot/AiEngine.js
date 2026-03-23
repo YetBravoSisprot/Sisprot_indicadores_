@@ -578,34 +578,68 @@ const getPlanesResponse = (filtroTxt, clientes) => {
         titleSuffix = "Solo Suspendidos";
     }
 
-    const conteoPlanes = clientes.reduce((acc, curr) => {
+    const planesData = clientes.reduce((acc, curr) => {
         if (validStatus.includes(curr.status_name)) {
             const planName = curr.plan?.name || 'Sin Plan';
-            acc[planName] = (acc[planName] || 0) + 1;
+            const planCost = parseFloat(curr.plan?.cost) || 0;
+            
+            if (!acc[planName]) {
+                acc[planName] = {
+                    name: planName,
+                    count: 0,
+                    cost: planCost,
+                    revenue: 0,
+                    category: planName.toUpperCase().includes("PYME") ? "PYME" : "RESIDENCIAL"
+                };
+            }
+            acc[planName].count += 1;
+            acc[planName].revenue += planCost;
         }
         return acc;
     }, {});
 
-    const topPlanes = Object.entries(conteoPlanes)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 4)
-        .map(([plan, count]) => ({
-            label: plan,
-            value: count
-        }));
+    const sortedPlanes = Object.values(planesData)
+        .sort((a, b) => b.count - a.count);
+
+    const topPlanes = sortedPlanes.slice(0, 5);
+
+    const categoryStats = sortedPlanes.reduce((acc, curr) => {
+        if (curr.category === "PYME") {
+            acc.pymeRevenue += curr.revenue;
+            acc.pymeCount += curr.count;
+        } else {
+            acc.residencialRevenue += curr.revenue;
+            acc.residencialCount += curr.count;
+        }
+        acc.totalRevenue += curr.revenue;
+        return acc;
+    }, { pymeRevenue: 0, pymeCount: 0, residencialRevenue: 0, residencialCount: 0, totalRevenue: 0 });
+
+    const statsArray = topPlanes.map(p => ({
+        label: p.name,
+        value: `${formatCurrency(p.revenue)} (${p.count} cl. x $${p.cost})`,
+        color: p.category === "PYME" ? "#9b59b6" : "#3498db"
+    }));
+
+    // Añadir separador visual y resúmenes de categoría
+    statsArray.push({ label: "──────────────────", value: "" });
+    statsArray.push({ label: "Total Residencial", value: formatCurrency(categoryStats.residencialRevenue), color: "#3498db" });
+    statsArray.push({ label: "Total PYME", value: formatCurrency(categoryStats.pymeRevenue), color: "#9b59b6" });
+    statsArray.push({ label: "INGRESO TOTAL", value: formatCurrency(categoryStats.totalRevenue), color: "#00ff88" });
 
     return {
-        text: `Estos son los planes o paquetes más populares entre tus clientes(Filtro: ${titleSuffix}): `,
+        text: `¡Claro! He generado el análisis financiero de planes para los clientes **${titleSuffix}**. Aquí tienes el desglose detallado de ingresos, costos y volumen:`,
         isCard: true,
         contextType: 'planes',
         cardData: {
-            title: "Planes más populares",
-            subtitle: `Basado en clientes ${titleSuffix} `,
+            title: "Análisis Financiero de Planes",
+            subtitle: `Corte: ${titleSuffix}`,
             color: "#9b59b6",
-            stats: topPlanes
+            stats: statsArray
         }
     };
 };
+
 
 // Función auxiliar para aplicar filtros comunes
 const getFilteredDataset = (clientes, parameters, query = "") => {
