@@ -115,7 +115,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "sector", "migrado", "ciclo", "plan", "costo"
+        "direccion", "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac", 
+        "fecha_creacion", "dias_habiles", "tipo_cliente"
     ];
 
     if (reportType === "operations") {
@@ -129,8 +130,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         const isAll = selectedColumns.includes("Todas");
         
         if (isAll) {
-            const base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
-                .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
+            // "Todas" ahora significa REALMENTE todas las posibles en el orden definido
+            const base = [...allPossibleColumns].sort((a, b) => {
+                const idxA = standardOrder.indexOf(a.key);
+                const idxB = standardOrder.indexOf(b.key);
+                return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+            });
             finalColumns = [...finalColumns, ...base];
         } else {
             const selected = allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
