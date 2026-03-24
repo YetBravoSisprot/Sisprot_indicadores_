@@ -405,7 +405,7 @@ function TopUrbanismo() {
     const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
     const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
 
-    exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName);
+    exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas);
   };
 
 
