@@ -70,6 +70,7 @@ function Ventas() {
         !planNameUpper.includes("GRATIS") && 
         !planNameUpper.includes("INSTITUCIONAL") && 
         !planNameUpper.includes("CORTESIA") &&
+        !planNameUpper.includes("PROYECTO") &&
         planCost > 0
       ) {
         category = "RESIDENCIAL";
