@@ -500,10 +500,21 @@ REGLA DE PARÁMETROS:
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 
+REGLA DE EXCEL Y REPORTES:
+- El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
+- **Solo ofrece el reporte si el usuario lo pide explícitamente** (ej: "genérame un excel", "descarga el reporte", "pásame un archivo"). No lo ofrezcas por iniciativa propia.
+- Al ofrecer el Reporte Ejecutivo, explícale con detalle que incluye: 
+    1️⃣ **Dashboard Visual**: Con KPIs de Clientes, Ingresos y Ticket Promedio.
+    2️⃣ **Análisis Gráfico**: Distribución de estatus y el Top de Urbanismos.
+    3️⃣ **Detalle de Clientes**: Una hoja con la lista exacta de clientes y las columnas que él elija.
+- Si pide el **Excel de Operaciones** (técnico con IP/MAC): Explícale que ese archivo se descarga en la sección **Top Urbanismos**.
+- Si pide el **Excel de Planes**: Explícale que se descarga en la sección **Ventas**.
+
 REGLA DE HUMANIZACIÓN:
 - Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
 - Si eligieron suspendidos y no hay ciclo, haz la pregunta del ciclo 15 ó 30.
-- Finalmente pregunta por el periodo (hoy/ayer).`;
+- Finalmente pregunta por el periodo (hoy/ayer).
+- **No uses markdown exagerado**, mantén la elegancia.`;
 
 
     const recentHistory = history.slice(-5).map(msg => ({
@@ -1078,20 +1089,21 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
                 }
 
-                // Interceptor 5: Aceptación de Excel (Directo a Ejecutivo)
+                // Interceptor 5: Aceptación de Excel (Preguntar Columnas para Detalle)
                 if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
+                    const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, IP, MAC, Plan...";
                     return {
-                        text: `¡Dicho y hecho ${userName}! Estoy preparando tu **Reporte Ejecutivo**. Se descargará en un momento...`,
+                        text: `¡Dicho y hecho ${userName}! Para la pestaña de **Detalle**, ¿qué columnas deseas incluir? \n\n(Dime "Todas" para el reporte completo o menciona las que necesites).`,
                         isCard: false,
-                        action: 'download_excel_executive',
+                        contextType: 'clarify_excel_columns',
                         cardData: {
-                            dataset: lastBotMsg.cardData?.dataset || lastBotMsg.cardData?.savedDataset,
-                            filtersText: lastBotMsg.cardData?.filtersText || ["Selección previa"]
+                            savedDataset: lastBotMsg.cardData?.dataset || lastBotMsg.cardData?.savedDataset,
+                            savedFiltersText: lastBotMsg.cardData?.filtersText || ["Selección previa"]
                         }
                     };
                 }
 
-                // Interceptor 6: Seleccion de Columnas (Ya no se usa para flujo directo, pero lo dejamos por si acaso)
+                // Interceptor 6: Selección de Columnas (Ahora descarga el Ejecutivo con esas columnas)
                 if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
                     const reqCols = query.toLowerCase();
                     const availableColsMap = {
@@ -1101,15 +1113,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
                         "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
                         "estatus": "Estatus", "estado": "Estatus",
-                        "estado final": "Estado Final", "operacion": "Estado Final",
-                        "migrado": "Migrado", "tecnologia": "Migrado",
-                        "ciclo": "Ciclo", "fecha": "Fecha_Creación", "creado": "Fecha_Creación",
-                        "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
-                        "ip": "IP", "mac": "MAC",
                         "dias": "Días Hábiles", "tiempo": "Días Hábiles",
                         "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
                         "plan": "Plan", "paquete": "Plan", "renta": "Plan",
-                        "costo": "Costo", "precio": "Costo", "valor": "Costo"
+                        "costo": "Costo", "precio": "Costo", "valor": "Costo",
+                        "ip": "IP", "mac": "MAC", "ciclo": "Ciclo", "migrado": "Migrado",
+                        "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
+                        "fecha": "Fecha_Creación", "creado": "Fecha_Creación"
                     };
 
                     let matchedCols = [];
@@ -1131,15 +1141,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                     const { savedDataset, savedFiltersText } = lastBotMsg.cardData;
                     return {
-                        text: `¡Listo! He preparado tu Excel con las columnas: **${matchedCols.join(", ")}**.\n\n**Haz clic en el botón de abajo para descargarlo.**`,
-                        isCard: true,
-                        isDownload: false,
+                        text: `¡Excelente selección ${userName}! Generando tu **Reporte Ejecutivo** con las columnas elegidas en la pestaña de detalle...`,
+                        isCard: false,
+                        action: 'download_excel_executive',
                         cardData: {
-                            title: "Reporte Generado",
-                            color: "#27ae60",
+                            selectedColumns: matchedCols,
                             dataset: savedDataset,
-                            filtersText: savedFiltersText,
-                            selectedColumns: matchedCols
+                            filtersText: savedFiltersText
                         }
                     };
                 }
