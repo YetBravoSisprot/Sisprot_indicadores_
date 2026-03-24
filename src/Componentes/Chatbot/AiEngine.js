@@ -465,8 +465,10 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
 - TOTAL_CLIENTES: Conteo de clientes (Solo si tienes el Estatus Y el Periodo).
-- INGRESOS: Dinero proyectado (Solo si tienes el Estatus Y el Periodo).
-- AMBOS_METRICAS: Conteo + Ingresos (Solo si tienes el Estatus Y el Periodo).
+- INGRESOS: Dinero proyectado (Facturación de planes. Solo si tienes el Estatus Y el Periodo).
+- INGRESOS_BANCOS: Cobros reales registrados en bancos (BNC, Venezuela/BDV, Provincial, etc.). Se activa cuando piden "ingresos en el banco X", "cuanto cayó en BNC", "cobros de hoy".
+- AMBOS_METRICAS: Conteo + Facturación (Solo si tienes el Estatus Y el Periodo).
+- AMBIGUEDAD_INGRESOS: Se usa cuando el usuario pide "Ingresos" sin especificar si se refiere a la **Facturación Proyectada** (planes) o a la **Recaudación Real** (en bancos como BNC).
 - PLANES: Detalle por planes de internet.
 - BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
 - DATA_MAESTRA: Universo total de la base de datos.
@@ -501,6 +503,9 @@ REGLA DE PARÁMETROS:
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 - "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
+- "banco": BNC, Venezuela / BDV, Provincial, etc.
+- "metodo": Pago Móvil, Zelle, Transferencia, Efectivo.
+- "startDate" / "endDate": YYYY-MM-DD (Usa si piden fechas específicas o rangos). 
 
 REGLA DE EXCEL Y REPORTES:
 - El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
@@ -511,6 +516,10 @@ REGLA DE EXCEL Y REPORTES:
     3️⃣ **Detalle de Clientes**: Una hoja con la lista exacta de clientes y las columnas que él elija.
 - Si pide el **Excel de Operaciones** (técnico con IP/MAC): Explícale que ese archivo se descarga en la sección **Top Urbanismos**.
 - Si pide el **Excel de Planes**: Explícale que se descarga en la sección **Ventas**.
+
+REGLA DE DISTINCIÓN DE INGRESOS:
+- Si mencionan "BNC", "Venezuela", "Provincial", "Banco", "Zelle", "Cobros", "Recaudación" o "Pagos": Usa **INGRESOS_BANCOS**. (No preguntes estatus aquí).
+- Si mencionan "Facturación", "Ingresos de clientes", "Ingresos Mensuales": Usa **INGRESOS**. (Aquí sí preguntar estatus si falta).
 
 REGLA DE HUMANIZACIÓN:
 - Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
@@ -2013,6 +2022,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         `🔹 ¿O prefieres ver **Ambos** datos?`,
                     isCard: false,
                     contextType: 'clarify_metric',
+                    cardData: { 
+                        periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
+                        savedParameters: parameters 
+                    }
+                };
+            }
+
+            case 'AMBIGUEDAD_INGRESOS': {
+                return {
+                    text: `He detectado tu consulta sobre ingresos ${userName}. ¿A qué tipo de dato te refieres específicamente?\n\n` +
+                        `🔹 **Facturación Proyectada**: Suma de los planes (Activos/Suspendidos).\n` +
+                        `🔹 **Recaudación Real**: Cobros efectivos en los bancos (BNC, BDV, etc.).`,
+                    isCard: false,
+                    contextType: 'clarify_revenue_type', // Nuevo tipo para botones
                     cardData: { 
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
                         savedParameters: parameters 
