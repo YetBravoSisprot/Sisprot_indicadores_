@@ -5,6 +5,10 @@ const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US'
 const norm = (v) => (v == null ? "" : String(v).trim());
 
 export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "", selectedColumns = ["Todas"]) => {
+    if (!dataset || !Array.isArray(dataset)) {
+        console.error("Dataset invalido para reporte");
+        return;
+    }
     const workbook = new ExcelJS.Workbook();
     const hoy = new Date();
     const dateStr = hoy.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -13,7 +17,6 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     const dashSheet = workbook.addWorksheet("Dashboard Ejecutivo");
     
     // Configuración estética de la hoja
-    dashSheet.properties.defaultRowHeight = 20;
     dashSheet.getColumn('B').width = 40;
     dashSheet.getColumn('C').width = 20;
     dashSheet.getColumn('D').width = 25;
@@ -156,19 +159,28 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
 
     const topUrbs = Object.entries(urbCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
-    topUrbs.forEach((urb, i) => {
-        const rowNum = urbStart + 1 + i;
-        dashSheet.getCell(`B${rowNum}`).value = `${i + 1}. ${urb[0]}`;
-        dashSheet.getCell(`C${rowNum}`).value = urb[1];
-        dashSheet.getCell(`C${rowNum}`).alignment = { horizontal: 'center' };
-        
-        // Barra azul para sectores
-        const ratio = urb[1] / topUrbs[0][1];
-        const barCells = Math.max(1, Math.round(ratio * 4));
-        for (let col = 0; col < barCells; col++) {
-            dashSheet.getCell(rowNum, 4 + col).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '3498db' } };
-        }
-    });
+    if (topUrbs.length > 0) {
+        topUrbs.forEach((urb, i) => {
+            const rowNum = urbStart + 1 + i;
+            dashSheet.getCell(`B${rowNum}`).value = `${i + 1}. ${urb[0]}`;
+            dashSheet.getCell(`C${rowNum}`).value = urb[1];
+            dashSheet.getCell(`C${rowNum}`).alignment = { horizontal: 'center' };
+            
+            // Barra azul para sectores
+            const maxVal = topUrbs[0][1];
+            const ratio = maxVal > 0 ? urb[1] / maxVal : 0;
+            const barCells = Math.max(1, Math.round(ratio * 4));
+            for (let col = 0; col < barCells; col++) {
+                dashSheet.getCell(rowNum, 4 + col).fill = { 
+                    type: 'pattern', 
+                    pattern: 'solid', 
+                    fgColor: { argb: '3498db' } 
+                };
+            }
+        });
+    } else {
+        dashSheet.getCell(`B${urbStart + 1}`).value = "(Sin datos de urbanismos en la selección)";
+    }
 
     // --- NOTA EXPLICATIVA SOBRE LA DATA (FILA 35+) ---
     const noteStart = 34;
