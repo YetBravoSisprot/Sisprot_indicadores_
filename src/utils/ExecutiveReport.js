@@ -1,5 +1,6 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { mapCycleValue } from "./cycleHelper";
 
 const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const norm = (v) => (v == null ? "" : String(v).trim());
@@ -246,7 +247,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             address: norm(cliente.address_tax || cliente.address),
             sector_name: cliente.sector_name,
             migrado: cliente.migrate ? "si" : "No",
-            ciclo: norm(cliente.cycle),
+            ciclo: mapCycleValue(cliente.cycle),
             plan_name: cliente.plan?.name || "N/A",
             costo: parseFloat(cliente.plan?.cost || 0),
             ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
