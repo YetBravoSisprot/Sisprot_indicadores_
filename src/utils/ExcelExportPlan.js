@@ -3,77 +3,74 @@ import { saveAs } from "file-saver";
 
 export const exportPlanesToExcel = async (planesData) => {
     const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("Ingresos por Plan");
+    const sheet = workbook.addWorksheet("TABLA 2 - CLIENTES POR PLAN");
 
+    // Calcular totales para participación
+    const totalClientesGeneral = planesData.reduce((acc, p) => acc + p.count, 0);
+
+    // Definir columnas según la imagen 3
     sheet.columns = [
-        { header: "PLAN", key: "name", width: 40 },
-        { header: "COSTO UNITARIO ($)", key: "cost", width: 20 },
-        { header: "CLIENTES TOTALES", key: "count", width: 20 },
-        { header: "CLIENTES ACTIVOS", key: "activeCount", width: 20 },
-        { header: "INGRESO TOTAL ($)", key: "revenue", width: 20 },
-        { header: "CATEGORÍA", key: "category", width: 20 }
+        { header: "Plan", key: "name", width: 40 },
+        { header: "Precio", key: "cost", width: 15 },
+        { header: "Cantidad de clientes", key: "count", width: 20 },
+        { header: "% participación", key: "participation", width: 20 }
     ];
 
-    // Estilo cabecera
-    sheet.getRow(1).height = 25;
-    sheet.getRow(1).eachCell((cell) => {
-        cell.font = { bold: true, color: { argb: 'FFFFFF' }, size: 11 };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1e3a8a' } }; // Azul oscuro
-        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+    // Título de la tabla (opcional)
+    sheet.insertRow(1, ["TABLA 2 – CLIENTES POR PLAN"]);
+    sheet.mergeCells('A1:D1');
+    sheet.getRow(1).font = { bold: true, size: 12 };
+    sheet.getRow(1).height = 30;
+    sheet.getRow(1).alignment = { horizontal: 'left', vertical: 'middle' };
+
+    // Estilo de cabeceras (Fila 2)
+    sheet.getRow(2).height = 25;
+    sheet.getRow(2).eachCell((cell) => {
+        cell.font = { bold: true, color: { argb: '000000' }, size: 11 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF' } }; 
+        cell.alignment = { horizontal: 'left', vertical: 'middle' };
         cell.border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
+            bottom: { style: 'thin', color: { argb: '000000' } }
         };
     });
 
+    // Agregar datos
     planesData.forEach(plan => {
         const row = sheet.addRow({
             name: plan.name,
             cost: plan.cost,
             count: plan.count,
-            activeCount: plan.activeCount || 0,
-            revenue: plan.revenue,
-            category: plan.category
+            participation: plan.count / totalClientesGeneral
         });
 
         row.eachCell((cell) => {
+            cell.alignment = { horizontal: 'left', vertical: 'middle' };
             cell.border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' }
+                bottom: { style: 'thin', color: { argb: 'E2E8F0' } }
             };
-            cell.alignment = { vertical: 'middle' };
         });
     });
 
-    // Formato moneda
+    // Formato moneda y porcentaje
     sheet.getColumn('B').numFmt = '"$ "#,##0.00';
-    sheet.getColumn('E').numFmt = '"$ "#,##0.00';
-    
-    // Alineación central para conteos
-    sheet.getColumn('C').alignment = { horizontal: 'center', vertical: 'middle' };
-    sheet.getColumn('D').alignment = { horizontal: 'center', vertical: 'middle' };
+    sheet.getColumn('D').numFmt = '0.00%';
 
-    // Añadir fila de totales
-    const lastRow = sheet.rowCount + 1;
-    sheet.getCell(`A${lastRow}`).value = "TOTAL GENERAL";
-    sheet.getCell(`A${lastRow}`).font = { bold: true };
-    
-    const countCol = "C";
-    const activeCol = "D";
-    const revenueCol = "E";
-    
-    sheet.getCell(`${countCol}${lastRow}`).value = { formula: `SUM(${countCol}2:${countCol}${lastRow - 1})` };
-    sheet.getCell(`${activeCol}${lastRow}`).value = { formula: `SUM(${activeCol}2:${activeCol}${lastRow - 1})` };
-    sheet.getCell(`${revenueCol}${lastRow}`).value = { formula: `SUM(${revenueCol}2:${revenueCol}${lastRow - 1})` };
-    
-    sheet.getRow(lastRow).font = { bold: true };
-    sheet.getRow(lastRow).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'f1f5f9' } };
-    sheet.getCell(`${revenueCol}${lastRow}`).numFmt = '"$ "#,##0.00';
+    // Fila de TOTAL
+    const lastRowIndex = sheet.rowCount + 1;
+    const totalRow = sheet.addRow({
+        name: "TOTAL",
+        cost: null,
+        count: totalClientesGeneral,
+        participation: 1
+    });
+
+    totalRow.font = { bold: true };
+    totalRow.eachCell((cell) => {
+        cell.border = {
+            top: { style: 'medium', color: { argb: '000000' } }
+        };
+    });
 
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), `Reporte_Ingresos_por_Plan_${new Date().toISOString().split('T')[0]}.xlsx`);
+    saveAs(new Blob([buffer]), `TABLA_CLIENTES_POR_PLAN_${new Date().toISOString().split('T')[0]}.xlsx`);
 };
