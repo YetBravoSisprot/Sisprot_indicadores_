@@ -489,22 +489,21 @@ REGLA DE EXCLUSIVIDAD DE CLIENTES COMERCIALES:
 - Siempre que el usuario pregunte por cantidad de clientes o ingresos, el sistema DEBE filtrar automáticamente para excluir: Empleados, Gratuitos, Institucionales, Cortesía y Proyectos. 
 - A nadie le importa la data de esas categorías no comerciales en las consultas rápidas.
 
-REGLA DE FLUJO DE PREGUNTAS (ESTATUS Y TIEMPO):
-1. **Paso 1: Estatus**: Si el usuario pregunta "cuántos clientes hay" o "¿cuál es el ingreso?" sin especificar estatus, el bot DEBE preguntar: "Entendido, ¿deseas ver los clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?".
-2. **Paso 2: Periodo**: Una vez que el estatus está claro (ej: el usuario dice "Activos"), el bot DEBE preguntar: "¿Deseas la información de **Hoy** (datos actuales) o del cierre de **Ayer**?".
-3. **Paso 3: Respuesta**: Solo después de tener el Estatus y el Periodo clarificados (o si el usuario los dio todos juntos en la primera frase), se procede a entregar el dato.
-- **EXCEPCIÓN**: Si el usuario explícitamente pide la "Data Maestra" o "Universo Total", se entrega todo el consolidado sin preguntar estatus.
+REGLA DE FLUJO OBLIGATORIO:
+1. **Paso 1: Estatus**: Si falta el estatus ("activos", "suspendidos", etc.), pídelo.
+2. **Paso 2: Ciclo (SOLO PARA SUSPENDIDOS)**: Si el usuario eligió "Suspendido" y aún no dice qué ciclo, el bot DEBE preguntar: "¿Deseas ver los suspendidos del **Ciclo 15** o del **Ciclo 30**?".
+3. **Paso 3: Periodo**: Una vez aclarado lo anterior, pregunta si desean los datos de **Hoy** o de **Ayer**.
 
 REGLA DE PARÁMETROS:
-- "status": Solo puede ser "Activo", "Suspendido", "Pausado", "Cancelado" o "Por Instalar".
-- "periodo": Puede ser "hoy" o "ayer".
+- "status": Activo, Suspendido, Pausado, Cancelado.
+- "ciclo": "15" o "30".
+- "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 
 REGLA DE HUMANIZACIÓN:
 - Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
-- Evita saludos iniciales (Hola, etc.).
-- Si falta el estatus, pídelo amablemente.
-- Si falta el periodo (hoy/ayer), pídelo amablemente.`;
+- Si eligieron suspendidos y no hay ciclo, haz la pregunta del ciclo 15 ó 30.
+- Finalmente pregunta por el periodo (hoy/ayer).`;
 
 
     const recentHistory = history.slice(-5).map(msg => ({
@@ -1037,6 +1036,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
                 }
 
+                if (lastBotMsg.contextType === 'clarify_cycle' && lastBotMsg.cardData) {
+                    const reqCycle = query.includes("15") ? "15" : query.includes("30") ? "30" : null;
+                    if (reqCycle) {
+                        const { originalIntent, savedParameters } = lastBotMsg.cardData;
+                        intent = originalIntent;
+                        parameters = { ...savedParameters, ciclo: reqCycle };
+                        fromClarification = true;
+                    }
+                }
+
                 // Interceptor 3: Clarificación de urbanismo
                 if (lastBotMsg.contextType === 'clarify_urbanismo' && lastBotMsg.cardData) {
                     const matched = findBestUrbanismoMatch(query);
@@ -1345,6 +1354,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
+                if ((parameters?.status === "Suspendido" || normalizeText(String(parameters?.status)).includes("suspendido")) && !parameters?.ciclo && !fromClarification) {
+                     return {
+                        text: `Perfecto ${userName}, vamos con los **Suspendidos**. ¿Deseas ver los del **Ciclo 15** o del **Ciclo 30**?`,
+                        isCard: false,
+                        contextType: 'clarify_cycle',
+                        cardData: { originalIntent: intent, savedParameters: parameters }
+                    };
+                }
+
                 // 2. Clarificación de Periodo (Hoy vs Ayer)
                 // Si ya tenemos el estatus pero el usuario no ha especificado si "hoy" o "ayer" y no viene de una clarificación previa
                 if (!isDataMaestra && (parameters?.status || parameters?.nombre || parameters?.contrato) && !explicitlyHoy && !explicitlyAyer && !periodKnownFromHistory && !fromClarification) {
@@ -1459,7 +1477,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         }
 
                         return {
-                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
+                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')} | Solo Pyme y Residencial)\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
                                 periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -1553,6 +1571,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         text: `He detectado tu consulta sobre ingresos ${userName}. ¿Deseas ver el dinero proyectado para clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?`,
                         isCard: false,
                         contextType: 'clarify_status',
+                        cardData: { originalIntent: intent, savedParameters: parameters }
+                    };
+                }
+
+                if ((parameters?.status === "Suspendido" || normalizeText(String(parameters?.status)).includes("suspendido")) && !parameters?.ciclo && !fromClarification) {
+                     return {
+                        text: `Excelente ${userName}, vamos con los **Suspendidos**. ¿Deseas ver el dinero de los del **Ciclo 15** o del **Ciclo 30**?`,
+                        isCard: false,
+                        contextType: 'clarify_cycle',
                         cardData: { originalIntent: intent, savedParameters: parameters }
                     };
                 }
