@@ -395,17 +395,22 @@ function TopUrbanismo() {
     exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations", customFileName);
   };
 
-  const handleDownloadExcelExecutive = () => {
-    const filtroTextos = [...estadosSeleccionados];
-    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
-    if (urbanismosEspecificos.length > 0) {
-      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
-    }
-    const baseName = email ? email.split('@')[0] : 'Usuario';
-    const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
-    const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
+  const handleDownloadExcelExecutive = async () => {
+    try {
+      const filtroTextos = [...estadosSeleccionados];
+      const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+      if (urbanismosEspecificos.length > 0) {
+        filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+      }
+      const baseName = email ? email.split('@')[0] : 'Usuario';
+      const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+      const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
 
-    exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas);
+      await exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas);
+    } catch (err) {
+      console.error("Error al generar Reporte Ejecutivo:", err);
+      alert("No se pudo generar el Reporte Ejecutivo por un error. Por favor intenta de nuevo.");
+    }
   };
 
 
