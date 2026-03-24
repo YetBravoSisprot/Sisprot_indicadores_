@@ -280,7 +280,7 @@ const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "
 
 function TopUrbanismo() {
   const location = useLocation();
-  const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
+  const { showPasswordState, data, isLoading, error, email } = useContext(PasswordContext);
 
   const [TopUrb, setTopUrb] = useState([0, 3500]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Activo"]);
