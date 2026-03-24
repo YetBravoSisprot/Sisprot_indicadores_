@@ -754,7 +754,7 @@ function TopUrbanismo() {
             <div style={{ backgroundColor: '#eef2f5', padding: '15px', borderRadius: '8px', marginBottom: '20px', fontSize: '0.9rem', color: '#333', border: '1px solid #cce5ff', textAlign: 'left' }}>
               <p style={{ margin: '0 0 8px 0', color: '#004085' }}><strong>📌 Guía para exportar reporte en Excel:</strong></p>
               <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                <li style={{ marginBottom: '6px' }}>Selecciona el <strong>Estatus del Cliente</strong> (ej. Suspendidos) y el <strong>Ciclo</strong> para filtrar antes de descargar.</li>
+                <li style={{ marginBottom: '6px' }}>Personaliza tu reporte seleccionando el <strong>Estatus</strong>, el <strong>Ciclo</strong> y las <strong>Columnas específicas</strong> (ej. IP, MAC, Contrato) que desees incluir antes de descargar.</li>
               </ul>
             </div>
 
