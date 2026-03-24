@@ -131,23 +131,72 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     // AutoFilter
     mainSheet.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: mainSheet.columns.length } };
 
-    // Operations stats
+    // Conditional Formatting for status
+    const statIdx = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
+    if (statIdx > 0) {
+        const colLet = getColumnLetter(statIdx);
+        mainSheet.addConditionalFormatting({
+            ref: `${colLet}2:${colLet}${mainSheet.rowCount}`,
+            rules: [
+                { type: 'cellIs', operator: 'equal', formulae: ['"Activo"'], style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FF92D050' } } } },
+                { type: 'cellIs', operator: 'equal', formulae: ['"Suspendido"'], style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFFC000' } } } },
+                { type: 'cellIs', operator: 'equal', formulae: ['"Cancelado"'], style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb: 'FFFF0000' }, font: { color: { argb: 'FFFFFFFF' } } } } }
+            ]
+        });
+    }
+
     if (reportType === "operations") {
         const statsSheet = workbook.addWorksheet("Estadisticas");
         const estIdx = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
-        const cIdx = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
+        const costIdx = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
+        const migIdx = mainSheet.columns.findIndex(c => c.key === 'migrado') + 1;
+        const cicIdx = mainSheet.columns.findIndex(c => c.key === 'ciclo') + 1;
         
-        if (estIdx > 0 && cIdx > 0) {
+        if (estIdx > 0 && costIdx > 0) {
             const estLet = getColumnLetter(estIdx);
-            const costLet = getColumnLetter(cIdx);
+            const costLet = getColumnLetter(costIdx);
+            const migLet = getColumnLetter(migIdx > 0 ? migIdx : 1);
+            const cicLet = getColumnLetter(cicIdx > 0 ? cicIdx : 1);
             const mRef = `'${mainSheetName}'`;
             const last = mainSheet.rowCount;
 
-            ["Activo", "Suspendido", "Cancelado"].forEach((status, i) => {
-                const r = i + 2;
-                statsSheet.getRow(r).getCell(1).value = status;
-                statsSheet.getRow(r).getCell(2).value = { formula: `COUNTIF(${mRef}!$${estLet}$2:$${estLet}$${last}, A${r})`, result: 0 };
-                statsSheet.getRow(r).getCell(3).value = { formula: `SUMIF(${mRef}!$${estLet}$2:$${estLet}$${last}, A${r}, ${mRef}!$${costLet}$2:$${costLet}$${last})`, result: 0 };
+            // Header Stats
+            statsSheet.getRow(2).height = 20;
+            [2, 3, 4].forEach(c => {
+                const cell = statsSheet.getRow(2).getCell(c);
+                cell.value = ["ESTADO", "CANTIDAD", "IMPORTE"][c-2];
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+                cell.font = { color: { argb: 'FFFFFF' }, bold: true };
+                cell.alignment = { horizontal: 'center' };
+            });
+
+            const statuses = ["Activo", "Suspendido", "Cancelado", "Pausado", "Por Instalar"];
+            statuses.forEach((status, i) => {
+                const r = i + 3;
+                statsSheet.getRow(r).getCell(2).value = status;
+                statsSheet.getRow(r).getCell(3).value = { formula: `COUNTIF(${mRef}!$${estLet}$2:$${estLet}$${last}, B${r})`, result: 0 };
+                statsSheet.getRow(r).getCell(4).value = { formula: `SUMIF(${mRef}!$${estLet}$2:$${estLet}$${last}, B${r}, ${mRef}!$${costLet}$2:$${costLet}$${last})`, result: 0 };
+                statsSheet.getRow(r).getCell(4).numFmt = '"$ "#,##0.00';
+            });
+
+            // Summary Cards
+            statsSheet.getRow(12).getCell(2).value = "RECAUDADO:";
+            statsSheet.getRow(12).getCell(3).value = { formula: `SUMIF(${mRef}!$${estLet}$2:$${estLet}$${last}, "Activo", ${mRef}!$${costLet}$2:$${costLet}$${last})`, result: 0 };
+            statsSheet.getRow(13).getCell(2).value = "PENDIENTE:";
+            statsSheet.getRow(13).getCell(3).value = { formula: `SUMIF(${mRef}!$${estLet}$2:$${estLet}$${last}, "Suspendido", ${mRef}!$${costLet}$2:$${costLet}$${last})`, result: 0 };
+            statsSheet.getRow(14).getCell(2).value = "% RECUPERADO:";
+            statsSheet.getRow(14).getCell(3).value = { formula: `IFERROR(C12/(C12+C13), 0)`, result: 0 };
+            statsSheet.getRow(14).getCell(3).numFmt = '0.00%';
+
+            // Migración Table
+            statsSheet.getRow(2).getCell(6).value = "MIGRADO / NO MIGRADO";
+            statsSheet.getRow(2).getCell(7).value = "PENDIENTE";
+            statsSheet.getRow(2).getCell(8).value = "RECAUDADO";
+            ["si", "No"].forEach((mig, i) => {
+                const r = i + 3;
+                statsSheet.getRow(r).getCell(6).value = (mig === "si" ? "MIGRADOS" : "NO MIGRADOS");
+                statsSheet.getRow(r).getCell(7).value = { formula: `SUMIFS(${mRef}!$${costLet}$2:$${costLet}$${last}, ${mRef}!$${migLet}$2:$${migLet}$${last}, "${mig}", ${mRef}!$${estLet}$2:$${estLet}$${last}, "Suspendido")`, result: 0 };
+                statsSheet.getRow(r).getCell(8).value = { formula: `SUMIFS(${mRef}!$${costLet}$2:$${costLet}$${last}, ${mRef}!$${migLet}$2:$${migLet}$${last}, "${mig}", ${mRef}!$${estLet}$2:$${estLet}$${last}, "Activo")`, result: 0 };
             });
         }
     }
