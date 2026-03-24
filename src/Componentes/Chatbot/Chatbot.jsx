@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { PasswordContext } from '../../PasswordContext/PasswordContext';
 import { processQuery } from './AiEngine';
 import { exportToExcel } from '../../utils/ExcelExport';
+import { exportExecutiveReport } from '../../utils/ExecutiveReport';
 import './Chatbot.css';
 
 const Chatbot = () => {
@@ -168,8 +169,17 @@ const Chatbot = () => {
             const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname);
             setMessages(prev => [...prev, { sender: 'bot', ...aiResponse }]);
 
-            // Si la respuesta indica una descarga, la ejecutamos con el tipo detectado (General u Operaciones)
-            if (aiResponse.isDownload && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
+            // ── MANEJO DE DESCARGAS AUTOMÁTICAS (NUEVO) ──
+            if (aiResponse.action === 'download_excel_executive' && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
+                setTimeout(() => {
+                    exportExecutiveReport(
+                        aiResponse.cardData.dataset || aiResponse.cardData.savedDataset, 
+                        aiResponse.cardData.filtersText, 
+                        formattedName,
+                        aiResponse.cardData.selectedColumns || ["Todas"]
+                    );
+                }, 1000);
+            } else if (aiResponse.isDownload && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
                 const dataset = aiResponse.cardData.dataset || aiResponse.cardData.savedDataset;
                 const rType = aiResponse.cardData.reportType || (aiResponse.cardData.parameters?.reportType) || "general";
                 setTimeout(() => {
