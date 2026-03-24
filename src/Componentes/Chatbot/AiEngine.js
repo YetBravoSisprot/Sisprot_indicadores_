@@ -1106,6 +1106,22 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
                 }
 
+                // Interceptor: Clarificación de origen de ingresos (Proyectado vs Bancos)
+                if (lastBotMsg.contextType === 'clarify_revenue_type' && lastBotMsg.cardData) {
+                    const normQuery = query.toLowerCase();
+                    const { savedParameters } = lastBotMsg.cardData;
+
+                    if (normQuery.includes("banco") || normQuery.includes("recauda") || normQuery.includes("cobro") || normQuery.includes("real")) {
+                        intent = 'INGRESOS_BANCOS';
+                        parameters = savedParameters;
+                        fromClarification = true;
+                    } else if (normQuery.includes("factura") || normQuery.includes("proyecta") || normQuery.includes("plan")) {
+                        intent = 'INGRESOS';
+                        parameters = savedParameters;
+                        fromClarification = true;
+                    }
+                }
+
                 // Interceptor 5: Aceptación de Excel (Preguntar Columnas para Detalle)
                 if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
                     const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, IP, MAC, Plan...";
@@ -1271,6 +1287,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
             if ((!parameters.urbanismo || (Array.isArray(parameters.urbanismo) && parameters.urbanismo.length === 0)) && mentionedSectors.length > 0) {
                 parameters.urbanismo = mentionedSectors;
                 if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
+            }
+
+            // Fallback Periodo (Seguridad si la IA lo omite)
+            if (query.toLowerCase().includes("ayer") && !parameters.periodo && !parameters.startDate) {
+                parameters.periodo = "ayer";
+            } else if (query.toLowerCase().includes("hoy") && !parameters.periodo && !parameters.startDate) {
+                parameters.periodo = "hoy";
             }
 
             // Interceptor Data Source (Hoy vs Ayer)
@@ -2208,8 +2231,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 try {
                     const bankFilter = parameters?.banco || null;
                     const methodFilter = parameters?.metodo || null;
-                    const startDate = parameters?.startDate || null;
-                    const endDate = parameters?.endDate || null;
+                    let startDate = parameters?.startDate || null;
+                    let endDate = parameters?.endDate || null;
+
+                    // Si no traemos fecha específica pero sí un periodo relativo (Hoy/Ayer)
+                    if (!startDate && parameters?.periodo === 'ayer') {
+                        const d = new Date();
+                        d.setDate(d.getDate() - 1);
+                        startDate = d.toLocaleDateString('en-CA');
+                        endDate = startDate;
+                    } else if (!startDate && parameters?.periodo === 'hoy') {
+                        startDate = new Date().toLocaleDateString('en-CA');
+                        endDate = startDate;
+                    }
 
                     const { payments, startDate: sDate, endDate: eDate } = await fetchBankPayments(bankFilter, methodFilter, startDate, endDate);
 
