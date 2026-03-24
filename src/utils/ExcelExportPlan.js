@@ -107,5 +107,5 @@ export const exportPlanesToExcel = async (planesData) => {
     sheet.getCell(`E${lastRowIndex}`).numFmt = '0.00%'; // Sincronizado para mostrar 100% correctamente
 
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), `REPORTE_CLIENTES_ESTILO_PLATAFORMAS_${new Date().toISOString().split('T')[0]}.xlsx`);
+    saveAs(new Blob([buffer]), `Reporte de ingresos de planes.xlsx`);
 };
