@@ -250,28 +250,30 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         });
 
     // Añadir fila de TOTAL al final del reporte
-    const lastRow = mainSheet.rowCount + 1;
-    const costoColIndex = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
-    const contratoColIndex = mainSheet.columns.findIndex(c => c.key === 'contrato') + 1;
+    const rowCount = mainSheet.rowCount;
+    if (rowCount > 1) { // Header + at least one data row
+        const lastRow = rowCount + 1;
+        const costoColIndex = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
+        const contratoColIndex = mainSheet.columns.findIndex(c => c.key === 'contrato') + 1;
 
-    if (costoColIndex > 0) {
-        const totalLabelCol = contratoColIndex > 0 ? contratoColIndex : (costoColIndex > 1 ? costoColIndex - 1 : 1);
-        const totalLabelLetter = getColumnLetter(totalLabelCol);
-        const costLetter = getColumnLetter(costoColIndex);
+        if (costoColIndex > 0) {
+            const totalLabelCol = contratoColIndex > 0 ? contratoColIndex : (costoColIndex > 1 ? costoColIndex - 1 : 1);
+            
+            const labelCell = mainSheet.getRow(lastRow).getCell(totalLabelCol);
+            labelCell.value = "TOTAL";
+            labelCell.font = { bold: true };
+            labelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+            labelCell.alignment = { horizontal: 'center' };
+            labelCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-        const labelCell = mainSheet.getCell(`${totalLabelLetter}${lastRow}`);
-        labelCell.value = "TOTAL";
-        labelCell.font = { bold: true };
-        labelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
-        labelCell.alignment = { horizontal: 'center' };
-        labelCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
-
-        const totalCell = mainSheet.getCell(`${costLetter}${lastRow}`);
-        totalCell.value = { formula: `SUM(${costLetter}2:${costLetter}${lastRow - 1})`, result: 0 };
-        totalCell.font = { bold: true };
-        totalCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
-        totalCell.numFmt = '"$ "#,##0.00';
-        totalCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+            const totalCell = mainSheet.getRow(lastRow).getCell(costoColIndex);
+            const costLetter = getColumnLetter(costoColIndex);
+            totalCell.value = { formula: `SUM(${costLetter}2:${costLetter}${lastRow - 1})`, result: 0 };
+            totalCell.font = { bold: true };
+            totalCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9D9D9' } };
+            totalCell.numFmt = '"$ "#,##0.00';
+            totalCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+        }
     }
 
     // --- 3. HOJA ESTADISTICA (Solo para reporte operaciones) ---
@@ -298,7 +300,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getCell('C2').value = "CANTIDAD";
         statsSheet.getCell('D2').value = "IMPORTE TOTAL";
         
-        [statsSheet.getCell('B2'), statsSheet.getCell('C2'), statsSheet.getCell('D2')].forEach(c => {
+        [statsSheet.getRow(2).getCell(2), statsSheet.getRow(2).getCell(3), statsSheet.getRow(2).getCell(4)].forEach(c => {
             c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
             c.font = { color: { argb: 'FFFFFF' }, bold: true };
             c.border = { top: {style:'thin'}, bottom: {style:'thin'} };
@@ -317,13 +319,13 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             
             // Cantidad
             statsSheet.getCell(`C${rowNum}`).value = { 
-                formula: `COUNTIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum})`, 
+                formula: `COUNTIF('${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum})`, 
                 result: 0 
             };
             
             // Monto $
             statsSheet.getCell(`D${rowNum}`).value = { 
-                formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum}, ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
+                formula: `SUMIF('${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, B${rowNum}, '${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, 
                 result: 0 
             };
 
@@ -362,7 +364,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.mergeCells('F6:G6');
         statsSheet.getCell('E6').value = "RECAUDADO:";
         statsSheet.getCell('E6').font = { bold: true };
-        statsSheet.getCell('F6').value = { formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('F6').value = { formula: `SUMIF('${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo", '${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
         statsSheet.getCell('F6').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E2EFDA' } }; // Verde muy claro
         statsSheet.getCell('F6').font = { bold: true, color: { argb: '375623' }, size: 12 };
         statsSheet.getCell('F6').numFmt = currencyFormat;
@@ -373,7 +375,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.mergeCells('F8:G8');
         statsSheet.getCell('E8').value = "PENDIENTE:";
         statsSheet.getCell('E8').font = { bold: true };
-        statsSheet.getCell('F8').value = { formula: `SUMIF(${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Suspendido", ${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
+        statsSheet.getCell('F8').value = { formula: `SUMIF('${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Suspendido", '${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef})`, result: 0 };
         statsSheet.getCell('F8').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2CC' } }; // Amarillo muy claro
         statsSheet.getCell('F8').font = { bold: true, color: { argb: '7F6000' }, size: 12 };
         statsSheet.getCell('F8').numFmt = currencyFormat;
@@ -445,12 +447,12 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             
             // Formula Pendiente
             statsSheet.getCell(`J${currentRow}`).value = { 
-                formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
+                formula: `SUMIFS('${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, '${mainSheetName}'!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
                 result: 0 
             };
             // Formula Recaudado
             statsSheet.getCell(`K${currentRow}`).value = { 
-                formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo")`, 
+                formula: `SUMIFS('${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, '${mainSheetName}'!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo")`, 
                 result: 0 
             };
             
@@ -467,11 +469,11 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 statsSheet.getCell(`I${currentRow}`).value = `   • Ciclo ${cycle}`; 
                 
                 statsSheet.getCell(`J${currentRow}`).value = { 
-                    formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
+                    formula: `SUMIFS('${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, '${mainSheetName}'!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", '${mainSheetName}'!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Activo", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "<>Cancelado")`, 
                     result: 0 
                 };
                 statsSheet.getCell(`K${currentRow}`).value = { 
-                    formula: `SUMIFS(${mainSheetName}!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, ${mainSheetName}!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", ${mainSheetName}!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", ${mainSheetName}!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo")`, 
+                    formula: `SUMIFS('${mainSheetName}'!$${costColLetter}$2:$${costColLetter}$${lastRowRef}, '${mainSheetName}'!$${migradoColLetter}$2:$${migradoColLetter}$${lastRowRef}, "${migradoStatus}", '${mainSheetName}'!$${cicloColLetter}$2:$${cicloColLetter}$${lastRowRef}, "${cycle}", '${mainSheetName}'!$${estadoColLetter}$2:$${estadoColLetter}$${lastRowRef}, "Activo")`, 
                     result: 0 
                 };
 
