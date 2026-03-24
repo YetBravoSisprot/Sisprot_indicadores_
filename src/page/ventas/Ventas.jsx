@@ -89,8 +89,8 @@ function Ventas() {
         };
       }
       
-      acc[planName].count += 1;
       if (isActive) {
+        acc[planName].count += 1;
         acc[planName].activeCount += 1;
         acc[planName].revenue += planCost;
       }
