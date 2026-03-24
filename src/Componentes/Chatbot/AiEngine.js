@@ -462,6 +462,8 @@ Actualmente el usuario se encuentra físicamente en la sección: "${context ? co
 
 DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
+
+FECHA ACTUAL DEL SISTEMA (USA ESTO PARA CALCULAR 'HOY' O 'AYER'): ${todayDate}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
 - TOTAL_CLIENTES: Conteo de clientes (Solo si tienes el Estatus Y el Periodo).
