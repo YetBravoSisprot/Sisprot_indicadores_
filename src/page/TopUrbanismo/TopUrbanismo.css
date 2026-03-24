@@ -304,15 +304,7 @@
   min-width: 180px;
 }
 
-.buttonDescargar.general {
-  background: linear-gradient(135deg, #1e3fa9, #1d4b8f);
-  box-shadow: 0 6px 16px rgba(30, 63, 169, 0.3);
-}
 
-.buttonDescargar.general:hover {
-  background: #1d4b8f;
-  filter: brightness(1.2);
-}
 
 .marginbitton {
   margin-bottom: 10px;
@@ -543,8 +535,7 @@ option:checked {
 
   /* Agencias, Urbanismos y Columnas en fila completa */
   #sectoresSelect,
-  #urbanismosSelect,
-  #columnasSelect {
+  #urbanismosSelect {
     grid-column: 1 / -1;
     height: 80px;
   }
@@ -601,80 +592,5 @@ option:checked {
     grid-template-columns: 1fr;
   }
 
-  #sectoresSelect,
-  #urbanismosSelect,
-  #columnasSelect {
-    grid-column: auto;
-  }
-}
 
-/* ================= PANEL DE CHECKBOXES (COLUMNAS) ================= */
-.columnas-checkbox-panel {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
-}
-
-.checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
-  margin-top: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-.checkbox-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #fff;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.checkbox-item:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.checkbox-item.active {
-  background: rgba(30, 144, 255, 0.3);
-  border: 1px solid rgba(30, 144, 255, 0.5);
-}
-
-.checkbox-item input {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* Scrollbar para el grid */
-.checkbox-grid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.checkbox-grid::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 6px;
-}
-
-/* ================= BOTON EXPORTANDO ================= */
-.buttonDescargar.exporting {
-  opacity: 0.7;
-  cursor: not-allowed;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
 }
