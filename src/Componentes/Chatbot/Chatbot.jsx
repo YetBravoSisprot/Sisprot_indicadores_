@@ -381,6 +381,12 @@ const Chatbot = () => {
                                             <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Ayer")}>Ayer</button>
                                         </>
                                     )}
+                                    {msg.contextType === 'clarify_revenue_type' && (
+                                        <>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Facturación proyectada")}>Proyectado (Planes)</button>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Ingresos bancos")}>Recaudación Real (Bancos)</button>
+                                        </>
+                                    )}
                                 </div>
                             )}
                         </div>
