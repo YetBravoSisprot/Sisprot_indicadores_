@@ -4,7 +4,7 @@ import { saveAs } from "file-saver";
 const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const norm = (v) => (v == null ? "" : String(v).trim());
 
-export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "") => {
+export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "", selectedColumns = ["Todas"]) => {
     const workbook = new ExcelJS.Workbook();
     const hoy = new Date();
     const dateStr = hoy.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -183,49 +183,73 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     noteCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F9F9F9' } };
     noteCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
-    // --- 2. HOJA: DETALLE DE CLIENTES (LA TABLA) ---
+    // --- 2. HOJA: DETALLE DE CLIENTES (LA TABLA DINÁMICA) ---
     const detailSheet = workbook.addWorksheet("Detalle de Clientes");
     
-    const columns = [
-        { header: "CONTRATO", key: "id", width: 12 },
-        { header: "CLIENTE", key: "client_name", width: 35 },
-        { header: "CI/RIF", key: "client_identification", width: 15 },
-        { header: "TELÉFONO", key: "client_mobile", width: 15 },
-        { header: "ESTATUS", key: "status_name", width: 15 },
-        { header: "SECTOR", key: "sector_name", width: 25 },
-        { header: "PLAN", key: "plan_name", width: 25 },
-        { header: "COSTO", key: "costo", width: 12 },
-        { header: "IP", key: "ip", width: 15 },
-        { header: "MAC", key: "mac", width: 20 },
+    const allDetailColumns = [
+        { header: "ESTADO INICIAL", key: "status_name", width: 18, ui: "Estatus" },
+        { header: "CONTRATO", key: "id", width: 12, ui: "Contrato" },
+        { header: "CLIENTE", key: "client_name", width: 35, ui: "Cliente" },
+        { header: "CI/RIF", key: "client_identification", width: 15, ui: "Cedula" },
+        { header: "TELÉFONO", key: "client_mobile", width: 15, ui: "Teléfono" },
+        { header: "DIRECCIÓN", key: "address", width: 35, ui: "Dirección" },
+        { header: "SECTOR", key: "sector_name", width: 25, ui: "Urbanismo" },
+        { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
+        { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
+        { header: "PLAN", key: "plan_name", width: 25, ui: "Plan" },
+        { header: "COSTO", key: "costo", width: 14, ui: "Costo" },
+        { header: "IP", key: "ip", width: 15, ui: "IP" },
+        { header: "MAC", key: "mac", width: 20, ui: "MAC" },
+        { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
     ];
 
-    detailSheet.columns = columns;
+    const isAll = selectedColumns.includes("Todas");
+    const finalDetailColumns = isAll 
+        ? allDetailColumns 
+        : allDetailColumns.filter(c => selectedColumns.includes(c.ui) || selectedColumns.includes(c.header));
+
+    detailSheet.columns = [{ header: "N°", key: "num", width: 5 }, ...finalDetailColumns];
 
     // Estilo cabecera detalle
+    detailSheet.getRow(1).height = 25;
     detailSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
     detailSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
-    detailSheet.getRow(1).alignment = { horizontal: 'center' };
+    detailSheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
 
-    dataset.forEach(cliente => {
-        detailSheet.addRow({
+    dataset.forEach((cliente, idx) => {
+        const rowData = {
+            num: idx + 1,
+            status_name: cliente.status_name,
             id: cliente.id,
             client_name: cliente.client_name,
             client_identification: cliente.client_identification,
             client_mobile: cliente.client_mobile,
-            status_name: cliente.status_name,
+            address: norm(cliente.address_tax || cliente.address),
             sector_name: cliente.sector_name,
+            migrado: cliente.migrate ? "si" : "No",
+            ciclo: norm(cliente.cycle),
             plan_name: cliente.plan?.name || "N/A",
             costo: parseFloat(cliente.plan?.cost || 0),
             ip: cliente.ip_name || "N/A",
-            mac: cliente.mac_address || "N/A"
-        });
+            mac: cliente.mac_address || "N/A",
+            fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
+            tipo_cliente: cliente.client_type_name
+        };
+        detailSheet.addRow(rowData);
     });
 
-    // Formato moneda en detalle
-    detailSheet.getColumn('costo').numFmt = '"$ "#,##0.00';
+    // Formato moneda si existe la columna costo
+    const costoCol = detailSheet.columns.find(c => c.key === 'costo');
+    if (costoCol) {
+        detailSheet.getColumn(costoCol.id).numFmt = '"$ "#,##0.00';
+    }
 
     // Auto-filtros en detalle
-    detailSheet.autoFilter = `A1:J${dataset.length + 1}`;
+    detailSheet.autoFilter = {
+        from: { row: 1, column: 1 },
+        to: { row: 1, column: detailSheet.columns.length }
+    };
 
     // --- FINALIZACIÓN ---
     const buffer = await workbook.xlsx.writeBuffer();
