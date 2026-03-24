@@ -5,10 +5,8 @@ export const exportPlanesToExcel = async (planesData) => {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("CLIENTES POR PLAN");
 
-    // Calcular total de clientes para el % de participación
     const totalClientesGeneral = planesData.reduce((acc, p) => acc + p.count, 0);
 
-    // Ordenar: PYMEs primero (menor a mayor precio), luego Residenciales (menor a mayor precio)
     const sortedPlanes = [...planesData].sort((a, b) => {
         if (a.category === b.category) {
             return a.cost - b.cost;
@@ -16,35 +14,44 @@ export const exportPlanesToExcel = async (planesData) => {
         return a.category === "PYME" ? -1 : 1;
     });
 
-    // Añadir Título Específico al inicio
+    const BLUE_THEME = 'FF0070C0'; // Azul profesional
+    const LIGHT_BLUE_BORDER = 'FFBFDBFE';
+
+    // Título
     sheet.insertRow(1, ["REPORTE DE CLIENTES PYMES Y RESIDENCIALES ACTIVOS"]);
     sheet.mergeCells('A1:E1');
-    sheet.getRow(1).font = { bold: true, size: 12 };
-    sheet.getRow(1).height = 30;
+    sheet.getRow(1).font = { bold: true, size: 14, color: { argb: BLUE_THEME } };
+    sheet.getRow(1).height = 35;
     sheet.getRow(1).alignment = { horizontal: 'left', vertical: 'middle' };
 
-    // Definir columnas (A partir de la Fila 3 para dejar espacio al título)
-    sheet.getRow(3).values = ["Plan", "Precio ($)", "Cantidad de clientes", "Monto total por plan ($)", "% participación"];
+    // Cabeceras (Fila 3)
+    const headerRow = sheet.getRow(3);
+    headerRow.values = ["Plan", "Precio ($)", "Cantidad de clientes", "Monto total por plan ($)", "% participación"];
     sheet.columns = [
         { key: "name", width: 40 },
         { key: "cost", width: 15 },
-        { key: "count", width: 20 },
+        { key: "count", width: 22 },
         { key: "revenue", width: 25 },
         { key: "participation", width: 20 }
     ];
 
-    // Estilo de cabeceras (Fila 3)
-    sheet.getRow(3).height = 25;
-    sheet.getRow(3).eachCell((cell) => {
-        cell.font = { bold: true, color: { argb: '000000' }, size: 11 };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF' } }; 
+    headerRow.height = 25;
+    headerRow.eachCell((cell) => {
+        cell.font = { bold: true, color: { argb: '000000' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F8FAFC' } };
         cell.alignment = { horizontal: 'left', vertical: 'middle' };
         cell.border = {
-            bottom: { style: 'thin', color: { argb: '000000' } }
+            top: { style: 'thin', color: { argb: BLUE_THEME } },
+            bottom: { style: 'medium', color: { argb: BLUE_THEME } },
+            left: { style: 'thin', color: { argb: LIGHT_BLUE_BORDER } },
+            right: { style: 'thin', color: { argb: LIGHT_BLUE_BORDER } }
         };
     });
 
-    // Agregar datos
+    // Filtros
+    sheet.autoFilter = 'A3:E3';
+
+    // Datos
     sortedPlanes.forEach(plan => {
         const row = sheet.addRow({
             name: plan.name,
@@ -54,42 +61,51 @@ export const exportPlanesToExcel = async (planesData) => {
             participation: plan.count / totalClientesGeneral
         });
 
-        row.eachCell((cell) => {
+        row.eachCell((cell, colNumber) => {
             cell.alignment = { horizontal: 'left', vertical: 'middle' };
             cell.border = {
-                bottom: { style: 'thin', color: { argb: 'E2E8F0' } }
+                bottom: { style: 'thin', color: { argb: LIGHT_BLUE_BORDER } },
+                left: { style: 'thin', color: { argb: LIGHT_BLUE_BORDER } },
+                right: { style: 'thin', color: { argb: LIGHT_BLUE_BORDER } }
             };
+            
+            // Si es la columna de ingresos, poner en negrita (como en la imagen)
+            if (colNumber === 4) {
+                cell.font = { bold: true };
+            }
         });
     });
 
-    // Formato moneda y porcentaje
+    // Formatos
     sheet.getColumn('B').numFmt = '"$ "#,##0.00';
     sheet.getColumn('D').numFmt = '"$ "#,##0.00';
     sheet.getColumn('E').numFmt = '0.00%';
 
-    // Fila de TOTAL
+    // Fila TOTAL
     const lastRowIndex = sheet.rowCount + 1;
     const totalRevenueGeneral = planesData.reduce((acc, p) => acc + p.revenue, 0);
 
     const totalRow = sheet.addRow({
-        name: "TOTAL",
+        name: "Total mensual",
         cost: null,
         count: totalClientesGeneral,
         revenue: totalRevenueGeneral,
         participation: 1
     });
 
+    totalRow.height = 25;
     totalRow.font = { bold: true };
     totalRow.eachCell((cell) => {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F1F5F9' } };
         cell.border = {
-            top: { style: 'medium', color: { argb: '000000' } }
+            top: { style: 'medium', color: { argb: BLUE_THEME } },
+            bottom: { style: 'medium', color: { argb: BLUE_THEME } }
         };
     });
     
-    // Formato moneda para el total recaudado y porcentaje corregido
     sheet.getCell(`D${lastRowIndex}`).numFmt = '"$ "#,##0.00';
-    sheet.getCell(`E${lastRowIndex}`).numFmt = '0.00%'; // Quitamos el literal '100.00%' que causaba error
+    sheet.getCell(`E${lastRowIndex}`).numFmt = '0.00%'; // Sincronizado para mostrar 100% correctamente
 
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), `REPORTE_CLIENTES_PLAN_ACTIVOS_${new Date().toISOString().split('T')[0]}.xlsx`);
+    saveAs(new Blob([buffer]), `REPORTE_CLIENTES_ESTILO_PLATAFORMAS_${new Date().toISOString().split('T')[0]}.xlsx`);
 };
