@@ -1078,31 +1078,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
                 }
 
-                // Interceptor 5: Aceptación de Excel
+                // Interceptor 5: Aceptación de Excel (Directo a Ejecutivo)
                 if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
-                    intent = 'GENERAR_EXCEL';
-                    // Persistencia de datos previos: Priorizamos dataset si ya existe filtrado
-                    if (lastBotMsg.cardData?.dataset) {
-                        parameters = lastBotMsg.cardData.parameters || {};
-                        // Inyectamos el dataset directamente para saltar getFilteredDataset si ya lo tenemos
-                        fromClarification = true;
-
-                        const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, Migrado, Ciclo, Cédula, IP, MAC, Fecha, Días, Tipo, Plan";
-                        return {
-                            text: `¡Entendido! Vamos a preparar el archivo con la información que acabamos de ver. **¿Qué columnas deseas incluir?** \n\nOpciones:\n_${colsList}_\n\n(Dime "Todas" para el reporte completo).`,
-                            isCard: false,
-                            contextType: 'clarify_excel_columns',
-                            cardData: {
-                                savedDataset: lastBotMsg.cardData.dataset,
-                                savedFiltersText: lastBotMsg.cardData.filtersText || ["Selección previa"]
-                            }
-                        };
-                    }
-                    parameters = lastBotMsg.cardData?.parameters || {};
-                    fromClarification = true;
+                    return {
+                        text: `¡Dicho y hecho ${userName}! Estoy preparando tu **Reporte Ejecutivo**. Se descargará en un momento...`,
+                        isCard: false,
+                        action: 'download_excel_executive',
+                        cardData: {
+                            dataset: lastBotMsg.cardData?.dataset || lastBotMsg.cardData?.savedDataset,
+                            filtersText: lastBotMsg.cardData?.filtersText || ["Selección previa"]
+                        }
+                    };
                 }
 
-                // Interceptor 6: Seleccion de Columnas para Excel
+                // Interceptor 6: Seleccion de Columnas (Ya no se usa para flujo directo, pero lo dejamos por si acaso)
                 if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
                     const reqCols = query.toLowerCase();
                     const availableColsMap = {
