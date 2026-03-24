@@ -522,9 +522,9 @@ REGLA DE PARÁMETROS:
 - "startDate" / "endDate": YYYY-MM-DD (Usa si piden fechas específicas o rangos). 
 
 REGLA DE EXCEL Y REPORTES:
-- El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
+- El bot **SOLO** genera el **Reporte Ejecutivo** (layout visual con gráficos). No genera el excel técnico de operaciones ni el de planes.
 - **Solo ofrece el reporte si el usuario lo pide explícitamente** (ej: "genérame un excel", "descarga el reporte", "pásame un archivo"). No lo ofrezcas por iniciativa propia.
-- Al ofrecer el Reporte Ejecutivo, explícale con detalle que incluye: 
+- Al ofrecer el "Reporte Ejecutivo", llámalo así siempre y explícale con detalle que incluye: 
     1️⃣ **Dashboard Visual**: Con KPIs de Clientes, Ingresos y Ticket Promedio.
     2️⃣ **Análisis Gráfico**: Distribución de estatus y el Top de Urbanismos.
     3️⃣ **Detalle de Clientes**: Una hoja con la lista exacta de clientes y las columnas que él elija.
@@ -2217,14 +2217,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 let responseText = "";
                 if (reportType === 'operations') {
-                    responseText = `¡Entendido **${userName}**! He preparado el **Excel de Operaciones** con los datos${currentSource} para: **${filtersMsg}**.`;
+                    responseText = `¡Entendido **${userName}**! He preparado el **Reporte Ejecutivo** (con enfoque en operaciones) con los datos${currentSource} para: **${filtersMsg}**.`;
                 } else {
-                    responseText = `¡Entendido **${userName}**! He preparado el **Excel General** con los datos${currentSource} de: **${filtersMsg}**. \n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
+                    responseText = `¡Entendido **${userName}**! He preparado el **Reporte Ejecutivo** con los datos${currentSource} de: **${filtersMsg}**. \n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
                 }
 
                 return {
                     text: responseText,
                     isCard: true,
+                    isDownload: true, // Auto-trigger download
                     contextType: 'excel_ready',
                     cardData: {
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -2234,7 +2235,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         parameters: { ...targetParams, reportType },
                         savedDataset: filtered,
                         filtersText: appliedTexts,
-                        reportType: reportType
+                        reportType: reportType === 'general' ? 'executive' : reportType // Favor Executive by default
                     }
                 };
             }
