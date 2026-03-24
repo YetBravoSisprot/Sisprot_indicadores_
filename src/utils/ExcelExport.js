@@ -115,19 +115,21 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "sector", "migrado", "ciclo", "plan", "costo"
+        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
     ];
 
+    const isAll = selectedColumns.includes("Todas");
+
     if (reportType === "operations") {
-        // En el de operaciones, usamos SIEMPRE el orden estándar y agregamos las de seguimiento. NO seleccionables.
-        const base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
-            .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
-        
+        let base;
+        if (isAll) {
+            base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
+                .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
+        } else {
+            base = allPossibleColumns.filter(c => selectedColumns.includes(c.ui));
+        }
         finalColumns = [...finalColumns, ...base, ...followUpColumns];
     } else {
-        // En el general, SI respetamos las columnas seleccionadas por el usuario
-        const isAll = selectedColumns.includes("Todas");
-        
         if (isAll) {
             const base = allPossibleColumns.filter(c => standardOrder.includes(c.key))
                 .sort((a, b) => standardOrder.indexOf(a.key) - standardOrder.indexOf(b.key));
