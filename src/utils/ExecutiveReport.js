@@ -5,13 +5,14 @@ const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US'
 const norm = (v) => (v == null ? "" : String(v).trim());
 
 export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "", selectedColumns = ["Todas"]) => {
-    if (!dataset || !Array.isArray(dataset)) {
-        console.error("Dataset invalido para reporte");
-        return;
-    }
-    const workbook = new ExcelJS.Workbook();
-    const hoy = new Date();
-    const dateStr = hoy.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    try {
+        if (!dataset || !Array.isArray(dataset)) {
+            console.error("Dataset invalido para reporte");
+            return;
+        }
+        const workbook = new ExcelJS.Workbook();
+        const hoy = new Date();
+        const dateStr = hoy.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
     // --- 1. HOJA: RESUMEN EJECUTIVO (VISUAL/DASHBOARD) ---
     const dashSheet = workbook.addWorksheet("Dashboard Ejecutivo");
@@ -28,8 +29,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     dashSheet.mergeCells('B2:G3');
     const titleCell = dashSheet.getCell('B2');
     titleCell.value = "REPORTE EJECUTIVO DE GESTIÓN COMERCIAL";
-    titleCell.font = { name: 'Calibri', size: 18, bold: true, color: { argb: 'FFFFFF' } };
-    titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1F4E78' } };
+    titleCell.font = { name: 'Calibri', size: 18, bold: true, color: { argb: 'FFFFFFFF' } };
+    titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E78' } };
     titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
 
     dashSheet.mergeCells('B4:G4');
@@ -43,7 +44,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     dashSheet.getCell('B6').font = { bold: true };
     dashSheet.mergeCells('B7:G7');
     dashSheet.getCell('B7').value = appliedFiltersText.join(" | ") || "Sin filtros específicos";
-    dashSheet.getCell('B7').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F2F2F2' } };
+    dashSheet.getCell('B7').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F2F2' } };
 
     // --- CÁLCULOS DE DATA (Comercial: Pyme/Residencial) ---
     const pymeClientes = dataset.filter(c => (c.client_subdivision || c.client_type_name || '').toUpperCase().includes("PYME"));
@@ -60,16 +61,16 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     dashSheet.mergeCells(`B${kpi1Start}:C${kpi1Start + 2}`);
     const kpi1 = dashSheet.getCell(`B${kpi1Start}`);
     kpi1.value = `CLIENTES TOTALES\n${totalCount}`;
-    kpi1.font = { size: 14, bold: true, color: { argb: 'FFFFFF' } };
-    kpi1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '34495e' } };
+    kpi1.font = { size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+    kpi1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF34495E' } };
     kpi1.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
 
     // Recuadro 2: Ingreso Total
     dashSheet.mergeCells(`D${kpi1Start}:E${kpi1Start + 2}`);
     const kpi2 = dashSheet.getCell(`D${kpi1Start}`);
     kpi2.value = `INGRESO PROYECTADO\n${formatCurrency(totalIngreso)}`;
-    kpi2.font = { size: 14, bold: true, color: { argb: 'FFFFFF' } };
-    kpi2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '27ae60' } };
+    kpi2.font = { size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+    kpi2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF27AE60' } };
     kpi2.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
 
     // Recuadro 3: Ticket Promedio
@@ -77,8 +78,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     const kpi3 = dashSheet.getCell(`F${kpi1Start}`);
     const avg = totalCount > 0 ? (totalIngreso / totalCount) : 0;
     kpi3.value = `TICKET PROMEDIO\n${formatCurrency(avg)}`;
-    kpi3.font = { size: 14, bold: true, color: { argb: 'FFFFFF' } };
-    kpi3.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '2980b9' } };
+    kpi3.font = { size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
+    kpi3.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2980B9' } };
     kpi3.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
 
     // --- DESGLOSE POR TIPO (TABLA INTERNA) ---
@@ -90,8 +91,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     headers.forEach((h, i) => {
         const cell = dashSheet.getCell(tableStart + 1, 2 + i);
         cell.value = h;
-        cell.font = { bold: true, color: { argb: 'FFFFFF' } };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF000000' } };
         cell.alignment = { horizontal: 'center' };
     });
 
@@ -136,10 +137,10 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         
         for (let col = 0; col < barCells; col++) {
             const cell = dashSheet.getCell(curRow, 4 + col);
-            let color = 'bdc3c7';
-            if (status === 'Activo') color = '2ecc71';
-            else if (status === 'Suspendido') color = 'f1c40f';
-            else if (status === 'Cancelado') color = 'e74c3c';
+            let color = 'FFBDC3C7';
+            if (status === 'Activo') color = 'FF2ECC71';
+            else if (status === 'Suspendido') color = 'FFF1C40F';
+            else if (status === 'Cancelado') color = 'FFE74C3C';
 
             cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: color } };
         }
@@ -174,7 +175,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
                 dashSheet.getCell(rowNum, 4 + col).fill = { 
                     type: 'pattern', 
                     pattern: 'solid', 
-                    fgColor: { argb: '3498db' } 
+                    fgColor: { argb: 'FF3498DB' } 
                 };
             }
         });
@@ -190,10 +191,15 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
                      "1. Este reporte se obtiene filtrando el Universo Maestro de SisProt según los criterios seleccionados en el Chatbot.\n" +
                      "2. Se aplican reglas comerciales automáticas: Solo se incluyen clientes 'Pyme' y 'Residencial'.\n" +
                      "3. El Ingreso Proyectado es la sumatoria de costos de planes contratados y NO representa dinero en caja real al cierre de caja.";
-    noteCell.font = { italic: true, size: 9, color: { argb: '444444' } };
+    noteCell.font = { italic: true, size: 9, color: { argb: 'FF444444' } };
     noteCell.alignment = { vertical: 'top', wrapText: true };
-    noteCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F9F9F9' } };
-    noteCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
+    noteCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9F9F9' } };
+    noteCell.border = { 
+        top: {style:'thin', color: {argb: 'FF000000'}}, 
+        left: {style:'thin', color: {argb: 'FF000000'}}, 
+        bottom: {style:'thin', color: {argb: 'FF000000'}}, 
+        right: {style:'thin', color: {argb: 'FF000000'}} 
+    };
 
     // --- 2. HOJA: DETALLE DE CLIENTES (LA TABLA DINÁMICA) ---
     const detailSheet = workbook.addWorksheet("Detalle de Clientes");
@@ -225,8 +231,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
 
     // Estilo cabecera detalle
     detailSheet.getRow(1).height = 25;
-    detailSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
-    detailSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '000000' } };
+    detailSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
+    detailSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF000000' } };
     detailSheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
 
     dataset.forEach((cliente, idx) => {
@@ -267,4 +273,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     const buffer = await workbook.xlsx.writeBuffer();
     const fileName = `Reporte_Ejecutivo_Sisprot_${hoy.toISOString().split('T')[0]}.xlsx`;
     saveAs(new Blob([buffer]), fileName);
+  } catch (err) {
+    console.error("CRITICAL ERROR IN EXCEL GEN:", err);
+    alert("Error crítico al generar el Excel Ejecutivo: " + err.message);
+  }
 };
