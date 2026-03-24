@@ -308,7 +308,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         const tableEstados = ["Activo", "Suspendido", "Cancelado", "Pausado", "Por Instalar"];
         const estadoFinalIdx = mainSheet.columns.findIndex(c => c.key === 'estado_final') + 1;
         const estadoColLetter = getColumnLetter(estadoFinalIdx > 0 ? estadoFinalIdx : 1);
-        const costColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'costo') + 1);
+        const costColIdx = mainSheet.columns.findIndex(c => c.key === 'costo') + 1;
+        const costColLetter = getColumnLetter(costColIdx > 0 ? costColIdx : 1);
 
         tableEstados.forEach((est, i) => {
             const rowNum = i + 3;
@@ -409,8 +410,11 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getCell('G18').border = { bottom: {style:'medium'} };
 
         // --- TABLA DERECHA: MIGRADO / NO MIGRADO ---
-        const migradoColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'migrado') + 1);
-        const cicloColLetter = String.fromCharCode(64 + mainSheet.columns.findIndex(c => c.key === 'ciclo') + 1);
+        const migradoIdx = mainSheet.columns.findIndex(c => c.key === 'migrado') + 1;
+        const migradoColLetter = getColumnLetter(migradoIdx > 0 ? migradoIdx : 1);
+        
+        const cicloIdx = mainSheet.columns.findIndex(c => c.key === 'ciclo') + 1;
+        const cicloColLetter = getColumnLetter(cicloIdx > 0 ? cicloIdx : 1);
         
         statsSheet.getCell('I2').value = "MIGRADO / NO MIGRADO";
         statsSheet.getCell('J2').value = "Total PENDIENTE";
