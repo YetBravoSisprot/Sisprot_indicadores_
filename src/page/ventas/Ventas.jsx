@@ -8,6 +8,7 @@ import LogingForm from "../../Componentes/LogingForm";
 import { fetchMigrationData } from "../../services/migrationService";
 import { fixSpellingErrors } from "../../utils/textUtils";
 import * as XLSX from "xlsx";
+import { exportPlanesToExcel } from "../../utils/ExcelExportPlan";
 import "./ventas.css";
 
 const PLAN_MAPPING = {
@@ -57,11 +58,13 @@ function Ventas() {
       // Limpiar prefijos ruidosos
       planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
       const planCost = parseFloat(curr.plan?.cost) || 0;
+      const isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
       
       if (!acc[planName]) {
         acc[planName] = {
           name: planName,
           count: 0,
+          activeCount: 0,
           cost: planCost,
           revenue: 0,
           category: planName.toUpperCase().includes("PYME") ? "PYME" : "RESIDENCIAL"
@@ -69,14 +72,15 @@ function Ventas() {
       }
       
       acc[planName].count += 1;
-      acc[planName].revenue += planCost;
+      if (isActive) {
+        acc[planName].activeCount += 1;
+        acc[planName].revenue += planCost;
+      }
       return acc;
     }, {});
 
-
-    const topPlanes = Object.values(planesData)
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
+    const allPlanes = Object.values(planesData).sort((a, b) => b.count - a.count);
+    const topPlanes = allPlanes.slice(0, 5);
 
     const total = clientes.length;
     const nuevos = clientes.filter(c => c.status_name === "Activo").length;
@@ -93,7 +97,7 @@ function Ventas() {
       return acc;
     }, { pymeRevenue: 0, pymeCount: 0, residencialRevenue: 0, residencialCount: 0, totalRevenue: 0 });
 
-    return { topPlanes, nuevos, total, ...categoryStats };
+    return { topPlanes, allPlanes, nuevos, total, ...categoryStats };
   }, [data]);
 
 
@@ -176,7 +180,16 @@ function Ventas() {
                 <div className="kpi-shared-row">
                   {/* Widget: Distribución de Planes */}
                   <div className="ventas-card glass kpi-card">
-                    <h3>💰 Ingresos por Plan</h3>
+                    <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
+                      <h3 style={{ margin: 0, border: 'none', padding: 0 }}>💰 Ingresos por Plan</h3>
+                      <button 
+                        className="button" 
+                        onClick={() => exportPlanesToExcel(stats.allPlanes)}
+                        style={{ padding: '6px 14px', fontSize: '0.8rem', borderRadius: '20px' }}
+                      >
+                        📊 Excel
+                      </button>
+                    </div>
                     <div className="plans-scroll-container">
                       <div className="plans-list">
                         {stats.topPlanes.map((plan, index) => (
