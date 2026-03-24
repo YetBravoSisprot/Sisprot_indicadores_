@@ -16,18 +16,26 @@ export const exportPlanesToExcel = async (planesData) => {
         return a.category === "PYME" ? -1 : 1;
     });
 
-    // Definir columnas (Añadiendo "Monto total por plan")
+    // Añadir Título Específico al inicio
+    sheet.insertRow(1, ["REPORTE DE CLIENTES PYMES Y RESIDENCIALES ACTIVOS"]);
+    sheet.mergeCells('A1:E1');
+    sheet.getRow(1).font = { bold: true, size: 12 };
+    sheet.getRow(1).height = 30;
+    sheet.getRow(1).alignment = { horizontal: 'left', vertical: 'middle' };
+
+    // Definir columnas (A partir de la Fila 3 para dejar espacio al título)
+    sheet.getRow(3).values = ["Plan", "Precio ($)", "Cantidad de clientes", "Monto total por plan ($)", "% participación"];
     sheet.columns = [
-        { header: "Plan", key: "name", width: 40 },
-        { header: "Precio ($)", key: "cost", width: 15 },
-        { header: "Cantidad de clientes", key: "count", width: 20 },
-        { header: "Monto total por plan ($)", key: "revenue", width: 25 },
-        { header: "% participación", key: "participation", width: 20 }
+        { key: "name", width: 40 },
+        { key: "cost", width: 15 },
+        { key: "count", width: 20 },
+        { key: "revenue", width: 25 },
+        { key: "participation", width: 20 }
     ];
 
-    // Estilo de cabeceras (Fila 1)
-    sheet.getRow(1).height = 25;
-    sheet.getRow(1).eachCell((cell) => {
+    // Estilo de cabeceras (Fila 3)
+    sheet.getRow(3).height = 25;
+    sheet.getRow(3).eachCell((cell) => {
         cell.font = { bold: true, color: { argb: '000000' }, size: 11 };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF' } }; 
         cell.alignment = { horizontal: 'left', vertical: 'middle' };
@@ -78,10 +86,10 @@ export const exportPlanesToExcel = async (planesData) => {
         };
     });
     
-    // Formato moneda para el total recaudado
+    // Formato moneda para el total recaudado y porcentaje corregido
     sheet.getCell(`D${lastRowIndex}`).numFmt = '"$ "#,##0.00';
-    sheet.getCell(`E${lastRowIndex}`).numFmt = '100.00%';
+    sheet.getCell(`E${lastRowIndex}`).numFmt = '0.00%'; // Quitamos el literal '100.00%' que causaba error
 
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), `REPORTE_CLIENTES_POR_PLAN_${new Date().toISOString().split('T')[0]}.xlsx`);
+    saveAs(new Blob([buffer]), `REPORTE_CLIENTES_PLAN_ACTIVOS_${new Date().toISOString().split('T')[0]}.xlsx`);
 };
