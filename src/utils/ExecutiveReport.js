@@ -2,6 +2,7 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 
 const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const norm = (v) => (v == null ? "" : String(v).trim());
 
 export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "") => {
     const workbook = new ExcelJS.Workbook();
@@ -108,9 +109,9 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         dashSheet.getRow(rowNum).alignment = { horizontal: 'center' };
     });
 
-    // --- GRÁFICO DE BARRAS "ARTESANAL" (Usando celdas y rellenos) ---
+    // --- GRÁFICO DE BARRAS "ARTESANAL" (Usando celdas y rellenos) (FILA 20-25) ---
     // Distribución por Estatus
-    const statusStart = 20;
+    const statusStart = 19;
     dashSheet.getCell(`B${statusStart}`).value = "DISTRIBUCIÓN POR ESTATUS (Visualización)";
     dashSheet.getCell(`B${statusStart}`).font = { bold: true, size: 12 };
 
@@ -126,13 +127,13 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         dashSheet.getCell(`C${curRow}`).value = count;
         
         // Simular barra
-        const maxBarWidth = 4; // Celdas D, E, F, G
+        const maxBarWidth = 4;
         const ratio = count / dataset.length;
         const barCells = Math.max(1, Math.round(ratio * 4));
         
         for (let col = 0; col < barCells; col++) {
             const cell = dashSheet.getCell(curRow, 4 + col);
-            let color = 'bdc3c7'; // Gris default
+            let color = 'bdc3c7';
             if (status === 'Activo') color = '2ecc71';
             else if (status === 'Suspendido') color = 'f1c40f';
             else if (status === 'Cancelado') color = 'e74c3c';
@@ -141,6 +142,46 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         }
         curRow++;
     });
+
+    // --- TOP URBANISMOS (FILA 28+) ---
+    const urbStart = 27;
+    dashSheet.getCell(`B${urbStart}`).value = "TOP 5 SECTORES POR CLIENTES";
+    dashSheet.getCell(`B${urbStart}`).font = { bold: true, size: 12 };
+
+    const urbCounts = dataset.reduce((acc, c) => {
+        const u = norm(c.sector_name || c._displaySector);
+        if (u) acc[u] = (acc[u] || 0) + 1;
+        return acc;
+    }, {});
+
+    const topUrbs = Object.entries(urbCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+    topUrbs.forEach((urb, i) => {
+        const rowNum = urbStart + 1 + i;
+        dashSheet.getCell(`B${rowNum}`).value = `${i + 1}. ${urb[0]}`;
+        dashSheet.getCell(`C${rowNum}`).value = urb[1];
+        dashSheet.getCell(`C${rowNum}`).alignment = { horizontal: 'center' };
+        
+        // Barra azul para sectores
+        const ratio = urb[1] / topUrbs[0][1];
+        const barCells = Math.max(1, Math.round(ratio * 4));
+        for (let col = 0; col < barCells; col++) {
+            dashSheet.getCell(rowNum, 4 + col).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '3498db' } };
+        }
+    });
+
+    // --- NOTA EXPLICATIVA SOBRE LA DATA (FILA 35+) ---
+    const noteStart = 34;
+    dashSheet.mergeCells(`B${noteStart}:G${noteStart + 3}`);
+    const noteCell = dashSheet.getCell(`B${noteStart}`);
+    noteCell.value = "NOTA METODOLÓGICA Y FUENTE DE DATOS:\n" + 
+                     "1. Este reporte se obtiene filtrando el Universo Maestro de SisProt según los criterios seleccionados en el Chatbot.\n" +
+                     "2. Se aplican reglas comerciales automáticas: Solo se incluyen clientes 'Pyme' y 'Residencial'.\n" +
+                     "3. El Ingreso Proyectado es la sumatoria de costos de planes contratados y NO representa dinero en caja real al cierre de caja.";
+    noteCell.font = { italic: true, size: 9, color: { argb: '444444' } };
+    noteCell.alignment = { vertical: 'top', wrapText: true };
+    noteCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F9F9F9' } };
+    noteCell.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} };
 
     // --- 2. HOJA: DETALLE DE CLIENTES (LA TABLA) ---
     const detailSheet = workbook.addWorksheet("Detalle de Clientes");
