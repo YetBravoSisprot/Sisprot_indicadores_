@@ -15,7 +15,8 @@ const extractNumber = (text) => {
 };
 
 const formatCurrency = (value) => {
-    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(value);
+    const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
+    return `${formatted} US$`;
 };
 
 const mapCycleValue = (val) => {
@@ -499,6 +500,7 @@ REGLA DE PARÁMETROS:
 - "ciclo": "15" o "30".
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
+- "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
 
 REGLA DE EXCEL Y REPORTES:
 - El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
@@ -620,7 +622,7 @@ const getPlanesResponse = (filtroTxt, clientes) => {
         const cleanName = p.name.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
         return {
             label: cleanName,
-            value: `${formatCurrency(p.revenue)}|(${p.count} cl. x $${p.cost})`,
+            value: `${formatCurrency(p.revenue)}|(${p.count} cl. x ${p.cost} US$)`,
             color: p.category === "PYME" ? "#9b59b6" : "#3498db"
         };
     });
@@ -819,16 +821,16 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             if (!tipoCliente) tipoCliente = "OTROS";
 
             const rawClientType = normalizeText(tipoCliente);
-            // Si el requerimiento es "residencial" o similar, buscamos coincidencia parcial
+            // Robustez: "pyme" debe marchar "pymes" y "residencial" debe marchar "residenciales"
             return normalizedReqs.some(req => {
                 let r = req;
-                if (r.includes('residencial')) r = 'residencial';
-                if (r.includes('pyme')) r = 'pyme';
+                if (r.indexOf('residencial') !== -1) r = 'residencial';
+                else if (r.indexOf('pyme') !== -1) r = 'pyme';
                 return rawClientType.includes(r);
             });
         });
 
-        appliedTexts.push(`Tipo: ${tipoParams.join(" y ")}`);
+        appliedTexts.push(`Tipo: ${tipoParams.map(t => t.toUpperCase()).join(" y ")}`);
     }
 
     // 6. Migrado
@@ -1398,7 +1400,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                         if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
                             const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" y ") : parameters.status.charAt(0).toUpperCase() + parameters.status.slice(1)) : "Clientes";
-                            const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                            const formatCurrencyLoc = (val) => {
+                                const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val || 0);
+                                return `${formatted} US$`;
+                            };
 
                             const statsByType = tipoParams.map(t => {
                                 const subDataset = filteredClientes.filter(c => {
@@ -1473,8 +1478,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             };
                         }
 
+                        const hasSpecificType = parameters?.tipo || appliedFiltersText.some(t => t.includes("Tipo:"));
+                        const finalAppliedLabel = hasSpecificType ? appliedFiltersText.join(', ') : `${appliedFiltersText.join(', ')} | Pyme y Residencial`;
+
                         return {
-                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${appliedFiltersText.join(', ')} | Solo Pyme y Residencial)\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
+                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
                                 periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -1591,119 +1599,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     };
                 }
 
-                // 2. Ciclo
-                if (parameters?.ciclo) {
-                    const cicloReq = String(parameters.ciclo);
-                    filteredClientes = filteredClientes.filter(c => mapCycleValue(c.cycle) === cicloReq);
-                    appliedFiltersText.push(`Ciclo: ${cicloReq} `);
-                }
-
-                // 3. Filtrar por Agencia (Prioridad si el usuario dice "agencia de X")
-                if (parameters?.agencia) {
-                    let ageReq = normalizeText(parameters.agencia);
-                    // Limpiamos palabras extra
-                    ageReq = ageReq.replace("agencia ", "").replace("nodo ", "").trim();
-
-                    // Identificar el Nodo correcto basado en la palabra clave
-                    let nodoBuscado = "";
-                    if (ageReq.includes("turmero")) nodoBuscado = "NODO TURMERO";
-                    else if (ageReq.includes("macaro") || ageReq.includes("mácaro")) nodoBuscado = "NODO MACARO";
-                    else if (ageReq.includes("paya")) nodoBuscado = "NODO PAYA";
-
-                    filteredClientes = filteredClientes.filter(c => {
-                        // 1. Intentar match por el dato en duro si existe
-                        const p1 = normalizeText(c.agency_name || '').includes(ageReq) || normalizeText(c.client_agency || '').includes(ageReq);
-                        // 2. Intentar match cruzando el sector con el mapa de agencias (Igual que hace TopUrbanismo)
-                        let p2 = false;
-                        if (c.sector_name && sectorAgenciaMap[c.sector_name]) {
-                            const mapUrb = normalizeText(sectorAgenciaMap[c.sector_name]);
-                            p2 = nodoBuscado ? sectorAgenciaMap[c.sector_name] === nodoBuscado : new RegExp(`(^|\\b |\\s)${ageReq} (\\b |\\s | $)`, 'i').test(mapUrb);
-                        }
-                        return p1 || p2;
-                    });
-
-                    // Asegurar etiqueta clara en la respuesta
-                    appliedFiltersText.push(`Agencia: ${nodoBuscado ? nodoBuscado.replace('NODO ', '') : parameters.agencia} `);
-
-                    // Removido temporalmente el bloqueo de similitud para permitir Agencia Paya + Paya Abajo
-                }
-
-                // 4. Filtrar por Urbanismo (Solo si no fue sobrescrito por la validación de Agencia)
-                if (parameters?.urbanismo) {
-                    const matchedSector = findBestUrbanismoMatch(parameters.urbanismo);
-                    if (Array.isArray(matchedSector)) {
-                        return {
-                            text: `He encontrado varios sectores para ingresos. ¿A cuál te refieres?\n\n` +
-                                matchedSector.map(s => `- **${s}**`).join('\n') +
-                                `\n\nPor favor, confírmame el nombre completo.`,
-                            isCard: false,
-                            contextType: 'clarify_urbanismo',
-                            cardData: { originalIntent: intent, savedParameters: parameters }
-                        };
-                    }
-
-                    if (matchedSector) {
-                        filteredClientes = filteredClientes.filter(c => c.sector_name === matchedSector);
-                        appliedFiltersText.push(`Urbanismo: ${matchedSector} `);
-                    } else {
-                        // NOVEDAD: Búsqueda difusa con niveles de confianza
-                        const result = getFuzzyUrbanismoSuggestion(parameters.urbanismo);
-
-                        if (result.match && result.score >= 0.8) {
-                            // NIVEL 1: ALTA CONFIANZA -> Auto-corrección humana proactiva
-                            const autoCorrection = result.match;
-                            filteredClientes = filteredClientes.filter(c => c.sector_name === autoCorrection);
-                            appliedFiltersText.push(`Urbanismo: ${autoCorrection} `);
-                        } else if (result.match && result.score >= 0.6) {
-                            // NIVEL 2: CONFIANZA MEDIA -> Sugerencia "Did you mean?"
-                            return {
-                                text: `No encontré el sector "${parameters.urbanismo}". ¿Quizás quisiste decir **"${result.match}"**?\n\nPor favor, verifica el nombre e intenta de nuevo.`,
-                                isCard: false
-                            };
-                        } else {
-                            // FALLBACK SEGURO: BAJA CONFIANZA -> Abortar en vez de buscar amplio
-                            registerUnansweredQuery(query, userName, currentPage);
-                            return {
-                                text: `Disculpa, pero no encuentro ningún urbanismo o sector llamado "${parameters.urbanismo}" en mis registros. ¿Podrías indicarme el nombre exacto o verificar si está bien escrito?`,
-                                isCard: false
-                            };
-                        }
-                    }
-                }
-
-                // 5. Filtrar por Tipo (Pyme, Residencial, etc.)
-                if (parameters?.tipo) {
-                    const extractTipo = (subdivision) => {
-                        if (!subdivision) return null;
-                        const partes = subdivision.split("_");
-                        if (partes.length >= 2 && partes[1]) return partes[1].toUpperCase();
-                        return null;
-                    };
-
-                    const tipoReq = normalizeText(parameters.tipo);
-                    filteredClientes = filteredClientes.filter(c => {
-                        let tipoCliente = null;
-                        if (c.client_subdivision) tipoCliente = extractTipo(c.client_subdivision);
-                        if (!tipoCliente && c.client_type_name) tipoCliente = c.client_type_name.trim().toUpperCase();
-                        if (!tipoCliente) tipoCliente = "OTROS";
-
-                        return normalizeText(tipoCliente).includes(tipoReq);
-                    });
-                    appliedFiltersText.push(`Tipo: ${parameters.tipo} `);
-                }
-
-                // 6. Filtrar por Migrado
-                if (parameters?.migrado) {
-                    const migradoReq = normalizeText(parameters.migrado);
-                    if (migradoReq.includes("no migrado")) {
-                        filteredClientes = filteredClientes.filter(c => !c.migrate);
-                        appliedFiltersText.push(`Categoría: No migrados`);
-                    } else if (migradoReq.includes("migrado")) {
-                        filteredClientes = filteredClientes.filter(c => c.migrate);
-                        appliedFiltersText.push(`Categoría: Migrados`);
-                    }
-                }
-
+                // Los filtros de Ciclo, Agencia, Urbanismo, Tipo y Migrado ya vienen de getFilteredDataset arriba.
                 const ingresosTotales = filteredClientes.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
                 const clientesCount = filteredClientes.length;
 
@@ -1844,7 +1740,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 subtitle: `${cliente.sector_name} | #${cliente.id}`,
                                 stats: [
                                     { label: "Estado", value: cliente.status_name },
-                                    { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
+                                    { label: "Plan", value: `${cliente.plan?.name} (${cliente.plan?.cost} US$)` },
                                     { label: "Teléfono", value: cliente.client_mobile || "N/A" },
                                     { label: "Ciclo", value: mapCycleValue(cliente.cycle) },
                                     { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
@@ -2035,7 +1931,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             subtitle: `${rawDataTarget.sector_name} | #${rawDataTarget.id}`,
                             stats: [
                                 { label: "Estado", value: rawDataTarget.status_name },
-                                { label: "Plan", value: `${rawDataTarget.plan?.name} ($${rawDataTarget.plan?.cost})` },
+                                { label: "Plan", value: `${rawDataTarget.plan?.name} (${rawDataTarget.plan?.cost} US$)` },
                                 { label: "Teléfono", value: rawDataTarget.client_mobile || "N/A" },
                                 { label: "Ciclo", value: mapCycleValue(rawDataTarget.cycle) },
                                 { label: "IP/MAC", value: `${rawDataTarget.service_detail?.ip || "N/A"} / ${rawDataTarget.service_detail?.mac || "N/A"}` },
