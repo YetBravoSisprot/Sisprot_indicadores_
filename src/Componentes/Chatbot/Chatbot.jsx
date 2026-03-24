@@ -150,11 +150,13 @@ const Chatbot = () => {
 
     if (!isAuthenticated) return null;
 
-    const handleSendMessage = async (e) => {
-        e.preventDefault();
-        if (!inputValue.trim()) return;
+    const handleSendMessage = async (e, directValue = null) => {
+        if (e) e.preventDefault();
+        
+        const messageToProcess = directValue !== null ? directValue : inputValue.trim();
+        if (!messageToProcess) return;
 
-        const userMsg = inputValue.trim();
+        const userMsg = messageToProcess;
         const currentMessages = [...messages, { sender: 'user', text: userMsg, isCard: false }];
 
         setMessages(currentMessages);
@@ -352,6 +354,32 @@ const Chatbot = () => {
                                                 📥 Descargar Excel
                                             </button>
                                         </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Acciones Rápidas (Botones) */}
+                            {msg.sender === 'bot' && msg.contextType && (
+                                <div className="chat-quick-actions">
+                                    {msg.contextType === 'clarify_status' && (
+                                        <>
+                                            <button className="quick-action-btn status-activo" onClick={() => handleSendMessage(null, "Activos")}>Activos</button>
+                                            <button className="quick-action-btn status-suspendido" onClick={() => handleSendMessage(null, "Suspendidos")}>Suspendidos</button>
+                                            <button className="quick-action-btn status-pausado" onClick={() => handleSendMessage(null, "Pausados")}>Pausados</button>
+                                            <button className="quick-action-btn status-cancelado" onClick={() => handleSendMessage(null, "Cancelados")}>Cancelados</button>
+                                        </>
+                                    )}
+                                    {msg.contextType === 'clarify_cycle' && (
+                                        <>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Ciclo 15")}>Ciclo 15</button>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Ciclo 30")}>Ciclo 30</button>
+                                        </>
+                                    )}
+                                    {msg.contextType === 'clarify_data_source' && (
+                                        <>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Hoy")}>Hoy</button>
+                                            <button className="quick-action-btn" onClick={() => handleSendMessage(null, "Ayer")}>Ayer</button>
+                                        </>
                                     )}
                                 </div>
                             )}
