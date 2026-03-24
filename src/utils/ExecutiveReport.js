@@ -249,8 +249,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             ciclo: norm(cliente.cycle),
             plan_name: cliente.plan?.name || "N/A",
             costo: parseFloat(cliente.plan?.cost || 0),
-            ip: cliente.ip_name || "N/A",
-            mac: cliente.mac_address || "N/A",
+            ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
+            mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
             fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
             tipo_cliente: cliente.client_type_name
         };
@@ -258,9 +258,12 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     });
 
     // Formato moneda si existe la columna costo
-    const costoCol = detailSheet.columns.find(c => c.key === 'costo');
-    if (costoCol) {
-        detailSheet.getColumn(costoCol.id).numFmt = '"$ "#,##0.00';
+    if (detailSheet.columns) {
+        detailSheet.columns.forEach(col => {
+            if (col && col.key === 'costo') {
+                col.numFmt = '"$ "#,##0.00';
+            }
+        });
     }
 
     // Auto-filtros en detalle
