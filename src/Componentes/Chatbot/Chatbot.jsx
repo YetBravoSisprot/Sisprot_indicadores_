@@ -339,13 +339,7 @@ const Chatbot = () => {
                                                 className="card-download-btn operations"
                                                 onClick={() => exportToExcel(msg.cardData.dataset || msg.cardData.savedDataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "operations")}
                                             >
-                                                📥 Excel Operaciones
-                                            </button>
-                                            <button
-                                                className="card-download-btn general"
-                                                onClick={() => exportToExcel(msg.cardData.dataset || msg.cardData.savedDataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "general")}
-                                            >
-                                                📥 Excel General
+                                                📥 Descargar Excel
                                             </button>
                                         </div>
                                     )}
