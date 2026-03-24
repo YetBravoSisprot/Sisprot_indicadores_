@@ -9,6 +9,7 @@ import "./TopUrbanismo.css";
 import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
 import { exportToExcel } from "../../utils/ExcelExport";
+import { exportExecutiveReport } from "../../utils/ExecutiveReport";
 import { mapCycleValue, getCycleLabel } from "../../utils/cycleHelper";
 
 // ===================== HELPERS =====================
@@ -394,6 +395,19 @@ function TopUrbanismo() {
     exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations", customFileName);
   };
 
+  const handleDownloadExcelExecutive = () => {
+    const filtroTextos = [...estadosSeleccionados];
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Urbanismos: ${urbanismosEspecificos.join(", ")}`);
+    }
+    const baseName = email ? email.split('@')[0] : 'Usuario';
+    const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+    const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
+
+    exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName);
+  };
+
 
 
   const extraerTipoDeSubdivision = useCallback((subdivision) => {
@@ -751,16 +765,24 @@ function TopUrbanismo() {
                 : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
             </button>
 
-            <div style={{ backgroundColor: '#eef2f5', padding: '15px', borderRadius: '8px', marginBottom: '20px', fontSize: '0.9rem', color: '#333', border: '1px solid #cce5ff', textAlign: 'left' }}>
-              <p style={{ margin: '0 0 8px 0', color: '#004085' }}><strong>📌 Guía para exportar reporte en Excel:</strong></p>
-              <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                <li style={{ marginBottom: '6px' }}>Personaliza tu reporte seleccionando el <strong>Estatus</strong>, el <strong>Ciclo</strong> y las <strong>Columnas específicas</strong> (ej. IP, MAC, Contrato) que desees incluir antes de descargar.</li>
+            <div style={{ backgroundColor: '#fdfcfe', padding: '20px', borderRadius: '12px', marginBottom: '25px', fontSize: '0.95rem', color: '#2c3e50', border: '1px solid #e1e8ed', textAlign: 'left', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+              <p style={{ margin: '0 0 12px 0', color: '#1f4e78', fontSize: '1.1rem' }}><strong>📊 Guía de Reportes Inteligentes:</strong></p>
+              <ul style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Reporte de Operaciones:</strong> Ideal para auditoría técnica. Te permite elegir <strong>Columnas específicas</strong> (como IP o MAC) para el análisis manual.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros sin necesidad de seleccionar columnas.
+                </li>
               </ul>
             </div>
 
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '15px 0' }}>
-               <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones} style={{ width: 'auto', minWidth: '240px' }}>
-                📥 Descargar Excel Operaciones
+            <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center', margin: '15px 0' }}>
+               <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#34495e' }}>
+                📂 Descargar Excel Operaciones
+              </button>
+              <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
+                📈 Descargar Reporte Ejecutivo
               </button>
             </div>
 
