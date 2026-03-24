@@ -967,11 +967,49 @@
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* Scrollbar para las tablas */
-.chat-table-container::-webkit-scrollbar {
-    height: 4px;
+/* Quick Actions (Botones de Respuesta Rápida) */
+.chat-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    width: 100%;
+    animation: slideUpFade 0.4s ease forwards;
 }
-.chat-table-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
+
+.quick-action-btn {
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: #e2e8f0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quick-action-btn:hover {
+    background: rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.2);
+    color: white;
+}
+
+.quick-action-btn:active {
+    transform: translateY(0);
+}
+
+/* Colores específicos para estatus */
+.quick-action-btn.status-activo:hover { background: rgba(46, 204, 113, 0.25); border-color: rgba(46, 204, 113, 0.5); }
+.quick-action-btn.status-suspendido:hover { background: rgba(241, 196, 15, 0.25); border-color: rgba(241, 196, 15, 0.5); }
+.quick-action-btn.status-cancelado:hover { background: rgba(231, 76, 60, 0.25); border-color: rgba(231, 76, 60, 0.5); }
+
