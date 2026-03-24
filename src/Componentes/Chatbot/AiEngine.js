@@ -19,6 +19,10 @@ const formatCurrency = (value) => {
     return `${formatted} US$`;
 };
 
+const formatUSD = (value) => {
+    return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
+};
+
 const mapCycleValue = (val) => {
     if (val === null || val === undefined) return "N/A";
     const cycle = String(val).trim();
@@ -2275,7 +2279,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const metodos = Object.entries(d.methods)
                             .map(([m, c]) => `${methodLabel(m)}: ${c}`)
                             .join(' | ');
-                        desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${d.totalUsd.toFixed(2)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
+                        desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${formatUSD(d.totalUsd)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
                     });
 
                     // --- Stats para la tarjeta visual ---
@@ -2291,11 +2295,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const cycleText = cicloFilter ? ` del **Ciclo ${cicloFilter}**` : '';
 
                     return {
-                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${totalUsd.toFixed(2)}** (${totalPagos} pagos)\n- Pendiente: **$${pendingAmount.toFixed(2)}** (~${pendingClients} clientes)`,
+                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${formatUSD(totalUsd)}** (${totalPagos} pagos)\n- Pendiente: **$${formatUSD(pendingAmount)}** (~${pendingClients} clientes)`,
                         isCard: true,
                         cardData: {
                             title: `💳 Balance de Ingresos`,
-                            value: `$${totalUsd.toFixed(2)} USD`,
+                            value: `$${formatUSD(totalUsd)} USD`,
                             subtitle: cicloFilter ? `Ciclo ${cicloFilter} | ${totalPagos} pagos` : `${totalPagos} pagos registrados`,
                             color: '#2ecc71',
                             stats
