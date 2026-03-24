@@ -15,12 +15,20 @@ const extractNumber = (text) => {
 };
 
 const formatCurrency = (value) => {
-    const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
+    const formatted = new Intl.NumberFormat('de-DE', { 
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2,
+        useGrouping: true 
+    }).format(value || 0);
     return `${formatted} US$`;
 };
 
 const formatUSD = (value) => {
-    return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
+    return new Intl.NumberFormat('de-DE', { 
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2,
+        useGrouping: true 
+    }).format(value || 0);
 };
 
 const mapCycleValue = (val) => {
@@ -1439,7 +1447,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
                             const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" y ") : parameters.status.charAt(0).toUpperCase() + parameters.status.slice(1)) : "Clientes";
                             const formatCurrencyLoc = (val) => {
-                                const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val || 0);
+                                const formatted = new Intl.NumberFormat('de-DE', { 
+                                    minimumFractionDigits: 2, 
+                                    maximumFractionDigits: 2,
+                                    useGrouping: true 
+                                }).format(val || 0);
                                 return `${formatted} US$`;
                             };
 
