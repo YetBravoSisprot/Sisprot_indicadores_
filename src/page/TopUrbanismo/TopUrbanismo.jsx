@@ -777,7 +777,7 @@ function TopUrbanismo() {
                   <strong>Reporte de Operaciones:</strong> Ideal para auditoría técnica. Te permite elegir <strong>Columnas específicas</strong> (como IP o MAC) para el análisis manual.
                 </li>
                 <li style={{ marginBottom: '10px' }}>
-                  <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros sin necesidad de seleccionar columnas.
+                  <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros, e incluye también el detalle de clientes con las columnas que hayas seleccionado.
                 </li>
               </ul>
             </div>
