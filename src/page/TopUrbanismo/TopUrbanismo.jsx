@@ -291,6 +291,7 @@ function TopUrbanismo() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
+  const [columnasSeleccionadas, setColumnasSeleccionadas] = useState(["Todas"]);
 
   const [contratoBuscado, setContratoBuscado] = useState("");
   const [clientesPorContrato, setClientesPorContrato] = useState([]);
@@ -325,6 +326,11 @@ function TopUrbanismo() {
   const handleCiclosChange = (event) => {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setCiclosSeleccionados(selectedOptions);
+  };
+
+  const handleColumnasChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setColumnasSeleccionadas(selectedOptions);
   };
 
   const buscarPorContrato = () => {
@@ -385,7 +391,7 @@ function TopUrbanismo() {
     const anio = hoy.getFullYear();    
     const customFileName = `Reporte de ${statusParaNombre}${cicloParaNombre} y la fecha ${dia} de ${mes} del ${anio}.xlsx`;
 
-    exportToExcel(serviciosParaExportar, filtroTextos, ["Todas"], "operations", customFileName);
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations", customFileName);
   };
 
 
@@ -714,6 +720,26 @@ function TopUrbanismo() {
                 ))}
               </select>
 
+              <select id="columnasSelect" size="5" multiple value={columnasSeleccionadas} onChange={handleColumnasChange}>
+                <option value="Todas">📋 Ver Todas las Columnas</option>
+                <option value="Contrato">Contrato</option>
+                <option value="Cedula">Cedula</option>
+                <option value="IP">IP</option>
+                <option value="MAC">MAC</option>
+                <option value="Estatus">Estatus Inicial</option>
+                <option value="Estado Final">Estado Final</option>
+                <option value="Cliente">Cliente</option>
+                <option value="Teléfono">Teléfono</option>
+                <option value="Urbanismo">Urbanismo</option>
+                <option value="Plan">Plan</option>
+                <option value="Costo">Costo</option>
+                <option value="Migrado">Migrado</option>
+                <option value="Ciclo">Ciclo</option>
+                <option value="Tipo_Cliente">Tipo Cliente</option>
+                <option value="Dirección">Dirección</option>
+                <option value="Fecha_Creación">Fecha de Creación</option>
+                <option value="Días Hábiles">Días Hábiles</option>
+              </select>
 
             </div>
 
