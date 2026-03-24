@@ -59,7 +59,24 @@ function Ventas() {
       planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
       const planCost = parseFloat(curr.plan?.cost) || 0;
       const isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
-      
+      const planNameUpper = planName.toUpperCase();
+
+      // Identificar categoría y excluir no deseados
+      let category = null;
+      if (planNameUpper.includes("PYME")) {
+        category = "PYME";
+      } else if (
+        !planNameUpper.includes("EMPLEADO") && 
+        !planNameUpper.includes("GRATIS") && 
+        !planNameUpper.includes("INSTITUCIONAL") && 
+        !planNameUpper.includes("CORTESIA") &&
+        planCost > 0
+      ) {
+        category = "RESIDENCIAL";
+      }
+
+      if (!category) return acc; // Excluir si no cae en PYME o RESIDENCIAL válido
+
       if (!acc[planName]) {
         acc[planName] = {
           name: planName,
@@ -67,7 +84,7 @@ function Ventas() {
           activeCount: 0,
           cost: planCost,
           revenue: 0,
-          category: planName.toUpperCase().includes("PYME") ? "PYME" : "RESIDENCIAL"
+          category: category
         };
       }
       
