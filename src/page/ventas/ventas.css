@@ -221,6 +221,7 @@
   margin-top: 10px;
   padding-top: 15px;
   border-top: 2px solid rgba(255, 255, 255, 0.08);
+  gap: 15px;
 }
 
 .cat-label {
