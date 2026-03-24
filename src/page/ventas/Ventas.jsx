@@ -155,7 +155,7 @@ function Ventas() {
     });
   }, [data, migrationData]);
 
-  const formatCurrency = (val) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(val);
+  const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true }).format(val) + " US$";
 
   const handleExportExcel = () => {
     if (!masterPlanData || masterPlanData.length === 0) return;
