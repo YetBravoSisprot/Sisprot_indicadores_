@@ -463,20 +463,19 @@ DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
 {"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
 ${dynamicContextPrompt}
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: Conteo de clientes. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
-- INGRESOS: Dinero proyectado. Parámetros: {"status", "ciclo", "urbanismo", "agencia", "tipo", "migrado"}.
-- AMBOS_METRICAS: Conteo + Ingresos (Reporte Gerencial). Parámetros: los de INGRESOS.
-- PLANES: Análisis de rentabilidad, costos, conteos e ingresos detalle por planes de internet (Pymes/Residenciales).
-- AMBIGUEDAD_METRICA: Si el usuario da un filtro (ej: "activos de paya") pero NO pide acción (cuantos/plata).
-- BUSCAR_CONTRATO / BUSCAR_CEDULA: Búsqueda por ID numérico.
-- BUSCAR_NOMBRE: Búsqueda por nombre de persona. Array: {"nombres": ["Juan"]}.
-- ESTADOS / TIPOS_CLIENTE: Reportes de distribución/desglose.
-- INGRESOS_BANCOS: Pagos recibidos por bancos. Parámetros: {"banco", "metodo", "startDate", "endDate", "ciclo", "bnc_account"}.
-- HISTORICO_VENTAS: Evolución de ventas por año y mes (2021-2026). Parámetros: {"year", "month"}.
-- DATA_MAESTRA: Reporte del universo completo (Todos los estatus, tipos, ciclos, migrados/no migrados). Úsalo si piden "todo", "data maestra", "universo completo", "base completa".
-- GENERAR_EXCEL: SOLO si pide ARCHIVO o EXCEL. Parámetro: {"reportType": "operations" | "general"}.
-- CONTEXTO_APP: Para qué sirve esta pantalla específica.
-- SALUDO / AGRADECIMIENTO / GUIA_APP / UNKNOWN.
+- TOTAL_CLIENTES: Conteo de clientes (Solo si tienes el Estatus Y el Periodo).
+- INGRESOS: Dinero proyectado (Solo si tienes el Estatus Y el Periodo).
+- AMBOS_METRICAS: Conteo + Ingresos (Solo si tienes el Estatus Y el Periodo).
+- PLANES: Detalle por planes de internet.
+- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
+- DATA_MAESTRA: Universo total de la base de datos.
+- GENERAR_EXCEL: Si el usuario pide descargar el archivo.
+- SALUDO / AGRADECIMIENTO / UNKNOWN.
+
+REGLA DE FILTRADO COMERCIAL:
+Solo procesamos clientes PYME y RESIDENCIAL. Ignora empleados, gratis, etc.
+- "status": Activo, Suspendido, Pausado, Cancelado.
+- "periodo": hoy, ayer.
 
 DEFINICIÓN TÉCNICA DE DATA MAESTRA:
 - La "Data Maestra" incluye a **TODOS** los clientes sin excepción: Activos, Suspendidos, Pausados, Cancelados y Por Instalar.
@@ -485,47 +484,27 @@ DEFINICIÓN TÉCNICA DE DATA MAESTRA:
 - Incluye migrados y no migrados.
 - **Si el usuario te pide la "Data Maestra", no le preguntes por estatus ni filtros, entrégale el resumen total directamente.**
 
+REGLA DE EXCLUSIVIDAD DE CLIENTES COMERCIALES:
+- **IMPORTANTE**: Al usuario solo le interesan los clientes de tipo **PYME** y **RESIDENCIAL**. 
+- Siempre que el usuario pregunte por cantidad de clientes o ingresos, el sistema DEBE filtrar automáticamente para excluir: Empleados, Gratuitos, Institucionales, Cortesía y Proyectos. 
+- A nadie le importa la data de esas categorías no comerciales en las consultas rápidas.
+
+REGLA DE FLUJO DE PREGUNTAS (ESTATUS Y TIEMPO):
+1. **Paso 1: Estatus**: Si el usuario pregunta "cuántos clientes hay" o "¿cuál es el ingreso?" sin especificar estatus, el bot DEBE preguntar: "Entendido, ¿deseas ver los clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?".
+2. **Paso 2: Periodo**: Una vez que el estatus está claro (ej: el usuario dice "Activos"), el bot DEBE preguntar: "¿Deseas la información de **Hoy** (datos actuales) o del cierre de **Ayer**?".
+3. **Paso 3: Respuesta**: Solo después de tener el Estatus y el Periodo clarificados (o si el usuario los dio todos juntos en la primera frase), se procede a entregar el dato.
+- **EXCEPCIÓN**: Si el usuario explícitamente pide la "Data Maestra" o "Universo Total", se entrega todo el consolidado sin preguntar estatus.
+
 REGLA DE PARÁMETROS:
-- "ciclo": Solo puede ser "15" o "30". NUNCA uses "ayer", "hoy" o fechas aquí.
 - "status": Solo puede ser "Activo", "Suspendido", "Pausado", "Cancelado" o "Por Instalar".
-- "urbanismo": Nombre del sector. Si el usuario dice "ayer" o "hoy", NO los pongas en ningún parámetro técnico. El sistema detecta el tiempo automáticamente.
-
-REGLA DE ORO PARA PLANES:
-Si el usuario pregunta por "ingresos por planes", "costos", "cuánto genera cada paquete" o "rentabilidad de pyme vs residencial", usa SIEMPRE el intent 'PLANES'. Ahora tenemos visibilidad detallada de cuánto aporta cada tipo de plan al ingreso total global.
-
-REGLA DE ORO PARA URBANISMOS: 
-Si el usuario menciona un sector, asegúrate de extraerlo tal cual lo dice o su versión más cercana. Ej: "Paya abajo", "Prados II", "Antigua Hacienda de Paya", "Salto Angel". No inventes sufijos si el usuario no los dice.
-ATENCIÓN: Existen sectores con NOMBRES DE PERSONA que NO deben confundirse con clientes. Si el usuario menciona: "Isaac Oliveira", "Tibisay Guevara", "Antonio Jose de Sucre", "Arturo Luis Berti", "Santa Eduviges", "Simon Bolivar", "Guerrero de Chavez", "Lascenio Guerrero" o "Salto Angel", clasifícalos como URBANISMO, NO como nombre de cliente o seguimiento.
-
-REGLA DE PERSISTENCIA DE FILTROS:
-Si el usuario hace una pregunta de continuidad (ej: "¿y los pausados?", "¿ahora los activos?"), DEBES mantener el "urbanismo" o "agencia" mencionado en el historial como parámetros.
-REGLA DE MEMORIA DE PERIODO:
-NO olvides si el usuario ya eligió "Hoy" o "Ayer". Si en el historial ves que ya se estableció esta preferencia, úsala por defecto sin volver a preguntar.
-
-REGLA SOBRE DATOS TÉCNICOS (IP/MAC):
-Si el usuario pregunta por la IP o MAC de clientes, explícale de forma humana (en el campo "message") que esa información NO se ve directamente en pantalla por seguridad y espacio, pero que se encuentra en los reportes de EXCEL. Indícale que puede ir a 'Top Urbanismos', filtrar y descargar el reporte, o que tú mismo puedes generarle un Excel aquí mismo si lo solicita. 
+- "periodo": Puede ser "hoy" o "ayer".
+- "urbanismo": Nombre del sector.
 
 REGLA DE HUMANIZACIÓN:
-- Evita sonar como un robot (pero sé breve).
-- Llama siempre al usuario por su nombre: **${userName}** (asegurándote de que la primera letra siempre sea mayúscula).
-- **PROHIBICIÓN TOTAL DE SALUDOS**: El sistema ya muestra un saludo inicial. Tú **NO** debes decir "Hola", "Buenos días", "¿Cómo estás?", ni nada parecido. Ve directamente al grano con la respuesta. Solo sé amable, pero sin preámbulos de saludo.
-- Si el usuario te pregunta por la página actual o qué hay en pantalla, usa la información del "CONOCIMIENTO DE LAS SECCIONES DE LA APP" para explicarlo de forma fluida.
-- Si saludan o agradecen, responde de forma variada y cálida.
-
-REGLA DE NOMENCLATURA DE SECCIONES (IMPORTANTE):
-- La sección que el usuario llama "**Indicadores**" es la ruta **/Admin** (donde están los KPIs, Ingresos y PowerBI).
-- La ruta **/Indicadores** se llama "**Lista de Clientes**" o "**Directorio**". NUNCA la llames "Sección de Indicadores" para evitar confusiones.
-
-REGLA DE EXCLUSIVIDAD DE FILTROS:
-- **EXCEPCIÓN PARA FILTROS**: El sistema SI permite ver múltiples estados (ej: "activos y suspendidos") o múltiples tipos (ej: "pyme y residencial") al mismo tiempo si el usuario lo solicita. En estos casos, el bot debe proporcionar el total sumado y, si es posible, el desglose en el mensaje.
-- SIEMPRE que hables de ingresos, dinero o facturación, debes referirte a ellos como **INGRESOS PROYECTADOS**.
-- Debes explicar brevemente que este monto NO representa necesariamente dinero en caja hoy, sino que es el resultado de **SUMAR LOS PLANES CONTRATADOS** de los clientes seleccionados. Es una estimación de lo que el negocio debería percibir mensualmente según su base de datos actual.
-REGLA DE HORARIOS DE ACTUALIZACIÓN:
-- La data de 'Hoy' se actualiza automáticamente tres veces al día: **8:00 AM, 12:00 PM y 4:00 PM**.
-- Si el usuario pregunta por la hora de los datos, infórmale estos horarios y dile que los datos reflejan el último corte realizado. NO inventes otras horas como las 6:00 AM.
-REGLA DE MÉTRICAS OPERATIVAS:
-- En la sección de Monitor de Operaciones (/Ventas), ahora tenemos acceso a: **Costo de cada Plan**, **Ingresos por Plan** cuantificados y cantidad de clientes per plan.
-- También contamos con resúmenes detallados por **Total Residencial** y **Total PYME**, así como el **Ingreso Total Global**. Menciona esto si el usuario te pregunta qué se mide en Operaciones o sobre la rentabilidad de los planes.`;
+- Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
+- Evita saludos iniciales (Hola, etc.).
+- Si falta el estatus, pídelo amablemente.
+- Si falta el periodo (hoy/ayer), pídelo amablemente.`;
 
 
     const recentHistory = history.slice(-5).map(msg => ({
@@ -663,7 +642,11 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
         return { filtered: clientes, appliedTexts: ["Universo Total (Data Maestra)"] };
     }
 
-    let filtered = clientes;
+    // REGLA: Filtrar por defecto solo Pymes y Residenciales (excluir empleados, institucional, etc.)
+    let filtered = clientes.filter(c => {
+        const type = normalizeText(c.client_subdivision || c.client_type_name || '');
+        return type.includes('residencial') || type.includes('pyme');
+    });
     let appliedTexts = [];
 
     // 0. Búsqueda Directa (Contrato, Cédula o Nombre) - NUEVO
@@ -1355,9 +1338,20 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (!isDataMaestra && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE') {
                     // DISPARAR CLARIFICACIÓN: Si no especifican estado, preguntamos de forma humana
                     return {
-                        text: `He preparado el resumen ${userName}, pero ¿deseas filtrar por algún estado específico(** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar **) o prefieres verlos ** Todos **? `,
+                        text: `Prepararé tu reporte de inmediato ${userName}. Para darte la cifra exacta, ¿deseas ver los clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?`,
                         isCard: false,
                         contextType: 'clarify_status',
+                        cardData: { originalIntent: intent, savedParameters: parameters }
+                    };
+                }
+
+                // 2. Clarificación de Periodo (Hoy vs Ayer)
+                // Si ya tenemos el estatus pero el usuario no ha especificado si "hoy" o "ayer" y no viene de una clarificación previa
+                if (!isDataMaestra && (parameters?.status || parameters?.nombre || parameters?.contrato) && !explicitlyHoy && !explicitlyAyer && !periodKnownFromHistory && !fromClarification) {
+                    return {
+                        text: `¡Entendido ${userName}! Ya tengo el estatus. Por último, ¿deseas la información actualizada de **Hoy** o prefieres el cierre de **Ayer**?`,
+                        isCard: false,
+                        contextType: 'clarify_data_source', // Reutilizamos el tipo existente
                         cardData: { originalIntent: intent, savedParameters: parameters }
                     };
                 }
@@ -1556,9 +1550,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (!isDataMaestraIng && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato) {
                     // Si no especifican estado, preguntamos de forma humana antes de calcular
                     return {
-                        text: `He detectado tu consulta sobre ingresos. ¿Deseas ver los resultados para clientes ** Activos **, ** Suspendidos **, ** Pausados **, ** Cancelados **, ** Por Instalar ** o de ** Todos los estados ** combinado ? `,
+                        text: `He detectado tu consulta sobre ingresos ${userName}. ¿Deseas ver el dinero proyectado para clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?`,
                         isCard: false,
                         contextType: 'clarify_status',
+                        cardData: { originalIntent: intent, savedParameters: parameters }
+                    };
+                }
+
+                // 2. Clarificación de Periodo (Hoy vs Ayer)
+                if (!isDataMaestraIng && (parameters?.status || parameters?.nombre || parameters?.contrato) && !explicitlyHoy && !explicitlyAyer && !periodKnownFromHistory && !fromClarification) {
+                    return {
+                        text: `¡Excelente ${userName}! Ya tengo el estatus para el cálculo. ¿Deseas usar la data de **Hoy** o la del cierre de **Ayer**?`,
+                        isCard: false,
+                        contextType: 'clarify_data_source',
                         cardData: { originalIntent: intent, savedParameters: parameters }
                     };
                 }
