@@ -246,7 +246,7 @@ function Ventas() {
                         <span className="cat-value">{formatCurrency(stats.pymeRevenue)}</span>
                       </div>
                       <div className="category-stat total">
-                        <span className="cat-label">Ingreso Total:</span>
+                        <span className="cat-label">Ingreso Total: &nbsp;</span>
                         <span className="cat-value">{formatCurrency(stats.totalRevenue)}</span>
                       </div>
                     </div>
