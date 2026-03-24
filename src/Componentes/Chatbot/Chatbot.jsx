@@ -181,11 +181,23 @@ const Chatbot = () => {
                         aiResponse.cardData.selectedColumns || ["Todas"]
                     );
                 }, 1000);
-            } else if (aiResponse.isDownload && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
+            } else if ((aiResponse.isDownload || aiResponse.action === 'download_excel') && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
                 const dataset = aiResponse.cardData.dataset || aiResponse.cardData.savedDataset;
                 const rType = aiResponse.cardData.reportType || (aiResponse.cardData.parameters?.reportType) || "general";
+                
                 setTimeout(() => {
-                    exportToExcel(dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], rType);
+                    // Si el reporte es general o ejecutivo, usamos el nuevo layout
+                    if (rType === 'general' || rType === 'accounting' || rType === 'executive') {
+                        exportExecutiveReport(
+                            dataset, 
+                            aiResponse.cardData.filtersText, 
+                            formattedName,
+                            aiResponse.cardData.selectedColumns || ["Todas"]
+                        );
+                    } else {
+                        // Solo usamos el export técnico para operaciones específicas
+                        exportToExcel(dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], rType);
+                    }
                 }, 1000); 
             }
         } catch (error) {
@@ -349,9 +361,20 @@ const Chatbot = () => {
                                         <div className="card-download-group">
                                             <button
                                                 className="card-download-btn operations"
-                                                onClick={() => exportToExcel(msg.cardData.dataset || msg.cardData.savedDataset, msg.cardData.filtersText, msg.cardData.selectedColumns || ["Todas"], "operations")}
+                                                onClick={() => {
+                                                    const baseName = email ? email.split('@')[0] : '';
+                                                    const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+                                                    const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : '';
+                                                    
+                                                    exportExecutiveReport(
+                                                        msg.cardData.dataset || msg.cardData.savedDataset, 
+                                                        msg.cardData.filtersText, 
+                                                        formattedName,
+                                                        msg.cardData.selectedColumns || ["Todas"]
+                                                    );
+                                                }}
                                             >
-                                                📥 Descargar Excel
+                                                📥 Descargar Reporte Ejecutivo
                                             </button>
                                         </div>
                                     )}
