@@ -348,7 +348,8 @@ option:checked {
 }
 
 #sectoresSelect,
-#urbanismosSelect {
+#urbanismosSelect,
+#columnasSelect {
   width: 200px;
 }
 
@@ -535,7 +536,8 @@ option:checked {
 
   /* Agencias, Urbanismos y Columnas en fila completa */
   #sectoresSelect,
-  #urbanismosSelect {
+  #urbanismosSelect,
+  #columnasSelect {
     grid-column: 1 / -1;
     height: 80px;
   }
