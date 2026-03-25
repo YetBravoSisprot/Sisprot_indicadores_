@@ -1535,8 +1535,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const hasSpecificType = parameters?.tipo || appliedFiltersText.some(t => t.includes("Tipo:"));
                         const finalAppliedLabel = hasSpecificType ? appliedFiltersText.join(', ') : `${appliedFiltersText.join(', ')} | Pyme y Residencial`;
 
+                        let responseText = `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n`;
+
+                        if (filteredClientes.length === 0) {
+                            responseText += `Actualmente **no hay ningún cliente** (0) bajo estos parámetros de búsqueda.`;
+                        } else if (filteredClientes.length > 0 && filteredClientes.length <= 10) {
+                            const listText = filteredClientes.map((m, i) => `${i + 1}) **${m.client_name}** (#${m.id}) · ${m.sector_name} · ${m.plan?.name || "Sin plan"}`).join("\n");
+                            responseText += `Como son pocos clientes (**${filteredClientes.length}**), te los muestro directamente en pantalla:\n\n${listText}\n\nSi necesitas exportarlos al **Excel**, solo dímelo.`;
+                        } else {
+                            responseText += `**Si necesitas el reporte detallado en Excel, solo dímelo.**`;
+                        }
+
                         return {
-                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
+                            text: responseText,
                             isCard: true,
                             cardData: {
                                 periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -1848,6 +1859,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let resolvedInThisStep = [];
                 let currentAmbiguous = null;
                 let currentMatches = [];
+                let notFoundNames = [];
 
                 while (pendingNames.length > 0) {
                     let nameRaw = pendingNames.shift();
@@ -1867,19 +1879,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                     if (!nameClean || nameClean.length < 3) continue;
 
-                    // Evitar procesar el mismo registro si ya está confirmado
-                    const alreadyResolvedIds = resolvedInThisStep.map(c => c.id);
+                    // Evitar procesar el mismo registro si ya está confirmado (MÁS los que ya resolvimos hoy)
+                    const alreadyResolvedIds = [...confirmedClients, ...resolvedInThisStep].map(c => c.id);
                     let matches = clientes.filter(c => normalizeText(c.client_name).includes(nameClean) && !alreadyResolvedIds.includes(c.id));
 
                     if (matches.length === 0 && nameClean.split(" ").length > 1) {
                         // Filtrar palabras cortas de unión (y, e, de, la, el) para que no rompan el buscador
                         const words = nameClean.split(" ").filter(w => w.length > 2 && w !== "del" && w !== "los" && w !== "las");
-                        if (words.length === 0) continue;
-                        
-                        matches = clientes.filter(c => {
-                            const dbName = normalizeText(c.client_name);
-                            return words.every(w => dbName.includes(w)) && !alreadyResolvedIds.includes(c.id);
-                        });
+                        if (words.length > 0) {
+                            matches = clientes.filter(c => {
+                                const dbName = normalizeText(c.client_name);
+                                return words.every(w => dbName.includes(w)) && !alreadyResolvedIds.includes(c.id);
+                            });
+                        }
                     }
 
                     if (matches.length === 1) {
@@ -1888,6 +1900,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         currentAmbiguous = nameRaw;
                         currentMatches = matches;
                         break;
+                    } else {
+                        notFoundNames.push(nameRaw);
                     }
                 }
 
@@ -1896,9 +1910,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (currentAmbiguous) {
                     const optionsList = currentMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
                     const introResolved = resolvedInThisStep.length > 0 ? `He agregado a ${resolvedInThisStep.map(c => c.client_name).join(", ")}. \n\n` : "";
+                    const notFoundText = notFoundNames.length > 0 ? `\n\n*(No encontré a: ${notFoundNames.join(", ")})*` : "";
 
                     return {
-                        text: `${introResolved}He encontrado **${currentMatches.length} contratos** asociados a "${currentAmbiguous}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}\n\nResponde con el número de la opción (1, 2, 3...) para ver el perfil detallado.`,
+                        text: `${introResolved}He encontrado **${currentMatches.length} contratos** asociados a "${currentAmbiguous}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}${notFoundText}\n\nResponde con el número de la opción (1, 2, 3...) para ver el perfil detallado.`,
                         isCard: false,
                         contextType: 'multi_client_clarification',
                         cardData: {
@@ -1912,9 +1927,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 else if (allConfirmed.length > 0) {
                     const confirmedList = allConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
                     const title = nombresReq.length > 1 ? "Clientes encontrados" : "Cliente encontrado";
+                    const notFoundText = notFoundNames.length > 0 ? `\n⚠️ **Nota:** No logré encontrar a: ${notFoundNames.join(", ")}.\n` : "";
 
                     // Si solo era un nombre y se resolvió directo, mostramos su card pero con opción a excel
-                    if (nombresReq.length === 1 && allConfirmed.length === 1) {
+                    if (nombresReq.length === 1 && allConfirmed.length === 1 && notFoundNames.length === 0) {
                         const cliente = allConfirmed[0];
                         return {
                             text: `He encontrado a **${cliente.client_name}**. ¿Deseas buscar a alguien más o **generamos el Excel** con sus datos?`,
@@ -1942,17 +1958,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     return {
-                        text: `He preparado la lista con los clientes encontrados:\n\n${confirmedList}\n\n¿Deseas buscar más nombres o **procedemos con el Excel**?`,
+                        text: `He preparado la lista con los clientes encontrados:\n\n${confirmedList}\n${notFoundText}\n¿Deseas buscar más nombres o **procedemos con el Excel**?`,
                         isCard: false,
                         contextType: 'multi_client_confirmed',
                         cardData: {
-                            confirmedClients: allConfirmed
+                            confirmedClients: allConfirmed,
+                            savedDataset: allConfirmed,
+                            filtersText: ["Lista Personalizada"]
                         }
                     };
                 }
 
                 registerUnansweredQuery(query, userName, currentPage);
-                return { text: `Lo siento ${userName}, no encontré ningún cliente que coincida con esos nombres.`, isCard: false };
+                return { text: `Lo siento ${userName}, no encontré clientes que coincidan con: ${notFoundNames.join(", ")}.`, isCard: false };
             }
 
             case 'BUSQUEDA_VAGA':
