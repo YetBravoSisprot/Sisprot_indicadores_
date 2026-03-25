@@ -356,8 +356,9 @@ const Chatbot = () => {
                                         </div>
                                     )}
 
-                                    {/* Botones de descarga si la tarjeta tiene dataset */}
-                                    {(msg.cardData.dataset || msg.cardData.savedDataset) && (
+                                    {/* Botones de descarga si la tarjeta tiene dataset válido */}
+                                    {((msg.cardData.dataset && msg.cardData.dataset.length > 0) || 
+                                      (msg.cardData.savedDataset && msg.cardData.savedDataset.length > 0)) && (
                                         <div className="card-download-group">
                                             <button
                                                 className="card-download-btn operations"
