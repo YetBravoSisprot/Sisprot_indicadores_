@@ -484,7 +484,9 @@ INTENCIONES DISPONIBLES:
 - AMBOS_METRICAS: Conteo + Facturación (Solo si tienes el Estatus Y el Periodo).
 - AMBIGUEDAD_INGRESOS: Se usa cuando el usuario pide "Ingresos" sin especificar si se refiere a la **Facturación Proyectada** (planes) o a la **Recaudación Real** (en bancos como BNC).
 - PLANES: Detalle por planes de internet.
-- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
+- BUSCAR_CONTRATO: Búsqueda de perfil si el usuario da un número de contrato.
+- BUSCAR_CEDULA: Búsqueda de perfil si el usuario da un número de cédula.
+- BUSCAR_NOMBRE: Búsqueda de perfil si el usuario te da uno o varios nombres/apellidos.
 - SEGUIMIENTO_CLIENTE: Se activa cuando YA se mostró un cliente y el usuario pregunta datos adicionales de ESE MISMO cliente (ej: "¿qué ip tiene?", "¿cuál es su dirección?", "¿qué plan tiene?", "¿me das su teléfono?").
   - "accion": perfil (ver de nuevo la card), direccion, deuda, ciclo, telefono, red (ip/mac), plan.
 - DATA_MAESTRA: Universo total de la base de datos.
