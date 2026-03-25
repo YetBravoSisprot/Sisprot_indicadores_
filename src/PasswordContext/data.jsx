@@ -4968,11 +4968,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "El Paraiso",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04120458688",
       "address": "CALLE LA UNION CASA NRO 98 URB EL PARAISO TURMERO",
@@ -12270,33 +12270,24 @@ const largeArraydata =
       "id": 3499,
       "client_name": "ALBERTO ARGENIS HEREDIA HEREDIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04228152669",
       "address": "CALLE MANZANA 19 CASA NRO 08 URB ROSARIO DE PAYA SECTOR FUNDA BARRIOS ROSARIO DE PAYA",
       "client_identification": "V27453474",
       "nap_box_name": "352",
       "created_at": "2024-04-15T08:21:00.781831",
-      "service_detail": {
-        "id": 11690,
-        "ip": "172.26.115.2",
-        "mac": "HWTCD1B48A9A",
-        "serial": "HWTCD1B48A9A",
-        "queue": null,
-        "interface": "VLAN240_DURPA",
-        "created_at": "2026-02-20T12:54:25.268762",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -13479,8 +13470,8 @@ const largeArraydata =
       "id": 3544,
       "client_name": "MIRIAN ANTONIA CARRASQUEL HIDALGO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Las Rurales",
@@ -13496,16 +13487,7 @@ const largeArraydata =
       "client_identification": "V8731279",
       "nap_box_name": "614",
       "created_at": "2024-04-15T13:47:47.690302",
-      "service_detail": {
-        "id": 10150,
-        "ip": "172.24.217.2",
-        "mac": "TPLGF9CD3C9B",
-        "serial": "TPLGF9CD3C9B",
-        "queue": null,
-        "interface": "VLAN252_RURALES_PAYA",
-        "created_at": "2025-11-15T14:35:40.666320",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -50481,11 +50463,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Las Rurales",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128903359",
       "address": "CALLE 106 CASA NUMERO 86 A SECTOR LAS RURALES ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
@@ -53325,8 +53307,8 @@ const largeArraydata =
       "id": 4970,
       "client_name": "FRANYELIN ALEJANDRA GONZALEZ GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Las Palmas",
@@ -53342,16 +53324,7 @@ const largeArraydata =
       "client_identification": "V25066771",
       "nap_box_name": "CE - 850",
       "created_at": "2024-06-17T11:33:46.599744",
-      "service_detail": {
-        "id": 2848,
-        "ip": "172.29.11.2",
-        "mac": "OEMT3C6260BE",
-        "serial": "OEMT3C6260BE",
-        "queue": "Plan_161906_30183_WispHub",
-        "interface": "VLAN262_LAS_PALMAS",
-        "created_at": "2024-06-17T11:35:46.897950",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -54210,8 +54183,8 @@ const largeArraydata =
       "id": 5009,
       "client_name": "VICTOR MARGARITO PARRA MAY",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "El Cambur",
@@ -54227,16 +54200,7 @@ const largeArraydata =
       "client_identification": "V14492501",
       "nap_box_name": "CTO-00150",
       "created_at": "2024-06-19T08:08:45.810610",
-      "service_detail": {
-        "id": 8809,
-        "ip": "172.28.226.2",
-        "mac": "OEMT3C62614A",
-        "serial": "OEMT3C62614A",
-        "queue": "queue1",
-        "interface": "VLAN263_EL_CAMBUR",
-        "created_at": "2025-06-02T14:17:30.031423",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -59556,8 +59520,8 @@ const largeArraydata =
       "id": 5223,
       "client_name": "PEDRO JOSE DIAZ COLMENARES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Betania",
@@ -59573,16 +59537,7 @@ const largeArraydata =
       "client_identification": "V8827529",
       "nap_box_name": "CTO-00453",
       "created_at": "2024-07-12T12:05:42.160302",
-      "service_detail": {
-        "id": 4238,
-        "ip": "172.18.43.2",
-        "mac": "TPLGF4B1D889",
-        "serial": "TPLGF4B1D889",
-        "queue": "Plan_161893_30183_WispHub",
-        "interface": "VLAN240_DURPA",
-        "created_at": "2024-08-07T14:21:42.099911",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -60480,8 +60435,8 @@ const largeArraydata =
       "id": 5254,
       "client_name": "LISBETH JOSEFINA ROJAS PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -60497,16 +60452,7 @@ const largeArraydata =
       "client_identification": "V11122146",
       "nap_box_name": "CTO-00130",
       "created_at": "2024-07-15T14:55:26.266842",
-      "service_detail": {
-        "id": 10294,
-        "ip": "172.20.107.2",
-        "mac": "VSOL00523A59",
-        "serial": "VSOL00523A59",
-        "queue": null,
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-11-24T15:34:34.392055",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -60741,11 +60687,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04126808998",
       "address": "AV EL MACARO CASA NRO 22 URB SAMAN  TARAZONERO II TURMERO",
@@ -62142,11 +62088,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04147383233",
       "address": "CALLE 15B CASA NRO 37 URB PANTIN ROSARIO DE PAYA",
@@ -62652,8 +62598,8 @@ const largeArraydata =
       "id": 5331,
       "client_name": "YUSMARY TERESA DE LOS SANTOS ARAUJO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -62669,24 +62615,15 @@ const largeArraydata =
       "client_identification": "V10727269",
       "nap_box_name": "281",
       "created_at": "2024-07-17T16:50:39.425780",
-      "service_detail": {
-        "id": 5447,
-        "ip": "172.19.209.2",
-        "mac": "TPLGB954F78F",
-        "serial": "TPLGB954F78F",
-        "queue": "Plan_92194_1574_WispHub",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-16T16:28:59.390043",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 5332,
       "client_name": "AMERICA BELFON LONGA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -62702,16 +62639,7 @@ const largeArraydata =
       "client_identification": "V3718872",
       "nap_box_name": "277",
       "created_at": "2024-07-17T16:55:35.165542",
-      "service_detail": {
-        "id": 5406,
-        "ip": "172.19.210.2",
-        "mac": "TPLGB954FBCB",
-        "serial": "TPLGB954FBCB",
-        "queue": "Plan_107915_1574_WispHub",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-16T15:23:02.727333",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -65136,11 +65064,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04129114169",
       "address": "CALLE CEDEÑO CASA NRO B-7 SAN CARLOS  TURMERO",
@@ -65961,11 +65889,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
       },
       "client_mobile": "04124614435",
       "address": "CALLE 6 CASA NRO 383 URB MATA CABALLO TURMERO",
@@ -67221,8 +67149,8 @@ const largeArraydata =
       "id": 5493,
       "client_name": "EVELISE ALFONSINA CALDERON ZURITA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Valle Paraiso",
@@ -67335,8 +67263,8 @@ const largeArraydata =
       "id": 5497,
       "client_name": "MARIA TERESA LUIS CIFUENTES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -67352,16 +67280,7 @@ const largeArraydata =
       "client_identification": "V23410337",
       "nap_box_name": "545",
       "created_at": "2024-07-23T12:06:10.555240",
-      "service_detail": {
-        "id": 11041,
-        "ip": "172.19.171.2",
-        "mac": "TPLGB954FBFC",
-        "serial": "TPLGB954FBFC",
-        "queue": null,
-        "interface": "VLAN221_CAFETAL_OLT1",
-        "created_at": "2026-01-07T14:26:45.308254",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -67731,8 +67650,8 @@ const largeArraydata =
       "id": 5509,
       "client_name": "BELKYS MARGARITA LOPEZ NAVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -67748,16 +67667,7 @@ const largeArraydata =
       "client_identification": "V4405130",
       "nap_box_name": "93",
       "created_at": "2024-07-23T16:41:33.813540",
-      "service_detail": {
-        "id": 5688,
-        "ip": "172.22.43.2",
-        "mac": "TPLGB68B4E85",
-        "serial": "TPLGB68B4E85",
-        "queue": "queue1",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2024-08-17T17:03:41.062795",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -68181,8 +68091,8 @@ const largeArraydata =
       "id": 5524,
       "client_name": "OSCAR RAFAEL MARCANO ORTEGA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -68198,16 +68108,7 @@ const largeArraydata =
       "client_identification": "V27289612",
       "nap_box_name": "CTO-00169",
       "created_at": "2024-07-23T17:14:06.864284",
-      "service_detail": {
-        "id": 4460,
-        "ip": "172.23.175.2",
-        "mac": "VSOL0012EDC9",
-        "serial": "VSOL0012EDC9",
-        "queue": "queue1",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-09T22:32:20.461822",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -68850,8 +68751,8 @@ const largeArraydata =
       "id": 5548,
       "client_name": "YARELIS ODALISCA MARCANO PANTOJA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -68867,16 +68768,7 @@ const largeArraydata =
       "client_identification": "V15649416",
       "nap_box_name": "CTO-00309",
       "created_at": "2024-07-25T10:38:25.940779",
-      "service_detail": {
-        "id": 10016,
-        "ip": "172.22.7.2",
-        "mac": "TPLGB68B5018",
-        "serial": "TPLGB68B5018",
-        "queue": null,
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-11-11T15:02:54.549058",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -69531,8 +69423,8 @@ const largeArraydata =
       "id": 5571,
       "client_name": "ZULAY VIRGINIA SALVA TIERRA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -69548,16 +69440,7 @@ const largeArraydata =
       "client_identification": "V7238350",
       "nap_box_name": "286",
       "created_at": "2024-07-25T11:46:18.211142",
-      "service_detail": {
-        "id": 4489,
-        "ip": "172.27.59.2",
-        "mac": "GPON0097B2C6",
-        "serial": "GPON0097B2C6",
-        "queue": "Plan_107915_1574_WispHub",
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2024-08-10T08:51:33.127732",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -70176,11 +70059,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243029089",
       "address": "CALLE CASA NRO 600B URB MATA CABALLO ROSARIO DE PAYA",
@@ -70275,11 +70158,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243301738",
       "address": "CALLE PPAL SECTOR SAMAN TARAZONERO II EL MACARO TURMERO",
@@ -70677,11 +70560,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243398031",
       "address": "CALLE SAN ANTONIO CASA NRO 23-B SECTOR PAYA ABAJO ROSARIO DE PAYA",
@@ -70893,8 +70776,8 @@ const largeArraydata =
       "id": 5617,
       "client_name": "JOSE LUIS AYALA VILLEGAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Paya Abajo",
@@ -70910,16 +70793,7 @@ const largeArraydata =
       "client_identification": "V26679926",
       "nap_box_name": "CTO-00319",
       "created_at": "2024-07-26T08:08:29.089624",
-      "service_detail": {
-        "id": 11372,
-        "ip": "172.23.97.2",
-        "mac": "VSOL0012E581",
-        "serial": "VSOL0012E581",
-        "queue": null,
-        "interface": "VLAN231_PAYABAJO",
-        "created_at": "2026-01-25T17:54:26.279109",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -71169,11 +71043,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128903445",
       "address": "CALLE LA CAPILLA CASA NRO 3 SECTOR PAYA ABAJO ROSARIO DE PAYA",
@@ -71220,8 +71094,8 @@ const largeArraydata =
       "id": 5628,
       "client_name": "AMERICA SULAY AMADOR BORGUES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -71237,16 +71111,7 @@ const largeArraydata =
       "client_identification": "V14943308",
       "nap_box_name": "254",
       "created_at": "2024-07-26T08:46:09.412111",
-      "service_detail": {
-        "id": 7497,
-        "ip": "172.23.93.2",
-        "mac": "VSOL0012E759",
-        "serial": "VSOL0012E759",
-        "queue": "Plan_161889_30183_WispHub",
-        "interface": "VLAN231_PAYABAJO",
-        "created_at": "2024-12-17T11:43:16.216131",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -71286,8 +71151,8 @@ const largeArraydata =
       "id": 5630,
       "client_name": "JESUS  DANIEL FARIAS AMADOR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -71303,16 +71168,7 @@ const largeArraydata =
       "client_identification": "V27520146",
       "nap_box_name": "254",
       "created_at": "2024-07-26T08:55:20.741328",
-      "service_detail": {
-        "id": 7495,
-        "ip": "172.23.87.2",
-        "mac": "VSOL001182E9",
-        "serial": "VSOL001182E9",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN231_PAYABAJO",
-        "created_at": "2024-12-17T11:37:28.179203",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -71499,8 +71355,8 @@ const largeArraydata =
       "id": 5637,
       "client_name": "SUSANA BERNANDITA RODRIGUEZ DE QUIARO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -71516,16 +71372,7 @@ const largeArraydata =
       "client_identification": "V8191461",
       "nap_box_name": "CTO-00178",
       "created_at": "2024-07-26T09:56:55.968855",
-      "service_detail": {
-        "id": 4796,
-        "ip": "172.30.85.2",
-        "mac": "TPLGBA6878CC",
-        "serial": "TPLGBA6878CC",
-        "queue": "Plan_161889_30183_WispHub",
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2024-08-12T16:27:47.437538",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -71943,8 +71790,8 @@ const largeArraydata =
       "id": 5652,
       "client_name": "JOSE LUIS VARGAS LUCENA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -71960,16 +71807,7 @@ const largeArraydata =
       "client_identification": "V14067245",
       "nap_box_name": "CTO-00312",
       "created_at": "2024-07-26T10:22:12.448622",
-      "service_detail": {
-        "id": 4501,
-        "ip": "172.21.234.2",
-        "mac": "TPLGB68B4E35",
-        "serial": "TPLGB68B4E35",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2024-08-10T11:17:02.342059",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -72909,8 +72747,8 @@ const largeArraydata =
       "id": 5685,
       "client_name": "EDGAR JOSE FLORES MENDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -72926,16 +72764,7 @@ const largeArraydata =
       "client_identification": "V17801722",
       "nap_box_name": "CTO-00222",
       "created_at": "2024-07-26T13:42:06.918899",
-      "service_detail": {
-        "id": 4543,
-        "ip": "172.21.224.2",
-        "mac": "TPLGB68B4EE6",
-        "serial": "TPLGB68B4EE6",
-        "queue": "Plan_161892_30183_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-08-11T13:04:10.471156",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -72999,8 +72828,8 @@ const largeArraydata =
       "id": 5688,
       "client_name": "VALERIA STEFANIA CORZO RIVERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -73016,16 +72845,7 @@ const largeArraydata =
       "client_identification": "V27646717",
       "nap_box_name": "CTO-00320",
       "created_at": "2024-07-26T14:01:44.252752",
-      "service_detail": {
-        "id": 11192,
-        "ip": "172.19.207.2",
-        "mac": "VSOL00498401",
-        "serial": "VSOL00498401",
-        "queue": null,
-        "interface": "VLAN240_DURPA",
-        "created_at": "2026-01-15T20:07:30.197526",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -73311,8 +73131,8 @@ const largeArraydata =
       "id": 5699,
       "client_name": "ROSA ALEJANDRA ARRAIZ OSORIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -73328,16 +73148,7 @@ const largeArraydata =
       "client_identification": "V13454335",
       "nap_box_name": "CTO-00320",
       "created_at": "2024-07-26T14:34:41.987528",
-      "service_detail": {
-        "id": 6096,
-        "ip": "172.17.224.2",
-        "mac": "VSOL0051FD91",
-        "serial": "VSOL0051FD91",
-        "queue": "Plan_161905_30183_WispHub",
-        "interface": "VLAN240_DURPA",
-        "created_at": "2024-08-22T14:46:56.541455",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -73557,8 +73368,8 @@ const largeArraydata =
       "id": 5707,
       "client_name": "EGLEE REGINA PLAZA GARCIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -73574,16 +73385,7 @@ const largeArraydata =
       "client_identification": "V16551097",
       "nap_box_name": "161 DOS",
       "created_at": "2024-07-26T14:55:33.642117",
-      "service_detail": {
-        "id": 4552,
-        "ip": "172.21.164.2",
-        "mac": "TPLGB68B58A6",
-        "serial": "TPLGB68B58A6",
-        "queue": "Plan_92192_1574_WispHub",
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2024-08-11T13:36:19.924579",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -74115,8 +73917,8 @@ const largeArraydata =
       "id": 5727,
       "client_name": "FRANCIA COROMOTO ACOSTA PEÑA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados I",
@@ -74132,16 +73934,7 @@ const largeArraydata =
       "client_identification": "V10976878",
       "nap_box_name": "CTO-00304",
       "created_at": "2024-07-26T16:34:45.030773",
-      "service_detail": {
-        "id": 5259,
-        "ip": "172.17.128.2",
-        "mac": "VSOL004988F9",
-        "serial": "VSOL004988F9",
-        "queue": "Plan_161865_30181_WispHub",
-        "interface": "VLAN239_PRADOS1",
-        "created_at": "2024-08-15T16:36:07.503675",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -75351,8 +75144,8 @@ const largeArraydata =
       "id": 5770,
       "client_name": "GEOVANA FRANCHESCA PLATANIA GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -75368,16 +75161,7 @@ const largeArraydata =
       "client_identification": "V31785232",
       "nap_box_name": "CTO-00101",
       "created_at": "2024-07-30T09:38:49.796572",
-      "service_detail": {
-        "id": 4850,
-        "ip": "172.22.173.2",
-        "mac": "TPLGBA687AAE",
-        "serial": "TPLGBA687AAE",
-        "queue": "Plan_107915_30181_WispHub",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-12T18:20:20.144471",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -75807,11 +75591,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121595314",
       "address": "CALLE 13B CASA NRO 37 URB PANTIN ROSARIO DE PAYA",
@@ -76095,8 +75879,8 @@ const largeArraydata =
       "id": 5795,
       "client_name": "JEFFERSON ENRIQUE ARCILA REVERON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -76112,16 +75896,7 @@ const largeArraydata =
       "client_identification": "V25841619",
       "nap_box_name": "CTO-00141",
       "created_at": "2024-07-30T11:47:11.638473",
-      "service_detail": {
-        "id": 4648,
-        "ip": "172.22.217.2",
-        "mac": "TPLGBA687C67",
-        "serial": "TPLGBA687C67",
-        "queue": "Plan_161905_30183_WispHub",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-12T09:57:32.327832",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -76161,8 +75936,8 @@ const largeArraydata =
       "id": 5797,
       "client_name": "ORIANA PAOLA PARIS HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -76178,16 +75953,7 @@ const largeArraydata =
       "client_identification": "V29728516",
       "nap_box_name": "CTO-00128",
       "created_at": "2024-07-30T12:00:20.559861",
-      "service_detail": {
-        "id": 6018,
-        "ip": "172.22.211.2",
-        "mac": "TPLGBA687C72",
-        "serial": "TPLGBA687C72",
-        "queue": "Plan_161905_30183_WispHub",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-22T09:14:37.757428",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -77178,8 +76944,8 @@ const largeArraydata =
       "id": 5833,
       "client_name": "RITZY ROZALYNN GALINDO CASTRO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -77195,16 +76961,7 @@ const largeArraydata =
       "client_identification": "V14577933",
       "nap_box_name": "CTO-00110",
       "created_at": "2024-07-30T15:47:43.024484",
-      "service_detail": {
-        "id": 5943,
-        "ip": "172.22.179.2",
-        "mac": "TPLGBA6875A1",
-        "serial": "TPLGBA6875A1",
-        "queue": "queue1",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-21T13:44:09.137244",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -77316,11 +77073,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Vista Hermosa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125123891",
       "address": "CALLE EL ROSARIO CASA NRO 20 SECTOR VISTA HERMOSA",
@@ -79749,8 +79506,8 @@ const largeArraydata =
       "id": 5918,
       "client_name": "MARGARITA ROSA MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -79766,16 +79523,7 @@ const largeArraydata =
       "client_identification": "V23213355",
       "nap_box_name": "258",
       "created_at": "2024-07-31T16:55:57.458040",
-      "service_detail": {
-        "id": 4390,
-        "ip": "172.18.72.2",
-        "mac": "VSOL00122591",
-        "serial": "VSOL00122591",
-        "queue": "Plan_161903_30183_WispHub",
-        "interface": "VLAN240_DURPA",
-        "created_at": "2024-08-09T19:39:02.063912",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -80556,8 +80304,8 @@ const largeArraydata =
       "id": 5946,
       "client_name": "JOSE FERNANDO MARTINEZ DIAZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -80573,16 +80321,7 @@ const largeArraydata =
       "client_identification": "V12929318",
       "nap_box_name": "348",
       "created_at": "2024-08-01T14:42:22.856961",
-      "service_detail": {
-        "id": 5084,
-        "ip": "172.18.117.2",
-        "mac": "VSOL00119559",
-        "serial": "VSOL00119559",
-        "queue": "Plan_161892_30183_WispHub",
-        "interface": "VLAN240_DURPA",
-        "created_at": "2024-08-14T12:34:58.629438",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -81489,11 +81228,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Palmeras I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124578221",
       "address": "CALLE 1 CASA NRO 22 URB LAS PALMERAS LA JULIA ARAGUA TURMERO",
@@ -83070,8 +82809,8 @@ const largeArraydata =
       "id": 6031,
       "client_name": "RONALD JOSE BOLIVAR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Antonio Jose de Sucre",
@@ -83087,16 +82826,7 @@ const largeArraydata =
       "client_identification": "V13907454",
       "nap_box_name": "123",
       "created_at": "2024-08-02T09:26:21.024124",
-      "service_detail": {
-        "id": 5145,
-        "ip": "172.17.91.2",
-        "mac": "TPLGC3CCB7D8",
-        "serial": "TPLGC3CCB7D8",
-        "queue": "Plan_137413_1574_WispHub",
-        "interface": "VLAN101_AJS",
-        "created_at": "2024-08-15T09:26:45.670602",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -84345,8 +84075,8 @@ const largeArraydata =
       "id": 6073,
       "client_name": "LERMARY JOSEHP SALAS CAMPOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -84362,16 +84092,7 @@ const largeArraydata =
       "client_identification": "V25074515",
       "nap_box_name": "CTO-00088",
       "created_at": "2024-08-02T11:14:40.507955",
-      "service_detail": {
-        "id": 8059,
-        "ip": "172.21.114.2",
-        "mac": "TPLGB954FAE5",
-        "serial": "TPLGB954FAE5",
-        "queue": "Plan_131337_24341_WispHub",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2025-03-28T16:11:53.682448",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -84831,8 +84552,8 @@ const largeArraydata =
       "id": 6088,
       "client_name": "DAVID CASTRO CORTEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Prados III",
@@ -84848,16 +84569,7 @@ const largeArraydata =
       "client_identification": "V22298418",
       "nap_box_name": "CTO-00284 DOS",
       "created_at": "2024-08-02T11:43:17.063442",
-      "service_detail": {
-        "id": 4773,
-        "ip": "172.17.120.2",
-        "mac": "VSOL00520A49",
-        "serial": "VSOL00520A49",
-        "queue": "Plan_161891_30183_WispHub",
-        "interface": "VLAN236_PRADOS3",
-        "created_at": "2024-08-12T15:30:39.816532",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -86277,8 +85989,8 @@ const largeArraydata =
       "id": 6137,
       "client_name": "VANESSA MARGARITA CARTA RIVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Antonio Jose de Sucre",
@@ -86294,16 +86006,7 @@ const largeArraydata =
       "client_identification": "V17247006",
       "nap_box_name": "86 DOS",
       "created_at": "2024-08-02T14:55:03.103043",
-      "service_detail": {
-        "id": 5058,
-        "ip": "172.21.89.2",
-        "mac": "TPLGB954FAEC",
-        "serial": "TPLGB954FAEC",
-        "queue": "Plan_92223_1574_WispHub",
-        "interface": "VLAN101_AJS",
-        "created_at": "2024-08-14T10:21:52.879803",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -87327,11 +87030,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "La Concepcion",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04126039964",
       "address": "AV PRINCIPAL LA CONCEPCION EDIF 9 APT 6 CONJUNTO RESIDENCIAL TURMERO",
@@ -87822,8 +87525,8 @@ const largeArraydata =
       "id": 6187,
       "client_name": "MARIANA LISSETTHE MARACARA ORELLANA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Vista Hermosa",
@@ -87839,16 +87542,7 @@ const largeArraydata =
       "client_identification": "V14038779",
       "nap_box_name": "CTO-00058",
       "created_at": "2024-08-03T18:01:40.215977",
-      "service_detail": {
-        "id": 4857,
-        "ip": "172.17.195.2",
-        "mac": "VSOL001283F1",
-        "serial": "VSOL001283F1",
-        "queue": "Plan_161891_30183_WispHub",
-        "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-08-12T18:34:54.196638",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -89322,11 +89016,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "San Pablo",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144889038",
       "address": "CALLE HICELE EDIF LAGUNA CARIBE PISO 1 APT PH4 URB SAN PABLO",
@@ -90081,8 +89775,8 @@ const largeArraydata =
       "id": 6262,
       "client_name": "WISTON ISRAEL GARCIA BRICEÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -90098,16 +89792,7 @@ const largeArraydata =
       "client_identification": "V24669992",
       "nap_box_name": "455",
       "created_at": "2024-08-05T08:16:00.786335",
-      "service_detail": {
-        "id": 4580,
-        "ip": "172.21.176.2",
-        "mac": "TPLGB68B531E",
-        "serial": "TPLGB68B531E",
-        "queue": "Plan_161905_30183_WispHub",
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2024-08-11T17:16:47.671532",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -93138,11 +92823,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04124316702",
       "address": "CALLE 1 MANZANA 1 CASA NRO 8 BARRIO SAN TARAZONERO II TURMERO",
@@ -98730,8 +98415,8 @@ const largeArraydata =
       "id": 6571,
       "client_name": "YENIFER MARGARET GRATEROL SOLIS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Valle del Rosario",
@@ -98747,16 +98432,7 @@ const largeArraydata =
       "client_identification": "V17374805",
       "nap_box_name": "299",
       "created_at": "2024-08-27T10:44:04.928931",
-      "service_detail": {
-        "id": 6696,
-        "ip": "172.20.87.2",
-        "mac": "TPLGF5CB059F",
-        "serial": "TPLGF5CB059F",
-        "queue": "Plan_127996_1574_WispHub",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2024-09-18T13:03:42.487759",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -99861,8 +99537,8 @@ const largeArraydata =
       "id": 6613,
       "client_name": "LUIS ALFREDO HERNANDEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -99878,16 +99554,7 @@ const largeArraydata =
       "client_identification": "V21204461",
       "nap_box_name": "CTO-00253",
       "created_at": "2024-08-31T12:23:20.958607",
-      "service_detail": {
-        "id": 9274,
-        "ip": "172.31.152.2",
-        "mac": "172",
-        "serial": "OEMT3C62290E",
-        "queue": "queue1",
-        "interface": "VLAN251_RIO_SECO",
-        "created_at": "2025-07-30T10:18:11.300703",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -99927,8 +99594,8 @@ const largeArraydata =
       "id": 6615,
       "client_name": "YOLIAGNIS YELICETH LANDAETA NIEVES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -99944,24 +99611,15 @@ const largeArraydata =
       "client_identification": "V27048675",
       "nap_box_name": "CTO-0609",
       "created_at": "2024-08-31T13:18:00.335144",
-      "service_detail": {
-        "id": 10957,
-        "ip": "172.31.154.2",
-        "mac": "OEMT3c6248be",
-        "serial": "OEMT3c6248be",
-        "queue": null,
-        "interface": "VLAN251_RIO_SECO",
-        "created_at": "2025-12-26T13:23:23.574682",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 6616,
       "client_name": "JOSE ALEJANDRO GONZALEZ MOTA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "La Casona II",
@@ -99977,16 +99635,7 @@ const largeArraydata =
       "client_identification": "V27463708",
       "nap_box_name": "CTO-00087",
       "created_at": "2024-09-01T10:02:00.517556",
-      "service_detail": {
-        "id": 6504,
-        "ip": "172.25.97.2",
-        "mac": "TPLGB777B40A",
-        "serial": "TPLGB777B40A",
-        "queue": "Plan_131647_24341_WispHub",
-        "interface": "VLAN110_CASONA_2",
-        "created_at": "2024-09-01T10:03:15.023555",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -102759,8 +102408,8 @@ const largeArraydata =
       "id": 6712,
       "client_name": "JOSE RUBY PEREZ URBINA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Pantin",
@@ -102776,16 +102425,7 @@ const largeArraydata =
       "client_identification": "V20287045",
       "nap_box_name": "CTO-00126",
       "created_at": "2024-09-26T13:37:25.442300",
-      "service_detail": {
-        "id": 9341,
-        "ip": "172.25.233.2",
-        "mac": "VSOL004818E1",
-        "serial": "VSOL004818E1",
-        "queue": "queue1",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2025-08-07T16:30:31.912167",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -104181,8 +103821,8 @@ const largeArraydata =
       "id": 6762,
       "client_name": "SILENNIS YNES FREITES VELASQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Canaima",
@@ -104198,16 +103838,7 @@ const largeArraydata =
       "client_identification": "V21287535",
       "nap_box_name": "CTO-00107 ",
       "created_at": "2024-10-11T14:32:59.790404",
-      "service_detail": {
-        "id": 11553,
-        "ip": "172.29.215.2",
-        "mac": "OEMT3C625CAE",
-        "serial": "OEMT3C625CAE",
-        "queue": null,
-        "interface": "VLAN237_CANAIMA",
-        "created_at": "2026-02-08T18:15:04.556936",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -104625,8 +104256,8 @@ const largeArraydata =
       "id": 6777,
       "client_name": "EDUARDO JOSE GONZALEZ SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -104642,16 +104273,7 @@ const largeArraydata =
       "client_identification": "V29574431",
       "nap_box_name": "CAJA NAP CALLE 6 D MATACABALLO",
       "created_at": "2024-10-17T15:45:16.177534",
-      "service_detail": {
-        "id": 6828,
-        "ip": "172.30.158.2",
-        "mac": "OEMT3C6226A6",
-        "serial": "OEMT3C6226A6",
-        "queue": "Plan_161869_30181_WispHub",
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2024-10-18T15:36:25.791706",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -105903,8 +105525,8 @@ const largeArraydata =
       "id": 6824,
       "client_name": "MAYERLIN CAROLINA VALERO SILVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Callejon Rosales",
@@ -105920,16 +105542,7 @@ const largeArraydata =
       "client_identification": "V16865080",
       "nap_box_name": "319",
       "created_at": "2024-10-23T15:01:46.551114",
-      "service_detail": {
-        "id": 11633,
-        "ip": "10.10.21.2",
-        "mac": "OEMT3C625042",
-        "serial": "OEMT3C625042",
-        "queue": null,
-        "interface": "VLAN206_ROSALES_OLT2",
-        "created_at": "2026-02-15T21:44:42.369274",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -106002,8 +105615,8 @@ const largeArraydata =
       "id": 6828,
       "client_name": "WENDY YERHIBER RONDON MENDOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Pantin",
@@ -106019,16 +105632,7 @@ const largeArraydata =
       "client_identification": "V16028673",
       "nap_box_name": "CTO-00311",
       "created_at": "2024-10-23T16:53:40.466966",
-      "service_detail": {
-        "id": 11012,
-        "ip": "172.25.125.2",
-        "mac": "HWTC45A02757",
-        "serial": "HWTC45A02757",
-        "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-01-06T14:21:15.943414",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -109419,8 +109023,8 @@ const largeArraydata =
       "id": 6968,
       "client_name": "ABRIL JOCERLYS MARIA CARRILLO CABRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -109436,16 +109040,7 @@ const largeArraydata =
       "client_identification": "V29620395",
       "nap_box_name": "509",
       "created_at": "2024-11-08T07:57:29.671291",
-      "service_detail": {
-        "id": 10258,
-        "ip": "10.10.22.2",
-        "mac": "GPON0097CBA6",
-        "serial": "GPON0097CBA6",
-        "queue": null,
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-11-22T16:47:50.718591",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -110118,8 +109713,8 @@ const largeArraydata =
       "id": 6996,
       "client_name": "CRUZ ANTONIO PEREIRA CAMPELO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "1ro de Mayo Norte",
@@ -110135,16 +109730,7 @@ const largeArraydata =
       "client_identification": "V19833338",
       "nap_box_name": "CTO - 900",
       "created_at": "2024-11-11T15:44:46.841303",
-      "service_detail": {
-        "id": 8840,
-        "ip": "172.18.245.2",
-        "mac": "OEMT3C624A0E",
-        "serial": "OEMT3C624A0E",
-        "queue": "queue1",
-        "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2025-06-04T15:55:28.627019",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -112518,8 +112104,8 @@ const largeArraydata =
       "id": 7090,
       "client_name": "ELIZABETH ALFONZO LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -112535,16 +112121,7 @@ const largeArraydata =
       "client_identification": "V21464003",
       "nap_box_name": "CTO - 1004",
       "created_at": "2024-11-22T16:46:29.559347",
-      "service_detail": {
-        "id": 11088,
-        "ip": "10.11.10.2",
-        "mac": "HWTC48220040",
-        "serial": "HWTC48220040",
-        "queue": null,
-        "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-01-10T19:13:31.943969",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -112914,8 +112491,8 @@ const largeArraydata =
       "id": 7102,
       "client_name": "VICTOR LUIS VINA REVERON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -112931,24 +112508,15 @@ const largeArraydata =
       "client_identification": "V20336262",
       "nap_box_name": "CTO - 987",
       "created_at": "2024-11-24T20:28:16.452276",
-      "service_detail": {
-        "id": 7159,
-        "ip": "10.10.41.2",
-        "mac": "HWTC48080094",
-        "serial": "HWTC48080094",
-        "queue": "Plan_107915_30181_WispHub",
-        "interface": "VLAN280_POLVORIN",
-        "created_at": "2024-11-24T20:29:40.203073",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 7103,
       "client_name": "YOHAN ALEXANDER LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -112964,16 +112532,7 @@ const largeArraydata =
       "client_identification": "V21204956",
       "nap_box_name": "CTO - 987",
       "created_at": "2024-11-25T13:35:46.756208",
-      "service_detail": {
-        "id": 11330,
-        "ip": "10.11.91.2",
-        "mac": "HWTC48220034",
-        "serial": "HWTC48220034",
-        "queue": null,
-        "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-01-23T12:38:24.858978",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -114927,13 +114486,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1000",
       "created_at": "2024-11-29T10:44:56.706195",
       "service_detail": {
-        "id": 7282,
+        "id": 12178,
         "ip": "10.11.100.2",
         "mac": "HWTC48080014",
-        "serial": "HWTC48080014 (PW170)",
-        "queue": "Plan_161870_30181_WispHub",
+        "serial": "HWTC48080014",
+        "queue": null,
         "interface": "VLAN280_POLVORIN",
-        "created_at": "2024-12-02T08:07:08.057522",
+        "created_at": "2026-03-25T08:14:42.638352",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -119541,8 +119100,8 @@ const largeArraydata =
       "id": 7344,
       "client_name": "ANGELA MARIA SUAREZ CALDERON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Durpa",
@@ -119558,16 +119117,7 @@ const largeArraydata =
       "client_identification": "V11182129",
       "nap_box_name": "CTO-00302",
       "created_at": "2024-12-18T14:35:05.471078",
-      "service_detail": {
-        "id": 7579,
-        "ip": "10.10.93.2",
-        "mac": "HWTC48080330",
-        "serial": "HWTC48080330",
-        "queue": "queue1",
-        "interface": "VLAN243_BICENTENARIO",
-        "created_at": "2024-12-19T13:56:36.507232",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -119631,8 +119181,8 @@ const largeArraydata =
       "id": 7347,
       "client_name": "ANNY BISKEY YANEZ RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Luz y Vida",
@@ -119648,16 +119198,7 @@ const largeArraydata =
       "client_identification": "V18163821",
       "nap_box_name": "CTO-00308",
       "created_at": "2024-12-18T15:43:49.815934",
-      "service_detail": {
-        "id": 11316,
-        "ip": "10.10.97.2",
-        "mac": "HWTC47310524",
-        "serial": "HWTC47310524",
-        "queue": null,
-        "interface": "VLAN264_LUZYVIDA_ZTE",
-        "created_at": "2026-01-22T15:51:11.968571",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -119802,8 +119343,8 @@ const largeArraydata =
       "id": 7354,
       "client_name": "YUBELIS JOSEFINA MENDOZA OLIVAR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Durpa",
@@ -119901,8 +119442,8 @@ const largeArraydata =
       "id": 7357,
       "client_name": "FERNANDO SIMON ALVAREZ VILLAMIZAR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Canaima",
@@ -119918,16 +119459,7 @@ const largeArraydata =
       "client_identification": "V21465394",
       "nap_box_name": "356",
       "created_at": "2024-12-18T18:15:17.890662",
-      "service_detail": {
-        "id": 10358,
-        "ip": "10.15.175.2",
-        "mac": "QXTLCBD9B047",
-        "serial": "QXTLCBD9B047",
-        "queue": null,
-        "interface": "VLAN237_CANAIMA",
-        "created_at": "2025-11-26T20:11:24.821588",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -120582,8 +120114,8 @@ const largeArraydata =
       "id": 7397,
       "client_name": "ANABEL GONZALEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Luz y Vida",
@@ -120599,16 +120131,7 @@ const largeArraydata =
       "client_identification": "V22291093",
       "nap_box_name": "CTO-00308",
       "created_at": "2025-01-15T13:38:43.516057",
-      "service_detail": {
-        "id": 9680,
-        "ip": "10.10.146.2",
-        "mac": "HWTC523AB487",
-        "serial": "HWTC523AB487",
-        "queue": null,
-        "interface": "VLAN264_LUZYVIDA_ZTE",
-        "created_at": "2025-11-04T09:56:27.448542",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -120843,8 +120366,8 @@ const largeArraydata =
       "id": 7407,
       "client_name": "KARELIS CAROLINA ESCALONA CARMONA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Las Rurales",
@@ -120861,13 +120384,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0490",
       "created_at": "2025-01-17T11:25:22.989368",
       "service_detail": {
-        "id": 7652,
+        "id": 12176,
         "ip": "10.10.168.2",
         "mac": "HWTC49200811",
         "serial": "HWTC49200811",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN252_RURALES_PAYA",
-        "created_at": "2025-01-27T09:18:00.960528",
+        "created_at": "2026-03-24T20:03:06.841682",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -122544,8 +122067,8 @@ const largeArraydata =
       "id": 7487,
       "client_name": "MARITZA DE JESUS RESTREPO USMA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Los Hornos",
@@ -122561,16 +122084,7 @@ const largeArraydata =
       "client_identification": "V14241775",
       "nap_box_name": "437",
       "created_at": "2025-02-05T15:35:44.689230",
-      "service_detail": {
-        "id": 7700,
-        "ip": "10.10.215.2",
-        "mac": "HWTC49200364",
-        "serial": "HWTC49200364",
-        "queue": "Plan_161895_30183_WispHub",
-        "interface": "VLAN247_HORNOS",
-        "created_at": "2025-02-05T17:19:34.057755",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -123087,8 +122601,8 @@ const largeArraydata =
       "id": 7504,
       "client_name": "FRANYERLI STHEPANY SANDOVAL SANDOVAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Canaima",
@@ -123104,16 +122618,7 @@ const largeArraydata =
       "client_identification": "V24930111",
       "nap_box_name": "356",
       "created_at": "2025-02-11T15:49:12.739481",
-      "service_detail": {
-        "id": 7722,
-        "ip": "10.10.232.2",
-        "mac": "HWTC48220056",
-        "serial": "HWTC48220056",
-        "queue": "Plan_161895_30183_WispHub",
-        "interface": "VLAN237_CANAIMA",
-        "created_at": "2025-02-11T15:56:14.337073",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -123693,8 +123198,8 @@ const largeArraydata =
       "id": 7538,
       "client_name": "ADOLFO CARLOS BAZAN HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Las Palmas",
@@ -123710,16 +123215,7 @@ const largeArraydata =
       "client_identification": "V30524725",
       "nap_box_name": "CTO-00098",
       "created_at": "2025-02-18T10:21:41.903654",
-      "service_detail": {
-        "id": 7750,
-        "ip": "10.10.251.2",
-        "mac": "OEMT3C624892",
-        "serial": "OEMT3C624892",
-        "queue": "Plan_161900_30183_WispHub",
-        "interface": "VLAN262_LAS_PALMAS_ZTE",
-        "created_at": "2025-02-18T13:41:41.474125",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -124242,8 +123738,8 @@ const largeArraydata =
       "id": 7566,
       "client_name": "VICENTDEIBYS JOSE ALVAREZ ROJAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -124259,16 +123755,7 @@ const largeArraydata =
       "client_identification": "V26904527",
       "nap_box_name": "CTO-00127 DOS",
       "created_at": "2025-02-23T11:36:02.821144",
-      "service_detail": {
-        "id": 11379,
-        "ip": "10.12.22.2",
-        "mac": "HWTC49200629",
-        "serial": "HWTC49200629",
-        "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-01-26T08:41:45.289431",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -140181,8 +139668,8 @@ const largeArraydata =
       "id": 8165,
       "client_name": "MAY LING DURAN ORTEGA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -140198,16 +139685,7 @@ const largeArraydata =
       "client_identification": "V12567765",
       "nap_box_name": "322",
       "created_at": "2025-05-14T14:58:08.874439",
-      "service_detail": {
-        "id": 8754,
-        "ip": "10.14.156.2",
-        "mac": "QXTLCB4E85E6",
-        "serial": "QXTLCB4E85E6",
-        "queue": "queue1",
-        "interface": "VLAN110_CASONA_2",
-        "created_at": "2025-05-28T09:00:58.811049",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -144072,8 +143550,8 @@ const largeArraydata =
       "id": 8333,
       "client_name": "DORIS RAMONA BRACOVICH DE PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Saman Tarazonero I",
@@ -144089,16 +143567,7 @@ const largeArraydata =
       "client_identification": "V5597063",
       "nap_box_name": "674",
       "created_at": "2025-06-05T13:13:46.089251",
-      "service_detail": {
-        "id": 8859,
-        "ip": "10.14.216.2",
-        "mac": "QXTLCB3C0A76",
-        "serial": "QXTLCB3C0A76",
-        "queue": "queue1",
-        "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2025-06-05T16:23:08.933874",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -145725,8 +145194,8 @@ const largeArraydata =
       "id": 8385,
       "client_name": "JOSE ANTONIO PALMA BOLIVAR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Saman de Guere",
@@ -145742,16 +145211,7 @@ const largeArraydata =
       "client_identification": "V10617995",
       "nap_box_name": "CTO - 1220",
       "created_at": "2025-06-13T12:17:16.672039",
-      "service_detail": {
-        "id": 11763,
-        "ip": "10.15.8.2",
-        "mac": "HWTCD62CD39C",
-        "serial": "HWTCD62CD39C",
-        "queue": null,
-        "interface": "VLAN122_SAMAN_GUERE",
-        "created_at": "2026-02-27T09:43:39.062757",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -147564,8 +147024,8 @@ const largeArraydata =
       "id": 8487,
       "client_name": "JOSE ANTONIO ECHEZURIA RIVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Simon Bolivar",
@@ -147581,16 +147041,7 @@ const largeArraydata =
       "client_identification": "V11409713",
       "nap_box_name": "CTO-00001",
       "created_at": "2025-06-25T11:15:03.390819",
-      "service_detail": {
-        "id": 10678,
-        "ip": "10.15.149.2",
-        "mac": "MONU00482C9D",
-        "serial": "MONU00482C9D",
-        "queue": null,
-        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
-        "created_at": "2025-12-13T08:43:43.102836",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
