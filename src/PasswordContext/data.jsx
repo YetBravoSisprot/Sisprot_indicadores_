@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5296,
+  "count": 5301,
   "results": [
     {
       "id": 3063,
@@ -57366,13 +57366,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00060 DOS",
       "created_at": "2024-07-02T13:48:14.601969",
       "service_detail": {
-        "id": 3435,
+        "id": 12186,
         "ip": "172.30.131.2",
-        "mac": "2012231218006769",
-        "serial": "OEMT3C6259AA (118)",
-        "queue": "Plan_107915_30181_WispHub",
+        "mac": "OEMT3C6259AA",
+        "serial": "OEMT3C6259AA",
+        "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2024-07-04T11:37:04.288635",
+        "created_at": "2026-03-26T09:33:00.849878",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -66078,11 +66078,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04149352506",
       "address": "CALLE 15 -A CASA NRO 20 URB PANTIN ROSARIO DE PAYA",
@@ -113292,11 +113292,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "1ro de Mayo Sur",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243800866",
       "address": "CALLE CALLEJON LOS PEREIRA CASA # 54 SECTOR PRIMERO DE MAYO SUR ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
@@ -157302,8 +157302,8 @@ const largeArraydata =
       "id": 8904,
       "client_name": "DELKIS TAMARA QUEVEDO AMADOR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Guerito",
@@ -160649,7 +160649,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Mata Caballo",
       "plan": {
@@ -160665,6 +160665,171 @@ const largeArraydata =
       "nap_box_name": "CTO-00265",
       "created_at": "2026-03-25T17:34:52.315218",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9040,
+      "client_name": "KELVIN DAYERSON SANCHEZ VARGAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Vista Hermosa",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128858460",
+      "address": "VISTA HERMOSA, CALLE LAS MANDARINAS CASA NÚMERO 59",
+      "client_identification": "V23783510",
+      "nap_box_name": "CTO-00060 DOS",
+      "created_at": "2026-03-26T10:36:42.444389",
+      "service_detail": {
+        "id": 12190,
+        "ip": "10.17.15.2",
+        "mac": "VSOL0011F7F9",
+        "serial": "VSOL0011F7F9",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-03-26T10:55:28.139698",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9041,
+      "client_name": "CARLOS JAVIER OVALLES PIÑANGO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Vista Hermosa",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04122900379",
+      "address": "CALLE LAS MANDARINAS CASA NRO 50 SECTOR VISTA HERMOSA ROSARIO DE PAYA",
+      "client_identification": "V32046620",
+      "nap_box_name": "CTO-00057 DOS",
+      "created_at": "2026-03-26T10:38:09.309764",
+      "service_detail": {
+        "id": 12189,
+        "ip": "10.17.13.2",
+        "mac": "QXTLCB2E7195",
+        "serial": "QXTLCB2E7195",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-03-26T10:48:25.712425",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9042,
+      "client_name": "YERAL EDUARDO JOSE GOMEZ RANGEL",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Vista Hermosa",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243130056",
+      "address": "CALLE LAS MANDARINAS CASA NRO 58 SECTOR VISTA HERMOSA ROSARIO DE PAYA",
+      "client_identification": "V25708428",
+      "nap_box_name": "CTO-00059",
+      "created_at": "2026-03-26T10:44:13.838552",
+      "service_detail": {
+        "id": 12188,
+        "ip": "10.17.12.2",
+        "mac": "QXTLCBB10DD7",
+        "serial": "QXTLCBB10DD7",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-03-26T10:47:56.607015",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9043,
+      "client_name": "RUFO JEAN PAUL MORALES TERAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Vista Hermosa",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04125989734",
+      "address": "PAYA VISTA HERMOSA CALLE LAS MANDARINAS CASA N#27",
+      "client_identification": "V21270403",
+      "nap_box_name": "CTO-00059",
+      "created_at": "2026-03-26T10:44:50.099597",
+      "service_detail": {
+        "id": 12187,
+        "ip": "10.17.11.2",
+        "mac": "OEMT3C622452",
+        "serial": "OEMT3C622452",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-03-26T10:47:20.317421",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9044,
+      "client_name": "ARNALDO RAFAEL ROJAS GOMEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": false,
+      "sector_name": "Vista Hermosa",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04140398689",
+      "address": "CALLE LAS MANDARINAS NRO 38 SECTOR VISTA HERMOSA ROSARIO DE PAYA",
+      "client_identification": "V25922903",
+      "nap_box_name": "CTO-00058",
+      "created_at": "2026-03-26T10:49:07.209718",
+      "service_detail": {
+        "id": 12191,
+        "ip": "10.17.14.2",
+        "mac": "QXTLCB893A57",
+        "serial": "QXTLCB893A57",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-03-26T10:55:56.444030",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
