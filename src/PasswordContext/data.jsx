@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5301,
+  "count": 5302,
   "results": [
     {
       "id": 3063,
@@ -63735,11 +63735,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125834809",
       "address": "CALLE MANZANA C-12 CASA NRO 10 SECTOR SAMAN TARAZONERO 2 TURMERO",
@@ -160664,7 +160664,16 @@ const largeArraydata =
       "client_identification": "V19790910",
       "nap_box_name": "CTO-00265",
       "created_at": "2026-03-25T17:34:52.315218",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12193,
+        "ip": "10.16.179.2",
+        "mac": "10.16.179.2",
+        "serial": "10.16.179.2",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-03-27T10:03:23.794022",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -160828,6 +160837,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
         "created_at": "2026-03-26T10:55:56.444030",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9045,
+      "client_name": "INVERSIONES WAWI 2025 CA",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Paya Abajo",
+      "plan": {
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
+      },
+      "client_mobile": "0424-3467219",
+      "address": "AV PRINCIPAL PARCELA NÚMERO 2 SECTOR PAYA ABAJO ROSARIO DE PAYA",
+      "client_identification": "J506765144",
+      "nap_box_name": "CE - 773",
+      "created_at": "2026-03-27T08:35:06.343063",
+      "service_detail": {
+        "id": 12194,
+        "ip": "10.16.180.2",
+        "mac": "10.16.180.2",
+        "serial": "10.16.180.2",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-03-27T10:03:53.165915",
         "created_by_name": null
       },
       "installation_invoice_cost": null
