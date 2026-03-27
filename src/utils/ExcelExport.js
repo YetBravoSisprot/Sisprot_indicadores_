@@ -98,7 +98,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "MAC", key: "mac", width: 20, ui: "MAC" },
         { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
         { header: "DÍAS HÁBILES", key: "dias_habiles", width: 15, ui: "Días Hábiles" },
-        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" },
+        { header: "INTERFACE", key: "interface", width: 20, ui: "Interface" }
     ];
 
     const followUpColumns = [
@@ -115,7 +116,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
+        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac", "interface"
     ];
 
     const isAll = selectedColumns.includes("Todas");
@@ -177,6 +178,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
                 dias_habiles: "", 
                 tipo_cliente: norm(cliente.client_type_name),
+                interface: cliente.interface || "N/A",
                 contactado_por: "",
                 contesto: "",
                 ultima_fecha: "",
