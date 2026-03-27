@@ -220,7 +220,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         { header: "IP", key: "ip", width: 15, ui: "IP" },
         { header: "MAC", key: "mac", width: 20, ui: "MAC" },
         { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
-        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" },
+        { header: "INTERFACE", key: "interface", width: 20, ui: "Interface" }
     ];
 
     const isAll = selectedColumns.includes("Todas");
@@ -253,7 +254,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
             mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
             fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
-            tipo_cliente: cliente.client_type_name
+            tipo_cliente: cliente.client_type_name,
+            interface: cliente.interface || "N/A"
         };
         detailSheet.addRow(rowData);
     });
