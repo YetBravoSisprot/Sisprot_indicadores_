@@ -865,12 +865,7 @@ function TopUrbanismo() {
               <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
                 📈 Descargar Reporte Ejecutivo
               </button>
-            </div>
-
-            <span className="filtro-tip">
-              💡 <b>Tip mágico:</b> Puedes mantener presionada la tecla <b>Ctrl</b> (o <b>Cmd ⌘</b> en Mac) y hacer clic para elegir <b>varias opciones</b> al mismo tiempo en los filtros de arriba.
-            </span>
-          </div>
+            </div>          </div>
 
 
           <div className="titulo-topurbanismos">
