@@ -276,6 +276,28 @@ const urbanismosAprobados = {
 
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
+const columnasOptions = [
+  { value: "Todas", label: "📋 Ver Todas las Columnas" },
+  { value: "Contrato", label: "Contrato" },
+  { value: "Cedula", label: "Cedula" },
+  { value: "IP", label: "IP" },
+  { value: "MAC", label: "MAC" },
+  { value: "Estatus", label: "Estatus Inicial" },
+  { value: "Estado Final", label: "Estado Final" },
+  { value: "Cliente", label: "Cliente" },
+  { value: "Teléfono", label: "Teléfono" },
+  { value: "Urbanismo", label: "Urbanismo" },
+  { value: "Plan", label: "Plan" },
+  { value: "Costo", label: "Costo" },
+  { value: "Migrado", label: "Migrado" },
+  { value: "Ciclo", label: "Ciclo" },
+  { value: "Tipo_Cliente", label: "Tipo Cliente" },
+  { value: "Dirección", label: "Dirección" },
+  { value: "Fecha_Creación", label: "Fecha de Creación" },
+  { value: "Días Hábiles", label: "Días Hábiles" },
+  { value: "Interface", label: "Interface" }
+];
+
 
 
 function TopUrbanismo() {
@@ -329,9 +351,21 @@ function TopUrbanismo() {
     setCiclosSeleccionados(selectedOptions);
   };
 
-  const handleColumnasChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setColumnasSeleccionadas(selectedOptions);
+  const handleColumnaCheckboxChange = (valor) => {
+    if (valor === "Todas") {
+      setColumnasSeleccionadas((prev) => (prev.includes("Todas") ? [] : ["Todas"]));
+    } else {
+      setColumnasSeleccionadas((prev) => {
+        let nuevos = prev.filter((col) => col !== "Todas");
+        if (nuevos.includes(valor)) {
+          nuevos = nuevos.filter((col) => col !== valor);
+        } else {
+          nuevos.push(valor);
+        }
+        if (nuevos.length === 0) return ["Todas"];
+        return nuevos;
+      });
+    }
   };
 
   const buscarPorContrato = () => {
@@ -739,27 +773,51 @@ function TopUrbanismo() {
                 ))}
               </select>
 
-              <select id="columnasSelect" size="5" multiple value={columnasSeleccionadas} onChange={handleColumnasChange}>
-                <option value="Todas">📋 Ver Todas las Columnas</option>
-                <option value="Contrato">Contrato</option>
-                <option value="Cedula">Cedula</option>
-                <option value="IP">IP</option>
-                <option value="MAC">MAC</option>
-                <option value="Estatus">Estatus Inicial</option>
-                <option value="Estado Final">Estado Final</option>
-                <option value="Cliente">Cliente</option>
-                <option value="Teléfono">Teléfono</option>
-                <option value="Urbanismo">Urbanismo</option>
-                <option value="Plan">Plan</option>
-                <option value="Costo">Costo</option>
-                <option value="Migrado">Migrado</option>
-                <option value="Ciclo">Ciclo</option>
-                <option value="Tipo_Cliente">Tipo Cliente</option>
-                <option value="Dirección">Dirección</option>
-                <option value="Fecha_Creación">Fecha de Creación</option>
-                <option value="Días Hábiles">Días Hábiles</option>
-                <option value="Interface">Interface</option>
-              </select>
+              <div 
+                className="columnas-checkbox-container"
+                style={{ 
+                  backgroundColor: '#fff', 
+                  border: '1px solid #ccc', 
+                  borderRadius: '6px', 
+                  overflowY: 'auto', 
+                  height: '100%', 
+                  maxHeight: '160px',
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                  minWidth: '200px'
+                }}
+              >
+                {columnasOptions.map((opt) => {
+                  const isTodas = opt.value === "Todas";
+                  const isChecked = columnasSeleccionadas.includes(opt.value) || (!isTodas && columnasSeleccionadas.includes("Todas"));
+                  return (
+                    <label 
+                      key={opt.value} 
+                      style={{ 
+                        margin: 0, 
+                        padding: '6px 10px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        cursor: 'pointer', 
+                        fontSize: '13px', 
+                        borderBottom: isTodas ? '1px solid #ccc' : 'none',
+                        backgroundColor: isTodas ? '#0047b3' : (columnasSeleccionadas.includes(opt.value) && !columnasSeleccionadas.includes("Todas") ? '#e6f0ff' : 'transparent'),
+                        color: isTodas ? '#fff' : '#333',
+                        fontWeight: isTodas ? 'bold' : 'normal'
+                      }}
+                    >
+                      <input 
+                        type="checkbox" 
+                        checked={isChecked}
+                        onChange={() => handleColumnaCheckboxChange(opt.value)}
+                        style={{ marginRight: '8px', cursor: 'pointer' }}
+                      />
+                      {opt.label}
+                    </label>
+                  );
+                })}
+              </div>
 
             </div>
 
