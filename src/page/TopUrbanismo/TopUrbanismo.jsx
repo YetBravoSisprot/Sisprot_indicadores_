@@ -780,7 +780,7 @@ function TopUrbanismo() {
               </button>
             </div>
 
-            <div>
+            <div className="top-buttons-group">
               <button className="button" onClick={handleTop10Urb}>
                 Top 10
               </button>
