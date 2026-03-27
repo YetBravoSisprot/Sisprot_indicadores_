@@ -1,108 +1,41 @@
-/* Avatar Flotante del Robot */
 .chatbot-toggle-wrapper {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 65px;
-    height: 65px;
+    width: 110px;
+    height: 110px;
     z-index: 9999;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    /* Efecto Glow moderno corporativo */
-    background: radial-gradient(circle at top right, #3498db, #1d4b8f);
-    box-shadow: 0 5px 20px rgba(29, 75, 143, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
-    border: 3px solid rgba(255, 255, 255, 0.2);
+    background: #0f172a; /* Fondo azul oscuro simulando la app */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(59,130,246,0.3);
+    border: 2px solid rgba(59, 130, 246, 0.4);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: robot-float 3s ease-in-out infinite;
-}
-
-.chatbot-toggle-wrapper:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(29, 75, 143, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.5);
+    mix-blend-mode: normal; /* Vuelve a normal para tapar las cajas blancas detrás */
+    overflow: hidden; /* Recorta en circulo perfecto */
 }
 
 .chatbot-toggle-wrapper.open {
     background: #e74c3c;
+    width: 65px;     /* Vuelve a ser peq  ueño al abrirse (botón X) */
+    height: 65px;
+    border-radius: 50%;
     animation: none;
     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
+    border: 2px solid rgba(255,255,255,0.2);
+    mix-blend-mode: normal; /* Al abrir, quitamos el efecto para que el botón rojo se vea bien */
 }
 
-/* El Robot (Diseño Interior) */
-.robot-avatar {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Antena Superior */
-.robot-antenna {
-    width: 4px;
-    height: 10px;
-    background: #ecf0f1;
-    position: relative;
-    top: -2px;
-    border-radius: 2px;
-}
-
-.robot-antenna::before {
-    content: "";
-    position: absolute;
-    top: -5px;
-    left: -3px;
-    width: 10px;
-    height: 10px;
-    background: #f1c40f;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #f1c40f;
-    animation: antenna-pulse 1.5s infinite alternate;
-}
-
-/* Cabeza */
-.robot-head {
-    width: 32px;
-    height: 24px;
-    background: #ecf0f1;
-    border-radius: 8px 8px 6px 6px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Ojos */
-.robot-eyes {
-    display: flex;
-    gap: 6px;
-    width: 100%;
-    justify-content: center;
-    margin-top: 2px;
-}
-
-.eye {
-    width: 7px;
-    height: 3px;
-    background: #2ecc71;
-    border-radius: 4px;
-    box-shadow: 0 0 5px #2ecc71;
-    animation: eye-blink 4s infinite;
-}
-
-/* Boca ("Hablando") */
-.robot-mouth {
-    width: 14px;
-    height: 3px;
-    background: #34495e;
-    border-radius: 2px;
-    animation: mouth-talk 2s infinite ease-in-out;
+.taurus-avatar {
+    width: 130%;  /* Robot grande dentro del círculo */
+    height: 130%;
+    object-fit: cover;
+    mix-blend-mode: screen; /* Quita lo negro integrándose contra el azul #0f172a del padre */
+    filter: drop-shadow(0 4px 10px rgba(59,130,246,0.2));
 }
 
 /* Botón de cerrar cuando el menú está abierto */
@@ -125,71 +58,7 @@
     100% {
         transform: translateY(0);
     }
-}
 
-@keyframes antenna-pulse {
-    from {
-        box-shadow: 0 0 2px #f1c40f;
-        background: #f39c12;
-    }
-
-    to {
-        box-shadow: 0 0 12px #f1c40f;
-        background: #f1c40f;
-    }
-}
-
-@keyframes eye-blink {
-
-    0%,
-    96%,
-    98%,
-    100% {
-        height: 3px;
-        transform: scaleY(1);
-    }
-
-    97%,
-    99% {
-        height: 1px;
-        transform: scaleY(0.1);
-    }
-
-    /* Parpadeo rápido */
-}
-
-@keyframes mouth-talk {
-
-    0%,
-    100% {
-        width: 14px;
-        height: 3px;
-    }
-
-    20% {
-        width: 10px;
-        height: 6px;
-        border-radius: 40%;
-    }
-
-    /* O */
-    40% {
-        width: 16px;
-        height: 2px;
-    }
-
-    /* - */
-    60% {
-        width: 8px;
-        height: 5px;
-        border-radius: 50%;
-    }
-
-    /* o */
-    80% {
-        width: 16px;
-        height: 3px;
-    }
 }
 
 /* Ventana Principal del Chatbot (Glassmorphism Moderno) */
@@ -1013,3 +882,100 @@
 .quick-action-btn.status-suspendido:hover { background: rgba(241, 196, 15, 0.25); border-color: rgba(241, 196, 15, 0.5); }
 .quick-action-btn.status-cancelado:hover { background: rgba(231, 76, 60, 0.25); border-color: rgba(231, 76, 60, 0.5); }
 
+/* Sombra debajo del robot animado */
+.chatbot-avatar-shadow {
+    position: fixed;
+    bottom: 20px;
+    right: 45px;
+    width: 80px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    filter: blur(8px);
+    z-index: 9997; /* Atrás del robot pero arriba del resto */
+    animation: shadow-pulse 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes shadow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(0.85); opacity: 0.2; }
+}
+
+/* Globo de conversación de bienvenida */
+.chatbot-welcome-bubble {
+    position: fixed;
+    bottom: 155px; /* Ajustado arriba del avatar 110px+ */
+    right: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 14px 20px;
+    border-radius: 20px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255,255,255,0.3) inset;
+    font-size: 0.92rem;
+    color: #1e293b;
+    font-weight: 700;
+    line-height: 1.4;
+    z-index: 9998; /* Un poco menos que el avatar */
+    cursor: pointer;
+    transform-origin: bottom right;
+    animation: popInBubble 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, float-bubble 3s ease-in-out infinite 0.6s;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.chatbot-welcome-bubble:hover {
+    filter: brightness(1.05);
+}
+
+.chatbot-welcome-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    border-width: 12px 12px 0;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+
+@keyframes popInBubble {
+    0% { transform: scale(0.5) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes float-bubble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* =========================================
+   RESPONSIVE MOBILE ADJUSTMENTS
+   ========================================= */
+@media screen and (max-width: 768px) {
+    .chatbot-toggle-wrapper {
+        width: 75px;
+        height: 75px;
+        bottom: 20px;
+        right: 15px;
+    }
+    .chatbot-toggle-wrapper.open {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .chatbot-welcome-bubble {
+        bottom: 105px;
+        right: 15px;
+        max-width: calc(100vw - 30px);
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+    
+    .chatbot-avatar-shadow {
+        bottom: 12px;
+        right: 22px;
+        width: 60px;
+        height: 8px;
+    }
+}
