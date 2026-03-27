@@ -499,14 +499,14 @@ option:checked {
   }
 
   /* Botones Top 10 / Top Global */
-  .filtros-panel>div:not(.filtros-selects-grid) {
+  .top-buttons-group {
     display: flex;
     gap: 8px;
     width: 100%;
     box-sizing: border-box;
   }
 
-  .filtros-panel>div:not(.filtros-selects-grid) .button {
+  .top-buttons-group .button {
     flex: 1;
     padding: 11px 10px;
     font-size: 14px;
