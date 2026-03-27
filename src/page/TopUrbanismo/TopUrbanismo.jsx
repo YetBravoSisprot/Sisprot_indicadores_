@@ -298,6 +298,94 @@ const columnasOptions = [
   { value: "Interface", label: "Interface" }
 ];
 
+const estadoOptions = [
+  { value: "Todos", label: "Todos" },
+  { value: "Activo", label: "Activos" },
+  { value: "Suspendido", label: "Suspendidos" },
+  { value: "Por instalar", label: "Por instalar" },
+  { value: "Pausado", label: "Pausado" },
+  { value: "Cancelado", label: "Cancelados" }
+];
+
+const tipoClienteOptions = [
+  { value: "Todos", label: "Tipo de Cliente / Todos" },
+  { value: "PYME", label: "Pyme" },
+  { value: "RESIDENCIAL", label: "Residenciales" },
+  { value: "INTERCAMBIO", label: "Intercambio" },
+  { value: "EMPLEADO", label: "Empleado" },
+  { value: "GRATIS", label: "Gratis" }
+];
+
+const migradosOptions = [
+  { value: "Todos", label: "Todos" },
+  { value: "Migrado", label: "Migrados" },
+  { value: "No migrado", label: "No migrados" }
+];
+
+const ciclosOptions = [
+  { value: "Todos", label: "Todos" },
+  { value: "15", label: "🗓️ Ciclo de Corte 15" },
+  { value: "30", label: "🗓️ Ciclo de Corte 30" }
+];
+
+const agenciasOptions = [
+  { value: "Todos", label: "Todas las agencias" },
+  { value: "NODO PAYA", label: "AGENCIA PAYA" },
+  { value: "NODO TURMERO", label: "AGENCIA TURMERO" },
+  { value: "NODO MACARO", label: "AGENCIA MACARO" }
+];
+
+const CheckboxList = ({ options, selectedValues, onChange, todosValue = "Todos" }) => {
+  return (
+    <div 
+      className="custom-checkbox-container"
+      style={{ 
+        backgroundColor: '#fff', 
+        border: '1px solid #ccc', 
+        borderRadius: '6px', 
+        overflowY: 'auto', 
+        height: '100%', 
+        maxHeight: '160px',
+        display: 'flex', 
+        flexDirection: 'column', 
+        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+        minWidth: '160px'
+      }}
+    >
+      {options.map((opt) => {
+        const isTodos = opt.value === todosValue;
+        const isChecked = selectedValues.includes(opt.value) || (!isTodos && selectedValues.includes(todosValue));
+        return (
+          <label 
+            key={opt.value} 
+            style={{ 
+              margin: 0, 
+              padding: '6px 10px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              cursor: 'pointer', 
+              fontSize: '13px', 
+              borderBottom: isTodos ? '1px solid #ccc' : 'none',
+              backgroundColor: isTodos ? '#0047b3' : (selectedValues.includes(opt.value) && !selectedValues.includes(todosValue) ? '#e6f0ff' : 'transparent'),
+              color: isTodos ? '#fff' : '#333',
+              fontWeight: isTodos ? 'bold' : 'normal',
+              userSelect: 'none'
+            }}
+          >
+            <input 
+              type="checkbox" 
+              checked={isChecked}
+              onChange={() => onChange(opt.value)}
+              style={{ marginRight: '8px', cursor: 'pointer' }}
+            />
+            {opt.label}
+          </label>
+        );
+      })}
+    </div>
+  );
+};
+
 
 
 function TopUrbanismo() {
@@ -324,49 +412,32 @@ function TopUrbanismo() {
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
 
-  const handleSectoresChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setSectoresSeleccionados(selectedOptions);
-    setUrbanismosSeleccionados([]);
-  };
-
-  const handleMigradosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setMigradosSeleccionados(selectedOptions);
-  };
-
-  const handleEstadoChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionados(selectedOptions);
-  };
-
-
-  const handleEstadoChange2 = (event) => {
-    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionadosType(selectedOptions2);
-  };
-
-  const handleCiclosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setCiclosSeleccionados(selectedOptions);
-  };
-
-  const handleColumnaCheckboxChange = (valor) => {
-    if (valor === "Todas") {
-      setColumnasSeleccionadas((prev) => (prev.includes("Todas") ? [] : ["Todas"]));
+  const handleGenericToggle = (valor, prev, setter, extras = null) => {
+    let esCategoriaFemenina = prev.includes("Todas") || valor === "Todas";
+    if (valor === "Todos" || valor === "Todas") {
+      const next = prev.includes(valor) ? [] : [valor];
+      setter(next);
+      if (extras) extras(next);
     } else {
-      setColumnasSeleccionadas((prev) => {
-        let nuevos = prev.filter((col) => col !== "Todas");
-        if (nuevos.includes(valor)) {
-          nuevos = nuevos.filter((col) => col !== valor);
-        } else {
-          nuevos.push(valor);
-        }
-        if (nuevos.length === 0) return ["Todas"];
-        return nuevos;
-      });
+      let nuevos = prev.filter((v) => v !== "Todos" && v !== "Todas");
+      if (nuevos.includes(valor)) {
+        nuevos = nuevos.filter((v) => v !== valor);
+      } else {
+        nuevos.push(valor);
+      }
+      const next = nuevos.length === 0 ? [esCategoriaFemenina ? "Todas" : "Todos"] : nuevos;
+      setter(next);
+      if (extras) extras(next);
     }
   };
+
+  const handleSectoresChange = (valor) => handleGenericToggle(valor, sectoresSeleccionados, setSectoresSeleccionados, () => setUrbanismosSeleccionados([]));
+  const handleMigradosChange = (valor) => handleGenericToggle(valor, migradosSeleccionados, setMigradosSeleccionados);
+  const handleEstadoChange = (valor) => handleGenericToggle(valor, estadosSeleccionados, setEstadosSeleccionados);
+  const handleEstadoChange2 = (valor) => handleGenericToggle(valor, estadosSeleccionadosType, setEstadosSeleccionadosType);
+  const handleCiclosChange = (valor) => handleGenericToggle(valor, ciclosSeleccionados, setCiclosSeleccionados);
+  const handleUrbanismosChange = (valor) => handleGenericToggle(valor, urbanismosSeleccionados, setUrbanismosSeleccionados);
+  const handleColumnaCheckboxChange = (valor) => handleGenericToggle(valor, columnasSeleccionadas, setColumnasSeleccionadas);
 
   const buscarPorContrato = () => {
     if (!contratoBuscado || !data?.results) return;
@@ -719,106 +790,52 @@ function TopUrbanismo() {
             </div>
 
             <div className="filtros-selects-grid">
-              <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
-                <option value="Todos">Todos</option>
-                <option value="Activo">Activos</option>
-                <option value="Suspendido">Suspendidos</option>
-                <option value="Por instalar">Por instalar</option>
-                <option value="Pausado">Pausado</option>
-                <option value="Cancelado">Cancelados</option>
-              </select>
+                        <CheckboxList 
+                options={estadoOptions} 
+                selectedValues={estadosSeleccionados} 
+                onChange={handleEstadoChange} 
+                todosValue="Todos" 
+              />
+              <CheckboxList 
+                options={tipoClienteOptions} 
+                selectedValues={estadosSeleccionadosType} 
+                onChange={handleEstadoChange2} 
+                todosValue="Todos" 
+              />
+              <CheckboxList 
+                options={migradosOptions} 
+                selectedValues={migradosSeleccionados} 
+                onChange={handleMigradosChange} 
+                todosValue="Todos" 
+              />
+              <CheckboxList 
+                options={ciclosOptions} 
+                selectedValues={ciclosSeleccionados} 
+                onChange={handleCiclosChange} 
+                todosValue="Todos" 
+              />
+              <CheckboxList 
+                options={agenciasOptions} 
+                selectedValues={sectoresSeleccionados} 
+                onChange={handleSectoresChange} 
+                todosValue="Todos" 
+              />
+              <CheckboxList 
+                options={[
+                  { value: "Todos", label: "Todos los urbanismos" },
+                  ...urbanismosParaMostrar.map(u => ({ value: u, label: u }))
+                ]} 
+                selectedValues={urbanismosSeleccionados} 
+                onChange={handleUrbanismosChange} 
+                todosValue="Todos" 
+              />
 
-              <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
-                <option value="Todos">Tipo de Cliente / Todos</option>
-                <option value="PYME">Pyme</option>
-                <option value="RESIDENCIAL">Residenciales</option>
-                <option value="INTERCAMBIO">Intercambio</option>
-                <option value="EMPLEADO">Empleado</option>
-                <option value="GRATIS">Gratis</option>
-              </select>
-
-              <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
-                <option value="Todos">Todos</option>
-                <option value="Migrado">Migrados</option>
-                <option value="No migrado">No migrados</option>
-              </select>
-
-              <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
-                <option value="Todos">Todos</option>
-                <option value="15">🗓️ Ciclo de Corte 15</option>
-                <option value="30">🗓️ Ciclo de Corte 30</option>
-              </select>
-
-              <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-                <option value="Todos">Todas las agencias</option>
-                <option value="NODO PAYA">AGENCIA PAYA</option>
-                <option value="NODO TURMERO">AGENCIA TURMERO</option>
-                <option value="NODO MACARO">AGENCIA MACARO</option>
-              </select>
-
-              <select
-                id="urbanismosSelect"
-                size="5"
-                multiple
-                value={urbanismosSeleccionados}
-                onChange={(e) =>
-                  setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))
-                }
-              >
-                <option value="Todos">Todos los urbanismos</option>
-                {urbanismosParaMostrar.map((urbanismo) => (
-                  <option key={urbanismo} value={urbanismo}>
-                    {urbanismo}
-                  </option>
-                ))}
-              </select>
-
-              <div 
-                className="columnas-checkbox-container"
-                style={{ 
-                  backgroundColor: '#fff', 
-                  border: '1px solid #ccc', 
-                  borderRadius: '6px', 
-                  overflowY: 'auto', 
-                  height: '100%', 
-                  maxHeight: '160px',
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                  minWidth: '200px'
-                }}
-              >
-                {columnasOptions.map((opt) => {
-                  const isTodas = opt.value === "Todas";
-                  const isChecked = columnasSeleccionadas.includes(opt.value) || (!isTodas && columnasSeleccionadas.includes("Todas"));
-                  return (
-                    <label 
-                      key={opt.value} 
-                      style={{ 
-                        margin: 0, 
-                        padding: '6px 10px', 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        cursor: 'pointer', 
-                        fontSize: '13px', 
-                        borderBottom: isTodas ? '1px solid #ccc' : 'none',
-                        backgroundColor: isTodas ? '#0047b3' : (columnasSeleccionadas.includes(opt.value) && !columnasSeleccionadas.includes("Todas") ? '#e6f0ff' : 'transparent'),
-                        color: isTodas ? '#fff' : '#333',
-                        fontWeight: isTodas ? 'bold' : 'normal'
-                      }}
-                    >
-                      <input 
-                        type="checkbox" 
-                        checked={isChecked}
-                        onChange={() => handleColumnaCheckboxChange(opt.value)}
-                        style={{ marginRight: '8px', cursor: 'pointer' }}
-                      />
-                      {opt.label}
-                    </label>
-                  );
-                })}
-              </div>
-
+              <CheckboxList 
+                options={columnasOptions} 
+                selectedValues={columnasSeleccionadas} 
+                onChange={handleColumnaCheckboxChange} 
+                todosValue="Todas" 
+              />
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
