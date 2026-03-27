@@ -758,6 +758,7 @@ function TopUrbanismo() {
                 <option value="Dirección">Dirección</option>
                 <option value="Fecha_Creación">Fecha de Creación</option>
                 <option value="Días Hábiles">Días Hábiles</option>
+                <option value="Interface">Interface</option>
               </select>
 
             </div>
