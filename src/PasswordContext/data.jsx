@@ -139467,13 +139467,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00456",
       "created_at": "2025-05-14T11:11:44.896650",
       "service_detail": {
-        "id": 10147,
+        "id": 12192,
         "ip": "10.14.72.2",
-        "mac": "QXTLCBDE9917",
-        "serial": "QXTLCBDE9917",
+        "mac": "B0A7B954AE69",
+        "serial": "TPLGB954EA69",
         "queue": null,
         "interface": "VLAN136_CONCEPCION_3",
-        "created_at": "2025-11-14T22:17:35.687793",
+        "created_at": "2026-03-26T19:36:21.167161",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160368,8 +160368,8 @@ const largeArraydata =
       "id": 9007,
       "client_name": "YORGLEIDER MARQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Valle Paraiso",
