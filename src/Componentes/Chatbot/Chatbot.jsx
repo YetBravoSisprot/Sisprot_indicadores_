@@ -282,19 +282,29 @@ const Chatbot = () => {
                     </div>
                 </div>
             )}
+            {/* Sombra del robot animada (fuera del mix-blend-mode para que se vea el negro) */}
+            {!isOpen && <div className="chatbot-avatar-shadow"></div>}
+
+            {/* Globo de bienvenida */}
+            {!isOpen && (
+                <div className="chatbot-welcome-bubble" onClick={handleToggle}>
+                    ¡Hola! Soy Taurus IA 👋<br/>¿Necesitas analizar algún reporte?
+                </div>
+            )}
+
             {/* Avatar Flotante del Robot */}
             <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
                 {!isOpen ? (
-                    <div className="robot-avatar">
-                        <div className="robot-antenna"></div>
-                        <div className="robot-head">
-                            <div className="robot-eyes">
-                                <div className="eye"></div>
-                                <div className="eye"></div>
-                            </div>
-                            <div className="robot-mouth"></div>
-                        </div>
-                    </div>
+                    <video 
+                        src="/taurus_robot.webm" 
+                        className="taurus-avatar" 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        title="Taurus IA"
+                    />
                 ) : (
                     <div className="close-btn">✕</div>
                 )}
