@@ -142572,13 +142572,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00057 DOS",
       "created_at": "2025-05-30T15:36:20.149184",
       "service_detail": {
-        "id": 11404,
+        "id": 12197,
         "ip": "10.14.182.2",
-        "mac": "QXTLCB66ABEB",
-        "serial": "QXTLCB66ABEB",
+        "mac": "QXTLCBB10DD7",
+        "serial": "QXTLCBB10DD7",
         "queue": null,
         "interface": "VLAN264_LUZYVIDA_ZTE",
-        "created_at": "2026-01-28T10:45:21.911381",
+        "created_at": "2026-03-27T15:07:28.260291",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160845,8 +160845,8 @@ const largeArraydata =
       "id": 9045,
       "client_name": "INVERSIONES WAWI 2025 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -160863,13 +160863,13 @@ const largeArraydata =
       "nap_box_name": "CE - 773",
       "created_at": "2026-03-27T08:35:06.343063",
       "service_detail": {
-        "id": 12194,
+        "id": 12195,
         "ip": "10.16.180.2",
-        "mac": "10.16.180.2",
-        "serial": "10.16.180.2",
+        "mac": "HWTC0E25CAA1",
+        "serial": "HWTC0E25CAA1",
         "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2026-03-27T10:03:53.165915",
+        "created_at": "2026-03-27T13:44:22.129497",
         "created_by_name": null
       },
       "installation_invoice_cost": null
