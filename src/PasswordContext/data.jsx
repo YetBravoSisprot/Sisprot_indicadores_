@@ -147261,7 +147261,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04128950822",
+      "client_mobile": "04128951661",
       "address": "CALLE MIRANDA CASA 33 19 DE ABRIL",
       "client_identification": "V9434385",
       "nap_box_name": "184",
@@ -154719,8 +154719,8 @@ const largeArraydata =
       "id": 8810,
       "client_name": "DOUBLEIBYS GREGORYS ROMERO TORBELLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Villa Los Tamarindos",
@@ -154736,7 +154736,16 @@ const largeArraydata =
       "client_identification": "V25880894",
       "nap_box_name": "CTO-00593",
       "created_at": "2025-09-17T11:34:58.152679",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12199,
+        "ip": "10.16.60.2",
+        "mac": "OEMT3C6246DA",
+        "serial": "OEMT3C6246DA",
+        "queue": null,
+        "interface": "VLAN133_VILLA_TAMARINDOS",
+        "created_at": "2026-03-28T08:53:56.410569",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
