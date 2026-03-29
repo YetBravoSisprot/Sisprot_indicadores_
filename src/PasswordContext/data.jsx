@@ -46347,13 +46347,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00215",
       "created_at": "2024-06-09T20:30:00.284767",
       "service_detail": {
-        "id": 8047,
+        "id": 12201,
         "ip": "172.21.166.2",
         "mac": "TPLGB68B58AA",
         "serial": "TPLGB68B58AA",
-        "queue": "Plan_107915_30181_WispHub",
+        "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-03-28T09:23:49.805195",
+        "created_at": "2026-03-29T11:17:45.969004",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160533,8 +160533,8 @@ const largeArraydata =
       "id": 9035,
       "client_name": "YELITZA DEL CARMEN HERNANDEZ LEAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Guerrero de Chavez",
