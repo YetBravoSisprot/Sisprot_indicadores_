@@ -40,7 +40,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
     const contactados = [
-        "Yetzareth Bravo", "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
+         "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
     ];
     const siNo = ["SI", "NO"];
 
