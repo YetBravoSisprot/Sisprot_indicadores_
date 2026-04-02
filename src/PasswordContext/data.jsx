@@ -156054,13 +156054,13 @@ const largeArraydata =
       "nap_box_name": "CE - 623",
       "created_at": "2025-10-21T17:29:28.719251",
       "service_detail": {
-        "id": 12048,
+        "id": 12244,
         "ip": "172.31.15.2",
         "mac": "TPLG2ABDC6BC",
         "serial": "TPLG2ABDC6BC",
         "queue": null,
         "interface": "VLAN144_LEOCOLBO",
-        "created_at": "2026-03-13T15:07:11.337353",
+        "created_at": "2026-04-02T13:34:47.958437",
         "created_by_name": null
       },
       "installation_invoice_cost": null
