@@ -9972,13 +9972,13 @@ const largeArraydata =
       "nap_box_name": "500",
       "created_at": "2024-04-12T13:43:02.821206",
       "service_detail": {
-        "id": 8763,
+        "id": 12252,
         "ip": "172.28.35.2",
         "mac": "TPLGF9CD3CAE",
         "serial": "TPLGF9CD3CAE",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2025-05-29T12:14:21.242880",
+        "created_at": "2026-04-05T11:53:49.934828",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -125757,8 +125757,8 @@ const largeArraydata =
       "id": 7635,
       "client_name": "GENERIS JIREH AGUILAR BERNAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Bicentenario",
@@ -150888,13 +150888,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00064",
       "created_at": "2025-07-24T14:44:47.822186",
       "service_detail": {
-        "id": 9255,
+        "id": 12251,
         "ip": "10.15.116.2",
         "mac": "HWTCCC931565",
         "serial": "HWTCCC931565",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-07-24T14:54:37.094941",
+        "created_at": "2026-04-05T11:51:03.077739",
         "created_by_name": null
       },
       "installation_invoice_cost": null
