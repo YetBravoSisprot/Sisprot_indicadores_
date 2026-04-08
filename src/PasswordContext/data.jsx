@@ -147435,8 +147435,8 @@ const largeArraydata =
       "id": 8501,
       "client_name": "JOSE ANGEL HERRERA FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "La Macarena",
@@ -147452,7 +147452,16 @@ const largeArraydata =
       "client_identification": "V29527325",
       "nap_box_name": "80 DOS",
       "created_at": "2025-06-26T17:56:11.606064",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12267,
+        "ip": "10.15.146.2",
+        "mac": "QXTLCB5348F1",
+        "serial": "QXTLCB5348F1",
+        "queue": "queue1",
+        "interface": "VLAN112_LA_MACARENA_ZTE",
+        "created_at": "2024-06-13T12:04:52.405684",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
