@@ -30807,8 +30807,8 @@ const largeArraydata =
       "id": 4161,
       "client_name": "FESTEJOS DAYANA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -47656,7 +47656,7 @@ const largeArraydata =
     },
     {
       "id": 4763,
-      "client_name": "DERWING JOSE ACEVEDO LAREZ",
+      "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
@@ -47670,9 +47670,9 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04121494173",
+      "client_mobile": "04128150454",
       "address": "CALLE 10 CASA NRO 62 BARRIO SIMON BOLIVAR TURMERO",
-      "client_identification": "V27434622",
+      "client_identification": "V30148131",
       "nap_box_name": "CTO-00034",
       "created_at": "2024-06-10T16:38:14.085984",
       "service_detail": null,
@@ -64290,8 +64290,8 @@ const largeArraydata =
       "id": 5389,
       "client_name": "ESTEPHANIE SOLEIL ESCOBAR VIEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados II",
@@ -64307,7 +64307,16 @@ const largeArraydata =
       "client_identification": "V18702581",
       "nap_box_name": "CTO-00205",
       "created_at": "2024-07-19T10:27:56.577231",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12266,
+        "ip": "172.18.150.2",
+        "mac": "TPLGF4B1D586",
+        "serial": "TPLGF4B1D586",
+        "queue": "queue1",
+        "interface": "VLAN242_PRADOS2",
+        "created_at": "2024-06-13T12:04:52.405684",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -147595,7 +147604,7 @@ const largeArraydata =
     },
     {
       "id": 8511,
-      "client_name": "DERWING JOSE ACEVEDO LAREZ",
+      "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
       "client_type_name": "EMPLEADO",
       "client_subdivision": "ACTIVO_EMPLEADO",
       "status_name": "Activo",
@@ -147609,9 +147618,9 @@ const largeArraydata =
         "code": "FO-80M",
         "profile": "80M/80M"
       },
-      "client_mobile": "04121494173",
+      "client_mobile": "04128150454",
       "address": "CALLE 10 CASA NRO 62 BARRIO SIMON BOLIVAR TURMERO",
-      "client_identification": "V27434622",
+      "client_identification": "V30148131",
       "nap_box_name": "CTO-00017 C/5 JABILLAR",
       "created_at": "2025-06-27T21:11:35.224357",
       "service_detail": {
