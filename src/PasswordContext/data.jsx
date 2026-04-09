@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5306,
+  "count": 5307,
   "results": [
     {
       "id": 3063,
@@ -52106,7 +52106,7 @@ const largeArraydata =
       "client_type_name": "EMPLEADO",
       "client_subdivision": "ACTIVO_EMPLEADO",
       "status_name": "Activo",
-      "cycle": 10,
+      "cycle": 15,
       "migrate": true,
       "sector_name": "Valle Paraiso",
       "plan": {
@@ -124482,8 +124482,8 @@ const largeArraydata =
       "id": 7589,
       "client_name": "JOSE LUIS LUNA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -160449,8 +160449,8 @@ const largeArraydata =
       "id": 9004,
       "client_name": "MARIA VICTORIA PEDRA TRUJILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Guerrero de Chavez",
@@ -161139,8 +161139,8 @@ const largeArraydata =
       "id": 9049,
       "client_name": "ELSI DISNOIDA OJEDA JIMENEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": false,
       "sector_name": "La Casona II Edificios",
@@ -161156,6 +161156,39 @@ const largeArraydata =
       "client_identification": "V6603435",
       "nap_box_name": "CTO-00145",
       "created_at": "2026-04-08T18:03:00.372409",
+      "service_detail": {
+        "id": 12268,
+        "ip": "10.17.20.2",
+        "mac": "OEMT3C6200F2",
+        "serial": "OEMT3C6200F2",
+        "queue": null,
+        "interface": "VLAN110_CASONA_2",
+        "created_at": "2026-04-09T08:49:55.588331",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9050,
+      "client_name": "ANABELLYS SANCHEZ HERNANDEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243649815",
+      "address": "SECTOR PARAGUATÁN CALLE ESCALONA NRO 8",
+      "client_identification": "V12612642",
+      "nap_box_name": "CTO-00397",
+      "created_at": "2026-04-09T11:08:48.469422",
       "service_detail": null,
       "installation_invoice_cost": null
     }
