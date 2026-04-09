@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5307,
+  "count": 5309,
   "results": [
     {
       "id": 3063,
@@ -161189,7 +161189,82 @@ const largeArraydata =
       "client_identification": "V12612642",
       "nap_box_name": "CTO-00397",
       "created_at": "2026-04-09T11:08:48.469422",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12269,
+        "ip": "10.16.183.2",
+        "mac": "10.16.183.2",
+        "serial": "10.16.183.2",
+        "queue": null,
+        "interface": "VLAN283_PARAGUATAN",
+        "created_at": "2026-04-09T13:31:42.508082",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9051,
+      "client_name": "ANDREINA DEL VALLE GOMEZ GUEVARA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Prados II",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "0424-3266100",
+      "address": "PRADOS 2 CALLE 2 CASA NÚMERO 18 SECTOR ROSARIO DE PAYA PARROQUIA PEDRO ARÉVALO APONTE",
+      "client_identification": "V26320654",
+      "nap_box_name": "CTO-00205",
+      "created_at": "2026-04-09T13:52:36.276649",
+      "service_detail": {
+        "id": 12270,
+        "ip": "10.16.184.2",
+        "mac": "2012231218007225",
+        "serial": "OEMT3C6260CA",
+        "queue": null,
+        "interface": "VLAN242_PRADOS2",
+        "created_at": "2026-04-09T14:14:53.438368",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9052,
+      "client_name": "3LITE IMPORTS",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
+      },
+      "client_mobile": "04128904122",
+      "address": "CALLE RICAURTE ENTRE BOLIVAR Y SUCRE LOCAL INMUEBLE 30 NUMERO 3 SECTOR TURMERO",
+      "client_identification": "J500339232",
+      "nap_box_name": "CAJA NAP EDIFICIO ABUUT",
+      "created_at": "2026-04-09T15:21:20.066912",
+      "service_detail": {
+        "id": 12271,
+        "ip": "10.17.21.2",
+        "mac": "VSOL0012BE19",
+        "serial": "VSOL0012BE19",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-04-09T15:41:11.629914",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
