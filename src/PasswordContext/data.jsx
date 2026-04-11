@@ -95250,8 +95250,8 @@ const largeArraydata =
       "id": 6472,
       "client_name": "YEISI YOJANI VASQUEZ CASTILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Durpa",
@@ -95267,7 +95267,16 @@ const largeArraydata =
       "client_identification": "V26535908",
       "nap_box_name": "CTO-00445",
       "created_at": "2024-08-20T16:08:36.342008",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12300,
+        "ip": "172.31.110.2",
+        "mac": "OEMT3C6228E6",
+        "serial": "OEMT3C6228E6",
+        "queue": null,
+        "interface": "VLAN240_DURPA",
+        "created_at": "2026-04-11T15:53:45.046362",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -123389,16 +123398,7 @@ const largeArraydata =
       "client_identification": "V16301092",
       "nap_box_name": "CTO-00218 ",
       "created_at": "2025-02-24T10:49:30.128701",
-      "service_detail": {
-        "id": 7785,
-        "ip": "10.12.9.2",
-        "mac": "OEMT3C624B4A",
-        "serial": "OEMT3C624B4A (P109)",
-        "queue": "Plan_107915_15811_WispHub",
-        "interface": "VLAN201_AHP2_OLT1",
-        "created_at": "2025-02-24T11:59:54.257599",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -136140,8 +136140,8 @@ const largeArraydata =
       "id": 8070,
       "client_name": "RAMON SAMUEL TOVAR GUERRA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Leocolbo",
@@ -136157,7 +136157,16 @@ const largeArraydata =
       "client_identification": "V12142853",
       "nap_box_name": "CE - 623",
       "created_at": "2025-05-01T18:59:03.310526",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12297,
+        "ip": "10.13.225.2",
+        "mac": "VSOL00E13ADB",
+        "serial": "VSOL00E13ADB",
+        "queue": null,
+        "interface": "VLAN144_LEOCOLBO",
+        "created_at": "2026-04-11T15:19:45.135523",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -140799,8 +140808,8 @@ const largeArraydata =
       "id": 8237,
       "client_name": "HAYDEE MARGARITA UTRERA SUMOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Sector los Mangos",
@@ -140816,7 +140825,16 @@ const largeArraydata =
       "client_identification": "V8740188",
       "nap_box_name": "CTO-00172 ",
       "created_at": "2025-05-21T14:04:02.943851",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12296,
+        "ip": "10.14.141.2",
+        "mac": "QXTLCBE6DBCC",
+        "serial": "QXTLCBE6DBCC",
+        "queue": null,
+        "interface": "VLAN263_EL_CAMBUR",
+        "created_at": "2026-04-11T15:12:44.549208",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
