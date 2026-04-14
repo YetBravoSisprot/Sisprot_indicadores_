@@ -142347,8 +142347,8 @@ const largeArraydata =
       "id": 8310,
       "client_name": "YOSSELIN TATIANA CORONA MENDOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "1ro de Mayo Norte",
@@ -142364,7 +142364,16 @@ const largeArraydata =
       "client_identification": "V29587797",
       "nap_box_name": "CTO-004444",
       "created_at": "2025-06-04T09:21:48.719212",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12309,
+        "ip": "10.14.203.2",
+        "mac": "QXTLCB441035",
+        "serial": "QXTLCB441035",
+        "queue": null,
+        "interface": "VLAN261_1ERO_MAYO_ZTE",
+        "created_at": "2026-04-14T14:25:29.420254",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
