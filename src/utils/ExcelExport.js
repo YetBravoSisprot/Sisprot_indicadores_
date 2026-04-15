@@ -40,7 +40,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
     const contactados = [
-         "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
+        "Yetzareth Bravo", "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
     ];
     const siNo = ["SI", "NO"];
 
@@ -89,6 +89,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "CIVIL", key: "ci_rif", width: 15, ui: "Cedula" },
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
         { header: "DIRECCIÓN", key: "direccion", width: 35, ui: "Dirección" },
+        { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
         { header: "SECTOR", key: "sector", width: 20, ui: "Urbanismo" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
@@ -98,8 +99,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "MAC", key: "mac", width: 20, ui: "MAC" },
         { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
         { header: "DÍAS HÁBILES", key: "dias_habiles", width: 15, ui: "Días Hábiles" },
-        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" },
-        { header: "INTERFACE", key: "interface", width: 20, ui: "Interface" }
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
     ];
 
     const followUpColumns = [
@@ -116,7 +116,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac", "interface"
+        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
     ];
 
     const isAll = selectedColumns.includes("Todas");
@@ -168,6 +168,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 ci_rif: cliente.client_identification,
                 telefono: cliente.client_mobile,
                 direccion: norm(cliente.address_tax || cliente.address),
+                interface: cliente.service_detail?.interface || "N/A",
                 sector: norm(cliente._displaySector || cliente.sector_name),
                 migrado: cliente.migrate ? "si" : "No",
                 ciclo: mapCycleValue(cliente.cycle),
@@ -178,7 +179,6 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
                 dias_habiles: "", 
                 tipo_cliente: norm(cliente.client_type_name),
-                interface: cliente.interface || "N/A",
                 contactado_por: "",
                 contesto: "",
                 ultima_fecha: "",
