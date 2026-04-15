@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5311,
+  "count": 5312,
   "results": [
     {
       "id": 3063,
@@ -30996,8 +30996,8 @@ const largeArraydata =
       "id": 4177,
       "client_name": "MI DULCE REFUGIO 2002 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -144834,7 +144834,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04243086038",
+      "client_mobile": "04123359410",
       "address": "CALLE RIVAS LOCAL 7-3  SECTOR CASCO DE TURMERO",
       "client_identification": "V30976136",
       "nap_box_name": "CTO-00129",
@@ -159966,13 +159966,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-04-09T15:21:20.066000",
       "service_detail": {
-        "id": 12279,
+        "id": 12312,
         "ip": "172.23.79.2",
         "mac": "VSOL0013E851",
         "serial": "VSOL0013E851",
         "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2026-03-30T18:42:41.733826",
+        "created_at": "2026-04-15T16:00:51.510533",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160008,6 +160008,30 @@ const largeArraydata =
         "created_at": "2026-04-14T11:16:21.205977",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9055,
+      "client_name": "DOMINIC GREGOR CORTEZ CARAPAICA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "‎04243484599",
+      "address": "COMANDO DE PROTECCION CIVIL MARIÑO CALLE BERMIUDEZ NUMERO 84 AL LADO DEL CDI LA ADUANA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V17513261",
+      "nap_box_name": "282",
+      "created_at": "2026-04-15T13:44:51.019239",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
