@@ -276,116 +276,6 @@ const urbanismosAprobados = {
 
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
-const columnasOptions = [
-  { value: "Todas", label: "📋 Ver Todas las Columnas" },
-  { value: "Contrato", label: "Contrato" },
-  { value: "Cedula", label: "Cedula" },
-  { value: "IP", label: "IP" },
-  { value: "MAC", label: "MAC" },
-  { value: "Estatus", label: "Estatus Inicial" },
-  { value: "Estado Final", label: "Estado Final" },
-  { value: "Cliente", label: "Cliente" },
-  { value: "Teléfono", label: "Teléfono" },
-  { value: "Urbanismo", label: "Urbanismo" },
-  { value: "Plan", label: "Plan" },
-  { value: "Costo", label: "Costo" },
-  { value: "Migrado", label: "Migrado" },
-  { value: "Ciclo", label: "Ciclo" },
-  { value: "Tipo_Cliente", label: "Tipo Cliente" },
-  { value: "Dirección", label: "Dirección" },
-  { value: "Fecha_Creación", label: "Fecha de Creación" },
-  { value: "Días Hábiles", label: "Días Hábiles" },
-  { value: "Interface", label: "Interface" }
-];
-
-const estadoOptions = [
-  { value: "Todos", label: "Todos" },
-  { value: "Activo", label: "Activos" },
-  { value: "Suspendido", label: "Suspendidos" },
-  { value: "Por instalar", label: "Por instalar" },
-  { value: "Pausado", label: "Pausado" },
-  { value: "Cancelado", label: "Cancelados" }
-];
-
-const tipoClienteOptions = [
-  { value: "Todos", label: "Tipo de Cliente / Todos" },
-  { value: "PYME", label: "Pyme" },
-  { value: "RESIDENCIAL", label: "Residenciales" },
-  { value: "INTERCAMBIO", label: "Intercambio" },
-  { value: "EMPLEADO", label: "Empleado" },
-  { value: "GRATIS", label: "Gratis" }
-];
-
-const migradosOptions = [
-  { value: "Todos", label: "Todos" },
-  { value: "Migrado", label: "Migrados" },
-  { value: "No migrado", label: "No migrados" }
-];
-
-const ciclosOptions = [
-  { value: "Todos", label: "Todos" },
-  { value: "15", label: "🗓️ Ciclo de Corte 15" },
-  { value: "30", label: "🗓️ Ciclo de Corte 30" }
-];
-
-const agenciasOptions = [
-  { value: "Todos", label: "Todas las agencias" },
-  { value: "NODO PAYA", label: "AGENCIA PAYA" },
-  { value: "NODO TURMERO", label: "AGENCIA TURMERO" },
-  { value: "NODO MACARO", label: "AGENCIA MACARO" }
-];
-
-const CheckboxList = ({ options, selectedValues, onChange, todosValue = "Todos" }) => {
-  return (
-    <div 
-      className="custom-checkbox-container"
-      style={{ 
-        backgroundColor: '#fff', 
-        border: '1px solid #ccc', 
-        borderRadius: '6px', 
-        overflowY: 'auto', 
-        height: '100%', 
-        maxHeight: '160px',
-        display: 'flex', 
-        flexDirection: 'column', 
-        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-        minWidth: '160px'
-      }}
-    >
-      {options.map((opt) => {
-        const isTodos = opt.value === todosValue;
-        const isChecked = selectedValues.includes(opt.value) || (!isTodos && selectedValues.includes(todosValue));
-        return (
-          <label 
-            key={opt.value} 
-            style={{ 
-              margin: 0, 
-              padding: '6px 10px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              cursor: 'pointer', 
-              fontSize: '13px', 
-              borderBottom: isTodos ? '1px solid #ccc' : 'none',
-              backgroundColor: isTodos ? '#0047b3' : (selectedValues.includes(opt.value) && !selectedValues.includes(todosValue) ? '#e6f0ff' : 'transparent'),
-              color: isTodos ? '#fff' : '#333',
-              fontWeight: isTodos ? 'bold' : 'normal',
-              userSelect: 'none'
-            }}
-          >
-            <input 
-              type="checkbox" 
-              checked={isChecked}
-              onChange={() => onChange(opt.value)}
-              style={{ marginRight: '8px', cursor: 'pointer' }}
-            />
-            {opt.label}
-          </label>
-        );
-      })}
-    </div>
-  );
-};
-
 
 
 function TopUrbanismo() {
@@ -412,32 +302,37 @@ function TopUrbanismo() {
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
 
-  const handleGenericToggle = (valor, prev, setter, extras = null) => {
-    let esCategoriaFemenina = prev.includes("Todas") || valor === "Todas";
-    if (valor === "Todos" || valor === "Todas") {
-      const next = prev.includes(valor) ? [] : [valor];
-      setter(next);
-      if (extras) extras(next);
-    } else {
-      let nuevos = prev.filter((v) => v !== "Todos" && v !== "Todas");
-      if (nuevos.includes(valor)) {
-        nuevos = nuevos.filter((v) => v !== valor);
-      } else {
-        nuevos.push(valor);
-      }
-      const next = nuevos.length === 0 ? [esCategoriaFemenina ? "Todas" : "Todos"] : nuevos;
-      setter(next);
-      if (extras) extras(next);
-    }
+  const handleSectoresChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setSectoresSeleccionados(selectedOptions);
+    setUrbanismosSeleccionados([]);
   };
 
-  const handleSectoresChange = (valor) => handleGenericToggle(valor, sectoresSeleccionados, setSectoresSeleccionados, () => setUrbanismosSeleccionados([]));
-  const handleMigradosChange = (valor) => handleGenericToggle(valor, migradosSeleccionados, setMigradosSeleccionados);
-  const handleEstadoChange = (valor) => handleGenericToggle(valor, estadosSeleccionados, setEstadosSeleccionados);
-  const handleEstadoChange2 = (valor) => handleGenericToggle(valor, estadosSeleccionadosType, setEstadosSeleccionadosType);
-  const handleCiclosChange = (valor) => handleGenericToggle(valor, ciclosSeleccionados, setCiclosSeleccionados);
-  const handleUrbanismosChange = (valor) => handleGenericToggle(valor, urbanismosSeleccionados, setUrbanismosSeleccionados);
-  const handleColumnaCheckboxChange = (valor) => handleGenericToggle(valor, columnasSeleccionadas, setColumnasSeleccionadas);
+  const handleMigradosChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setMigradosSeleccionados(selectedOptions);
+  };
+
+  const handleEstadoChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setEstadosSeleccionados(selectedOptions);
+  };
+
+
+  const handleEstadoChange2 = (event) => {
+    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
+    setEstadosSeleccionadosType(selectedOptions2);
+  };
+
+  const handleCiclosChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setCiclosSeleccionados(selectedOptions);
+  };
+
+  const handleColumnasChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setColumnasSeleccionadas(selectedOptions);
+  };
 
   const buscarPorContrato = () => {
     if (!contratoBuscado || !data?.results) return;
@@ -780,7 +675,7 @@ function TopUrbanismo() {
               </button>
             </div>
 
-            <div className="top-buttons-group">
+            <div>
               <button className="button" onClick={handleTop10Urb}>
                 Top 10
               </button>
@@ -790,52 +685,82 @@ function TopUrbanismo() {
             </div>
 
             <div className="filtros-selects-grid">
-                        <CheckboxList 
-                options={estadoOptions} 
-                selectedValues={estadosSeleccionados} 
-                onChange={handleEstadoChange} 
-                todosValue="Todos" 
-              />
-              <CheckboxList 
-                options={tipoClienteOptions} 
-                selectedValues={estadosSeleccionadosType} 
-                onChange={handleEstadoChange2} 
-                todosValue="Todos" 
-              />
-              <CheckboxList 
-                options={migradosOptions} 
-                selectedValues={migradosSeleccionados} 
-                onChange={handleMigradosChange} 
-                todosValue="Todos" 
-              />
-              <CheckboxList 
-                options={ciclosOptions} 
-                selectedValues={ciclosSeleccionados} 
-                onChange={handleCiclosChange} 
-                todosValue="Todos" 
-              />
-              <CheckboxList 
-                options={agenciasOptions} 
-                selectedValues={sectoresSeleccionados} 
-                onChange={handleSectoresChange} 
-                todosValue="Todos" 
-              />
-              <CheckboxList 
-                options={[
-                  { value: "Todos", label: "Todos los urbanismos" },
-                  ...urbanismosParaMostrar.map(u => ({ value: u, label: u }))
-                ]} 
-                selectedValues={urbanismosSeleccionados} 
-                onChange={handleUrbanismosChange} 
-                todosValue="Todos" 
-              />
+              <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
+                <option value="Todos">Todos</option>
+                <option value="Activo">Activos</option>
+                <option value="Suspendido">Suspendidos</option>
+                <option value="Por instalar">Por instalar</option>
+                <option value="Pausado">Pausado</option>
+                <option value="Cancelado">Cancelados</option>
+              </select>
 
-              <CheckboxList 
-                options={columnasOptions} 
-                selectedValues={columnasSeleccionadas} 
-                onChange={handleColumnaCheckboxChange} 
-                todosValue="Todas" 
-              />
+              <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
+                <option value="Todos">Tipo de Cliente / Todos</option>
+                <option value="PYME">Pyme</option>
+                <option value="RESIDENCIAL">Residenciales</option>
+                <option value="INTERCAMBIO">Intercambio</option>
+                <option value="EMPLEADO">Empleado</option>
+                <option value="GRATIS">Gratis</option>
+              </select>
+
+              <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
+                <option value="Todos">Todos</option>
+                <option value="Migrado">Migrados</option>
+                <option value="No migrado">No migrados</option>
+              </select>
+
+              <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
+                <option value="Todos">Todos</option>
+                <option value="15">🗓️ Ciclo de Corte 15</option>
+                <option value="30">🗓️ Ciclo de Corte 30</option>
+              </select>
+
+              <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+                <option value="Todos">Todas las agencias</option>
+                <option value="NODO PAYA">AGENCIA PAYA</option>
+                <option value="NODO TURMERO">AGENCIA TURMERO</option>
+                <option value="NODO MACARO">AGENCIA MACARO</option>
+              </select>
+
+              <select
+                id="urbanismosSelect"
+                size="5"
+                multiple
+                value={urbanismosSeleccionados}
+                onChange={(e) =>
+                  setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))
+                }
+              >
+                <option value="Todos">Todos los urbanismos</option>
+                {urbanismosParaMostrar.map((urbanismo) => (
+                  <option key={urbanismo} value={urbanismo}>
+                    {urbanismo}
+                  </option>
+                ))}
+              </select>
+
+              <select id="columnasSelect" size="5" multiple value={columnasSeleccionadas} onChange={handleColumnasChange}>
+                <option value="Todas">📋 Ver Todas las Columnas</option>
+                <option value="Contrato">Contrato</option>
+                <option value="Cedula">Cedula</option>
+                <option value="IP">IP</option>
+                <option value="MAC">MAC</option>
+                <option value="Estatus">Estatus Inicial</option>
+                <option value="Estado Final">Estado Final</option>
+                <option value="Cliente">Cliente</option>
+                <option value="Teléfono">Teléfono</option>
+                <option value="Urbanismo">Urbanismo</option>
+                <option value="Plan">Plan</option>
+                <option value="Costo">Costo</option>
+                <option value="Migrado">Migrado</option>
+                <option value="Ciclo">Ciclo</option>
+                <option value="Tipo_Cliente">Tipo Cliente</option>
+                <option value="Dirección">Dirección</option>
+                <option value="Interface">Interfaz/VLAN</option>
+                <option value="Fecha_Creación">Fecha de Creación</option>
+                <option value="Días Hábiles">Días Hábiles</option>
+              </select>
+
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
@@ -865,7 +790,12 @@ function TopUrbanismo() {
               <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
                 📈 Descargar Reporte Ejecutivo
               </button>
-            </div>          </div>
+            </div>
+
+            <span className="filtro-tip">
+              💡 <b>Tip mágico:</b> Puedes mantener presionada la tecla <b>Ctrl</b> (o <b>Cmd ⌘</b> en Mac) y hacer clic para elegir <b>varias opciones</b> al mismo tiempo en los filtros de arriba.
+            </span>
+          </div>
 
 
           <div className="titulo-topurbanismos">
