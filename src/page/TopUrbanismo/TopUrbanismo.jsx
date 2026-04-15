@@ -302,36 +302,50 @@ function TopUrbanismo() {
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
 
-  const handleSectoresChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setSectoresSeleccionados(selectedOptions);
+  const handleToggleGeneric = (setter, value, allLabel = "Todos") => {
+    setter((prev) => {
+      if (value === allLabel) return [allLabel];
+      let newList = prev.filter((v) => v !== allLabel);
+      if (newList.includes(value)) {
+        newList = newList.filter((v) => v !== value);
+      } else {
+        newList = [...newList, value];
+      }
+      return newList.length === 0 ? [allLabel] : newList;
+    });
+  };
+
+  const handleSectoresChange = (sector) => {
+    handleToggleGeneric(setSectoresSeleccionados, sector, "Todos");
     setUrbanismosSeleccionados([]);
   };
 
-  const handleMigradosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setMigradosSeleccionados(selectedOptions);
-  };
+  const handleMigradosChange = (val) => handleToggleGeneric(setMigradosSeleccionados, val, "Todos");
+  const handleEstadoChange = (val) => handleToggleGeneric(setEstadosSeleccionados, val, "Todos");
+  const handleEstadoChange2 = (val) => handleToggleGeneric(setEstadosSeleccionadosType, val, "Todos");
 
-  const handleEstadoChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionados(selectedOptions);
-  };
+  const handleCiclosChange = (val) => handleToggleGeneric(setCiclosSeleccionados, val, "Todos");
 
+  const handleColumnasChange = (colValue) => {
+    setColumnasSeleccionadas((prev) => {
+      if (colValue === "Todas") {
+        return ["Todas"];
+      }
 
-  const handleEstadoChange2 = (event) => {
-    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
-    setEstadosSeleccionadosType(selectedOptions2);
-  };
+      // Si estaba en "Todas", al marcar otra cosa, quitamos "Todas"
+      let newList = prev.filter((c) => c !== "Todas");
 
-  const handleCiclosChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setCiclosSeleccionados(selectedOptions);
-  };
+      if (newList.includes(colValue)) {
+        // Desmarcar
+        newList = newList.filter((c) => c !== colValue);
+      } else {
+        // Marcar
+        newList = [...newList, colValue];
+      }
 
-  const handleColumnasChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setColumnasSeleccionadas(selectedOptions);
+      // Si no queda nada, volvemos a "Todas"
+      return newList.length === 0 ? ["Todas"] : newList;
+    });
   };
 
   const buscarPorContrato = () => {
@@ -685,81 +699,122 @@ function TopUrbanismo() {
             </div>
 
             <div className="filtros-selects-grid">
-              <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
-                <option value="Todos">Todos</option>
-                <option value="Activo">Activos</option>
-                <option value="Suspendido">Suspendidos</option>
-                <option value="Por instalar">Por instalar</option>
-                <option value="Pausado">Pausado</option>
-                <option value="Cancelado">Cancelados</option>
-              </select>
-
-              <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
-                <option value="Todos">Tipo de Cliente / Todos</option>
-                <option value="PYME">Pyme</option>
-                <option value="RESIDENCIAL">Residenciales</option>
-                <option value="INTERCAMBIO">Intercambio</option>
-                <option value="EMPLEADO">Empleado</option>
-                <option value="GRATIS">Gratis</option>
-              </select>
-
-              <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
-                <option value="Todos">Todos</option>
-                <option value="Migrado">Migrados</option>
-                <option value="No migrado">No migrados</option>
-              </select>
-
-              <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
-                <option value="Todos">Todos</option>
-                <option value="15">🗓️ Ciclo de Corte 15</option>
-                <option value="30">🗓️ Ciclo de Corte 30</option>
-              </select>
-
-              <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-                <option value="Todos">Todas las agencias</option>
-                <option value="NODO PAYA">AGENCIA PAYA</option>
-                <option value="NODO TURMERO">AGENCIA TURMERO</option>
-                <option value="NODO MACARO">AGENCIA MACARO</option>
-              </select>
-
-              <select
-                id="urbanismosSelect"
-                size="5"
-                multiple
-                value={urbanismosSeleccionados}
-                onChange={(e) =>
-                  setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))
-                }
-              >
-                <option value="Todos">Todos los urbanismos</option>
-                {urbanismosParaMostrar.map((urbanismo) => (
-                  <option key={urbanismo} value={urbanismo}>
-                    {urbanismo}
-                  </option>
+              <div className="columnas-checkbox-container" id="estadoSelect">
+                <label className="filter-header">Estatus</label>
+                {["Todos", "Activo", "Suspendido", "Por instalar", "Pausado", "Cancelado"].map(est => (
+                   <label key={est} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={estadosSeleccionados.includes(est)}
+                      onChange={() => handleEstadoChange(est)}
+                    />
+                    <span>{est === "Todos" ? "Todos" : est}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
 
-              <select id="columnasSelect" size="5" multiple value={columnasSeleccionadas} onChange={handleColumnasChange}>
-                <option value="Todas">📋 Ver Todas las Columnas</option>
-                <option value="Contrato">Contrato</option>
-                <option value="Cedula">Cedula</option>
-                <option value="IP">IP</option>
-                <option value="MAC">MAC</option>
-                <option value="Estatus">Estatus Inicial</option>
-                <option value="Estado Final">Estado Final</option>
-                <option value="Cliente">Cliente</option>
-                <option value="Teléfono">Teléfono</option>
-                <option value="Urbanismo">Urbanismo</option>
-                <option value="Plan">Plan</option>
-                <option value="Costo">Costo</option>
-                <option value="Migrado">Migrado</option>
-                <option value="Ciclo">Ciclo</option>
-                <option value="Tipo_Cliente">Tipo Cliente</option>
-                <option value="Dirección">Dirección</option>
-                <option value="Interface">Interfaz/VLAN</option>
-                <option value="Fecha_Creación">Fecha de Creación</option>
-                <option value="Días Hábiles">Días Hábiles</option>
-              </select>
+              <div className="columnas-checkbox-container" id="estadoSelect2">
+                <label className="filter-header">Tipo de Cliente</label>
+                {["Todos", "PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"].map(tipo => (
+                   <label key={tipo} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={estadosSeleccionadosType.includes(tipo)}
+                      onChange={() => handleEstadoChange2(tipo)}
+                    />
+                    <span>{tipo === "Todos" ? "Todos" : tipo}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="columnas-checkbox-container" id="migradosSelect">
+                <label className="filter-header">Migrados</label>
+                {["Todos", "Migrado", "No migrado"].map(mig => (
+                   <label key={mig} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={migradosSeleccionados.includes(mig)}
+                      onChange={() => handleMigradosChange(mig)}
+                    />
+                    <span>{mig}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="columnas-checkbox-container" id="ciclosSelect">
+                <label className="filter-header">Ciclos</label>
+                {["Todos", "15", "30"].map(ciclo => (
+                   <label key={ciclo} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={ciclosSeleccionados.includes(ciclo)}
+                      onChange={() => handleCiclosChange(ciclo)}
+                    />
+                    <span>{ciclo === "Todos" ? "Todos" : `🗓️ Ciclo ${ciclo}`}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="columnas-checkbox-container" id="sectoresSelect">
+                <label className="filter-header">Agencias</label>
+                {["Todos", "NODO PAYA", "NODO TURMERO", "NODO MACARO"].map(sec => (
+                   <label key={sec} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={sectoresSeleccionados.includes(sec)}
+                      onChange={() => handleSectoresChange(sec)}
+                    />
+                    <span>{sec === "Todos" ? "Todas" : sec}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="columnas-checkbox-container" id="urbanismosSelect">
+                <label className="filter-header">Urbanismos</label>
+                <label className="columna-item-check">
+                  <input
+                    type="checkbox"
+                    checked={urbanismosSeleccionados.includes("Todos")}
+                    onChange={() => handleToggleGeneric(setUrbanismosSeleccionados, "Todos", "Todos")}
+                  />
+                  <span>Todos</span>
+                </label>
+                {urbanismosParaMostrar.map((urbanismo) => (
+                  <label key={urbanismo} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={urbanismosSeleccionados.includes(urbanismo)}
+                      onChange={() => handleToggleGeneric(setUrbanismosSeleccionados, urbanismo, "Todos")}
+                    />
+                    <span>{urbanismo}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="columnas-checkbox-container" id="columnasSelect">
+                <label className="columna-item-check">
+                  <input
+                    type="checkbox"
+                    checked={columnasSeleccionadas.includes("Todas")}
+                    onChange={() => handleColumnasChange("Todas")}
+                  />
+                  <span>📋 Ver Todas</span>
+                </label>
+                {[
+                  "Contrato", "Cedula", "IP", "MAC", "Estatus", "Estado Final", "Cliente",
+                  "Teléfono", "Urbanismo", "Plan", "Costo", "Migrado", "Ciclo",
+                  "Tipo_Cliente", "Dirección", "Interface", "Fecha_Creación", "Días Hábiles"
+                ].map((col) => (
+                  <label key={col} className="columna-item-check">
+                    <input
+                      type="checkbox"
+                      checked={columnasSeleccionadas.includes(col)}
+                      onChange={() => handleColumnasChange(col)}
+                    />
+                    <span>{col.replace("_", " ")}</span>
+                  </label>
+                ))}
+              </div>
 
             </div>
 
@@ -793,7 +848,7 @@ function TopUrbanismo() {
             </div>
 
             <span className="filtro-tip">
-              💡 <b>Tip mágico:</b> Puedes mantener presionada la tecla <b>Ctrl</b> (o <b>Cmd ⌘</b> en Mac) y hacer clic para elegir <b>varias opciones</b> al mismo tiempo en los filtros de arriba.
+              💡 <b>Tip de uso:</b> Ahora puedes <b>marcar directamente</b> las casillas para elegir los filtros. Si marcas una opción específica, se quitará la selección de "Todos" automáticamente.
             </span>
           </div>
 
