@@ -15,20 +15,12 @@ const extractNumber = (text) => {
 };
 
 const formatCurrency = (value) => {
-    const formatted = new Intl.NumberFormat('de-DE', { 
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2,
-        useGrouping: true 
-    }).format(value || 0);
+    const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
     return `${formatted} US$`;
 };
 
 const formatUSD = (value) => {
-    return new Intl.NumberFormat('de-DE', { 
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2,
-        useGrouping: true 
-    }).format(value || 0);
+    return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
 };
 
 const mapCycleValue = (val) => {
@@ -484,11 +476,7 @@ INTENCIONES DISPONIBLES:
 - AMBOS_METRICAS: Conteo + Facturación (Solo si tienes el Estatus Y el Periodo).
 - AMBIGUEDAD_INGRESOS: Se usa cuando el usuario pide "Ingresos" sin especificar si se refiere a la **Facturación Proyectada** (planes) o a la **Recaudación Real** (en bancos como BNC).
 - PLANES: Detalle por planes de internet.
-- BUSCAR_CONTRATO: Búsqueda de perfil si el usuario da un número de contrato.
-- BUSCAR_CEDULA: Búsqueda de perfil si el usuario da un número de cédula.
-- BUSCAR_NOMBRE: Búsqueda de perfil si el usuario te da uno o varios nombres/apellidos.
-- SEGUIMIENTO_CLIENTE: Se activa cuando YA se mostró un cliente y el usuario pregunta datos adicionales de ESE MISMO cliente (ej: "¿qué ip tiene?", "¿cuál es su dirección?", "¿qué plan tiene?", "¿me das su teléfono?").
-  - "accion": perfil (ver de nuevo la card), direccion, deuda, ciclo, telefono, red (ip/mac), plan.
+- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
 - DATA_MAESTRA: Universo total de la base de datos.
 - GENERAR_EXCEL: Si el usuario pide descargar el archivo.
 - SALUDO / AGRADECIMIENTO / UNKNOWN.
@@ -521,20 +509,19 @@ REGLA DE PARÁMETROS:
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 - "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
-- "nombres": ["Nombre A", "Nombre B"] (Usa un ARRAY si el usuario pide buscar a varias personas simultáneamente).
 - "banco": BNC, Venezuela / BDV, Provincial, etc.
 - "metodo": Pago Móvil, Zelle, Transferencia, Efectivo.
 - "startDate" / "endDate": YYYY-MM-DD (Usa si piden fechas específicas o rangos). 
 
 REGLA DE EXCEL Y REPORTES:
-- El bot **SOLO** genera el **Reporte Ejecutivo** (layout visual con gráficos). No genera el excel técnico de operaciones ni el de planes.
+- El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
 - **Solo ofrece el reporte si el usuario lo pide explícitamente** (ej: "genérame un excel", "descarga el reporte", "pásame un archivo"). No lo ofrezcas por iniciativa propia.
-- Al ofrecer el "Reporte Ejecutivo", llámalo así siempre y explícale con detalle que incluye: 
+- Al ofrecer el Reporte Ejecutivo, explícale con detalle que incluye: 
     1️⃣ **Dashboard Visual**: Con KPIs de Clientes, Ingresos y Ticket Promedio.
     2️⃣ **Análisis Gráfico**: Distribución de estatus y el Top de Urbanismos.
     3️⃣ **Detalle de Clientes**: Una hoja con la lista exacta de clientes y las columnas que él elija.
-- Si pide el **Excel de Operaciones** (técnico con IP/MAC): Explícale que ese archivo se descarga en la sección **Top Urbanismos**. (USA INTENT: UNKNOWN).
-- Si pide el **Excel de Planes**: Explícale que se descarga en la sección **Ventas**. (USA INTENT: UNKNOWN).
+- Si pide el **Excel de Operaciones** (técnico con IP/MAC): Explícale que ese archivo se descarga en la sección **Top Urbanismos**.
+- Si pide el **Excel de Planes**: Explícale que se descarga en la sección **Ventas**.
 
 REGLA DE DISTINCIÓN DE INGRESOS:
 - Si mencionan "BNC", "Venezuela", "Provincial", "Banco", "Zelle", "Cobros", "Recaudación" o "Pagos": Usa **INGRESOS_BANCOS**. (No preguntes estatus aquí).
@@ -544,13 +531,12 @@ REGLA DE HUMANIZACIÓN:
 - Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
 - Si eligieron suspendidos y no hay ciclo, haz la pregunta del ciclo 15 ó 30.
 - Finalmente pregunta por el periodo (hoy/ayer).
-- **PRIORIDAD**: Si el usuario pregunta por un dato puntual (ej: "qué ip tiene", "dónde vive") y ya viste un cliente en el historial reciente, USA **SEGUIMIENTO_CLIENTE**. NO USES BUSCAR_CONTRATO si ya se mostró ese cliente.
 - **No uses markdown exagerado**, mantén la elegancia.`;
 
 
-    const recentHistory = history.slice(-10).map(msg => ({
+    const recentHistory = history.slice(-5).map(msg => ({
         role: msg.sender === 'bot' ? 'model' : 'user',
-        parts: [{ text: msg.text || "(Envió tarjeta de datos del cliente/indicador)" }]
+        parts: [{ text: msg.text || "(Mostrando tarjeta de datos UI)" }]
     }));
 
     const contents = [
@@ -1166,6 +1152,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         "costo": "Costo", "precio": "Costo", "valor": "Costo",
                         "ip": "IP", "mac": "MAC", "ciclo": "Ciclo", "migrado": "Migrado",
                         "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
+                        "interface": "Interface", "vlan": "Interface", "red": "Interface",
                         "fecha": "Fecha_Creación", "creado": "Fecha_Creación"
                     };
 
@@ -1453,11 +1440,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
                             const statusLabel = parameters?.status ? (Array.isArray(parameters.status) ? parameters.status.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" y ") : parameters.status.charAt(0).toUpperCase() + parameters.status.slice(1)) : "Clientes";
                             const formatCurrencyLoc = (val) => {
-                                const formatted = new Intl.NumberFormat('de-DE', { 
-                                    minimumFractionDigits: 2, 
-                                    maximumFractionDigits: 2,
-                                    useGrouping: true 
-                                }).format(val || 0);
+                                const formatted = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val || 0);
                                 return `${formatted} US$`;
                             };
 
@@ -1537,19 +1520,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const hasSpecificType = parameters?.tipo || appliedFiltersText.some(t => t.includes("Tipo:"));
                         const finalAppliedLabel = hasSpecificType ? appliedFiltersText.join(', ') : `${appliedFiltersText.join(', ')} | Pyme y Residencial`;
 
-                        let responseText = `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n`;
-
-                        if (filteredClientes.length === 0) {
-                            responseText += `Actualmente **no hay ningún cliente** (0) bajo estos parámetros de búsqueda.`;
-                        } else if (filteredClientes.length > 0 && filteredClientes.length <= 10) {
-                            const listText = filteredClientes.map((m, i) => `${i + 1}) **${m.client_name}** (#${m.id}) · ${m.sector_name} · ${m.plan?.name || "Sin plan"}`).join("\n");
-                            responseText += `Como son pocos clientes (**${filteredClientes.length}**), te los muestro directamente en pantalla:\n\n${listText}\n\nSi necesitas exportarlos al **Excel**, solo dímelo.`;
-                        } else {
-                            responseText += `**Si necesitas el reporte detallado en Excel, solo dímelo.**`;
-                        }
-
                         return {
-                            text: responseText,
+                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
                             isCard: true,
                             cardData: {
                                 periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -1861,39 +1833,25 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let resolvedInThisStep = [];
                 let currentAmbiguous = null;
                 let currentMatches = [];
-                let notFoundNames = [];
 
                 while (pendingNames.length > 0) {
-                    let nameRaw = pendingNames.shift();
-                    
-                    // Si el nombre contiene " y " o "," pero se envió como un solo string, lo separamos
-                    if (typeof nameRaw === 'string' && (nameRaw.toLowerCase().includes(" y ") || nameRaw.includes(","))) {
-                        const splitNames = nameRaw.split(/ y |,| Y /).map(n => n.trim()).filter(n => n.length > 2);
-                        if (splitNames.length > 1) {
-                            pendingNames = [...splitNames, ...pendingNames];
-                            continue;
-                        }
-                    }
-
+                    const nameRaw = pendingNames.shift();
                     let nameClean = normalizeText(nameRaw)
                         .replace(/^(del\s+cliente|el\s+cliente|cliente|datos\s+de|datos\s+del|la\s+informacion\s+de)\s+/g, "")
                         .trim();
 
                     if (!nameClean || nameClean.length < 3) continue;
 
-                    // Evitar procesar el mismo registro si ya está confirmado (MÁS los que ya resolvimos hoy)
-                    const alreadyResolvedIds = [...confirmedClients, ...resolvedInThisStep].map(c => c.id);
+                    // Evitar procesar el mismo registro si ya está confirmado
+                    const alreadyResolvedIds = resolvedInThisStep.map(c => c.id);
                     let matches = clientes.filter(c => normalizeText(c.client_name).includes(nameClean) && !alreadyResolvedIds.includes(c.id));
 
                     if (matches.length === 0 && nameClean.split(" ").length > 1) {
-                        // Filtrar palabras cortas de unión (y, e, de, la, el) para que no rompan el buscador
-                        const words = nameClean.split(" ").filter(w => w.length > 2 && w !== "del" && w !== "los" && w !== "las");
-                        if (words.length > 0) {
-                            matches = clientes.filter(c => {
-                                const dbName = normalizeText(c.client_name);
-                                return words.every(w => dbName.includes(w)) && !alreadyResolvedIds.includes(c.id);
-                            });
-                        }
+                        const words = nameClean.split(" ");
+                        matches = clientes.filter(c => {
+                            const dbName = normalizeText(c.client_name);
+                            return words.every(w => dbName.includes(w)) && !alreadyResolvedIds.includes(c.id);
+                        });
                     }
 
                     if (matches.length === 1) {
@@ -1902,8 +1860,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         currentAmbiguous = nameRaw;
                         currentMatches = matches;
                         break;
-                    } else {
-                        notFoundNames.push(nameRaw);
                     }
                 }
 
@@ -1912,10 +1868,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 if (currentAmbiguous) {
                     const optionsList = currentMatches.map((m, i) => `${i + 1}) **${m.client_name}** (Contrato: **#${m.id}**, Estatus: ${m.status_name}, Sector: ${m.sector_name})`).join("\n");
                     const introResolved = resolvedInThisStep.length > 0 ? `He agregado a ${resolvedInThisStep.map(c => c.client_name).join(", ")}. \n\n` : "";
-                    const notFoundText = notFoundNames.length > 0 ? `\n\n*(No encontré a: ${notFoundNames.join(", ")})*` : "";
 
                     return {
-                        text: `${introResolved}He encontrado **${currentMatches.length} contratos** asociados a "${currentAmbiguous}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}${notFoundText}\n\nResponde con el número de la opción (1, 2, 3...) para ver el perfil detallado.`,
+                        text: `${introResolved}He encontrado **${currentMatches.length} contratos** asociados a "${currentAmbiguous}". ¿Cuál de ellos deseas consultar?\n\n${optionsList}\n\nResponde con el número de la opción (1, 2, 3...) para ver el perfil detallado.`,
                         isCard: false,
                         contextType: 'multi_client_clarification',
                         cardData: {
@@ -1929,10 +1884,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 else if (allConfirmed.length > 0) {
                     const confirmedList = allConfirmed.map(c => `- ${c.client_name} (#${c.id})`).join("\n");
                     const title = nombresReq.length > 1 ? "Clientes encontrados" : "Cliente encontrado";
-                    const notFoundText = notFoundNames.length > 0 ? `\n⚠️ **Nota:** No logré encontrar a: ${notFoundNames.join(", ")}.\n` : "";
 
                     // Si solo era un nombre y se resolvió directo, mostramos su card pero con opción a excel
-                    if (nombresReq.length === 1 && allConfirmed.length === 1 && notFoundNames.length === 0) {
+                    if (nombresReq.length === 1 && allConfirmed.length === 1) {
                         const cliente = allConfirmed[0];
                         return {
                             text: `He encontrado a **${cliente.client_name}**. ¿Deseas buscar a alguien más o **generamos el Excel** con sus datos?`,
@@ -1960,19 +1914,17 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     return {
-                        text: `He preparado la lista con los clientes encontrados:\n\n${confirmedList}\n${notFoundText}\n¿Deseas buscar más nombres o **procedemos con el Excel**?`,
+                        text: `He preparado la lista con los clientes encontrados:\n\n${confirmedList}\n\n¿Deseas buscar más nombres o **procedemos con el Excel**?`,
                         isCard: false,
                         contextType: 'multi_client_confirmed',
                         cardData: {
-                            confirmedClients: allConfirmed,
-                            savedDataset: allConfirmed,
-                            filtersText: ["Lista Personalizada"]
+                            confirmedClients: allConfirmed
                         }
                     };
                 }
 
                 registerUnansweredQuery(query, userName, currentPage);
-                return { text: `Lo siento ${userName}, no encontré clientes que coincidan con: ${notFoundNames.join(", ")}.`, isCard: false };
+                return { text: `Lo siento ${userName}, no encontré ningún cliente que coincida con esos nombres.`, isCard: false };
             }
 
             case 'BUSQUEDA_VAGA':
@@ -2071,10 +2023,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
 
                 if (accion === 'red') {
-                    const ip = rawDataTarget.service_detail?.ip || rawDataTarget.ip_address || 'Asignación Dinámica/NA';
-                    const mac = rawDataTarget.service_detail?.mac || rawDataTarget.mac_address || 'N/A';
                     return {
-                        text: `Parámetros de Networking de **${rawDataTarget.client_name}**:\n\n🌐 **IP**: ${ip}\n💻 **MAC**: ${mac}`,
+                        text: `Parámetros de Networking de ** ${rawDataTarget.client_name}**: \n\n🌐 IP: ${rawDataTarget.ip_address || 'Asignación Dinamica/NA'} \n💻 MAC: ${rawDataTarget.mac_address || 'N/A'} `,
                         isCard: false,
                         contextType: 'viewing_client',
                         cardData: { rawData: rawDataTarget }
@@ -2082,10 +2032,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
 
                 if (accion === 'plan') {
-                    const pName = rawDataTarget.plan?.name || 'No definido';
-                    const pCost = rawDataTarget.plan?.cost || 0;
                     return {
-                        text: `El contrato comercial de **${rawDataTarget.client_name}** está bajo el plan:\n\n📦 **Plan**: ${pName}\n💳 **Costo Mensual**: $${pCost} US$`,
+                        text: `El contrato comercial de ** ${rawDataTarget.client_name}** está sujeto al siguiente paquete: \n\n📦 Plan: ** ${rawDataTarget.plan?.name || 'Vago/Ninguno'}**\n💳 Costo Mensual: ** $${rawDataTarget.plan?.cost || 0}** `,
                         isCard: false,
                         contextType: 'viewing_client',
                         cardData: { rawData: rawDataTarget }
@@ -2225,26 +2173,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'GENERAR_EXCEL': {
-                const requestedType = parameters?.reportType || 'general';
-                const queryText = query.toLowerCase();
-
-                // 🛑 Bloqueo Duro: Si pide excels técnicos, rechazar y enviar directo
-                if (requestedType === 'operations' || queryText.includes('operacion') || queryText.includes('operativa')) {
-                     return {
-                         text: `El **Excel de Operaciones** (archivo técnico con IP/MAC/Red) se descarga exclusivamente en la sección de **Top Urbanismos**. Por favor, ve al menú y ábrelo desde allí. Aquí solo puedo entregarte el **Reporte Ejecutivo**.`,
-                         isCard: false,
-                         contextType: 'redirect_operations'
-                     };
-                }
-
-                if (requestedType === 'planes' || queryText.includes('plan')) {
-                     return {
-                         text: `El **Excel de Planes** se genera exclusivamente en la sección de **Ventas**. Por favor, ve a esa opción en el menú. Aquí solo puedo entregarte el **Reporte Ejecutivo**.`,
-                         isCard: false,
-                         contextType: 'redirect_planes'
-                     };
-                }
-
                 // Buscamos si el último mensaje tenía un dataset relevante (contexto)
                 let targetDataset = null;
                 let targetFilters = null;
@@ -2271,25 +2199,31 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     ? { filtered: targetDataset, appliedTexts: targetFilters }
                     : getFilteredDataset(clientes, targetParams, query);
 
+                const reportType = parameters?.reportType || 'general';
+                const reportName = reportType === 'operations' ? 'Operaciones (Seguimiento)' : 'General';
                 const currentSource = dataLabel.startsWith("Hoy") ? "" : ` de **${dataLabel}**`;
                 const filtersMsg = appliedTexts.join(', ') || (currentSource ? `Toda la data` : 'Global');
 
-                const responseText = `¡Entendido **${userName}**! He preparado el **Reporte Ejecutivo** con los datos${currentSource} de: **${filtersMsg}**. \n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
+                let responseText = "";
+                if (reportType === 'operations') {
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel de Operaciones** con los datos${currentSource} para: **${filtersMsg}**.`;
+                } else {
+                    responseText = `¡Entendido **${userName}**! He preparado el **Excel General** con los datos${currentSource} de: **${filtersMsg}**. \n\n¿Deseas descargarlo ahora o prefieres que incluya alguna columna específica al principio?`;
+                }
 
                 return {
                     text: responseText,
                     isCard: true,
-                    isDownload: true, // Auto-trigger download
                     contextType: 'excel_ready',
                     cardData: {
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
-                        title: `Reporte Ejecutivo Listo`,
+                        title: `Excel ${reportName} listo`,
                         subtitle: appliedTexts.join(" | "),
                         color: "#27ae60",
-                        parameters: { ...targetParams, reportType: 'executive' },
+                        parameters: { ...targetParams, reportType },
                         savedDataset: filtered,
                         filtersText: appliedTexts,
-                        reportType: 'executive'
+                        reportType: reportType
                     }
                 };
             }
