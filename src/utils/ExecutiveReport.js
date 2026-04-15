@@ -2,7 +2,7 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import { mapCycleValue } from "./cycleHelper";
 
-const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const norm = (v) => (v == null ? "" : String(v).trim());
 
 export const exportExecutiveReport = async (dataset, appliedFiltersText = [], userName = "", selectedColumns = ["Todas"]) => {
@@ -212,6 +212,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         { header: "CI/RIF", key: "client_identification", width: 15, ui: "Cedula" },
         { header: "TELÉFONO", key: "client_mobile", width: 15, ui: "Teléfono" },
         { header: "DIRECCIÓN", key: "address", width: 35, ui: "Dirección" },
+        { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
         { header: "SECTOR", key: "sector_name", width: 25, ui: "Urbanismo" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
@@ -220,8 +221,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         { header: "IP", key: "ip", width: 15, ui: "IP" },
         { header: "MAC", key: "mac", width: 20, ui: "MAC" },
         { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
-        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" },
-        { header: "INTERFACE", key: "interface", width: 20, ui: "Interface" }
+        { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
     ];
 
     const isAll = selectedColumns.includes("Todas");
@@ -246,7 +246,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             client_identification: cliente.client_identification,
             client_mobile: cliente.client_mobile,
             address: norm(cliente.address_tax || cliente.address),
-            sector_name: cliente.sector_name,
+            interface: cliente.service_detail?.interface || "N/A",
+            sector_name: norm(cliente.sector_name || cliente._displaySector),
             migrado: cliente.migrate ? "si" : "No",
             ciclo: mapCycleValue(cliente.cycle),
             plan_name: cliente.plan?.name || "N/A",
@@ -254,8 +255,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
             mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
             fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
-            tipo_cliente: cliente.client_type_name,
-            interface: cliente.interface || "N/A"
+            tipo_cliente: cliente.client_type_name
         };
         detailSheet.addRow(rowData);
     });
