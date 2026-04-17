@@ -26,18 +26,46 @@ function PageNotFound() {
             <span style={{ fontSize: '1.5rem' }}>🔐</span>
             <h4>Credenciales de Acceso Corporativo</h4>
           </div>
+          
           <div className="credential-item">
-            <span className="credential-label">Usuario:</span>
-            <span className="credential-value">ybravo@sisprotgf.com</span>
+            <div className="credential-content">
+              <span className="credential-label">Usuario:</span>
+              <span className="credential-value" id="user-val">ybravo@sisprotgf.com</span>
+            </div>
+            <button 
+              className="copy-btn" 
+              onClick={() => {
+                navigator.clipboard.writeText("ybravo@sisprotgf.com");
+                alert("Usuario copiado");
+              }}
+              title="Copiar Usuario"
+            >
+              📋
+            </button>
           </div>
+
           <div className="credential-item">
-            <span className="credential-label">Contraseña:</span>
-            <span className="credential-value">Qwerty#2501.</span>
+            <div className="credential-content">
+              <span className="credential-label">Contraseña:</span>
+              <span className="credential-value" id="pass-val">Qwerty#2501.</span>
+            </div>
+            <button 
+              className="copy-btn" 
+              onClick={() => {
+                navigator.clipboard.writeText("Qwerty#2501.");
+                alert("Contraseña copiada");
+              }}
+              title="Copiar Contraseña"
+            >
+              📋
+            </button>
           </div>
+
           <span className="access-note">
             * Use estos datos si el sistema solicita inicio de sesión para visualizar los tableros.
           </span>
         </div>
+
 
         {/* Aviso de Rotación para Móviles */}
         <div className="mobile-rotation-notice">
@@ -72,32 +100,6 @@ function PageNotFound() {
               </div>
             </div>
 
-            {/* Informe NUEVO: Control de Cancelaciones y Motivos */}
-            <div className="report-card">
-              <h3 className="report-title">Control de Cancelaciones y Motivos</h3>
-              <div className="iframe-wrapper">
-                <iframe
-                  title="Control de Cancelaciones y Motivos"
-                  src="https://app.powerbi.com/reportEmbed?reportId=478a6da0-9adf-430e-a7ba-0200ee609cbe&autoAuth=true&experience=power-bi"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                ></iframe>
-              </div>
-            </div>
-
-            {/* Informe NUEVO: Encuesta de Satisfacción */}
-            <div className="report-card">
-              <h3 className="report-title">Encuesta de Satisfacción</h3>
-              <div className="iframe-wrapper">
-                <iframe
-                  title="Encuesta de Satisfacción"
-                  src="https://app.powerbi.com/reportEmbed?reportId=d33fc88a-e54a-4419-b7da-1842085483c9&pageName=f13b3b732a3cecbf2ef9&autoAuth=true&experience=power-bi"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                ></iframe>
-              </div>
-            </div>
-
             {/* Informe 2: Ingresos Diarios */}
             <div className="report-card">
               <h3 className="report-title">Ingresos Diarios</h3>
@@ -110,6 +112,7 @@ function PageNotFound() {
                 ></iframe>
               </div>
             </div>
+
 
             {/* Informe 3: Activos por día */}
             <div className="report-card">
