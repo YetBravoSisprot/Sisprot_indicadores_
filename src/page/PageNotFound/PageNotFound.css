@@ -10,7 +10,7 @@
   color: #fff;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   text-align: center;
-  padding: 20px 0 60px 0; /* Quitamos padding lateral para que el slider llegue a los bordes si es necesario */
+  padding: 20px 0 60px 0;
   padding-top: 40px;
   box-sizing: border-box;
   position: relative;
@@ -49,7 +49,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 20px;
   box-sizing: border-box;
 }
 
@@ -60,7 +60,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 25px;
-  margin-bottom: 40px;
+  margin: 0 auto 30px auto;
   width: 90%;
   max-width: 600px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -105,6 +105,68 @@
   padding: 12px 18px;
   border-radius: 12px;
   gap: 15px;
+  transition: background 0.3s ease;
+}
+
+.credential-item:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.credential-content {
+  display: flex;
+  flex-direction: column; /* Cambiado a columna para evitar desbordamientos */
+  gap: 4px;
+  flex: 1;
+}
+
+.credential-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.credential-value {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 600;
+  word-break: break-all;
+  text-align: left;
+}
+
+.copy-btn {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: rgba(59, 130, 246, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
+
+.access-note {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 15px;
+  font-style: italic;
 }
 
 /* Slider / Carousel System */
@@ -112,7 +174,7 @@
   position: relative;
   width: 100%;
   max-width: 1400px;
-  padding: 0 60px; /* Espacio para los botones */
+  padding: 0 60px;
   box-sizing: border-box;
 }
 
@@ -122,18 +184,17 @@
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   gap: 30px;
-  padding: 20px 0 40px 0;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  padding: 10px 0 40px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .reports-slider::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
-/* Tarjeta de Reporte - Ahora con tamaño fijo para el slider */
 .report-card {
-  flex: 0 0 calc(100% - 20px); /* Un reporte por vista casi completo */
+  flex: 0 0 calc(100% - 0px);
   max-width: 1200px;
   min-width: 300px;
   scroll-snap-align: center;
@@ -162,7 +223,7 @@
 .iframe-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
   border-radius: 16px;
@@ -179,7 +240,6 @@
   border: none;
 }
 
-/* Botones de Navegación del Slider */
 .slider-nav-btn {
   position: absolute;
   top: 50%;
@@ -210,20 +270,11 @@
 .slider-nav-btn.prev { left: 0px; }
 .slider-nav-btn.next { right: 0px; }
 
-/* Desktop size adjustment */
-@media (min-width: 1024px) {
-  .report-card {
-    flex: 0 0 100%; /* Tamaño completo en desktop */
-  }
-}
-
-/* Tablet size adjustment */
 @media (max-width: 1023px) {
   .slider-wrapper {
     padding: 0 50px;
   }
   .report-card {
-    flex: 0 0 100%;
     padding: 20px;
   }
   .report-title {
@@ -231,20 +282,18 @@
   }
 }
 
-/* Mobile adjustments */
 @media (max-width: 768px) {
   .slider-wrapper {
     padding: 0 10px;
   }
   .slider-nav-btn {
-    display: none; /* Usar scroll táctil en móvil */
+    display: none;
   }
   .reports-slider {
     gap: 15px;
-    padding: 10px 0 20px 0;
   }
   .report-card {
-    flex: 0 0 92%;
+    flex: 0 0 95%;
     border-radius: 16px;
     padding: 15px;
   }
@@ -252,52 +301,24 @@
     font-size: 1.1rem;
     margin-bottom: 15px;
   }
+  
+  .access-credentials-card {
+    padding: 15px;
+  }
+
+  .credential-value {
+    font-size: 0.9rem; /* Reducido ligeramente para evitar saltos de línea */
+  }
+
+  .mobile-rotation-notice {
+    display: flex;
+    width: 90%;
+    margin-bottom: 20px;
+  }
 }
 
-/* Credential details restore */
-.credential-label {
-    font-size: 0.7rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    font-weight: 700;
-    flex-shrink: 0;
-    letter-spacing: 1px;
-}
-
-.credential-value {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.95rem;
-    color: #fff;
-    font-weight: 600;
-    word-break: break-all;
-    text-align: right;
-}
-
-.access-note {
-    display: block;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 15px;
-    font-style: italic;
-}
-
-.mobile-rotation-notice {
-    background: rgba(59, 130, 246, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px dashed rgba(59, 130, 246, 0.4);
-    padding: 15px 20px;
-    border-radius: 14px;
-    margin-bottom: 30px;
-    width: 100%;
-    max-width: 500px;
-    display: none;
-    align-items: center;
-    gap: 15px;
-}
-
-@media (max-width: 768px) {
-    .mobile-rotation-notice {
-        display: flex;
-        width: 90%;
-    }
+@media (max-width: 480px) {
+  .credential-value {
+    font-size: 0.85rem;
+  }
 }
