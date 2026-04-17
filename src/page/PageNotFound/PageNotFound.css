@@ -161,12 +161,31 @@
   transform: scale(0.95);
 }
 
-.access-note {
-  display: block;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 15px;
-  font-style: italic;
+/* Aviso de Rotación para Móviles - Oculto por defecto */
+.mobile-rotation-notice {
+  background: rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px dashed rgba(59, 130, 246, 0.4);
+  padding: 15px 20px;
+  border-radius: 14px;
+  margin: 0 auto 30px auto;
+  width: 100%;
+  max-width: 500px;
+  display: none; /* Asegura que no se vea en PC */
+  align-items: center;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+.notice-icon {
+  font-size: 1.5rem;
+}
+
+.notice-text {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #e2e8f0;
+  text-align: left;
 }
 
 /* Slider / Carousel System */
@@ -310,12 +329,16 @@
     font-size: 0.9rem; /* Reducido ligeramente para evitar saltos de línea */
   }
 
-  .mobile-rotation-notice {
-    display: flex;
-    width: 90%;
-    margin-bottom: 20px;
+  /* Solo mostrar tip de rotación en móviles y en posición vertical */
+  @media (orientation: portrait) {
+    .mobile-rotation-notice {
+      display: flex;
+      width: 90%;
+      margin-bottom: 25px;
+    }
   }
 }
+
 
 @media (max-width: 480px) {
   .credential-value {
