@@ -93021,19 +93021,19 @@ const largeArraydata =
         "code": "FOR600M",
         "profile": "600M/600M"
       },
-      "client_mobile": "04124323704",
+      "client_mobile": "04129977991",
       "address": "VDA PRINCIPAL DEL MACARO CASA NRO C4 URB  SAMAN TARAZONERO II TURMERO",
       "client_identification": "V27820865",
       "nap_box_name": "115",
       "created_at": "2024-08-12T12:59:28.327569",
       "service_detail": {
-        "id": 11588,
+        "id": 12361,
         "ip": "172.23.157.2",
         "mac": "GPON0097CA76",
         "serial": "GPON0097CA76",
         "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2026-02-10T19:35:28.408999",
+        "created_at": "2026-04-19T10:55:37.568378",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -106212,10 +106212,10 @@ const largeArraydata =
       "id": 6877,
       "client_name": "MERVIN EDWIN LINARES ONTIVEROS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
         "id": 100,
@@ -116097,8 +116097,8 @@ const largeArraydata =
       "id": 7256,
       "client_name": "ALVARO AMEIJENDA SANTANA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -137484,13 +137484,13 @@ const largeArraydata =
       "nap_box_name": "667",
       "created_at": "2025-05-10T14:33:54.385189",
       "service_detail": {
-        "id": 12351,
+        "id": 12360,
         "ip": "10.14.41.2",
         "mac": "HWTCCC93AA2F",
         "serial": "HWTCCC93AA2F",
         "queue": null,
         "interface": "VLAN112_LA_MACARENA_ZTE",
-        "created_at": "2026-04-18T09:52:20.531143",
+        "created_at": "2026-04-19T10:38:01.464773",
         "created_by_name": null
       },
       "installation_invoice_cost": null
