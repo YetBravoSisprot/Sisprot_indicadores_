@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5315,
+  "count": 5316,
   "results": [
     {
       "id": 3063,
@@ -4722,8 +4722,8 @@ const largeArraydata =
       "id": 3228,
       "client_name": "EMILYS YHOSVELIN MAYORA PERALTA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
@@ -15189,8 +15189,8 @@ const largeArraydata =
       "id": 3607,
       "client_name": "MARISABEL MAAL DE RIVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Callejon Cañaveral",
@@ -30612,8 +30612,8 @@ const largeArraydata =
       "id": 4163,
       "client_name": "BENETTI Y ASOCIADOS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -62760,8 +62760,8 @@ const largeArraydata =
       "id": 5352,
       "client_name": "CESAR GREGORIO ROJAS HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Terrazas de Paya",
@@ -103587,13 +103587,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 981",
       "created_at": "2024-10-16T09:05:37.704041",
       "service_detail": {
-        "id": 8484,
+        "id": 12373,
         "ip": "172.30.190.2",
         "mac": "OEMT3C622AEA",
-        "serial": "OEMT3C622AEA (56)",
-        "queue": "Plan_92194_15811_WispHub",
+        "serial": "OEMT3C622AEA",
+        "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2025-05-06T11:08:45.157498",
+        "created_at": "2026-04-20T11:47:22.233556",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -117615,13 +117615,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 1105",
       "created_at": "2024-12-13T09:14:01.792476",
       "service_detail": {
-        "id": 7533,
+        "id": 12372,
         "ip": "10.10.68.2",
         "mac": "OEMT3C6254B6",
-        "serial": "OEMT3C6254B6 (P268)",
-        "queue": "Plan_92194_15811_WispHub",
+        "serial": "OEMT3C6254B6",
+        "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2024-12-17T16:07:44.364177",
+        "created_at": "2026-04-20T11:38:02.236784",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -118593,13 +118593,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 981",
       "created_at": "2024-12-18T14:46:55.072066",
       "service_detail": {
-        "id": 7571,
+        "id": 12370,
         "ip": "10.10.94.2",
         "mac": "HWTC48220060",
-        "serial": "HWTC48220060 (PW222)",
-        "queue": "Plan_140304_15811_WispHub",
+        "serial": "HWTC48220060",
+        "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2024-12-18T14:57:11.071932",
+        "created_at": "2026-04-20T11:34:45.832361",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -129558,13 +129558,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 981",
       "created_at": "2025-03-31T13:55:54.783027",
       "service_detail": {
-        "id": 8083,
+        "id": 12368,
         "ip": "10.12.245.2",
         "mac": "OEMT3C6207EE",
         "serial": "OEMT3C6207EE",
-        "queue": "Plan_107915_15811_WispHub",
+        "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2025-04-01T09:00:20.149479",
+        "created_at": "2026-04-20T11:29:59.342652",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -143034,8 +143034,8 @@ const largeArraydata =
       "id": 8340,
       "client_name": "OSCAR LEONARDO SUAREZ LORCA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -148764,8 +148764,8 @@ const largeArraydata =
       "id": 8617,
       "client_name": "MARIANELLA AULAR SARABIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Urb. Vista Hermosa La Julia",
@@ -149370,8 +149370,8 @@ const largeArraydata =
       "id": 8640,
       "client_name": "LIDIRKA CAROLINA ROBERTO MEDINA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "El Nispero",
@@ -149985,13 +149985,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 981",
       "created_at": "2025-07-31T17:33:38.719342",
       "service_detail": {
-        "id": 9282,
+        "id": 12369,
         "ip": "10.15.203.2",
         "mac": "OEMT3C620BCE",
         "serial": "OEMT3C620BCE",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2025-08-01T08:22:23.706163",
+        "created_at": "2026-04-20T11:32:09.940251",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -155960,16 +155960,7 @@ const largeArraydata =
       "client_identification": "V23528033",
       "nap_box_name": "CE-00236",
       "created_at": "2025-11-18T10:08:32.615799",
-      "service_detail": {
-        "id": 10330,
-        "ip": "10.16.119.2",
-        "mac": "VSOL009e1ab4",
-        "serial": "VSOL009e1ab4",
-        "queue": null,
-        "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2025-11-25T14:11:17.001901",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -157794,8 +157785,8 @@ const largeArraydata =
       "id": 8951,
       "client_name": "HUGO JOSE TOVAR CARREÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Guanarito",
@@ -158034,13 +158025,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00733",
       "created_at": "2026-01-14T10:32:02.682000",
       "service_detail": {
-        "id": 11215,
+        "id": 12374,
         "ip": "10.16.201.2",
         "mac": "OEMT3C624D76",
         "serial": "OEMT3C624D76",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-01-17T10:15:46.863895",
+        "created_at": "2026-04-20T11:49:02.281655",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160309,6 +160300,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
         "created_at": "2026-04-19T18:45:16.875739",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9059,
+      "client_name": "ROSIMAR ADRIANA RUI DE FARIÑAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Residencias Mariño",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243520169",
+      "address": "CALLE MARIÑO RESIDENCIAS MARIÑO APTO 32 TORRE A TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15076217",
+      "nap_box_name": "CTO-0518",
+      "created_at": "2026-04-20T09:07:34.086352",
+      "service_detail": {
+        "id": 12366,
+        "ip": "10.14.1.2",
+        "mac": "OEMT3C6210BE",
+        "serial": "OEMT3C6210BE",
+        "queue": null,
+        "interface": "VLAN234_R_MARINO_OLT2",
+        "created_at": "2026-04-20T09:09:42.358544",
         "created_by_name": null
       },
       "installation_invoice_cost": null
