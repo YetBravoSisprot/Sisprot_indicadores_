@@ -3,7 +3,7 @@
  */
 
 const REVENUE_API_URL = "https://api.sisprotgf.com/api/public/statistics/income/";
-const API_KEY = "PgfFJ9K6LkM7ggghQJh4HP22bfqu1b43d2f1TITeil2c";
+const API_KEY = process.env.REACT_APP_SISPROT_API_KEY;
 
 export const getHistoricalRevenueData = async () => {
     try {
@@ -20,7 +20,7 @@ export const getHistoricalRevenueData = async () => {
 
         const response = await fetch(url, {
             headers: {
-                "x-api-key": API_KEY
+                "x-api-key": (API_KEY || "").trim()
             }
         });
 
