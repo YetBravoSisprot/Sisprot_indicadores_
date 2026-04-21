@@ -48,7 +48,11 @@ const sendToN8nLog = async (logData) => {
 // ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
 const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDate = null, endDate = null) => {
     const PAYMENTS_URL = "https://api.sisprotgf.com/api/public/payments/payment_company/";
-    const TOKEN = process.env.REACT_APP_PAYMENTS_API_KEY;
+    const TOKEN = (process.env.REACT_APP_PAYMENTS_API_KEY || process.env.REACT_APP_SISPROT_API_KEY || "").trim();
+
+    if (!TOKEN) {
+        throw new Error("No hay API Key configurada para los cobros bancarios.");
+    }
 
     // Si no hay fecha, usamos hoy por defecto (retrocompatibilidad)
     const nowLocal = new Date();
@@ -70,6 +74,7 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
         });
 
         if (!response.ok) {
+            console.error(`Error API Pagos (${response.status}):`, response.statusText);
             throw new Error(`Error consultando pagos bancarios: HTTP ${response.status}`);
         }
 
