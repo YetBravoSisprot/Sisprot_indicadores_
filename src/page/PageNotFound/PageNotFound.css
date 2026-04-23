@@ -94,6 +94,38 @@
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.5px;
+  flex: 1; /* Para empujar el icono al final */
+}
+
+.toggle-icon {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.credentials-collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.access-credentials-card.is-open .credentials-collapsible-content {
+  max-height: 500px; /* Suficiente para el contenido */
+  padding-top: 15px;
+  opacity: 1;
+}
+
+.access-note {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 15px;
+  font-style: italic;
 }
 
 .credential-item {
