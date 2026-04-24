@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5320,
+  "count": 5321,
   "results": [
     {
       "id": 3063,
@@ -30069,8 +30069,8 @@ const largeArraydata =
       "id": 4145,
       "client_name": "JEXI CAROLINA URRUTIA GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Jabillar",
@@ -30086,7 +30086,16 @@ const largeArraydata =
       "client_identification": "V21100151",
       "nap_box_name": "CTO-00017 C/5 JABILLAR",
       "created_at": "2024-04-20T19:15:26.489587",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12404,
+        "ip": "172.17.237.2",
+        "mac": "VSOL004987D1",
+        "serial": "VSOL004987D1",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-04-24T13:23:46.020060",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -48567,8 +48576,8 @@ const largeArraydata =
       "id": 4808,
       "client_name": "YOLERKIS ELIMAR VALERO LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Canaima",
@@ -48584,7 +48593,16 @@ const largeArraydata =
       "client_identification": "V27864980",
       "nap_box_name": "355",
       "created_at": "2024-06-11T11:37:51.788102",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12408,
+        "ip": "172.27.193.2",
+        "mac": "HWTC466C3D9B",
+        "serial": "HWTC466C3D9B",
+        "queue": null,
+        "interface": "VLAN270_VALLE_FRESCO_OLT3",
+        "created_at": "2026-04-24T15:20:52.546183",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -116352,13 +116370,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00207 DOS",
       "created_at": "2024-12-05T14:58:38.197263",
       "service_detail": {
-        "id": 11225,
+        "id": 12405,
         "ip": "10.11.213.2",
         "mac": "OEMT3C62472A",
-        "serial": "A8BF3C624729",
+        "serial": "OEMT3C62472A",
         "queue": null,
         "interface": "VLAN209_ZAMORA_OLT1",
-        "created_at": "2026-01-19T12:26:31.127560",
+        "created_at": "2026-04-24T14:21:18.625924",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160502,6 +160520,39 @@ const largeArraydata =
       "client_identification": "V14637635",
       "nap_box_name": "CTO-00038",
       "created_at": "2026-04-24T08:57:13.046484",
+      "service_detail": {
+        "id": 12407,
+        "ip": "10.16.190.2",
+        "mac": "4CABFC13C834",
+        "serial": "JMKGCB7BF5DC",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-04-24T15:17:43.753368",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9064,
+      "client_name": "KEYMAR STEFANY LOPEZ CALDERON",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04140476979",
+      "address": "‎AV 5TA CASA PARCELA NRO 3 URB SAN PABLO RESIDENCAS\n‎CAMELOT 3RA ETAPA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V20449913",
+      "nap_box_name": "635",
+      "created_at": "2026-04-24T12:59:04.585839",
       "service_detail": null,
       "installation_invoice_cost": null
     }
