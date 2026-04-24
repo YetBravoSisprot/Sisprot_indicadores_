@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5319,
+  "count": 5320,
   "results": [
     {
       "id": 3063,
@@ -129756,8 +129756,8 @@ const largeArraydata =
       "id": 7828,
       "client_name": "FRANCISCO JAVIER ALVARADO REYES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Las Rurales",
@@ -158511,8 +158511,8 @@ const largeArraydata =
       "id": 8978,
       "client_name": "‎YOHALY YUSLEINY AREVALO ROJAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -160479,6 +160479,30 @@ const largeArraydata =
         "created_at": "2026-04-23T08:31:30.113470",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9063,
+      "client_name": "ARTURO JOSE VELASQUEZ FONSECA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144918143",
+      "address": "CALLE MIRANDA NUMERO 60 AL FRENTE DE TDK TURMERO ARAGUA",
+      "client_identification": "V14637635",
+      "nap_box_name": "CTO-00038",
+      "created_at": "2026-04-24T08:57:13.046484",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
