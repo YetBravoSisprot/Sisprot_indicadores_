@@ -7854,8 +7854,8 @@ const largeArraydata =
       "id": 3339,
       "client_name": "ALEJANDRA GABRIELA CERVANTES MONTILLA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -7871,7 +7871,16 @@ const largeArraydata =
       "client_identification": "V27369562",
       "nap_box_name": "CTO-00387",
       "created_at": "2024-04-11T17:31:16.315930",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12412,
+        "ip": "172.25.207.2",
+        "mac": "TPLGF9CD412D",
+        "serial": "TPLGF9CD412D",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-04-25T12:32:12.190145",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -18612,8 +18621,8 @@ const largeArraydata =
       "id": 3732,
       "client_name": "RAIZA ABIGAIL NIEVES CARUCCI",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Prados I",
@@ -44076,7 +44085,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04148428118",
+      "client_mobile": "04121483714",
       "address": "URB LA FLORESTA CASCO DE TURMERO  CALLE 1 MANZANA B PARCELA N 12 TURMERO",
       "client_identification": "V13610842",
       "nap_box_name": "34 DOS",
@@ -100416,7 +100425,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04148428118",
+      "client_mobile": "04121483714",
       "address": "CALLE 5 CASA NRO 41 URB SIMON BOLIVAR TURMERO",
       "client_identification": "V13610842",
       "nap_box_name": "CTO-00001",
@@ -129990,8 +129999,8 @@ const largeArraydata =
       "id": 7857,
       "client_name": "BRISLEIDA CASTILLO QUINTANA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -130008,13 +130017,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00077",
       "created_at": "2025-04-03T11:35:38.689540",
       "service_detail": {
-        "id": 8181,
+        "id": 12414,
         "ip": "10.13.18.2",
         "mac": "OEMT3C62029A",
         "serial": "OEMT3C62029A",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
+        "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2025-04-08T15:30:01.842960",
+        "created_at": "2026-04-25T14:17:01.331938",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -155501,7 +155510,16 @@ const largeArraydata =
       "client_identification": "V23528033",
       "nap_box_name": "CE-00236",
       "created_at": "2025-11-18T10:08:32.615799",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12413,
+        "ip": "10.16.119.2",
+        "mac": "VSOL009E1AB4",
+        "serial": "VSOL009E1AB4",
+        "queue": null,
+        "interface": "VLAN270_VALLE_FRESCO_OLT3",
+        "created_at": "2026-04-25T13:11:19.282723",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
