@@ -118920,8 +118920,8 @@ const largeArraydata =
       "id": 7390,
       "client_name": "YOSELAY GABRIELA YEPEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Palmeras II",
@@ -118937,7 +118937,16 @@ const largeArraydata =
       "client_identification": "V20590361",
       "nap_box_name": "336",
       "created_at": "2025-01-13T16:05:07.362992",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12415,
+        "ip": "10.10.134.2",
+        "mac": "HWTC48080280",
+        "serial": "HWTC48080280",
+        "queue": null,
+        "interface": "VLAN119_PALMERAS_2",
+        "created_at": "2026-04-26T09:10:13.914425",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -142404,8 +142413,8 @@ const largeArraydata =
       "id": 8334,
       "client_name": "YESICA DEL CARMEN MORALES GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Betania",
@@ -142421,7 +142430,16 @@ const largeArraydata =
       "client_identification": "V16370932",
       "nap_box_name": "CTO-00376",
       "created_at": "2025-06-06T08:47:50.323162",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12416,
+        "ip": "10.14.218.2",
+        "mac": "QXTLCBE07EDA",
+        "serial": "QXTLCBE07EDA",
+        "queue": null,
+        "interface": "VLAN260_BETANIA",
+        "created_at": "2026-04-26T10:42:19.824864",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
