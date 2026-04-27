@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5321,
+  "count": 5322,
   "results": [
     {
       "id": 3063,
@@ -43422,11 +43422,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Simon Bolivar",
       "plan": {
-        "id": 43,
-        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
-        "cost": "46.00",
-        "code": "FOR650M",
-        "profile": "650M/650M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04128908085",
       "address": "CALLE 7 CASA NRO 57 URB SIMON BOLIVAR TURMERO",
@@ -73493,7 +73493,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
@@ -74777,7 +74777,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
@@ -94389,13 +94389,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 939",
       "created_at": "2024-08-17T10:18:59.017466",
       "service_detail": {
-        "id": 9727,
+        "id": 12419,
         "ip": "172.23.22.2",
-        "mac": "OEMT3C625A06",
-        "serial": "OEMT3C625A06",
+        "mac": "TPLGBA6878B1",
+        "serial": "TPLGBA6878B1",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2025-11-10T11:14:11.111843",
+        "created_at": "2026-04-27T11:57:31.537802",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -110636,7 +110636,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Prados III",
       "plan": {
@@ -111150,11 +111150,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04123983126",
       "address": "CALLE 3 DE MAYO CASA NRO 11 BARRIO POLVORIN LA BODEGUITA LA BODEGUITA ARAGUA ZONA POSTAL 2115",
@@ -142947,8 +142947,8 @@ const largeArraydata =
       "id": 8351,
       "client_name": "HECTOR DANIEL RIVERO LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "La Esperanza",
@@ -144599,7 +144599,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
@@ -149054,7 +149054,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -153974,7 +153974,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
@@ -159557,7 +159557,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "La Casona II Edificios",
       "plan": {
@@ -159623,7 +159623,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Prados II",
       "plan": {
@@ -159722,7 +159722,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Palmeras I",
       "plan": {
@@ -159755,7 +159755,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -159788,7 +159788,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Prados I",
       "plan": {
@@ -159821,7 +159821,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Villa Caribe",
       "plan": {
@@ -159854,7 +159854,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
@@ -159887,7 +159887,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Residencias Mariño",
       "plan": {
@@ -159920,7 +159920,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Saman Tarazonero I",
       "plan": {
@@ -159953,7 +159953,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "La Casona I Edificios",
       "plan": {
@@ -159986,7 +159986,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -160068,6 +160068,39 @@ const largeArraydata =
       "nap_box_name": "635",
       "created_at": "2026-04-24T12:59:04.585839",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9065,
+      "client_name": "LA CASA DE LOS ABUELOS",
+      "client_type_name": "INTERCAMBIO",
+      "client_subdivision": "POR INSTALAR_INTERCAMBIO",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": false,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 83,
+        "name": "RECURRENTE INSTITUCIONAL 80M",
+        "cost": "0.00",
+        "code": "FO-R80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04142178878",
+      "address": "Saman de Guere Calle el Carmen",
+      "client_identification": "V15819582",
+      "nap_box_name": "11",
+      "created_at": "2026-04-27T12:59:04.549000",
+      "service_detail": {
+        "id": 12418,
+        "ip": "10.16.215.2",
+        "mac": "2012231218001146",
+        "serial": "OEMT3C6201CE",
+        "queue": null,
+        "interface": "VLAN122_SAMAN_GUERE",
+        "created_at": "2026-04-27T12:59:04.549000",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
