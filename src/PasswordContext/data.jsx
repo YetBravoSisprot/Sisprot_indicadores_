@@ -62952,11 +62952,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Laguna Plaza",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04127410201",
       "address": "CALLE NEGRO PRIMERO EDIF 10 PISO PB APT 4 CONJUNTO RESIDENCIAL LAGUNA  PLAZA  TURMERO",
@@ -94782,13 +94782,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00577 DOS",
       "created_at": "2024-08-19T11:14:42.502258",
       "service_detail": {
-        "id": 12331,
+        "id": 12420,
         "ip": "172.31.103.2",
-        "mac": "OEMT3C623206",
-        "serial": "OEMT3C623206",
+        "mac": "OEMT3C622302",
+        "serial": "OEMT3C622302",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-04-16T17:34:02.297731",
+        "created_at": "2026-04-27T12:58:14.711778",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160017,8 +160017,8 @@ const largeArraydata =
       "id": 9063,
       "client_name": "ARTURO JOSE VELASQUEZ FONSECA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -160031,7 +160031,7 @@ const largeArraydata =
       },
       "client_mobile": "04144918143",
       "address": "CALLE MIRANDA NUMERO 60 AL FRENTE DE TDK TURMERO ARAGUA",
-      "client_identification": "V14637635",
+      "client_identification": "V14637675",
       "nap_box_name": "CTO-00038",
       "created_at": "2026-04-24T08:57:13.046484",
       "service_detail": {
