@@ -118581,24 +118581,33 @@ const largeArraydata =
       "id": 7363,
       "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Calle Peñalver",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
       },
       "client_mobile": "04241436934",
       "address": "SAFSADF",
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00283",
       "created_at": "2024-12-21T15:50:10.480107",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12427,
+        "ip": "10.17.1.2",
+        "mac": "JMKGC034D394",
+        "serial": "JMKGC034D394",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-04-28T15:46:54.230186",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -143916,8 +143925,8 @@ const largeArraydata =
       "id": 8382,
       "client_name": "YEMELI ALEXANDRA RONDON BARRIOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Ezequiel Zamora",
@@ -143933,7 +143942,16 @@ const largeArraydata =
       "client_identification": "V30658856",
       "nap_box_name": "118",
       "created_at": "2025-06-13T11:43:32.369808",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12425,
+        "ip": "10.15.37.2",
+        "mac": "QXTLCB3497BB",
+        "serial": "QXTLCB3497BB",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-04-28T13:08:50.664282",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -151839,7 +151857,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 25,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Macarena",
       "plan": {
         "id": 100,
@@ -160058,7 +160076,16 @@ const largeArraydata =
       "client_identification": "V20449913",
       "nap_box_name": "635",
       "created_at": "2026-04-24T12:59:04.585839",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12426,
+        "ip": "10.16.191.2",
+        "mac": "JMKGCF4E7A6E",
+        "serial": "JMKGCF4E7A6E",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-04-28T14:32:21.347927",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -160140,13 +160167,13 @@ const largeArraydata =
       "nap_box_name": "38",
       "created_at": "2026-04-28T10:03:52.436856",
       "service_detail": {
-        "id": 12422,
+        "id": 12424,
         "ip": "10.15.90.2",
         "mac": "OEMT3C6244FA",
         "serial": "OEMT3C6244FA",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-04-28T10:03:52.592769",
+        "created_at": "2026-04-28T12:28:49.648048",
         "created_by_name": null
       },
       "installation_invoice_cost": null
