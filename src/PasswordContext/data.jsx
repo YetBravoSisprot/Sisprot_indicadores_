@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5322,
+  "count": 5323,
   "results": [
     {
       "id": 3063,
@@ -12471,8 +12471,8 @@ const largeArraydata =
       "id": 3513,
       "client_name": "DEGLIS ALEXANDER VELAZQUEZ ACUÑA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Los Hornos",
@@ -47829,8 +47829,8 @@ const largeArraydata =
       "id": 4784,
       "client_name": "GINO GABRIEL JIMENEZ GIULIANELLI",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Arturo Luis Berti",
@@ -94389,13 +94389,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 939",
       "created_at": "2024-08-17T10:18:59.017466",
       "service_detail": {
-        "id": 12419,
+        "id": 12421,
         "ip": "172.23.22.2",
-        "mac": "TPLGBA6878B1",
-        "serial": "TPLGBA6878B1",
+        "mac": "OEMT3C625A06",
+        "serial": "OEMT3C625A06",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-04-27T11:57:31.537802",
+        "created_at": "2026-04-27T16:45:54.778570",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -111150,11 +111150,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04123983126",
       "address": "CALLE 3 DE MAYO CASA NRO 11 BARRIO POLVORIN LA BODEGUITA LA BODEGUITA ARAGUA ZONA POSTAL 2115",
@@ -159753,8 +159753,8 @@ const largeArraydata =
       "id": 9055,
       "client_name": "DOMINIC GREGOR CORTEZ CARAPAICA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -160101,6 +160101,30 @@ const largeArraydata =
         "created_at": "2026-04-27T12:59:04.549000",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9066,
+      "client_name": "EDNYN MILEYDIS LUGO DE CELIS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Valle Fresco",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144773140",
+      "address": "URBANIZACIÓN VALLE FRESCO, TURMERO",
+      "client_identification": "V6454846",
+      "nap_box_name": "Valle fresco",
+      "created_at": "2026-04-27T18:41:03.044516",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
