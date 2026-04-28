@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5323,
+  "count": 5324,
   "results": [
     {
       "id": 3063,
@@ -118579,7 +118579,7 @@ const largeArraydata =
     },
     {
       "id": 7363,
-      "client_name": "PRUEBA FREDDY2 FREDDY2",
+      "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
@@ -158093,16 +158093,7 @@ const largeArraydata =
       "client_identification": "V18221823",
       "nap_box_name": "32",
       "created_at": "2026-02-05T20:11:47.533263",
-      "service_detail": {
-        "id": 11656,
-        "ip": "10.17.1.2",
-        "mac": "OEMT3C62059E",
-        "serial": "OEMT3C62059E",
-        "queue": null,
-        "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2026-02-18T09:57:47.467917",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -159061,7 +159052,7 @@ const largeArraydata =
     },
     {
       "id": 9018,
-      "client_name": "PRUEBA FREDDY2 FREDDY2",
+      "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
@@ -159085,7 +159076,7 @@ const largeArraydata =
     },
     {
       "id": 9034,
-      "client_name": "PRUEBA FREDDY2 FREDDY2",
+      "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
@@ -160125,6 +160116,39 @@ const largeArraydata =
       "nap_box_name": "Valle fresco",
       "created_at": "2026-04-27T18:41:03.044516",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9067,
+      "client_name": "AGENCIA TURMERO",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
+      "cycle": 25,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04140390506",
+      "address": "CALLE MARIÑO C.C PASEO MARIÑO NIVEL PB-09 LOCAL PB-09 CENTRO TURMERO, Turmero 2115",
+      "client_identification": "V0000001",
+      "nap_box_name": "38",
+      "created_at": "2026-04-28T10:03:52.436856",
+      "service_detail": {
+        "id": 12422,
+        "ip": "10.15.90.2",
+        "mac": "OEMT3C6244FA",
+        "serial": "OEMT3C6244FA",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-04-28T10:03:52.592769",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
