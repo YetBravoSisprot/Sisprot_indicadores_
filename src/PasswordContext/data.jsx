@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5324,
+  "count": 5326,
   "results": [
     {
       "id": 3063,
@@ -126370,7 +126370,7 @@ const largeArraydata =
     },
     {
       "id": 7725,
-      "client_name": "GREGORY KATIUSKA GONZALEZ RAMIREZ",
+      "client_name": "MIGDALIA JOSEFINA PERDOMO",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -126384,9 +126384,9 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243085087",
+      "client_mobile": "04243409695",
       "address": "LA MARCELOTA CALLE LA LAGUNITA CASA NRO 07",
-      "client_identification": "V16268260",
+      "client_identification": "V9669819",
       "nap_box_name": "CTO - 1061",
       "created_at": "2025-03-18T10:02:38.550293",
       "service_detail": {
@@ -141408,8 +141408,8 @@ const largeArraydata =
       "id": 8286,
       "client_name": "EDIARLY ELENA ALAYON SALMERON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Ezequiel Zamora",
@@ -141425,7 +141425,16 @@ const largeArraydata =
       "client_identification": "V30972696",
       "nap_box_name": "CTO-00387",
       "created_at": "2025-05-30T16:40:27.263295",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12429,
+        "ip": "10.14.181.2",
+        "mac": "QXTLCB1437CD",
+        "serial": "QXTLCB1437CD",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-04-29T14:40:38.792230",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -159102,11 +159111,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 101,
+        "name": "RECURRENTE RESIDENCIAL PLAN 200M",
+        "cost": "19.00",
+        "code": "FOR200MB",
+        "profile": "200Mbps/200Mbps"
       },
       "client_mobile": "04241436934",
       "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
@@ -160059,8 +160068,8 @@ const largeArraydata =
       "id": 9064,
       "client_name": "KEYMAR STEFANY LOPEZ CALDERON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -160147,7 +160156,7 @@ const largeArraydata =
     },
     {
       "id": 9067,
-      "client_name": "AGENCIA TURMERO",
+      "client_name": "OFICINA OPERACIONES TURMERO",
       "client_type_name": "GRATIS",
       "client_subdivision": "ACTIVO_GRATIS",
       "status_name": "Activo",
@@ -160174,6 +160183,72 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN200_OLTs",
         "created_at": "2026-04-28T12:28:49.648048",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9069,
+      "client_name": "OFICINA OPERACIONES TURMERO",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
+      "cycle": 25,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04140390506",
+      "address": "CALLE MARINO C.C PASEO MARINO NIVEL PB-09 LOCAL PB-09 CENTRO TURMERO, Turmero 2115",
+      "client_identification": "V0000001",
+      "nap_box_name": "38",
+      "created_at": "2026-04-29T15:40:06.341903",
+      "service_detail": {
+        "id": 12430,
+        "ip": "10.10.155.2",
+        "mac": "QXTLC8EB156C",
+        "serial": "QXTLC8EB156C",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-04-29T15:40:06.487591",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9070,
+      "client_name": "OFICINA OPERACIONES TURMERO",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
+      "cycle": 25,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04140390506",
+      "address": "CALLE MARINO C.C PASEO MARINO NIVEL PB-09 LOCAL PB-09 CENTRO TURMERO, Turmero 2115",
+      "client_identification": "V0000001",
+      "nap_box_name": "256",
+      "created_at": "2026-04-29T15:40:07.458392",
+      "service_detail": {
+        "id": 12431,
+        "ip": "10.10.154.2",
+        "mac": "OEMT3C624776",
+        "serial": "OEMT3C624776",
+        "queue": null,
+        "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
+        "created_at": "2026-04-29T15:40:07.600345",
         "created_by_name": null
       },
       "installation_invoice_cost": null
