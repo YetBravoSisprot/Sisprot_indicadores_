@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5328,
+  "count": 5329,
   "results": [
     {
       "id": 3063,
@@ -23541,8 +23541,8 @@ const largeArraydata =
       "id": 3914,
       "client_name": "ROSA ANGELA ARIZA RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
@@ -55164,8 +55164,8 @@ const largeArraydata =
       "id": 5062,
       "client_name": "DEIBIS RAFAEL PEREZ SILVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
@@ -116766,8 +116766,8 @@ const largeArraydata =
       "id": 7295,
       "client_name": "CARLOS ALBERTO SORIA ROCHE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -116783,7 +116783,16 @@ const largeArraydata =
       "client_identification": "V25841149",
       "nap_box_name": "611",
       "created_at": "2024-12-10T09:12:32.748172",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12437,
+        "ip": "10.10.48.2",
+        "mac": "HWTC47310526",
+        "serial": "HWTC47310526",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-04-30T12:45:22.802731",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -151086,13 +151095,13 @@ const largeArraydata =
       "nap_box_name": "184",
       "created_at": "2025-08-12T14:04:16.381060",
       "service_detail": {
-        "id": 9361,
+        "id": 12439,
         "ip": "10.15.240.2",
         "mac": "OEMT3C620F9A",
         "serial": "OEMT3C620F9A",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2025-08-12T20:26:22.996876",
+        "created_at": "2026-04-30T15:55:15.767859",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160143,8 +160152,8 @@ const largeArraydata =
       "id": 9066,
       "client_name": "EDNYN MILEYDIS LUGO DE CELIS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Valle Fresco",
@@ -160160,7 +160169,16 @@ const largeArraydata =
       "client_identification": "V6454846",
       "nap_box_name": "Valle fresco",
       "created_at": "2026-04-27T18:41:03.044516",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12438,
+        "ip": "10.16.192.2",
+        "mac": "OEMT3C6260CA",
+        "serial": "OEMT3C6260CA",
+        "queue": null,
+        "interface": "VLAN270_VALLE_FRESCO_OLT3",
+        "created_at": "2026-04-30T14:12:47.417242",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -160316,6 +160334,30 @@ const largeArraydata =
       "client_identification": "V22948399",
       "nap_box_name": "CTO-00453",
       "created_at": "2026-04-30T10:57:27.848768",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9073,
+      "client_name": "MARIUXY EUGENIA TREJO TINEO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123359336",
+      "address": "CALLE MARIÑO EDIFICIO RESIDENCIAS MARIÑO TORRE B, PISO 6 APARTAMENTO 62-B SECTOR TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V24437877",
+      "nap_box_name": "CTO-0519",
+      "created_at": "2026-04-30T14:48:58.920278",
       "service_detail": null,
       "installation_invoice_cost": null
     }
