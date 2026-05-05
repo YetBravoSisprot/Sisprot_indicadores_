@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5331,
+  "count": 5332,
   "results": [
     {
       "id": 3063,
@@ -68805,8 +68805,8 @@ const largeArraydata =
       "id": 5567,
       "client_name": "CARMEN EDILIA CALDEVILA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -72495,8 +72495,8 @@ const largeArraydata =
       "id": 5694,
       "client_name": "CARMEN LUCIA MONTILVA MORENO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Durpa",
@@ -74730,8 +74730,8 @@ const largeArraydata =
       "id": 5773,
       "client_name": "ENEDINA ESMERALDA BRAVO ALVAREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Pantin",
@@ -84732,24 +84732,33 @@ const largeArraydata =
       "id": 6113,
       "client_name": "LUCIA IBIS ECHENIQUE CORDOVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Narayola II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243592766",
       "address": "AV. INTERCOMUNAL TURMERO EDIF 4 PISO 3 APTO 3-3 URB NARAYOLA II TURMERO ESTADO ARAGUA",
       "client_identification": "V12618098",
       "nap_box_name": "CTO-0524",
       "created_at": "2024-08-02T14:00:38.777050",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12460,
+        "ip": "172.18.1.2",
+        "mac": "TPLGB954F7E8",
+        "serial": "TPLGB954F7E8",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-05-05T15:37:08.172195",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -91380,8 +91389,8 @@ const largeArraydata =
       "id": 6340,
       "client_name": "YELITZA MARBERLLI PINEDA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Salto Angel",
@@ -160504,6 +160513,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN101_AJS",
         "created_at": "2026-05-04T17:55:13.566697",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9076,
+      "client_name": "ELA SPA BOUTIQUE, C.A",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
+      },
+      "client_mobile": "04243499464",
+      "address": "DOMICILIO FISCAL CALLE MIRANDA CC NONO LORENZO NIVEL PLANTA BAJA\n‎LOCAL N°29 SECTOR TURMERO ESTADO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "J506315785",
+      "nap_box_name": "CAJA NAP BICENTENARIO",
+      "created_at": "2026-05-05T15:55:49.117582",
+      "service_detail": {
+        "id": 12461,
+        "ip": "10.16.197.2",
+        "mac": "68-9F-F0-3B-8A-1F",
+        "serial": "ZXICCE588DC5",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-05-05T16:03:39.760779",
         "created_by_name": null
       },
       "installation_invoice_cost": null
