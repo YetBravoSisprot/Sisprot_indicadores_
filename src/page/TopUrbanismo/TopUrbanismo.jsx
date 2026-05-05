@@ -351,13 +351,18 @@ function TopUrbanismo() {
   const buscarPorContrato = () => {
     if (!contratoBuscado || !data?.results) return;
 
-    const resultado = data.results.filter(
-      (cliente) => String(cliente.id) === String(contratoBuscado)
-    );
+    const searchStr = String(contratoBuscado).toLowerCase().trim();
+
+    const resultado = data.results.filter((cliente) => {
+      const matchId = String(cliente.id) === searchStr;
+      const matchName = cliente.client_name && cliente.client_name.toLowerCase().includes(searchStr);
+      return matchId || matchName;
+    });
 
     setClientesPorContrato(resultado);
     setModoBusquedaContrato(true);
   };
+
 
   // ✅ NUEVO: Aplicar filtro inicial si viene de navegacion (ej. desde Admin)
   useEffect(() => {
@@ -679,11 +684,12 @@ function TopUrbanismo() {
           <div className="filtros-panel">
             <div className="busqueda-contrato">
               <input
-                type="number"
-                placeholder="Numero de contrato"
+                type="text"
+                placeholder="Contrato o nombre..."
                 value={contratoBuscado}
                 onChange={(e) => setContratoBuscado(e.target.value)}
               />
+
               <button className="button" onClick={buscarPorContrato}>
                 Buscar
               </button>
