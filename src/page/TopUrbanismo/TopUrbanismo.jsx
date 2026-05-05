@@ -830,7 +830,7 @@ function TopUrbanismo() {
               <p style={{ margin: '0 0 12px 0', color: '#1f4e78', fontSize: '1.1rem' }}><strong>📊 Guía de Reportes Inteligentes:</strong></p>
               <ul style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
                 <li style={{ marginBottom: '10px' }}>
-                  <strong>Reporte de Operaciones:</strong> Ideal para auditoría técnica. Te permite elegir <strong>Columnas específicas</strong> (como IP o MAC) para el análisis manual.
+                  <strong>Reporte de Postventa / Atención al Cliente:</strong> Ideal para auditoría técnica. Te permite elegir <strong>Columnas específicas</strong> (como IP o MAC) para el análisis manual.
                 </li>
                 <li style={{ marginBottom: '10px' }}>
                   <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros, e incluye también el detalle de clientes con las columnas que hayas seleccionado.
@@ -840,7 +840,7 @@ function TopUrbanismo() {
 
             <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center', margin: '15px 0' }}>
                <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#34495e' }}>
-                📂 Descargar Excel Operaciones
+                📂 Descargar Excel Postventa / Atención al Cliente
               </button>
               <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
                 📈 Descargar Reporte Ejecutivo
