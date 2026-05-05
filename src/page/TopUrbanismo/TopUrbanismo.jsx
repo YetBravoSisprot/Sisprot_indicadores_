@@ -830,7 +830,7 @@ function TopUrbanismo() {
               <p style={{ margin: '0 0 12px 0', color: '#1f4e78', fontSize: '1.1rem' }}><strong>📊 Guía de Reportes Inteligentes:</strong></p>
               <ul style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
                 <li style={{ marginBottom: '10px' }}>
-                  <strong>Reporte de Postventa / Atención al Cliente:</strong> Ideal para auditoría técnica. Te permite elegir <strong>Columnas específicas</strong> (como IP o MAC) para el análisis manual.
+                  <strong>Reporte de Postventa / Atención al Cliente:</strong> Optimizado para el seguimiento de usuarios y gestión de contactos. Permite generar listas personalizadas para validar el estatus y la atención brindada.
                 </li>
                 <li style={{ marginBottom: '10px' }}>
                   <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros, e incluye también el detalle de clientes con las columnas que hayas seleccionado.
