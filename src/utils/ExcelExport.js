@@ -39,9 +39,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         "Cambio de Proveedor (NETCOM)"
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
-    const contactados = [
-        "Yetzareth Bravo", "Khaloa Serrano", "Maria Moreno", "Derwing Acevedo"
-    ];
+    const contactados = []; // Ahora se deja vacío para ingreso manual en Excel
+
     const siNo = ["SI", "NO"];
 
     validSheet.getColumn('A').width = 45;
@@ -67,11 +66,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         cell.value = e;
         cell.alignment = { horizontal: 'center' };
     });
-    contactados.forEach((c, i) => {
-        const cell = validSheet.getCell(`C${i + 2}`);
-        cell.value = c;
-        cell.alignment = { horizontal: 'center' };
-    });
+    // Se omite el llenado automático de contactados para permitir ingreso manual en Excel
+
     siNo.forEach((s, i) => {
         const cell = validSheet.getCell(`D${i + 2}`);
         cell.value = s;
@@ -231,7 +227,8 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             row.getCell('estado_final').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
             
             if (rowData.contactado_por !== undefined) {
-                row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$${contactados.length + 1}`] };
+                row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$50`] };
+
                 row.getCell('contesto').dataValidation = { type: 'list', formulae: [`'Validaciones'!$D$2:$D$3`] };
                 row.getCell('estado_actualizado').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
                 row.getCell('motivo_cierre').dataValidation = { type: 'list', formulae: [`'Validaciones'!$A$2:$A$${motivos.length + 1}`] };
