@@ -184,8 +184,56 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         dashSheet.getCell(`B${urbStart + 1}`).value = "(Sin datos de urbanismos en la selección)";
     }
 
-    // --- NOTA EXPLICATIVA SOBRE LA DATA (FILA 35+) ---
-    const noteStart = 34;
+    // --- NUEVA TABLA: DETALLE POR URBANISMO Y ESTATUS (FILA 35+) ---
+    const urbTableStart = 35;
+    dashSheet.getCell(`B${urbTableStart}`).value = "ESTADO DE CLIENTES POR URBANISMO (Detalle)";
+    dashSheet.getCell(`B${urbTableStart}`).font = { bold: true, size: 12 };
+
+    const statusByUrb = dataset.reduce((acc, c) => {
+        const u = norm(c.sector_name || c._displaySector) || "OTROS";
+        const s = (c.status_name || 'OTROS').toUpperCase();
+        if (!acc[u]) acc[u] = { ACTIVO: 0, CANCELADO: 0, SUSPENDIDO: 0, TOTAL: 0 };
+        
+        if (s.includes('ACTIVO')) acc[u].ACTIVO++;
+        else if (s.includes('CANCELADO')) acc[u].CANCELADO++;
+        else if (s.includes('SUSPENDIDO')) acc[u].SUSPENDIDO++;
+        
+        acc[u].TOTAL++;
+        return acc;
+    }, {});
+
+    const urbHeaders = ["Urbanismo", "Activo", "Cancelado", "Suspendido", "Total"];
+    urbHeaders.forEach((h, i) => {
+        const cell = dashSheet.getCell(urbTableStart + 1, 2 + i);
+        cell.value = h;
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF5B9BD5' } };
+        cell.alignment = { horizontal: 'center' };
+    });
+
+    const sortedStats = Object.entries(statusByUrb).sort((a, b) => b[1].TOTAL - a[1].TOTAL);
+    
+    sortedStats.forEach(([name, stats], i) => {
+        const rowNum = urbTableStart + 2 + i;
+        dashSheet.getCell(`B${rowNum}`).value = name;
+        dashSheet.getCell(`C${rowNum}`).value = stats.ACTIVO;
+        dashSheet.getCell(`D${rowNum}`).value = stats.CANCELADO;
+        dashSheet.getCell(`E${rowNum}`).value = stats.SUSPENDIDO;
+        dashSheet.getCell(`F${rowNum}`).value = stats.TOTAL;
+        
+        dashSheet.getRow(rowNum).alignment = { horizontal: 'center' };
+        dashSheet.getCell(`B${rowNum}`).alignment = { horizontal: 'left' };
+        
+        // Bordes para la tabla
+        ['B', 'C', 'D', 'E', 'F'].forEach(col => {
+            dashSheet.getCell(`${col}${rowNum}`).border = {
+                top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}
+            };
+        });
+    });
+
+    // --- NOTA EXPLICATIVA SOBRE LA DATA (Dinámica) ---
+    const noteStart = urbTableStart + 2 + sortedStats.length + 2;
     dashSheet.mergeCells(`B${noteStart}:G${noteStart + 3}`);
     const noteCell = dashSheet.getCell(`B${noteStart}`);
     noteCell.value = "NOTA METODOLÓGICA Y FUENTE DE DATOS:\n" + 
