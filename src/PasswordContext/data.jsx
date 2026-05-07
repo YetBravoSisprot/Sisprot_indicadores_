@@ -4935,8 +4935,8 @@ const largeArraydata =
       "id": 3235,
       "client_name": "NERIO ANTONIO BARRETO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "El Paraiso",
@@ -64155,8 +64155,8 @@ const largeArraydata =
       "id": 5403,
       "client_name": "RICHARD JOSE FERNANDES PEREIRA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Villeguita",
@@ -133650,8 +133650,8 @@ const largeArraydata =
       "id": 7991,
       "client_name": "MARIA LIONZA PENA DE BELLORIN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Marcelota",
@@ -133667,7 +133667,16 @@ const largeArraydata =
       "client_identification": "V6041383",
       "nap_box_name": "CTO - 1059",
       "created_at": "2025-04-23T09:00:45.695225",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12473,
+        "ip": "10.13.226.2",
+        "mac": "80:D4:A5:A4:2E:C1",
+        "serial": "HWTC49200748",
+        "queue": null,
+        "interface": "VLAN281_MARCELOTA",
+        "created_at": "2026-05-07T12:39:41.331023",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -145520,16 +145529,7 @@ const largeArraydata =
       "client_identification": "V30082349",
       "nap_box_name": "CTO TORREON TORRE B",
       "created_at": "2025-06-23T09:41:41.127032",
-      "service_detail": {
-        "id": 9091,
-        "ip": "10.15.153.2",
-        "mac": "10.15.153.2",
-        "serial": "10.15.153.2",
-        "queue": "queue1",
-        "interface": "VLAN289_TORREON",
-        "created_at": "2025-06-26T20:23:05.378378",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -150870,7 +150870,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 10,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Leocolbo",
       "plan": {
         "id": 100,
@@ -153404,16 +153404,7 @@ const largeArraydata =
       "client_identification": "V281872687",
       "nap_box_name": "CTO-00266",
       "created_at": "2025-09-12T09:58:02.476150",
-      "service_detail": {
-        "id": 9516,
-        "ip": "10.16.51.2",
-        "mac": "10.16.51.2",
-        "serial": "10.16.51.2",
-        "queue": "queue1",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-09-12T10:08:30.054661",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -159248,7 +159239,16 @@ const largeArraydata =
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00038",
       "created_at": "2026-03-13T11:59:11.687326",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12474,
+        "ip": "192.168.1.1",
+        "mac": "00:1A:2B:3C:4D:5E",
+        "serial": "onu123456",
+        "queue": null,
+        "interface": "VLAN90_GESTION_OLT",
+        "created_at": "2026-05-07T13:11:28.018597",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -160614,8 +160614,8 @@ const largeArraydata =
       "id": 9078,
       "client_name": "LISBOA 2026 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Haras de San Pablo",
@@ -160632,13 +160632,13 @@ const largeArraydata =
       "nap_box_name": "641",
       "created_at": "2026-05-06T13:06:02.811962",
       "service_detail": {
-        "id": 12470,
+        "id": 12475,
         "ip": "10.16.194.2",
         "mac": "4C:AB:FC:65:64:D4",
         "serial": "JMKGCEB4E4DA3",
         "queue": null,
-        "interface": "VLAN210_HSP_OLT1",
-        "created_at": "2026-05-07T08:36:16.497277",
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-05-07T13:31:58.387094",
         "created_by_name": null
       },
       "installation_invoice_cost": null
