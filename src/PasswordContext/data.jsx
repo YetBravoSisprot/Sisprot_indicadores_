@@ -31303,7 +31303,7 @@ const largeArraydata =
     },
     {
       "id": 4186,
-      "client_name": "JOAO MANUEL BAPTISTA",
+      "client_name": "INVERSIONES HAWAY, C.A",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -31317,7 +31317,7 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04141449323",
+      "client_mobile": "04243189779",
       "address": "ZONA INDUSTRIAL SAN PABLO CALLE NRO 2 GALPON NRO 24",
       "client_identification": "V146275962",
       "nap_box_name": "102",
@@ -58663,7 +58663,7 @@ const largeArraydata =
     },
     {
       "id": 5204,
-      "client_name": "JOAO MANUEL BAPTISTA",
+      "client_name": "INVERSIONES HAWAY, C.A",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -58677,7 +58677,7 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04141449323",
+      "client_mobile": "04243189779",
       "address": "ZONA INDUSTRIAL SAN PABLO",
       "client_identification": "V146275962",
       "nap_box_name": "102 DOS",
@@ -99752,7 +99752,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 25,
+      "cycle": 10,
       "migrate": false,
       "sector_name": "Durpa",
       "plan": {
@@ -133248,8 +133248,8 @@ const largeArraydata =
       "id": 7976,
       "client_name": "YORIANGELIS CAROLINA CHIRINOS CHIQUITO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Concepcion",
@@ -160730,7 +160730,16 @@ const largeArraydata =
       "client_identification": "V29728905",
       "nap_box_name": "CE - 952",
       "created_at": "2026-05-08T08:16:22.245995",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12478,
+        "ip": "10.16.242.2",
+        "mac": "68:9F:F0:OA:DC:4F",
+        "serial": "ZXICCD5664DD",
+        "queue": null,
+        "interface": "VLAN274_VALLELINDO",
+        "created_at": "2026-05-08T15:12:26.959732",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
