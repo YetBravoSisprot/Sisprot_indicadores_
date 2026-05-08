@@ -30948,7 +30948,7 @@ const largeArraydata =
         "code": "FOP650M",
         "profile": "650M/650M"
       },
-      "client_mobile": "04243194181",
+      "client_mobile": "04124582937",
       "address": "CALLE MIRANDA NUMERO 34 LOCAL NRO 01 SECTOR CENTRO TURMERO ARAGUA",
       "client_identification": "J312523654",
       "nap_box_name": "CTO-00037",
@@ -99750,8 +99750,8 @@ const largeArraydata =
       "id": 6642,
       "client_name": "YOANA ELIZABETH MONTERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Durpa",
@@ -123438,8 +123438,8 @@ const largeArraydata =
       "id": 7589,
       "client_name": "JOSE LUIS LUNA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -160673,7 +160673,16 @@ const largeArraydata =
       "client_identification": "V30322655",
       "nap_box_name": "CTO - 999",
       "created_at": "2026-05-07T09:15:33.087227",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12477,
+        "ip": "10.16.241.2",
+        "mac": "4C:AB:FC:E8:97:FA",
+        "serial": "JMKGC17A5EC1",
+        "queue": null,
+        "interface": "VLAN280_POLVORIN",
+        "created_at": "2026-05-08T09:05:27.382397",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
