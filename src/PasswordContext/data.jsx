@@ -9134,7 +9134,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 10,
+      "cycle": 25,
       "migrate": true,
       "sector_name": "La Floresta",
       "plan": {
@@ -23382,13 +23382,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00386",
       "created_at": "2024-04-18T23:33:11.964837",
       "service_detail": {
-        "id": 12339,
+        "id": 12482,
         "ip": "172.26.61.2",
-        "mac": "HWTCD130189A",
-        "serial": "HWTCD130189A",
+        "mac": "JM:KG:CF:EC:A0:7D",
+        "serial": "JMKGCFECA07D",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-04-16T20:38:16.050351",
+        "created_at": "2026-05-10T09:53:52.967176",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -138420,8 +138420,8 @@ const largeArraydata =
       "id": 8173,
       "client_name": "EVANS YOKIRA GARCIA PERDONO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
