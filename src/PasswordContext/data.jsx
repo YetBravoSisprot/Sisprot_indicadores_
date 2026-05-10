@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5337,
+  "count": 5339,
   "results": [
     {
       "id": 3063,
@@ -72702,8 +72702,8 @@ const largeArraydata =
       "id": 5710,
       "client_name": "JOHANA JOSE VILLAZANA GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Floresta",
@@ -105342,8 +105342,8 @@ const largeArraydata =
       "id": 6864,
       "client_name": "ANGEL EDUARDO AMADOR ANDRADE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -160092,6 +160092,54 @@ const largeArraydata =
         "created_at": "2026-05-08T15:12:26.959732",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9082,
+      "client_name": "JESUS DANIEL MATHEUS LUZON",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123438979",
+      "address": "SAMAN TARAZONERO II MANZANA H-4 CASA NUMERO 13 SECTOR EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V21426583",
+      "nap_box_name": "510 DOS",
+      "created_at": "2026-05-10T15:43:45.533503",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9083,
+      "client_name": "ROBERT GUILLERMO PALENCIA LOPEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243160484",
+      "address": "URBANIZACION VILLA DE SAN JOSE EL MACARO CASA NUMERO 04-10 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V11983289",
+      "nap_box_name": "396",
+      "created_at": "2026-05-10T15:55:26.645738",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
