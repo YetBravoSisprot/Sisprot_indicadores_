@@ -186,92 +186,75 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
 
     // --- NUEVA TABLA: DETALLE POR URBANISMO Y ESTATUS (FILA 35+) ---
     const urbTableStart = 35;
-    dashSheet.getCell(`B${urbTableStart}`).value = "ANÁLISIS DE TENDENCIAS Y SALUD POR NODO";
+    dashSheet.getCell(`B${urbTableStart}`).value = "TABLERO DE CONTROL Y MOVIMIENTOS POR NODO";
     dashSheet.getCell(`B${urbTableStart}`).font = { bold: true, size: 14, color: { argb: 'FF1F4E78' } };
-
-    const sieteDiasAtras = new Date();
-    sieteDiasAtras.setDate(sieteDiasAtras.getDate() - 7);
 
     const statusByUrb = dataset.reduce((acc, c) => {
         const u = norm(c.sector_name || c._displaySector) || "OTROS";
         const s = (c.status_name || 'OTROS').toUpperCase();
-        const fechaCreacion = c.created_at ? new Date(c.created_at) : null;
         
-        if (!acc[u]) acc[u] = { ACTIVO: 0, CANCELADO: 0, SUSPENDIDO: 0, TOTAL: 0, RECIENTES: 0 };
+        if (!acc[u]) acc[u] = { ACTIVO: 0, CANCELADO: 0, SUSPENDIDO: 0, TOTAL: 0 };
         
         if (s.includes('ACTIVO')) acc[u].ACTIVO++;
         else if (s.includes('CANCELADO')) acc[u].CANCELADO++;
         else if (s.includes('SUSPENDIDO')) acc[u].SUSPENDIDO++;
-        
-        if (fechaCreacion && fechaCreacion >= sieteDiasAtras) {
-            acc[u].RECIENTES++;
-        }
         
         acc[u].TOTAL++;
         return acc;
     }, {});
 
     const sortedStats = Object.entries(statusByUrb).sort((a, b) => b[1].TOTAL - a[1].TOTAL);
-    const globalTotal = sortedStats.reduce((acc, [_, s]) => acc + s.TOTAL, 0);
 
-    // Headers con Módulo de Comparativa
+    // Headers: Data Actual vs Data Anterior (Comparativa)
     const urbHeaders = [
         "Urbanismo", 
-        "Total Actual", 
-        "Altas (7d)", 
-        "Referencia Anterior", // Espacio para pegar data de la semana pasada
-        "Variación", 
-        "Activo", 
-        "Cancelado", 
-        "Suspendido", 
-        "% Salud"
+        "Total Hoy", "Ant.", 
+        "Activos", "Ant.", 
+        "Cancelados", "Ant.", 
+        "Suspendidos", "Ant.",
+        "Variación Neta"
     ];
-    const colLetters = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    const colLetters = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
     
     urbHeaders.forEach((h, i) => {
         const cell = dashSheet.getCell(urbTableStart + 1, 2 + i);
         cell.value = h;
-        cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF', size: 9 } };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF203764' } };
         cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
     });
 
     sortedStats.forEach(([name, stats], i) => {
         const rowNum = urbTableStart + 2 + i;
-        const pSalud = stats.TOTAL > 0 ? (stats.ACTIVO / stats.TOTAL) : 0;
 
         dashSheet.getCell(`B${rowNum}`).value = name;
+        
+        // --- DATA ACTUAL ---
         dashSheet.getCell(`C${rowNum}`).value = stats.TOTAL;
-        dashSheet.getCell(`D${rowNum}`).value = stats.RECIENTES; // Nuevas ventas
-        
-        // --- GO BEYOND: FORMULAS PARA COMPARATIVA MANUAL ---
-        dashSheet.getCell(`E${rowNum}`).value = 0; // El usuario pegará aquí el total del lunes pasado
-        dashSheet.getCell(`E${rowNum}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFCC' } }; // Amarillo suave para indicar entrada
-        
-        // Formula de Variación: Total Actual - Referencia Anterior
-        dashSheet.getCell(`F${rowNum}`).value = { formula: `C${rowNum}-E${rowNum}` };
-        
-        dashSheet.getCell(`G${rowNum}`).value = stats.ACTIVO;
-        dashSheet.getCell(`H${rowNum}`).value = stats.CANCELADO;
+        dashSheet.getCell(`E${rowNum}`).value = stats.ACTIVO;
+        dashSheet.getCell(`G${rowNum}`).value = stats.CANCELADO;
         dashSheet.getCell(`I${rowNum}`).value = stats.SUSPENDIDO;
-        dashSheet.getCell(`J${rowNum}`).value = pSalud;
 
-        // Formatos
-        dashSheet.getCell(`J${rowNum}`).numFmt = '0.0%';
+        // --- ZONA DE ENTRADA (ANTERIOR) - Celdas amarillas para pegar data ---
+        const inputCols = ['D', 'F', 'H', 'J'];
+        inputCols.forEach(col => {
+            dashSheet.getCell(`${col}${rowNum}`).value = 0;
+            dashSheet.getCell(`${col}${rowNum}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFCC' } };
+        });
+
+        // --- FORMULAS DE VARIACIÓN ---
+        // Variación Neta (K) = Total Hoy (C) - Total Ant (D)
+        dashSheet.getCell(`K${rowNum}`).value = { formula: `C${rowNum}-D${rowNum}` };
+        dashSheet.getCell(`K${rowNum}`).font = { bold: true };
+
+        // --- ALERTAS DE MOVIMIENTO ---
+        // Si Cancelados Hoy (G) > Cancelados Ant (H) -> ALERTA ROJA (Fuga)
+        // Se aplicará mediante formato condicional manual del usuario o sugerencia visual:
+        // Nota: ExcelJS no aplica formato condicional dinámico tan fácil, pero podemos dejar la estructura.
+
         dashSheet.getRow(rowNum).alignment = { horizontal: 'center' };
         dashSheet.getCell(`B${rowNum}`).alignment = { horizontal: 'left' };
         
-        // --- FORMATO CONDICIONAL PARA TENDENCIAS ---
-        // Si hay altas recientes, resaltar en verde
-        if (stats.RECIENTES > 0) {
-            dashSheet.getCell(`D${rowNum}`).font = { color: { argb: 'FF00B050' }, bold: true };
-        }
-
-        // Alerta de Salud
-        if (pSalud < 0.85) {
-            dashSheet.getCell(`J${rowNum}`).font = { color: { argb: 'FFFF0000' }, bold: true };
-        }
-
         // Bordes
         colLetters.forEach(col => {
             dashSheet.getCell(`${col}${rowNum}`).border = {
@@ -280,35 +263,36 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         });
     });
 
-    // --- LEYENDA PARA EL JEFE ---
+    // --- LEYENDA DE MOVIMIENTOS ---
     const legendRow = urbTableStart + 2 + sortedStats.length + 1;
-    dashSheet.getCell(`B${legendRow}`).value = "💡 INSTRUCCIONES PARA COMPARATIVA SEMANAL:";
-    dashSheet.getCell(`B${legendRow}`).font = { bold: true, size: 10, color: { argb: 'FFC00000' } };
-    dashSheet.mergeCells(`B${legendRow + 1}:J${legendRow + 2}`);
+    dashSheet.getCell(`B${legendRow}`).value = "🚦 GUÍA PARA ANÁLISIS DE MOVIMIENTOS:";
+    dashSheet.getCell(`B${legendRow}`).font = { bold: true, color: { argb: 'FFC00000' } };
+    dashSheet.mergeCells(`B${legendRow + 1}:K${legendRow + 4}`);
     dashSheet.getCell(`B${legendRow + 1}`).value = 
-        "1. Para ver la evolución, abre el reporte de la semana pasada y copia la columna 'Total Actual'.\n" +
-        "2. Pega esos valores en la columna amarilla 'Referencia Anterior' de este archivo.\n" +
-        "3. La columna 'Variación' te mostrará automáticamente cuántos clientes ganaste o perdiste en cada nodo.";
+        "1. Abre tu reporte anterior y copia los valores de Total, Activos, Cancelados y Suspendidos.\n" +
+        "2. Pégalos en las columnas amarillas ('Ant.') correspondientes a cada estatus.\n" +
+        "3. OBSERVACIÓN DE SALUD:\n" +
+        "   - Si 'Cancelados' subió: Tienes una fuga de clientes en ese nodo.\n" +
+        "   - Si 'Suspendidos' bajó y 'Activos' subió: Hubo una recuperación/cobranza exitosa.\n" +
+        "   - 'Variación Neta' positiva indica crecimiento real del urbanismo.";
     dashSheet.getCell(`B${legendRow + 1}`).alignment = { wrapText: true, vertical: 'top' };
 
     // --- FILA DE TOTALES ---
     const totalRow = urbTableStart + 2 + sortedStats.length;
+    const globalTotal = sortedStats.reduce((acc, [_, s]) => acc + s.TOTAL, 0);
     const globalAct = sortedStats.reduce((acc, [_, s]) => acc + s.ACTIVO, 0);
     const globalCan = sortedStats.reduce((acc, [_, s]) => acc + s.CANCELADO, 0);
     const globalSus = sortedStats.reduce((acc, [_, s]) => acc + s.SUSPENDIDO, 0);
-    const globalRecientes = sortedStats.reduce((acc, [_, s]) => acc + s.RECIENTES, 0);
 
     dashSheet.getCell(`B${totalRow}`).value = "TOTAL GENERAL";
     dashSheet.getCell(`C${totalRow}`).value = globalTotal;
-    dashSheet.getCell(`D${totalRow}`).value = globalRecientes;
-    dashSheet.getCell(`G${totalRow}`).value = globalAct;
-    dashSheet.getCell(`H${totalRow}`).value = globalCan;
+    dashSheet.getCell(`E${totalRow}`).value = globalAct;
+    dashSheet.getCell(`G${totalRow}`).value = globalCan;
     dashSheet.getCell(`I${totalRow}`).value = globalSus;
-    dashSheet.getCell(`J${totalRow}`).value = globalTotal > 0 ? (globalAct / globalTotal) : 0;
+    dashSheet.getCell(`K${totalRow}`).value = { formula: `C${totalRow}-D${totalRow}` };
 
     dashSheet.getRow(totalRow).font = { bold: true };
     dashSheet.getRow(totalRow).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD9D9D9' } };
-    dashSheet.getCell(`J${totalRow}`).numFmt = '0.0%';
     colLetters.forEach(col => {
         dashSheet.getCell(`${col}${totalRow}`).border = {
             top: {style:'medium'}, left: {style:'thin'}, bottom: {style:'medium'}, right: {style:'thin'}
@@ -316,7 +300,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
     });
 
     // --- NOTA EXPLICATIVA SOBRE LA DATA (Dinámica) ---
-    const noteStart = legendRow + 4;
+    const noteStart = legendRow + 6;
     dashSheet.mergeCells(`B${noteStart}:G${noteStart + 3}`);
     const noteCell = dashSheet.getCell(`B${noteStart}`);
     noteCell.value = "NOTA METODOLÓGICA Y FUENTE DE DATOS:\n" + 
