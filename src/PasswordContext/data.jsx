@@ -22295,7 +22295,7 @@ const largeArraydata =
       },
       "client_mobile": "04124520536",
       "address": "CALLE CARREÑO EDIF CAYCAPE PISO 01 APTO 01 EZEQUIEL ZAMORA TURMERO ARAGUA ZONA POSTAL 2115",
-      "client_identification": "V13612151",
+      "client_identification": "V7183616",
       "nap_box_name": "130",
       "created_at": "2024-04-18T14:46:09.981342",
       "service_detail": {
@@ -160065,8 +160065,8 @@ const largeArraydata =
       "id": 9081,
       "client_name": "DANGELO VITTORIO FERRARROTTO VEGAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Valle lindo",
@@ -160139,7 +160139,16 @@ const largeArraydata =
       "client_identification": "V11983289",
       "nap_box_name": "396",
       "created_at": "2026-05-10T15:55:26.645738",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12483,
+        "ip": "10.16.243.2",
+        "mac": "68:9F:FO:OA:C2:2F",
+        "serial": "ZXICCD03A0F2",
+        "queue": null,
+        "interface": "VLAN134_VILLAS_DSJ_OLT_ZTE",
+        "created_at": "2026-05-11T15:38:05.467247",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
