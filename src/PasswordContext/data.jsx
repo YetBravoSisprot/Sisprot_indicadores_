@@ -22279,7 +22279,7 @@ const largeArraydata =
     },
     {
       "id": 3868,
-      "client_name": "CAROL YOSELIN LOPEZ PEDEMONTE",
+      "client_name": "ANA JOSEFINA HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -56120,7 +56120,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "La Casona II",
       "plan": {
@@ -77361,11 +77361,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Valle Paraiso",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04122929275",
       "address": "CALLE PRINCIPAL CASA NRO 10 URB VALLE PARAISO TURMERO ARAGUA ZONA POSTAL 2115",
@@ -85521,8 +85521,8 @@ const largeArraydata =
       "id": 6149,
       "client_name": "CAROLL YANET LUNA MENDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -159146,7 +159146,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Prados II",
       "plan": {
@@ -159522,8 +159522,8 @@ const largeArraydata =
       "id": 9063,
       "client_name": "ARTURO JOSE VELASQUEZ FONSECA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -159788,7 +159788,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Bicentenario",
       "plan": {
@@ -159845,7 +159845,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -159911,7 +159911,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -159944,7 +159944,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
       "plan": {
@@ -159977,7 +159977,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Haras de San Pablo",
       "plan": {
@@ -160010,7 +160010,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 15,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
