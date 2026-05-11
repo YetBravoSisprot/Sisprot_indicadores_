@@ -186,8 +186,8 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
 
     // --- NUEVA TABLA: DETALLE POR URBANISMO Y ESTATUS (FILA 35+) ---
     const urbTableStart = 35;
-    dashSheet.getCell(`B${urbTableStart}`).value = "ESTADO DE CLIENTES POR URBANISMO (Detalle)";
-    dashSheet.getCell(`B${urbTableStart}`).font = { bold: true, size: 12 };
+    dashSheet.getCell(`B${urbTableStart}`).value = "ESTADO DE CLIENTES POR NODO / URBANISMO (Análisis de Salud)";
+    dashSheet.getCell(`B${urbTableStart}`).font = { bold: true, size: 14, color: { argb: 'FF1F4E78' } };
 
     const statusByUrb = dataset.reduce((acc, c) => {
         const u = norm(c.sector_name || c._displaySector) || "OTROS";
@@ -202,34 +202,89 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         return acc;
     }, {});
 
-    const urbHeaders = ["Urbanismo", "Activo", "Cancelado", "Suspendido", "Total"];
+    const urbHeaders = ["Urbanismo", "Total", "Activo", "% Activo", "Cancelado", "% Canc.", "Suspendido", "% Susp."];
+    const colLetters = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    
     urbHeaders.forEach((h, i) => {
         const cell = dashSheet.getCell(urbTableStart + 1, 2 + i);
         cell.value = h;
         cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF5B9BD5' } };
-        cell.alignment = { horizontal: 'center' };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF203764' } };
+        cell.alignment = { horizontal: 'center', vertical: 'middle' };
     });
 
     const sortedStats = Object.entries(statusByUrb).sort((a, b) => b[1].TOTAL - a[1].TOTAL);
     
     sortedStats.forEach(([name, stats], i) => {
         const rowNum = urbTableStart + 2 + i;
+        const pAct = stats.TOTAL > 0 ? (stats.ACTIVO / stats.TOTAL) : 0;
+        const pCan = stats.TOTAL > 0 ? (stats.CANCELADO / stats.TOTAL) : 0;
+        const pSus = stats.TOTAL > 0 ? (stats.SUSPENDIDO / stats.TOTAL) : 0;
+
         dashSheet.getCell(`B${rowNum}`).value = name;
-        dashSheet.getCell(`C${rowNum}`).value = stats.ACTIVO;
-        dashSheet.getCell(`D${rowNum}`).value = stats.CANCELADO;
-        dashSheet.getCell(`E${rowNum}`).value = stats.SUSPENDIDO;
-        dashSheet.getCell(`F${rowNum}`).value = stats.TOTAL;
-        
+        dashSheet.getCell(`C${rowNum}`).value = stats.TOTAL;
+        dashSheet.getCell(`D${rowNum}`).value = stats.ACTIVO;
+        dashSheet.getCell(`E${rowNum}`).value = pAct;
+        dashSheet.getCell(`F${rowNum}`).value = stats.CANCELADO;
+        dashSheet.getCell(`G${rowNum}`).value = pCan;
+        dashSheet.getCell(`H${rowNum}`).value = stats.SUSPENDIDO;
+        dashSheet.getCell(`I${rowNum}`).value = pSus;
+
+        // Formatos
+        dashSheet.getCell(`E${rowNum}`).numFmt = '0.0%';
+        dashSheet.getCell(`G${rowNum}`).numFmt = '0.0%';
+        dashSheet.getCell(`I${rowNum}`).numFmt = '0.0%';
+
         dashSheet.getRow(rowNum).alignment = { horizontal: 'center' };
         dashSheet.getCell(`B${rowNum}`).alignment = { horizontal: 'left' };
         
-        // Bordes para la tabla
-        ['B', 'C', 'D', 'E', 'F'].forEach(col => {
+        // --- GO BEYOND: ALERTAS Y FORMATO CONDICIONAL ---
+        // Alerta: Cancelación alta (> 5%)
+        if (pCan > 0.05) {
+            dashSheet.getCell(`G${rowNum}`).font = { color: { argb: 'FFFF0000' }, bold: true };
+            dashSheet.getCell(`B${rowNum}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFE6E6' } };
+        }
+        // Alerta: Suspensión alta (> 15%)
+        if (pSus > 0.15) {
+            dashSheet.getCell(`I${rowNum}`).font = { color: { argb: 'FFC65911' }, bold: true };
+        }
+        // Salud del nodo (Activo > 90%)
+        if (pAct > 0.90) {
+            dashSheet.getCell(`E${rowNum}`).font = { color: { argb: 'FF375623' }, bold: true };
+        }
+
+        // Bordes
+        colLetters.forEach(col => {
             dashSheet.getCell(`${col}${rowNum}`).border = {
                 top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}
             };
         });
+    });
+
+    // --- GO BEYOND: FILA DE TOTALES / RESUMEN ---
+    const totalRow = urbTableStart + 2 + sortedStats.length;
+    const globalTotal = sortedStats.reduce((acc, [_, s]) => acc + s.TOTAL, 0);
+    const globalAct = sortedStats.reduce((acc, [_, s]) => acc + s.ACTIVO, 0);
+    const globalCan = sortedStats.reduce((acc, [_, s]) => acc + s.CANCELADO, 0);
+    const globalSus = sortedStats.reduce((acc, [_, s]) => acc + s.SUSPENDIDO, 0);
+
+    dashSheet.getCell(`B${totalRow}`).value = "TOTAL GENERAL";
+    dashSheet.getCell(`B${totalRow}`).font = { bold: true };
+    dashSheet.getCell(`C${totalRow}`).value = globalTotal;
+    dashSheet.getCell(`D${totalRow}`).value = globalAct;
+    dashSheet.getCell(`E${totalRow}`).value = globalTotal > 0 ? (globalAct / globalTotal) : 0;
+    dashSheet.getCell(`F${totalRow}`).value = globalCan;
+    dashSheet.getCell(`G${totalRow}`).value = globalTotal > 0 ? (globalCan / globalTotal) : 0;
+    dashSheet.getCell(`H${totalRow}`).value = globalSus;
+    dashSheet.getCell(`I${totalRow}`).value = globalTotal > 0 ? (globalSus / globalTotal) : 0;
+
+    dashSheet.getRow(totalRow).font = { bold: true };
+    dashSheet.getRow(totalRow).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD9D9D9' } };
+    ['E', 'G', 'I'].forEach(c => dashSheet.getCell(`${c}${totalRow}`).numFmt = '0.0%');
+    colLetters.forEach(col => {
+        dashSheet.getCell(`${col}${totalRow}`).border = {
+            top: {style:'medium'}, left: {style:'thin'}, bottom: {style:'medium'}, right: {style:'thin'}
+        };
     });
 
     // --- NOTA EXPLICATIVA SOBRE LA DATA (Dinámica) ---
