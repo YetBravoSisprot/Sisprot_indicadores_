@@ -831,7 +831,16 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     };
 
     if (parameters?.tipo) {
-        const tipoParams = Array.isArray(parameters.tipo) ? parameters.tipo : [parameters.tipo];
+        // Soporte para strings combinados ("Pyme y Residencial")
+        let tipoParams = Array.isArray(parameters.tipo) ? parameters.tipo : [parameters.tipo];
+        
+        // Si hay un string con " y " o ",", lo dividimos en un array real
+        if (tipoParams.length === 1 && typeof tipoParams[0] === 'string') {
+            const raw = tipoParams[0].toLowerCase();
+            if (raw.includes(" y ") || raw.includes(",")) {
+                tipoParams = raw.split(/ y |,/).map(t => t.trim()).filter(t => t.length > 0);
+            }
+        }
         const normalizedReqs = tipoParams.map(t => normalizeText(t));
 
         filtered = filtered.filter(c => {
@@ -843,9 +852,7 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
             const rawClientType = normalizeText(tipoCliente);
             // Robustez: "pyme" debe marchar "pymes" y "residencial" debe marchar "residenciales"
             return normalizedReqs.some(req => {
-                let r = req;
-                if (r.indexOf('residencial') !== -1) r = 'residencial';
-                else if (r.indexOf('pyme') !== -1) r = 'pyme';
+                const r = req.includes('residencial') ? 'residencial' : (req.includes('pyme') ? 'pyme' : req);
                 return rawClientType.includes(r);
             });
         });
@@ -1439,7 +1446,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // If a specific type or status was requested, give direct result
                     if (appliedFiltersText.length > 0) {
                         // CASO: Desglose Dinámico por Tipos (Ej: Residencial + Empleado + Pyme)
-                        const tipoParams = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
+                        let tipoParams = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
+                        
+                        // Normalización: si es un string compuesto, lo dividimos
+                        if (tipoParams.length === 1 && typeof tipoParams[0] === 'string') {
+                            const raw = tipoParams[0].toLowerCase();
+                            if (raw.includes(" y ") || raw.includes(",")) {
+                                tipoParams = raw.split(/ y |,/).map(t => t.trim()).filter(t => t.length > 0);
+                            }
+                        }
+
                         const isMultipleTypes = tipoParams.length > 1;
 
                         if (isMultipleTypes && (intent === 'TOTAL_CLIENTES' || intent === 'TIPOS_CLIENTE')) {
