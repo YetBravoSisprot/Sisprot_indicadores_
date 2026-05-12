@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5339,
+  "count": 5340,
   "results": [
     {
       "id": 3063,
@@ -160156,6 +160156,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN134_VILLAS_DSJ_OLT_ZTE",
         "created_at": "2026-05-11T15:38:05.467247",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9084,
+      "client_name": "MARIA JOSE FERREIRA DE SANZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243695727",
+      "address": "Calle mariño residencias mariño torre A piso 4 apartamento. A-41. Turmero",
+      "client_identification": "9438836",
+      "nap_box_name": null,
+      "created_at": "2026-05-10T15:55:26.645000",
+      "service_detail": {
+        "id": 12485,
+        "ip": "10.16.245.2",
+        "mac": "4C:AB:FC:52:6A:A9",
+        "serial": "JMKGCAF8BE07",
+        "queue": null,
+        "interface": "VLAN234_R_MARINO_OLT2",
+        "created_at": "2026-05-12T15:04:15.341956",
         "created_by_name": null
       },
       "installation_invoice_cost": null
