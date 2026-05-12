@@ -989,13 +989,29 @@ export const processQuery = async (message, data, history = [], userName = "", c
         }
 
         if (contractCountName && contractCountName.length >= 3) {
-            const nameNorm = normalizeText(contractCountName);
-            const matches = clientes.filter(c => normalizeText(c.client_name).includes(nameNorm));
+            // Limpieza: quitar "esta cedula:", "el cliente:", "al sr", etc.
+            let cleanSearch = contractCountName.replace(/^(esta\s+cedula:?|esta\s+ci:?|el\s+cliente:?|la\s+cedula:?|identidad:?|cedula:?)\s*/i, "").trim();
+            
+            const nameNorm = normalizeText(cleanSearch);
+            const isNumeric = /^\d+$/.test(cleanSearch.replace(/\D/g, ''));
+
+            const matches = clientes.filter(c => {
+                const dbName = normalizeText(c.client_name);
+                const dbId = String(c.id);
+                const dbCi = String(c.client_identification || '').replace(/\D/g, '');
+                
+                // Si es numérico, priorizamos ID o Cédula
+                if (isNumeric) {
+                    const pureNum = cleanSearch.replace(/\D/g, '');
+                    return dbId === pureNum || dbCi === pureNum || dbName.includes(nameNorm);
+                }
+                return dbName.includes(nameNorm);
+            });
 
             if (matches.length === 0) {
                 registerUnansweredQuery(query, userName, currentPage);
                 return {
-                    text: `Revisé la base de datos ${userName} y no encontré ningún registro asociado a **"${contractCountName}"**. Puede ser que el nombre esté escrito diferente o que aún no esté cargado en el sistema. ¿Quieres que intente con otro nombre o número de cédula?`,
+                    text: `Revisé la base de datos ${userName} y no encontré ningún registro asociado a **"${cleanSearch}"**. Puede ser que el nombre esté escrito diferente o que aún no esté cargado en el sistema. ¿Quieres que intente con otro nombre o número de cédula?`,
                     isCard: false
                 };
             }
