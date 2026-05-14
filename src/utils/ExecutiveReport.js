@@ -1,6 +1,6 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
-import { mapCycleValue } from "./cycleHelper";
+import { mapCycleValue } from "./cycleHelpers";
 
 const formatCurrency = (val) => `$ ${parseFloat(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const norm = (v) => (v == null ? "" : String(v).trim());
@@ -64,21 +64,20 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
         const statsAyer = historicalData ? getStatsByUrbanismo(historicalData) : {};
 
         // 3. Determinar qué sectores mostrar en el tablero
-        // Si el usuario filtró urbanismos/sectores, respetamos esa selección.
-        // Si es una vista global, mostramos los Top 20 por volumen.
+        // Mostramos todos los sectores que coincidan con los filtros actuales.
+        // Si no hay filtros (vista global), mostramos todos los sectores de la empresa.
         const filteredSectorNames = Object.keys(statsFiltered);
         let sortedStats = [];
 
-        if (filteredSectorNames.length > 0 && filteredSectorNames.length < 100) {
+        if (filteredSectorNames.length > 0) {
             // Caso: Filtros activos. Mostramos los sectores filtrados pero con data completa (Hoy vs Ayer)
             sortedStats = Object.entries(statsFullHoy)
                 .filter(([name]) => filteredSectorNames.includes(name))
                 .sort((a, b) => b[1].TOTAL - a[1].TOTAL);
         } else {
-            // Caso: Vista global o demasiados sectores. Mostramos el Top 20 general.
+            // Caso: Vista global. Mostramos todos los sectores.
             sortedStats = Object.entries(statsFullHoy)
-                .sort((a, b) => b[1].TOTAL - a[1].TOTAL)
-                .slice(0, 20);
+                .sort((a, b) => b[1].TOTAL - a[1].TOTAL);
         }
 
         const workbook = new ExcelJS.Workbook();
