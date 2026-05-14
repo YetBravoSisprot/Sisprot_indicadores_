@@ -5,7 +5,7 @@ import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 import { getHistoricalRevenueData } from "../../services/revenueService";
-import { getCycleLabel } from "../../utils/cycleHelpers";
+import { getCycleLabel } from "../../utils/cycleHelper";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
