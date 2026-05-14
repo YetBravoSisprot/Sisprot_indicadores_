@@ -19731,11 +19731,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Laguna Plaza",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04127410201",
       "address": "CALLE NEGRO PRIMERO EDIF 10 PISO PB APT 4 CONJUNTO RESIDENCIAL LAGUNA PLAZA TURMERO",
@@ -23997,7 +23997,7 @@ const largeArraydata =
         "code": "FOR750M",
         "profile": "750M/750M"
       },
-      "client_mobile": "04124535515",
+      "client_mobile": "04126829668",
       "address": "AV PRINCIPAL MACARO CASA NRO 0121 URB VILLAS SAN JOSÉ TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V29931484",
       "nap_box_name": "396",
@@ -30252,13 +30252,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00015",
       "created_at": "2024-04-20T20:38:10.642381",
       "service_detail": {
-        "id": 2963,
+        "id": 12489,
         "ip": "172.24.151.2",
-        "mac": "TPLGB446F4AE",
+        "mac": "54:50:4c:47:b4:46",
         "serial": "TPLGB446F4AE",
-        "queue": "Plan_127744_1574_WispHub",
-        "interface": "VLAN108_JABILLAR",
-        "created_at": "2024-06-20T15:11:33.248634",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-05-14T11:26:58.318150",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -51512,7 +51512,7 @@ const largeArraydata =
       "client_type_name": "EMPLEADO",
       "client_subdivision": "ACTIVO_EMPLEADO",
       "status_name": "Activo",
-      "cycle": 25,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Valle Paraiso",
       "plan": {
@@ -57900,11 +57900,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128970762",
       "address": "CALLE 1 CASA NRO 89 PRADOS II ROSARIO DE PAYA",
@@ -91617,7 +91617,7 @@ const largeArraydata =
         "code": "FO-R80",
         "profile": "80M/80M"
       },
-      "client_mobile": "04269317726",
+      "client_mobile": "04243449290",
       "address": "CALLE PROLONGACIÓN AV BOLIVAR SECTOR CENTRO TURMERO ARAGUA",
       "client_identification": "G200027860",
       "nap_box_name": "88",
@@ -153176,7 +153176,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "CANCELADO_PYME",
       "status_name": "Cancelado",
-      "cycle": 10,
+      "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
@@ -160140,8 +160140,8 @@ const largeArraydata =
       "id": 9083,
       "client_name": "ROBERT GUILLERMO PALENCIA LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
