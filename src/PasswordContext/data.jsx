@@ -61113,13 +61113,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0657",
       "created_at": "2024-07-17T09:40:02.703203",
       "service_detail": {
-        "id": 4140,
+        "id": 12490,
         "ip": "172.17.48.2",
-        "mac": "VSOL0013D421",
+        "mac": "VS:OL:00:13:D4:21",
         "serial": "VSOL0013D421",
-        "queue": "Plan_137589_24341_WispHub",
-        "interface": "VLAN139_GUERITO_OLT2",
-        "created_at": "2024-07-31T11:26:09.314283",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-05-14T12:51:47.068244",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -100072,7 +100072,7 @@ const largeArraydata =
     },
     {
       "id": 6663,
-      "client_name": "ARIANNA DE LOS ANGELES CARRILLO RENGIFO",
+      "client_name": "ESTEFANI ALEJANDRA TORREALBA PARRA",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
@@ -100086,7 +100086,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243459875",
+      "client_mobile": "04243200242",
       "address": "CALLE MARIÑO EDIF TORRE C PLANTA TIPO PISO 2 APT 23-C CONJUNTO RESIDENCIAL MARIÑO TURMERO ARAGUA",
       "client_identification": "V30147910",
       "nap_box_name": "CTO-0520",
