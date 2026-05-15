@@ -7581,11 +7581,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
-        "id": 43,
-        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
-        "cost": "46.00",
-        "code": "FOR650M",
-        "profile": "650M/650M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04128909917",
       "address": "CALLE 12 CASA NRO 21 SECTOR SAMAN TARAZONERO 1 TURMERO",
@@ -9726,8 +9726,8 @@ const largeArraydata =
       "id": 3410,
       "client_name": "TAMARA LISSETH VILLARROEL TALABERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Callejon Lim",
@@ -9743,7 +9743,16 @@ const largeArraydata =
       "client_identification": "V13133207",
       "nap_box_name": "CTO-0563",
       "created_at": "2024-04-12T13:35:38.379268",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12496,
+        "ip": "172.25.142.2",
+        "mac": "TP:LG:F9:CD:45:3D",
+        "serial": "TPLGF9CD453D",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-05-15T11:33:12.013317",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -14373,11 +14382,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124537178",
       "address": "CALLE MANZANA I-8 CASA NRO 09 SECTOR SAMAN TARAZONERO 2 TURMERO ARAGUA ZONA POSTAL 2115",
@@ -70404,8 +70413,8 @@ const largeArraydata =
       "id": 5630,
       "client_name": "JESUS  DANIEL FARIAS AMADOR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -94383,11 +94392,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Vista Hermosa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125099848",
       "address": "SECTOR VISTA HERMOSA, AV LAS MANDARINAS, CASA #90, TURMERO, PAYA",
@@ -101190,8 +101199,8 @@ const largeArraydata =
       "id": 6703,
       "client_name": "DAYCI ARYENAIL BERMUDEZ VILLANUEVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -101202,12 +101211,21 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243746978",
+      "client_mobile": "04243034970",
       "address": "AV PRINCIPAL EDIF MODULO 12 PISO 1 APT 677-D URB MATACABALLO ROSARIO DE PAYA ZONA POSTAL 2115",
       "client_identification": "V19760482",
       "nap_box_name": "CTO-00215",
       "created_at": "2024-09-25T11:14:29.380143",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12495,
+        "ip": "172.31.224.2",
+        "mac": "OE:MT:3C:62:2D:BE",
+        "serial": "OEMT3C622DBE",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-05-15T10:32:05.205073",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -101610,11 +101628,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243392464",
       "address": "CALLE 3 CASA N 204 MATACABALLO",
@@ -118323,7 +118341,7 @@ const largeArraydata =
         "code": "[FOR10]",
         "profile": "10Mbps/10Mbps"
       },
-      "client_mobile": "04241436934",
+      "client_mobile": "04123698614",
       "address": "SAFSADF",
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00283",
@@ -121380,24 +121398,33 @@ const largeArraydata =
       "id": 7506,
       "client_name": "EMPRENDIMIENTO YELXA HERNANDEZ",
       "client_type_name": "PYME",
-      "client_subdivision": "CANCELADO_PYME",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04144484933",
       "address": "CALLE MIRANDA LOCAL NRO 20-1 CENTRO CASCO CENTRAL TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "J506481693",
       "nap_box_name": "CAJA NAP BICENTENARIO",
       "created_at": "2025-02-12T10:56:16.767351",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12494,
+        "ip": "172.23.162.2",
+        "mac": "GP:ON:00:98:0E:66",
+        "serial": "GPON00980E66",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-05-15T08:49:18.171333",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -142773,7 +142800,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04243013604",
+      "client_mobile": "04227999637",
       "address": "CALLE MANZANA E CASA 8-1 SAMAN TARAZONERO II TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V16407266",
       "nap_box_name": "161 DOS",
@@ -158652,7 +158679,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04241436934",
+      "client_mobile": "04123698614",
       "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00038",
@@ -158676,7 +158703,7 @@ const largeArraydata =
         "code": "[FOR10]",
         "profile": "10Mbps/10Mbps"
       },
-      "client_mobile": "04241436934",
+      "client_mobile": "04123698614",
       "address": "CALLE 5 NÚMERO 8 SAMAN TARAZONERO 2",
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00038",
@@ -160215,8 +160242,8 @@ const largeArraydata =
       "id": 9085,
       "client_name": "MARYULI OMALI MENDEZ DE LA CRUZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
