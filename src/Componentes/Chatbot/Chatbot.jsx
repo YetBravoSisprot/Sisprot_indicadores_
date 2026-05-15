@@ -314,7 +314,7 @@ const Chatbot = () => {
             <div className={`chatbot-window glass ${isOpen ? 'active' : ''}`}>
                 <div className="chatbot-header">
                     <div className="header-info">
-                        <h4>Taurus Ia</h4>
+                        <h4>Taurus IA</h4>
                         <p>Inteligencia Artificial</p>
                     </div>
                     <button 
@@ -451,7 +451,7 @@ const Chatbot = () => {
                         
                         <input
                             type="text"
-                            placeholder={isListening ? "Escuchando..." : "Mensaje a Taurus Ia..."}
+                            placeholder={isListening ? "Escuchando..." : "Mensaje a Taurus IA..."}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             className={isListening ? 'listening' : ''}
