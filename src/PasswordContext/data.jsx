@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5340,
+  "count": 5341,
   "results": [
     {
       "id": 3063,
@@ -70383,7 +70383,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04125898473",
+      "client_mobile": "04247327178",
       "address": "CALLE PRINCIPAL CASA PARCELA NRO 4 SECTOR PAYA ABAJO ROSARIO DE PAYA",
       "client_identification": "V20817444",
       "nap_box_name": "CTO-00307",
@@ -100074,8 +100074,8 @@ const largeArraydata =
       "id": 6663,
       "client_name": "ESTEFANI ALEJANDRA TORREALBA PARRA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Residencias Mariño",
@@ -100088,10 +100088,19 @@ const largeArraydata =
       },
       "client_mobile": "04243200242",
       "address": "CALLE MARIÑO EDIF TORRE C PLANTA TIPO PISO 2 APT 23-C CONJUNTO RESIDENCIAL MARIÑO TURMERO ARAGUA",
-      "client_identification": "V30147910",
+      "client_identification": "V31161166",
       "nap_box_name": "CTO-0520",
       "created_at": "2024-09-12T14:24:29.185015",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12491,
+        "ip": "172.31.191.2",
+        "mac": "a8:bf:3c:62:51:CA",
+        "serial": "OEMT3C6251CA",
+        "queue": null,
+        "interface": "VLAN234_R_MARINO_OLT2",
+        "created_at": "2026-05-14T17:17:12.684716",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -111606,8 +111615,8 @@ const largeArraydata =
       "id": 7117,
       "client_name": "JENNIFER DEL CARMEN RENGEL HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -140829,13 +140838,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00120",
       "created_at": "2025-05-30T11:37:06.623746",
       "service_detail": {
-        "id": 8779,
+        "id": 12493,
         "ip": "10.14.174.2",
-        "mac": "QXTLCB3A4C30",
+        "mac": "68:9f:f0:cc:90:3f",
         "serial": "QXTLCB3A4C30",
-        "queue": "queue1",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2025-05-30T11:57:05.593049",
+        "queue": null,
+        "interface": "VLAN110_CASONA_2",
+        "created_at": "2026-05-14T17:59:46.310868",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160198,6 +160207,39 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN234_R_MARINO_OLT2",
         "created_at": "2026-05-12T15:04:15.341956",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9085,
+      "client_name": "MARYULI OMALI MENDEZ DE LA CRUZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
+      "cycle": 10,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04147595379",
+      "address": "calle Mariño residencias Mariño torre C apartamento 91-C",
+      "client_identification": "V12145886",
+      "nap_box_name": "CTO-00734",
+      "created_at": "2026-05-14T17:44:36.805214",
+      "service_detail": {
+        "id": 12492,
+        "ip": "10.16.246.2",
+        "mac": "4CABFCFEC277",
+        "serial": "JMKGCC874D1",
+        "queue": null,
+        "interface": "VLAN234_R_MARINO_OLT2",
+        "created_at": "2026-05-14T17:44:36.957068",
         "created_by_name": null
       },
       "installation_invoice_cost": null
