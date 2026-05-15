@@ -2305,19 +2305,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const introLabel = labelFecha;
                     const cicloFilter = parameters?.ciclo || null;
                     
-                    // --- CALCULO DE META vs REAL (Solicitado por Sr. Elisaul) ---
-                    let activeClientsInSelection = clientes.filter(c => c.status_name === "Activo");
-                    if(cicloFilter) activeClientsInSelection = activeClientsInSelection.filter(c => mapCycleValue(c.cycle) === String(cicloFilter));
-                    
-                    const totalExpectedAmount = activeClientsInSelection.reduce((s, c) => s + parseFloat(c.plan?.cost || 0), 0);
-                    const totalExpectedClients = activeClientsInSelection.length;
-                    
                     const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
                     const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
                     const totalPagos = payments.length;
-
-                    const pendingAmount = Math.max(0, totalExpectedAmount - totalUsd);
-                    const pendingClients = Math.max(0, totalExpectedClients - totalPagos);
 
                     // --- Agrupar por banco ---
                     const byBank = payments.reduce((acc, p) => {
@@ -2356,9 +2346,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                     // --- Stats para la tarjeta visual ---
                     const stats = [
-                        { label: '💰 Monto Recaudado', value: `$${totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#2ecc71' },
-                        { label: '💳 Pendiente por Cobrar', value: `$${pendingAmount.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#f1c40f' },
-                        { label: '👥 Clientes Pendientes', value: pendingClients, color: '#e74c3c' }
+                        { label: '💰 Monto Recaudado', value: `$${totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#2ecc71' }
                     ];
 
                     // El indicador especial que pidió el jefe (badge inferior)
@@ -2367,7 +2355,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const cycleText = cicloFilter ? ` del **Ciclo ${cicloFilter}**` : '';
 
                     return {
-                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${formatUSD(totalUsd)}** (${totalPagos} pagos)\n- Pendiente: **$${formatUSD(pendingAmount)}** (~${pendingClients} clientes)`,
+                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${formatUSD(totalUsd)}** (${totalPagos} pagos)`,
                         isCard: true,
                         cardData: {
                             title: `💳 Balance de Ingresos`,
