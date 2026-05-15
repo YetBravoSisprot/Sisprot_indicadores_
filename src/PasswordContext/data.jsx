@@ -15072,8 +15072,8 @@ const largeArraydata =
       "id": 3604,
       "client_name": "MARIA YULEYMA GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "La Magdalena",
@@ -15089,7 +15089,16 @@ const largeArraydata =
       "client_identification": "V8998706",
       "nap_box_name": "627",
       "created_at": "2024-04-15T16:16:45.594835",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12500,
+        "ip": "172.26.253.2",
+        "mac": "1c:ef:03:d0:ea:b3",
+        "serial": "VSOL00D0EAB3",
+        "queue": null,
+        "interface": "VLAN114_MAGDALENA",
+        "created_at": "2026-05-15T15:03:17.224584",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -42615,8 +42624,8 @@ const largeArraydata =
       "id": 4606,
       "client_name": "CRISMARY ANYIRILUZ ZURITA TEJADA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -42632,7 +42641,16 @@ const largeArraydata =
       "client_identification": "V26491050",
       "nap_box_name": "CTO-00215",
       "created_at": "2024-06-09T13:55:14.593986",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12501,
+        "ip": "172.28.219.2",
+        "mac": "HW:TC:03:38:C2:A1",
+        "serial": "HWTC0338C2A1",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-05-15T15:59:04.658611",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -57782,7 +57800,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 10,
+      "cycle": 15,
       "migrate": true,
       "sector_name": "Bicentenario",
       "plan": {
@@ -95223,7 +95241,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243249636",
+      "client_mobile": "04129628925",
       "address": "CALLE 11 CASA NRO 15 BARRIO SAMAN TARAZONERO 1 TURMERO ARAGUA",
       "client_identification": "V21269616",
       "nap_box_name": "CTO-00147",
@@ -101217,13 +101235,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00215",
       "created_at": "2024-09-25T11:14:29.380143",
       "service_detail": {
-        "id": 12495,
+        "id": 12498,
         "ip": "172.31.224.2",
-        "mac": "OE:MT:3C:62:2D:BE",
+        "mac": "a8:bf:3c:62:2d:be",
         "serial": "OEMT3C622DBE",
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2026-05-15T10:32:05.205073",
+        "created_at": "2026-05-15T13:49:52.594925",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -121416,13 +121434,13 @@ const largeArraydata =
       "nap_box_name": "CAJA NAP BICENTENARIO",
       "created_at": "2025-02-12T10:56:16.767351",
       "service_detail": {
-        "id": 12494,
+        "id": 12497,
         "ip": "172.23.162.2",
-        "mac": "GP:ON:00:98:0E:66",
+        "mac": "80:07:1b:98:0e:6f",
         "serial": "GPON00980E66",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-05-15T08:49:18.171333",
+        "created_at": "2026-05-15T13:48:40.100990",
         "created_by_name": null
       },
       "installation_invoice_cost": null
