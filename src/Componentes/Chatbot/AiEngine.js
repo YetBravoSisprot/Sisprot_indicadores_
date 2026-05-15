@@ -483,6 +483,8 @@ INTENCIONES DISPONIBLES:
 - PLANES: Detalle por planes de internet.
 - BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
 - DATA_MAESTRA: Universo total de la base de datos.
+- ANALISIS_VENTAS: Resumen global de ventas, proyecciones 2026, análisis trimestral y tendencias. Se activa con "como van las ventas", "proyección de ventas", "análisis de ventas".
+- HISTORICO_VENTAS: Detalle de ventas por mes y año específico.
 - GENERAR_EXCEL: Si el usuario pide descargar el archivo.
 - SALUDO / AGRADECIMIENTO / UNKNOWN.
 
@@ -1718,33 +1720,85 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 };
             }
 
-            case 'HISTORICO_VENTAS': {
-                const salesData = await getFullSalesData();
-                const year = parameters?.year ? String(parameters.year) : new Date().getFullYear().toString();
-                const monthIdx = parameters?.month ? parseInt(parameters.month) - 1 : new Date().getMonth();
-                const yearData = salesData[year] || new Array(12).fill(0);
-                const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-                const monthName = mesesNombres[monthIdx] || mesesNombres[new Date().getMonth()];
-                const value = yearData[monthIdx] || 0;
-                
-                const totalYear = yearData.reduce((a, b) => a + b, 0);
-                const avgMonth = totalYear / 12;
+            case 'HISTORICO_VENTAS':
+            case 'ANALISIS_VENTAS': {
+                try {
+                    const salesData = await getFullSalesData();
+                    const year = parameters?.year ? String(parameters.year) : "2026";
+                    const monthIdx = parameters?.month ? parseInt(parameters.month) - 1 : new Date().getMonth();
+                    const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    
+                    const yearData = salesData[year] || new Array(12).fill(0);
+                    const currentValue = yearData[monthIdx] || 0;
+                    const totalYear = yearData.reduce((a, b) => a + b, 0);
+                    
+                    // --- Cálculos de Impacto Trimestral ---
+                    const q1 = yearData.slice(0, 3).reduce((a, b) => a + b, 0);
+                    const q2 = yearData.slice(3, 6).reduce((a, b) => a + b, 0);
+                    const q3 = yearData.slice(6, 9).reduce((a, b) => a + b, 0);
+                    const q4 = yearData.slice(9, 12).reduce((a, b) => a + b, 0);
 
-                return {
-                    text: `Claro ${userName}, he consultado el histórico global de ventas. En **${monthName} de ${year}** cerramos con un total de **${value} ventas** reales.\n\n` +
-                          `En todo el año **${year}** logramos acumular **${totalYear} ventas** (un promedio mensual de ${avgMonth.toFixed(1)}).`,
-                    isCard: true,
-                    cardData: {
-                        title: `Ventas en ${monthName}`,
-                        value: value,
-                        subtitle: `Año ${year}`,
-                        color: "#e67e22",
-                        stats: [
-                            { label: `Total ${year}`, value: totalYear },
-                            { label: "Promedio", value: avgMonth.toFixed(1) }
-                        ]
+                    // --- Proyección 2026 ---
+                    const currentYearData = salesData["2026"] || [];
+                    const validMonths = currentYearData.filter(v => v > 0);
+                    let projection2026 = 0;
+                    if (validMonths.length > 0) {
+                        const totalActual = validMonths.reduce((a, b) => a + b, 0);
+                        projection2026 = Math.round((totalActual / validMonths.length) * 12);
                     }
-                };
+
+                    // --- Variación vs Enero ---
+                    const janValue = yearData[0] || 0;
+                    const diffToJan = janValue > 0 ? ((currentValue - janValue) / janValue) * 100 : 0;
+                    const variationText = diffToJan !== 0 
+                        ? `Representa una variación del **${diffToJan > 0 ? '+' : ''}${diffToJan.toFixed(1)}%** respecto a enero de ${year}.`
+                        : "";
+
+                    if (intent === 'HISTORICO_VENTAS') {
+                        return {
+                            text: `Claro ${userName}, he consultado el histórico de ventas. En **${mesesNombres[monthIdx]} de ${year}** cerramos con **${currentValue} ventas**.\n\n` +
+                                  `En el año **${year}** acumulamos **${totalYear} ventas** totales. ${variationText}`,
+                            isCard: true,
+                            cardData: {
+                                title: `Ventas ${mesesNombres[monthIdx]} ${year}`,
+                                value: currentValue,
+                                subtitle: `Acumulado ${year}: ${totalYear}`,
+                                color: "#e67e22",
+                                stats: [
+                                    { label: "Trimestre Actual", value: monthIdx < 3 ? q1 : monthIdx < 6 ? q2 : monthIdx < 9 ? q3 : q4 },
+                                    { label: "Variación vs Ene", value: `${diffToJan.toFixed(1)}%`, color: diffToJan < 0 ? "#ff6b6b" : "#2ecc71" }
+                                ]
+                            }
+                        };
+                    }
+
+                    // Caso ANALISIS_VENTAS (Resumen Completo)
+                    return {
+                        text: `¡Hola ${userName}! Aquí tienes el análisis de **Ventas Globales**:\n\n` +
+                              `📊 **Proyección 2026**: Basado en el promedio actual, estimamos cerrar el año con **${projection2026} ventas**.\n` +
+                              `📉 **Rendimiento Anual**: En lo que va de ${year}, llevamos **${totalYear} ventas** registradas.\n\n` +
+                              `**Impacto Trimestral (${year}):**\n` +
+                              `- **T1**: ${q1} | **T2**: ${q2}\n` +
+                              `- **T3**: ${q3} | **T4**: ${q4}\n\n` +
+                              `¿Deseas profundizar en algún mes o año en particular?`,
+                        isCard: true,
+                        cardData: {
+                            title: `Análisis Global de Ventas`,
+                            value: projection2026,
+                            subtitle: `Proyección Estimada 2026`,
+                            color: "#00d2ff",
+                            stats: [
+                                { label: "Total Acumulado", value: totalYear },
+                                { label: "Impacto T1/T2", value: `${q1} | ${q2}` },
+                                { label: "Impacto T3/T4", value: `${q3} | ${q4}` },
+                                { label: "Variación Mensual", value: `${diffToJan.toFixed(1)}%` }
+                            ]
+                        }
+                    };
+                } catch (err) {
+                    console.error("Error en ANALISIS_VENTAS:", err);
+                    return { text: `Lo siento ${userName}, hubo un problema al obtener los datos de ventas: ${err.message}`, isCard: false };
+                }
             }
 
             case 'TOP_URBANISMO': {
