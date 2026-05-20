@@ -288,7 +288,7 @@ const Chatbot = () => {
             {/* Globo de bienvenida */}
             {!isOpen && (
                 <div className="chatbot-welcome-bubble" onClick={handleToggle}>
-                    ¡Hola! Soy Taurus IA 👋<br/>¿Necesitas analizar algún reporte?
+                    ¡Hola! Soy Chronos 👋<br/>¿Necesitas analizar algún reporte?
                 </div>
             )}
 
@@ -303,7 +303,7 @@ const Chatbot = () => {
                         muted 
                         playsInline
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        title="Taurus IA"
+                        title="Chronos"
                     />
                 ) : (
                     <div className="close-btn">✕</div>
@@ -314,8 +314,8 @@ const Chatbot = () => {
             <div className={`chatbot-window glass ${isOpen ? 'active' : ''}`}>
                 <div className="chatbot-header">
                     <div className="header-info">
-                        <h4>Taurus IA</h4>
-                        <p>Inteligencia Artificial</p>
+                        <h4>Chronos</h4>
+                        <p>Asistente Inteligente</p>
                     </div>
                     <button 
                         className="reset-chat-btn" 
@@ -451,7 +451,7 @@ const Chatbot = () => {
                         
                         <input
                             type="text"
-                            placeholder={isListening ? "Escuchando..." : "Mensaje a Taurus IA..."}
+                            placeholder={isListening ? "Escuchando..." : "Mensaje a Chronos..."}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             className={isListening ? 'listening' : ''}
