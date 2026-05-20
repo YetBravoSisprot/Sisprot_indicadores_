@@ -701,6 +701,24 @@ option:checked {
   .filtros-selects-grid {
     grid-template-columns: 1fr;
   }
+}
 
+.buscador-sectores {
+  padding: 6px 10px;
+  margin: 4px 8px 8px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  position: sticky;
+  top: 23px;
+  z-index: 9;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
+.buscador-sectores:focus {
+  border-color: #1e3fa9;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
 }
