@@ -103,6 +103,7 @@ function TopUrbanismo() {
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
   const [columnasSeleccionadas, setColumnasSeleccionadas] = useState(["Todas"]);
+  const [busquedaSector, setBusquedaSector] = useState("");
 
   const listaAgenciasDinamica = useMemo(() => {
     const keys = Object.keys(urbanismosAprobados).filter(Boolean);
@@ -596,6 +597,13 @@ function TopUrbanismo() {
 
               <div className="columnas-checkbox-container" id="urbanismosSelect">
                 <label className="filter-header">Sectores</label>
+                <input
+                  type="text"
+                  placeholder="🔍 Buscar sector..."
+                  value={busquedaSector}
+                  onChange={(e) => setBusquedaSector(e.target.value)}
+                  className="buscador-sectores"
+                />
                 <label className="columna-item-check">
                   <input
                     type="checkbox"
@@ -604,16 +612,22 @@ function TopUrbanismo() {
                   />
                   <span>Todos</span>
                 </label>
-                {urbanismosParaMostrar.map((urbanismo) => (
-                  <label key={urbanismo} className="columna-item-check">
-                    <input
-                      type="checkbox"
-                      checked={urbanismosSeleccionados.includes(urbanismo)}
-                      onChange={() => handleToggleGeneric(setUrbanismosSeleccionados, urbanismo, "Todos")}
-                    />
-                    <span>{urbanismo}</span>
-                  </label>
-                ))}
+                {urbanismosParaMostrar
+                  .filter((urbanismo) =>
+                    norm(urbanismo)
+                      .toLowerCase()
+                      .includes(busquedaSector.toLowerCase())
+                  )
+                  .map((urbanismo) => (
+                    <label key={urbanismo} className="columna-item-check">
+                      <input
+                        type="checkbox"
+                        checked={urbanismosSeleccionados.includes(urbanismo)}
+                        onChange={() => handleToggleGeneric(setUrbanismosSeleccionados, urbanismo, "Todos")}
+                      />
+                      <span>{urbanismo}</span>
+                    </label>
+                  ))}
               </div>
 
               <div className="columnas-checkbox-container" id="columnasSelect">
