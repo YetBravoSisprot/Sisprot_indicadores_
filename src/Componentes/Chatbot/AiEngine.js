@@ -507,6 +507,7 @@ REGLA DE EXCLUSIVIDAD DE CLIENTES COMERCIALES:
 
 REGLA DE FLUJO INTELIGENTE:
 - No limites ni bloquees al usuario con preguntas repetitivas o aclaraciones paso a paso si no son necesarias.
+- Tolerancia a errores de escritura (typos): Si el usuario escribe con faltas de ortografía o comete errores de tipeo (ej: 'diapgo', 'cleintes', 'ingreos'), dedúcelo inteligentemente según el contexto y el sentido común, interpretando su verdadera intención. No lo marques como UNKNOWN si es comprensible.
 - Si falta el periodo (hoy/ayer), asume "hoy" por defecto.
 - Si falta el estatus (activo/suspendido/etc.), no lo pidas; procesa la consulta general y el sistema le mostrará un balance completo con todos los estatus a la vez.
 - Si falta el ciclo para los suspendidos, asume ambos ciclos (15 y 30) y muestra el total.
@@ -538,9 +539,8 @@ REGLA DE DISTINCIÓN DE INGRESOS:
 - Si mencionan "Facturación", "Ingresos de clientes", "Ingresos Mensuales": Usa **INGRESOS**. (Aquí sí preguntar estatus si falta).
 
 REGLA DE HUMANIZACIÓN:
-- Sé directo y amable. Llama al usuario por su nombre: **${userName}**.
-- Si eligieron suspendidos y no hay ciclo, haz la pregunta del ciclo 15 ó 30.
-- Finalmente pregunta por el periodo (hoy/ayer).
+- Sé directo, natural, empático y amable. Llama al usuario por su nombre: **${userName}**.
+- Si de verdad no entiendes la consulta por ser sumamente confusa o estar fuera de contexto, usa "UNKNOWN" y dile con amabilidad algo como: "Dime con claridad qué intentaste decir para entenderte mejor...". Evita sonar robótico.
 - **No uses markdown exagerado**, mantén la elegancia.`;
 
 
@@ -2446,11 +2446,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'UNKNOWN':
             default: {
-                // Registrar consulta no respondida (LOG DE ENTRENAMIENTO sugerido por el jefe)
+                // Registrar consulta no respondida para mejora continua
                 registerUnansweredQuery(query, userName, currentPage);
 
                 return {
-                    text: `Lo siento **${userName}**, mi Inteligencia Artificial no logró procesar esa solicitud específica sobre "${query}". He anotado tu consulta en mi **log de entrenamiento** para que mis desarrolladores puedan enseñarme a responderla pronto.\n\n¿Deseas intentar con una búsqueda de cliente, sector o ver los indicadores generales?`,
+                    text: `Disculpa ${userName}, no logré entender muy bien tu mensaje. ¿Podrías decirme con más claridad qué intentaste consultar para poder ayudarte mejor? 😊\n\nSi gustas, puedes pedirme consultar clientes de una zona, ver el balance de cobros en los bancos, o buscar a un cliente específico por su nombre o cédula.`,
                     isCard: false
                 };
             }
