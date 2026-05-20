@@ -56,7 +56,7 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
 
     // Si no hay fecha, usamos hoy por defecto (retrocompatibilidad)
     const nowLocal = new Date();
-    const today = nowLocal.toLocaleDateString('en-CA'); 
+    const today = nowLocal.toLocaleDateString('en-CA');
 
     const start = startDate || today;
     const end = endDate || today;
@@ -481,7 +481,7 @@ INTENCIONES DISPONIBLES:
 - AMBOS_METRICAS: Conteo + Facturación (Solo si tienes el Estatus Y el Periodo).
 - AMBIGUEDAD_INGRESOS: Se usa cuando el usuario pide "Ingresos" sin especificar si se refiere a la **Facturación Proyectada** (planes) o a la **Recaudación Real** (en bancos como BNC).
 - PLANES: Detalle por planes de internet.
-- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
+- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico. Extraer "contrato" (ID de contrato), "cedula" (identificación), o "nombres" / "nombre" (nombre del cliente) según corresponda.
 - DATA_MAESTRA: Universo total de la base de datos.
 - ANALISIS_VENTAS: Resumen global de ventas, proyecciones 2026, análisis trimestral y tendencias. Se activa con "como van las ventas", "proyección de ventas", "análisis de ventas".
 - HISTORICO_VENTAS: Detalle de ventas por mes y año específico.
@@ -505,10 +505,12 @@ REGLA DE EXCLUSIVIDAD DE CLIENTES COMERCIALES:
 - Siempre que el usuario pregunte por cantidad de clientes o ingresos, el sistema DEBE filtrar automáticamente para excluir: Empleados, Gratuitos, Institucionales, Cortesía y Proyectos. 
 - A nadie le importa la data de esas categorías no comerciales en las consultas rápidas.
 
-REGLA DE FLUJO OBLIGATORIO:
-1. **Paso 1: Estatus**: Si falta el estatus ("activos", "suspendidos", etc.), pídelo.
-2. **Paso 2: Ciclo (SOLO PARA SUSPENDIDOS)**: Si el usuario eligió "Suspendido" y aún no dice qué ciclo, el bot DEBE preguntar: "¿Deseas ver los suspendidos del **Ciclo 15** o del **Ciclo 30**?".
-3. **Paso 3: Periodo**: Una vez aclarado lo anterior, pregunta si desean los datos de **Hoy** o de **Ayer**.
+REGLA DE FLUJO INTELIGENTE:
+- No limites ni bloquees al usuario con preguntas repetitivas o aclaraciones paso a paso si no son necesarias.
+- Si falta el periodo (hoy/ayer), asume "hoy" por defecto.
+- Si falta el estatus (activo/suspendido/etc.), no lo pidas; procesa la consulta general y el sistema le mostrará un balance completo con todos los estatus a la vez.
+- Si falta el ciclo para los suspendidos, asume ambos ciclos (15 y 30) y muestra el total.
+- Responde directamente a lo que pida el usuario con amabilidad y claridad.
 
 REGLA DE PARÁMETROS:
 - "status": Activo, Suspendido, Pausado, Cancelado.
@@ -519,6 +521,7 @@ REGLA DE PARÁMETROS:
 - "banco": BNC, Venezuela / BDV, Provincial, etc.
 - "metodo": Pago Móvil, Zelle, Transferencia, Efectivo.
 - "startDate" / "endDate": YYYY-MM-DD (Usa si piden fechas específicas o rangos). 
+- "nombre" / "nombres": Nombre(s) o apellido(s) del cliente a buscar (en caso de BUSCAR_NOMBRE).
 
 REGLA DE EXCEL Y REPORTES:
 - El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
@@ -607,7 +610,7 @@ const getPlanesResponse = (filtroTxt, clientes) => {
         if (validStatus.includes(curr.status_name)) {
             const planName = curr.plan?.name || 'Sin Plan';
             const planCost = parseFloat(curr.plan?.cost) || 0;
-            
+
             if (!acc[planName]) {
                 acc[planName] = {
                     name: planName,
@@ -835,7 +838,7 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     if (parameters?.tipo) {
         // Soporte para strings combinados ("Pyme y Residencial")
         let tipoParams = Array.isArray(parameters.tipo) ? parameters.tipo : [parameters.tipo];
-        
+
         // Si hay un string con " y " o ",", lo dividimos en un array real
         if (tipoParams.length === 1 && typeof tipoParams[0] === 'string') {
             const raw = tipoParams[0].toLowerCase();
@@ -900,10 +903,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
     // --- DETECTOR DE PERIODO (Persistencia) ---
     const explicitlyHoy = query.includes("hoy") || query.includes("17");
     const explicitlyAyer = query.includes("ayer") || query.includes("16") || query.includes("de ayer");
-    
+
     let isTodayQuery = true;
     let periodKnownFromHistory = false;
-    
+
     if (explicitlyAyer) {
         isTodayQuery = false;
     } else if (explicitlyHoy) {
@@ -919,9 +922,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
         }
     }
-    
+
     let dataLabel = isTodayQuery ? "Hoy" : "Ayer";
-    
+
     // --- CÁLCULO DINÁMICO DE AYER (Para evitar hardcoding) ---
     const now = new Date();
     const yesterday = new Date(now);
@@ -949,7 +952,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
         intent = lastBotMsg.cardData.originalIntent;
         parameters = lastBotMsg.cardData.savedParameters;
         fromClarification = true;
-        
+
         if (query.includes("ayer") || query.includes("16")) {
             isTodayQuery = false;
         } else {
@@ -976,375 +979,365 @@ export const processQuery = async (message, data, history = [], userName = "", c
     try {
         if (!fromClarification) {
 
-        // --- INTERCEPTOR PRIORITARIO: "Cuántos contratos tiene [nombre]" ---
-        // Este interceptor corre ANTES que todo para evitar que el contexto previo
-        // haga que el bot muestre el último cliente visto en vez de buscar todos los contratos.
-        const contractCountPatterns = [
-            /cu[aá]ntos?\s+contratos?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
-            /cuantas?\s+cuentas?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
-            /contratos?\s+(?:de|tiene|para)\s+(.+)/i,
-        ];
-        let contractCountName = null;
-        for (const pat of contractCountPatterns) {
-            const m = message.match(pat);
-            if (m && m[1]) { contractCountName = m[1].replace(/\s+y\s+dame\s+.*$/i, "").trim(); break; }
-        }
+            // --- INTERCEPTOR PRIORITARIO: "Cuántos contratos tiene [nombre]" ---
+            // Este interceptor corre ANTES que todo para evitar que el contexto previo
+            // haga que el bot muestre el último cliente visto en vez de buscar todos los contratos.
+            const contractCountPatterns = [
+                /cu[aá]ntos?\s+contratos?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
+                /cuantas?\s+cuentas?\s+(?:tiene|hay\s+(?:de|para))\s+(.+)/i,
+                /contratos?\s+(?:de|tiene|para)\s+(.+)/i,
+            ];
+            let contractCountName = null;
+            for (const pat of contractCountPatterns) {
+                const m = message.match(pat);
+                if (m && m[1]) { contractCountName = m[1].replace(/\s+y\s+dame\s+.*$/i, "").trim(); break; }
+            }
 
-        if (contractCountName && contractCountName.length >= 3) {
-            // Limpieza: quitar "esta cedula:", "el cliente:", "al sr", etc.
-            let cleanSearch = contractCountName.replace(/^(esta\s+cedula:?|esta\s+ci:?|el\s+cliente:?|la\s+cedula:?|identidad:?|cedula:?)\s*/i, "").trim();
-            
-            const nameNorm = normalizeText(cleanSearch);
-            const isNumeric = /^\d+$/.test(cleanSearch.replace(/\D/g, ''));
+            if (contractCountName && contractCountName.length >= 3) {
+                // Limpieza: quitar "esta cedula:", "el cliente:", "al sr", etc.
+                let cleanSearch = contractCountName.replace(/^(esta\s+cedula:?|esta\s+ci:?|el\s+cliente:?|la\s+cedula:?|identidad:?|cedula:?)\s*/i, "").trim();
 
-            const matches = clientes.filter(c => {
-                const dbName = normalizeText(c.client_name);
-                const dbId = String(c.id);
-                const dbCi = String(c.client_identification || '').replace(/\D/g, '');
-                
-                // Si es numérico, priorizamos ID o Cédula
-                if (isNumeric) {
-                    const pureNum = cleanSearch.replace(/\D/g, '');
-                    return dbId === pureNum || dbCi === pureNum || dbName.includes(nameNorm);
+                const nameNorm = normalizeText(cleanSearch);
+                const isNumeric = /^\d+$/.test(cleanSearch.replace(/\D/g, ''));
+
+                const matches = clientes.filter(c => {
+                    const dbName = normalizeText(c.client_name);
+                    const dbId = String(c.id);
+                    const dbCi = String(c.client_identification || '').replace(/\D/g, '');
+
+                    // Si es numérico, priorizamos ID o Cédula
+                    if (isNumeric) {
+                        const pureNum = cleanSearch.replace(/\D/g, '');
+                        return dbId === pureNum || dbCi === pureNum || dbName.includes(nameNorm);
+                    }
+                    return dbName.includes(nameNorm);
+                });
+
+                if (matches.length === 0) {
+                    registerUnansweredQuery(query, userName, currentPage);
+                    return {
+                        text: `Revisé la base de datos ${userName} y no encontré ningún registro asociado a **"${cleanSearch}"**. Puede ser que el nombre esté escrito diferente o que aún no esté cargado en el sistema. ¿Quieres que intente con otro nombre o número de cédula?`,
+                        isCard: false
+                    };
                 }
-                return dbName.includes(nameNorm);
-            });
 
-            if (matches.length === 0) {
-                registerUnansweredQuery(query, userName, currentPage);
+                const nameDisplay = matches[0].client_name;
+                const intro = matches.length === 1
+                    ? `Claro ${userName}, revisé el sistema y **${nameDisplay}** tiene registrado **1 contrato** actualmente:`
+                    : `Claro ${userName}, revisé el sistema y en la base de datos aparecen **${matches.length} contratos** a nombre de **${nameDisplay}**. Aquí los tienes:`;
+
+                const listText = matches.map((m, i) =>
+                    `${i + 1}) Contrato **#${m.id}** · ${m.status_name} · ${m.sector_name} · Plan: ${m.plan?.name || 'Sin plan'} ($${m.plan?.cost || 0})`
+                ).join("\n");
+
+                const closing = matches.length === 1
+                    ? `¿Deseas ver el perfil completo de este contrato o lo exportamos al **Excel**?`
+                    : `¿Quieres que te muestre el detalle de alguno en específico? Solo dime el número de la opción. También puedo generarte el **Excel** con todos ellos si lo prefieres.`;
+
                 return {
-                    text: `Revisé la base de datos ${userName} y no encontré ningún registro asociado a **"${cleanSearch}"**. Puede ser que el nombre esté escrito diferente o que aún no esté cargado en el sistema. ¿Quieres que intente con otro nombre o número de cédula?`,
-                    isCard: false
+                    text: `${intro}\n\n${listText}\n\n${closing}`,
+                    isCard: true,
+                    offerExcel: true,
+                    contextType: 'multi_client_confirmed',
+                    cardData: {
+                        title: "Contratos Encontrados",
+                        value: matches.length,
+                        subtitle: `registros de ${nameDisplay}`,
+                        color: "#3498db",
+                        confirmedClients: matches,
+                        savedDataset: matches,
+                        filtersText: [`Nombre: ${nameDisplay}`],
+                        parameters: { nombres: [contractCountName] }
+                    }
                 };
             }
 
-            const nameDisplay = matches[0].client_name;
-            const intro = matches.length === 1
-                ? `Claro ${userName}, revisé el sistema y **${nameDisplay}** tiene registrado **1 contrato** actualmente:`
-                : `Claro ${userName}, revisé el sistema y en la base de datos aparecen **${matches.length} contratos** a nombre de **${nameDisplay}**. Aquí los tienes:`;
+            // --- 0. INTERCEPTOR LOCAL PARA MEMORIA DE CONTEXTO ESTRICTA ---
+            if (history && history.length > 0) {
+                const lastBotMsg = history.length >= 2 ? history[history.length - 2] : null;
 
-            const listText = matches.map((m, i) =>
-                `${i + 1}) Contrato **#${m.id}** · ${m.status_name} · ${m.sector_name} · Plan: ${m.plan?.name || 'Sin plan'} ($${m.plan?.cost || 0})`
-            ).join("\n");
+                if (lastBotMsg && lastBotMsg.sender === 'bot') {
+                    // Interceptor 1: Nombres múltiples
+                    if (lastBotMsg.contextType === 'multiple_names' && lastBotMsg.cardData && lastBotMsg.cardData.term) {
+                        const vaguePhrases = ["lista", "verlos", "cuales", "dime", "no se", "no recuerdo", "ni idea", "olvido", "muestrame"];
+                        if (vaguePhrases.some(w => query.includes(w))) {
+                            const terminoRaw = lastBotMsg.cardData.term;
+                            const Matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(terminoRaw)));
+                            const maxMatches = 10;
+                            const listToShow = Matches.slice(0, maxMatches).map(c => `- ${c.client_name} (Contrato: #${c.id}, Sector: ${c.sector_name})`).join("\n");
+                            const extraMsg = Matches.length > maxMatches ? `\n\n * (Y ${Matches.length - maxMatches} más...)* ` : "";
 
-            const closing = matches.length === 1
-                ? `¿Deseas ver el perfil completo de este contrato o lo exportamos al **Excel**?`
-                : `¿Quieres que te muestre el detalle de alguno en específico? Solo dime el número de la opción. También puedo generarte el **Excel** con todos ellos si lo prefieres.`;
-
-            return {
-                text: `${intro}\n\n${listText}\n\n${closing}`,
-                isCard: true,
-                offerExcel: true,
-                contextType: 'multi_client_confirmed',
-                cardData: {
-                    title: "Contratos Encontrados",
-                    value: matches.length,
-                    subtitle: `registros de ${nameDisplay}`,
-                    color: "#3498db",
-                    confirmedClients: matches,
-                    savedDataset: matches,
-                    filtersText: [`Nombre: ${nameDisplay}`],
-                    parameters: { nombres: [contractCountName] }
-                }
-            };
-        }
-
-        // --- 0. INTERCEPTOR LOCAL PARA MEMORIA DE CONTEXTO ESTRICTA ---
-        if (history && history.length > 0) {
-            const lastBotMsg = history.length >= 2 ? history[history.length - 2] : null;
-
-            if (lastBotMsg && lastBotMsg.sender === 'bot') {
-                // Interceptor 1: Nombres múltiples
-                if (lastBotMsg.contextType === 'multiple_names' && lastBotMsg.cardData && lastBotMsg.cardData.term) {
-                    const vaguePhrases = ["lista", "verlos", "cuales", "dime", "no se", "no recuerdo", "ni idea", "olvido", "muestrame"];
-                    if (vaguePhrases.some(w => query.includes(w))) {
-                        const terminoRaw = lastBotMsg.cardData.term;
-                        const Matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(terminoRaw)));
-                        const maxMatches = 10;
-                        const listToShow = Matches.slice(0, maxMatches).map(c => `- ${c.client_name} (Contrato: #${c.id}, Sector: ${c.sector_name})`).join("\n");
-                        const extraMsg = Matches.length > maxMatches ? `\n\n * (Y ${Matches.length - maxMatches} más...)* ` : "";
-
-                        const nameToUse = userName ? ` ${userName}` : "";
-                        return {
-                            text: `¡No te preocupes${nameToUse}! Aquí tienes la lista detallada de los clientes que coinciden con "${terminoRaw}": \n\n${listToShow}${extraMsg} \n\nDime el número de contrato del que te interese.`,
-                            isCard: false,
-                            contextType: 'multiple_names',
-                            cardData: { term: terminoRaw }
-                        };
-                    }
-                }
-
-                // Interceptor 2: Clarificación de estatus
-                if (lastBotMsg.contextType === 'clarify_status' && lastBotMsg.cardData) {
-                    const lowerQuery = query.toLowerCase();
-                    let chosenStatus = null;
-                    if (lowerQuery.includes("activo")) chosenStatus = "Activo";
-                    else if (lowerQuery.includes("suspendido")) chosenStatus = "Suspendido";
-                    else if (lowerQuery.includes("pausado") || lowerQuery.includes("pausa")) chosenStatus = "Pausado";
-                    else if (lowerQuery.includes("por instalar") || lowerQuery.includes("instalacion")) chosenStatus = "Por Instalar";
-                    else if (lowerQuery.includes("cancelado") || lowerQuery.includes("cortado") || lowerQuery.includes("de baja")) chosenStatus = "Cancelado";
-                    else if (lowerQuery.includes("todos") || lowerQuery.includes("total") || lowerQuery.includes("combinado")) chosenStatus = "Todos";
-
-                    if (chosenStatus) {
-                        const { originalIntent, savedParameters } = lastBotMsg.cardData;
-                        intent = originalIntent;
-                        const newParams = { ...savedParameters, status: chosenStatus };
-                        parameters = newParams;
-                        fromClarification = true;
-                    }
-                }
-
-                if (lastBotMsg.contextType === 'clarify_cycle' && lastBotMsg.cardData) {
-                    const reqCycle = query.includes("15") ? "15" : query.includes("30") ? "30" : null;
-                    if (reqCycle) {
-                        const { originalIntent, savedParameters } = lastBotMsg.cardData;
-                        intent = originalIntent;
-                        parameters = { ...savedParameters, ciclo: reqCycle };
-                        fromClarification = true;
-                    }
-                }
-
-                // Interceptor 3: Clarificación de urbanismo
-                if (lastBotMsg.contextType === 'clarify_urbanismo' && lastBotMsg.cardData) {
-                    const matched = findBestUrbanismoMatch(query);
-                    // Si el usuario escribió algo que ahora sí da un match único (ej: puso el "I")
-                    if (matched && !Array.isArray(matched)) {
-                        const { originalIntent, savedParameters } = lastBotMsg.cardData;
-                        intent = originalIntent;
-                        parameters = { ...savedParameters, urbanismo: matched };
-                        fromClarification = true;
-                    }
-                }
-
-                // Interceptor 4: Clarificación de métrica (Total vs Ingresos)
-                if (lastBotMsg.contextType === 'clarify_metric' && lastBotMsg.cardData) {
-                    const normQuery = query.toLowerCase();
-                    const { savedParameters } = lastBotMsg.cardData;
-
-                    if (normQuery.includes("total") || normQuery.includes("cuantos") || normQuery.includes("clientes")) {
-                        intent = 'TOTAL_CLIENTES';
-                        parameters = savedParameters;
-                        fromClarification = true;
-                    } else if (normQuery.includes("ingreso") || normQuery.includes("plata") || normQuery.includes("dinero") || normQuery.includes("venta")) {
-                        intent = 'INGRESOS';
-                        parameters = savedParameters;
-                        fromClarification = true;
-                    } else if (normQuery.includes("ambos") || normQuery.includes("los dos") || normQuery.includes("todo")) {
-                        intent = 'AMBOS_METRICAS';
-                        parameters = savedParameters;
-                        fromClarification = true;
-                    }
-                }
-
-                // Interceptor: Clarificación de origen de ingresos (Proyectado vs Bancos)
-                if (lastBotMsg.contextType === 'clarify_revenue_type' && lastBotMsg.cardData) {
-                    const normQuery = query.toLowerCase();
-                    const { savedParameters } = lastBotMsg.cardData;
-
-                    if (normQuery.includes("banco") || normQuery.includes("recauda") || normQuery.includes("cobro") || normQuery.includes("real")) {
-                        intent = 'INGRESOS_BANCOS';
-                        parameters = savedParameters;
-                        fromClarification = true;
-                    } else if (normQuery.includes("factura") || normQuery.includes("proyecta") || normQuery.includes("plan")) {
-                        intent = 'INGRESOS';
-                        parameters = savedParameters;
-                        fromClarification = true;
-                    }
-                }
-
-                // Interceptor 5: Aceptación de Excel (Preguntar Columnas para Detalle)
-                if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
-                    const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, IP, MAC, Plan...";
-                    return {
-                        text: `¡Dicho y hecho ${userName}! Para la pestaña de **Detalle**, ¿qué columnas deseas incluir? \n\n(Dime "Todas" para el reporte completo o menciona las que necesites).`,
-                        isCard: false,
-                        contextType: 'clarify_excel_columns',
-                        cardData: {
-                            savedDataset: lastBotMsg.cardData?.dataset || lastBotMsg.cardData?.savedDataset,
-                            savedFiltersText: lastBotMsg.cardData?.filtersText || ["Selección previa"]
-                        }
-                    };
-                }
-
-                // Interceptor 6: Selección de Columnas (Ahora descarga el Ejecutivo con esas columnas)
-                if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
-                    const reqCols = query.toLowerCase();
-                    const availableColsMap = {
-                        "contrato": "Contrato", "nro": "Contrato", "id": "Contrato",
-                        "cliente": "Cliente", "nombre": "Cliente",
-                        "telefono": "Teléfono", "telfo": "Teléfono", "telf": "Teléfono", "celular": "Teléfono", "movil": "Teléfono",
-                        "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
-                        "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
-                        "estatus": "Estatus", "estado": "Estatus",
-                        "dias": "Días Hábiles", "tiempo": "Días Hábiles",
-                        "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
-                        "plan": "Plan", "paquete": "Plan", "renta": "Plan",
-                        "costo": "Costo", "precio": "Costo", "valor": "Costo",
-                        "ip": "IP", "mac": "MAC", "ciclo": "Ciclo", "migrado": "Migrado",
-                        "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
-                        "interface": "Interface", "vlan": "Interface", "red": "Interface",
-                        "fecha": "Fecha_Creación", "creado": "Fecha_Creación"
-                    };
-
-                    let matchedCols = [];
-                    if (reqCols.includes("toda") || reqCols.includes("todo") || reqCols.includes("completo")) {
-                        matchedCols = ["Todas"];
-                    } else {
-                        Object.keys(availableColsMap).forEach(key => {
-                            if (reqCols.includes(key)) {
-                                if (!matchedCols.includes(availableColsMap[key])) {
-                                    matchedCols.push(availableColsMap[key]);
-                                }
-                            }
-                        });
-                    }
-
-                    if (matchedCols.length === 0) {
-                        matchedCols = ["Todas"];
-                    }
-
-                    const { savedDataset, savedFiltersText } = lastBotMsg.cardData;
-                    return {
-                        text: `¡Excelente selección ${userName}! Generando tu **Reporte Ejecutivo** con las columnas elegidas en la pestaña de detalle...`,
-                        isCard: false,
-                        action: 'download_excel_executive',
-                        cardData: {
-                            selectedColumns: matchedCols,
-                            dataset: savedDataset,
-                            filtersText: savedFiltersText
-                        }
-                    };
-                }
-
-                // Interceptor 7: Clarificación de Múltiples Clientes
-                if (lastBotMsg.contextType === 'multi_client_clarification' && lastBotMsg.cardData) {
-                    const normQuery = query.toLowerCase();
-                    const currentMatches = lastBotMsg.cardData.currentMatches;
-                    const contractMatch = query.match(/\b(\d{4,6})\b/);
-                    const matchedByContract = contractMatch ? currentMatches.find(m => String(m.id).includes(contractMatch[0])) : null;
-                    const optionMatch = query.match(/\b([1-9]|10)\b/);
-                    const choiceIdx = optionMatch ? parseInt(optionMatch[0]) - 1 : -1;
-                    const isNewSearch = contractMatch && !matchedByContract;
-                    const isComplex = normQuery.split(" ").length > 3;
-
-                    if (!isNewSearch && !isComplex) {
-                        const { currentName, pendingNames = [], confirmedClients = [] } = lastBotMsg.cardData;
-                        const updatedConfirmed = [...confirmedClients];
-                        let updatedPending = [...pendingNames];
-                        let nextName = null;
-                        let nextMatches = [];
-
-                        if (matchedByContract) updatedConfirmed.push(matchedByContract);
-                        else if (choiceIdx >= 0 && currentMatches && currentMatches[choiceIdx]) updatedConfirmed.push(currentMatches[choiceIdx]);
-                        else if (normQuery.includes("saltar") || normQuery.includes("ninguno")) { /* salta */ }
-                        else if (currentMatches && currentMatches.length > 0) {
+                            const nameToUse = userName ? ` ${userName}` : "";
                             return {
-                                text: `Disculpa ${userName}, esa opción no me figura para **${currentName}**. ¿Podrías indicarme el número correcto?\n\nSi quieres buscar otro contrato distinto, dímelo directamente.`,
+                                text: `¡No te preocupes${nameToUse}! Aquí tienes la lista detallada de los clientes que coinciden con "${terminoRaw}": \n\n${listToShow}${extraMsg} \n\nDime el número de contrato del que te interese.`,
                                 isCard: false,
-                                contextType: 'multi_client_clarification',
-                                cardData: lastBotMsg.cardData
-                            };
-                        }
-
-                        while (updatedPending.length > 0) {
-                            const nameToProcess = updatedPending.shift();
-                            const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(nameToProcess)));
-                            if (matches.length === 1) updatedConfirmed.push(matches[0]);
-                            else if (matches.length > 1) { nextName = nameToProcess; nextMatches = matches; break; }
-                        }
-
-                        if (nextName) {
-                            const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (#${m.id}, ${m.sector_name})`).join("\n");
-                            return {
-                                text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál incluyo?\n\n${optionsList}`,
-                                isCard: false,
-                                contextType: 'multi_client_clarification',
-                                cardData: { pendingNames: updatedPending, confirmedClients: updatedConfirmed, currentName: nextName, currentMatches: nextMatches }
-                            };
-                        } else if (updatedConfirmed.length > 0) {
-                            const cliente = updatedConfirmed[updatedConfirmed.length - 1];
-                            return {
-                                text: `¡Listo ${userName}! Detalle de **${cliente.client_name}** (#${cliente.id}).\n\nGuardado junto a los otros ${updatedConfirmed.length} contratos. ¿Deseas buscar más o **descargamos el Excel**?`,
-                                isCard: true,
-                                contextType: 'multi_client_confirmed',
-                                cardData: {
-                                    title: cliente.client_name,
-                                    subtitle: `${cliente.sector_name} | #${cliente.id}`,
-                                    stats: [
-                                        { label: "Estado", value: cliente.status_name },
-                                        { label: "Plan", value: cliente.plan?.name },
-                                        { label: "ID", value: cliente.client_identification }
-                                    ],
-                                    confirmedClients: updatedConfirmed,
-                                    rawData: cliente,
-                                    dataset: updatedConfirmed,
-                                    filtersText: ["Búsqueda múltiple"]
-                                }
+                                contextType: 'multiple_names',
+                                cardData: { term: terminoRaw }
                             };
                         }
                     }
-                }
 
-                // Interceptor 8: Confirmación de lista personalizada
-                if (lastBotMsg.contextType === 'multi_client_confirmed' && lastBotMsg.cardData) {
-                    const normQ = query.toLowerCase();
-                    if (!normQ.includes("otro") && (normQ.includes("excel") || normQ.includes("si") || normQ.includes("proceder"))) {
+                    // Interceptor 2: Clarificación de estatus
+                    if (lastBotMsg.contextType === 'clarify_status' && lastBotMsg.cardData) {
+                        const lowerQuery = query.toLowerCase();
+                        let chosenStatus = null;
+                        if (lowerQuery.includes("activo")) chosenStatus = "Activo";
+                        else if (lowerQuery.includes("suspendido")) chosenStatus = "Suspendido";
+                        else if (lowerQuery.includes("pausado") || lowerQuery.includes("pausa")) chosenStatus = "Pausado";
+                        else if (lowerQuery.includes("por instalar") || lowerQuery.includes("instalacion")) chosenStatus = "Por Instalar";
+                        else if (lowerQuery.includes("cancelado") || lowerQuery.includes("cortado") || lowerQuery.includes("de baja")) chosenStatus = "Cancelado";
+                        else if (lowerQuery.includes("todos") || lowerQuery.includes("total") || lowerQuery.includes("combinado")) chosenStatus = "Todos";
+
+                        if (chosenStatus) {
+                            const { originalIntent, savedParameters } = lastBotMsg.cardData;
+                            intent = originalIntent;
+                            const newParams = { ...savedParameters, status: chosenStatus };
+                            parameters = newParams;
+                            fromClarification = true;
+                        }
+                    }
+
+                    if (lastBotMsg.contextType === 'clarify_cycle' && lastBotMsg.cardData) {
+                        const reqCycle = query.includes("15") ? "15" : query.includes("30") ? "30" : null;
+                        if (reqCycle) {
+                            const { originalIntent, savedParameters } = lastBotMsg.cardData;
+                            intent = originalIntent;
+                            parameters = { ...savedParameters, ciclo: reqCycle };
+                            fromClarification = true;
+                        }
+                    }
+
+                    // Interceptor 3: Clarificación de urbanismo
+                    if (lastBotMsg.contextType === 'clarify_urbanismo' && lastBotMsg.cardData) {
+                        const matched = findBestUrbanismoMatch(query);
+                        // Si el usuario escribió algo que ahora sí da un match único (ej: puso el "I")
+                        if (matched && !Array.isArray(matched)) {
+                            const { originalIntent, savedParameters } = lastBotMsg.cardData;
+                            intent = originalIntent;
+                            parameters = { ...savedParameters, urbanismo: matched };
+                            fromClarification = true;
+                        }
+                    }
+
+                    // Interceptor 4: Clarificación de métrica (Total vs Ingresos)
+                    if (lastBotMsg.contextType === 'clarify_metric' && lastBotMsg.cardData) {
+                        const normQuery = query.toLowerCase();
+                        const { savedParameters } = lastBotMsg.cardData;
+
+                        if (normQuery.includes("total") || normQuery.includes("cuantos") || normQuery.includes("clientes")) {
+                            intent = 'TOTAL_CLIENTES';
+                            parameters = savedParameters;
+                            fromClarification = true;
+                        } else if (normQuery.includes("ingreso") || normQuery.includes("plata") || normQuery.includes("dinero") || normQuery.includes("venta")) {
+                            intent = 'INGRESOS';
+                            parameters = savedParameters;
+                            fromClarification = true;
+                        } else if (normQuery.includes("ambos") || normQuery.includes("los dos") || normQuery.includes("todo")) {
+                            intent = 'AMBOS_METRICAS';
+                            parameters = savedParameters;
+                            fromClarification = true;
+                        }
+                    }
+
+                    // Interceptor: Clarificación de origen de ingresos (Proyectado vs Bancos)
+                    if (lastBotMsg.contextType === 'clarify_revenue_type' && lastBotMsg.cardData) {
+                        const normQuery = query.toLowerCase();
+                        const { savedParameters } = lastBotMsg.cardData;
+
+                        if (normQuery.includes("banco") || normQuery.includes("recauda") || normQuery.includes("cobro") || normQuery.includes("real")) {
+                            intent = 'INGRESOS_BANCOS';
+                            parameters = savedParameters;
+                            fromClarification = true;
+                        } else if (normQuery.includes("factura") || normQuery.includes("proyecta") || normQuery.includes("plan")) {
+                            intent = 'INGRESOS';
+                            parameters = savedParameters;
+                            fromClarification = true;
+                        }
+                    }
+
+                    // Interceptor 5: Aceptación de Excel (Preguntar Columnas para Detalle)
+                    if (lastBotMsg.offerExcel && (query.includes("si") || query.includes("claro") || query.includes("favor") || query.includes("generalo") || query.includes("descargar"))) {
+                        const colsList = "Contrato, Cliente, Teléfono, Dirección, Urbanismo, Estatus, IP, MAC, Plan...";
                         return {
-                            text: `¡Entendido! Generando Excel para los seleccionados. **¿Qué columnas incluyo?**\n\n(Escribe "Todas" o los nombres de las columnas)`,
+                            text: `¡Dicho y hecho ${userName}! Para la pestaña de **Detalle**, ¿qué columnas deseas incluir? \n\n(Dime "Todas" para el reporte completo o menciona las que necesites).`,
                             isCard: false,
                             contextType: 'clarify_excel_columns',
-                            cardData: { savedDataset: lastBotMsg.cardData.confirmedClients, savedFiltersText: ["Lista Personalizada"] }
+                            cardData: {
+                                savedDataset: lastBotMsg.cardData?.dataset || lastBotMsg.cardData?.savedDataset,
+                                savedFiltersText: lastBotMsg.cardData?.filtersText || ["Selección previa"]
+                            }
                         };
+                    }
+
+                    // Interceptor 6: Selección de Columnas (Ahora descarga el Ejecutivo con esas columnas)
+                    if (lastBotMsg.contextType === 'clarify_excel_columns' && lastBotMsg.cardData) {
+                        const reqCols = query.toLowerCase();
+                        const availableColsMap = {
+                            "contrato": "Contrato", "nro": "Contrato", "id": "Contrato",
+                            "cliente": "Cliente", "nombre": "Cliente",
+                            "telefono": "Teléfono", "telfo": "Teléfono", "telf": "Teléfono", "celular": "Teléfono", "movil": "Teléfono",
+                            "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
+                            "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
+                            "estatus": "Estatus", "estado": "Estatus",
+                            "dias": "Días Hábiles", "tiempo": "Días Hábiles",
+                            "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
+                            "plan": "Plan", "paquete": "Plan", "renta": "Plan",
+                            "costo": "Costo", "precio": "Costo", "valor": "Costo",
+                            "ip": "IP", "mac": "MAC", "ciclo": "Ciclo", "migrado": "Migrado",
+                            "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
+                            "interface": "Interface", "vlan": "Interface", "red": "Interface",
+                            "fecha": "Fecha_Creación", "creado": "Fecha_Creación"
+                        };
+
+                        let matchedCols = [];
+                        if (reqCols.includes("toda") || reqCols.includes("todo") || reqCols.includes("completo")) {
+                            matchedCols = ["Todas"];
+                        } else {
+                            Object.keys(availableColsMap).forEach(key => {
+                                if (reqCols.includes(key)) {
+                                    if (!matchedCols.includes(availableColsMap[key])) {
+                                        matchedCols.push(availableColsMap[key]);
+                                    }
+                                }
+                            });
+                        }
+
+                        if (matchedCols.length === 0) {
+                            matchedCols = ["Todas"];
+                        }
+
+                        const { savedDataset, savedFiltersText } = lastBotMsg.cardData;
+                        return {
+                            text: `¡Excelente selección ${userName}! Generando tu **Reporte Ejecutivo** con las columnas elegidas en la pestaña de detalle...`,
+                            isCard: false,
+                            action: 'download_excel_executive',
+                            cardData: {
+                                selectedColumns: matchedCols,
+                                dataset: savedDataset,
+                                filtersText: savedFiltersText
+                            }
+                        };
+                    }
+
+                    // Interceptor 7: Clarificación de Múltiples Clientes
+                    if (lastBotMsg.contextType === 'multi_client_clarification' && lastBotMsg.cardData) {
+                        const normQuery = query.toLowerCase();
+                        const currentMatches = lastBotMsg.cardData.currentMatches;
+                        const contractMatch = query.match(/\b(\d{4,6})\b/);
+                        const matchedByContract = contractMatch ? currentMatches.find(m => String(m.id).includes(contractMatch[0])) : null;
+                        const optionMatch = query.match(/\b([1-9]|10)\b/);
+                        const choiceIdx = optionMatch ? parseInt(optionMatch[0]) - 1 : -1;
+                        const isNewSearch = contractMatch && !matchedByContract;
+                        const isComplex = normQuery.split(" ").length > 3;
+
+                        if (!isNewSearch && !isComplex) {
+                            const { currentName, pendingNames = [], confirmedClients = [] } = lastBotMsg.cardData;
+                            const updatedConfirmed = [...confirmedClients];
+                            let updatedPending = [...pendingNames];
+                            let nextName = null;
+                            let nextMatches = [];
+
+                            if (matchedByContract) updatedConfirmed.push(matchedByContract);
+                            else if (choiceIdx >= 0 && currentMatches && currentMatches[choiceIdx]) updatedConfirmed.push(currentMatches[choiceIdx]);
+                            else if (normQuery.includes("saltar") || normQuery.includes("ninguno")) { /* salta */ }
+                            else if (currentMatches && currentMatches.length > 0) {
+                                return {
+                                    text: `Disculpa ${userName}, esa opción no me figura para **${currentName}**. ¿Podrías indicarme el número correcto?\n\nSi quieres buscar otro contrato distinto, dímelo directamente.`,
+                                    isCard: false,
+                                    contextType: 'multi_client_clarification',
+                                    cardData: lastBotMsg.cardData
+                                };
+                            }
+
+                            while (updatedPending.length > 0) {
+                                const nameToProcess = updatedPending.shift();
+                                const matches = clientes.filter(c => normalizeText(c.client_name).includes(normalizeText(nameToProcess)));
+                                if (matches.length === 1) updatedConfirmed.push(matches[0]);
+                                else if (matches.length > 1) { nextName = nameToProcess; nextMatches = matches; break; }
+                            }
+
+                            if (nextName) {
+                                const optionsList = nextMatches.map((m, i) => `${i + 1}) **${m.client_name}** (#${m.id}, ${m.sector_name})`).join("\n");
+                                return {
+                                    text: `Para **${nextName}** encontré ${nextMatches.length} registros. ¿Cuál incluyo?\n\n${optionsList}`,
+                                    isCard: false,
+                                    contextType: 'multi_client_clarification',
+                                    cardData: { pendingNames: updatedPending, confirmedClients: updatedConfirmed, currentName: nextName, currentMatches: nextMatches }
+                                };
+                            } else if (updatedConfirmed.length > 0) {
+                                const cliente = updatedConfirmed[updatedConfirmed.length - 1];
+                                return {
+                                    text: `¡Listo ${userName}! Detalle de **${cliente.client_name}** (#${cliente.id}).\n\nGuardado junto a los otros ${updatedConfirmed.length} contratos. ¿Deseas buscar más o **descargamos el Excel**?`,
+                                    isCard: true,
+                                    contextType: 'multi_client_confirmed',
+                                    cardData: {
+                                        title: cliente.client_name,
+                                        subtitle: `${cliente.sector_name} | #${cliente.id}`,
+                                        stats: [
+                                            { label: "Estado", value: cliente.status_name },
+                                            { label: "Plan", value: cliente.plan?.name },
+                                            { label: "ID", value: cliente.client_identification }
+                                        ],
+                                        confirmedClients: updatedConfirmed,
+                                        rawData: cliente,
+                                        dataset: updatedConfirmed,
+                                        filtersText: ["Búsqueda múltiple"]
+                                    }
+                                };
+                            }
+                        }
+                    }
+
+                    // Interceptor 8: Confirmación de lista personalizada
+                    if (lastBotMsg.contextType === 'multi_client_confirmed' && lastBotMsg.cardData) {
+                        const normQ = query.toLowerCase();
+                        if (!normQ.includes("otro") && (normQ.includes("excel") || normQ.includes("si") || normQ.includes("proceder"))) {
+                            return {
+                                text: `¡Entendido! Generando Excel para los seleccionados. **¿Qué columnas incluyo?**\n\n(Escribe "Todas" o los nombres de las columnas)`,
+                                isCard: false,
+                                contextType: 'clarify_excel_columns',
+                                cardData: { savedDataset: lastBotMsg.cardData.confirmedClients, savedFiltersText: ["Lista Personalizada"] }
+                            };
+                        }
                     }
                 }
             }
-        }
 
-        // --- LLAMADA PRINCIPAL A IA ---
-        if (!fromClarification) {
-            const openAIResult = await callOpenAI(message, history, currentPage, userName);
-            intent = openAIResult.intent;
-            parameters = openAIResult.parameters || {};
+            // --- LLAMADA PRINCIPAL A IA ---
+            if (!fromClarification) {
+                const openAIResult = await callOpenAI(message, history, currentPage, userName);
+                intent = openAIResult.intent;
+                parameters = openAIResult.parameters || {};
 
-            // Sanitización
-            ['ciclo', 'urbanismo', 'tipo', 'agencia'].forEach(key => {
-                if (parameters[key] && typeof parameters[key] === 'string') {
-                    const val = parameters[key].toLowerCase();
-                    if (val.includes('ayer') || val.includes('hoy') || val.includes('16') || val.includes('17')) delete parameters[key];
+                // Sanitización
+                ['ciclo', 'urbanismo', 'tipo', 'agencia'].forEach(key => {
+                    if (parameters[key] && typeof parameters[key] === 'string') {
+                        const val = parameters[key].toLowerCase();
+                        if (val.includes('ayer') || val.includes('hoy') || val.includes('16') || val.includes('17')) delete parameters[key];
+                    }
+                });
+
+                // Fallback sectores
+                if ((!parameters.urbanismo || (Array.isArray(parameters.urbanismo) && parameters.urbanismo.length === 0)) && mentionedSectors.length > 0) {
+                    parameters.urbanismo = mentionedSectors;
+                    if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
                 }
-            });
 
-            // Fallback sectores
-            if ((!parameters.urbanismo || (Array.isArray(parameters.urbanismo) && parameters.urbanismo.length === 0)) && mentionedSectors.length > 0) {
-                parameters.urbanismo = mentionedSectors;
-                if (intent === 'UNKNOWN' || intent === 'SALUDO') intent = 'AMBOS_METRICAS';
+                // Fallback Periodo (Seguridad si la IA lo omite)
+                if (query.toLowerCase().includes("ayer") && !parameters.periodo && !parameters.startDate) {
+                    parameters.periodo = "ayer";
+                } else if (query.toLowerCase().includes("hoy") && !parameters.periodo && !parameters.startDate) {
+                    parameters.periodo = "hoy";
+                }
+
+                // Interceptor de Periodo deshabilitado para permitir respuestas directas con el día de hoy por defecto.
+
             }
-
-            // Fallback Periodo (Seguridad si la IA lo omite)
-            if (query.toLowerCase().includes("ayer") && !parameters.periodo && !parameters.startDate) {
-                parameters.periodo = "ayer";
-            } else if (query.toLowerCase().includes("hoy") && !parameters.periodo && !parameters.startDate) {
-                parameters.periodo = "hoy";
-            }
-
-            // Interceptor Data Source (Hoy vs Ayer)
-            const metricIntents = ['TOTAL_CLIENTES', 'AMBOS_METRICAS', 'ESTADOS', 'TIPOS_CLIENTE'];
-            const hasDateKeyword = query.includes("ayer") || query.includes("hoy") || query.includes("16") || query.includes("respaldo");
-            if (metricIntents.includes(intent) && !hasDateKeyword && !fromClarification && !periodKnownFromHistory) {
-                return {
-                    text: `Perfecto ${userName}, ¿Deseas ver los resultados de **Hoy** o el cierre de **Ayer**?`,
-                    isCard: false,
-                    contextType: 'clarify_data_source',
-                    cardData: { originalIntent: intent, savedParameters: parameters }
-                };
-            }
-
         }
-    }
 
-    // --- 2. EJECUCIÓN DE LOGICA (POST-IA & INTERCEPTORES) ---
-    switch (intent) {
-        case 'SALUDO': {
+        // --- 2. EJECUCIÓN DE LOGICA (POST-IA & INTERCEPTORES) ---
+        switch (intent) {
+            case 'SALUDO': {
                 const hour = new Date().getHours();
                 let timeGreeting = "Hola";
                 if (hour >= 5 && hour < 12) timeGreeting = "Buenos días";
@@ -1409,36 +1402,42 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let filteredClientes = filtered;
                 let appliedFiltersText = appliedTexts;
 
-                // 1. Clarificación de Estado (Solo si no hay otros filtros de identidad ya aplicados y NO es DATA MAESTRA)
+                // 1. Desglose automático de Estado si no se especificó estatus ni filtros específicos
                 const isDataMaestra = parameters?.dataMaestra || appliedFiltersText.includes("Universo Total (Data Maestra)");
-                
-                if (!isDataMaestra && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE') {
-                    // DISPARAR CLARIFICACIÓN: Si no especifican estado, preguntamos de forma humana
-                    return {
-                        text: `Prepararé tu reporte de inmediato ${userName}. Para darte la cifra exacta, ¿deseas ver los clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?`,
-                        isCard: false,
-                        contextType: 'clarify_status',
-                        cardData: { originalIntent: intent, savedParameters: parameters }
-                    };
-                }
+                const statusNotSpecified = !isDataMaestra && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato && intent !== 'ESTADOS' && intent !== 'TIPOS_CLIENTE';
 
-                if ((parameters?.status === "Suspendido" || normalizeText(String(parameters?.status)).includes("suspendido")) && !parameters?.ciclo && !fromClarification) {
-                     return {
-                        text: `Perfecto ${userName}, vamos con los **Suspendidos**. ¿Deseas ver los del **Ciclo 15** o del **Ciclo 30**?`,
-                        isCard: false,
-                        contextType: 'clarify_cycle',
-                        cardData: { originalIntent: intent, savedParameters: parameters }
-                    };
-                }
+                if (statusNotSpecified) {
+                    const counts = filteredClientes.reduce((acc, c) => {
+                        const st = c.status_name || 'Otros';
+                        acc[st] = (acc[st] || 0) + 1;
+                        return acc;
+                    }, {});
 
-                // 2. Clarificación de Periodo (Hoy vs Ayer)
-                // Si ya tenemos el estatus pero el usuario no ha especificado si "hoy" o "ayer" y no viene de una clarificación previa
-                if (!isDataMaestra && (parameters?.status || parameters?.nombre || parameters?.contrato) && !explicitlyHoy && !explicitlyAyer && !periodKnownFromHistory && !fromClarification) {
+                    const activeCount = filteredClientes.filter(c => c.status_name === "Activo").length;
+
+                    const statsArray = [
+                        { label: "🟢 Activos", value: counts.Activo || 0, color: "#2ecc71" },
+                        { label: "🟡 Suspendidos", value: counts.Suspendido || 0, color: "#f1c40f" },
+                        { label: "🔴 Cancelados", value: counts.Cancelado || 0, color: "#e74c3c" }
+                    ];
+                    if (counts.Pausado) {
+                        statsArray.push({ label: "🔵 Pausados", value: counts.Pausado, color: "#3498db" });
+                    }
+
                     return {
-                        text: `¡Entendido ${userName}! Ya tengo el estatus. Por último, ¿deseas la información actualizada de **Hoy** o prefieres el cierre de **Ayer**?`,
-                        isCard: false,
-                        contextType: 'clarify_data_source', // Reutilizamos el tipo existente
-                        cardData: { originalIntent: intent, savedParameters: parameters }
+                        text: `Claro ${userName}, en la zona consultada (${appliedFiltersText.join(", ") || "General"}) he encontrado un total de **${filteredClientes.length}** clientes, de los cuales **${activeCount}** están activos.\n\nAquí tienes el desglose completo de estatus:`,
+                        isCard: true,
+                        cardData: {
+                            periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
+                            title: `Clientes: ${appliedFiltersText.join(" | ") || "General"}`,
+                            value: filteredClientes.length,
+                            subtitle: "Clientes totales (todos los estatus)",
+                            color: "#3498db",
+                            stats: statsArray,
+                            parameters: parameters,
+                            savedDataset: filteredClientes,
+                            filtersText: [...appliedFiltersText, "Todos los estatus"]
+                        }
                     };
                 }
 
@@ -1465,7 +1464,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     if (appliedFiltersText.length > 0) {
                         // CASO: Desglose Dinámico por Tipos (Ej: Residencial + Empleado + Pyme)
                         let tipoParams = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
-                        
+
                         // Normalización: si es un string compuesto, lo dividimos
                         if (tipoParams.length === 1 && typeof tipoParams[0] === 'string') {
                             const raw = tipoParams[0].toLowerCase();
@@ -1489,7 +1488,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                     return clientType.includes(normalizeText(t));
                                 });
                                 const revenue = subDataset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-                                
+
                                 // Asignar colores por tipo
                                 let color = "#bdc3c7";
                                 const tNorm = normalizeText(t);
@@ -1505,8 +1504,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             const cardTitle = dataLabel.startsWith("Hoy") ? `Dashboard de ${statusLabel}` : `Dashboard (${dataLabel})`;
                             return {
                                 text: `**${userName}**, aquí tienes el balance detallado por tipo para los clientes **${statusLabel}** de tu consulta:\n\n` +
-                                      statsByType.map(s => `• **${s.label}**: ${s.value}`).join("\n") +
-                                      `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
+                                    statsByType.map(s => `• **${s.label}**: ${s.value}`).join("\n") +
+                                    `\n\nEl total general es de **${filteredClientes.length}** clientes con una facturación proyectada de **${formatCurrencyLoc(totalRevenue)}**.`,
                                 isCard: true,
                                 cardData: {
                                     periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
@@ -1645,35 +1644,41 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 let filteredClientes = filtered;
                 let appliedFiltersText = appliedTexts;
 
-                // 1. Filtrar por Status (Flujo Humano: Preguntar si no existe, a menos que sea DATA MAESTRA)
+                // 1. Desglose automático de Ingresos si no se especificó estatus ni filtros específicos
                 const isDataMaestraIng = parameters?.dataMaestra || appliedFiltersText.includes("Universo Total (Data Maestra)");
+                const statusNotSpecifiedIng = !isDataMaestraIng && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato;
 
-                if (!isDataMaestraIng && !parameters?.status && !parameters?.nombre && !parameters?.nombres && !parameters?.contrato) {
-                    // Si no especifican estado, preguntamos de forma humana antes de calcular
+                if (statusNotSpecifiedIng) {
+                    const activeClients = filteredClientes.filter(c => c.status_name === "Activo");
+                    const suspendedClients = filteredClientes.filter(c => c.status_name === "Suspendido");
+                    const cancelledClients = filteredClientes.filter(c => c.status_name === "Cancelado");
+
+                    const activeRevenue = activeClients.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                    const suspendedRevenue = suspendedClients.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+                    const cancelledRevenue = cancelledClients.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
+
+                    const totalRevenue = activeRevenue + suspendedRevenue + cancelledRevenue;
+
+                    statsFinancial = [
+                        { label: "🟢 Activos (Facturación)", value: formatCurrency(activeRevenue), color: "#2ecc71" },
+                        { label: "🟡 Suspendidos (Cartera)", value: formatCurrency(suspendedRevenue), color: "#f1c40f" },
+                        { label: "🔴 Cancelados (Sin cobrar)", value: formatCurrency(cancelledRevenue), color: "#e74c3c" }
+                    ];
+
                     return {
-                        text: `He detectado tu consulta sobre ingresos ${userName}. ¿Deseas ver el dinero proyectado para clientes **Activos**, **Suspendidos**, **Pausados** o **Cancelados**?`,
-                        isCard: false,
-                        contextType: 'clarify_status',
-                        cardData: { originalIntent: intent, savedParameters: parameters }
-                    };
-                }
-
-                if ((parameters?.status === "Suspendido" || normalizeText(String(parameters?.status)).includes("suspendido")) && !parameters?.ciclo && !fromClarification) {
-                     return {
-                        text: `Excelente ${userName}, vamos con los **Suspendidos**. ¿Deseas ver el dinero de los del **Ciclo 15** o del **Ciclo 30**?`,
-                        isCard: false,
-                        contextType: 'clarify_cycle',
-                        cardData: { originalIntent: intent, savedParameters: parameters }
-                    };
-                }
-
-                // 2. Clarificación de Periodo (Hoy vs Ayer)
-                if (!isDataMaestraIng && (parameters?.status || parameters?.nombre || parameters?.contrato) && !explicitlyHoy && !explicitlyAyer && !periodKnownFromHistory && !fromClarification) {
-                    return {
-                        text: `¡Excelente ${userName}! Ya tengo el estatus para el cálculo. ¿Deseas usar la data de **Hoy** o la del cierre de **Ayer**?`,
-                        isCard: false,
-                        contextType: 'clarify_data_source',
-                        cardData: { originalIntent: intent, savedParameters: parameters }
+                        text: `Claro ${userName}, he calculado los ingresos mensuales proyectados para la selección (${appliedFiltersText.join(", ") || "General"}). Aquí tienes el balance detallado por estado:`,
+                        isCard: true,
+                        cardData: {
+                            periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
+                            title: "Balance de Facturación",
+                            value: formatCurrency(activeRevenue),
+                            subtitle: `Solo Activos (Total general: ${formatCurrency(totalRevenue)})`,
+                            color: "#2ecc71",
+                            stats: statsFinancial,
+                            parameters: parameters,
+                            savedDataset: filteredClientes,
+                            filtersText: [...appliedFiltersText, "Desglose de Ingresos"]
+                        }
                     };
                 }
 
@@ -1690,7 +1695,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     statsFinancial = statusParamsIngresos.map(s => {
                         const subDataset = filteredClientes.filter(c => normalizeText(c.status_name).includes(normalizeText(s)));
                         const amount = subDataset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-                        
+
                         let label = s;
                         let color = "#bdc3c7";
                         if (normalizeText(s).includes("activo")) { label = "Recuperado (Activos)"; color = "#2ecc71"; }
@@ -1727,11 +1732,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const year = parameters?.year ? String(parameters.year) : "2026";
                     const monthIdx = parameters?.month ? parseInt(parameters.month) - 1 : new Date().getMonth();
                     const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-                    
+
                     const yearData = salesData[year] || new Array(12).fill(0);
                     const currentValue = yearData[monthIdx] || 0;
                     const totalYear = yearData.reduce((a, b) => a + b, 0);
-                    
+
                     // --- Cálculos de Impacto Trimestral ---
                     const q1 = yearData.slice(0, 3).reduce((a, b) => a + b, 0);
                     const q2 = yearData.slice(3, 6).reduce((a, b) => a + b, 0);
@@ -1750,14 +1755,14 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // --- Variación vs Enero ---
                     const janValue = yearData[0] || 0;
                     const diffToJan = janValue > 0 ? ((currentValue - janValue) / janValue) * 100 : 0;
-                    const variationText = diffToJan !== 0 
+                    const variationText = diffToJan !== 0
                         ? `Representa una variación del **${diffToJan > 0 ? '+' : ''}${diffToJan.toFixed(1)}%** respecto a enero de ${year}.`
                         : "";
 
                     if (intent === 'HISTORICO_VENTAS') {
                         return {
                             text: `Claro ${userName}, he consultado el histórico de ventas. En **${mesesNombres[monthIdx]} de ${year}** cerramos con **${currentValue} ventas**.\n\n` +
-                                  `En el año **${year}** acumulamos **${totalYear} ventas** totales. ${variationText}`,
+                                `En el año **${year}** acumulamos **${totalYear} ventas** totales. ${variationText}`,
                             isCard: true,
                             cardData: {
                                 title: `Ventas ${mesesNombres[monthIdx]} ${year}`,
@@ -1775,12 +1780,12 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // Caso ANALISIS_VENTAS (Resumen Completo)
                     return {
                         text: `¡Hola ${userName}! Aquí tienes el análisis de **Ventas Globales**:\n\n` +
-                              `📊 **Proyección 2026**: Basado en el promedio actual, estimamos cerrar el año con **${projection2026} ventas**.\n` +
-                              `📉 **Rendimiento Anual**: En lo que va de ${year}, llevamos **${totalYear} ventas** registradas.\n\n` +
-                              `**Impacto Trimestral (${year}):**\n` +
-                              `- **T1**: ${q1} | **T2**: ${q2}\n` +
-                              `- **T3**: ${q3} | **T4**: ${q4}\n\n` +
-                              `¿Deseas profundizar en algún mes o año en particular?`,
+                            `📊 **Proyección 2026**: Basado en el promedio actual, estimamos cerrar el año con **${projection2026} ventas**.\n` +
+                            `📉 **Rendimiento Anual**: En lo que va de ${year}, llevamos **${totalYear} ventas** registradas.\n\n` +
+                            `**Impacto Trimestral (${year}):**\n` +
+                            `- **T1**: ${q1} | **T2**: ${q2}\n` +
+                            `- **T3**: ${q3} | **T4**: ${q4}\n\n` +
+                            `¿Deseas profundizar en algún mes o año en particular?`,
                         isCard: true,
                         cardData: {
                             title: `Análisis Global de Ventas`,
@@ -1907,7 +1912,18 @@ export const processQuery = async (message, data, history = [], userName = "", c
             }
 
             case 'BUSCAR_NOMBRE': {
-                const nombresReq = parameters?.nombres || (parameters?.nombre ? [parameters.nombre] : []);
+                let nombresReq = parameters?.nombres || (parameters?.nombre ? [parameters.nombre] : []);
+
+                // Fallback local: si la IA identificó BUSCAR_NOMBRE pero no extrajo el parámetro,
+                // o si el usuario respondió directamente con un nombre en el flujo de chat.
+                if (nombresReq.length === 0 && message) {
+                    let cleanQuery = message
+                        .replace(/^(buscar|busca|consultar|consulta|dame la informacion de|dame informacion de|informacion de|datos de|ver el cliente|ver a|ver al cliente|el cliente|cliente)\s+/gi, "")
+                        .trim();
+                    if (cleanQuery.length >= 3) {
+                        nombresReq = [cleanQuery];
+                    }
+                }
 
                 if (nombresReq.length === 0) {
                     return { text: `Dime los nombres de los clientes que buscas ${userName}.`, isCard: false };
@@ -2143,9 +2159,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         `🔹 ¿O prefieres ver **Ambos** datos?`,
                     isCard: false,
                     contextType: 'clarify_metric',
-                    cardData: { 
+                    cardData: {
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
-                        savedParameters: parameters 
+                        savedParameters: parameters
                     }
                 };
             }
@@ -2157,16 +2173,16 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         `🔹 **Recaudación Real**: Cobros efectivos en los bancos (BNC, BDV, etc.).`,
                     isCard: false,
                     contextType: 'clarify_revenue_type', // Nuevo tipo para botones
-                    cardData: { 
+                    cardData: {
                         periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
-                        savedParameters: parameters 
+                        savedParameters: parameters
                     }
                 };
             }
 
             case 'DATA_MAESTRA': {
                 const { filtered, appliedTexts } = getFilteredDataset(clientes, { dataMaestra: true }, query);
-                
+
                 // Conteo por estados para el resumen visual
                 const counts = filtered.reduce((acc, c) => {
                     const st = c.status_name || 'Otros';
@@ -2176,7 +2192,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 const formatCurrencyLoc = (val) => `$${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                 const calculateRevenue = (subset) => subset.reduce((acc, curr) => acc + parseFloat(curr.plan?.cost || 0), 0);
-                
+
                 const stats = [
                     { label: "Activos", value: `${counts.Activo || 0} (${formatCurrencyLoc(calculateRevenue(filtered.filter(c => c.status_name === "Activo")))})`, color: "#2ecc71" },
                     { label: "Suspendidos", value: `${counts.Suspendido || 0} (${formatCurrencyLoc(calculateRevenue(filtered.filter(c => c.status_name === "Suspendido")))})`, color: "#f1c40f" },
@@ -2211,21 +2227,21 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
                 const finalStats = [];
                 const tipoParamsAmb = Array.isArray(parameters?.tipo) ? parameters.tipo : (parameters?.tipo ? [parameters.tipo] : []);
-                
+
                 if (tipoParamsAmb.length > 1) {
                     tipoParamsAmb.forEach(t => {
                         const subset = filtered.filter(c => normalizeText(c.client_subdivision || c.client_type_name || '').includes(normalizeText(t)));
                         const revenue = calculateRevenue(subset);
-                        
+
                         let color = "#bdc3c7";
                         const tNorm = normalizeText(t);
                         if (tNorm.includes("pyme")) color = "#9b59b6";
                         else if (tNorm.includes("residencial")) color = "#3498db";
-                        
-                        finalStats.push({ 
-                            label: `Tipo: ${t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()}`, 
-                            value: formatVal(subset.length, revenue), 
-                            color 
+
+                        finalStats.push({
+                            label: `Tipo: ${t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()}`,
+                            value: formatVal(subset.length, revenue),
+                            color
                         });
                     });
                 } else {
@@ -2234,13 +2250,13 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     statusList.forEach(s => {
                         const subset = filtered.filter(c => normalizeText(c.status_name).includes(normalizeText(s)));
                         if (subset.length > 0 || parameters?.status) {
-                             let color = "#bdc3c7";
-                             const sNorm = normalizeText(s);
-                             if (sNorm.includes("activo")) color = "#2ecc71";
-                             else if (sNorm.includes("suspendido")) color = "#f1c40f";
-                             else if (sNorm.includes("cancelado")) color = "#e74c3c";
+                            let color = "#bdc3c7";
+                            const sNorm = normalizeText(s);
+                            if (sNorm.includes("activo")) color = "#2ecc71";
+                            else if (sNorm.includes("suspendido")) color = "#f1c40f";
+                            else if (sNorm.includes("cancelado")) color = "#e74c3c";
 
-                             finalStats.push({ label: s, value: formatVal(subset.length, calculateRevenue(subset)), color });
+                            finalStats.push({ label: s, value: formatVal(subset.length, calculateRevenue(subset)), color });
                         }
                     });
                 }
@@ -2342,9 +2358,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const formatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
                     const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
                     const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
-                    
-                    const labelFecha = sDate === eDate 
-                        ? `el **${startLabel}**` 
+
+                    const labelFecha = sDate === eDate
+                        ? `el **${startLabel}**`
                         : `desde el **${startLabel}** hasta el **${endLabel}**`;
 
                     if (payments.length === 0) {
@@ -2358,7 +2374,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     // --- Agrupar por banco ---
                     const introLabel = labelFecha;
                     const cicloFilter = parameters?.ciclo || null;
-                    
+
                     const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
                     const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
                     const totalPagos = payments.length;
