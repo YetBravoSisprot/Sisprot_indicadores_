@@ -86,7 +86,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
         { header: "DIRECCIÓN", key: "direccion", width: 35, ui: "Dirección" },
         { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
-        { header: "SECTOR", key: "sector", width: 20, ui: "Urbanismo" },
+        { header: "SECTOR", key: "sector", width: 20, ui: "Sector" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
         { header: "PLAN", key: "plan", width: 25, ui: "Plan" },
