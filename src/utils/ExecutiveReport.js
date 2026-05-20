@@ -136,7 +136,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             { header: "TELÉFONO", key: "client_mobile", width: 15, ui: "Teléfono" },
             { header: "DIRECCIÓN", key: "address", width: 35, ui: "Dirección" },
             { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
-            { header: "SECTOR", key: "sector_name", width: 25, ui: "Urbanismo" },
+            { header: "SECTOR", key: "sector_name", width: 25, ui: "Sector" },
             { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
             { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
             { header: "PLAN", key: "plan_name", width: 25, ui: "Plan" },
