@@ -117585,24 +117585,33 @@ const largeArraydata =
       "id": 7330,
       "client_name": "JACKSON ANDRES GONZALEZ AVENDAÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
-      "cycle": 25,
-      "migrate": false,
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04244636854",
       "address": "LOS NISPEROS EDIF. TORRE A PISO 7 APT  74",
       "client_identification": "V11939694",
       "nap_box_name": "TORRE A EDIF LOS NISPEROS",
       "created_at": "2024-12-17T14:50:11.736641",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12541,
+        "ip": "10.10.65.2",
+        "mac": "OE:MT:3C:62:45:72",
+        "serial": "OEMT3C624572",
+        "queue": null,
+        "interface": "VLAN272_EDIF_NISPEROS_OLT3",
+        "created_at": "2026-05-24T13:44:56.028037",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
