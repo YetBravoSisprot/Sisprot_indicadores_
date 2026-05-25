@@ -106056,13 +106056,13 @@ const largeArraydata =
       "nap_box_name": "406",
       "created_at": "2024-10-30T09:02:14.225120",
       "service_detail": {
-        "id": 12540,
+        "id": 12542,
         "ip": "172.22.118.2",
-        "mac": "4c:ab:fc:67:97:20",
-        "serial": "JMKGCE8746E7",
+        "mac": "4C:AB:FC:E9:9D:F7",
+        "serial": "JMKGC2248334",
         "queue": null,
         "interface": "VLAN231_PAYABAJO",
-        "created_at": "2026-05-22T18:56:59.897573",
+        "created_at": "2026-05-25T10:09:17.024560",
         "created_by_name": null
       },
       "installation_invoice_cost": null
