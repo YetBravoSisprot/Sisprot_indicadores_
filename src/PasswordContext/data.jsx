@@ -103842,8 +103842,8 @@ const largeArraydata =
       "id": 6805,
       "client_name": "CARMEN VIOLETA OROPEZA TONA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Prados III",
@@ -103859,16 +103859,7 @@ const largeArraydata =
       "client_identification": "V7367450",
       "nap_box_name": "CTO-00284 DOS",
       "created_at": "2024-10-22T13:49:48.587996",
-      "service_detail": {
-        "id": 11068,
-        "ip": "172.29.39.2",
-        "mac": "OEMT3C624BF2",
-        "serial": "OEMT3C624BF2",
-        "queue": null,
-        "interface": "VLAN236_PRADOS3",
-        "created_at": "2026-01-09T14:21:51.240779",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -105786,7 +105777,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 25,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
