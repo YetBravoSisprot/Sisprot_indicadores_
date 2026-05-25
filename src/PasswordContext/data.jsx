@@ -110763,11 +110763,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04123983126",
       "address": "CALLE 3 DE MAYO CASA NRO 11 BARRIO POLVORIN LA BODEGUITA LA BODEGUITA ARAGUA ZONA POSTAL 2115",
@@ -114303,8 +114303,8 @@ const largeArraydata =
       "id": 7222,
       "client_name": "BEATRIZ ROSALBA FLORES BELLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Rio Seco",
