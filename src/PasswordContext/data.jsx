@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5344,
+  "count": 5345,
   "results": [
     {
       "id": 3063,
@@ -118287,8 +118287,8 @@ const largeArraydata =
       "id": 7368,
       "client_name": "EGILDA RAMONA CERMENO DE VEGAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -146823,8 +146823,8 @@ const largeArraydata =
       "id": 8580,
       "client_name": "ENEIDA MARITZA BLANCO ESCORCHA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -160196,6 +160196,30 @@ const largeArraydata =
       "client_identification": "V29808275",
       "nap_box_name": "CTO-00037",
       "created_at": "2026-05-19T11:36:43.499351",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9089,
+      "client_name": "RUGLIS MAGLIS MUDARRA FRAGOZA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Prados de Cafetal",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124615815",
+      "address": "PRADOS DE CAFETAL CALLE 1 CASA 7 VIA PAYA",
+      "client_identification": "V20266129",
+      "nap_box_name": "CTO-00250",
+      "created_at": "2026-05-26T14:13:08.551625",
       "service_detail": null,
       "installation_invoice_cost": null
     }
