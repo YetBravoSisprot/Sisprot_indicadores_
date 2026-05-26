@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5345,
+  "count": 5347,
   "results": [
     {
       "id": 3063,
@@ -96582,13 +96582,13 @@ const largeArraydata =
       "nap_box_name": "596",
       "created_at": "2024-08-26T17:04:51.930573",
       "service_detail": {
-        "id": 9248,
+        "id": 12546,
         "ip": "172.23.49.2",
-        "mac": "OEMT3C625DFE",
+        "mac": "a8:bf:3c:62:5d:ff",
         "serial": "OEMT3C625DFE",
-        "queue": "queue1",
-        "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-07-22T12:04:50.800733",
+        "queue": null,
+        "interface": "VLAN246_NARANJAL",
+        "created_at": "2026-05-26T16:05:21.270116",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -135270,13 +135270,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00290",
       "created_at": "2025-05-01T18:14:12.672557",
       "service_detail": {
-        "id": 8530,
+        "id": 12543,
         "ip": "10.13.229.2",
-        "mac": "OEMT3C620F52",
+        "mac": "a8:bf:3c:62:0f:52",
         "serial": "OEMT3C620F52",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN266_EL_BOSQUE_ZTE",
-        "created_at": "2025-05-10T10:22:22.414445",
+        "created_at": "2026-05-26T14:18:43.670756",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -160203,8 +160203,8 @@ const largeArraydata =
       "id": 9089,
       "client_name": "RUGLIS MAGLIS MUDARRA FRAGOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -160220,6 +160220,72 @@ const largeArraydata =
       "client_identification": "V20266129",
       "nap_box_name": "CTO-00250",
       "created_at": "2026-05-26T14:13:08.551625",
+      "service_detail": {
+        "id": 12544,
+        "ip": "10.16.248.2",
+        "mac": "4C:AB:FC:66:08:C3",
+        "serial": "JMKGCOA84A6D",
+        "queue": null,
+        "interface": "VLAN221_CAFETAL_OLT1",
+        "created_at": "2026-05-26T14:31:26.134816",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9090,
+      "client_name": "RAFAEL EFRAIN PINTO PANTOJA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04121796388",
+      "address": "CASCO DE TURMERO CALLE RIVAS CASA 39",
+      "client_identification": "V18084871",
+      "nap_box_name": "CTO-00066",
+      "created_at": "2026-05-26T14:42:02.534736",
+      "service_detail": {
+        "id": 12545,
+        "ip": "10.16.249.2",
+        "mac": "68:9F:FO:OA:F3:4F",
+        "serial": "ZXICCDDA2D19",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-05-26T14:57:43.009432",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9091,
+      "client_name": "DANY LUZ GONZALES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": true,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124362868",
+      "address": "SAMAN TARAZONERO 2 MANZANA E 10 CASA #8 SECTOR SAMAN DE GUERE ARAGUA ZPNA POSTAL 2115",
+      "client_identification": "V11686264",
+      "nap_box_name": "95",
+      "created_at": "2026-05-26T15:48:35.867707",
       "service_detail": null,
       "installation_invoice_cost": null
     }
