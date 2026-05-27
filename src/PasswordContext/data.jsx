@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5349,
+  "count": 5350,
   "results": [
     {
       "id": 3063,
@@ -41325,8 +41325,8 @@ const largeArraydata =
       "id": 4560,
       "client_name": "EVELIN YULIVET PADRON PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Prados II",
@@ -79969,7 +79969,7 @@ const largeArraydata =
     },
     {
       "id": 5964,
-      "client_name": "RAFAEL ANGEL ARDILA PEREZ",
+      "client_name": "RAFAEL ANGEL ARDILA PEREZ F.P",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -160221,8 +160221,8 @@ const largeArraydata =
       "id": 9089,
       "client_name": "RUGLIS MAGLIS MUDARRA FRAGOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -160289,7 +160289,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 10,
+      "cycle": 25,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
@@ -160371,6 +160371,30 @@ const largeArraydata =
         "created_at": "2026-05-27T12:08:53.401315",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9095,
+      "client_name": "RAFAEL ANGEL ARDILA PEREZ F.P",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04143455757",
+      "address": "CALLE HECILLE QTA CLARAMARAL NRO  24 URB SAN PABLO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V633472",
+      "nap_box_name": "CTO-0642",
+      "created_at": "2026-05-27T15:30:51.442211",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
