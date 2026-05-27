@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5348,
+  "count": 5349,
   "results": [
     {
       "id": 3063,
@@ -160338,6 +160338,39 @@ const largeArraydata =
       "nap_box_name": "CTO - 97",
       "created_at": "2026-05-27T08:43:19.651158",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9094,
+      "client_name": "JENNYMAR TIBISAY HERNANDEZ QUEVEDO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04221788920",
+      "address": "CALLE 4 CASA NÚMERO 53 SAMAN TARAZONERO 1 TURMERO",
+      "client_identification": "V20334734",
+      "nap_box_name": "262",
+      "created_at": "2026-05-27T11:50:17.451200",
+      "service_detail": {
+        "id": 12551,
+        "ip": "10.16.252.2",
+        "mac": "XP:ON:6B:53:A9:74",
+        "serial": "XPON6B53A974",
+        "queue": null,
+        "interface": "VLAN140_SMT1_ZTE",
+        "created_at": "2026-05-27T12:08:53.401315",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
