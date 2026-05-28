@@ -153132,13 +153132,13 @@ const largeArraydata =
       "nap_box_name": "CTO-9696",
       "created_at": "2025-09-23T16:40:07.472263",
       "service_detail": {
-        "id": 12329,
+        "id": 12554,
         "ip": "10.16.66.2",
-        "mac": "HWTCBD3352AC",
-        "serial": "HWTCBD3352AC",
+        "mac": "4C:AB:FC:8B:DE:26",
+        "serial": "JMKGCE742D0C",
         "queue": null,
         "interface": "VLAN253_VALLE_VERDE",
-        "created_at": "2026-04-16T14:44:06.162480",
+        "created_at": "2026-05-28T15:12:29.893254",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -154545,8 +154545,8 @@ const largeArraydata =
       "id": 8875,
       "client_name": "LORIANA NATALY ALVARADO MORA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": false,
       "sector_name": "1ro de Mayo Norte",
