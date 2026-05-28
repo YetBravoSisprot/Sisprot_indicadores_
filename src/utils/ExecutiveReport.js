@@ -126,6 +126,175 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
             dashSheet.getCell(`B${rowNum}`).alignment = { horizontal: 'left' };
         });
 
+        // --- 2. HOJA: ANÁLISIS POR URBANISMO ---
+        const urbSheet = workbook.addWorksheet("Análisis por Urbanismo");
+        
+        // Configuración de columnas
+        urbSheet.getColumn('A').width = 8;   // N°
+        urbSheet.getColumn('B').width = 35;  // Urbanismo / Sector
+        urbSheet.getColumn('C').width = 18;  // Clientes Activos
+        urbSheet.getColumn('D').width = 22;  // Ingreso Activo (USD)
+        urbSheet.getColumn('E').width = 18;  // Clientes Retirados
+        urbSheet.getColumn('F').width = 22;  // Dinero Retirado (Pérdida USD)
+        urbSheet.getColumn('G').width = 22;  // Pérdida Promedio (USD)
+
+        // TÍTULO PRINCIPAL DE LA HOJA
+        urbSheet.mergeCells('B2:G3');
+        const urbTitleCell = urbSheet.getCell('B2');
+        urbTitleCell.value = "ANÁLISIS DE INGRESOS Y RETIROS POR URBANIZACIÓN";
+        urbTitleCell.font = { name: 'Calibri', size: 16, bold: true, color: { argb: 'FFFFFFFF' } };
+        urbTitleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E78' } }; // Azul oscuro corporativo
+        urbTitleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+
+        // Subtítulo
+        urbSheet.mergeCells('B4:G4');
+        const urbSubTitleCell = urbSheet.getCell('B4');
+        urbSubTitleCell.value = `Detalle general e histórico de bajas por sector`;
+        urbSubTitleCell.font = { italic: true, size: 10, color: { argb: 'FF595959' } };
+        urbSubTitleCell.alignment = { horizontal: 'right' };
+
+        // Cabeceras de tabla
+        const urbHeaders = ["N°", "Urbanización / Sector", "Clientes Activos", "Ingreso Activo", "Clientes Retirados", "Dinero Retirado", "Pérdida Promedio"];
+        urbHeaders.forEach((h, i) => {
+            const cell = urbSheet.getCell(6, 1 + i);
+            cell.value = h;
+            cell.font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FFFFFFFF' } };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF333333' } }; // Gris oscuro
+            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        });
+
+        // Obtener data base (preferir base completa de hoy para ver todos los retirados reales)
+        const baseData = fullDatasetHoy || dataset;
+        
+        // Filtrar clientes comerciales (Residenciales o Pymes) únicamente
+        const clientesComerciales = baseData.filter(c => {
+            const type = (c.client_subdivision || c.client_type_name || '').toUpperCase();
+            return type.includes("PYME") || type.includes("RESIDENCIAL");
+        });
+
+        // Agrupar por sector
+        const sectorGroup = {};
+        clientesComerciales.forEach(c => {
+            const sector = norm(c.sector_name) || "Sin Sector";
+            const status = norm(c.status_name).toUpperCase();
+            const cost = parseFloat(c.plan?.cost) || 0;
+
+            if (!sectorGroup[sector]) {
+                sectorGroup[sector] = {
+                    sectorName: sector,
+                    activeCount: 0,
+                    activeRevenue: 0,
+                    retiredCount: 0,
+                    retiredRevenue: 0
+                };
+            }
+
+            if (status === "ACTIVO" || status === "ACTIVOS") {
+                sectorGroup[sector].activeCount += 1;
+                sectorGroup[sector].activeRevenue += cost;
+            } else if (status === "CANCELADO" || status === "CANCELADOS" || status === "SUSPENDIDO" || status === "SUSPENDIDOS") {
+                sectorGroup[sector].retiredCount += 1;
+                sectorGroup[sector].retiredRevenue += cost;
+            }
+        });
+
+        // Convertir a array y calcular promedios
+        const urbRows = Object.values(sectorGroup).map(u => {
+            const avgLost = u.retiredCount > 0 ? (u.retiredRevenue / u.retiredCount) : 0;
+            return {
+                sectorName: u.sectorName,
+                activeCount: u.activeCount,
+                activeRevenue: u.activeRevenue,
+                retiredCount: u.retiredCount,
+                retiredRevenue: u.retiredRevenue,
+                avgLost: avgLost
+            };
+        });
+
+        // Ordenar por Ingreso Activo de mayor a menor
+        urbRows.sort((a, b) => b.activeRevenue - a.activeRevenue);
+
+        // Rellenar filas
+        let currentUrbRow = 7;
+        urbRows.forEach((row, idx) => {
+            urbSheet.getCell(`A${currentUrbRow}`).value = idx + 1;
+            urbSheet.getCell(`B${currentUrbRow}`).value = row.sectorName;
+            urbSheet.getCell(`C${currentUrbRow}`).value = row.activeCount;
+            urbSheet.getCell(`D${currentUrbRow}`).value = row.activeRevenue;
+            urbSheet.getCell(`E${currentUrbRow}`).value = row.retiredCount;
+            urbSheet.getCell(`F${currentUrbRow}`).value = row.retiredRevenue;
+            urbSheet.getCell(`G${currentUrbRow}`).value = row.avgLost;
+
+            // Formatos
+            urbSheet.getCell(`A${currentUrbRow}`).alignment = { horizontal: 'center' };
+            urbSheet.getCell(`B${currentUrbRow}`).alignment = { horizontal: 'left' };
+            urbSheet.getCell(`C${currentUrbRow}`).alignment = { horizontal: 'center' };
+            urbSheet.getCell(`D${currentUrbRow}`).alignment = { horizontal: 'right' };
+            urbSheet.getCell(`E${currentUrbRow}`).alignment = { horizontal: 'center' };
+            urbSheet.getCell(`F${currentUrbRow}`).alignment = { horizontal: 'right' };
+            urbSheet.getCell(`G${currentUrbRow}`).alignment = { horizontal: 'right' };
+
+            // Formato de moneda
+            urbSheet.getCell(`D${currentUrbRow}`).numFmt = '"$ "#,##0.00';
+            urbSheet.getCell(`F${currentUrbRow}`).numFmt = '"$ "#,##0.00';
+            urbSheet.getCell(`G${currentUrbRow}`).numFmt = '"$ "#,##0.00';
+
+            // Estilo de línea (bordes delgados)
+            const borderStyle = {
+                top: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                bottom: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                left: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                right: { style: 'thin', color: { argb: 'FFE0E0E0' } }
+            };
+            for (let col = 1; col <= 7; col++) {
+                urbSheet.getCell(currentUrbRow, col).border = borderStyle;
+            }
+
+            // Fila de cebra (sutil gris)
+            if (idx % 2 === 1) {
+                for (let col = 1; col <= 7; col++) {
+                    urbSheet.getCell(currentUrbRow, col).fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFF9F9F9' }
+                    };
+                }
+            }
+
+            currentUrbRow++;
+        });
+
+        // FILA DE TOTALES
+        const totalRowIndex = currentUrbRow;
+        urbSheet.getCell(`A${totalRowIndex}`).value = "";
+        urbSheet.getCell(`B${totalRowIndex}`).value = "TOTAL COMERCIAL Taurus";
+        urbSheet.getCell(`B${totalRowIndex}`).font = { bold: true };
+        
+        // Sumas por fórmulas de Excel
+        urbSheet.getCell(`C${totalRowIndex}`).value = { formula: `SUM(C7:C${totalRowIndex - 1})` };
+        urbSheet.getCell(`D${totalRowIndex}`).value = { formula: `SUM(D7:D${totalRowIndex - 1})` };
+        urbSheet.getCell(`E${totalRowIndex}`).value = { formula: `SUM(E7:E${totalRowIndex - 1})` };
+        urbSheet.getCell(`F${totalRowIndex}`).value = { formula: `SUM(F7:F${totalRowIndex - 1})` };
+        
+        // Pérdida Promedio General (Fórmula)
+        urbSheet.getCell(`G${totalRowIndex}`).value = { formula: `IF(E${totalRowIndex}>0, F${totalRowIndex}/E${totalRowIndex}, 0)` };
+
+        // Formatos de fila de total
+        for (let col = 1; col <= 7; col++) {
+            const cell = urbSheet.getCell(totalRowIndex, col);
+            cell.font = { bold: true };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFEAEAEA' } };
+            cell.border = {
+                top: { style: 'thin', color: { argb: 'FF000000' } },
+                bottom: { style: 'double', color: { argb: 'FF000000' } }
+            };
+            if (col === 3 || col === 5) cell.alignment = { horizontal: 'center' };
+            if (col === 4 || col === 6 || col === 7) cell.alignment = { horizontal: 'right' };
+        }
+        urbSheet.getCell(`D${totalRowIndex}`).numFmt = '"$ "#,##0.00';
+        urbSheet.getCell(`F${totalRowIndex}`).numFmt = '"$ "#,##0.00';
+        urbSheet.getCell(`G${totalRowIndex}`).numFmt = '"$ "#,##0.00';
+
         // --- DETALLE SHEET ---
         const detailSheet = workbook.addWorksheet("Detalle de Clientes (Filtrado)");
         const allDetailColumns = [
