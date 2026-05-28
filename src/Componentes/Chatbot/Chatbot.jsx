@@ -178,7 +178,8 @@ const Chatbot = () => {
                         aiResponse.cardData.dataset || aiResponse.cardData.savedDataset, 
                         aiResponse.cardData.filtersText, 
                         formattedName,
-                        aiResponse.cardData.selectedColumns || ["Todas"]
+                        aiResponse.cardData.selectedColumns || ["Todas"],
+                        data?.results
                     );
                 }, 1000);
             } else if ((aiResponse.isDownload || aiResponse.action === 'download_excel') && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
@@ -192,7 +193,8 @@ const Chatbot = () => {
                             dataset, 
                             aiResponse.cardData.filtersText, 
                             formattedName,
-                            aiResponse.cardData.selectedColumns || ["Todas"]
+                            aiResponse.cardData.selectedColumns || ["Todas"],
+                            data?.results
                         );
                     } else {
                         // Solo usamos el export técnico para operaciones específicas
@@ -381,7 +383,8 @@ const Chatbot = () => {
                                                         msg.cardData.dataset || msg.cardData.savedDataset, 
                                                         msg.cardData.filtersText, 
                                                         formattedName,
-                                                        msg.cardData.selectedColumns || ["Todas"]
+                                                        msg.cardData.selectedColumns || ["Todas"],
+                                                        data?.results
                                                     );
                                                 }}
                                             >
