@@ -242,7 +242,7 @@ function TopUrbanismo() {
       const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
       const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
 
-      await exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas);
+      await exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas, data?.results);
     } catch (err) {
       console.error("Error al generar Reporte Ejecutivo:", err);
       alert("No se pudo generar el Reporte Ejecutivo por un error. Por favor intenta de nuevo.");
