@@ -88431,7 +88431,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04124372266",
-      "client_email": "BIANETT52@GMAIL.COM",
+      "client_email": "BIANETTDEGONZALEZ@GMAIL.COM",
       "address": "CALLE 1 CASA NRO 14 BARRIO PRADOS DE PAYA I",
       "client_identification": "V9438598",
       "nap_box_name": "CTO-00193",
@@ -115194,7 +115194,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04124372266",
-      "client_email": "BIANETT52@GMAIL.COM",
+      "client_email": "BIANETTDEGONZALEZ@GMAIL.COM",
       "address": "PRADOS DE PAYA I CALLE I CASA NRO 05",
       "client_identification": "V9438598",
       "nap_box_name": "585 DOS",
@@ -165565,8 +165565,8 @@ const largeArraydata =
       "id": 9089,
       "client_name": "RUGLIS MAGLIS MUDARRA FRAGOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
