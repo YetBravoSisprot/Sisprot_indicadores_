@@ -84,6 +84,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "CLIENTE", key: "cliente", width: 35, ui: "Cliente" },
         { header: "CIVIL", key: "ci_rif", width: 15, ui: "Cedula" },
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
+        { header: "CORREO", key: "email", width: 25, ui: "Correo" },
         { header: "DIRECCIÓN", key: "direccion", width: 35, ui: "Dirección" },
         { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
         { header: "SECTOR", key: "sector", width: 20, ui: "Sector" },
@@ -112,7 +113,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
+        "email", "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
     ];
 
     const isAll = selectedColumns.includes("Todas");
@@ -163,6 +164,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 cliente: cliente.client_name,
                 ci_rif: cliente.client_identification,
                 telefono: cliente.client_mobile,
+                email: cliente.email || cliente.client_email || "N/A",
                 direccion: norm(cliente.address_tax || cliente.address),
                 interface: cliente.service_detail?.interface || "N/A",
                 sector: norm(cliente._displaySector || cliente.sector_name),
