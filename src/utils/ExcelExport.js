@@ -164,7 +164,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 cliente: cliente.client_name,
                 ci_rif: cliente.client_identification,
                 telefono: cliente.client_mobile,
-                email: cliente.email || cliente.client_email || "N/A",
+                email: (cliente.client_email && String(cliente.client_email).toUpperCase() !== "N/A") ? cliente.client_email : (cliente.email || "N/A"),
                 direccion: norm(cliente.address_tax || cliente.address),
                 interface: cliente.service_detail?.interface || "N/A",
                 sector: norm(cliente._displaySector || cliente.sector_name),
