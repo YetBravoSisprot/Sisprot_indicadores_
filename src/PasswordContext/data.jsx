@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5350,
+  "count": 5351,
   "results": [
     {
       "id": 3063,
@@ -21611,7 +21611,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 25,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Villas El Carmen",
       "plan": {
@@ -37866,8 +37866,8 @@ const largeArraydata =
       "id": 4433,
       "client_name": "DAYANA CAROLINA MEJIA PADILLA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "La Macarena",
@@ -59823,8 +59823,8 @@ const largeArraydata =
       "id": 5254,
       "client_name": "LISBETH JOSEFINA ROJAS PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -94131,8 +94131,8 @@ const largeArraydata =
       "id": 6451,
       "client_name": "LLINES MARGARITA RAMIREZ ULLOA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Canaima",
@@ -160221,8 +160221,8 @@ const largeArraydata =
       "id": 9089,
       "client_name": "RUGLIS MAGLIS MUDARRA FRAGOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -160395,6 +160395,39 @@ const largeArraydata =
       "nap_box_name": "CTO-0642",
       "created_at": "2026-05-27T15:30:51.442211",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9096,
+      "client_name": "ROSBELY NOHEMY HERNÁNDEZ CHANG",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "El Cambur",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04262433077",
+      "address": "EL CAMBUR CORAZON DE JESÚS CALLE JESÚS REQUE #05 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V27646720",
+      "nap_box_name": "CTO-004444",
+      "created_at": "2026-05-28T17:05:11.642168",
+      "service_detail": {
+        "id": 12555,
+        "ip": "10.16.253.2",
+        "mac": "4c:ab:fc:f3:3b:e8",
+        "serial": "JMKGC127F06C",
+        "queue": null,
+        "interface": "VLAN253_VALLE_VERDE",
+        "created_at": "2026-05-28T17:07:18.009862",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
