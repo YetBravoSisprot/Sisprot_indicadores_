@@ -114632,7 +114632,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 25,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
@@ -165749,10 +165749,10 @@ const largeArraydata =
     },
     {
       "id": 9096,
-      "client_name": "ROSBELY NOHEMY HERNÁNDEZ CHANG",
+      "client_name": "ROSBELY NOHEMY HERNANDEZ CHANG",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "El Cambur",
@@ -165770,13 +165770,13 @@ const largeArraydata =
       "nap_box_name": "CTO-004444",
       "created_at": "2026-05-28T17:05:11.642168",
       "service_detail": {
-        "id": 12555,
+        "id": 12556,
         "ip": "10.16.253.2",
         "mac": "4c:ab:fc:f3:3b:e8",
         "serial": "JMKGC127F06C",
         "queue": null,
-        "interface": "VLAN253_VALLE_VERDE",
-        "created_at": "2026-05-28T17:07:18.009862",
+        "interface": "VLAN263_EL_CAMBUR",
+        "created_at": "2026-05-29T11:37:14.496449",
         "created_by_name": null
       },
       "installation_invoice_cost": null
