@@ -561,7 +561,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
                 client_name: cliente.client_name,
                 client_identification: cliente.client_identification,
                 client_mobile: cliente.client_mobile,
-                email: cliente.email || cliente.client_email || "N/A",
+                email: (cliente.client_email && String(cliente.client_email).toUpperCase() !== "N/A") ? cliente.client_email : (cliente.email || "N/A"),
                 address: norm(cliente.address_tax || cliente.address),
                 interface: cliente.service_detail?.interface || "N/A",
                 sector_name: norm(cliente.sector_name || cliente._displaySector),
