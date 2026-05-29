@@ -66821,7 +66821,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04128996473",
-      "client_email": "KEYLOV@HOTMAIL.COM",
+      "client_email": "FERNANDOSEP10@GMAIL.COM",
       "address": "MANZANA B-8 CASA 4 SECTOR SAMAN  TARAZONERO II EL MACARO TURMERO",
       "client_identification": "V16132300",
       "nap_box_name": "186",
@@ -87634,7 +87634,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 25,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
         "id": 21,
@@ -113220,8 +113220,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04121483012",
-      "client_email": "MUJICAH911@GMAIL.COM",
+      "client_mobile": "04127762629",
+      "client_email": "Michelmelende@GMAIL.COM",
       "address": "AV SEGUNDA QTA LA YAGUARA NRO 5 URB BERMUDEZ MARACAY ARAGUA ZONA POSTAL 2102",
       "client_identification": "V5459700",
       "nap_box_name": "TORRE B EDIF LOS NISPEROS",
@@ -123870,8 +123870,8 @@ const largeArraydata =
         "code": "FOR600M",
         "profile": "600M/600M"
       },
-      "client_mobile": "04121483012",
-      "client_email": "MUJICAH911@GMAIL.COM",
+      "client_mobile": "04127762629",
+      "client_email": "Michelmelende@GMAIL.COM",
       "address": "CALLE RIVAS PASILLO B LOCAL N# 67,68 CENTRO COMERCIAL CANDYS",
       "client_identification": "V5459700",
       "nap_box_name": "CTO-00129",
