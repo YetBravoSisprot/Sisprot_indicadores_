@@ -631,6 +631,7 @@ function TopUrbanismo() {
               </div>
 
               <div className="columnas-checkbox-container" id="columnasSelect">
+                <label className="filter-header">Columnas</label>
                 <label className="columna-item-check">
                   <input
                     type="checkbox"
@@ -641,7 +642,7 @@ function TopUrbanismo() {
                 </label>
                 {[
                   "Contrato", "Cedula", "IP", "MAC", "Estatus", "Estado Final", "Cliente",
-                  "Teléfono", "Sector", "Plan", "Costo", "Migrado", "Ciclo",
+                  "Teléfono", "Correo", "Sector", "Plan", "Costo", "Migrado", "Ciclo",
                   "Tipo_Cliente", "Dirección", "Interface", "Fecha_Creación", "Días Hábiles"
                 ].map((col) => (
                   <label key={col} className="columna-item-check">
