@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5352,
+  "count": 5353,
   "results": [
     {
       "id": 3063,
@@ -165811,6 +165811,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN218_NISPEROS_OLT1",
         "created_at": "2026-05-30T11:35:20.228296",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9098,
+      "client_name": "ALEJANDRO GABRIEL VELASCO TORO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 10,
+      "migrate": true,
+      "sector_name": "Taguapire",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128859782",
+      "client_email": "ALEVELASCOT@GMAIL.COM",
+      "address": "CONJUNTO MULTIFAMILIAR URBANIZACION TAGUAPIRE PRIMERA ETAPA APARTAMENTO NÚMERO 51 PLANTA BAJA SEGUNDA CALLE EL MACARO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V27535771",
+      "nap_box_name": "549 DOS",
+      "created_at": "2026-05-30T13:32:15.577908",
+      "service_detail": {
+        "id": 12558,
+        "ip": "10.16.255.2",
+        "mac": "a8:bf:3c:62:47:ee",
+        "serial": "OEMT3C6247EE",
+        "queue": null,
+        "interface": "VLAN129_TAGUAPIRE_ZTE",
+        "created_at": "2026-05-30T13:34:31.307856",
         "created_by_name": null
       },
       "installation_invoice_cost": null
