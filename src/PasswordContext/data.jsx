@@ -114404,8 +114404,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243574273",
-      "client_email": "LPZLUISA301@GMAIL.COM",
+      "client_mobile": "04228157853",
+      "client_email": "NELSONGCARRILLOL@GMAIL.COM",
       "address": "CALLE CALLEJON LOS MANGOS CASA NRO 3 SECTOR GUAYABITA POLVORIN TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V29837346",
       "nap_box_name": "CTO-00353",
@@ -114540,8 +114540,8 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04125829265",
-      "client_email": "CEBALLOSLUCRECIA892@GMAIL.COM",
+      "client_mobile": "04141448112",
+      "client_email": "DEISYCEBALLOS751@GMAIL.COM",
       "address": "CALLE PRINCIPAL CASA NRO 41 SECTOR POLVORIN TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V21464046",
       "nap_box_name": "CTO - 1004",
@@ -165785,8 +165785,8 @@ const largeArraydata =
       "id": 9097,
       "client_name": "GABRIELA COROMOTO HERNANDEZ PICHARDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -165803,7 +165803,16 @@ const largeArraydata =
       "client_identification": "V26316794",
       "nap_box_name": "TORRE A EDIF LOS NISPEROS",
       "created_at": "2026-05-30T09:51:24.809443",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12557,
+        "ip": "10.16.254.2",
+        "mac": "4C:AB:FC:7O:EF:22",
+        "serial": "JMKGC8964C42",
+        "queue": null,
+        "interface": "VLAN218_NISPEROS_OLT1",
+        "created_at": "2026-05-30T11:35:20.228296",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
