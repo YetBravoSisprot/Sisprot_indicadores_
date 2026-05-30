@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5351,
+  "count": 5352,
   "results": [
     {
       "id": 3063,
@@ -165779,6 +165779,31 @@ const largeArraydata =
         "created_at": "2026-05-29T11:37:14.496449",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9097,
+      "client_name": "GABRIELA COROMOTO HERNANDEZ PICHARDO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 10,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243272248",
+      "client_email": "GABRIELAHERNANDEZ830@GMAIL.COM",
+      "address": "CALLE BOLIVAR RESIDENCIAS LOS NISPEROS TORRE C TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V26316794",
+      "nap_box_name": "TORRE A EDIF LOS NISPEROS",
+      "created_at": "2026-05-30T09:51:24.809443",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
