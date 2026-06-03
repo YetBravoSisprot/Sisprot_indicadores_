@@ -65152,8 +65152,8 @@ const largeArraydata =
       "id": 5370,
       "client_name": "ADRIANA YOLIMAR BARCENAS RONDON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -108324,7 +108324,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04128151275",
-      "client_email": "ALEXGRODRIGUEZP@GMAIL.COM",
+      "client_email": "alexgrodriguezp@gmail.com",
       "address": "SAMAN TARAZONERO 1 CALLE 3 CASA 50",
       "client_identification": "V26095105",
       "nap_box_name": "32",
@@ -132313,11 +132313,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Vallecito",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
       },
       "client_mobile": "04243391128",
       "client_email": "NIEVESYAJAIRA450@GMAIL.COM",
@@ -133998,7 +133998,7 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128151275",
-      "client_email": "ALEXGRODRIGUEZP@GMAIL.COM",
+      "client_email": "alexgrodriguezp@gmail.com",
       "address": "SAMAN TARAZONERO 1 CALLE 3 CASA 50",
       "client_identification": "V26095105",
       "nap_box_name": "32",
@@ -142019,8 +142019,8 @@ const largeArraydata =
       "id": 8141,
       "client_name": "WILMER JOSUE CARRILLO LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Sur",
@@ -142037,16 +142037,7 @@ const largeArraydata =
       "client_identification": "V24445118",
       "nap_box_name": "CTO-00149",
       "created_at": "2025-05-12T18:16:40.860737",
-      "service_detail": {
-        "id": 8609,
-        "ip": "10.14.67.2",
-        "mac": "QXTLCBAB2EEA",
-        "serial": "QXTLCBAB2EEA",
-        "queue": "queue1",
-        "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2025-05-14T08:52:32.927706",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -157357,8 +157348,8 @@ const largeArraydata =
       "id": 8777,
       "client_name": "YANLIS YUDERQUIS BARRIOS GOMEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "El Macaro",
@@ -165730,8 +165721,8 @@ const largeArraydata =
       "id": 9092,
       "client_name": "WILMER JOSUE CARRILLO LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -165748,7 +165739,16 @@ const largeArraydata =
       "client_identification": "V24445118",
       "nap_box_name": "CTO - 97",
       "created_at": "2026-05-27T08:43:19.651158",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12575,
+        "ip": "10.14.67.2",
+        "mac": "68:9f:f0:cc:7e:6f",
+        "serial": "QXTLCBAB2EEA",
+        "queue": null,
+        "interface": "VLAN258_VALLECITO",
+        "created_at": "2026-06-03T10:07:27.568000",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -165959,8 +165959,8 @@ const largeArraydata =
       "id": 9100,
       "client_name": "GESTRUDIS BELEN ALVES FAJARDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -166011,7 +166011,16 @@ const largeArraydata =
       "client_identification": "V13502308",
       "nap_box_name": "CTO-00744",
       "created_at": "2026-06-03T06:56:51.840094",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12573,
+        "ip": "10.17.23.2",
+        "mac": "68:9F:FO:OA:D3:FF",
+        "serial": "ZXICCD8C9F38",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-06-03T08:35:29.997613",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
