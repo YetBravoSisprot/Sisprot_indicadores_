@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5356,
+  "count": 5357,
   "results": [
     {
       "id": 3063,
@@ -69561,8 +69561,8 @@ const largeArraydata =
       "id": 5521,
       "client_name": "JULIA MENDOZA DE CARRERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -70886,8 +70886,8 @@ const largeArraydata =
       "id": 5567,
       "client_name": "CARMEN EDILIA CALDEVILA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Durpa",
@@ -83674,8 +83674,8 @@ const largeArraydata =
       "id": 5998,
       "client_name": "HEINYLUZ DAMARIS PABON CRESPO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Floresta",
@@ -85209,8 +85209,8 @@ const largeArraydata =
       "id": 6049,
       "client_name": "GABRIEL SHARIFF RODRIGUEZ ALI",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II Edificios",
@@ -166021,6 +166021,31 @@ const largeArraydata =
         "created_at": "2026-06-03T08:35:29.997613",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9102,
+      "client_name": "AZALIA YANILETH QUEVEDO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Guerito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128998229",
+      "client_email": "AZAQUEVEDO72@GMAIL.COM",
+      "address": "CALLE MARIÑO CASA NUMERO 143 SECTOR GUERITO URBANIZACIÓN SAN MIGUEL TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V11749583",
+      "nap_box_name": "CTO-000735",
+      "created_at": "2026-06-03T16:21:42.035532",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
