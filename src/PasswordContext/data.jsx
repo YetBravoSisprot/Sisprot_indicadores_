@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5358,
+  "count": 5359,
   "results": [
     {
       "id": 3063,
@@ -71571,8 +71571,8 @@ const largeArraydata =
       "id": 5589,
       "client_name": "JANETT ALICIA GONCALVES RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -81717,8 +81717,8 @@ const largeArraydata =
       "id": 5931,
       "client_name": "JOSE GABRIEL MEDINA RIVERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -84247,7 +84247,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04123987619",
-      "client_email": "KATIUSKATORO2010@GMAIL.COM",
+      "client_email": "EMPKATIUSKATORO2010@GMAIL.COM",
       "address": "CALLE LIBERTAD QTA MANZAZNA 16 NRO 10 SECTOR DESARROLLO URBANISTICO DURPA",
       "client_identification": "V16435132",
       "nap_box_name": "377",
@@ -87513,8 +87513,8 @@ const largeArraydata =
       "id": 6123,
       "client_name": "ADLIH NOHELY CHACON CASTELLANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -90713,8 +90713,8 @@ const largeArraydata =
       "id": 6226,
       "client_name": "VIVIANA HADDAD FAKS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -106010,7 +106010,7 @@ const largeArraydata =
         "profile": "600M/600M"
       },
       "client_mobile": "04126822112",
-      "client_email": "CAROLINADILAURO0@GMAIL.COM",
+      "client_email": "KATIUSKATORO@GMAIL.COM",
       "address": "CALLE PRINCIPAL MANZANA 08 CASA NRO 14-URB TERRAZA DE PAYA ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
       "client_identification": "V14155208",
       "nap_box_name": "CTO-00163",
@@ -116313,8 +116313,8 @@ const largeArraydata =
       "id": 7159,
       "client_name": "RICARDO JOSE OZAL ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -166098,6 +166098,31 @@ const largeArraydata =
         "created_at": "2026-06-04T16:46:43.255435",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9104,
+      "client_name": "DARWING EDUARDO GALINDEZ CONTRERAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Jabillar",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243395135",
+      "client_email": "DARWINEDUARDO_21@HOTMAIL.COM",
+      "address": "URBANIZACION JABILLAR CALLE LOS SAUCES CASA 10/13 EL MACARO SAMAN DE GUERE TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V17273314",
+      "nap_box_name": "CTO-00007",
+      "created_at": "2026-06-05T14:15:20.474945",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
