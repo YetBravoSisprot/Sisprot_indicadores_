@@ -14398,11 +14398,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados de Cafetal",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 19,
+        "name": "RECURRENTE RESIDENCIAL PLAN 1GB",
+        "cost": "74.70",
+        "code": "FOR1GB",
+        "profile": "1000M/1000M"
       },
       "client_mobile": "04149474118",
       "client_email": "RAHUNYM@GMAIL.COM",
@@ -113895,8 +113895,8 @@ const largeArraydata =
       "id": 7067,
       "client_name": "WILSON JOSE SALAZAR MENDOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vallecito",
