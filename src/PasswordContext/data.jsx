@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5362,
+  "count": 5363,
   "results": [
     {
       "id": 3063,
@@ -121985,8 +121985,8 @@ const largeArraydata =
       "id": 7355,
       "client_name": "OMAR ALEXANDER REQUENA OLMOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -166252,6 +166252,40 @@ const largeArraydata =
       "nap_box_name": "CTO-0303",
       "created_at": "2026-06-07T08:35:22.538369",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9108,
+      "client_name": "ELVA GREGORIO SEIJAS NIEVES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Guerito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128907350",
+      "client_email": "SEIJASELVA5@GMAIL.COM",
+      "address": "URBANIZACION SAN MIGUEL CASA NUMERO 88 CALLE RICAURTE CON MARIÑO SECTOR GUERITO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V10278901",
+      "nap_box_name": "CTO-00524",
+      "created_at": "2026-06-07T13:36:02.895717",
+      "service_detail": {
+        "id": 12595,
+        "ip": "10.16.217.2",
+        "mac": "10:16:21:72",
+        "serial": "10.16.217.2",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-06-07T14:10:18.669844",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
