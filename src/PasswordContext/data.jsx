@@ -166258,8 +166258,8 @@ const largeArraydata =
       "id": 9108,
       "client_name": "ELVA GREGORIO SEIJAS NIEVES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Guerito",
@@ -166277,13 +166277,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00524",
       "created_at": "2026-06-07T13:36:02.895717",
       "service_detail": {
-        "id": 12595,
+        "id": 12597,
         "ip": "10.16.217.2",
-        "mac": "10:16:21:72",
-        "serial": "10.16.217.2",
+        "mac": "48:35:2E:37:5F:00",
+        "serial": "MONU00375F01",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-06-07T14:10:18.669844",
+        "created_at": "2026-06-07T14:49:22.452851",
         "created_by_name": null
       },
       "installation_invoice_cost": null
