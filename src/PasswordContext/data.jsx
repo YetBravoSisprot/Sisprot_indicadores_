@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5361,
+  "count": 5362,
   "results": [
     {
       "id": 3063,
@@ -100146,8 +100146,8 @@ const largeArraydata =
       "id": 6553,
       "client_name": "MARIANYELI ANAIS SANCHEZ ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados III",
@@ -115666,8 +115666,8 @@ const largeArraydata =
       "id": 7132,
       "client_name": "DORELYS DEL VALLE FRIAS PERALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Sector los Mangos",
@@ -166226,6 +166226,31 @@ const largeArraydata =
       "client_identification": "V26140813",
       "nap_box_name": "CTO-00098",
       "created_at": "2026-06-06T17:53:41.441987",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9107,
+      "client_name": "MARIA FERNANDA PEREZ JUAREZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "La Casona II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243745857",
+      "client_email": "PMAFER659@GMAIL.COM",
+      "address": "URBANIZACION LA CASONA II CALLE 15 CASA NUMERO 72 TURMERO LA JULIA ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V24172190",
+      "nap_box_name": "CTO-0303",
+      "created_at": "2026-06-07T08:35:22.538369",
       "service_detail": null,
       "installation_invoice_cost": null
     }
