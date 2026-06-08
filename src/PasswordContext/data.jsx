@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5363,
+  "count": 5364,
   "results": [
     {
       "id": 3063,
@@ -52953,13 +52953,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00361",
       "created_at": "2024-06-13T15:27:34.023084",
       "service_detail": {
-        "id": 2939,
+        "id": 12600,
         "ip": "172.26.51.2",
-        "mac": "HWTCC1ACF59C",
-        "serial": "HWTCC1ACF59C",
-        "queue": "Plan_161895_30183_WispHub",
+        "mac": "68:9F:FO:OA:9F:2F",
+        "serial": "ZXICCDBE6756",
+        "queue": null,
         "interface": "VLAN252_RURALES_PAYA",
-        "created_at": "2024-06-20T08:11:25.595083",
+        "created_at": "2026-06-08T13:41:56.138604",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166304,6 +166304,31 @@ const largeArraydata =
         "created_at": "2026-06-07T14:49:22.452851",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9109,
+      "client_name": "ALBERTO JOSE JIMENEZ HERRERA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243529871",
+      "client_email": "UNEFAALBERT91@GMAIL.COM",
+      "address": "CALLE EL CENTRO CASA NRO 15 SECTOR PUEBLO NUEVO TURMERO ESTADO ARAGUA",
+      "client_identification": "V18778847",
+      "nap_box_name": "211",
+      "created_at": "2026-06-08T13:44:59.234355",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
