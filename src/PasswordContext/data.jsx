@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5365,
+  "count": 5366,
   "results": [
     {
       "id": 3063,
@@ -23053,7 +23053,7 @@ const largeArraydata =
     },
     {
       "id": 3868,
-      "client_name": "ANA JOSEFINA HERNANDEZ",
+      "client_name": "JUANA JOSEFINA HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -23068,7 +23068,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04124520536",
-      "client_email": "josefinahernandez245558@GMAIL.COM",
+      "client_email": "GOCHOSANCHEZ2011@GMAIL.COM",
       "address": "CALLE CARREÑO EDIF CAYCAPE PISO 01 APTO 01 EZEQUIEL ZAMORA TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V7183616",
       "nap_box_name": "130",
@@ -166353,6 +166353,40 @@ const largeArraydata =
       "client_identification": "V4085485",
       "nap_box_name": "223",
       "created_at": "2026-06-09T18:23:12.929696",
+      "service_detail": {
+        "id": 12603,
+        "ip": "10.17.29.2",
+        "mac": "4C:AB:FC:7B:71:4",
+        "serial": "JMKGCE3EOF73",
+        "queue": null,
+        "interface": "VLAN202_AHP_OLT1",
+        "created_at": "2026-06-10T15:45:10.729475",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9111,
+      "client_name": "LUIS FELIPE DE TOVAR PANTIN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Antigua Hacienda De Paya",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04145888150",
+      "client_email": "DETOVAR@HOTMAIL.COM",
+      "address": "ANTIGUA HACIENDA PAYA, CALLE 17 DOMINGO DE TOVAR. CASA NUMERO 1 LA TOVAREÑA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V4085485",
+      "nap_box_name": "247",
+      "created_at": "2026-06-10T15:29:09.834376",
       "service_detail": null,
       "installation_invoice_cost": null
     }
