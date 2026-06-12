@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5369,
+  "count": 5370,
   "results": [
     {
       "id": 3063,
@@ -166428,8 +166428,8 @@ const largeArraydata =
       "id": 9113,
       "client_name": "MARCOS ALEXANDER GOYO SERENO",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "ACTIVO_EMPLEADO",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_EMPLEADO",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Saman Tarazonero I",
@@ -166479,6 +166479,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN140_SMT1_ZTE",
         "created_at": "2026-06-11T08:20:25.566173",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9115,
+      "client_name": "MILTHA ALEJANDRA GIL ARANGUREN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Casona I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124826209",
+      "client_email": "MGILARANGUREN@GMAIL.COM",
+      "address": "LA CASONA 1 INTERCOMUNAL LA CASONA L CALLE 2 CASA#10 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V27894471",
+      "nap_box_name": "451",
+      "created_at": "2026-06-11T17:32:31.457859",
+      "service_detail": {
+        "id": 12611,
+        "ip": "10.17.30.2",
+        "mac": "A8:BF:3C:62:05:9D",
+        "serial": "OEMT3C62059E",
+        "queue": null,
+        "interface": "VLAN109_CASONA_1",
+        "created_at": "2026-06-11T17:57:13.498334",
         "created_by_name": null
       },
       "installation_invoice_cost": null
