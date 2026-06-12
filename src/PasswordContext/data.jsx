@@ -53172,8 +53172,8 @@ const largeArraydata =
       "id": 4924,
       "client_name": "ALBERTO JOSE JIMENEZ HERRERA",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "ACTIVO_EMPLEADO",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_EMPLEADO",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -53190,16 +53190,7 @@ const largeArraydata =
       "client_identification": "V18778847",
       "nap_box_name": "211",
       "created_at": "2024-06-14T08:59:58.774937",
-      "service_detail": {
-        "id": 9783,
-        "ip": "172.20.7.2",
-        "mac": "TPLGB7656242",
-        "serial": "TPLGB7656242",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-11-10T13:04:14.969738",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166301,8 +166292,8 @@ const largeArraydata =
       "id": 9109,
       "client_name": "ALBERTO JOSE JIMENEZ HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -166319,7 +166310,16 @@ const largeArraydata =
       "client_identification": "V18778847",
       "nap_box_name": "211",
       "created_at": "2026-06-08T13:44:59.234355",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12613,
+        "ip": "172.20.7.2",
+        "mac": "3C:84:6A:FA:FF:0A",
+        "serial": "TPLGB7656242",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-06-12T15:30:18.495105",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166521,8 +166521,8 @@ const largeArraydata =
       "id": 9116,
       "client_name": "WILLIAM ALEJANDRO LEVITAN ABDELNOUR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Haras de San Pablo",
@@ -166539,7 +166539,16 @@ const largeArraydata =
       "client_identification": "V24930477",
       "nap_box_name": "247",
       "created_at": "2026-06-12T12:55:39.610821",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12612,
+        "ip": "10.17.31.2",
+        "mac": "68:9F:F0:0A:BB:9F",
+        "serial": "ZXICCDAB01B8",
+        "queue": null,
+        "interface": "VLAN210_HSP_OLT1",
+        "created_at": "2026-06-12T15:12:25.444651",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
