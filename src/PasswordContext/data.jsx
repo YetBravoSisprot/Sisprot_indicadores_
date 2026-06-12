@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5370,
+  "count": 5371,
   "results": [
     {
       "id": 3063,
@@ -144764,7 +144764,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Calle Peñalver",
       "plan": {
         "id": 100,
@@ -166515,6 +166515,31 @@ const largeArraydata =
         "created_at": "2026-06-11T17:57:13.498334",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9116,
+      "client_name": "WILLIAM ALEJANDRO LEVITAN ABDELNOUR",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Haras de San Pablo",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04243227916",
+      "client_email": "LEVITANW@GMAIL.COM",
+      "address": "CONJUNTO RESIDENCIAL EL HARAS SAN PABLO AV 2 CASA 53",
+      "client_identification": "V24930477",
+      "nap_box_name": "247",
+      "created_at": "2026-06-12T12:55:39.610821",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
