@@ -57579,7 +57579,7 @@ const largeArraydata =
         "profile": "600M/600M"
       },
       "client_mobile": "04243127842",
-      "client_email": "TOMASYDAY.22@GMAIL.COM",
+      "client_email": "tomasyday.22@gmail.com",
       "address": "CALLE EL ROBLE CASA NRO 09 SECTOR VALLECITO ROSARIO DE PAYA ARAGUA.",
       "client_identification": "V20056564",
       "nap_box_name": "CTO-00101",
