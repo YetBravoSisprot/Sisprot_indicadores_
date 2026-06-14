@@ -6663,8 +6663,8 @@ const largeArraydata =
       "id": 3287,
       "client_name": "KARELIS ELENA DIAZ PANTOJA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -6681,7 +6681,16 @@ const largeArraydata =
       "client_identification": "V12566795",
       "nap_box_name": "CTO-0167",
       "created_at": "2024-04-11T16:10:03.447653",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12614,
+        "ip": "172.25.213.2",
+        "mac": "TP:LG:F9:CD:3F:33",
+        "serial": "TPLGF9CD3F33",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-06-14T14:46:10.187666",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
