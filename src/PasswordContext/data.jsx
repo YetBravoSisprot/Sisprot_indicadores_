@@ -150775,7 +150775,7 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04261395111",
-      "client_email": "ARRIETAROMEROG@GMAIL.COM",
+      "client_email": "Genesisadrianaarrietaromero@gmail.com",
       "address": "CALLE 2 CASANRO 35 SAMAN TARAZONERO I TURMERO ARAGUA ZONZ POSTAL 2115",
       "client_identification": "V20989836",
       "nap_box_name": "670",
