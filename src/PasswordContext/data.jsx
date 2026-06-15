@@ -83365,7 +83365,7 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243605078",
-      "client_email": "BG00452@GMAIL.COM",
+      "client_email": "Barbaragonzalez0415@gmail.com",
       "address": "AV I CASA NRO 15 CONJUNTO RESIDENCIAL LAS PALMERAS I PARCELA 16 SECTOR VILLEGAS ASENTAMIENTO CAMPESINO TURMERO ARAGUA",
       "client_identification": "V9641254",
       "nap_box_name": "CTO-00053",
@@ -146203,7 +146203,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04128843027",
-      "client_email": "ILIANACAR5@GMAIL.COM",
+      "client_email": "ILIANACARS26@GMAIL.COM",
       "address": "SAMAN TARAZONERO II, MANZANA E -10 CASA 22. TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V17273323",
       "nap_box_name": "277",
