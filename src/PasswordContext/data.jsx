@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5371,
+  "count": 5372,
   "results": [
     {
       "id": 3063,
@@ -166558,6 +166558,31 @@ const largeArraydata =
         "created_at": "2026-06-12T15:12:25.444651",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9117,
+      "client_name": "SUJEINS SORANGEL MADERO ORTEGA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Las Rurales",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128903811",
+      "client_email": "SUJEINSMADERO@GMAIL.COM",
+      "address": "CALLE SUCRE POR LA ESCUELA SEIGA CASA NUMERO 13 LAS RURALES ROSARIO DE PAYA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V13699970",
+      "nap_box_name": "CE-00067",
+      "created_at": "2026-06-15T10:11:56.185808",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
