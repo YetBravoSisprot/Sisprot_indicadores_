@@ -166582,7 +166582,16 @@ const largeArraydata =
       "client_identification": "V13699970",
       "nap_box_name": "CE-00067",
       "created_at": "2026-06-15T10:11:56.185808",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12615,
+        "ip": "10.16.219.2",
+        "mac": "68:9F:F0:0A:97:9F",
+        "serial": "ZXICCD9C8728",
+        "queue": null,
+        "interface": "VLAN252_RURALES_PAYA",
+        "created_at": "2026-06-15T13:01:02.912266",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
