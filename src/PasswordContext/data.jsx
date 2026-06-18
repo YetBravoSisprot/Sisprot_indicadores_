@@ -4681,8 +4681,8 @@ const largeArraydata =
       "id": 3223,
       "client_name": "LAURANGELA REBECA OVIEDO BASTIDAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Lascenio Guerrero",
@@ -4699,16 +4699,7 @@ const largeArraydata =
       "client_identification": "V22296806",
       "nap_box_name": "432",
       "created_at": "2024-04-11T14:48:07.791481",
-      "service_detail": {
-        "id": 9846,
-        "ip": "172.23.72.2",
-        "mac": "VSOL0013F021",
-        "serial": "VSOL0013F021",
-        "queue": null,
-        "interface": "VLAN115_LG",
-        "created_at": "2025-11-10T17:59:16.112598",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -157963,8 +157954,8 @@ const largeArraydata =
       "id": 8809,
       "client_name": "DIONY JOSE ZURITA PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Santa Eduviges",
@@ -166533,8 +166524,8 @@ const largeArraydata =
       "id": 9119,
       "client_name": "MILAGRO MARGARITA LOPEZ MATOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -166551,7 +166542,16 @@ const largeArraydata =
       "client_identification": "V11088948",
       "nap_box_name": "CTO - 991",
       "created_at": "2026-06-18T10:09:13.384047",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12621,
+        "ip": "10.17.28.2",
+        "mac": "68:9F:F0:0A:DC:FF",
+        "serial": "ZXICCD4343FD",
+        "queue": null,
+        "interface": "VLAN280_POLVORIN",
+        "created_at": "2026-06-18T12:22:51.329251",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
