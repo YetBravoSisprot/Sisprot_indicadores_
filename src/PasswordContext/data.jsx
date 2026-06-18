@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5373,
+  "count": 5374,
   "results": [
     {
       "id": 3063,
@@ -117915,8 +117915,8 @@ const largeArraydata =
       "id": 7215,
       "client_name": "HENRY RAFAEL BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Marcelota",
@@ -128852,8 +128852,8 @@ const largeArraydata =
       "id": 7650,
       "client_name": "LUIS DANIEL GOMEZ FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados III",
@@ -128870,16 +128870,7 @@ const largeArraydata =
       "client_identification": "V17888964",
       "nap_box_name": "CTO-00299",
       "created_at": "2025-03-10T14:23:18.482676",
-      "service_detail": {
-        "id": 7877,
-        "ip": "10.12.97.2",
-        "mac": "HWTC11859B85",
-        "serial": "HWTC11859B85",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN236_PRADOS3",
-        "created_at": "2025-03-11T13:36:27.282506",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -130374,8 +130365,8 @@ const largeArraydata =
       "id": 7730,
       "client_name": "MARYELYN JOHANA PALACIOS FIGUEROA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -130392,16 +130383,7 @@ const largeArraydata =
       "client_identification": "V15077348",
       "nap_box_name": "CTO-0012345",
       "created_at": "2025-03-18T11:23:14.049406",
-      "service_detail": {
-        "id": 7935,
-        "ip": "10.12.143.2",
-        "mac": "OEMT3C6201EA",
-        "serial": "OEMT3C6201EA",
-        "queue": "Plan_107915_30181_WispHub",
-        "interface": "VLAN258_VALLECITO",
-        "created_at": "2025-03-18T19:32:20.986470",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -132738,8 +132720,8 @@ const largeArraydata =
       "id": 7815,
       "client_name": "YUSBELIS MARIA ARAUJO GRATEROL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -135421,8 +135403,8 @@ const largeArraydata =
       "id": 7911,
       "client_name": "AIXA ERLINDA MOREAN VILLEGAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -153951,8 +153933,8 @@ const largeArraydata =
       "id": 8666,
       "client_name": "JOSE CIPRIANO LOPEZ ANTON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Valle Paraiso",
@@ -160968,8 +160950,8 @@ const largeArraydata =
       "id": 8914,
       "client_name": "JINEIBY ANDREINA VARGAS MORILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Betania",
@@ -162220,8 +162202,8 @@ const largeArraydata =
       "id": 8955,
       "client_name": "MIREYA RAMONA TORO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Los Nisperos",
@@ -166563,6 +166545,31 @@ const largeArraydata =
         "created_at": "2026-06-15T16:55:17.109339",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9119,
+      "client_name": "MILAGRO MARGARITA LOPEZ MATOS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04163300087",
+      "client_email": "MILAGROMARGARITALOPEZMATOS@GMAIL.COM",
+      "address": "POLVORIN SECTOR GUAYABITA CALLE 3 DE MAYO NUMERO 19 ROSARIO DE PAYA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V11088948",
+      "nap_box_name": "CTO - 991",
+      "created_at": "2026-06-18T10:09:13.384047",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
