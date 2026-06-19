@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5374,
+  "count": 5375,
   "results": [
     {
       "id": 3063,
@@ -126010,7 +126010,16 @@ const largeArraydata =
       "client_identification": "V15611342",
       "nap_box_name": "CTO-00118 DOS",
       "created_at": "2025-02-19T13:30:09.254958",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12622,
+        "ip": "10.10.252.2",
+        "mac": "OE:MT:3C:62:46:E6",
+        "serial": "OEMT3C6246E6",
+        "queue": null,
+        "interface": "VLAN242_PRADOS2",
+        "created_at": "2026-06-19T12:09:40.542440",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -130261,8 +130270,8 @@ const largeArraydata =
       "id": 7728,
       "client_name": "ANA CECILIA SILVA GUZMAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -158165,8 +158174,8 @@ const largeArraydata =
       "id": 8822,
       "client_name": "OSMERY AZAIRY PINERO CARRILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -158326,8 +158335,8 @@ const largeArraydata =
       "id": 8827,
       "client_name": "EMPRENDIMIENTO JHONDER MENDOZA PEREZ",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -158344,16 +158353,7 @@ const largeArraydata =
       "client_identification": "J507320910",
       "nap_box_name": "CTO-00129",
       "created_at": "2025-09-29T10:41:31.231151",
-      "service_detail": {
-        "id": 9573,
-        "ip": "10.16.70.2",
-        "mac": "OEMT3C620386",
-        "serial": "OEMT3C620386",
-        "queue": "queue1",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-09-29T11:45:12.554119",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166543,6 +166543,31 @@ const largeArraydata =
         "created_at": "2026-06-18T12:22:51.329251",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9120,
+      "client_name": "YEMISON EDUARDO DELGADO MADERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Las Rurales",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243657843",
+      "client_email": "YEMISONDELGADO11@GMAIL.COM",
+      "address": "CALLE SUCRE CALLE 13 SECTOR LAS RURALES",
+      "client_identification": "V25620731",
+      "nap_box_name": "CE - 658",
+      "created_at": "2026-06-19T10:37:09.997374",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
