@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5375,
+  "count": 5376,
   "results": [
     {
       "id": 3063,
@@ -56325,8 +56325,8 @@ const largeArraydata =
       "id": 5040,
       "client_name": "ALEXANDRA YULAY SOSA CALVETE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -145018,8 +145018,8 @@ const largeArraydata =
       "id": 8267,
       "client_name": "LAURA YAKELIN TORRES PEREIRA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Los Caobos",
@@ -149740,8 +149740,8 @@ const largeArraydata =
       "id": 8473,
       "client_name": "LUIS MAGIN ESPINOZA MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Dios Es Mi Refugio",
@@ -166577,6 +166577,31 @@ const largeArraydata =
         "created_at": "2026-06-19T12:21:40.441707",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9121,
+      "client_name": "JUANA FRANCISCA PANTOJA CAPOTE",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Cambur",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123987047",
+      "client_email": "JUANABENDECIDA27@GMAIL.COM",
+      "address": "CALLE PRINCIPAL CASA NÚMERO 30-3 SECTOR EL CAMBUR - ROSARIO DE PAYA",
+      "client_identification": "V12168542",
+      "nap_box_name": "CTO - 912",
+      "created_at": "2026-06-20T11:34:57.115512",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
