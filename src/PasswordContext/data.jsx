@@ -29027,8 +29027,8 @@ const largeArraydata =
       "id": 4076,
       "client_name": "NICOLASA MONTILLA AGRINZONES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Jabillar",
@@ -29045,16 +29045,7 @@ const largeArraydata =
       "client_identification": "V4441741",
       "nap_box_name": "CTO-0552",
       "created_at": "2024-04-20T13:04:48.973993",
-      "service_detail": {
-        "id": 10737,
-        "ip": "172.29.20.2",
-        "mac": "TPLG1BB3634F",
-        "serial": "TPLG1BB3634F",
-        "queue": null,
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-12-15T15:59:13.996556",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -36587,8 +36578,8 @@ const largeArraydata =
       "id": 4349,
       "client_name": "MAYERKY ANYURY GARCIA ESPIDEA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -36605,16 +36596,7 @@ const largeArraydata =
       "client_identification": "V19131181",
       "nap_box_name": "271",
       "created_at": "2024-06-07T15:18:49.540535",
-      "service_detail": {
-        "id": 7480,
-        "ip": "172.31.2.2",
-        "mac": "TPLGF4EFC4DC",
-        "serial": "TPLGF4EFC4DC",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN231_PAYABAJO",
-        "created_at": "2024-12-17T10:44:18.740230",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -81552,8 +81534,8 @@ const largeArraydata =
       "id": 5928,
       "client_name": "NICOLAS DE JESUS RAMOS PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Palmeras II",
@@ -81570,7 +81552,16 @@ const largeArraydata =
       "client_identification": "V12608966",
       "nap_box_name": "337",
       "created_at": "2024-08-01T13:41:35.953345",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12635,
+        "ip": "172.18.39.2",
+        "mac": "TP:LG:B7:65:65:15",
+        "serial": "TPLGB7656515",
+        "queue": null,
+        "interface": "VLAN119_PALMERAS_2",
+        "created_at": "2026-06-23T14:12:30.836521",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -152842,8 +152833,8 @@ const largeArraydata =
       "id": 8620,
       "client_name": "ASAER ALBERTO ROMERO PINANGO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
