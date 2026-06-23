@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5377,
+  "count": 5378,
   "results": [
     {
       "id": 3063,
@@ -54543,7 +54543,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04124612043",
+      "client_mobile": "04243787395",
       "client_email": "25COROMOTO25@GMAIL.COM",
       "address": "CALLE CAREÑO CON CALLE GIRALDO RESIDENCIAS GUADALUPE APT 5 TURMERO",
       "client_identification": "V13763357",
@@ -136753,8 +136753,8 @@ const largeArraydata =
       "id": 7961,
       "client_name": "MARCOS ALEXANDER GOYO SERENO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -136771,16 +136771,7 @@ const largeArraydata =
       "client_identification": "V12509727",
       "nap_box_name": "32",
       "created_at": "2025-04-18T10:48:16.728644",
-      "service_detail": {
-        "id": 12628,
-        "ip": "172.27.181.2",
-        "mac": "HW:TC:D1:7A:22:9A",
-        "serial": "HWTCD17A229A",
-        "queue": null,
-        "interface": "VLAN101_AJS",
-        "created_at": "2026-06-22T11:37:19.866939",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -163184,8 +163175,8 @@ const largeArraydata =
       "id": 8991,
       "client_name": "JOSE ALEJANDRO MEJIAS RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Simon Bolivar",
@@ -163202,16 +163193,7 @@ const largeArraydata =
       "client_identification": "V27820470",
       "nap_box_name": "CTO-00043",
       "created_at": "2026-02-24T13:30:38.475282",
-      "service_detail": {
-        "id": 11756,
-        "ip": "10.16.171.2",
-        "mac": "TPLGB954ED50",
-        "serial": "TPLGB954ED50",
-        "queue": null,
-        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
-        "created_at": "2026-02-26T16:48:48.945786",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166681,6 +166663,31 @@ const largeArraydata =
         "created_at": "2026-06-22T16:35:45.956607",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9123,
+      "client_name": "ROXANA MICHELE ARROYO VELASQUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Laguna Plaza",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243312462",
+      "client_email": "ARROYOROXANA04@GMAIL.COM",
+      "address": "CONDOMINIO DEL CONJUNTO RESIDENCIAL LAGUNA PLAZA SECTOR 4, APARTAMENTO 12 PH 3 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V23919814",
+      "nap_box_name": "3",
+      "created_at": "2026-06-23T12:06:12.759402",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
