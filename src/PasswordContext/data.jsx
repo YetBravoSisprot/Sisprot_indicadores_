@@ -14932,8 +14932,8 @@ const largeArraydata =
       "id": 3584,
       "client_name": "WILLMER ANTONIO BOADA BARILLAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Lascenio Guerrero",
@@ -14950,24 +14950,15 @@ const largeArraydata =
       "client_identification": "V10156927",
       "nap_box_name": "432",
       "created_at": "2024-04-15T15:00:12.302832",
-      "service_detail": {
-        "id": 3598,
-        "ip": "172.31.231.2",
-        "mac": "TPLGF4EFC340",
-        "serial": "TPLGF4EFC340",
-        "queue": "Plan_92034_1574_WispHub",
-        "interface": "VLAN115_LG",
-        "created_at": "2024-07-09T17:10:06.355146",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 3585,
       "client_name": "JESUS ALBERTO TORRES ARGUINZONEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -14984,16 +14975,7 @@ const largeArraydata =
       "client_identification": "V13200452",
       "nap_box_name": "608",
       "created_at": "2024-04-15T15:12:28.233505",
-      "service_detail": {
-        "id": 6133,
-        "ip": "172.28.66.2",
-        "mac": "HWTC52588187",
-        "serial": "HWTC52588187",
-        "queue": "Plan_161901_30183_WispHub",
-        "interface": "VLAN251_RIO_SECO",
-        "created_at": "2024-08-22T17:06:48.457149",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -28893,8 +28875,8 @@ const largeArraydata =
       "id": 4071,
       "client_name": "ESPERANZA COROMOTO LLOVERA MONTILLA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Jabillar",
@@ -28911,16 +28893,7 @@ const largeArraydata =
       "client_identification": "V7276690",
       "nap_box_name": "CTO-00017 C/5 JABILLAR",
       "created_at": "2024-04-20T12:47:50.814655",
-      "service_detail": {
-        "id": 10668,
-        "ip": "172.25.94.2",
-        "mac": "TPLGB8627F6B",
-        "serial": "TPLGB8627F6B",
-        "queue": null,
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-12-12T10:08:49.758199",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -138876,8 +138849,8 @@ const largeArraydata =
       "id": 8036,
       "client_name": "MERCEDES VICTORIA ESPINOZA DE SERVEN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -166669,8 +166642,8 @@ const largeArraydata =
       "id": 9123,
       "client_name": "ROXANA MICHELE ARROYO VELASQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Laguna Plaza",
@@ -166682,12 +166655,21 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243312462",
-      "client_email": "ARROYOROXANA04@GMAIL.COM",
+      "client_email": "roxanaarroyo04@gmail.com",
       "address": "CONDOMINIO DEL CONJUNTO RESIDENCIAL LAGUNA PLAZA SECTOR 4, APARTAMENTO 12 PH 3 TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V23919814",
       "nap_box_name": "3",
       "created_at": "2026-06-23T12:06:12.759402",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12634,
+        "ip": "10.17.36.2",
+        "mac": "ZX:IC:CD:A5:F5:A0",
+        "serial": "ZXICCDA5F5A0",
+        "queue": null,
+        "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
+        "created_at": "2026-06-23T13:59:51.984735",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
