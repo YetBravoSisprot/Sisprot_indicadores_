@@ -166676,8 +166676,8 @@ const largeArraydata =
       "id": 9124,
       "client_name": "STEFANI YAIMAR OVALLES RIVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
@@ -166694,7 +166694,16 @@ const largeArraydata =
       "client_identification": "V27286086",
       "nap_box_name": "667",
       "created_at": "2026-06-26T12:00:57.435627",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12637,
+        "ip": "172.29.159.2",
+        "mac": "HW:TC:24:A6:F2:90",
+        "serial": "HWTC24A6F290",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-06-26T13:49:21.839072",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
