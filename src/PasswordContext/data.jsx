@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5378,
+  "count": 5379,
   "results": [
     {
       "id": 3063,
@@ -38198,7 +38198,7 @@ const largeArraydata =
         "code": "FOP1GB",
         "profile": "1000Mbps/1000Mbps"
       },
-      "client_mobile": "04168273739",
+      "client_mobile": "04124851552",
       "client_email": "COMPRAS-AVITECNICA2011@HOTMAIL.COM",
       "address": "CALLE NORTE LOCAL NRO 41-B ZONA INDUSTRIAL SAN PABLO TURMERO",
       "client_identification": "J304166761",
@@ -56326,7 +56326,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04123988790",
+      "client_mobile": "04228155319",
       "client_email": "CAMPOSNATALIA653@GMAIL.COM",
       "address": "CALLE PRINCIPAL NRO. 3 CASA PARCELA NRO. 27 URBANIZACION URIMARE, ROSARIO DE PAYA ARAGUA",
       "client_identification": "V27286086",
@@ -154417,7 +154417,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04123988790",
+      "client_mobile": "04228155319",
       "client_email": "CAMPOSNATALIA653@GMAIL.COM",
       "address": "EL MACARO, SIMÓN BOLÍVAR, CALLE 6, CASA #48",
       "client_identification": "V27286086",
@@ -166670,6 +166670,31 @@ const largeArraydata =
         "created_at": "2026-06-23T13:59:51.984735",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9124,
+      "client_name": "STEFANI YAIMAR OVALLES RIVAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman Tarazonero I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04228155319",
+      "client_email": "CAMPOSNATALIA653@GMAIL.COM",
+      "address": "CALLE 6 SECTOR SAMAN TARAZONERO I EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V27286086",
+      "nap_box_name": "667",
+      "created_at": "2026-06-26T12:00:57.435627",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
