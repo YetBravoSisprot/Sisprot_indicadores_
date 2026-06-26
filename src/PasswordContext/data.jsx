@@ -20699,8 +20699,8 @@ const largeArraydata =
       "id": 3789,
       "client_name": "EVERTH ANTONIO MATOS MURGA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Narayola II",
@@ -20717,7 +20717,16 @@ const largeArraydata =
       "client_identification": "V11180657",
       "nap_box_name": "CTO-0523",
       "created_at": "2024-04-18T11:11:24.072175",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12636,
+        "ip": "172.25.108.2",
+        "mac": "TP:LG:1B:B3:63:E5",
+        "serial": "TPLG1BB363E5",
+        "queue": null,
+        "interface": "VLAN117_NARAYOLA",
+        "created_at": "2026-06-25T18:28:09.756485",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
