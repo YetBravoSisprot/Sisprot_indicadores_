@@ -35033,8 +35033,8 @@ const largeArraydata =
       "id": 4288,
       "client_name": "DIANA CAROLINA BARRETO DE BERNAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guerito",
@@ -45348,8 +45348,8 @@ const largeArraydata =
       "id": 4651,
       "client_name": "YELADYS MAHLY JIMENEZ BERMUDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Taguapire",
@@ -45366,7 +45366,16 @@ const largeArraydata =
       "client_identification": "V26535383",
       "nap_box_name": "CTO-00386",
       "created_at": "2024-06-09T15:11:09.565963",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12639,
+        "ip": "172.22.242.2",
+        "mac": "TP:LG:BA:68:7C:50",
+        "serial": "TPLGBA687C50",
+        "queue": null,
+        "interface": "VLAN129_TAGUAPIRE_ZTE",
+        "created_at": "2026-06-27T10:23:09.502298",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -101935,7 +101944,7 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04125323574",
+      "client_mobile": "04225323575",
       "client_email": "SAIDCRAFT45@GMAIL.COM",
       "address": "CALLE MARIÑO CC COMUNA 13 DE ENERO NIVEL PB LOCAL 45 SECTOR CENTRO DE TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "J505627490",
