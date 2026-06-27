@@ -101942,13 +101942,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00256",
       "created_at": "2024-09-02T16:35:37.958983",
       "service_detail": {
-        "id": 6584,
+        "id": 12638,
         "ip": "172.31.158.2",
-        "mac": "GPON0097C7E6",
+        "mac": "GP:ON:00:97:C7:E6",
         "serial": "GPON0097C7E6",
-        "queue": "Plan_92036_15811_WispHub",
+        "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2024-09-09T17:56:17.904900",
+        "created_at": "2026-06-27T09:39:59.604642",
         "created_by_name": null
       },
       "installation_invoice_cost": null
