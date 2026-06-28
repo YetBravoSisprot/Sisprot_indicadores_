@@ -40879,8 +40879,8 @@ const largeArraydata =
       "id": 4499,
       "client_name": "IRIS ARELIS INFANTE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Taguapire",
@@ -40897,7 +40897,16 @@ const largeArraydata =
       "client_identification": "V15393348",
       "nap_box_name": "549",
       "created_at": "2024-06-08T16:11:15.355409",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12641,
+        "ip": "172.28.80.2",
+        "mac": "CI:OT:09:6B:C3:24",
+        "serial": "CIOT096BC324",
+        "queue": null,
+        "interface": "VLAN129_TAGUAPIRE_ZTE",
+        "created_at": "2026-06-27T19:00:47.968557",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -143174,10 +143183,10 @@ const largeArraydata =
       "id": 8183,
       "client_name": "ERIKA RUIZ PAVIQUE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Rio Seco",
       "plan": {
         "id": 100,
@@ -143192,7 +143201,16 @@ const largeArraydata =
       "client_identification": "V16474723",
       "nap_box_name": "598",
       "created_at": "2025-05-16T10:39:44.474157",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12642,
+        "ip": "10.14.93.2",
+        "mac": "QX:TL:CB:F3:33:F1",
+        "serial": "QXTLCBF333F1",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-06-27T19:57:33.414310",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
