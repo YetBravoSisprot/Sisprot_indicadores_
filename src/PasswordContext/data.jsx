@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5382,
+  "count": 5383,
   "results": [
     {
       "id": 3063,
@@ -166831,6 +166831,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN246_NARANJAL",
         "created_at": "2026-06-29T16:08:13.928238",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9128,
+      "client_name": "IRAM JESUS PALMA PEREZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129171016",
+      "client_email": "JESUSPALMASKRT97@GMAIL.COM",
+      "address": "CALLE CARREÑO CASA NUMERO 3 URB HACIENDA LOS NISPEROS TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V29786069",
+      "nap_box_name": "CTO-00464",
+      "created_at": "2026-06-29T17:51:01.705852",
+      "service_detail": {
+        "id": 12646,
+        "ip": "10.17.40.2",
+        "mac": "68:9f:f0:cc:b9:ff",
+        "serial": "QXTLCBF12F7A",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-06-29T17:54:44.430794",
         "created_by_name": null
       },
       "installation_invoice_cost": null
