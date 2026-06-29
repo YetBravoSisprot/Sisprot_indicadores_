@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5379,
+  "count": 5381,
   "results": [
     {
       "id": 3063,
@@ -166731,6 +166731,65 @@ const largeArraydata =
         "created_at": "2026-06-26T13:49:21.839072",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9125,
+      "client_name": "ALEJANDRO ANTONIO SORETT GARCIA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Antigua Hacienda De Paya",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144876639",
+      "client_email": "SORETTALEJANDRO5@GMAIL.COM",
+      "address": "CALLE MOLINA ESTE CASA NUMERO 1 ANTIGUA HACIENDA PAYA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V30033029",
+      "nap_box_name": "CE - 941",
+      "created_at": "2026-06-29T11:11:14.911648",
+      "service_detail": {
+        "id": 12643,
+        "ip": "10.17.37.2",
+        "mac": "68:9F:F0:0A:F1:FF",
+        "serial": "ZXICCDD7B9C9",
+        "queue": null,
+        "interface": "VLAN202_AHP_OLT1",
+        "created_at": "2026-06-29T11:14:25.228505",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9126,
+      "client_name": "LURIANNY BETZABETH CORREA BELISARIO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Prados I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144053832",
+      "client_email": "LURIANNYCORREA585@GMAIL.COM",
+      "address": "CALLE 1 PRADOS 1 CASA NUMERO 3 PARROQUIA PEDRO AREVALO APONTE TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V31231502",
+      "nap_box_name": "CTO-00206",
+      "created_at": "2026-06-29T11:20:27.300192",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
