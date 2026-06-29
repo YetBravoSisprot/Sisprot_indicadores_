@@ -166771,8 +166771,8 @@ const largeArraydata =
       "id": 9126,
       "client_name": "LURIANNY BETZABETH CORREA BELISARIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados I",
@@ -166789,7 +166789,16 @@ const largeArraydata =
       "client_identification": "V31231502",
       "nap_box_name": "CTO-00206",
       "created_at": "2026-06-29T11:20:27.300192",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12644,
+        "ip": "10.17.38.2",
+        "mac": "68:9f:f0:0a:dd:3f",
+        "serial": "ZXICCDFC868D",
+        "queue": null,
+        "interface": "VLAN239_PRADOS1",
+        "created_at": "2026-06-29T14:04:07.865573",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
