@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5381,
+  "count": 5382,
   "results": [
     {
       "id": 3063,
@@ -166797,6 +166797,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN239_PRADOS1",
         "created_at": "2026-06-29T14:04:07.865573",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9127,
+      "client_name": "ANGEL FRANCISCO GALLARDO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Naranjal",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243637010",
+      "client_email": "GALLARDOANGELF19@GMAL.COM",
+      "address": "CALLE NARANJAL CASA NUMERO 31 SECTOR EL NARANJAL TUMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15036034",
+      "nap_box_name": "CE - 681",
+      "created_at": "2026-06-29T14:51:24.811393",
+      "service_detail": {
+        "id": 12645,
+        "ip": "10.17.39.2",
+        "mac": "68:9f:f0:0a:f2:ef",
+        "serial": "ZXICCD940225",
+        "queue": null,
+        "interface": "VLAN246_NARANJAL",
+        "created_at": "2026-06-29T16:08:13.928238",
         "created_by_name": null
       },
       "installation_invoice_cost": null
