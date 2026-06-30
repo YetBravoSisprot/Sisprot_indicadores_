@@ -34940,8 +34940,8 @@ const largeArraydata =
       "id": 4285,
       "client_name": "SILENNE ESTHER GALINDEZ MORALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -34958,7 +34958,16 @@ const largeArraydata =
       "client_identification": "V11092485",
       "nap_box_name": "262",
       "created_at": "2024-05-17T15:28:48.434061",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12647,
+        "ip": "172.21.138.2",
+        "mac": "TP:LG:32:68:0C:A2",
+        "serial": "TPLG32680CA2",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-06-30T11:32:37.170717",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
