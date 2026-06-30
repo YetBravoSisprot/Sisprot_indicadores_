@@ -85718,8 +85718,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04121448016",
-      "client_email": "JEANFLOW1989@GMAIL.COM",
+      "client_mobile": "04120375393",
+      "client_email": "eurostylevnzl@gmail.com",
       "address": "CALLE 12A CASA NRO 7 URB PANTIN ROSARIO DE PAYA",
       "client_identification": "V13132498",
       "nap_box_name": "CTO-00165",
