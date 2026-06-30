@@ -569,7 +569,7 @@ function TopUrbanismo() {
 
               <div className="columnas-checkbox-container" id="ciclosSelect">
                 <label className="filter-header">Ciclos</label>
-                {["Todos", "15", "30"].map(ciclo => (
+                {["Todos", "1"].map(ciclo => (
                    <label key={ciclo} className="columna-item-check">
                     <input
                       type="checkbox"
