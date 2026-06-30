@@ -566,7 +566,7 @@ export const exportExecutiveReport = async (dataset, appliedFiltersText = [], us
                 interface: cliente.service_detail?.interface || "N/A",
                 sector_name: norm(cliente.sector_name || cliente._displaySector),
                 migrado: cliente.migrate ? "si" : "No",
-                ciclo: mapCycleValue(cliente.cycle),
+                ciclo: mapCycleValue(cliente.cycle, cliente),
                 plan_name: cliente.plan?.name || "N/A",
                 costo: parseFloat(cliente.plan?.cost || 0),
                 ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
