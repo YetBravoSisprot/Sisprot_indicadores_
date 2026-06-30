@@ -313,7 +313,7 @@ function TopUrbanismo() {
       const cicloFiltrado =
         ciclosSeleccionados.includes("Todos") ||
         servicio.cycle == null ||
-        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle));
+        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle, servicio));
       if (!cicloFiltrado) return false;
 
       const sectorName = norm(servicio.sector_name);
@@ -394,7 +394,7 @@ function TopUrbanismo() {
 
       const cicloFiltrado =
         ciclosSeleccionados.includes("Todos") ||
-        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle));
+        ciclosSeleccionados.includes(mapCycleValue(servicio.cycle, servicio));
       if (!cicloFiltrado) return false;
 
       const sectorName = norm(servicio.sector_name);
@@ -567,19 +567,21 @@ function TopUrbanismo() {
                 ))}
               </div>
 
-              <div className="columnas-checkbox-container" id="ciclosSelect">
-                <label className="filter-header">Ciclos</label>
-                {["Todos", "1"].map(ciclo => (
-                   <label key={ciclo} className="columna-item-check">
-                    <input
-                      type="checkbox"
-                      checked={ciclosSeleccionados.includes(ciclo)}
-                      onChange={() => handleCiclosChange(ciclo)}
-                    />
-                    <span>{ciclo === "Todos" ? "Todos" : `🗓️ Ciclo ${ciclo}`}</span>
-                  </label>
-                ))}
-              </div>
+              {(estadosSeleccionadosType.includes("PYME") || estadosSeleccionadosType.includes("Todos")) && (
+                <div className="columnas-checkbox-container" id="ciclosSelect">
+                  <label className="filter-header">Ciclos</label>
+                  {["Todos", "15", "30"].map(ciclo => (
+                     <label key={ciclo} className="columna-item-check">
+                      <input
+                        type="checkbox"
+                        checked={ciclosSeleccionados.includes(ciclo)}
+                        onChange={() => handleCiclosChange(ciclo)}
+                      />
+                      <span>{ciclo === "Todos" ? "Todos" : `🗓️ Ciclo ${ciclo}`}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
 
               <div className="columnas-checkbox-container" id="sectoresSelect">
                 <label className="filter-header">Parroquias</label>
@@ -792,7 +794,7 @@ function UrbanismoList({ urbanismos }) {
 
                         <div className="cliente-data">
                           <span><strong>ID:</strong> {cliente.id}</span>
-                          <span><strong>Ciclo:</strong> {mapCycleValue(cliente.cycle)}</span>
+                          <span><strong>Ciclo:</strong> {mapCycleValue(cliente.cycle, cliente)}</span>
                         </div>
 
                         <div className="cliente-row cliente-row-direccion">
