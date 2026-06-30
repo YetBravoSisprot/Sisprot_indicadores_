@@ -5,10 +5,7 @@ const norm = (v) => (v == null ? "" : String(v).trim());
 
 function mapCycleValue(val) {
     if (val === null || val === undefined) return "N/A";
-    const cycle = String(val).trim();
-    if (cycle === "10") return "15";
-    if (cycle === "25") return "30";
-    return cycle;
+    return "1";
 }
 
 export const exportToExcel = async (dataset, appliedFiltersText = [], selectedColumns = ["Todas"], reportType = "general", customFileName = null) => {
