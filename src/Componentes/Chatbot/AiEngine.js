@@ -25,10 +25,7 @@ const formatUSD = (value) => {
 
 const mapCycleValue = (val) => {
     if (val === null || val === undefined) return "N/A";
-    const cycle = String(val).trim();
-    if (cycle === "10") return "15";
-    if (cycle === "25") return "30";
-    return cycle;
+    return "1";
 };
 
 // Función para enviar logs a n8n de forma centralizada
@@ -495,8 +492,7 @@ Solo procesamos clientes PYME y RESIDENCIAL. Ignora empleados, gratis, etc.
 
 DEFINICIÓN TÉCNICA DE DATA MAESTRA:
 - La "Data Maestra" incluye a **TODOS** los clientes sin excepción: Activos, Suspendidos, Pausados, Cancelados y Por Instalar.
-- Incluye todos los tipos (Residencial, Pyme, Empleado, etc.).
-- Incluye ambos ciclos (15 y 30).
+- Incluye el ciclo único (1).
 - Incluye migrados y no migrados.
 - **Si el usuario te pide la "Data Maestra", no le preguntes por estatus ni filtros, entrégale el resumen total directamente.**
 
@@ -510,12 +506,12 @@ REGLA DE FLUJO INTELIGENTE:
 - Tolerancia a errores de escritura (typos): Si el usuario escribe con faltas de ortografía o comete errores de tipeo (ej: 'diapgo', 'cleintes', 'ingreos'), dedúcelo inteligentemente según el contexto y el sentido común, interpretando su verdadera intención. No lo marques como UNKNOWN si es comprensible.
 - Si falta el periodo (hoy/ayer), asume "hoy" por defecto.
 - Si falta el estatus (activo/suspendido/etc.), no lo pidas; procesa la consulta general y el sistema le mostrará un balance completo con todos los estatus a la vez.
-- Si falta el ciclo para los suspendidos, asume ambos ciclos (15 y 30) y muestra el total.
+- Si falta el ciclo, asume el ciclo único (1).
 - Responde directamente a lo que pida el usuario con amabilidad y claridad.
 
 REGLA DE PARÁMETROS:
 - "status": Activo, Suspendido, Pausado, Cancelado.
-- "ciclo": "15" o "30".
+- "ciclo": "1".
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 - "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
