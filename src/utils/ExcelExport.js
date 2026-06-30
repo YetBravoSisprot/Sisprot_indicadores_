@@ -3,9 +3,30 @@ import { saveAs } from "file-saver";
 
 const norm = (v) => (v == null ? "" : String(v).trim());
 
-function mapCycleValue(val) {
+function isPymeClient(cliente) {
+    if (!cliente) return false;
+    let tipo = "";
+    if (cliente.client_subdivision && cliente.client_subdivision !== "") {
+        const partes = String(cliente.client_subdivision).split("_");
+        if (partes.length >= 2 && partes[1]) {
+            tipo = partes[1].toUpperCase();
+        }
+    }
+    if (!tipo && cliente.client_type_name) {
+        tipo = String(cliente.client_type_name).trim().toUpperCase();
+    }
+    return tipo === "PYME";
+}
+
+function mapCycleValue(val, cliente) {
     if (val === null || val === undefined) return "N/A";
-    return "1";
+    if (!isPymeClient(cliente)) {
+        return "1";
+    }
+    const cycle = String(val).trim();
+    if (cycle === "10") return "15";
+    if (cycle === "25") return "30";
+    return cycle;
 }
 
 export const exportToExcel = async (dataset, appliedFiltersText = [], selectedColumns = ["Todas"], reportType = "general", customFileName = null) => {
@@ -166,7 +187,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 interface: cliente.service_detail?.interface || "N/A",
                 sector: norm(cliente._displaySector || cliente.sector_name),
                 migrado: cliente.migrate ? "si" : "No",
-                ciclo: mapCycleValue(cliente.cycle),
+                ciclo: mapCycleValue(cliente.cycle, cliente),
                 plan: cliente.plan?.name || "N/A",
                 costo: parseFloat(cliente.plan?.cost || 0),
                 ip: cliente.ip_name || "N/A",
@@ -331,7 +352,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         statsSheet.getCell(`C${footerRowStats}`).alignment = { horizontal: 'center' };
 
         // --- CENTRO: DASHBOARD DE ALTO IMPACTO (DASHBOARD) ---
-        const cicloLabel = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle)} DE ${mesActual}` : `CICLO DE ${mesActual}`;
+        const cicloLabel = dataset[0]?.cycle ? `CICLO ${mapCycleValue(dataset[0].cycle, dataset[0])} DE ${mesActual}` : `CICLO DE ${mesActual}`;
         statsSheet.mergeCells('E3:G3');
         statsSheet.getCell('E3').value = "DASHBOARD OPERATIVO";
         statsSheet.getCell('E3').font = { bold: true, size: 18, color: { argb: '1F4E78' } };
@@ -413,7 +434,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         let currentRow = 3;
         const mainRowsJ = [];
         const mainRowsK = [];
-        const uniqueCycles = [...new Set(dataset.map(c => mapCycleValue(c.cycle)))].filter(c => c !== "N/A");
+        const uniqueCycles = [...new Set(dataset.map(c => mapCycleValue(c.cycle, c)))].filter(c => c !== "N/A");
 
         ["si", "No"].forEach(migradoStatus => {
             // Main row
