@@ -23,9 +23,30 @@ const formatUSD = (value) => {
     return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
 };
 
-const mapCycleValue = (val) => {
+const isPymeClient = (cliente) => {
+    if (!cliente) return false;
+    let tipo = "";
+    if (cliente.client_subdivision && cliente.client_subdivision !== "") {
+        const partes = String(cliente.client_subdivision).split("_");
+        if (partes.length >= 2 && partes[1]) {
+            tipo = partes[1].toUpperCase();
+        }
+    }
+    if (!tipo && cliente.client_type_name) {
+        tipo = String(cliente.client_type_name).trim().toUpperCase();
+    }
+    return tipo === "PYME";
+};
+
+const mapCycleValue = (val, cliente) => {
     if (val === null || val === undefined) return "N/A";
-    return "1";
+    if (!isPymeClient(cliente)) {
+        return "1";
+    }
+    const cycle = String(val).trim();
+    if (cycle === "10") return "15";
+    if (cycle === "25") return "30";
+    return cycle;
 };
 
 // Función para enviar logs a n8n de forma centralizada
@@ -148,8 +169,8 @@ const registerUnansweredQuery = (query, userName, currentPage) => {
     sendToN8nLog(logEntry);
 };
 
-const getCycleLabel = (val) => {
-    const mapped = mapCycleValue(val);
+const getCycleLabel = (val, cliente) => {
+    const mapped = mapCycleValue(val, cliente);
     if (mapped === "N/A") return "N/A";
     return `Ciclo ${mapped}`;
 };
@@ -737,7 +758,7 @@ const getFilteredDataset = (clientes, parameters, query = "") => {
     // 2. Ciclo
     if (parameters?.ciclo) {
         const cicloReq = String(parameters.ciclo);
-        filtered = filtered.filter(c => mapCycleValue(c.cycle) === cicloReq);
+        filtered = filtered.filter(c => mapCycleValue(c.cycle, c) === cicloReq);
         appliedTexts.push(`Ciclo: ${cicloReq}`);
     }
 
@@ -1873,7 +1894,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                     { label: "Estado", value: cliente.status_name },
                                     { label: "Plan", value: `${cliente.plan?.name} (${cliente.plan?.cost} US$)` },
                                     { label: "Teléfono", value: cliente.client_mobile || "N/A" },
-                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle) },
+                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle, cliente) },
                                     { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
                                     { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
                                     { label: "Dirección", value: cliente.address || "N/A" },
@@ -2002,7 +2023,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                     { label: "Estado", value: cliente.status_name },
                                     { label: "Plan", value: `${cliente.plan?.name} ($${cliente.plan?.cost})` },
                                     { label: "Teléfono", value: cliente.client_mobile || "N/A" },
-                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle) },
+                                    { label: "Ciclo", value: mapCycleValue(cliente.cycle, cliente) },
                                     { label: "IP/MAC", value: `${cliente.service_detail?.ip || "N/A"} / ${cliente.service_detail?.mac || "N/A"}` },
                                     { label: "Caja NAP", value: cliente.nap_box_name || "N/A" },
                                     { label: "Dirección", value: cliente.address || "N/A" },
@@ -2075,7 +2096,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                                 { label: "Estado", value: rawDataTarget.status_name },
                                 { label: "Plan", value: `${rawDataTarget.plan?.name} (${rawDataTarget.plan?.cost} US$)` },
                                 { label: "Teléfono", value: rawDataTarget.client_mobile || "N/A" },
-                                { label: "Ciclo", value: mapCycleValue(rawDataTarget.cycle) },
+                                { label: "Ciclo", value: mapCycleValue(rawDataTarget.cycle, rawDataTarget) },
                                 { label: "IP/MAC", value: `${rawDataTarget.service_detail?.ip || "N/A"} / ${rawDataTarget.service_detail?.mac || "N/A"}` },
                                 { label: "Caja NAP", value: rawDataTarget.nap_box_name || "N/A" },
                                 { label: "Dirección", value: rawDataTarget.address || "N/A" },
