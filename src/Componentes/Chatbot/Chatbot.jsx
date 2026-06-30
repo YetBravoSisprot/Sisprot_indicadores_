@@ -11,6 +11,7 @@ const Chatbot = () => {
     const location = useLocation();
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isMinimized, setIsMinimized] = useState(false);
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
@@ -147,6 +148,18 @@ const Chatbot = () => {
             }
         }
     }, [messages, isVoiceEnabled]);
+
+    if (isMinimized) {
+        return (
+            <button 
+                className="chatbot-restore-btn animate-pop-in" 
+                onClick={() => setIsMinimized(false)}
+                title="Abrir Asistente Chronos"
+            >
+                🤖
+            </button>
+        );
+    }
 
     if (!isAuthenticated) return null;
 
@@ -289,26 +302,45 @@ const Chatbot = () => {
 
             {/* Globo de bienvenida */}
             {!isOpen && (
-                <div className="chatbot-welcome-bubble" onClick={handleToggle}>
-                    ¡Hola! Soy Chronos 👋<br/>¿Necesitas analizar algún reporte?
+                <div className="chatbot-welcome-bubble">
+                    <button 
+                        className="welcome-close-btn" 
+                        onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }} 
+                        title="Minimizar"
+                    >
+                        ✕
+                    </button>
+                    <div className="welcome-content" onClick={handleToggle}>
+                        ¡Hola! Soy Chronos 👋<br/>¿Necesitas analizar algún reporte?
+                    </div>
                 </div>
             )}
 
             {/* Avatar Flotante del Robot */}
-            <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
+            <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`}>
                 {!isOpen ? (
-                    <video 
-                        src="/taurus_robot.webm" 
-                        className="taurus-avatar" 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        title="Chronos"
-                    />
+                    <>
+                        <button 
+                            className="avatar-minimize-btn" 
+                            onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }} 
+                            title="Minimizar"
+                        >
+                            ✕
+                        </button>
+                        <video 
+                            src="/taurus_robot.webm" 
+                            className="taurus-avatar" 
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline
+                            onClick={handleToggle}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            title="Chronos"
+                        />
+                    </>
                 ) : (
-                    <div className="close-btn">✕</div>
+                    <div className="close-btn" onClick={handleToggle}>✕</div>
                 )}
             </div>
 
