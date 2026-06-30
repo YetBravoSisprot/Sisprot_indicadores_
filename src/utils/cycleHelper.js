@@ -6,14 +6,10 @@
 
 export const mapCycleValue = (val) => {
     if (val === null || val === undefined) return "N/A";
-    const cycle = String(val).trim();
-    if (cycle === "10") return "15";
-    if (cycle === "25") return "30";
-    return cycle;
+    return "1";
 };
 
 export const getCycleLabel = (val) => {
     if (val === null || val === undefined) return "N/A";
-    const mapped = mapCycleValue(val);
-    return `Ciclo ${mapped}`;
+    return "Ciclo 1";
 };
