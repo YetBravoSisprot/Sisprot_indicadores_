@@ -131,12 +131,37 @@ const sectorAgenciaMap = {
   "Turmerito": "TURMERO",
 };
 
+const getClientType = (cliente) => {
+  if (!cliente) return "";
+  let tipo = "";
+  if (cliente.client_subdivision && cliente.client_subdivision !== "") {
+    const partes = String(cliente.client_subdivision).split("_");
+    if (partes.length >= 2 && partes[1]) {
+      tipo = partes[1].toUpperCase();
+    }
+  }
+  if (!tipo && cliente.client_type_name) {
+    tipo = String(cliente.client_type_name).trim().toUpperCase();
+  }
+  return tipo;
+};
+
+const matchesTipoCliente = (cliente, filterVal) => {
+  if (filterVal === "Todos") return true;
+  const clientType = getClientType(cliente);
+  if (filterVal === "Residencial y PYME") {
+    return clientType === "RESIDENCIAL" || clientType === "PYME";
+  }
+  return clientType === filterVal;
+};
+
 function Indicadores() {
   const { showPasswordState, data } = useContext(PasswordContext);
 
   const [tipoFiltro, setTipoFiltro] = useState("Todos");
   const [agenciaFiltro, setAgenciaFiltro] = useState("Todos");
   const [sectorFiltro, setSectorFiltro] = useState("Todos");
+  const [tipoClienteFiltro, setTipoClienteFiltro] = useState("Todos");
   const [mostrarLista, setMostrarLista] = useState(true);
 
   // Al cambiar agencia, reseteamos sector
@@ -172,8 +197,8 @@ function Indicadores() {
   }, [data]);
 
   const topSector = analyticsSectores[0];
-
   const listaAgencias = ["Todos", "MACARO", "PAYA", "TURMERO"];
+  const listaTiposCliente = ["Todos", "RESIDENCIAL", "PYME", "Residencial y PYME", "EMPLEADO", "GRATIS", "INTERCAMBIO"];
 
   const listaSectores = useMemo(() => {
     if (!data?.results) return ["Todos"];
@@ -189,13 +214,14 @@ function Indicadores() {
       const matchEstado = tipoFiltro === "Todos" || cliente.status_name === tipoFiltro;
       const matchAgencia = agenciaFiltro === "Todos" || sectorAgenciaMap[cliente.sector_name] === agenciaFiltro;
       const matchSector = sectorFiltro === "Todos" || cliente.sector_name === sectorFiltro;
-      return matchEstado && matchAgencia && matchSector;
+      const matchTipoCliente = matchesTipoCliente(cliente, tipoClienteFiltro);
+      return matchEstado && matchAgencia && matchSector && matchTipoCliente;
     });
-  }, [data, tipoFiltro, agenciaFiltro, sectorFiltro]);
+  }, [data, tipoFiltro, agenciaFiltro, sectorFiltro, tipoClienteFiltro]);
 
   useEffect(() => {
     // Ya no usamos limiteVisible pero podrías resetear otros estados si fuera necesario
-  }, [tipoFiltro, agenciaFiltro, sectorFiltro]);
+  }, [tipoFiltro, agenciaFiltro, sectorFiltro, tipoClienteFiltro]);
 
   const filtrarClientes = (tipo) => {
     setTipoFiltro(tipo);
@@ -210,6 +236,7 @@ function Indicadores() {
     if (sectorFiltro !== "Todos") {
       baseParaConteo = baseParaConteo.filter(c => c.sector_name === sectorFiltro);
     }
+    baseParaConteo = baseParaConteo.filter(c => matchesTipoCliente(c, tipoClienteFiltro));
 
     const conteo = { Todos: baseParaConteo.length };
     const montos = { Todos: 0 };
@@ -376,6 +403,19 @@ function Indicadores() {
                 >
                   {listaSectores.map(sector => (
                     <option key={sector} value={sector}>{sector}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <label>Tipo de Cliente</label>
+                <select
+                  value={tipoClienteFiltro}
+                  onChange={(e) => setTipoClienteFiltro(e.target.value)}
+                  className="select-premium"
+                >
+                  {listaTiposCliente.map(tipo => (
+                    <option key={tipo} value={tipo}>{tipo === "RESIDENCIAL" ? "RESIDENCIAL (Ciclo 1)" : tipo === "PYME" ? "PYME (Ciclo 15/30)" : tipo}</option>
                   ))}
                 </select>
               </div>
