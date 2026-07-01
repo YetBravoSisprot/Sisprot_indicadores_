@@ -11827,8 +11827,8 @@ const largeArraydata =
       "id": 3476,
       "client_name": "OFELIA NICOLASA PEREZ PERRONE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -35499,11 +35499,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Terrazas de Paya",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144614864",
       "client_email": "JEISYLOPE77@GMAIL.COM",
@@ -121010,8 +121010,8 @@ const largeArraydata =
       "id": 7352,
       "client_name": "JHONNY OSWALDO PERNIA GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Bicentenario",
@@ -121028,16 +121028,7 @@ const largeArraydata =
       "client_identification": "V10509271",
       "nap_box_name": "592",
       "created_at": "2024-12-18T16:57:04.288161",
-      "service_detail": {
-        "id": 7586,
-        "ip": "10.10.117.2",
-        "mac": "HWTC48080271",
-        "serial": "HWTC48080271",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN243_BICENTENARIO",
-        "created_at": "2024-12-20T09:50:50.702021",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -121146,8 +121137,8 @@ const largeArraydata =
       "id": 7356,
       "client_name": "RAFAEL JOSE THEIS CONTRERAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -121164,16 +121155,7 @@ const largeArraydata =
       "client_identification": "V18646732",
       "nap_box_name": "CTO-00413",
       "created_at": "2024-12-18T17:41:38.601128",
-      "service_detail": {
-        "id": 7575,
-        "ip": "10.10.100.2",
-        "mac": "OEMT3C62469E",
-        "serial": "OEMT3C62469E",
-        "queue": "queue1",
-        "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2024-12-19T08:55:08.982176",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
