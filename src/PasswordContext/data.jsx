@@ -16301,8 +16301,8 @@ const largeArraydata =
       "id": 3635,
       "client_name": "WENDY JOSEFINA RAMIREZ DE VALLADARES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -40561,8 +40561,8 @@ const largeArraydata =
       "id": 4496,
       "client_name": "DIANA ROXELY VERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Luz y Vida",
@@ -40579,7 +40579,16 @@ const largeArraydata =
       "client_identification": "V16692077",
       "nap_box_name": "CTO-00303",
       "created_at": "2024-06-08T16:05:52.972262",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12648,
+        "ip": "172.28.63.2",
+        "mac": "ZI:CG:CB:80:0F:EE",
+        "serial": "ZICGCB800FEE",
+        "queue": null,
+        "interface": "VLAN246_NARANJAL",
+        "created_at": "2026-07-01T16:20:54.799139",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -146191,7 +146200,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04243609069",
+      "client_mobile": "04143874237",
       "client_email": "ROSANGELYSOCAMPO5@GMAIL.COM",
       "address": "CALLE 5 CASA # 8 URBANIZACION VALLE LINDO SECTOR 4 CASCO TURMERO",
       "client_identification": "V30327058",
