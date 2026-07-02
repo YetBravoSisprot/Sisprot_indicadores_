@@ -119993,8 +119993,8 @@ const largeArraydata =
       "id": 7314,
       "client_name": "FELIPE ANTONIO GIMENEZ SEQUERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Durpa",
@@ -120011,7 +120011,16 @@ const largeArraydata =
       "client_identification": "V7367084",
       "nap_box_name": "352",
       "created_at": "2024-12-16T12:39:40.105185",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12653,
+        "ip": "10.10.58.2",
+        "mac": "HW:TC:48:08:00:20",
+        "serial": "HWTC48080020",
+        "queue": null,
+        "interface": "VLAN240_DURPA",
+        "created_at": "2026-07-02T10:56:36.872770",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
