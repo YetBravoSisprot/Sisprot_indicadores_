@@ -3012,7 +3012,16 @@ const largeArraydata =
       "client_identification": "V23520515",
       "nap_box_name": "33",
       "created_at": "2024-04-11T13:21:09.032753",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12650,
+        "ip": "172.21.201.2",
+        "mac": "TP:LG:B6:8B:4F:32",
+        "serial": "TPLGB68B4F32",
+        "queue": null,
+        "interface": "VLAN112_LA_MACARENA_ZTE",
+        "created_at": "2026-07-01T19:57:26.534852",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -14560,11 +14569,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Durpa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144579167",
       "client_email": "CIROM384@GMAIL.COM",
