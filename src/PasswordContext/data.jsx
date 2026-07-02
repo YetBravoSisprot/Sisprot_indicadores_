@@ -54458,7 +54458,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04243167441",
-      "client_email": "PACHECOANGELA996@GMAIL.COM",
+      "client_email": "ANGELADINOPACHEHER620@GMAIL.COM",
       "address": "CALLE 6 CASA NRO 378 URB MATA CABALLO ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
       "client_identification": "V14241620",
       "nap_box_name": "CTO-00178",
