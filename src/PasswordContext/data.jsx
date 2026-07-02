@@ -17347,8 +17347,8 @@ const largeArraydata =
       "id": 3675,
       "client_name": "MARIOXY CAROLINA ABARCA GUEDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -17365,7 +17365,16 @@ const largeArraydata =
       "client_identification": "V19948976",
       "nap_box_name": "366",
       "created_at": "2024-04-16T13:29:13.958879",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12654,
+        "ip": "172.27.184.2",
+        "mac": "HW:TC:C1:64:51:9C",
+        "serial": "HWTCC164519C",
+        "queue": null,
+        "interface": "VLAN241_BRISAS",
+        "created_at": "2026-07-02T13:50:53.915919",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
