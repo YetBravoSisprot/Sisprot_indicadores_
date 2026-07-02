@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5383,
+  "count": 5384,
   "results": [
     {
       "id": 3063,
@@ -165598,6 +165598,31 @@ const largeArraydata =
         "created_at": "2026-06-29T17:54:44.430794",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9129,
+      "client_name": "MAYELI CAROLINA PEREZ CARRASQUEL",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "1ro de Mayo Norte",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123986152",
+      "client_email": "DANIELALEOTA95@GMAIL.COM",
+      "address": "CALLE INTERNACIONAL NUMERO 31 PRIMERO DE MAYO NORTE ROSARIO DE PAYA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V30596623",
+      "nap_box_name": "CTO- 908",
+      "created_at": "2026-07-02T16:17:37.734781",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
