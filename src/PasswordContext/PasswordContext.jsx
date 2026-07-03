@@ -84,37 +84,44 @@ function PasswordProvider({ children }) {
       setIsLoading(true);
     }
     setError(null);
-    try {
-      const apiKey = "xK9pW2vM4zY0nR1tQ5sJ8hF3cD6aB1uE9iO2mN7rT4bV5xS8gL";
-      const urls = [
-        "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=10&page=1&provisional=True&client_type=2",
-        "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=25&page=1&provisional=True&client_type=2",
-        "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1",
-        "https://api.sisprotgf.com/api/public/contracts/?status=19&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1"
-      ];
-      
-      let apiResults = [];
-      try {
-        const fetchPromises = urls.map(url =>
-          fetch(url, {
-            method: "GET",
-            headers: {
-              "X-API-KEY": apiKey.trim(),
-              "Accept": "application/json"
-            }
-          }).then(async res => {
-            if (!res.ok) throw new Error(`HTTP error ${res.status} on ${url}`);
-            return res.json();
-          })
-        );
-        
-        const lists = await Promise.all(fetchPromises);
-        apiResults = lists.flat();
-      } catch (apiErr) {
-        console.error("Error fetching real-time contracts from URLs, falling back to local data:", apiErr);
-        apiResults = largeArraydata.results;
-      }
 
+    let apiResults = [];
+    const apiKey = "xK9pW2vM4zY0nR1tQ5sJ8hF3cD6aB1uE9iO2mN7rT4bV5xS8gL";
+    const urls = [
+      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=10&page=1&provisional=True&client_type=2",
+      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=25&page=1&provisional=True&client_type=2",
+      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1",
+      "https://api.sisprotgf.com/api/public/contracts/?status=19&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1"
+    ];
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    try {
+      const fetchPromises = urls.map(url =>
+        fetch(url, {
+          method: "GET",
+          signal: controller.signal,
+          headers: {
+            "X-API-KEY": apiKey.trim(),
+            "Accept": "application/json"
+          }
+        }).then(async res => {
+          if (!res.ok) throw new Error(`HTTP error ${res.status} on ${url}`);
+          return res.json();
+        })
+      );
+      
+      const lists = await Promise.all(fetchPromises);
+      clearTimeout(timeoutId);
+      apiResults = lists.flat();
+    } catch (apiErr) {
+      clearTimeout(timeoutId);
+      console.error("Error fetching real-time contracts from URLs, falling back to local data:", apiErr);
+      apiResults = largeArraydata.results;
+    }
+
+    try {
       // Map local data by ID for fast lookup
       const localDataMap = new Map();
       if (largeArraydata && largeArraydata.results) {
@@ -127,6 +134,7 @@ function PasswordProvider({ children }) {
 
       // Merge API data with local data details
       const mergedResults = apiResults.map(c => {
+        if (!c) return null;
         if (c.client_name !== undefined) {
           return c; // Already in local format if we fell back
         }
@@ -157,7 +165,7 @@ function PasswordProvider({ children }) {
           ip_name: local.ip_name || "",
           mac_address: local.mac_address || ""
         };
-      });
+      }).filter(Boolean);
 
       const jsonData = {
         count: mergedResults.length,
@@ -168,7 +176,7 @@ function PasswordProvider({ children }) {
       if (jsonData && jsonData.results) {
         const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
         jsonData.results = jsonData.results.filter(cliente => {
-          // Si el cliente está en la whitelist, mostrarlo aunque tenga la palabra "PRUEBA"
+          if (!cliente) return false;
           const name = (cliente.client_name || "").toUpperCase();
           const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase()));
           if (isWhitelisted) return true;
@@ -190,7 +198,9 @@ function PasswordProvider({ children }) {
 
       setData(jsonData);
     } catch (err) {
+      console.error("Critical error in data merging/processing, using local data raw:", err);
       setError(err);
+      setData(largeArraydata);
     } finally {
       setIsLoading(false);
       setIsUpdating(false);
