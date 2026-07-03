@@ -190,7 +190,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 plan: cliente.plan?.name || "N/A",
                 costo: parseFloat(cliente.plan?.cost || 0),
                 ip: cliente.ip_name || "N/A",
-                mac: cliente.mac_address || "N/A",
+                mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
                 fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
                 dias_habiles: "", 
                 tipo_cliente: norm(cliente.client_type_name),
