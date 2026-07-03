@@ -231,6 +231,30 @@ function TopUrbanismo() {
     exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "operations", customFileName);
   };
 
+  const handleDownloadExcelSimple = () => {
+    const filtroTextos = [...estadosSeleccionados];
+    const urbanismosEspecificos = urbanismosSeleccionados.filter(u => u !== "Todos" && u !== "");
+    if (urbanismosEspecificos.length > 0) {
+      filtroTextos.push(`Sectores: ${urbanismosEspecificos.join(", ")}`);
+    }
+
+    let statusParaNombre = estadosSeleccionados.includes("Todos") ? "todos" : estadosSeleccionados.join(" y ").toLowerCase();
+    
+    let cicloParaNombre = "";
+    if (!ciclosSeleccionados.includes("Todos") && ciclosSeleccionados.length > 0) {
+        const numbers = ciclosSeleccionados.map(c => String(c).replace(/\D/g, ""));
+        cicloParaNombre = ` ciclo ${numbers.join(" y ")}`;
+    }
+
+    const hoy = new Date();
+    const dia = hoy.getDate();
+    const mes = hoy.toLocaleString('es-ES', { month: 'long' });
+    const anio = hoy.getFullYear();    
+    const customFileName = `Lista Personalizada de ${statusParaNombre}${cicloParaNombre} y la fecha ${dia} de ${mes} del ${anio}.xlsx`;
+
+    exportToExcel(serviciosParaExportar, filtroTextos, columnasSeleccionadas, "simple", customFileName);
+  };
+
   const handleDownloadExcelExecutive = async () => {
     try {
       const filtroTextos = [...estadosSeleccionados];
@@ -677,6 +701,9 @@ function TopUrbanismo() {
                 <li style={{ marginBottom: '10px' }}>
                   <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros, e incluye también el detalle de clientes con las columnas que hayas seleccionado.
                 </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Lista Personalizada (Solo Columnas):</strong> Genera una lista simple en Excel que incluye únicamente las columnas que hayas seleccionado en el panel de filtros, sin pestañas adicionales ni reportes complejos.
+                </li>
               </ul>
             </div>
 
@@ -686,6 +713,9 @@ function TopUrbanismo() {
               </button>
               <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
                 📈 Descargar Reporte Ejecutivo
+              </button>
+              <button className="buttonDescargar" onClick={handleDownloadExcelSimple} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#2980b9' }}>
+                📋 Descargar Lista Personalizada (Solo Columnas)
               </button>
             </div>
 
