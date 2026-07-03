@@ -46,7 +46,6 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     const anioActual = hoy.getFullYear();
 
     // --- 1. HOJA DE VALIDACIONES ---
-    const validSheet = workbook.addWorksheet("Validaciones");
     const motivos = [
         "Baja por Mudanza", "Cliente no Contestó", "Cliente pronto a realizar pago",
         "Cambio de Proveedor (CHNET)", "Cliente ya Pagó", "Cliente ya solicito cancelación anteriormente",
@@ -58,41 +57,41 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
     ];
     const estados = ["Activo", "Cancelado", "Por Instalar", "Pausado", "Suspendido"];
     const contactados = []; // Ahora se deja vacío para ingreso manual en Excel
-
     const siNo = ["SI", "NO"];
 
-    validSheet.getColumn('A').width = 45;
-    validSheet.getColumn('B').width = 20;
-    validSheet.getColumn('C').width = 30;
-    validSheet.getColumn('D').width = 15;
+    if (reportType === "operations") {
+        const validSheet = workbook.addWorksheet("Validaciones");
+        validSheet.getColumn('A').width = 45;
+        validSheet.getColumn('B').width = 20;
+        validSheet.getColumn('C').width = 30;
+        validSheet.getColumn('D').width = 15;
 
-    validSheet.getCell('A1').value = "Motivo";
-    validSheet.getCell('B1').value = "Estado";
-    validSheet.getCell('C1').value = "Contactado Por";
-    validSheet.getCell('D1').value = "Condicional";
+        validSheet.getCell('A1').value = "Motivo";
+        validSheet.getCell('B1').value = "Estado";
+        validSheet.getCell('C1').value = "Contactado Por";
+        validSheet.getCell('D1').value = "Condicional";
 
-    validSheet.getRow(1).font = { bold: true };
-    validSheet.getRow(1).alignment = { horizontal: 'center' };
+        validSheet.getRow(1).font = { bold: true };
+        validSheet.getRow(1).alignment = { horizontal: 'center' };
 
-    motivos.forEach((m, i) => {
-        const cell = validSheet.getCell(`A${i + 2}`);
-        cell.value = m;
-        cell.alignment = { horizontal: 'center' };
-    });
-    estados.forEach((e, i) => {
-        const cell = validSheet.getCell(`B${i + 2}`);
-        cell.value = e;
-        cell.alignment = { horizontal: 'center' };
-    });
-    // Se omite el llenado automático de contactados para permitir ingreso manual en Excel
+        motivos.forEach((m, i) => {
+            const cell = validSheet.getCell(`A${i + 2}`);
+            cell.value = m;
+            cell.alignment = { horizontal: 'center' };
+        });
+        estados.forEach((e, i) => {
+            const cell = validSheet.getCell(`B${i + 2}`);
+            cell.value = e;
+            cell.alignment = { horizontal: 'center' };
+        });
 
-    siNo.forEach((s, i) => {
-        const cell = validSheet.getCell(`D${i + 2}`);
-        cell.value = s;
-        cell.alignment = { horizontal: 'center' };
-    });
+        siNo.forEach((s, i) => {
+            const cell = validSheet.getCell(`D${i + 2}`);
+            cell.value = s;
+            cell.alignment = { horizontal: 'center' };
+        });
+    }
 
-    // --- 2. HOJA REPORTE GENERAL ---
     const mainSheet = workbook.addWorksheet("REPORTE GENERAL");
 
     const allPossibleColumns = [
@@ -244,14 +243,16 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
             });
 
             // Validaciones
-            row.getCell('estado_final').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
-            
-            if (rowData.contactado_por !== undefined) {
-                row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$50`] };
+            if (reportType === "operations") {
+                row.getCell('estado_final').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
+                
+                if (rowData.contactado_por !== undefined) {
+                    row.getCell('contactado_por').dataValidation = { type: 'list', formulae: [`'Validaciones'!$C$2:$C$50`] };
 
-                row.getCell('contesto').dataValidation = { type: 'list', formulae: [`'Validaciones'!$D$2:$D$3`] };
-                row.getCell('estado_actualizado').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
-                row.getCell('motivo_cierre').dataValidation = { type: 'list', formulae: [`'Validaciones'!$A$2:$A$${motivos.length + 1}`] };
+                    row.getCell('contesto').dataValidation = { type: 'list', formulae: [`'Validaciones'!$D$2:$D$3`] };
+                    row.getCell('estado_actualizado').dataValidation = { type: 'list', formulae: [`'Validaciones'!$B$2:$B$${estados.length + 1}`] };
+                    row.getCell('motivo_cierre').dataValidation = { type: 'list', formulae: [`'Validaciones'!$A$2:$A$${motivos.length + 1}`] };
+                }
             }
         });
 
