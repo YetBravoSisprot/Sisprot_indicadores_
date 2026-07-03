@@ -95,29 +95,58 @@ function PasswordProvider({ children }) {
     ];
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
 
     try {
-      const fetchPromises = urls.map(url =>
-        fetch(url, {
-          method: "GET",
-          signal: controller.signal,
-          headers: {
-            "X-API-KEY": apiKey.trim(),
-            "Accept": "application/json"
+      const fetchPromises = urls.map(async (url, idx) => {
+        const urlController = new AbortController();
+        const timeoutId = setTimeout(() => urlController.abort(), 15000); // 15 seconds timeout
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+            signal: urlController.signal,
+            headers: {
+              "X-API-KEY": apiKey.trim(),
+              "Accept": "application/json"
+            }
+          });
+          clearTimeout(timeoutId);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          return await response.json();
+        } catch (apiErr) {
+          clearTimeout(timeoutId);
+          console.warn(`URL ${idx + 1} failed or timed out. Falling back to local data for this category.`, apiErr);
+          
+          if (largeArraydata && largeArraydata.results) {
+            if (idx === 0) {
+              // Pymes Activos Ciclo 10
+              return largeArraydata.results.filter(c => 
+                c.status_name === "Activo" && c.cycle === 10 && c.client_type_name === "PYME"
+              );
+            } else if (idx === 1) {
+              // Pymes Activos Ciclo 25
+              return largeArraydata.results.filter(c => 
+                c.status_name === "Activo" && c.cycle === 25 && c.client_type_name === "PYME"
+              );
+            } else if (idx === 2) {
+              // Residenciales Activos Ciclo 1
+              return largeArraydata.results.filter(c => 
+                c.status_name === "Activo" && c.cycle === 1 && c.client_type_name === "RESIDENCIAL"
+              );
+            } else if (idx === 3) {
+              // Suspendidos Residenciales Ciclo 1
+              return largeArraydata.results.filter(c => 
+                c.status_name === "Suspendido" && c.cycle === 1 && c.client_type_name === "RESIDENCIAL"
+              );
+            }
           }
-        }).then(async res => {
-          if (!res.ok) throw new Error(`HTTP error ${res.status} on ${url}`);
-          return res.json();
-        })
-      );
+          return [];
+        }
+      });
       
       const lists = await Promise.all(fetchPromises);
-      clearTimeout(timeoutId);
       apiResults = lists.flat();
     } catch (apiErr) {
-      clearTimeout(timeoutId);
-      console.error("Error fetching real-time contracts from URLs, falling back to local data:", apiErr);
+      console.error("General error in fetching process, falling back to all local data:", apiErr);
       apiResults = largeArraydata.results;
     }
 
