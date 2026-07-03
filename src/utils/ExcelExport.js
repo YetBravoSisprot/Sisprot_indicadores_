@@ -189,7 +189,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
                 ciclo: mapCycleValue(cliente.cycle, cliente),
                 plan: cliente.plan?.name || "N/A",
                 costo: parseFloat(cliente.plan?.cost || 0),
-                ip: cliente.ip_name || "N/A",
+                ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
                 mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
                 fecha_creacion: cliente.created_at ? new Date(cliente.created_at).toLocaleDateString() : "N/A",
                 dias_habiles: "", 
