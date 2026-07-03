@@ -21,7 +21,7 @@ const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "
 
 function TopUrbanismo() {
   const location = useLocation();
-  const { showPasswordState, data, isLoading, error, email } = useContext(PasswordContext);
+  const { showPasswordState, data, isLoading, error, email, fetchData, isUpdating } = useContext(PasswordContext);
 
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState({});
   const [urbanismosAprobados, setUrbanismosAprobados] = useState({});
@@ -545,6 +545,14 @@ function TopUrbanismo() {
               </button>
               <button className="button" onClick={handleTopUrb}>
                 Top Global
+              </button>
+              <button 
+                className="button" 
+                onClick={() => fetchData(true)} 
+                disabled={isUpdating}
+                style={{ backgroundColor: isUpdating ? '#bdc3c7' : '#9b59b6', color: '#fff', marginLeft: '10px' }}
+              >
+                {isUpdating ? "🔄 Actualizando..." : "🔄 Actualizar Datos"}
               </button>
             </div>
 
