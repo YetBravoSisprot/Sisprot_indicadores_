@@ -76,27 +76,87 @@ function PasswordProvider({ children }) {
     setIsAuthenticated(false);
     setShowPasswordState(true);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // console.log("URL:", api);
-        // console.log("Token:", token);
+        const apiKey = "xK9pW2vM4zY0nR1tQ5sJ8hF3cD6aB1uE9iO2mN7rT4bV5xS8gL";
+        const urls = [
+          "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=10&page=1&provisional=True&client_type=2",
+          "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=25&page=1&provisional=True&client_type=2",
+          "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1",
+          "https://api.sisprotgf.com/api/public/contracts/?status=19&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1"
+        ];
+        
+        let apiResults = [];
+        try {
+          const fetchPromises = urls.map(url =>
+            fetch(url, {
+              method: "GET",
+              headers: {
+                "X-API-KEY": apiKey.trim(),
+                "Accept": "application/json"
+              }
+            }).then(async res => {
+              if (!res.ok) throw new Error(`HTTP error ${res.status} on ${url}`);
+              return res.json();
+            })
+          );
+          
+          const lists = await Promise.all(fetchPromises);
+          apiResults = lists.flat();
+        } catch (apiErr) {
+          console.error("Error fetching real-time contracts from URLs, falling back to local data:", apiErr);
+          apiResults = largeArraydata.results;
+        }
 
-        // const response = await fetch(api, {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
+        // Map local data by ID for fast lookup
+        const localDataMap = new Map();
+        if (largeArraydata && largeArraydata.results) {
+          largeArraydata.results.forEach(item => {
+            if (item && item.id) {
+              localDataMap.set(item.id, item);
+            }
+          });
+        }
 
-        // if (!response.ok) {
-        //   throw new Error(`Error al cargar los datos: ${response.statusText}`);
-        // }
+        // Merge API data with local data details
+        const mergedResults = apiResults.map(c => {
+          if (c.client_name !== undefined) {
+            return c; // Already in local format if we fell back
+          }
 
-        // const jsonData = await response.json();
-        //               **            //
-        // aqui en vez de usar la api usare datos fiticios ya que es informacion privada de la empresa//
-        const jsonData = { ...largeArraydata };
+          const local = localDataMap.get(c.id) || {};
+          
+          const status = c.status_name || "N/A";
+          const clientType = c.client_type?.name || "N/A";
+          const clientSubdivision = `${status.toUpperCase()}_${clientType.toUpperCase()}`;
+
+          return {
+            id: c.id,
+            client_name: c.client?.full_name || local.client_name || "Sin nombre",
+            client_type_name: clientType,
+            client_subdivision: clientSubdivision,
+            status_name: status,
+            cycle: c.cycle !== undefined && c.cycle !== null ? c.cycle : local.cycle,
+            migrate: local.migrate !== undefined ? local.migrate : false,
+            sector_name: local.sector_name || "",
+            plan: c.plan || local.plan || { id: null, name: "N/A", cost: "0.00" },
+            client_mobile: c.client?.mobile || local.client_mobile || "N/A",
+            client_email: c.client?.email || local.client_email || "N/A",
+            address: local.address || "",
+            client_identification: c.client?.identification || local.client_identification || "N/A",
+            created_at: c.created_at || local.created_at || null,
+            service_detail: local.service_detail || null,
+            nap_box_name: local.nap_box_name || "",
+            ip_name: local.ip_name || "",
+            mac_address: local.mac_address || ""
+          };
+        });
+
+        const jsonData = {
+          count: mergedResults.length,
+          results: mergedResults
+        };
 
         // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
         if (jsonData && jsonData.results) {
