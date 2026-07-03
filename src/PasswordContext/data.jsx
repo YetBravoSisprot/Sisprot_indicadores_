@@ -108063,8 +108063,8 @@ const largeArraydata =
       "id": 6864,
       "client_name": "ANGEL EDUARDO AMADOR ANDRADE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -108081,7 +108081,16 @@ const largeArraydata =
       "client_identification": "V28317298",
       "nap_box_name": "CTO-00179",
       "created_at": "2024-10-26T11:22:44.429610",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12656,
+        "ip": "172.24.10.2",
+        "mac": "OE:MT:3C:62:54:0E",
+        "serial": "OEMT3C62540E",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-07-02T21:43:13.063802",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
