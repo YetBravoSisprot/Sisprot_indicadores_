@@ -509,7 +509,6 @@ function TopUrbanismo() {
     sectorAgenciaMap,
   ]);
 
-  if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -554,7 +553,7 @@ function TopUrbanismo() {
               >
                 {isUpdating ? "🔄 Actualizando..." : "🔄 Actualizar Datos"}
               </button>
-              {connectionStatus && (
+              {connectionStatus && !isLoading && !isUpdating && (
                 <div style={{ fontSize: '0.9rem', color: connectionStatus.includes('✅') ? '#2ecc71' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
                   {connectionStatus}
                 </div>
@@ -757,6 +756,14 @@ function TopUrbanismo() {
             <UrbanismoList urbanismos={topUrbanismos} />
           )}
         </>
+      )}
+      {(isLoading || isUpdating) && (
+        <div className="loading-overlay-blur">
+          <div className="loading-card">
+            <div className="loading-spinner"></div>
+            <span className="loading-text">Cargando...</span>
+          </div>
+        </div>
       )}
     </div>
   );
