@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import { useNavigate } from "react-router-dom";
 import LogoTitulo from "../../Componentes/LogoTitulo";
-import ParticleBackground from "../../Componentes/ParticleBackground";
 import "./Loging.css";
 
 function Loging() {
@@ -44,7 +43,6 @@ function Loging() {
 
   return (
     <div className="login-page">
-      <ParticleBackground />
       <div className="login-wrapper">
         <LogoTitulo />
 
