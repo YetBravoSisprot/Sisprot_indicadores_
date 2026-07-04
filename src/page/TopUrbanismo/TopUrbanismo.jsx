@@ -21,7 +21,7 @@ const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "
 
 function TopUrbanismo() {
   const location = useLocation();
-  const { showPasswordState, data, isLoading, error, email, fetchData, isUpdating } = useContext(PasswordContext);
+  const { showPasswordState, data, isLoading, error, email, fetchData, isUpdating, connectionStatus } = useContext(PasswordContext);
 
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState({});
   const [urbanismosAprobados, setUrbanismosAprobados] = useState({});
@@ -554,6 +554,11 @@ function TopUrbanismo() {
               >
                 {isUpdating ? "🔄 Actualizando..." : "🔄 Actualizar Datos"}
               </button>
+              {connectionStatus && (
+                <div style={{ fontSize: '0.9rem', color: connectionStatus.includes('✅') ? '#2ecc71' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
+                  {connectionStatus}
+                </div>
+              )}
             </div>
 
             <div className="filtros-selects-grid">
