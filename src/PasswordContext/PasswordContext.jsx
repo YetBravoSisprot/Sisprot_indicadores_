@@ -7,8 +7,35 @@ function PasswordProvider({ children }) {
   const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
   const [password, setPassword] = useState("");
   const [showPasswordState, setShowPasswordState] = useState(localStorage.getItem("isAuthenticated") !== "true");
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const getInitialFilteredData = () => {
+    const jsonData = { ...largeArraydata };
+    if (jsonData && jsonData.results) {
+      const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+      jsonData.results = jsonData.results.filter(cliente => {
+        if (!cliente) return false;
+        const name = (cliente.client_name || "").toUpperCase();
+        const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase()));
+        if (isWhitelisted) return true;
+
+        const searchFields = [
+          cliente.client_name,
+          cliente.address,
+          cliente.sector_name,
+          cliente.client_mobile,
+          cliente.client_identification,
+          cliente.client_type_name,
+          cliente.plan?.name
+        ];
+        return !searchFields.some(val =>
+          val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
+        );
+      });
+    }
+    return jsonData;
+  };
+
+  const [data, setData] = useState(getInitialFilteredData());
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [role, setRole] = useState(localStorage.getItem("userRole") || null);
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
@@ -103,7 +130,7 @@ function PasswordProvider({ children }) {
 
       const fetchPromises = urls.map(async (url, idx) => {
         const urlController = new AbortController();
-        const timeoutId = setTimeout(() => urlController.abort(), 15000); // 15 seconds timeout
+        const timeoutId = setTimeout(() => urlController.abort(), 30000); // 30 seconds timeout
         try {
           const response = await fetch(url, {
             method: "GET",
@@ -252,7 +279,7 @@ function PasswordProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(true);
   }, []);
 
   // Lógica de Cierre de Sesión Automático por Inactividad (10 minutos)
