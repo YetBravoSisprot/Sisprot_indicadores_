@@ -765,7 +765,7 @@ option:checked {
   font-family: 'Outfit', 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #1e293b;
+  color: #1e293b !important;
 }
 
 @keyframes spin-loader-anim {
