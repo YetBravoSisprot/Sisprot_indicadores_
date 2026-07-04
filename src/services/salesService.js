@@ -59,14 +59,13 @@ export const fetchDriveSales = async () => {
             if (fullName.includes("PRUEBA")) return;
             if (!ventaAsignada || ventaAsignada.toLowerCase() === "none") return;
 
-            const date = new Date(ventaAsignada);
-            if (isNaN(date.getTime())) return;
-
-            const yearStr = date.getFullYear().toString();
-
-            if (dataByYear[yearStr]) {
-                const month = date.getMonth();
-                dataByYear[yearStr][month]++;
+            const dateParts = ventaAsignada.split(" ")[0].split("T")[0].split("-");
+            if (dateParts.length >= 3) {
+                const yearStr = dateParts[0];
+                const month = parseInt(dateParts[1], 10) - 1;
+                if (dataByYear[yearStr] && month >= 0 && month < 12) {
+                    dataByYear[yearStr][month]++;
+                }
             }
         });
 
