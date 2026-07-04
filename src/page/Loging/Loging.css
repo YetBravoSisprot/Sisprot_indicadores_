@@ -68,17 +68,18 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease;
+  color: #94a3b8; /* Gris pizarra profesional */
+  transition: color 0.2s ease, transform 0.2s ease;
   user-select: none;
 }
 
 .toggle-password:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  color: #004C6D; /* Azul oscuro corporativo al pasar el cursor */
 }
 
 .login-form input {
