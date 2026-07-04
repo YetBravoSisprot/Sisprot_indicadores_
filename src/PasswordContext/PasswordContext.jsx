@@ -13,6 +13,7 @@ function PasswordProvider({ children }) {
   const [role, setRole] = useState(localStorage.getItem("userRole") || null);
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState("Conectando...");
   const token = process.env.REACT_APP_TOKEN_KEY;
   const api = process.env.REACT_APP_API;
 
@@ -94,9 +95,12 @@ function PasswordProvider({ children }) {
       "https://api.sisprotgf.com/api/public/contracts/?status=19&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1"
     ];
 
-    const controller = new AbortController();
+    setConnectionStatus("Conectando con la API...");
 
     try {
+      let failedCount = 0;
+      let lastErrorMessage = "";
+
       const fetchPromises = urls.map(async (url, idx) => {
         const urlController = new AbortController();
         const timeoutId = setTimeout(() => urlController.abort(), 15000); // 15 seconds timeout
@@ -114,6 +118,8 @@ function PasswordProvider({ children }) {
           return await response.json();
         } catch (apiErr) {
           clearTimeout(timeoutId);
+          failedCount++;
+          lastErrorMessage = apiErr.message || String(apiErr);
           console.warn(`URL ${idx + 1} failed or timed out. Falling back to local data for this category.`, apiErr);
           
           if (largeArraydata && largeArraydata.results) {
@@ -145,9 +151,18 @@ function PasswordProvider({ children }) {
       
       const lists = await Promise.all(fetchPromises);
       apiResults = lists.flat();
+
+      if (failedCount === 0) {
+        setConnectionStatus("✅ Datos actualizados en tiempo real");
+      } else if (failedCount === urls.length) {
+        setConnectionStatus(`⚠️ Cargado offline (Error: ${lastErrorMessage})`);
+      } else {
+        setConnectionStatus(`⚠️ Conexión parcial (Fallaron ${failedCount} de 4 consultas. Error: ${lastErrorMessage})`);
+      }
     } catch (apiErr) {
       console.error("General error in fetching process, falling back to all local data:", apiErr);
       apiResults = largeArraydata.results;
+      setConnectionStatus("⚠️ Cargado offline (Error crítico en proceso de descarga)");
     }
 
     try {
@@ -302,6 +317,7 @@ function PasswordProvider({ children }) {
         logout,
         fetchData,
         isUpdating,
+        connectionStatus,
       }}
     >
       {children}
