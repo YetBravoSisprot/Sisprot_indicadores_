@@ -1,11 +1,11 @@
 :root {
     /* --- PALETA DE COLORES --- */
-    --color-primary: #1e90ff;
-    /* Azul Brillante */
-    --color-primary-dark: #0047ab;
-    /* Azul Oscuro */
-    --color-accent: #2ecc71;
-    /* Verde Éxito */
+    --color-primary: #004C6D;
+    /* Azul Oscuro Corporativo */
+    --color-primary-dark: #002f45;
+    /* Azul Oscuro Más Fuerte */
+    --color-accent: #E9A124;
+    /* Dorado / Amarillo Mostaza */
     --color-danger: #e74c3c;
     /* Rojo Alerta */
     --color-text-light: #ffffff;
@@ -16,9 +16,9 @@
     /* Azul Cielo Brillante */
 
     /* --- COLORES GLASSHMORPHISM --- */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 76, 109, 0.25);
 
     /* --- FUENTES Y TAMAÑOS --- */
     --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -33,8 +33,10 @@
 
 body {
     font-family: var(--font-family-base);
-    background-color: #082a63;
-    /* Fallback background */
+    background: radial-gradient(circle at 80% 20%, rgba(233, 161, 36, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(0, 76, 109, 0.45) 0%, transparent 55%),
+                linear-gradient(135deg, #021a24 0%, #004C6D 100%);
+    background-attachment: fixed;
     color: var(--color-text-dark);
     margin: 0;
     -webkit-font-smoothing: antialiased;
