@@ -140,9 +140,10 @@ function PasswordProvider({ children }) {
               "Accept": "application/json"
             }
           });
-          clearTimeout(timeoutId);
           if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          return await response.json();
+          const jsonData = await response.json();
+          clearTimeout(timeoutId);
+          return jsonData;
         } catch (apiErr) {
           clearTimeout(timeoutId);
           failedCount++;
@@ -238,9 +239,28 @@ function PasswordProvider({ children }) {
         };
       }).filter(Boolean);
 
+      // Get all local clients that are NOT in the categories we fetch from the API
+      const nonApiLocalClients = (largeArraydata && largeArraydata.results)
+        ? largeArraydata.results.filter(client => {
+            if (!client) return false;
+            const status = (client.status_name || "").toUpperCase().trim();
+            const cycle = parseInt(client.cycle, 10);
+            const type = (client.client_type_name || "").toUpperCase().trim();
+
+            const isApiCategory1 = (status === "ACTIVO" && cycle === 10 && type === "PYME");
+            const isApiCategory2 = (status === "ACTIVO" && cycle === 25 && type === "PYME");
+            const isApiCategory3 = (status === "ACTIVO" && cycle === 1 && type === "RESIDENCIAL");
+            const isApiCategory4 = (status === "SUSPENDIDO" && cycle === 1 && type === "RESIDENCIAL");
+
+            return !(isApiCategory1 || isApiCategory2 || isApiCategory3 || isApiCategory4);
+          })
+        : [];
+
+      const finalResults = [...mergedResults, ...nonApiLocalClients];
+
       const jsonData = {
-        count: mergedResults.length,
-        results: mergedResults
+        count: finalResults.length,
+        results: finalResults
       };
 
       // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
