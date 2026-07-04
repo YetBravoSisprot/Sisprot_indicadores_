@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5388,
+  "count": 5389,
   "results": [
     {
       "id": 3063,
@@ -84696,8 +84696,8 @@ const largeArraydata =
       "id": 6049,
       "client_name": "GABRIEL SHARIFF RODRIGUEZ ALI",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II Edificios",
@@ -104573,7 +104573,16 @@ const largeArraydata =
       "client_identification": "V11273334",
       "nap_box_name": "CTO-00127",
       "created_at": "2024-10-02T15:48:02.547315",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12674,
+        "ip": "172.31.250.2",
+        "mac": "OE:MT:3C:62:32:0E",
+        "serial": "OEMT3C62320E",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-07-04T14:57:03.358707",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -118772,8 +118781,8 @@ const largeArraydata =
       "id": 7270,
       "client_name": "JUAN ANTONIO ESPINOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -139221,8 +139230,8 @@ const largeArraydata =
       "id": 8079,
       "client_name": "BLASINA TRINIDAD PERAZA DIAZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -159925,8 +159934,8 @@ const largeArraydata =
       "id": 8918,
       "client_name": "MARIBEL DE JESUS ARMAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Callejon Lim",
@@ -159943,7 +159952,16 @@ const largeArraydata =
       "client_identification": "V9664737",
       "nap_box_name": "TORRE AZUCENA",
       "created_at": "2025-12-04T10:17:51.888176",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12673,
+        "ip": "10.16.138.2",
+        "mac": "OE:MT:3C:62:4B:C2",
+        "serial": "OEMT3C624BC2",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-07-04T14:48:57.471660",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -165812,6 +165830,31 @@ const largeArraydata =
       "client_identification": "v18779468",
       "nap_box_name": "CTO-00693",
       "created_at": "2026-07-04T12:29:03.436232",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9135,
+      "client_name": "PAOLA ISABELLA VIZCAYA CORREA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Casona II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04122251892",
+      "client_email": "PAOISABELLA26@GMAIL.COM",
+      "address": "URB LA CASONA 2 CALLE 18 CASA 13 INTERCOMUNAL TURMERO  ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V27864691",
+      "nap_box_name": "CTO-00086",
+      "created_at": "2026-07-04T15:05:55.342061",
       "service_detail": null,
       "installation_invoice_cost": null
     }
