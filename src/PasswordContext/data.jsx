@@ -54268,8 +54268,8 @@ const largeArraydata =
       "id": 4974,
       "client_name": "ERICK DANIEL BLANCA GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados I",
@@ -99369,7 +99369,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04122992477",
+      "client_mobile": "04243087877",
       "client_email": "BELLOHABERLYN08@GMAIL.COM",
       "address": "CALLE PRINCIPAL CASA PARCELA 13 SECTOR PAYITA TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V31023241",
@@ -152059,7 +152059,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Santa Eduviges",
       "plan": {
         "id": 100,
