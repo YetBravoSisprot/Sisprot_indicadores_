@@ -13581,8 +13581,8 @@ const largeArraydata =
       "id": 3541,
       "client_name": "ALAN DAVID TOVAR GARCIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -13599,7 +13599,16 @@ const largeArraydata =
       "client_identification": "V29837588",
       "nap_box_name": "CTO-00105",
       "created_at": "2024-04-15T13:40:57.792672",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12692,
+        "ip": "172.26.159.2",
+        "mac": "HW:TC:D1:59:F6:9A",
+        "serial": "HWTCD159F69A",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-07-06T14:01:54.191213",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -14420,8 +14429,8 @@ const largeArraydata =
       "id": 3568,
       "client_name": "MARVIS YOHANA PAREJO ALAYON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Macarena",
@@ -14438,7 +14447,16 @@ const largeArraydata =
       "client_identification": "V17511607",
       "nap_box_name": "668",
       "created_at": "2024-04-15T14:28:45.426895",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12693,
+        "ip": "172.23.113.2",
+        "mac": "XP:ON:23:13:4C:C0",
+        "serial": "XPON23134CC0",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-07-06T14:19:25.052067",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -119534,8 +119552,8 @@ const largeArraydata =
       "id": 7295,
       "client_name": "CARLOS ALBERTO SORIA ROCHE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
