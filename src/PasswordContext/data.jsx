@@ -117790,13 +117790,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00303",
       "created_at": "2024-12-04T14:07:04.528468",
       "service_detail": {
-        "id": 12691,
+        "id": 12694,
         "ip": "10.11.146.2",
         "mac": "HW:TC:22:AD:B2:86",
         "serial": "HWTC22ADB286",
         "queue": null,
         "interface": "VLAN246_NARANJAL",
-        "created_at": "2026-07-06T12:11:16.847300",
+        "created_at": "2026-07-06T18:22:35.937712",
         "created_by_name": null
       },
       "installation_invoice_cost": null
