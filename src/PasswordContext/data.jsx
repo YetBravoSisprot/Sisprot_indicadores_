@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5389,
+  "count": 5390,
   "results": [
     {
       "id": 3063,
@@ -88558,8 +88558,8 @@ const largeArraydata =
       "id": 6173,
       "client_name": "DAYANA ALEXANDRA ARIAS CORONEL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -114828,8 +114828,8 @@ const largeArraydata =
       "id": 7127,
       "client_name": "CARLOS ALBERTO CHIRINO MORILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Sector los Mangos",
@@ -117753,17 +117753,17 @@ const largeArraydata =
       "id": 7233,
       "client_name": "VICTOR SEGUNDO MENDEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Naranjal",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04124815270",
       "client_email": "VICTORSEGUNDOMP@GMAIL.COM",
@@ -117771,7 +117771,16 @@ const largeArraydata =
       "client_identification": "V25845240",
       "nap_box_name": "CTO-00303",
       "created_at": "2024-12-04T14:07:04.528468",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12691,
+        "ip": "10.11.146.2",
+        "mac": "HW:TC:22:AD:B2:86",
+        "serial": "HWTC22ADB286",
+        "queue": null,
+        "interface": "VLAN246_NARANJAL",
+        "created_at": "2026-07-06T12:11:16.847300",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -165908,6 +165917,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN110_CASONA_2",
         "created_at": "2026-07-05T09:53:48.029783",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9136,
+      "client_name": "JEAN CANDELARIO LOPEZ MONTILLA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Terrazas de Juan Pablo",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04145905155",
+      "client_email": "JCLOPEZMONTILLA1@GMAIL.COM",
+      "address": "URB TERRAZAS DE JUAN PABLO II SECTOR SAMAN DE GUERE TURMERO EDO ARAGUA APTO C07",
+      "client_identification": "V14086736",
+      "nap_box_name": "12",
+      "created_at": "2026-07-06T11:53:28.794980",
+      "service_detail": {
+        "id": 12690,
+        "ip": "172.25.23.2",
+        "mac": "TP:LG:2A:BD:C6:93",
+        "serial": "TPLG2ABDC693",
+        "queue": null,
+        "interface": "VLAN130_TERRAZAS_JP",
+        "created_at": "2026-07-06T12:09:43.366285",
         "created_by_name": null
       },
       "installation_invoice_cost": null
