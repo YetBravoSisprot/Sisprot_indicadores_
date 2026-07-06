@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5390,
+  "count": 5391,
   "results": [
     {
       "id": 3063,
@@ -146570,8 +146570,8 @@ const largeArraydata =
       "id": 8360,
       "client_name": "CARLOS EDUARDO HERNANDEZ RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Betania",
@@ -155828,8 +155828,8 @@ const largeArraydata =
       "id": 8758,
       "client_name": "YELITZA MARIA CALDERAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II Edificios",
@@ -165971,6 +165971,31 @@ const largeArraydata =
         "created_at": "2026-07-06T12:09:43.366285",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9137,
+      "client_name": "MARVIS YOHANA PAREJO ALAYON",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Guerito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04141442518",
+      "client_email": "PAREJOMARVIS@GMAIL.COM",
+      "address": "CONJUNTO RESIDENCIAL LOS SAMANES TERRAZA 8 TORRE B SECTOR GUERITO EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V17511607",
+      "nap_box_name": "CE (Proyecto)",
+      "created_at": "2026-07-06T19:36:45.803276",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
