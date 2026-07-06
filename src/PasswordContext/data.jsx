@@ -13587,14 +13587,14 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04127768528",
-      "client_email": "ALANDTOVARG@GMAIL.COM",
+      "client_mobile": "04228871749",
+      "client_email": "yulitzagarcia32@gmail.com",
       "address": "URB. PANTIN CALLE 22 CASA #5 TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V29837588",
       "nap_box_name": "CTO-00105",
