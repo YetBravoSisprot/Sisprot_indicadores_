@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5394,
+  "count": 5395,
   "results": [
     {
       "id": 3063,
@@ -142845,8 +142845,8 @@ const largeArraydata =
       "id": 8202,
       "client_name": "LUIS EDUARDO BARRADA ROA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "1ro de Mayo Sur",
@@ -142863,16 +142863,7 @@ const largeArraydata =
       "client_identification": "V30852962",
       "nap_box_name": "CTO-00149",
       "created_at": "2025-05-19T10:43:33.212495",
-      "service_detail": {
-        "id": 8685,
-        "ip": "10.14.110.2",
-        "mac": "QXTLCB3A026E",
-        "serial": "QXTLCB3A026E",
-        "queue": "queue1",
-        "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2025-05-19T16:32:27.740614",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -158359,8 +158350,8 @@ const largeArraydata =
       "id": 8864,
       "client_name": "ZULAY TRINIDAD GONCALVES DE SOUSA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Callejon Lim",
@@ -166088,8 +166079,8 @@ const largeArraydata =
       "id": 9140,
       "client_name": "LUIS EDUARDO BARRADA ROA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Bosque",
@@ -166106,6 +166097,40 @@ const largeArraydata =
       "client_identification": "V30852962",
       "nap_box_name": "CTO-00290",
       "created_at": "2026-07-07T12:12:42.525405",
+      "service_detail": {
+        "id": 12701,
+        "ip": "10.14.110.2",
+        "mac": "QX:TL:CB:3A:02:6E",
+        "serial": "QXTLCB3A026E",
+        "queue": null,
+        "interface": "VLAN266_EL_BOSQUE_ZTE",
+        "created_at": "2026-07-07T15:09:42.221742",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9141,
+      "client_name": "MERKI DELFINA LUNA LADERA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124583804",
+      "client_email": "LUNAMERKI7@GMAIL.COM",
+      "address": "CALLE LINARES ALCANTARA CASA NRO 57 B SECTOR SAMAN DE GUERE TURMERO",
+      "client_identification": "V10753746",
+      "nap_box_name": "CE - 1078",
+      "created_at": "2026-07-07T15:01:50.502257",
       "service_detail": null,
       "installation_invoice_cost": null
     }
