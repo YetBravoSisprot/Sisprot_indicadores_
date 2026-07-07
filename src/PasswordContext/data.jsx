@@ -166131,7 +166131,16 @@ const largeArraydata =
       "client_identification": "V10753746",
       "nap_box_name": "CE - 1078",
       "created_at": "2026-07-07T15:01:50.502257",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12703,
+        "ip": "10.17.47.2",
+        "mac": "ZX:IC:CD:FD:50:56",
+        "serial": "ZXICCDFD5056",
+        "queue": null,
+        "interface": "VLAN122_SAMAN_GUERE",
+        "created_at": "2026-07-07T17:27:17.165680",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
