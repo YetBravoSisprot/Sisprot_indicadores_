@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5393,
+  "count": 5394,
   "results": [
     {
       "id": 3063,
@@ -144220,8 +144220,8 @@ const largeArraydata =
       "id": 8270,
       "client_name": "CESAR JOSE ACOSTA PULGAR",
       "client_type_name": "GRATIS",
-      "client_subdivision": "ACTIVO_GRATIS",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_GRATIS",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Valle Paraiso",
@@ -144238,16 +144238,7 @@ const largeArraydata =
       "client_identification": "V27511673",
       "nap_box_name": "CTO-00603",
       "created_at": "2025-05-29T12:22:08.325143",
-      "service_detail": {
-        "id": 12667,
-        "ip": "10.14.150.2",
-        "mac": "HW:TC:49:20:07:28",
-        "serial": "HWTC49200728",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2026-07-03T14:31:56.066057",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -156345,8 +156336,8 @@ const largeArraydata =
       "id": 8783,
       "client_name": "EDWARD REINALDO FERNANDEZ GUILLEN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "La Esperanza",
@@ -166054,8 +166045,8 @@ const largeArraydata =
       "id": 9139,
       "client_name": "Ana Karina Garcia Ibarra",
       "client_type_name": "GRATIS",
-      "client_subdivision": "POR INSTALAR_GRATIS",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -166072,6 +166063,40 @@ const largeArraydata =
       "client_identification": "v25827611",
       "nap_box_name": "CTO-00246",
       "created_at": "2026-07-07T11:35:31.832355",
+      "service_detail": {
+        "id": 12699,
+        "ip": "10.14.150.2",
+        "mac": "HW:TC:49:20:07:28",
+        "serial": "HWTC49200728",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-07-07T12:05:03.236608",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9140,
+      "client_name": "LUIS EDUARDO BARRADA ROA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Bosque",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243020799",
+      "client_email": "BARRADALUIS75@GMAIL.COM",
+      "address": "CALLE ARISMENDI CASA NRO 5 SECTOR EL BOSQUE ROSARIO DE PAYA",
+      "client_identification": "V30852962",
+      "nap_box_name": "CTO-00290",
+      "created_at": "2026-07-07T12:12:42.525405",
       "service_detail": null,
       "installation_invoice_cost": null
     }
