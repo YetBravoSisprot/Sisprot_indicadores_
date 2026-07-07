@@ -165702,9 +165702,9 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243637010",
-      "client_email": "GALLARDOANGELF19@GMAL.COM",
+      "client_email": "GALLARDOANGELF19@GMAIL.COM",
       "address": "CALLE NARANJAL CASA NUMERO 31 SECTOR EL NARANJAL TUMERO ARAGUA ZONA POSTAL 2115",
-      "client_identification": "V15036034",
+      "client_identification": "V15038034",
       "nap_box_name": "CE - 681",
       "created_at": "2026-06-29T14:51:24.811393",
       "service_detail": {
@@ -165892,17 +165892,17 @@ const largeArraydata =
     {
       "id": 9134,
       "client_name": "Humberto Javier Morales Padron",
-      "client_type_name": "GRATIS",
-      "client_subdivision": "POR INSTALAR_GRATIS",
+      "client_type_name": "INTERCAMBIO",
+      "client_subdivision": "POR INSTALAR_INTERCAMBIO",
       "status_name": "Por instalar",
       "cycle": 1,
       "migrate": false,
       "sector_name": "San Pablo",
       "plan": {
-        "id": 86,
-        "name": "PLAN RECURRENTE 80M GRATIS",
+        "id": 83,
+        "name": "RECURRENTE INSTITUCIONAL 80M",
         "cost": "0.00",
-        "code": "FO-G80",
+        "code": "FO-R80",
         "profile": "80M/80M"
       },
       "client_mobile": "4144534868",
@@ -165911,7 +165911,16 @@ const largeArraydata =
       "client_identification": "v18779468",
       "nap_box_name": "CTO-00693",
       "created_at": "2026-07-04T12:29:03.436232",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12696,
+        "ip": "10.17.46.2",
+        "mac": "68:9F:FO:2A:7F:EF",
+        "serial": "ZXICCD43BC52",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-07-07T10:45:25.882246",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
