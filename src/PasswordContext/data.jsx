@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5391,
+  "count": 5393,
   "results": [
     {
       "id": 3063,
@@ -42352,11 +42352,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Rio Seco",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
       },
       "client_mobile": "04243039221",
       "client_email": "MAIKELAPG97@GMAIL.COM",
@@ -95017,8 +95017,8 @@ const largeArraydata =
       "id": 6393,
       "client_name": "STEPHANY DUGLEYS SEGOVIA ARIAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -104684,8 +104684,8 @@ const largeArraydata =
       "id": 6733,
       "client_name": "VICTOR JULIO MEDINAS TORRES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -145733,7 +145733,16 @@ const largeArraydata =
       "client_identification": "V5597063",
       "nap_box_name": "674",
       "created_at": "2025-06-05T13:13:46.089251",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12697,
+        "ip": "10.14.216.2",
+        "mac": "QX:TL:CB:3C:0A:76",
+        "serial": "QXTLCB3C0A76",
+        "queue": null,
+        "interface": "VLAN140_SMT1_ZTE",
+        "created_at": "2026-07-07T11:27:38.387190",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166013,6 +166022,56 @@ const largeArraydata =
       "client_identification": "V17511607",
       "nap_box_name": "CE (Proyecto)",
       "created_at": "2026-07-06T19:36:45.803276",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9138,
+      "client_name": "Ana Karina Garcia Ibarra",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "POR INSTALAR_GRATIS",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "4127314994",
+      "client_email": "garciaibarraanakarina@gmail.com",
+      "address": "calle urdaneta numero 31 casco de turmero",
+      "client_identification": "v25827611",
+      "nap_box_name": "CTO-00246",
+      "created_at": "2026-07-07T11:32:31.866633",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9139,
+      "client_name": "Ana Karina Garcia Ibarra",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "POR INSTALAR_GRATIS",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "4127314994",
+      "client_email": "garciaibarraanakarina@gmail.com",
+      "address": "calle urdaneta numero 31 casco de turmero",
+      "client_identification": "v25827611",
+      "nap_box_name": "CTO-00246",
+      "created_at": "2026-07-07T11:35:31.832355",
       "service_detail": null,
       "installation_invoice_cost": null
     }
