@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5395,
+  "count": 5396,
   "results": [
     {
       "id": 3063,
@@ -154769,8 +154769,8 @@ const largeArraydata =
       "id": 8725,
       "client_name": "MARIA EUGENIA LEAL SILVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Callejon Lim",
@@ -163372,8 +163372,8 @@ const largeArraydata =
       "id": 9055,
       "client_name": "DOMINIC GREGOR CORTEZ CARAPAICA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -163390,7 +163390,16 @@ const largeArraydata =
       "client_identification": "V17513261",
       "nap_box_name": "282",
       "created_at": "2026-04-15T13:44:51.019239",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12704,
+        "ip": "10.16.186.2",
+        "mac": "OE:MT:3C:62:45:CE",
+        "serial": "OEMT3C6245CE",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-07-08T09:34:34.543733",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166141,6 +166150,31 @@ const largeArraydata =
         "created_at": "2026-07-07T17:27:17.165680",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9142,
+      "client_name": "ADRIAN ALEJANDRO RODRIGUEZ MONTILLA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Dios Es Mi Refugio",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123085072",
+      "client_email": "ALEJANDROMONTILLA277@GMAIL.COM",
+      "address": "AV PRINCIPAL DE ROSARIO DE PAYA MANZANA 1 NRO 2 SECTOR DIOS ES MI REFUGIO",
+      "client_identification": "V27866553",
+      "nap_box_name": "406",
+      "created_at": "2026-07-08T09:27:44.055856",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
