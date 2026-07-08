@@ -48205,8 +48205,8 @@ const largeArraydata =
       "id": 4754,
       "client_name": "NILYA DEL VALLE GONZALEZ RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
@@ -152093,13 +152093,13 @@ const largeArraydata =
       "nap_box_name": "CE-526",
       "created_at": "2025-07-14T15:49:25.282254",
       "service_detail": {
-        "id": 12354,
+        "id": 12707,
         "ip": "10.15.180.2",
-        "mac": "ADCGCA659D45",
+        "mac": "AD:CG:CA:65:9D:45",
         "serial": "ADCGCA659D45",
         "queue": null,
         "interface": "VLAN127_SANTA_EDUVIGES",
-        "created_at": "2026-04-18T12:38:06.544503",
+        "created_at": "2026-07-08T17:04:53.535879",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166004,8 +166004,8 @@ const largeArraydata =
       "id": 9137,
       "client_name": "MARVIS YOHANA PAREJO ALAYON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guerito",
@@ -166022,7 +166022,16 @@ const largeArraydata =
       "client_identification": "V17511607",
       "nap_box_name": "CE (Proyecto)",
       "created_at": "2026-07-06T19:36:45.803276",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12709,
+        "ip": "172.23.113.2",
+        "mac": "XP:ON:23:13:4C:C0",
+        "serial": "XPON23134CC0",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-07-08T17:15:11.688877",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
