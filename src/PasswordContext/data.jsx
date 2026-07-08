@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5396,
+  "count": 5397,
   "results": [
     {
       "id": 3063,
@@ -166184,6 +166184,31 @@ const largeArraydata =
         "created_at": "2026-07-08T13:55:36.964244",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9143,
+      "client_name": "GREGORI BERNARDO BORGES GRAFFE",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128870448",
+      "client_email": "GREGORYGRAFFE34@GMAIL.COM",
+      "address": "CALLE NEGRO PRIMERO CASA 2-1 CASCO DE TURMERO, TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15302952",
+      "nap_box_name": "53",
+      "created_at": "2026-07-08T14:54:02.270571",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
