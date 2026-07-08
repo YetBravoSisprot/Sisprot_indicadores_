@@ -29354,7 +29354,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04124270758",
-      "client_email": "Edinzonp2010@gmail. Com",
+      "client_email": "EGLYSRINCONES63@GMAIL.COM",
       "address": "CALLE BOLIVAR CASA NRO 57-2 SECTOR 19 DE ABRIL TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V11032997",
       "nap_box_name": "CTO-00004",
