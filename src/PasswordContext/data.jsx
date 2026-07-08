@@ -166174,7 +166174,16 @@ const largeArraydata =
       "client_identification": "V27866553",
       "nap_box_name": "406",
       "created_at": "2026-07-08T09:27:44.055856",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12705,
+        "ip": "10.17.48.2",
+        "mac": "ZX:IC:CD:0F:3A:C0",
+        "serial": "ZXICCD0F3AC0",
+        "queue": null,
+        "interface": "VLAN271_DIOS_ES_MI_REFUGIO_OLT1",
+        "created_at": "2026-07-08T13:55:36.964244",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
