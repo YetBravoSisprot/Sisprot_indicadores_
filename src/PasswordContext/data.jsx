@@ -42337,8 +42337,8 @@ const largeArraydata =
       "id": 4555,
       "client_name": "MAIKEL ANIBAL PACHECO GOMEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -42355,7 +42355,16 @@ const largeArraydata =
       "client_identification": "V26935349",
       "nap_box_name": "CTO-00070",
       "created_at": "2024-06-09T09:50:57.944052",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12714,
+        "ip": "172.29.56.2",
+        "mac": "HW:TC:88:4A:E4:85",
+        "serial": "HWTC884AE485",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-07-09T15:02:42.073786",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166224,8 +166233,8 @@ const largeArraydata =
       "id": 9144,
       "client_name": "ANDREINA COROMOTO GARCIA CAMACHO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -166242,7 +166251,16 @@ const largeArraydata =
       "client_identification": "V18852184",
       "nap_box_name": "CTO-00130",
       "created_at": "2026-07-09T14:46:49.985480",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12713,
+        "ip": "10.16.224.2",
+        "mac": "68:9F:F0:2A:76:CF",
+        "serial": "ZXICCD75E207",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-07-09T14:50:16.278943",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
