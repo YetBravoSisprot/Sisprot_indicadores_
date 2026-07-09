@@ -32404,7 +32404,7 @@ const largeArraydata =
         "profile": "300M/300M"
       },
       "client_mobile": "04148685485",
-      "client_email": "venphil25@gmail.com",
+      "client_email": "VEHICULOSTURMERO2025@GMAIL.COM",
       "address": "TURMERO, CALLE PETIÓN, EDIF CICPC TURMERO, FRENTE AL CONCEJO MUNICIPAL",
       "client_identification": "V25069135",
       "nap_box_name": "CTO-00037",
@@ -54227,8 +54227,8 @@ const largeArraydata =
       "id": 4970,
       "client_name": "FRANYELIN ALEJANDRA GONZALEZ GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Las Palmas",
@@ -54245,7 +54245,16 @@ const largeArraydata =
       "client_identification": "V25066771",
       "nap_box_name": "CE - 850",
       "created_at": "2024-06-17T11:33:46.599744",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12711,
+        "ip": "172.29.11.2",
+        "mac": "OE:MT:3C:62:60:BE",
+        "serial": "OEMT3C6260BE",
+        "queue": null,
+        "interface": "VLAN262_LAS_PALMAS_ZTE",
+        "created_at": "2026-07-09T10:25:51.138432",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -156736,13 +156745,13 @@ const largeArraydata =
       "nap_box_name": "CTO - 992",
       "created_at": "2025-09-11T12:49:52.684828",
       "service_detail": {
-        "id": 12245,
+        "id": 12712,
         "ip": "10.16.54.2",
-        "mac": "HWTCCA54C54D",
-        "serial": "HWTCCA54C54D",
+        "mac": "68:9F:F0:2A:81:AF",
+        "serial": "ZXICCDC2C9E4",
         "queue": null,
         "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-04-02T17:18:45.574999",
+        "created_at": "2026-07-09T10:54:26.045481",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -158763,8 +158772,8 @@ const largeArraydata =
       "id": 8878,
       "client_name": "RONALDO MANUEL PENA LEON CICPC",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -158776,7 +158785,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04148685485",
-      "client_email": "venphil25@gmail.com",
+      "client_email": "VEHICULOSTURMERO2025@GMAIL.COM",
       "address": "CALLÉ PETION, EDIF. CICPC TURMERO, CASCO DE TURMERO, FRENTE AL CONCEJO MUNICIPAL",
       "client_identification": "V25069135",
       "nap_box_name": "CTO-00037",
@@ -166168,7 +166177,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04123085072",
+      "client_mobile": "04124685774",
       "client_email": "ALEJANDROMONTILLA277@GMAIL.COM",
       "address": "AV PRINCIPAL DE ROSARIO DE PAYA MANZANA 1 NRO 2 SECTOR DIOS ES MI REFUGIO",
       "client_identification": "V27866553",
