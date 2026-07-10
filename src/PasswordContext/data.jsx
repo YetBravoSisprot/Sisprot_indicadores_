@@ -144238,8 +144238,8 @@ const largeArraydata =
       "id": 8270,
       "client_name": "CESAR JOSE ACOSTA PULGAR",
       "client_type_name": "GRATIS",
-      "client_subdivision": "CANCELADO_GRATIS",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Valle Paraiso",
@@ -166353,8 +166353,8 @@ const largeArraydata =
       "id": 9147,
       "client_name": "HUGO JOSE TOVAR CARREÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Haras de San Pablo",
@@ -166371,7 +166371,16 @@ const largeArraydata =
       "client_identification": "V13770135",
       "nap_box_name": "26",
       "created_at": "2026-07-10T16:41:26.041048",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12722,
+        "ip": "10.16.227.2",
+        "mac": "ZX:IC:CD:48:CE:80",
+        "serial": "ZXICCD48CE80",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-07-10T17:12:19.334007",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
