@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5399,
+  "count": 5400,
   "results": [
     {
       "id": 3063,
@@ -159336,7 +159336,7 @@ const largeArraydata =
         "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04247097035",
-      "client_email": "LLLENINLARA@GMAIL.COM",
+      "client_email": "JEVELIN58@GMAIL.COM",
       "address": "CALLE RICAURTE EDIF SAN MIGUEL PLANTA BAJA LOCAL 1",
       "client_identification": "J294925391",
       "nap_box_name": "CTO-00037",
@@ -166303,6 +166303,31 @@ const largeArraydata =
       "client_identification": "V12145980",
       "nap_box_name": "CTO - 924",
       "created_at": "2026-07-10T09:20:13.782523",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9146,
+      "client_name": "PAULIMAR STEFANY DIAZ CANCELADO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "1ro de Mayo Sur",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04242798353",
+      "client_email": "PAULIMARSDC@GMAIL.COM",
+      "address": "CALLE EL CUJI CASA NÚMERO 8 - A SECTOR PRIMERO DE MAYO SUR TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V28387561",
+      "nap_box_name": "CTO-00470",
+      "created_at": "2026-07-10T10:18:22.483138",
       "service_detail": null,
       "installation_invoice_cost": null
     }
