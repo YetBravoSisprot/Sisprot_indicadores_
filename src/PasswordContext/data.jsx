@@ -31406,11 +31406,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04128866837",
       "client_email": "abreurodrigueznelsonavelino77@gmail.com",
@@ -33668,11 +33668,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04144656784",
       "client_email": "EDIGITALCELL@GMAIL.COM",
@@ -37091,11 +37091,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04144905577",
       "client_email": "CAROLINADEBETANCOURT@GMAIL.COM",
@@ -166081,8 +166081,8 @@ const largeArraydata =
       "id": 9139,
       "client_name": "Ana Karina Garcia Ibarra",
       "client_type_name": "GRATIS",
-      "client_subdivision": "ACTIVO_GRATIS",
-      "status_name": "Activo",
+      "client_subdivision": "SUSPENDIDO_GRATIS",
+      "status_name": "Suspendido",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
