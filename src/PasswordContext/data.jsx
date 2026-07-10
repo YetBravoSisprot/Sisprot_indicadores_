@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5400,
+  "count": 5401,
   "results": [
     {
       "id": 3063,
@@ -139363,8 +139363,8 @@ const largeArraydata =
       "id": 8080,
       "client_name": "ARACELIZ DE LA CARIDAD ANZOLA JUAREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -166347,6 +166347,31 @@ const largeArraydata =
         "created_at": "2026-07-10T14:09:49.942760",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9147,
+      "client_name": "HUGO JOSE TOVAR CARREÑO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Haras de San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243285839",
+      "client_email": "yeilymar.laya23@gmail.com",
+      "address": "URBANIZACION VALLE PARAISO DESARROLLO URBANISTICO HARAS DE SAN PABLO CALLE CENTRAL CONJUNTO RESIDENCIAL ALTOS DE JUAN PABLO SEGUNDO APARTAMENTO NUMERO 6 PLANTA ALTA TUEMRO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V13770135",
+      "nap_box_name": "26",
+      "created_at": "2026-07-10T16:41:26.041048",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
