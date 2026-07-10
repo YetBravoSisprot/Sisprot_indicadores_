@@ -166310,8 +166310,8 @@ const largeArraydata =
       "id": 9146,
       "client_name": "PAULIMAR STEFANY DIAZ CANCELADO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Sur",
@@ -166328,7 +166328,16 @@ const largeArraydata =
       "client_identification": "V28387561",
       "nap_box_name": "CTO-00470",
       "created_at": "2026-07-10T10:18:22.483138",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12717,
+        "ip": "10.16.225.2",
+        "mac": "ZX:IC:CD:0F:3A:C0",
+        "serial": "ZXICCD0F3AC0",
+        "queue": null,
+        "interface": "VLAN261_1ERO_MAYO_ZTE",
+        "created_at": "2026-07-10T13:07:20.202782",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
