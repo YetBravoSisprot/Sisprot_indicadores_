@@ -166329,13 +166329,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00470",
       "created_at": "2026-07-10T10:18:22.483138",
       "service_detail": {
-        "id": 12718,
+        "id": 12719,
         "ip": "10.16.225.2",
-        "mac": "ZX:IC:CD:0F:3A:C0",
+        "mac": "68:9f:f0:0a:f3:0f",
         "serial": "ZXICCD0F3AC0",
         "queue": null,
         "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2026-07-10T13:33:02.341227",
+        "created_at": "2026-07-10T14:09:49.942760",
         "created_by_name": null
       },
       "installation_invoice_cost": null
