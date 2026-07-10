@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5398,
+  "count": 5399,
   "results": [
     {
       "id": 3063,
@@ -119545,8 +119545,8 @@ const largeArraydata =
       "id": 7294,
       "client_name": "SATURNINA YUBISNARDA MARQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -166279,6 +166279,31 @@ const largeArraydata =
         "created_at": "2026-07-09T14:50:16.278943",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9145,
+      "client_name": "PABLO JOSE DIAZ HERRERA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle Fresco",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04163465252",
+      "client_email": "PROTOKULTURA76@GMAIL.COM",
+      "address": "CALLE 2-A MANZANA 8 CASA NUMERO 8-7 URB VALLE FRESCO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V12145980",
+      "nap_box_name": "CTO - 924",
+      "created_at": "2026-07-10T09:20:13.782523",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
