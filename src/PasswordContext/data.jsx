@@ -18431,8 +18431,8 @@ const largeArraydata =
       "id": 3710,
       "client_name": "VICENTA MARITZA MORA ZAMBRANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -166303,7 +166303,16 @@ const largeArraydata =
       "client_identification": "V12145980",
       "nap_box_name": "CTO - 924",
       "created_at": "2026-07-10T09:20:13.782523",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12720,
+        "ip": "10.16.226.2",
+        "mac": "68:9F:F0:2A:93:AF",
+        "serial": "ZXICCD48CE80",
+        "queue": null,
+        "interface": "VLAN270_VALLE_FRESCO_OLT3",
+        "created_at": "2026-07-10T15:27:48.783428",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
