@@ -121452,7 +121452,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Sabana Grande",
       "plan": {
         "id": 34,
