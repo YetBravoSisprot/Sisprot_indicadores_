@@ -165957,13 +165957,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00693",
       "created_at": "2026-07-04T12:29:03.436232",
       "service_detail": {
-        "id": 12696,
+        "id": 12724,
         "ip": "10.17.46.2",
-        "mac": "68:9F:FO:2A:7F:EF",
-        "serial": "ZXICCD43BC52",
+        "mac": "ZX:IC:CD:CE:9C:89",
+        "serial": "ZXICCDCE9C89",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-07-07T10:45:25.882246",
+        "created_at": "2026-07-11T14:53:52.554093",
         "created_by_name": null
       },
       "installation_invoice_cost": null
