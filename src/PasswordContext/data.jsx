@@ -61478,8 +61478,8 @@ const largeArraydata =
       "id": 5254,
       "client_name": "LISBETH JOSEFINA ROJAS PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -61496,7 +61496,16 @@ const largeArraydata =
       "client_identification": "V11122146",
       "nap_box_name": "CTO-00130",
       "created_at": "2024-07-15T14:55:26.266842",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12726,
+        "ip": "172.20.107.2",
+        "mac": "VS:OL:00:52:3A:59",
+        "serial": "VSOL00523A59",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-07-11T17:19:58.081668",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
