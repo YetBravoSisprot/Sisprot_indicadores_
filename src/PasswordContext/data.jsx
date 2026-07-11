@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5401,
+  "count": 5403,
   "results": [
     {
       "id": 3063,
@@ -166390,6 +166390,56 @@ const largeArraydata =
         "created_at": "2026-07-10T17:12:19.334007",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9148,
+      "client_name": "LINA RAQUEL LOPEZ OSORIO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Terrazas de Juan Pablo",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243421224",
+      "client_email": "LINARAQUELOPEZO@GMAIL.COM",
+      "address": "URBANIZACION TERRAZAS DE JUAN PABLO APTO C3 CALLE LA LLANERA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V14491767",
+      "nap_box_name": "12",
+      "created_at": "2026-07-11T11:28:13.594730",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9149,
+      "client_name": "RUTH NAIROVITH CAMACHO DUARTE",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Narayola II",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04120349951",
+      "client_email": "RUTHCAMACHO83@GMAIL.COM",
+      "address": "‎URB NARAYOLA 2 TORRE 2 APTO 2-4 AVENIDA INTERCOMUNAL LA JULIA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15767845",
+      "nap_box_name": "CTO-0522",
+      "created_at": "2026-07-11T11:30:43.813455",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
