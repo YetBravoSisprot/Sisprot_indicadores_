@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5403,
+  "count": 5404,
   "results": [
     {
       "id": 3063,
@@ -166269,8 +166269,8 @@ const largeArraydata =
       "id": 9144,
       "client_name": "ANDREINA COROMOTO GARCIA CAMACHO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -166467,6 +166467,31 @@ const largeArraydata =
         "created_at": "2026-07-12T10:23:48.774730",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9150,
+      "client_name": "RAFAEL EDUARDO ARIAS JIMENEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04165438923",
+      "client_email": "RAFARIAS04@HOTMAIL.COM",
+      "address": "URB SAN PABLO 4TA AVENIDA MANZANA 5 CASA NUMERO 12-A TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V11087519",
+      "nap_box_name": "635",
+      "created_at": "2026-07-12T12:12:10.322451",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
