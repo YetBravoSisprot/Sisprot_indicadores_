@@ -166405,8 +166405,8 @@ const largeArraydata =
       "id": 9148,
       "client_name": "LINA RAQUEL LOPEZ OSORIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Terrazas de Juan Pablo",
@@ -166423,7 +166423,16 @@ const largeArraydata =
       "client_identification": "V14491767",
       "nap_box_name": "12",
       "created_at": "2026-07-11T11:28:13.594730",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12729,
+        "ip": "172.10.26.2",
+        "mac": "TP:LG:B7:65:63:64",
+        "serial": "TPLGB7656364",
+        "queue": null,
+        "interface": "VLAN130_TERRAZAS_JP",
+        "created_at": "2026-07-12T10:50:31.703451",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
