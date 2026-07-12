@@ -166303,8 +166303,8 @@ const largeArraydata =
       "id": 9145,
       "client_name": "PABLO JOSE DIAZ HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle Fresco",
@@ -166449,13 +166449,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0522",
       "created_at": "2026-07-11T11:30:43.813455",
       "service_detail": {
-        "id": 12727,
+        "id": 12728,
         "ip": "10.17.49.2",
-        "mac": "10:17:49:2",
-        "serial": "10.17.49.2",
+        "mac": "ZX:IC:CD:7A:72:0E",
+        "serial": "ZXICCD7A720E",
         "queue": null,
         "interface": "VLAN117_NARAYOLA",
-        "created_at": "2026-07-12T09:53:54.334148",
+        "created_at": "2026-07-12T10:23:48.774730",
         "created_by_name": null
       },
       "installation_invoice_cost": null
