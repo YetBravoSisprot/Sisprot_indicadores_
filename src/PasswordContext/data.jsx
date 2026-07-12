@@ -166485,13 +166485,22 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04165438923",
+      "client_mobile": "04165438921",
       "client_email": "RAFARIAS04@HOTMAIL.COM",
       "address": "URB SAN PABLO 4TA AVENIDA MANZANA 5 CASA NUMERO 12-A TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V11087519",
       "nap_box_name": "635",
       "created_at": "2026-07-12T12:12:10.322451",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12730,
+        "ip": "10.17.50.2",
+        "mac": "ZX:IC:CD:97:A4:B1",
+        "serial": "ZXICCD97A4B1",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-07-12T12:20:41.621191",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
