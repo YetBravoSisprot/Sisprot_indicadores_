@@ -166448,7 +166448,16 @@ const largeArraydata =
       "client_identification": "V15767845",
       "nap_box_name": "CTO-0522",
       "created_at": "2026-07-11T11:30:43.813455",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12727,
+        "ip": "10.17.49.2",
+        "mac": "10:17:49:2",
+        "serial": "10.17.49.2",
+        "queue": null,
+        "interface": "VLAN117_NARAYOLA",
+        "created_at": "2026-07-12T09:53:54.334148",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
