@@ -110670,7 +110670,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
         "id": 21,
