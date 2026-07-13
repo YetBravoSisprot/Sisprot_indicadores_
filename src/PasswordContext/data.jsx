@@ -117664,7 +117664,16 @@ const largeArraydata =
       "client_identification": "V10999617",
       "nap_box_name": "CTO-00052",
       "created_at": "2024-12-04T11:25:29.227858",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12732,
+        "ip": "10.11.137.2",
+        "mac": "OE:MT:3C:62:4D:0E",
+        "serial": "OEMT3C624D0E",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-07-13T11:19:37.108753",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
