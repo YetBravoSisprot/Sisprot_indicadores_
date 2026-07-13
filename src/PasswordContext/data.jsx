@@ -154384,13 +154384,13 @@ const largeArraydata =
       "nap_box_name": "CTO VALLE FRESCO",
       "created_at": "2025-08-08T20:18:58.262703",
       "service_detail": {
-        "id": 12715,
+        "id": 12731,
         "ip": "10.15.234.2",
         "mac": "HW:TC:48:08:03:15",
         "serial": "HWTC48080315",
         "queue": null,
         "interface": "VLAN270_VALLE_FRESCO_OLT3",
-        "created_at": "2026-07-09T19:15:17.534003",
+        "created_at": "2026-07-13T09:13:35.176700",
         "created_by_name": null
       },
       "installation_invoice_cost": null
