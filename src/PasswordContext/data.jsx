@@ -30466,8 +30466,8 @@ const largeArraydata =
       "id": 4135,
       "client_name": "FABIAN EDUARDO MATA TOLEDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Callejon Los Jabillos",
@@ -145813,13 +145813,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00376",
       "created_at": "2025-06-06T08:47:50.323162",
       "service_detail": {
-        "id": 12416,
+        "id": 12736,
         "ip": "10.14.218.2",
-        "mac": "QXTLCBE07EDA",
-        "serial": "QXTLCBE07EDA",
+        "mac": "ZX:IC:CD:65:30:57",
+        "serial": "ZXICCD653057",
         "queue": null,
         "interface": "VLAN260_BETANIA",
-        "created_at": "2026-04-26T10:42:19.824864",
+        "created_at": "2026-07-14T15:38:22.961896",
         "created_by_name": null
       },
       "installation_invoice_cost": null
