@@ -92427,8 +92427,8 @@ const largeArraydata =
       "id": 6302,
       "client_name": "NADESCA YASBILEX BENAVIDES TORRES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Taguapire",
@@ -92445,7 +92445,16 @@ const largeArraydata =
       "client_identification": "V16528406",
       "nap_box_name": "548",
       "created_at": "2024-08-07T16:38:41.612124",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12735,
+        "ip": "172.31.54.2",
+        "mac": "OE:MT:3C:62:2D:A2",
+        "serial": "OEMT3C622DA2",
+        "queue": null,
+        "interface": "VLAN129_TAGUAPIRE_ZTE",
+        "created_at": "2026-07-14T10:23:51.906654",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
