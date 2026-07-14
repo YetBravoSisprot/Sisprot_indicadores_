@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5404,
+  "count": 5405,
   "results": [
     {
       "id": 3063,
@@ -166528,6 +166528,31 @@ const largeArraydata =
         "created_at": "2026-07-12T12:20:41.621191",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9151,
+      "client_name": "GEISMAR DE NAZARET VILLAZANA RODRIGUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Guanarito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04228158768",
+      "client_email": "VILLAZANAGEISMAR@GMAIL.COM",
+      "address": "TURMERO GUANARITO CALLE LOS NARANJOS CASA NR 30 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V30081844",
+      "nap_box_name": "499",
+      "created_at": "2026-07-14T14:25:01.972233",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
