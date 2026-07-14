@@ -166552,7 +166552,16 @@ const largeArraydata =
       "client_identification": "V30081844",
       "nap_box_name": "499",
       "created_at": "2026-07-14T14:25:01.972233",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12738,
+        "ip": "10.17.53.2",
+        "mac": "10:17:53:2",
+        "serial": "10.17.53.2",
+        "queue": null,
+        "interface": "VLAN232_GUANARITO_OLT2",
+        "created_at": "2026-07-14T16:57:39.106009",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166577,7 +166586,16 @@ const largeArraydata =
       "client_identification": "V20559158",
       "nap_box_name": "CTO-00662",
       "created_at": "2026-07-14T15:13:08.363940",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12737,
+        "ip": "10.17.52.2",
+        "mac": "ZX:IC:CD:02:45:EE",
+        "serial": "ZXICCD0245EE",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-07-14T16:56:56.373835",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
