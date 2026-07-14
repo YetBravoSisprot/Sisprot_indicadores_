@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5405,
+  "count": 5406,
   "results": [
     {
       "id": 3063,
@@ -166552,6 +166552,31 @@ const largeArraydata =
       "client_identification": "V30081844",
       "nap_box_name": "499",
       "created_at": "2026-07-14T14:25:01.972233",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9152,
+      "client_name": "MARIANA JOSEFINA MARTINEZ LOZADA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127081242",
+      "client_email": "MARIANAMARTINEZ_14L@HOTMAIL.COM",
+      "address": "URBANIZACION SAN PABLO 1 AV ESTE MANZANA 15 CASA 21 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V20559158",
+      "nap_box_name": "CTO-00662",
+      "created_at": "2026-07-14T15:13:08.363940",
       "service_detail": null,
       "installation_invoice_cost": null
     }
