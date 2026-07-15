@@ -166552,8 +166552,8 @@ const largeArraydata =
       "id": 9151,
       "client_name": "GEISMAR DE NAZARET VILLAZANA RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guanarito",
@@ -166571,13 +166571,13 @@ const largeArraydata =
       "nap_box_name": "499",
       "created_at": "2026-07-14T14:25:01.972233",
       "service_detail": {
-        "id": 12738,
+        "id": 12741,
         "ip": "10.17.53.2",
-        "mac": "10:17:53:2",
-        "serial": "10.17.53.2",
+        "mac": "OE:MT:3C:61:F0:5E",
+        "serial": "OEMT3C61F05E",
         "queue": null,
         "interface": "VLAN232_GUANARITO_OLT2",
-        "created_at": "2026-07-14T16:57:39.106009",
+        "created_at": "2026-07-15T16:28:15.841709",
         "created_by_name": null
       },
       "installation_invoice_cost": null
