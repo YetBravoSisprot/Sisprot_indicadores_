@@ -30636,17 +30636,17 @@ const largeArraydata =
       "id": 4140,
       "client_name": "FREDDY JOSE BALDOVINO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Jabillar",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04128848352",
       "client_email": "F.BALDOVINO1971@HOTMAIL.COM",
@@ -30654,7 +30654,16 @@ const largeArraydata =
       "client_identification": "V11089972",
       "nap_box_name": "CTO-00008",
       "created_at": "2024-04-20T19:00:51.558163",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12740,
+        "ip": "172.23.243.2",
+        "mac": "1c:ef:03:12:4e:49",
+        "serial": "VSOL00124E49",
+        "queue": null,
+        "interface": "VLAN108_JABILLAR_OLT_ZTE",
+        "created_at": "2026-07-15T13:21:08.009681",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
