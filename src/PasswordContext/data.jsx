@@ -141216,8 +141216,8 @@ const largeArraydata =
       "id": 8142,
       "client_name": "DEYCI PAOLA ESCALONA DE SOLORZANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Terrazas de Paya",
@@ -141234,7 +141234,16 @@ const largeArraydata =
       "client_identification": "V9676799",
       "nap_box_name": "595",
       "created_at": "2025-05-12T18:24:31.137418",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12739,
+        "ip": "10.14.20.2",
+        "mac": "a8:bf:3c:62:09:42",
+        "serial": "OEMT3C620942",
+        "queue": null,
+        "interface": "VLAN243_BICENTENARIO",
+        "created_at": "2026-07-15T11:46:07.161872",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
