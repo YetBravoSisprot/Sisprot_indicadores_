@@ -131334,13 +131334,13 @@ const largeArraydata =
       "nap_box_name": "54",
       "created_at": "2025-03-26T15:11:57.642745",
       "service_detail": {
-        "id": 12394,
+        "id": 12742,
         "ip": "10.12.214.2",
-        "mac": "HWTC49200133",
-        "serial": "HWTC49200133",
+        "mac": "OE:MT:3C:62:09:EE",
+        "serial": "OEMT3C6209EE",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-04-22T11:46:42.990840",
+        "created_at": "2026-07-16T10:29:10.029639",
         "created_by_name": null
       },
       "installation_invoice_cost": null
