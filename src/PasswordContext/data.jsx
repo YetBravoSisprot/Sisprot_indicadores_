@@ -25973,8 +25973,8 @@ const largeArraydata =
       "id": 3974,
       "client_name": "JOSETH EDUARDO ANGRIZONES SOLORZANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -119634,13 +119634,13 @@ const largeArraydata =
       "nap_box_name": "611",
       "created_at": "2024-12-10T09:12:32.748172",
       "service_detail": {
-        "id": 12437,
+        "id": 12744,
         "ip": "10.10.48.2",
-        "mac": "HWTC47310526",
-        "serial": "HWTC47310526",
+        "mac": "80:d4:a5:a4:08:50",
+        "serial": "HWTC49200133",
         "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2026-04-30T12:45:22.802731",
+        "created_at": "2026-07-16T12:58:37.127277",
         "created_by_name": null
       },
       "installation_invoice_cost": null
