@@ -166592,11 +166592,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
       },
       "client_mobile": "04127081242",
       "client_email": "MARIANAMARTINEZ_14L@HOTMAIL.COM",
