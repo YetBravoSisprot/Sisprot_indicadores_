@@ -527,12 +527,12 @@ REGLA DE FLUJO INTELIGENTE:
 - Tolerancia a errores de escritura (typos): Si el usuario escribe con faltas de ortografía o comete errores de tipeo (ej: 'diapgo', 'cleintes', 'ingreos'), dedúcelo inteligentemente según el contexto y el sentido común, interpretando su verdadera intención. No lo marques como UNKNOWN si es comprensible.
 - Si falta el periodo (hoy/ayer), asume "hoy" por defecto.
 - Si falta el estatus (activo/suspendido/etc.), no lo pidas; procesa la consulta general y el sistema le mostrará un balance completo con todos los estatus a la vez.
-- Si falta el ciclo, asume el ciclo único (1).
+- Si falta el ciclo, no lo asumas por defecto (deja que el sistema procese todos los ciclos).
 - Responde directamente a lo que pida el usuario con amabilidad y claridad.
 
 REGLA DE PARÁMETROS:
 - "status": Activo, Suspendido, Pausado, Cancelado.
-- "ciclo": "1".
+- "ciclo": Ciclo de facturación comercial ("1" para Residencial, o "15" / "30" para Pyme). Solo incluir si se menciona explícitamente en la consulta.
 - "periodo": hoy, ayer.
 - "urbanismo": Nombre del sector.
 - "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
