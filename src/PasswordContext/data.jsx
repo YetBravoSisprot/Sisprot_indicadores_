@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5406,
+  "count": 5407,
   "results": [
     {
       "id": 3063,
@@ -166621,6 +166621,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
         "created_at": "2026-07-14T16:56:56.373835",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9153,
+      "client_name": "HUMBERTO JAVIER MORALES PADRON",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "POR INSTALAR_GRATIS",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "4144534868",
+      "client_email": "tribunalagrarioturmero@gmail.com",
+      "address": "centro comercial el portal local 01 calle rivas, frente al cementerio municipal de turmero",
+      "client_identification": "v18779468",
+      "nap_box_name": "CTO-00693",
+      "created_at": "2026-07-17T13:19:38.910030",
+      "service_detail": {
+        "id": 12747,
+        "ip": "10.17.54.2",
+        "mac": "zx:ic:cd:df:a2:74",
+        "serial": "zxiccddfa274",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-07-17T13:21:37.642464",
         "created_by_name": null
       },
       "installation_invoice_cost": null
