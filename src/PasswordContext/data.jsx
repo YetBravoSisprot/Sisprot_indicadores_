@@ -166673,13 +166673,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-07-17T13:52:15.668324",
       "service_detail": {
-        "id": 12748,
+        "id": 12749,
         "ip": "10.17.54.2",
-        "mac": "zx:ic:cd:df:a2:74",
-        "serial": "zxiccddfa274",
+        "mac": "ZX:IC:CD:DF:A2:74",
+        "serial": "ZXICCDDFA274",
         "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2026-07-17T13:53:53.139790",
+        "created_at": "2026-07-17T14:29:48.190509",
         "created_by_name": null
       },
       "installation_invoice_cost": null
