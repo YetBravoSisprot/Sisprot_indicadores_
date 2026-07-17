@@ -126547,13 +126547,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00081",
       "created_at": "2025-02-27T12:42:15.709754",
       "service_detail": {
-        "id": 7806,
+        "id": 12746,
         "ip": "10.12.44.2",
-        "mac": "HWTC49200603",
-        "serial": "HWTC49200603",
-        "queue": "Plan_161870_30181_WispHub",
+        "mac": "68:9f:f0:2a:95:7f",
+        "serial": "ZXICCDDC3339",
+        "queue": null,
         "interface": "VLAN258_VALLECITO",
-        "created_at": "2025-02-28T08:11:14.680254",
+        "created_at": "2026-07-17T11:47:39.655674",
         "created_by_name": null
       },
       "installation_invoice_cost": null
