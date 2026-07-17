@@ -9,7 +9,7 @@ import PageNotFound from "./page/PageNotFound/PageNotFound";
 import Ventas from "./page/ventas/Ventas";
 import VentasGlobales from "./page/ventas/VentasGlobales";
 import Reactivados from "./page/Reactivados/Reactivados";
-import Encuestas from "./page/Encuestas/Encuestas";
+import Encuestas from "./page/encuestas/Encuestas";
 import { PasswordProvider, PasswordContext } from "./PasswordContext/PasswordContext";
 
 import Chatbot from "./Componentes/Chatbot/Chatbot";
