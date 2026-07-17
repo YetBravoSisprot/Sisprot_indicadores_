@@ -165423,8 +165423,8 @@ const largeArraydata =
       "id": 9116,
       "client_name": "WILLIAM ALEJANDRO LEVITAN ABDELNOUR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Haras de San Pablo",
@@ -166658,7 +166658,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Pantin",
       "plan": {
         "id": 86,
         "name": "PLAN RECURRENTE 80M GRATIS",
@@ -166670,7 +166670,7 @@ const largeArraydata =
       "client_email": "luishflores2609@gmail.com",
       "address": "calle 1b casa 67",
       "client_identification": "V30148131",
-      "nap_box_name": null,
+      "nap_box_name": "125",
       "created_at": "2026-07-17T13:52:15.668324",
       "service_detail": {
         "id": 12749,
