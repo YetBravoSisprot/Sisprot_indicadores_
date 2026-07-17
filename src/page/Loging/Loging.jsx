@@ -5,7 +5,7 @@ import LogoTitulo from "../../Componentes/LogoTitulo";
 import "./Loging.css";
 
 function Loging() {
-  const { login, isAuthenticated } = useContext(PasswordContext);
+  const { login, isAuthenticated, role } = useContext(PasswordContext);
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -15,10 +15,16 @@ function Loging() {
 
   // Redirigir si ya está autenticado
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/TopUrbanismo");
+    if (isAuthenticated && role) {
+      if (role === "analista_atencion") {
+        navigate("/Reactivados");
+      } else if (role === "ventas") {
+        navigate("/Ventas");
+      } else {
+        navigate("/TopUrbanismo");
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, role, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
