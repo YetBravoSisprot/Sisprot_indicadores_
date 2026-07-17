@@ -8,6 +8,8 @@ import Admin from "./page/Admin/Admin";
 import PageNotFound from "./page/PageNotFound/PageNotFound";
 import Ventas from "./page/ventas/Ventas";
 import VentasGlobales from "./page/ventas/VentasGlobales";
+import Reactivados from "./page/Reactivados/Reactivados";
+import Encuestas from "./page/Encuestas/Encuestas";
 import { PasswordProvider, PasswordContext } from "./PasswordContext/PasswordContext";
 
 import Chatbot from "./Componentes/Chatbot/Chatbot";
@@ -87,6 +89,23 @@ function AppContent() {
           }
         />
 
+        <Route
+          path="Reactivados"
+          element={
+            <ProtectedRoute roles={["admin", "analista_atencion"]}>
+              <Reactivados />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="Encuestas"
+          element={
+            <ProtectedRoute roles={["admin", "analista_atencion"]}>
+              <Encuestas />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="*"
