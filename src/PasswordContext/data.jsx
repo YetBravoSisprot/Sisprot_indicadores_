@@ -143355,10 +143355,10 @@ const largeArraydata =
       "id": 8220,
       "client_name": "WENDY YOLIMAR GARCIA CAMACHO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Dios Es Mi Refugio",
       "plan": {
         "id": 100,
