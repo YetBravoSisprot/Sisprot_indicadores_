@@ -4,7 +4,7 @@ import { PasswordContext } from "../PasswordContext/PasswordContext";
 import "./PageNav.css";
 
 function PageNav() {
-  const { logout, email } = useContext(PasswordContext);
+  const { logout, email, role } = useContext(PasswordContext);
   const navigate = useNavigate();
 
   const [currentDateTime, setCurrentDateTime] = useState("");
@@ -43,14 +43,18 @@ function PageNav() {
     setShowLogoutModal(true);
   };
 
-  const navLinks = [
-    { to: "/TopUrbanismo", label: "Top Urbanismos" },
-    { to: "/*", label: "Reportes BI" },
-    { to: "/Indicadores", label: "Resumen BI" },
-    { to: "/Ventas", label: "Operaciones" },
-    { to: "/VentasGlobales", label: "Ventas 2021-2026" },
-    { to: "/Admin", label: "Adm. Ingresos" },
+  const allNavLinks = [
+    { to: "/TopUrbanismo", label: "Top Urbanismos", roles: ["admin"] },
+    { to: "/*", label: "Reportes BI", roles: ["admin"] },
+    { to: "/Indicadores", label: "Resumen BI", roles: ["admin"] },
+    { to: "/Ventas", label: "Operaciones", roles: ["admin", "ventas"] },
+    { to: "/VentasGlobales", label: "Ventas 2021-2026", roles: ["admin", "ventas"] },
+    { to: "/Admin", label: "Adm. Ingresos", roles: ["admin"] },
+    { to: "/Reactivados", label: "Control Reactivados", roles: ["admin", "analista_atencion"] },
+    { to: "/Encuestas", label: "Encuestas", roles: ["admin", "analista_atencion"] },
   ];
+
+  const navLinks = allNavLinks.filter((link) => !link.roles || link.roles.includes(role));
 
   return (
     <>
