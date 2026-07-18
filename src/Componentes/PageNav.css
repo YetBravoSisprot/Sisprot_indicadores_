@@ -4,6 +4,7 @@
 
 :root {
   --sidebar-width: 280px;
+  --sidebar-collapsed-width: 85px;
   --sidebar-bg: linear-gradient(185deg, #002d42 0%, #011620 100%);
   --sidebar-border: rgba(255, 255, 255, 0.08);
   --sidebar-glow: rgba(0, 210, 255, 0.15);
@@ -27,7 +28,110 @@
   flex-direction: column;
   padding: 24px 16px;
   box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== TOGGLE BUTTON ===== */
+.sidebar-toggle-btn {
+  position: absolute;
+  top: 24px;
+  right: -14px;
+  background: #011620;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1010;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--active-gradient);
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.sidebar-toggle-btn svg {
+  transition: transform 0.3s ease;
+}
+
+/* ===== COLLAPSED STATE ===== */
+@media (min-width: 769px) {
+  .sidebar-container.collapsed {
+    width: var(--sidebar-collapsed-width);
+    padding: 24px 10px;
+  }
+
+  .sidebar-container.collapsed .sidebar-toggle-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .sidebar-container.collapsed .sidebar-brand-title,
+  .sidebar-container.collapsed .sidebar-brand-divider,
+  .sidebar-container.collapsed .sidebar-logo-sgf {
+    display: none;
+  }
+
+  .sidebar-container.collapsed .sidebar-logo-main-container {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sidebar-container.collapsed .sidebar-logo-main {
+    height: 34px;
+  }
+
+  .sidebar-container.collapsed .sidebar-brand {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .sidebar-container.collapsed .sidebar-link-label,
+  .sidebar-container.collapsed .sidebar-link-arrow {
+    display: none;
+  }
+
+  .sidebar-container.collapsed .sidebar-link-btn {
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .sidebar-container.collapsed .sidebar-link-icon {
+    margin-right: 0;
+  }
+
+  .sidebar-container.collapsed .sidebar-datetime {
+    display: none;
+  }
+
+  .sidebar-container.collapsed .sidebar-user-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 6px;
+  }
+
+  .sidebar-container.collapsed .sidebar-user-info {
+    display: none;
+  }
+
+  .sidebar-container.collapsed .sidebar-logout-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 6px 0;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
 }
 
 /* ===== BRAND / LOGO SECTION ===== */
