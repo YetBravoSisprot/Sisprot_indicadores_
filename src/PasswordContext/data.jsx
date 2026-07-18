@@ -166662,18 +166662,18 @@ const largeArraydata =
     {
       "id": 9154,
       "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
-      "client_type_name": "GRATIS",
-      "client_subdivision": "ACTIVO_GRATIS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
       "plan": {
-        "id": 86,
-        "name": "PLAN RECURRENTE 80M GRATIS",
-        "cost": "0.00",
-        "code": "FO-G80",
-        "profile": "80M/80M"
+        "id": 2,
+        "name": "RECURRENTE RESIDENCIAL PLAN 30M",
+        "cost": "20.00",
+        "code": "FOR30",
+        "profile": "30M/30M"
       },
       "client_mobile": "04128150454",
       "client_email": "luishflores2609@gmail.com",
