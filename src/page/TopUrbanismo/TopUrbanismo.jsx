@@ -17,7 +17,42 @@ const norm = (v) => (v == null ? "" : String(v).replace(/\u00a0/g, " ").trim());
 
 const tiposClienteValidos = ["PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"];
 
+// Componente de Dropdown Personalizado para Filtros Multi-selección
+function DropdownFilter({ label, placeholder, children }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = React.useRef(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="custom-filter-dropdown" ref={containerRef}>
+      <label className="filter-header">{label}</label>
+      <div className={`dropdown-trigger-btn ${isOpen ? "active" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <span className="dropdown-trigger-text">{placeholder}</span>
+        <span className={`dropdown-chevron-arrow ${isOpen ? "open" : ""}`}>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </span>
+      </div>
+      {isOpen && (
+        <div className="dropdown-options-popover animate-fade-in">
+          <div className="dropdown-options-content">
+            {children}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function TopUrbanismo() {
   const location = useLocation();
@@ -561,8 +596,16 @@ function TopUrbanismo() {
             </div>
 
             <div className="filtros-selects-grid">
-              <div className="columnas-checkbox-container" id="estadoSelect">
-                <label className="filter-header">Estatus</label>
+              <DropdownFilter
+                label="Estatus"
+                placeholder={
+                  estadosSeleccionados.includes("Todos")
+                    ? "Todos"
+                    : estadosSeleccionados.length === 0
+                    ? "Seleccionar..."
+                    : estadosSeleccionados.filter(x => x !== "Todos").join(", ")
+                }
+              >
                 {["Todos", "Activo", "Suspendido", "Por instalar", "Pausado", "Cancelado"].map(est => (
                    <label key={est} className="columna-item-check">
                     <input
@@ -573,10 +616,18 @@ function TopUrbanismo() {
                     <span>{est === "Todos" ? "Todos" : est}</span>
                   </label>
                 ))}
-              </div>
+              </DropdownFilter>
 
-              <div className="columnas-checkbox-container" id="estadoSelect2">
-                <label className="filter-header">Tipo de Cliente</label>
+              <DropdownFilter
+                label="Tipo de Cliente"
+                placeholder={
+                  estadosSeleccionadosType.includes("Todos")
+                    ? "Todos"
+                    : estadosSeleccionadosType.length === 0
+                    ? "Seleccionar..."
+                    : estadosSeleccionadosType.filter(x => x !== "Todos").join(", ")
+                }
+              >
                 {["Todos", "PYME", "RESIDENCIAL", "INTERCAMBIO", "EMPLEADO", "GRATIS"].map(tipo => (
                    <label key={tipo} className="columna-item-check">
                     <input
@@ -587,10 +638,18 @@ function TopUrbanismo() {
                     <span>{tipo === "Todos" ? "Todos" : tipo}</span>
                   </label>
                 ))}
-              </div>
+              </DropdownFilter>
 
-              <div className="columnas-checkbox-container" id="migradosSelect">
-                <label className="filter-header">Migrados</label>
+              <DropdownFilter
+                label="Migrados"
+                placeholder={
+                  migradosSeleccionados.includes("Todos")
+                    ? "Todos"
+                    : migradosSeleccionados.length === 0
+                    ? "Seleccionar..."
+                    : migradosSeleccionados.filter(x => x !== "Todos").join(", ")
+                }
+              >
                 {["Todos", "Migrado", "No migrado"].map(mig => (
                    <label key={mig} className="columna-item-check">
                     <input
@@ -601,11 +660,19 @@ function TopUrbanismo() {
                     <span>{mig}</span>
                   </label>
                 ))}
-              </div>
+              </DropdownFilter>
 
               {(estadosSeleccionadosType.includes("PYME") || estadosSeleccionadosType.includes("Todos")) && (
-                <div className="columnas-checkbox-container" id="ciclosSelect">
-                  <label className="filter-header">Ciclos</label>
+                <DropdownFilter
+                  label="Ciclos"
+                  placeholder={
+                    ciclosSeleccionados.includes("Todos")
+                      ? "Todos"
+                      : ciclosSeleccionados.length === 0
+                      ? "Seleccionar..."
+                      : ciclosSeleccionados.filter(x => x !== "Todos").map(c => `Ciclo ${c}`).join(", ")
+                  }
+                >
                   {["Todos", "15", "30"].map(ciclo => (
                      <label key={ciclo} className="columna-item-check">
                       <input
@@ -614,13 +681,21 @@ function TopUrbanismo() {
                         onChange={() => handleCiclosChange(ciclo)}
                       />
                       <span>{ciclo === "Todos" ? "Todos" : `🗓️ Ciclo ${ciclo}`}</span>
-                    </label>
+                     </label>
                   ))}
-                </div>
+                </DropdownFilter>
               )}
 
-              <div className="columnas-checkbox-container" id="sectoresSelect">
-                <label className="filter-header">Parroquias</label>
+              <DropdownFilter
+                label="Parroquias"
+                placeholder={
+                  sectoresSeleccionados.includes("Todos")
+                    ? "Todas"
+                    : sectoresSeleccionados.length === 0
+                    ? "Seleccionar..."
+                    : sectoresSeleccionados.filter(x => x !== "Todos").join(", ")
+                }
+              >
                 {listaAgenciasDinamica.map(sec => (
                    <label key={sec} className="columna-item-check">
                     <input
@@ -631,10 +706,18 @@ function TopUrbanismo() {
                     <span>{sec === "Todos" ? "Todas" : sec}</span>
                   </label>
                 ))}
-              </div>
+              </DropdownFilter>
 
-              <div className="columnas-checkbox-container" id="urbanismosSelect">
-                <label className="filter-header">Sectores</label>
+              <DropdownFilter
+                label="Sectores"
+                placeholder={
+                  urbanismosSeleccionados.includes("Todos")
+                    ? "Todos"
+                    : urbanismosSeleccionados.length === 0
+                    ? "Seleccionar..."
+                    : `${urbanismosSeleccionados.length} seleccionados`
+                }
+              >
                 <input
                   type="text"
                   placeholder="🔍 Buscar sector..."
@@ -666,10 +749,18 @@ function TopUrbanismo() {
                       <span>{urbanismo}</span>
                     </label>
                   ))}
-              </div>
+              </DropdownFilter>
 
-              <div className="columnas-checkbox-container" id="columnasSelect">
-                <label className="filter-header">Columnas</label>
+              <DropdownFilter
+                label="Columnas"
+                placeholder={
+                  columnasSeleccionadas.includes("Todas")
+                    ? "Ver Todas"
+                    : columnasSeleccionadas.length === 0
+                    ? "Ninguna"
+                    : `${columnasSeleccionadas.length} columnas`
+                }
+              >
                 <label className="columna-item-check">
                   <input
                     type="checkbox"
@@ -692,8 +783,7 @@ function TopUrbanismo() {
                     <span>{col.replace("_", " ")}</span>
                   </label>
                 ))}
-              </div>
-
+              </DropdownFilter>
             </div>
 
             <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
