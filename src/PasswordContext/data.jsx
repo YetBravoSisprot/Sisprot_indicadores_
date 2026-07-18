@@ -39075,13 +39075,13 @@ const largeArraydata =
       "nap_box_name": "65",
       "created_at": "2024-06-08T11:42:57.455711",
       "service_detail": {
-        "id": 6316,
+        "id": 12751,
         "ip": "172.28.133.2",
-        "mac": "OEMT3C623026",
-        "serial": "OEMT3C623026",
-        "queue": "Plan_127996_1574_WispHub",
+        "mac": "ZX:IC:CD:0B:80:91",
+        "serial": "ZXICCD0B8091",
+        "queue": null,
         "interface": "VLAN102_ARTURO_BERTI",
-        "created_at": "2024-08-23T17:57:20.273529",
+        "created_at": "2026-07-18T10:22:09.587009",
         "created_by_name": null
       },
       "installation_invoice_cost": null
