@@ -59,6 +59,16 @@ function PageNav() {
   return (
     <>
       <nav className="DisplayNotMax481px">
+        {/* ===== BRAND LOGOS ===== */}
+        <div className="nav-brand">
+          <img src="/logo_sgf.png" alt="SGF Logo" className="nav-logo-empresa" />
+          <div className="nav-brand-divider"></div>
+          <div className="nav-logo-sisprot-container">
+            <img src="/logo-.png" alt="Sisprot Logo" className="nav-logo-sisprot" />
+            <span className="nav-title">Sisprot BI</span>
+          </div>
+        </div>
+
         {/* ===== MENÚ DESKTOP ===== */}
         <ul className="horizontal-list">
           {navLinks.map((link) => (
