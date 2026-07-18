@@ -2,8 +2,8 @@
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 110px;
-    height: 110px;
+    width: 65px; /* Reducido de 110px para ser minimalista */
+    height: 65px; /* Reducido de 110px para ser minimalista */
     z-index: 9999;
     cursor: pointer;
     display: flex;
