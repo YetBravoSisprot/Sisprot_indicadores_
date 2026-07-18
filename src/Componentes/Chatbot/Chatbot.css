@@ -30,12 +30,15 @@
     mix-blend-mode: normal; /* Al abrir, quitamos el efecto para que el botón rojo se vea bien */
 }
 
-.taurus-avatar {
-    width: 130%;  /* Robot grande dentro del círculo */
-    height: 130%;
-    object-fit: cover;
-    mix-blend-mode: screen; /* Quita lo negro integrándose contra el azul #0f172a del padre */
-    filter: drop-shadow(0 4px 10px rgba(59,130,246,0.2));
+.robot-avatar-svg {
+    width: 65%;
+    height: 65%;
+    filter: drop-shadow(0 4px 8px rgba(59,130,246,0.3));
+    transition: transform 0.3s ease;
+}
+
+.chatbot-toggle-wrapper:hover .robot-avatar-svg {
+    transform: scale(1.1);
 }
 
 /* Botón de cerrar cuando el menú está abierto */
