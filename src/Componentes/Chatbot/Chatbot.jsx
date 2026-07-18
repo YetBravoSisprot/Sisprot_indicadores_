@@ -327,17 +327,31 @@ const Chatbot = () => {
                         >
                             ✕
                         </button>
-                        <video 
-                            src="/taurus_robot.webm" 
-                            className="taurus-avatar" 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline
+                        <svg 
+                            viewBox="0 0 100 100" 
+                            className="robot-avatar-svg"
                             onClick={handleToggle}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             title="Chronos"
-                        />
+                            style={{ width: '70%', height: '70%', cursor: 'pointer' }}
+                        >
+                            {/* Antenas */}
+                            <rect x="22" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
+                            <rect x="74" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
+                            <circle cx="24" cy="35" r="4.5" fill="#fcd12a" />
+                            <circle cx="76" cy="35" r="4.5" fill="#fcd12a" />
+                            
+                            {/* Cuerpo/Cabeza de robot */}
+                            <rect x="28" y="32" width="44" height="8" rx="3" fill="#fcd12a" />
+                            <rect x="26" y="38" width="48" height="42" rx="14" fill="#b9bedf" />
+                            
+                            {/* Visor / Ojos */}
+                            <rect x="33" y="47" width="34" height="15" rx="7.5" fill="#0f172a" />
+                            <rect x="39" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
+                            <rect x="55" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
+                            
+                            {/* Boca */}
+                            <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#5c638c" />
+                        </svg>
                     </>
                 ) : (
                     <div className="close-btn" onClick={handleToggle}>✕</div>
