@@ -110,3 +110,47 @@ body {
 .animate-slide-up {
     animation: slideUp 0.5s ease-out forwards;
 }
+
+/* ==========================================================================
+   LAYOUT SHIFT FOR SIDEBAR COMPONENT
+   ========================================================================== */
+@media (min-width: 769px) {
+  /* Push dashboards to the right to accommodate fixed sidebar */
+  .indicadores-dashboard,
+  .ventas-dashboard,
+  .admin-dashboard,
+  .ventas-globales-container,
+  .report-fullscreen-container,
+  .survey-container,
+  .filtros-panel {
+    margin-left: 300px !important;
+    max-width: calc(100% - 320px) !important;
+    box-sizing: border-box;
+  }
+
+  /* Hide duplicate top logo/title on dashboard pages on desktop since sidebar has it */
+  .contenedor > .container,
+  .ventas-globales-page > .container,
+  .admin-page > .container,
+  .encuestas-page > .report-header-info,
+  div:has(> .indicadores-dashboard) > .container,
+  div:has(> .ventas-dashboard) > .container {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Push dashboard content down to clear fixed mobile top header */
+  .indicadores-dashboard,
+  .ventas-dashboard,
+  .admin-dashboard,
+  .ventas-globales-container,
+  .report-fullscreen-container,
+  .survey-container,
+  .filtros-panel {
+    padding-top: 80px !important;
+    box-sizing: border-box;
+  }
+}
+
+
