@@ -121,6 +121,7 @@ body {
   .admin-dashboard,
   .ventas-globales-container,
   .report-fullscreen-container,
+  .report-container,
   .survey-container,
   .filtros-panel {
     margin-left: 300px !important;
@@ -134,6 +135,7 @@ body {
   body.sidebar-collapsed .admin-dashboard,
   body.sidebar-collapsed .ventas-globales-container,
   body.sidebar-collapsed .report-fullscreen-container,
+  body.sidebar-collapsed .report-container,
   body.sidebar-collapsed .survey-container,
   body.sidebar-collapsed .filtros-panel {
     margin-left: 105px !important;
@@ -145,6 +147,7 @@ body {
   .ventas-globales-page > .container,
   .admin-page > .container,
   .encuestas-page > .report-header-info,
+  .reactivados-page > .report-header-info,
   div:has(> .indicadores-dashboard) > .container,
   div:has(> .ventas-dashboard) > .container {
     display: none !important;
@@ -158,6 +161,7 @@ body {
   .admin-dashboard,
   .ventas-globales-container,
   .report-fullscreen-container,
+  .report-container,
   .survey-container,
   .filtros-panel {
     padding-top: 80px !important;
