@@ -104,19 +104,50 @@ nav ul li a.active {
   margin-left: 15px;
 }
 
-/* Spacer for centering on desktop */
-nav::before {
-  content: "";
-  width: 150px; /* Width roughly equal to the clock to keep the menu centered */
+/* ===== LOGOS Y MARCA (BRAND) ===== */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-shrink: 0;
-  display: block;
+  margin-right: 15px;
 }
 
-@media (max-width: 1100px) {
-  nav::before {
-    display: none;
-  }
+.nav-logo-empresa {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
+
+.nav-brand-divider {
+  width: 1px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-logo-sisprot-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo-sisprot {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 
 .datetime-display p {
   margin: 0;
@@ -241,8 +272,14 @@ nav::before {
     font-size: 13px;
     padding: 6px 10px;
   }
-  nav::before {
-    width: 100px;
+  .nav-title {
+    font-size: 16px;
+  }
+  .nav-logo-empresa {
+    height: 32px;
+  }
+  .nav-logo-sisprot {
+    height: 26px;
   }
 }
 
@@ -250,8 +287,8 @@ nav::before {
   .datetime-display {
     display: none;
   }
-  nav::before {
-    display: none;
+  .nav-title {
+    display: none; /* Hide text on medium/small viewports */
   }
 }
 
@@ -389,10 +426,6 @@ nav::before {
 @media (max-height: 500px) and (orientation: landscape) {
   nav {
     padding: 6px 15px;
-  }
-  
-  nav::before {
-    display: none;
   }
 
   nav ul.horizontal-list {
