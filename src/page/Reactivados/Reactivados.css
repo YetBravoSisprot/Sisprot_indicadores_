@@ -2,12 +2,53 @@
 .reactivados-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  align-items: center;
+  min-height: 100vh;
   background: radial-gradient(circle at top right, #004C6D 0%, #021a24 100%);
   color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px 0 60px 0;
+  padding-top: 40px;
   box-sizing: border-box;
-  overflow: hidden;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Estilos para el logo y el texto del autor */
+.report-header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+  z-index: 10;
+  width: 100%;
+}
+
+.company-logo {
+  max-width: 180px;
+  height: auto;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+}
+
+.author-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Contenedor principal de reportes */
+.report-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  box-sizing: border-box;
 }
 
 /* Tarjeta de Credenciales de Acceso */
@@ -16,16 +57,14 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 15px 25px;
-  margin: 10px auto 5px auto;
-  width: 95%;
+  padding: 25px;
+  margin: 0 auto 30px auto;
+  width: 90%;
   max-width: 600px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   text-align: left;
   position: relative;
   overflow: hidden;
-  z-index: 10;
-  flex-shrink: 0;
 }
 
 .access-credentials-card::before {
@@ -42,16 +81,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  cursor: pointer;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
 }
 
 .credentials-header h4 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.5px;
-  flex: 1;
+  flex: 1; /* Para empujar el icono al final */
 }
 
 .toggle-icon {
@@ -72,16 +113,16 @@
 }
 
 .access-credentials-card.is-open .credentials-collapsible-content {
-  max-height: 500px;
+  max-height: 500px; /* Suficiente para el contenido */
   padding-top: 15px;
   opacity: 1;
 }
 
 .access-note {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
-  margin-top: 10px;
+  margin-top: 15px;
   font-style: italic;
 }
 
@@ -89,9 +130,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   background: rgba(0, 0, 0, 0.25);
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 12px;
   gap: 15px;
   transition: background 0.3s ease;
@@ -103,13 +144,13 @@
 
 .credential-content {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-direction: column; /* Cambiado a columna para evitar desbordamientos */
+  gap: 4px;
   flex: 1;
 }
 
 .credential-label {
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   color: #94a3b8;
   text-transform: uppercase;
   font-weight: 700;
@@ -118,7 +159,7 @@
 
 .credential-value {
   font-family: 'Fira Code', monospace;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #fff;
   font-weight: 600;
   word-break: break-all;
@@ -129,10 +170,10 @@
   background: rgba(59, 130, 246, 0.15);
   border: 1px solid rgba(59, 130, 246, 0.3);
   color: white;
-  padding: 6px;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,29 +191,120 @@
   transform: scale(0.95);
 }
 
-.report-fullscreen-container {
-  flex: 1;
-  display: flex;
-  padding: 8px;
+/* Aviso de Rotación para Móviles - Oculto por defecto */
+.mobile-rotation-notice {
+  background: rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px dashed rgba(59, 130, 246, 0.4);
+  padding: 15px 20px;
+  border-radius: 14px;
+  margin: 0 auto 30px auto;
+  width: 90%;
+  max-width: 500px;
+  display: none; /* Asegura que no se vea en PC */
+  align-items: center;
+  gap: 15px;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 0; /* Permite que el flex container se encoja para dar espacio */
 }
 
-.report-fullscreen-container iframe {
+.notice-icon {
+  font-size: 1.5rem;
+}
+
+.notice-text {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #e2e8f0;
+  text-align: left;
+}
+
+.report-card {
+  width: 90%;
+  max-width: 1200px;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 30px;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 25px 0;
+  text-align: left;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.iframe-wrapper {
+  position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background: #000;
 }
 
-@media (max-width: 768px) {
-  .report-fullscreen-container {
-    padding: 4px;
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 1023px) {
+  .report-card {
+    padding: 20px;
   }
-  .report-fullscreen-container iframe {
-    border-radius: 4px;
+  .report-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-card {
+    width: 95%;
+    border-radius: 16px;
+    padding: 15px;
+  }
+  .report-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .access-credentials-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .credential-value {
+    font-size: 0.9rem;
+  }
+
+  /* Solo mostrar tip de rotación en móviles y en posición vertical */
+  @media (orientation: portrait) {
+    .mobile-rotation-notice {
+      display: flex;
+      width: 95%;
+      margin-bottom: 25px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .credential-value {
+    font-size: 0.85rem;
   }
 }
