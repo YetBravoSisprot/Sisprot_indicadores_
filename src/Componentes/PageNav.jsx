@@ -11,6 +11,9 @@ function PageNav() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    return localStorage.getItem("sidebar-collapsed") === "true";
+  });
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -21,6 +24,15 @@ function PageNav() {
     const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("sidebar-collapsed", isCollapsed);
+    if (isCollapsed) {
+      document.body.classList.add("sidebar-collapsed");
+    } else {
+      document.body.classList.remove("sidebar-collapsed");
+    }
+  }, [isCollapsed]);
 
   const handleLinkClick = () => setMenuOpen(false);
 
@@ -152,7 +164,20 @@ function PageNav() {
       </div>
 
       {/* Sidebar Principal */}
-      <aside className={`sidebar-container ${menuOpen ? "mobile-open" : ""}`}>
+      <aside className={`sidebar-container ${isCollapsed ? "collapsed" : ""} ${menuOpen ? "mobile-open" : ""}`}>
+        {/* Botón para colapsar en Desktop */}
+        <button
+          className="sidebar-toggle-btn"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          title={isCollapsed ? "Expandir menú" : "Contraer menú"}
+          aria-label={isCollapsed ? "Expandir menú" : "Contraer menú"}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <line x1="9" y1="3" x2="9" y2="21" />
+          </svg>
+        </button>
+
         {/* Marca / Logos */}
         <div className="sidebar-brand">
           <img src="/logo_sgf.png" alt="SGF Logo" className="sidebar-logo-sgf" />
