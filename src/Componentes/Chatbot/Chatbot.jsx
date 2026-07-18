@@ -151,8 +151,8 @@ const Chatbot = () => {
 
     if (isMinimized) {
         return (
-            <button 
-                className="chatbot-restore-btn animate-pop-in" 
+            <button
+                className="chatbot-restore-btn animate-pop-in"
                 onClick={() => setIsMinimized(false)}
                 title="Abrir Asistente Chronos"
             >
@@ -165,7 +165,7 @@ const Chatbot = () => {
 
     const handleSendMessage = async (e, directValue = null) => {
         if (e) e.preventDefault();
-        
+
         const messageToProcess = directValue !== null ? directValue : inputValue.trim();
         if (!messageToProcess) return;
 
@@ -188,8 +188,8 @@ const Chatbot = () => {
             if (aiResponse.action === 'download_excel_executive' && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
                 setTimeout(() => {
                     exportExecutiveReport(
-                        aiResponse.cardData.dataset || aiResponse.cardData.savedDataset, 
-                        aiResponse.cardData.filtersText, 
+                        aiResponse.cardData.dataset || aiResponse.cardData.savedDataset,
+                        aiResponse.cardData.filtersText,
                         formattedName,
                         aiResponse.cardData.selectedColumns || ["Todas"],
                         data?.results
@@ -198,13 +198,13 @@ const Chatbot = () => {
             } else if ((aiResponse.isDownload || aiResponse.action === 'download_excel') && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
                 const dataset = aiResponse.cardData.dataset || aiResponse.cardData.savedDataset;
                 const rType = aiResponse.cardData.reportType || (aiResponse.cardData.parameters?.reportType) || "general";
-                
+
                 setTimeout(() => {
                     // Si el reporte es general o ejecutivo, usamos el nuevo layout
                     if (rType === 'general' || rType === 'accounting' || rType === 'executive') {
                         exportExecutiveReport(
-                            dataset, 
-                            aiResponse.cardData.filtersText, 
+                            dataset,
+                            aiResponse.cardData.filtersText,
                             formattedName,
                             aiResponse.cardData.selectedColumns || ["Todas"],
                             data?.results
@@ -213,7 +213,7 @@ const Chatbot = () => {
                         // Solo usamos el export técnico para operaciones específicas
                         exportToExcel(dataset, aiResponse.cardData.filtersText, aiResponse.cardData.selectedColumns || ["Todas"], rType);
                     }
-                }, 1000); 
+                }, 1000);
             }
         } catch (error) {
             console.error("Error AI:", error);
@@ -297,64 +297,35 @@ const Chatbot = () => {
                     </div>
                 </div>
             )}
-            {/* Sombra del robot animada (fuera del mix-blend-mode para que se vea el negro) */}
-            {!isOpen && <div className="chatbot-avatar-shadow"></div>}
-
-            {/* Globo de bienvenida */}
-            {!isOpen && (
-                <div className="chatbot-welcome-bubble">
-                    <button 
-                        className="welcome-close-btn" 
-                        onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }} 
-                        title="Minimizar"
-                    >
-                        ✕
-                    </button>
-                    <div className="welcome-content" onClick={handleToggle}>
-                        ¡Hola! Soy Chronos 👋<br/>¿Necesitas analizar algún reporte?
-                    </div>
-                </div>
-            )}
-
             {/* Avatar Flotante del Robot */}
-            <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`}>
+            <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
                 {!isOpen ? (
-                    <>
-                        <button 
-                            className="avatar-minimize-btn" 
-                            onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }} 
-                            title="Minimizar"
-                        >
-                            ✕
-                        </button>
-                        <svg 
-                            viewBox="0 0 100 100" 
-                            className="robot-avatar-svg"
-                            onClick={handleToggle}
-                            title="Chronos"
-                            style={{ width: '70%', height: '70%', cursor: 'pointer' }}
-                        >
-                            {/* Antenas */}
-                            <rect x="22" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
-                            <rect x="74" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
-                            <circle cx="24" cy="35" r="4.5" fill="#fcd12a" />
-                            <circle cx="76" cy="35" r="4.5" fill="#fcd12a" />
-                            
-                            {/* Cuerpo/Cabeza de robot */}
-                            <rect x="28" y="32" width="44" height="8" rx="3" fill="#fcd12a" />
-                            <rect x="26" y="38" width="48" height="42" rx="14" fill="#b9bedf" />
-                            
-                            {/* Visor / Ojos */}
-                            <rect x="33" y="47" width="34" height="15" rx="7.5" fill="#0f172a" />
-                            <rect x="39" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
-                            <rect x="55" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
-                            
-                            {/* Boca */}
-                            <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#5c638c" />
-                        </svg>
-                    </>
+                    <svg
+                        viewBox="0 0 100 100"
+                        className="robot-avatar-svg"
+                        title="Chronos"
+                        style={{ width: '70%', height: '70%' }}
+                    >
+                        {/* Antenas */}
+                        <rect x="22" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
+                        <rect x="74" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
+                        <circle cx="24" cy="35" r="4.5" fill="#fcd12a" />
+                        <circle cx="76" cy="35" r="4.5" fill="#fcd12a" />
+
+                        {/* Cuerpo/Cabeza de robot */}
+                        <rect x="28" y="32" width="44" height="8" rx="3" fill="#fcd12a" />
+                        <rect x="26" y="38" width="48" height="42" rx="14" fill="#b9bedf" />
+
+                        {/* Visor / Ojos */}
+                        <rect x="33" y="47" width="34" height="15" rx="7.5" fill="#0f172a" />
+                        <rect x="39" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
+                        <rect x="55" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
+
+                        {/* Boca */}
+                        <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#5c638c" />
+                    </svg>
                 ) : (
-                    <div className="close-btn" onClick={handleToggle}>✕</div>
+                    <div className="close-btn">✕</div>
                 )}
             </div>
 
@@ -365,8 +336,8 @@ const Chatbot = () => {
                         <h4>Chronos</h4>
                         <p>Asistente Inteligente</p>
                     </div>
-                    <button 
-                        className="reset-chat-btn" 
+                    <button
+                        className="reset-chat-btn"
                         onClick={handleResetChat}
                         title="Reiniciar conversación"
                     >
@@ -415,29 +386,29 @@ const Chatbot = () => {
                                     )}
 
                                     {/* Botones de descarga si la tarjeta tiene dataset válido */}
-                                    {((msg.cardData.dataset && msg.cardData.dataset.length > 0) || 
-                                      (msg.cardData.savedDataset && msg.cardData.savedDataset.length > 0)) && (
-                                        <div className="card-download-group">
-                                            <button
-                                                className="card-download-btn operations"
-                                                onClick={() => {
-                                                    const baseName = email ? email.split('@')[0] : '';
-                                                    const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
-                                                    const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : '';
-                                                    
-                                                    exportExecutiveReport(
-                                                        msg.cardData.dataset || msg.cardData.savedDataset, 
-                                                        msg.cardData.filtersText, 
-                                                        formattedName,
-                                                        msg.cardData.selectedColumns || ["Todas"],
-                                                        data?.results
-                                                    );
-                                                }}
-                                            >
-                                                📥 Descargar Reporte Ejecutivo
-                                            </button>
-                                        </div>
-                                    )}
+                                    {((msg.cardData.dataset && msg.cardData.dataset.length > 0) ||
+                                        (msg.cardData.savedDataset && msg.cardData.savedDataset.length > 0)) && (
+                                            <div className="card-download-group">
+                                                <button
+                                                    className="card-download-btn operations"
+                                                    onClick={() => {
+                                                        const baseName = email ? email.split('@')[0] : '';
+                                                        const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+                                                        const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : '';
+
+                                                        exportExecutiveReport(
+                                                            msg.cardData.dataset || msg.cardData.savedDataset,
+                                                            msg.cardData.filtersText,
+                                                            formattedName,
+                                                            msg.cardData.selectedColumns || ["Todas"],
+                                                            data?.results
+                                                        );
+                                                    }}
+                                                >
+                                                    📥 Descargar Reporte Ejecutivo
+                                                </button>
+                                            </div>
+                                        )}
                                 </div>
                             )}
 
@@ -489,15 +460,15 @@ const Chatbot = () => {
 
                 <form className="chatbot-input-area" onSubmit={handleSendMessage}>
                     <div className="chatbot-input-container">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className={`voice-toggle-btn ${isVoiceEnabled ? 'active' : ''}`}
                             onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
                             title={isVoiceEnabled ? "Desactivar voz" : "Activar lectura de voz (Accesibilidad)"}
                         >
                             {isVoiceEnabled ? '🔊' : '🔈'}
                         </button>
-                        
+
                         <input
                             type="text"
                             placeholder={isListening ? "Escuchando..." : "Mensaje a Chronos..."}
@@ -506,8 +477,8 @@ const Chatbot = () => {
                             className={isListening ? 'listening' : ''}
                         />
 
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className={`mic-btn ${isListening ? 'listening' : ''}`}
                             onClick={handleVoiceInput}
                             title="Hablar (Dictar mensaje)"
