@@ -126,6 +126,18 @@ body {
     margin-left: 300px !important;
     max-width: calc(100% - 320px) !important;
     box-sizing: border-box;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.sidebar-collapsed .indicadores-dashboard,
+  body.sidebar-collapsed .ventas-dashboard,
+  body.sidebar-collapsed .admin-dashboard,
+  body.sidebar-collapsed .ventas-globales-container,
+  body.sidebar-collapsed .report-fullscreen-container,
+  body.sidebar-collapsed .survey-container,
+  body.sidebar-collapsed .filtros-panel {
+    margin-left: 105px !important;
+    max-width: calc(100% - 125px) !important;
   }
 
   /* Hide duplicate top logo/title on dashboard pages on desktop since sidebar has it */
