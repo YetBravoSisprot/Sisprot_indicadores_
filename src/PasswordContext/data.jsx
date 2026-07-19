@@ -158985,7 +158985,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Terrazas de Juan Pablo",
       "plan": {
         "id": 3,
