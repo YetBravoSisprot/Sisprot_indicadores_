@@ -589,8 +589,8 @@ const largeArraydata =
       "id": 3088,
       "client_name": "ANDREYS ARIANNA ZAMBRANO MANRIQUE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -607,7 +607,16 @@ const largeArraydata =
       "client_identification": "V28456607",
       "nap_box_name": "49",
       "created_at": "2024-04-10T13:58:41.401462",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12754,
+        "ip": "172.24.140.2",
+        "mac": "TP:LG:B4:46:F5:3B",
+        "serial": "TPLGB446F53B",
+        "queue": null,
+        "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
+        "created_at": "2026-07-19T11:04:44.575163",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
