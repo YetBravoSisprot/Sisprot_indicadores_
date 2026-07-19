@@ -139231,8 +139231,8 @@ const largeArraydata =
       "id": 8074,
       "client_name": "YHOSSELLYN VANESA PEREZ JIMENEZ",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "ACTIVO_EMPLEADO",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_EMPLEADO",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Simon Bolivar",
@@ -139249,16 +139249,7 @@ const largeArraydata =
       "client_identification": "V25066218",
       "nap_box_name": "CTO-00036",
       "created_at": "2025-05-02T14:06:03.454026",
-      "service_detail": {
-        "id": 8474,
-        "ip": "10.13.238.2",
-        "mac": "OEMT3C62020E",
-        "serial": "OEMT3C62020E",
-        "queue": "queue1",
-        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
-        "created_at": "2025-05-06T09:48:32.243217",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166724,8 +166715,8 @@ const largeArraydata =
       "id": 9155,
       "client_name": "YHOSSELLYN VANESA PEREZ JIMENEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -166742,7 +166733,16 @@ const largeArraydata =
       "client_identification": "V25066218",
       "nap_box_name": "CTO-00036",
       "created_at": "2026-07-19T12:36:51.057935",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12755,
+        "ip": "10.13.238.2",
+        "mac": "OE:MT:3C:62:02:0E",
+        "serial": "OEMT3C62020E",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-07-19T12:57:01.980965",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
