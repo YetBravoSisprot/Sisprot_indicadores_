@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5408,
+  "count": 5409,
   "results": [
     {
       "id": 3063,
@@ -166718,6 +166718,31 @@ const largeArraydata =
         "created_at": "2026-07-17T14:29:48.190509",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9155,
+      "client_name": "YHOSSELLYN VANESA PEREZ JIMENEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04143840349",
+      "client_email": "YHOSSELLYNP@GMAIL.COM",
+      "address": "URBANIZACION SIMON BOLIVAR CALLE 10 CASA NRO 03 SECTOR EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V25066218",
+      "nap_box_name": "CTO-00036",
+      "created_at": "2026-07-19T12:36:51.057935",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
