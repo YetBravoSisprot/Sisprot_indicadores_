@@ -197,6 +197,7 @@ function PageNav() {
                   to={link.to}
                   onClick={handleLinkClick}
                   className={({ isActive }) => `sidebar-link-btn ${isActive ? "active" : ""}`}
+                  title={link.label}
                 >
                   <span className="sidebar-link-icon">{getIcon(link.label)}</span>
                   <span className="sidebar-link-label">{link.label}</span>
