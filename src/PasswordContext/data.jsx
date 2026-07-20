@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5410,
+  "count": 5411,
   "results": [
     {
       "id": 3063,
@@ -166786,6 +166786,31 @@ const largeArraydata =
         "created_at": "2026-07-20T12:37:41.109845",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9157,
+      "client_name": "MARIA GISELA ARAUJO PATIÑO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127345196",
+      "client_email": "MARIAGISELAITALIA@GMAIL.COM",
+      "address": "SECTOR SAN PABLO URBANIZACION MARINA CARIBE CALLE ISABEL CASA A 50 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V6024797",
+      "nap_box_name": "CTO - 940",
+      "created_at": "2026-07-20T14:30:02.953875",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
