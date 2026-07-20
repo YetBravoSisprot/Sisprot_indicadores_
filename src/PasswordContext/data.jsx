@@ -147017,13 +147017,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00322",
       "created_at": "2025-06-11T15:02:34.716926",
       "service_detail": {
-        "id": 8924,
-        "ip": "10.15.1.2",
-        "mac": "QXTLCBC6232E",
+        "id": 12758,
+        "ip": "10.17.100.2",
+        "mac": "QX:TL:CB:C6:23:2E",
         "serial": "QXTLCBC6232E",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN282_ZONA_AGRARIA",
-        "created_at": "2025-06-13T12:05:10.967349",
+        "created_at": "2026-07-20T16:32:40.204935",
         "created_by_name": null
       },
       "installation_invoice_cost": null
