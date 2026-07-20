@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5409,
+  "count": 5410,
   "results": [
     {
       "id": 3063,
@@ -120098,8 +120098,8 @@ const largeArraydata =
       "id": 7310,
       "client_name": "AURELIO NICANOR HAYA AJA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -152021,8 +152021,8 @@ const largeArraydata =
       "id": 8623,
       "client_name": "ANGEL FELIPE RODRIGUEZ OCHOA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "1ro de Mayo Norte",
@@ -152039,7 +152039,16 @@ const largeArraydata =
       "client_identification": "V12500694",
       "nap_box_name": "CTO - 900",
       "created_at": "2025-07-12T16:26:29.799986",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12756,
+        "ip": "10.15.148.2",
+        "mac": "OE:MT:3C:62:0C:DA",
+        "serial": "OEMT3C620CDA",
+        "queue": null,
+        "interface": "VLAN261_1ERO_MAYO_ZTE",
+        "created_at": "2026-07-20T11:57:13.534775",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166681,8 +166690,8 @@ const largeArraydata =
       "id": 9154,
       "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
@@ -166741,6 +166750,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
         "created_at": "2026-07-19T12:57:01.980965",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9156,
+      "client_name": "YULI YSABEL GOMES FERNANDEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243328602",
+      "client_email": "YULIG2@GMAIL.COM",
+      "address": "CALLE MARIÑO EDIFICIO MARIÑO PISO 9 APARTAMENTO 91-B CONJUNTO RESIDENCIAL MARIÑO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15600835",
+      "nap_box_name": "CTO-0519",
+      "created_at": "2026-07-20T09:06:36.783955",
+      "service_detail": {
+        "id": 12757,
+        "ip": "10.17.55.2",
+        "mac": "ZX:IC:CD:B4:9E:BC",
+        "serial": "ZXICCDB49EBC",
+        "queue": null,
+        "interface": "VLAN234_R_MARINO_OLT2",
+        "created_at": "2026-07-20T12:37:41.109845",
         "created_by_name": null
       },
       "installation_invoice_cost": null
