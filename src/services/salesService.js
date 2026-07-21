@@ -97,3 +97,77 @@ export const getFullSalesData = async () => {
 
     return fullData;
 };
+
+/**
+ * Retorna los registros detallados de ventas filtrados por año y mes.
+ */
+export const getDetailedSalesForMonth = async (year, monthIndex) => {
+    try {
+        const response = await fetch(DRIVE_CSV_URL);
+        if (!response.ok) throw new Error("Error al obtener datos del Drive");
+
+        const csvText = await response.text();
+        const rows = csvText.split(/\r?\n/).slice(2);
+        const validInstTypes = ["CON WIFI", "SIN WIFI", "CAMBIO DE PROVEEDOR"];
+
+        const parseCSVLine = (line) => {
+            const result = [];
+            let cur = "";
+            let inQuote = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') inQuote = !inQuote;
+                else if (char === ',' && !inQuote) {
+                    result.push(cur);
+                    cur = "";
+                } else cur += char;
+            }
+            result.push(cur);
+            return result;
+        };
+
+        const detailedSales = [];
+
+        rows.forEach(row => {
+            const cols = parseCSVLine(row);
+            if (cols.length < 14) return;
+
+            const instType = (cols[9] || "").trim().toUpperCase();
+            const ventaAsignada = (cols[13] || "").trim();
+            const nombreCliente = (cols[1] || "").trim().toUpperCase();
+            const apellidoCliente = (cols[2] || "").trim().toUpperCase();
+            const fullName = `${nombreCliente} ${apellidoCliente}`;
+
+            if (!validInstTypes.includes(instType)) return;
+            if (fullName.includes("PRUEBA")) return;
+            if (!ventaAsignada || ventaAsignada.toLowerCase() === "none") return;
+
+            const dateParts = ventaAsignada.split(" ")[0].split("T")[0].split("-");
+            if (dateParts.length >= 3) {
+                const yearStr = dateParts[0];
+                const month = parseInt(dateParts[1], 10) - 1;
+                
+                if (yearStr === String(year) && month === monthIndex) {
+                    detailedSales.push({
+                        ordenInstalacion: (cols[0] || "").trim(),
+                        nombre: (cols[1] || "").trim(),
+                        apellido: (cols[2] || "").trim(),
+                        cedula: (cols[3] || "").trim(),
+                        sector: (cols[4] || "").trim(),
+                        tipoCliente: (cols[6] || "").trim(),
+                        plan: (cols[7] || "").trim(),
+                        costoPlan: (cols[8] || "").trim(),
+                        tipoPago: (cols[12] || "").trim(),
+                        tipoInstalacion: (cols[9] || "").trim()
+                    });
+                }
+            }
+        });
+
+        return detailedSales;
+    } catch (error) {
+        console.error("Error en getDetailedSalesForMonth:", error);
+        return [];
+    }
+};
+
