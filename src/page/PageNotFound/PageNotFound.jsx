@@ -181,6 +181,19 @@ function PageNotFound() {
                 ></iframe>
               </div>
             </div>
+
+            {/* Informe NUEVO: Control de Pérdida por Devaluación Cambiaria */}
+            <div className="report-card">
+              <h3 className="report-title">Control de Pérdida por Devaluación Cambiaria</h3>
+              <div className="iframe-wrapper">
+                <iframe
+                  title="Control de Pérdida por Devaluación Cambiaria"
+                  src="https://app.powerbi.com/reportEmbed?reportId=c5772133-95a7-4be3-acc1-03621fe7a517&pageName=39027b0849566dce0c4e&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133&experience=power-bi"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                ></iframe>
+              </div>
+            </div>
           </div>
 
           <button 
