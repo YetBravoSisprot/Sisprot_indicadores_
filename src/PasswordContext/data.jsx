@@ -166758,10 +166758,10 @@ const largeArraydata =
       "id": 9156,
       "client_name": "YULI YSABEL GOMES FERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": true,
+      "migrate": false,
       "sector_name": "Casco de Turmero",
       "plan": {
         "id": 100,
