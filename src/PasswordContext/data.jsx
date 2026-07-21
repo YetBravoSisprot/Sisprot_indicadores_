@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5411,
+  "count": 5412,
   "results": [
     {
       "id": 3063,
@@ -148903,8 +148903,8 @@ const largeArraydata =
       "id": 8473,
       "client_name": "LUIS MAGIN ESPINOZA MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Dios Es Mi Refugio",
@@ -166810,6 +166810,31 @@ const largeArraydata =
       "client_identification": "V6024707",
       "nap_box_name": "CTO - 940",
       "created_at": "2026-07-20T14:30:02.953875",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9158,
+      "client_name": "JESSICA ANDREINA HENRIQUEZ MORIN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04125058089",
+      "client_email": "JESSICAHENRIQUEZ1981@GMAIL.COM",
+      "address": "CALLE MARIÑO PASANDO EL PUENTE DEL MACARO FRENTE A EL ESTACIONAMIENTO DE TRANSITO CASA HOGAR EL GRAN MANDAMIENTO EL MACARO TURMERO",
+      "client_identification": "V16128568",
+      "nap_box_name": "CTO-00174",
+      "created_at": "2026-07-21T10:08:09.350142",
       "service_detail": null,
       "installation_invoice_cost": null
     }
