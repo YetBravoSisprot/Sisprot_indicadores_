@@ -118357,11 +118357,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Guayabita",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243597758",
       "client_email": "KALINHOFF.VE@GMAIL.COM",
@@ -121251,8 +121251,8 @@ const largeArraydata =
       "id": 7353,
       "client_name": "JESSICA ANDREINA HENRIQUEZ MORIN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -121269,16 +121269,7 @@ const largeArraydata =
       "client_identification": "V16128568",
       "nap_box_name": "CTO-00266",
       "created_at": "2024-12-18T17:07:31.755374",
-      "service_detail": {
-        "id": 7588,
-        "ip": "10.10.119.2",
-        "mac": "HWTC48080273",
-        "serial": "HWTC48080273",
-        "queue": "Plan_147201_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-12-20T10:35:12.944014",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166817,8 +166808,8 @@ const largeArraydata =
       "id": 9158,
       "client_name": "JESSICA ANDREINA HENRIQUEZ MORIN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "El Macaro",
@@ -166835,7 +166826,16 @@ const largeArraydata =
       "client_identification": "V16128568",
       "nap_box_name": "CTO-00174",
       "created_at": "2026-07-21T10:08:09.350142",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12761,
+        "ip": "10.10.119.2",
+        "mac": "HW:TC:48:08:02:73",
+        "serial": "HWTC48080273",
+        "queue": null,
+        "interface": "VLAN249_CBENDITA_OLT2",
+        "created_at": "2026-07-21T12:35:53.032931",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
