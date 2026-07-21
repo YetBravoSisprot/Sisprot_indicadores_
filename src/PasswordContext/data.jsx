@@ -166801,7 +166801,16 @@ const largeArraydata =
       "client_identification": "V6024707",
       "nap_box_name": "CTO - 940",
       "created_at": "2026-07-20T14:30:02.953875",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12762,
+        "ip": "10.16.228.2",
+        "mac": "68:9F:F0:2A:C4:5F",
+        "serial": "ZXICCD447A34",
+        "queue": null,
+        "interface": "VLAN287_M_CARIBE",
+        "created_at": "2026-07-21T15:37:26.068137",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
