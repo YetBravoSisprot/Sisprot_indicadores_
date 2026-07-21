@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import DropdownMenu from "../../Componentes/DropdownMenu";
-import { getFullSalesData } from "../../services/salesService";
+import { getFullSalesData, getDetailedSalesForMonth } from "../../services/salesService";
+import * as XLSX from "xlsx";
 import { Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -35,8 +36,61 @@ const VentasGlobales = () => {
     const [comparisonYears, setComparisonYears] = useState(["2026"]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+    const [downloading, setDownloading] = useState(false);
 
     const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+    const canDownload = parseInt(selectedYear) > 2025 || (parseInt(selectedYear) === 2025 && selectedMonth >= 6);
+
+    const handleDownloadExcel = async () => {
+        if (!canDownload) return;
+        setDownloading(true);
+        try {
+            const data = await getDetailedSalesForMonth(selectedYear, selectedMonth);
+            if (data.length === 0) {
+                alert("No se encontraron registros para el mes seleccionado.");
+                setDownloading(false);
+                return;
+            }
+
+            // Convert to XLSX format with column mapping
+            const formattedData = data.map(item => ({
+                "Orden de Instalación": item.ordenInstalacion,
+                "Nombre": item.nombre,
+                "Apellido": item.apellido,
+                "Cédula": item.cedula,
+                "Sector": item.sector,
+                "Tipo de Cliente": item.tipoCliente,
+                "Plan": item.plan,
+                "Costo de Plan": item.costoPlan,
+                "Tipo de Pago": item.tipoPago,
+                "Tipo de Instalación": item.tipoInstalacion
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(formattedData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Ventas");
+
+            // Auto-fit columns
+            const maxLens = {};
+            formattedData.forEach(row => {
+                Object.keys(row).forEach(key => {
+                    const val = String(row[key] || "");
+                    maxLens[key] = Math.max(maxLens[key] || key.length, val.length);
+                });
+            });
+            worksheet["!cols"] = Object.keys(maxLens).map(key => ({
+                wch: maxLens[key] + 3
+            }));
+
+            XLSX.writeFile(workbook, `Ventas_${meses[selectedMonth]}_${selectedYear}.xlsx`);
+        } catch (error) {
+            console.error("Error al descargar Excel:", error);
+            alert("Ocurrió un error al descargar el reporte.");
+        } finally {
+            setDownloading(false);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 900);
@@ -230,6 +284,19 @@ const VentasGlobales = () => {
                                         {meses.map((m, i) => <option key={m} value={i}>{m}</option>)}
                                     </select>
                                 </div>
+                                <button 
+                                    className="download-excel-btn" 
+                                    onClick={handleDownloadExcel} 
+                                    disabled={downloading || !canDownload}
+                                    title={!canDownload ? "Registros exactos disponibles solo a partir de Julio 2025" : ""}
+                                >
+                                    {downloading ? "Descargando..." : "📊 Descargar Excel"}
+                                </button>
+                                {!canDownload && (
+                                    <span className="excel-disabled-warning">
+                                        Disponible desde Julio 2025
+                                    </span>
+                                )}
                                 <div className="result-val">{currentValue}</div>
                                 <span className="unit">Ventas en {meses[selectedMonth]} {selectedYear}</span>
                             </div>
