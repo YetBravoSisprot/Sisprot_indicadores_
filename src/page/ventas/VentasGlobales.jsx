@@ -53,19 +53,57 @@ const VentasGlobales = () => {
                 return;
             }
 
+            // Calculate total USD sum
+            const totalUSD = data.reduce((acc, item) => {
+                const costStr = (item.costoPlan || "").replace(",", ".").trim();
+                const val = parseFloat(costStr);
+                return acc + (isNaN(val) ? 0 : val);
+            }, 0);
+
             // Convert to XLSX format with column mapping
-            const formattedData = data.map(item => ({
-                "Orden de Instalación": item.ordenInstalacion,
-                "Nombre": item.nombre,
-                "Apellido": item.apellido,
-                "Cédula": item.cedula,
-                "Sector": item.sector,
-                "Tipo de Cliente": item.tipoCliente,
-                "Plan": item.plan,
-                "Costo de Plan": item.costoPlan,
-                "Tipo de Pago": item.tipoPago,
-                "Tipo de Instalación": item.tipoInstalacion
-            }));
+            const formattedData = data.map(item => {
+                const costStr = (item.costoPlan || "").replace(",", ".").trim();
+                const costNum = parseFloat(costStr);
+                return {
+                    "Orden de Instalación": item.ordenInstalacion,
+                    "Nombre": item.nombre,
+                    "Apellido": item.apellido,
+                    "Cédula": item.cedula,
+                    "Sector": item.sector,
+                    "Tipo de Cliente": item.tipoCliente,
+                    "Plan": item.plan,
+                    "Costo de Plan": isNaN(costNum) ? item.costoPlan : costNum,
+                    "Tipo de Pago": item.tipoPago,
+                    "Tipo de Instalación": item.tipoInstalacion
+                };
+            });
+
+            // Append empty row and total row
+            formattedData.push({
+                "Orden de Instalación": "",
+                "Nombre": "",
+                "Apellido": "",
+                "Cédula": "",
+                "Sector": "",
+                "Tipo de Cliente": "",
+                "Plan": "",
+                "Costo de Plan": "",
+                "Tipo de Pago": "",
+                "Tipo de Instalación": ""
+            });
+
+            formattedData.push({
+                "Orden de Instalación": "",
+                "Nombre": "",
+                "Apellido": "",
+                "Cédula": "",
+                "Sector": "",
+                "Tipo de Cliente": "",
+                "Plan": "TOTAL VENTAS ($)",
+                "Costo de Plan": totalUSD,
+                "Tipo de Pago": "",
+                "Tipo de Instalación": ""
+            });
 
             const worksheet = XLSX.utils.json_to_sheet(formattedData);
             const workbook = XLSX.utils.book_new();
