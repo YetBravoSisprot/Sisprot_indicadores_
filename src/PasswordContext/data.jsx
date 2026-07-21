@@ -159010,13 +159010,13 @@ const largeArraydata =
       "nap_box_name": "13",
       "created_at": "2025-11-14T10:46:36.396531",
       "service_detail": {
-        "id": 12753,
+        "id": 12760,
         "ip": "10.15.138.2",
         "mac": "TP:LG:2A:BD:C7:CD",
         "serial": "TPLG2ABDC7CD",
         "queue": null,
         "interface": "VLAN130_TERRAZAS_JP",
-        "created_at": "2026-07-19T10:57:23.689794",
+        "created_at": "2026-07-21T11:20:49.150232",
         "created_by_name": null
       },
       "installation_invoice_cost": null
