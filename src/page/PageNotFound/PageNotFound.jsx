@@ -87,7 +87,15 @@ function PageNotFound() {
         <div className="slider-wrapper">
           <button 
             className="slider-nav-btn prev" 
-            onClick={() => document.getElementById('reports-slider').scrollBy({ left: -window.innerWidth * 0.8, behavior: 'smooth' })}
+            onClick={() => {
+              const slider = document.getElementById('reports-slider');
+              if (slider) {
+                const card = slider.querySelector('.report-card');
+                const cardWidth = card ? card.getBoundingClientRect().width : slider.clientWidth;
+                const gap = 30; // Gap between cards in desktop
+                slider.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+              }
+            }}
           >
             ❮
           </button>
@@ -177,7 +185,15 @@ function PageNotFound() {
 
           <button 
             className="slider-nav-btn next" 
-            onClick={() => document.getElementById('reports-slider').scrollBy({ left: window.innerWidth * 0.8, behavior: 'smooth' })}
+            onClick={() => {
+              const slider = document.getElementById('reports-slider');
+              if (slider) {
+                const card = slider.querySelector('.report-card');
+                const cardWidth = card ? card.getBoundingClientRect().width : slider.clientWidth;
+                const gap = 30; // Gap between cards in desktop
+                slider.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+              }
+            }}
           >
             ❯
           </button>
