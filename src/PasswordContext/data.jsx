@@ -118351,8 +118351,8 @@ const largeArraydata =
       "id": 7250,
       "client_name": "AMERICO KALINHOFF DIAZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -118369,7 +118369,16 @@ const largeArraydata =
       "client_identification": "V2995723",
       "nap_box_name": "CE - 956",
       "created_at": "2024-12-04T17:10:47.465614",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12765,
+        "ip": "10.11.191.2",
+        "mac": "OE:MT:3C:62:4A:B2",
+        "serial": "OEMT3C624AB2",
+        "queue": null,
+        "interface": "VLAN282_ZONA_AGRARIA",
+        "created_at": "2026-07-22T13:28:46.172692",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
