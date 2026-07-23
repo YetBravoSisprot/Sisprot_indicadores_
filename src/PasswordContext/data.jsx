@@ -126187,7 +126187,7 @@ const largeArraydata =
         "profile": "80M/80M"
       },
       "client_mobile": "04267332724",
-      "client_email": "NIDIA49ZAMBRRANO@GMAIL.COM",
+      "client_email": "nidia49zambrano@gmail.com",
       "address": "CALLE ARAGUANEY ROSARIO DE PAYA CASERIO COLINAS DE VALLECITO ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
       "client_identification": "J409726517",
       "nap_box_name": "CTO-00062",
@@ -166709,13 +166709,13 @@ const largeArraydata =
       "nap_box_name": "125",
       "created_at": "2026-07-17T13:52:15.668324",
       "service_detail": {
-        "id": 12764,
-        "ip": "10.16.229.2",
+        "id": 12768,
+        "ip": "10.17.54.2",
         "mac": "ZX:IC:CD:DF:A2:74",
         "serial": "ZXICCDDFA274",
         "queue": null,
         "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2026-07-22T12:17:33.191731",
+        "created_at": "2026-07-23T15:59:05.467136",
         "created_by_name": null
       },
       "installation_invoice_cost": null
