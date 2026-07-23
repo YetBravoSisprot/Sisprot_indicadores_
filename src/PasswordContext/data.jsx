@@ -157048,13 +157048,13 @@ const largeArraydata =
       "nap_box_name": "55",
       "created_at": "2025-09-16T14:30:32.101849",
       "service_detail": {
-        "id": 9530,
+        "id": 12766,
         "ip": "10.16.55.2",
-        "mac": "OEMT3C622546",
-        "serial": "OEMT3C622546",
-        "queue": "queue1",
+        "mac": "ZX:IC:CD:62:C9:AB",
+        "serial": "ZXICCD62C9AB",
+        "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2025-09-16T15:07:22.023609",
+        "created_at": "2026-07-23T10:20:45.315263",
         "created_by_name": null
       },
       "installation_invoice_cost": null
