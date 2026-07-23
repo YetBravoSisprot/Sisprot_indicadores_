@@ -121515,7 +121515,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_PYME",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Sabana Grande",
       "plan": {
         "id": 34,
