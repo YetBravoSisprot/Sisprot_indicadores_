@@ -166878,7 +166878,16 @@ const largeArraydata =
       "client_identification": "V15609730",
       "nap_box_name": "263",
       "created_at": "2026-07-24T09:02:56.189765",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12769,
+        "ip": "10.16.229.2",
+        "mac": "1C:EF:03:13:85:90",
+        "serial": "VSOL00138591",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-07-24T11:05:11.300588",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
