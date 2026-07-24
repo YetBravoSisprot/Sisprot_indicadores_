@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5412,
+  "count": 5414,
   "results": [
     {
       "id": 3063,
@@ -166854,6 +166854,56 @@ const largeArraydata =
         "created_at": "2026-07-21T12:35:53.032931",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9159,
+      "client_name": "AMANDA LISETH MILLAN VIELMA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman Tarazonero II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128995208",
+      "client_email": "ELIAMNIS212@GMAIL.COM",
+      "address": "SAMAN TARAZONERO 2 MANZANA C7 CASA 14 EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15609730",
+      "nap_box_name": "263",
+      "created_at": "2026-07-24T09:02:56.189765",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9160,
+      "client_name": "JOSUE SAMUEL APONTE MORENO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Simon Bolivar",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127656223",
+      "client_email": "GEORGINAA.CONTACTO@GMAIL.COM",
+      "address": "SECTOR EL MACARO URBANIZACION SIMON BOLIVAR CALLE 4 CASA 42 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V30499461",
+      "nap_box_name": "CTO-00047",
+      "created_at": "2026-07-24T09:06:55.770120",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
