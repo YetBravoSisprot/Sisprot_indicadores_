@@ -58,21 +58,29 @@ function Ventas() {
       // Limpiar prefijos ruidosos
       planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
       const planCost = parseFloat(curr.plan?.cost) || 0;
-      const isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
-      const planNameUpper = planName.toUpperCase();
+      let isActive = false;
+      if (curr.client_subdivision && curr.client_subdivision !== "") {
+        isActive = String(curr.client_subdivision).includes("ACTIVO");
+      } else if (curr.status_name) {
+        isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
+      }
 
-      // Identificar categoría y excluir no deseados
+      // Identificar categoría usando el tipo de cliente real de forma idéntica a TopUrbanismo / Indicadores
       let category = null;
-      if (planNameUpper.includes("PYME")) {
+      let tipoServicio = null;
+      if (curr.client_subdivision && curr.client_subdivision !== "") {
+        const partes = String(curr.client_subdivision).split("_");
+        if (partes.length >= 2 && partes[1]) {
+          tipoServicio = partes[1].toUpperCase();
+        }
+      }
+      if (!tipoServicio && curr.client_type_name) {
+        tipoServicio = String(curr.client_type_name).trim().toUpperCase();
+      }
+
+      if (tipoServicio === "PYME") {
         category = "PYME";
-      } else if (
-        !planNameUpper.includes("EMPLEADO") && 
-        !planNameUpper.includes("GRATIS") && 
-        !planNameUpper.includes("INSTITUCIONAL") && 
-        !planNameUpper.includes("CORTESIA") &&
-        !planNameUpper.includes("PROYECTO") &&
-        planCost > 0
-      ) {
+      } else if (tipoServicio === "RESIDENCIAL") {
         category = "RESIDENCIAL";
       }
 
