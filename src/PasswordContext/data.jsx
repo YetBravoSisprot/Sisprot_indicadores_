@@ -166894,8 +166894,8 @@ const largeArraydata =
       "id": 9160,
       "client_name": "JOSUE SAMUEL APONTE MORENO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Simon Bolivar",
@@ -166912,7 +166912,16 @@ const largeArraydata =
       "client_identification": "V30499461",
       "nap_box_name": "CTO-00047",
       "created_at": "2026-07-24T09:06:55.770120",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12770,
+        "ip": "10.16.230.2",
+        "mac": "ZX:IC:cd:f5:7e:78",
+        "serial": "ZXICcdf57e78",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-07-24T17:15:29.553477",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
