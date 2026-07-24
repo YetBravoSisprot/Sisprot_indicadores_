@@ -317,41 +317,6 @@ function TopUrbanismo() {
     return "DESCONOCIDO";
   }, []);
 
-  const obtenerTipoClienteReal = useCallback((servicio) => {
-    let planName = servicio.plan?.name || "Sin Plan";
-    planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
-    const planCost = parseFloat(servicio.plan?.cost) || 0;
-    const planNameUpper = planName.toUpperCase();
-
-    if (planNameUpper.includes("PYME")) {
-      return "PYME";
-    }
-
-    if (
-      planNameUpper.includes("EMPLEADO") ||
-      planNameUpper.includes("GRATIS") ||
-      planNameUpper.includes("INSTITUCIONAL") ||
-      planNameUpper.includes("CORTESIA") ||
-      planNameUpper.includes("PROYECTO") ||
-      planCost <= 0
-    ) {
-      if (planNameUpper.includes("EMPLEADO")) return "EMPLEADO";
-      if (planNameUpper.includes("GRATIS") || planNameUpper.includes("CORTESIA")) return "GRATIS";
-      return "INTERCAMBIO";
-    }
-
-    let tipoDb = null;
-    if (servicio.client_subdivision && servicio.client_subdivision !== "") {
-      tipoDb = extraerTipoDeSubdivision(servicio.client_subdivision);
-    }
-    if (!tipoDb && servicio.client_type_name) {
-      tipoDb = String(servicio.client_type_name).trim().toUpperCase();
-    }
-
-    if (tipoDb === "PYME") return "PYME";
-    return "RESIDENCIAL";
-  }, [extraerTipoDeSubdivision]);
-
   const pasaFiltros = useCallback(
     (servicio) => {
       let tipoFiltrado = false;
@@ -360,7 +325,16 @@ function TopUrbanismo() {
         tipoFiltrado = true;
       } else {
         tipoFiltrado = estadosSeleccionadosType.some((tipoSeleccionado) => {
-          const tipoServicio = obtenerTipoClienteReal(servicio);
+          let tipoServicio = null;
+
+          if (servicio.client_subdivision && servicio.client_subdivision !== "") {
+            tipoServicio = extraerTipoDeSubdivision(servicio.client_subdivision);
+          }
+          if (!tipoServicio && servicio.client_type_name) {
+            tipoServicio = String(servicio.client_type_name).trim().toUpperCase();
+          }
+          if (!tipoServicio) return false;
+
           return tipoServicio === String(tipoSeleccionado).trim().toUpperCase();
         });
       }
@@ -425,7 +399,7 @@ function TopUrbanismo() {
       ciclosSeleccionados,
       sectoresSeleccionados,
       urbanismosSeleccionados,
-      obtenerTipoClienteReal,
+      extraerTipoDeSubdivision,
       sectorAgenciaMap,
     ]
   );
