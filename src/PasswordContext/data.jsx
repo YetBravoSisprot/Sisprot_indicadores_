@@ -16516,16 +16516,7 @@ const largeArraydata =
       "client_identification": "V20693102",
       "nap_box_name": "CE - 451",
       "created_at": "2024-04-16T10:30:46.685428",
-      "service_detail": {
-        "id": 9551,
-        "ip": "172.27.224.2",
-        "mac": "HWTCD155589A",
-        "serial": "HWTCD155589A",
-        "queue": "queue1",
-        "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
-        "created_at": "2025-09-23T18:54:17.304906",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
