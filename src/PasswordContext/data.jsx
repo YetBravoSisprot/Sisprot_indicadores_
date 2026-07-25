@@ -1038,7 +1038,16 @@ const largeArraydata =
       "client_identification": "V30211563",
       "nap_box_name": "106",
       "created_at": "2024-04-10T15:48:09.125351",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12772,
+        "ip": "172.20.175.2",
+        "mac": "TP:LG:B9:54:E8:24",
+        "serial": "TPLGB954E824",
+        "queue": null,
+        "interface": "VLAN133_VILLA_TAMARINDOS",
+        "created_at": "2026-07-25T13:12:17.563751",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
