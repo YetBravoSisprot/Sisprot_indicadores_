@@ -155920,8 +155920,8 @@ const largeArraydata =
       "id": 8757,
       "client_name": "ROBERT PORFIRIO MATAS ACOSTA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Vallecito",
@@ -160625,13 +160625,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0536",
       "created_at": "2025-12-15T09:44:05.658110",
       "service_detail": {
-        "id": 10740,
+        "id": 12773,
         "ip": "172.23.220.2",
-        "mac": "VSOL0013CFD1",
+        "mac": "VS:OL:00:13:CF:D1",
         "serial": "VSOL0013CFD1",
         "queue": null,
         "interface": "VLAN110_CASONA_2",
-        "created_at": "2025-12-15T17:12:08.722244",
+        "created_at": "2026-07-26T09:26:57.531168",
         "created_by_name": null
       },
       "installation_invoice_cost": null
