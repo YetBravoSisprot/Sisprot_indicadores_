@@ -166701,7 +166701,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 25,
+      "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
       "plan": {
