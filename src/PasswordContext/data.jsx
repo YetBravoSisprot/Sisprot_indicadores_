@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5414,
+  "count": 5415,
   "results": [
     {
       "id": 3063,
@@ -166931,6 +166931,31 @@ const largeArraydata =
         "created_at": "2026-07-24T17:15:29.553477",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9161,
+      "client_name": "LUIS ALFONSO GARCIA ARENAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04121493144",
+      "client_email": "LUISGARARENAS@GMAIL.COM",
+      "address": "AV PRINCIPAL SAN PABLO RESIDENCIA LAS ISABELLAS TORRE A APARTAMENTO 10-4 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V28444491",
+      "nap_box_name": "CTO-00686",
+      "created_at": "2026-07-27T14:28:40.831140",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
