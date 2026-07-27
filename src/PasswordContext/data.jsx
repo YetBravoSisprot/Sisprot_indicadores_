@@ -166955,7 +166955,16 @@ const largeArraydata =
       "client_identification": "V28444491",
       "nap_box_name": "CTO-00686",
       "created_at": "2026-07-27T14:28:40.831140",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12774,
+        "ip": "10.17.56.2",
+        "mac": "ZX:IC:CD:8C:2D:65",
+        "serial": "ZXICCD8C2D65",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-07-27T15:14:24.975901",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
