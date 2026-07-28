@@ -49741,13 +49741,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00110",
       "created_at": "2024-06-11T11:26:01.960117",
       "service_detail": {
-        "id": 5273,
+        "id": 12775,
         "ip": "172.29.51.2",
-        "mac": "HWTC2ED407A1",
+        "mac": "00:11:41:2e:d4:08",
         "serial": "HWTC2ED407A1",
-        "queue": "Plan_161906_30183_WispHub",
+        "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2024-08-15T17:06:32.650835",
+        "created_at": "2026-07-28T09:07:02.491905",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -161849,8 +161849,8 @@ const largeArraydata =
       "id": 8979,
       "client_name": "MAYNELIN RODRIGUEZ PRUEBA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "El Macaro",
@@ -161867,7 +161867,16 @@ const largeArraydata =
       "client_identification": "V18221823",
       "nap_box_name": "32",
       "created_at": "2026-02-05T20:11:47.533263",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12776,
+        "ip": "10.16.231.2",
+        "mac": "JM:KG:C2:AD:05:52",
+        "serial": "JMKGC2AD0552",
+        "queue": null,
+        "interface": "VLAN140_SMT1_ZTE",
+        "created_at": "2026-07-28T09:31:03.883130",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
