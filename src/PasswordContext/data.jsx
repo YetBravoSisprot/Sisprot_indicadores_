@@ -23663,11 +23663,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Villa De San Jose",
       "plan": {
-        "id": 2,
-        "name": "RECURRENTE RESIDENCIAL PLAN 30M",
-        "cost": "20.00",
-        "code": "FOR30",
-        "profile": "30M/30M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144449067",
       "client_email": "JOHANAPONTECASTRO@HOTMAIL.COM",
