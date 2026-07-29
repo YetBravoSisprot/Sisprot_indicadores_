@@ -1,6 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import largeArraydata from "../PasswordContext/data";
 
+// Filter out test contracts for "Freddy Carrillo"
+if (largeArraydata && Array.isArray(largeArraydata.results)) {
+  largeArraydata.results = largeArraydata.results.filter(
+    client => client && client.client_name !== "Freddy Carrillo"
+  );
+}
+
 const PasswordContext = createContext();
 
 function PasswordProvider({ children }) {
