@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5415,
+  "count": 5416,
   "results": [
     {
       "id": 3063,
@@ -106291,7 +106291,7 @@ const largeArraydata =
       "client_mobile": "04243403013",
       "client_email": "YAIDINLICELOTH@GMAIL.COM",
       "address": "LOS NISPEROS TORRE D APART 14",
-      "client_identification": "V8819787",
+      "client_identification": "V13241710",
       "nap_box_name": "TORRE D EDIF LOS NISPEROS",
       "created_at": "2024-10-18T10:18:18.904985",
       "service_detail": {
@@ -166974,6 +166974,31 @@ const largeArraydata =
         "created_at": "2026-07-27T15:14:24.975901",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9162,
+      "client_name": "YANITZA LISSETTE BLANCO DE LACRUZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Villas El Carmen",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04246636295",
+      "client_email": "YANILISBLANCOM@HOTMAIL.COM",
+      "address": "SECTOR EL MACARO URBANIZACION VILLAS DEL CARMEN CALLE 8 CASA NUMERO 7 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V16202208",
+      "nap_box_name": "41",
+      "created_at": "2026-07-29T15:15:03.883055",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
