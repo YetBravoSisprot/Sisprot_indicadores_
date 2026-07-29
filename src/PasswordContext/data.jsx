@@ -166980,8 +166980,8 @@ const largeArraydata =
       "id": 9162,
       "client_name": "YANITZA LISSETTE BLANCO DE LACRUZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -166998,7 +166998,16 @@ const largeArraydata =
       "client_identification": "V16202208",
       "nap_box_name": "41",
       "created_at": "2026-07-29T15:15:03.883055",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12777,
+        "ip": "10.16.232.2",
+        "mac": "ZX:IC:CD:35:12:F0",
+        "serial": "ZXICCD3512F0",
+        "queue": null,
+        "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
+        "created_at": "2026-07-29T18:25:07.558850",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
