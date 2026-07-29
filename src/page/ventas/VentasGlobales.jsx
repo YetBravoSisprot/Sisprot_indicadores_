@@ -64,6 +64,12 @@ const VentasGlobales = () => {
             const formattedData = data.map(item => {
                 const costStr = (item.costoPlan || "").replace(",", ".").trim();
                 const costNum = parseFloat(costStr);
+                let formattedCost = item.costoPlan;
+                if (!isNaN(costNum)) {
+                    formattedCost = `$${costNum.toFixed(2)}`;
+                } else if (costStr) {
+                    formattedCost = `$${costStr}`;
+                }
                 return {
                     "Orden de Instalación": item.ordenInstalacion,
                     "Nombre": item.nombre,
@@ -72,7 +78,7 @@ const VentasGlobales = () => {
                     "Sector": item.sector,
                     "Tipo de Cliente": item.tipoCliente,
                     "Plan": item.plan,
-                    "Costo de Plan": isNaN(costNum) ? item.costoPlan : costNum,
+                    "Costo de Plan": formattedCost,
                     "Tipo de Pago": item.tipoPago,
                     "Tipo de Instalación": item.tipoInstalacion
                 };
@@ -100,7 +106,7 @@ const VentasGlobales = () => {
                 "Sector": "",
                 "Tipo de Cliente": "",
                 "Plan": "TOTAL VENTAS ($)",
-                "Costo de Plan": totalUSD,
+                "Costo de Plan": `$${totalUSD.toFixed(2)}`,
                 "Tipo de Pago": "",
                 "Tipo de Instalación": ""
             });
