@@ -715,3 +715,46 @@
     font-size: 1.4rem;
   }
 }
+
+/* Category Badge and styling variations */
+.plan-category-badge {
+  font-weight: 800;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.plan-item.pyme .plan-category-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.plan-item.residencial .plan-category-badge {
+  background: rgba(0, 210, 255, 0.15);
+  color: #00d2ff;
+  border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.plan-item.pyme .progress-bar-fill {
+  background: linear-gradient(90deg, #a855f7, #c084fc);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+.plan-item.pyme .plan-revenue-row::before {
+  background: #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.plan-item.pyme .plan-revenue-value {
+  color: #c084fc;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.plan-item.pyme .plan-revenue-row {
+  border-color: rgba(168, 85, 247, 0.15);
+}
+
