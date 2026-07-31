@@ -212,8 +212,9 @@ function Ventas() {
                         className="button" 
                         onClick={() => exportPlanesToExcel(stats.allPlanes)}
                         style={{ padding: '6px 14px', fontSize: '0.8rem', borderRadius: '20px' }}
+                        title="Descargar listado completo de planes en Excel"
                       >
-                        📊 Excel
+                        📥 Descargar Excel
                       </button>
                     </div>
                     <div className="plans-scroll-container">
