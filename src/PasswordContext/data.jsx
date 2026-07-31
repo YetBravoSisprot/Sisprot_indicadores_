@@ -31963,13 +31963,13 @@ const largeArraydata =
       "nap_box_name": "83",
       "created_at": "2024-05-07T12:08:52.990557",
       "service_detail": {
-        "id": 4109,
+        "id": 12780,
         "ip": "172.19.117.2",
-        "mac": "TPLGB954FB35",
+        "mac": "c0:25:2f:36:a8:03",
         "serial": "TPLGB954FB35",
-        "queue": "Plan_92033_1574_WispHub",
+        "queue": null,
         "interface": "VLAN100_OLTs",
-        "created_at": "2024-07-26T16:12:12.068969",
+        "created_at": "2026-07-31T16:20:23.382841",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166708,8 +166708,8 @@ const largeArraydata =
       "id": 9154,
       "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
