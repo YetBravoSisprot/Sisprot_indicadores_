@@ -61499,13 +61499,13 @@ const largeArraydata =
       "nap_box_name": "CE - 566",
       "created_at": "2024-07-15T14:48:32.749004",
       "service_detail": {
-        "id": 10076,
+        "id": 12779,
         "ip": "172.19.186.2",
-        "mac": "VSOL00521859",
-        "serial": "VSOL00521859",
+        "mac": "ZX:IC:CD:09:35:64",
+        "serial": "ZXICCD093564",
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-11-12T15:30:47.186206",
+        "created_at": "2026-07-31T13:32:59.674209",
         "created_by_name": null
       },
       "installation_invoice_cost": null
