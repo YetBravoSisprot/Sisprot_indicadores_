@@ -208,14 +208,6 @@ function Ventas() {
                   <div className="ventas-card glass kpi-card">
                     <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
                       <h3 style={{ margin: 0, border: 'none', padding: 0 }}>💰 Ingresos por Plan</h3>
-                      <button 
-                        className="button" 
-                        onClick={() => exportPlanesToExcel(stats.allPlanes)}
-                        style={{ padding: '6px 14px', fontSize: '0.8rem', borderRadius: '20px' }}
-                        title="Descargar listado completo de planes en Excel"
-                      >
-                        📥 Descargar Excel
-                      </button>
                     </div>
                     <div className="plans-scroll-container">
                       <div className="plans-list">
