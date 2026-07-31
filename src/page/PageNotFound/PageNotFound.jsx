@@ -101,21 +101,6 @@ function PageNotFound() {
           </button>
           
           <div className="reports-slider" id="reports-slider">
-            {/* Informe 1: Indicadores con API */}
-            <div className="report-card">
-              <h3 className="report-title">
-                Dashboard SGF — Control Diario de Contratos (Estados, RS/PM y Montos)
-              </h3>
-              <div className="iframe-wrapper">
-                <iframe
-                  title="Indicadores con API"
-                  src="https://app.powerbi.com/reportEmbed?reportId=1064c211-8d6e-49b5-acae-975603e275a0&autoAuth=true&experience=power-bi"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                ></iframe>
-              </div>
-            </div>
-
             {/* Informe 2: Ingresos Diarios */}
             <div className="report-card">
               <h3 className="report-title">Ingresos Diarios</h3>
