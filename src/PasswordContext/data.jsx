@@ -33464,7 +33464,7 @@ const largeArraydata =
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
-      "cycle": 10,
+      "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
@@ -93956,7 +93956,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04243534654",
+      "client_mobile": "04122295591",
       "client_email": "YHONATTANHURTADO2201@GMAIL.COM",
       "address": "CALLE PRINCIPAL CASA NRO 54 SECTOR PRADOS I ROSARIO DE PAYA TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V205913072",
