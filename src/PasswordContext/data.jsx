@@ -64399,7 +64399,7 @@ const largeArraydata =
         "profile": "450M/450M"
       },
       "client_mobile": "04124651910",
-      "client_email": "WILLIAMSLUGO2001@GMAIL.COM",
+      "client_email": "lugowilliams1012@gmail.com",
       "address": "CALLE 6 CASA NRO 384 URB MATA CABALLO ROSARIO DE PAYA",
       "client_identification": "V29581955",
       "nap_box_name": "CTO-00178",
