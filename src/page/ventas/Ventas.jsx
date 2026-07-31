@@ -9,6 +9,7 @@ import { fetchMigrationData } from "../../services/migrationService";
 import { fixSpellingErrors } from "../../utils/textUtils";
 import * as XLSX from "xlsx";
 import { exportPlanesToExcel } from "../../utils/ExcelExportPlan";
+import { exportToExcel } from "../../utils/ExcelExport";
 import "./ventas.css";
 
 const PLAN_MAPPING = {
@@ -200,6 +201,39 @@ function Ventas() {
     XLSX.writeFile(workbook, "Plan_200M_Clientes.xlsx");
   };
 
+  const handleExportActiveClientsExcel = () => {
+    if (!data || !data.results) return;
+    const activeClients = data.results.filter(curr => {
+      let isActive = false;
+      if (curr.client_subdivision && curr.client_subdivision !== "") {
+        isActive = String(curr.client_subdivision).includes("ACTIVO");
+      } else if (curr.status_name) {
+        isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
+      }
+      if (!isActive) return false;
+
+      let tipoServicio = null;
+      if (curr.client_subdivision && curr.client_subdivision !== "") {
+        const partes = String(curr.client_subdivision).split("_");
+        if (partes.length >= 2 && partes[1]) {
+          tipoServicio = partes[1].toUpperCase();
+        }
+      }
+      if (!tipoServicio && curr.client_type_name) {
+        tipoServicio = String(curr.client_type_name).trim().toUpperCase();
+      }
+
+      return tipoServicio === "PYME" || tipoServicio === "RESIDENCIAL";
+    });
+
+    const columns = [
+      "Contrato", "Cedula", "IP", "MAC", "Estatus", "Cliente",
+      "Teléfono", "Correo", "Sector", "Plan", "Costo", "Migrado",
+      "Ciclo", "Tipo_Cliente", "Dirección"
+    ];
+    exportToExcel(activeClients, ["Clientes Activos PYME y Residencial"], columns, "general", "Reporte_Clientes_Activos.xlsx");
+  };
+
   return (
     <div>
       {showPasswordState ? (
@@ -224,13 +258,24 @@ function Ventas() {
                   <div className="ventas-card glass kpi-card">
                     <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <h3 style={{ margin: 0, border: 'none', padding: 0 }}>💰 Ingresos por Plan</h3>
-                      <button 
-                        className="button" 
-                        onClick={() => exportPlanesToExcel(stats.allPlanes)}
-                        style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
-                      >
-                        📥 Excel
-                      </button>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button 
+                          className="button" 
+                          onClick={() => exportPlanesToExcel(stats.allPlanes)}
+                          style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
+                          title="Descargar Resumen de Planes"
+                        >
+                          📊 Resumen
+                        </button>
+                        <button 
+                          className="button" 
+                          onClick={handleExportActiveClientsExcel}
+                          style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
+                          title="Descargar Detalle de Clientes Activos"
+                        >
+                          📥 Clientes
+                        </button>
+                      </div>
                     </div>
                     <div className="plans-scroll-container">
                       <div className="plans-list">
