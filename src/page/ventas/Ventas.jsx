@@ -218,11 +218,12 @@ function Ventas() {
                     </div>
                     <div className="plans-scroll-container">
                       <div className="plans-list">
-                        {stats.topPlanes.map((plan, index) => (
-                          <div key={plan.name} className="plan-item">
+                        {stats.allPlanes.map((plan, index) => (
+                          <div key={plan.name} className={`plan-item ${plan.category?.toLowerCase()}`}>
                             <div className="plan-info">
                               <span className="plan-name">{index + 1}. {plan.name}</span>
                               <div className="plan-details">
+                                <span className="plan-category-badge">{plan.category}</span>
                                 <span className="plan-meta">${plan.cost}</span>
                                 <span className="plan-count">{plan.count} cl.</span>
                               </div>
