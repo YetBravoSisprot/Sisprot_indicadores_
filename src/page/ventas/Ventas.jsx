@@ -52,18 +52,36 @@ function Ventas() {
     if (!data || !data.results) return null;
     const clientes = data.results;
 
-    // Agrupación por plan con detalles de ingresos
-    const planesData = clientes.reduce((acc, curr) => {
-      let planName = curr.plan?.name || "Sin Plan";
-      // Limpiar prefijos ruidosos
-      planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
-      const planCost = parseFloat(curr.plan?.cost) || 0;
+    // Filter active PYME and RESIDENCIAL clients
+    const activeClients = clientes.filter(curr => {
       let isActive = false;
       if (curr.client_subdivision && curr.client_subdivision !== "") {
         isActive = String(curr.client_subdivision).includes("ACTIVO");
       } else if (curr.status_name) {
         isActive = curr.status_name === "Activo" || curr.status_name === "Activos";
       }
+      if (!isActive) return false;
+
+      let tipoServicio = null;
+      if (curr.client_subdivision && curr.client_subdivision !== "") {
+        const partes = String(curr.client_subdivision).split("_");
+        if (partes.length >= 2 && partes[1]) {
+          tipoServicio = partes[1].toUpperCase();
+        }
+      }
+      if (!tipoServicio && curr.client_type_name) {
+        tipoServicio = String(curr.client_type_name).trim().toUpperCase();
+      }
+
+      return tipoServicio === "PYME" || tipoServicio === "RESIDENCIAL";
+    });
+
+    // Agrupación por plan con detalles de ingresos
+    const planesData = activeClients.reduce((acc, curr) => {
+      let planName = curr.plan?.name || "Sin Plan";
+      // Limpiar prefijos ruidosos
+      planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
+      const planCost = parseFloat(curr.plan?.cost) || 0;
 
       // Identificar categoría usando el tipo de cliente real de forma idéntica a TopUrbanismo / Indicadores
       let category = null;
@@ -97,18 +115,16 @@ function Ventas() {
         };
       }
       
-      if (isActive) {
-        acc[planName].count += 1;
-        acc[planName].activeCount += 1;
-        acc[planName].revenue += planCost;
-      }
+      acc[planName].count += 1;
+      acc[planName].activeCount += 1;
+      acc[planName].revenue += planCost;
       return acc;
     }, {});
 
     const allPlanes = Object.values(planesData).sort((a, b) => b.count - a.count);
     const topPlanes = allPlanes.slice(0, 5);
 
-    const total = clientes.length;
+    const total = activeClients.length;
     const nuevos = clientes.filter(c => c.status_name === "Activo").length;
     
     const categoryStats = Object.values(planesData).reduce((acc, curr) => {
@@ -206,8 +222,15 @@ function Ventas() {
                 <div className="kpi-shared-row">
                   {/* Widget: Distribución de Planes */}
                   <div className="ventas-card glass kpi-card">
-                    <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
+                    <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <h3 style={{ margin: 0, border: 'none', padding: 0 }}>💰 Ingresos por Plan</h3>
+                      <button 
+                        className="button" 
+                        onClick={() => exportPlanesToExcel(stats.allPlanes)}
+                        style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
+                      >
+                        📥 Excel
+                      </button>
                     </div>
                     <div className="plans-scroll-container">
                       <div className="plans-list">
