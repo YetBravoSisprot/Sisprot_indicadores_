@@ -16957,8 +16957,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04121799896",
-      "client_email": "LILIBETHPADRINO21@GMAIL.COM",
+      "client_mobile": "04127768678",
+      "client_email": "CEFFJB@GMAIL.COM",
       "address": "CALLE MANZANA 16 CASA NRO 7 SECTOR ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
       "client_identification": "V15818054",
       "nap_box_name": "377",
