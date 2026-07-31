@@ -321,27 +321,6 @@ function Ventas() {
                       </div>
                     </div>
                   </div>
-
-
-
-                  {/* Widget: Resumen de Actividad */}
-                  <div className="ventas-card glass kpi-card">
-                    <h3>📊 Resumen de Actividad</h3>
-                    <div className="activity-stat">
-                      <span className="stat-label">Total Clientes:</span>
-                      <span className="stat-number">{stats.total}</span>
-                    </div>
-                    <div className="activity-stat">
-                      <span className="stat-label">Nuevas Activaciones:</span>
-                      <span className="stat-number highlight">{stats.nuevos}</span>
-                    </div>
-                    <button
-                      className="button full-width"
-                      onClick={() => navigate('/topurbanismo')}
-                    >
-                      Ver Reporte Detallado
-                    </button>
-                  </div>
                 </div>
 
                 {/* Widget: Migraciones Plan 200M (ENRIQUECIDO) */}
