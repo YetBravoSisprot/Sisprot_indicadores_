@@ -87527,11 +87527,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Palmeras I",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243546629",
       "client_email": "RUILOBAANGEL@GMAIL.COM",
