@@ -3730,11 +3730,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144654215",
       "client_email": "RAVELOHARRIET@GMAIL.COM",
@@ -6708,11 +6708,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Magdalena",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128834259",
       "client_email": "KELVINALISSON15@GMAIL.COM",
@@ -7770,11 +7770,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128909917",
       "client_email": "MORABELKIS688@GMAIL.COM",
@@ -11708,11 +11708,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124573816",
       "client_email": "ADVL2798@GMAIL.COM",
@@ -13083,11 +13083,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121341293",
       "client_email": "OJEDA.DEIVIS@GMAIL.COM",
@@ -14326,11 +14326,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados de Cafetal",
       "plan": {
-        "id": 19,
-        "name": "RECURRENTE RESIDENCIAL PLAN 1GB",
-        "cost": "74.70",
-        "code": "FOR1GB",
-        "profile": "1000M/1000M"
+        "id": 8,
+        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
+        "cost": "49.50",
+        "code": "FOR750M",
+        "profile": "750M/750M"
       },
       "client_mobile": "04149474118",
       "client_email": "RAHUNYM@GMAIL.COM",
@@ -19503,11 +19503,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Terrazas de Paya",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121358408",
       "client_email": "carolinaamador953@gmail.com",
@@ -42910,11 +42910,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Vista Hermosa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04145733505",
       "client_email": "ENEIDA75HB@GMAIL.COM",
@@ -45353,11 +45353,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 2,
+        "name": "RECURRENTE RESIDENCIAL PLAN 30M",
+        "cost": "20.00",
+        "code": "FOR30",
+        "profile": "30M/30M"
       },
       "client_mobile": "04121486776",
       "client_email": "BRAYANDWONHILL@GMAIL.COM",
@@ -57729,11 +57729,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Rio Seco",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121598327",
       "client_email": "JAMS231296@GMAIL.COM",
@@ -57940,11 +57940,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243210099",
       "client_email": "ANNYMG219@GMAIL.COM",
@@ -84368,11 +84368,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Floresta",
       "plan": {
-        "id": 19,
-        "name": "RECURRENTE RESIDENCIAL PLAN 1GB",
-        "cost": "74.70",
-        "code": "FOR1GB",
-        "profile": "1000M/1000M"
+        "id": 16,
+        "name": "RECURRENTE RESIDENCIAL PLAN 800M",
+        "cost": "55.00",
+        "code": "FOR800",
+        "profile": "800M/800M"
       },
       "client_mobile": "04145981968",
       "client_email": "JAGOOEDEL79@GMAIL.COM",
@@ -91725,11 +91725,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243603074",
       "client_email": "YULIREIMIS@GMAIL.COM",
@@ -93950,11 +93950,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04122295591",
       "client_email": "YHONATTANHURTADO2201@GMAIL.COM",
@@ -122015,11 +122015,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Prados",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128494901",
       "client_email": "GNORELISJOSEFINA@GMAIL.COM",
@@ -130987,11 +130987,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243116328",
       "client_email": "MARCELYSLUGO949@GMAIL.COM",
@@ -132196,11 +132196,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Valle Verde",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128651293",
       "client_email": "LOPEZ317@GMAIL.COM",
@@ -135948,11 +135948,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Casona II",
       "plan": {
-        "id": 43,
-        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
-        "cost": "46.00",
-        "code": "FOR650M",
-        "profile": "650M/650M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144911762",
       "client_email": "DARWINSJABG1@GMAIL.COM",
@@ -143692,11 +143692,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Valle Fresco",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125009022",
       "client_email": "JJCAMPERO2@GMAIL.COM",
