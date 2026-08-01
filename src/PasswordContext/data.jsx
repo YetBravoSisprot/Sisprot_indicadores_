@@ -121730,8 +121730,8 @@ const largeArraydata =
       "id": 7371,
       "client_name": "HECTOR ANTONIO GUZMAN ACHE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Callejon Los Jabillos",
@@ -121748,7 +121748,16 @@ const largeArraydata =
       "client_identification": "V3742167",
       "nap_box_name": "138",
       "created_at": "2025-01-08T14:53:43.148306",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12781,
+        "ip": "10.10.130.2",
+        "mac": "TP:LG:F5:CB:0A:C9",
+        "serial": "TPLGF5CB0AC9",
+        "queue": null,
+        "interface": "VLAN205_JABILLOS_OLT2",
+        "created_at": "2026-08-01T13:54:26.154670",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
