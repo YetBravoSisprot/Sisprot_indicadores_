@@ -34907,8 +34907,8 @@ const largeArraydata =
       "id": 4288,
       "client_name": "DIANA CAROLINA BARRETO DE BERNAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guerito",
@@ -34925,16 +34925,7 @@ const largeArraydata =
       "client_identification": "V16738870",
       "nap_box_name": "CE - 771",
       "created_at": "2024-05-17T16:04:08.544902",
-      "service_detail": {
-        "id": 11837,
-        "ip": "172.28.55.2",
-        "mac": "ZICGCE36E4D0",
-        "serial": "ZICGCE36E4D0",
-        "queue": null,
-        "interface": "VLAN139_GUERITO",
-        "created_at": "2026-02-27T12:05:56.418028",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
