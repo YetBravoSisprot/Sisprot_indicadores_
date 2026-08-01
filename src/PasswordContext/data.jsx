@@ -50908,8 +50908,8 @@ const largeArraydata =
       "id": 4848,
       "client_name": "JORGE ANDRES ZEGHEN BARRIOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Residencias Candys",
@@ -50926,7 +50926,16 @@ const largeArraydata =
       "client_identification": "V30005887",
       "nap_box_name": "CTO-0516",
       "created_at": "2024-06-13T08:55:13.225781",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12782,
+        "ip": "172.27.209.2",
+        "mac": "HW:TC:54:B1:2D:A3",
+        "serial": "HWTC54B12DA3",
+        "queue": null,
+        "interface": "VLAN254_CANDYS_OLT1",
+        "created_at": "2026-08-01T14:57:23.429378",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
