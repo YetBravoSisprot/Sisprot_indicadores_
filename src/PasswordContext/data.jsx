@@ -97328,8 +97328,8 @@ const largeArraydata =
       "id": 6470,
       "client_name": "JAKELINE CRISTINA ROSALES OCANDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Arturo Luis Berti",
@@ -113661,11 +113661,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125259470",
       "client_email": "NESTORJOSEH27@GMAIL.COM",
@@ -121742,8 +121742,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04143322167",
-      "client_email": "GUZMANACHE@GMAIL.COM",
+      "client_mobile": "04243498951",
+      "client_email": "JORRIBO68@GMAIL.COM",
       "address": "FINAL CALLE LOS JABILLOS CASA S/N SECTOR PRADOS DEL CAFETAL TURMERO ARAGUA ZONA 2115",
       "client_identification": "V3742167",
       "nap_box_name": "138",
@@ -146418,7 +146418,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Casona I",
       "plan": {
         "id": 100,
