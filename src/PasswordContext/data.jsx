@@ -146433,8 +146433,8 @@ const largeArraydata =
       "id": 8352,
       "client_name": "SHADAY HARYSAID RENGIFO FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona I",
@@ -146451,7 +146451,16 @@ const largeArraydata =
       "client_identification": "V30452910",
       "nap_box_name": "410",
       "created_at": "2025-06-09T08:55:33.346055",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12783,
+        "ip": "10.15.20.2",
+        "mac": "QX:TL:CB:F3:2D:BE",
+        "serial": "QXTLCBF32DBE",
+        "queue": null,
+        "interface": "VLAN109_CASONA_1",
+        "created_at": "2026-08-02T15:56:19.911516",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
