@@ -15040,13 +15040,13 @@ const largeArraydata =
       "nap_box_name": "186",
       "created_at": "2024-04-15T15:32:25.537705",
       "service_detail": {
-        "id": 10453,
+        "id": 12785,
         "ip": "172.30.46.2",
-        "mac": "CIOT08B7B2CE",
-        "serial": "CIOT08B7B2CE",
+        "mac": "B4:64:15:72:26:70",
+        "serial": "GPON00722670",
         "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-12-02T10:49:15.747978",
+        "created_at": "2026-08-02T19:25:38.630854",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -27646,11 +27646,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128905781",
       "client_email": "AIDNISKEVINJATNIEL@GMAIL.COM",
