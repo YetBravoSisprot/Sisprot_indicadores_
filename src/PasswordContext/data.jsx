@@ -145266,13 +145266,13 @@ const largeArraydata =
       "nap_box_name": "161 DOS",
       "created_at": "2025-06-03T12:35:29.643499",
       "service_detail": {
-        "id": 8831,
+        "id": 12784,
         "ip": "10.14.200.2",
-        "mac": "MONU004ADFC3",
-        "serial": "MONU004ADFC3",
-        "queue": "queue1",
+        "mac": "68:9f:f0:2a:d1:ff",
+        "serial": "ZXICCDE890C8",
+        "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2025-06-04T08:05:01.124049",
+        "created_at": "2026-08-02T17:07:27.019830",
         "created_by_name": null
       },
       "installation_invoice_cost": null
