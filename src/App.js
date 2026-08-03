@@ -97,14 +97,7 @@ function AppContent() {
           }
         />
 
-        <Route
-          path="Encuestas"
-          element={
-            <ProtectedRoute roles={["admin", "analista_atencion"]}>
-              <Encuestas />
-            </ProtectedRoute>
-          }
-        />
+       
 
         <Route
           path="*"
