@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5416,
+  "count": 5417,
   "results": [
     {
       "id": 3063,
@@ -19007,8 +19007,8 @@ const largeArraydata =
       "id": 3729,
       "client_name": "LESLY YUDITH MIRANDA DE ANDUEZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -35985,8 +35985,8 @@ const largeArraydata =
       "id": 4333,
       "client_name": "JOSEFA MONTANO HURTADO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -149801,8 +149801,8 @@ const largeArraydata =
       "id": 8529,
       "client_name": "EFREN AUGUSTO RODRIGUEZ MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -167035,6 +167035,31 @@ const largeArraydata =
         "created_at": "2026-07-29T18:25:07.558850",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9163,
+      "client_name": "OMAR LEONARDO AZUAJE MEZA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle Fresco",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144754446",
+      "client_email": "LEONARDOAZUAJE10@GMAIL.COM",
+      "address": "VALLE FRESCO MANZANA NUMERO 23 CASA NUMERO 24-6 TURMERO ZONA POSTAL 2115",
+      "client_identification": "V21369195",
+      "nap_box_name": "CTO - 981",
+      "created_at": "2026-08-05T14:44:55.945389",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
