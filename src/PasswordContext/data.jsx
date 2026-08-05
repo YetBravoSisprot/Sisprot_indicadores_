@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5418,
+  "count": 5419,
   "results": [
     {
       "id": 3063,
@@ -93085,7 +93085,7 @@ const largeArraydata =
       },
       "client_mobile": "04144587068",
       "client_email": "LAURAYJUANYJOSEGRE6@GMAIL.COM",
-      "address": "CALLE LA LLANERA CASA NRO PB D1. URB TERRAZAS DE JUAN PABLO TURMERO ARAGUA",
+      "address": "CALLE LA LLANERA CASA NRO PB D 1 URB TERRAZA DE JUAN PABLO TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V14344185",
       "nap_box_name": "CTO-0531",
       "created_at": "2024-08-07T17:40:28.858293",
@@ -99971,8 +99971,8 @@ const largeArraydata =
       "id": 6565,
       "client_name": "BRYAN ALEXANDER LAMAS MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Valle del Rosario",
@@ -128592,8 +128592,8 @@ const largeArraydata =
       "id": 7691,
       "client_name": "JOSE ANTONIO ALVES FAJARDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guayabita",
@@ -133984,8 +133984,8 @@ const largeArraydata =
       "id": 7883,
       "client_name": "YULI JOSEFINA MENDEZ FLORES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Concepcion III",
@@ -167102,6 +167102,31 @@ const largeArraydata =
       "client_identification": "V14344185",
       "nap_box_name": "12",
       "created_at": "2026-08-05T16:01:48.877874",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9165,
+      "client_name": "ELENNY KATIUSKA CORONADO RODRIGUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "+5255778533",
+      "client_email": "ELENNYCORONADO7@GMAIL.COM",
+      "address": "URBANIZACION SAN PABLO CALLE HYCELLE PARCELA NUMERO 19 CONJUNTO RESINDENCIAL CAMELOT SUITE APARTAMENTO 4 PLANTA ALTA TURMERO ZONA POSTAL 2115",
+      "client_identification": "V12612672",
+      "nap_box_name": "140",
+      "created_at": "2026-08-05T16:29:00.055920",
       "service_detail": null,
       "installation_invoice_cost": null
     }
