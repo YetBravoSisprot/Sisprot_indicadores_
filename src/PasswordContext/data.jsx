@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5423,
+  "count": 5424,
   "results": [
     {
       "id": 3063,
@@ -17392,8 +17392,8 @@ const largeArraydata =
       "id": 3675,
       "client_name": "MARIOXY CAROLINA ABARCA GUEDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -129760,8 +129760,8 @@ const largeArraydata =
       "id": 7731,
       "client_name": "STEFANY GABRIELA JASPE SERRANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Betania",
@@ -167282,6 +167282,31 @@ const largeArraydata =
         "created_at": "2026-08-06T14:06:31.771421",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9170,
+      "client_name": "CAROLINA DA COSTA DE ASCENCAO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127768109",
+      "client_email": "CARODC490@HOTMAIL.COM",
+      "address": "4TA AVENIDA ESTE DE SAN PABLO, CASA NUMEROO 13-1 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V15129490",
+      "nap_box_name": "CTO-00629",
+      "created_at": "2026-08-06T15:03:35.869284",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
