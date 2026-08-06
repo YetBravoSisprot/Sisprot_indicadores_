@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5419,
+  "count": 5420,
   "results": [
     {
       "id": 3063,
@@ -105339,8 +105339,8 @@ const largeArraydata =
       "id": 6753,
       "client_name": "MIGUEL EDUARDO ANDARA OLIVARES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -108840,8 +108840,8 @@ const largeArraydata =
       "id": 6891,
       "client_name": "ALVARO LUIS LOPEZ MARINO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -167155,6 +167155,31 @@ const largeArraydata =
         "created_at": "2026-08-06T08:41:46.801481",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9166,
+      "client_name": "MARIANYELI VANESSA RIVAS ROJA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle Verde",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243533854",
+      "client_email": "ANDRIFABIAN2580@GMAIL.COM",
+      "address": "PAYA SECTOR VALLE VERDE CALLÉ RO SECO CASA NÚMERO 20 TURMERO ZONA POSTAL 2115",
+      "client_identification": "V24445141",
+      "nap_box_name": "CTO-00676",
+      "created_at": "2026-08-06T10:29:11.704887",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
