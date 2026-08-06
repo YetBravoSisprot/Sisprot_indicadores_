@@ -153690,8 +153690,8 @@ const largeArraydata =
       "id": 8684,
       "client_name": "OMAR LEONARDO AZUAJE MEZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Edif. El Portal",
@@ -153708,16 +153708,7 @@ const largeArraydata =
       "client_identification": "V21369195",
       "nap_box_name": "CTO-00413",
       "created_at": "2025-08-04T12:44:21.684969",
-      "service_detail": {
-        "id": 9306,
-        "ip": "10.15.210.2",
-        "mac": "OEMT3C620E72",
-        "serial": "OEMT3C620E72",
-        "queue": "queue1",
-        "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2025-08-04T14:00:39.449914",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -167111,8 +167102,8 @@ const largeArraydata =
       "id": 9164,
       "client_name": "JUAN LUIS RUIZ MONCADA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Terrazas de Juan Pablo",
@@ -167129,7 +167120,16 @@ const largeArraydata =
       "client_identification": "V14344185",
       "nap_box_name": "12",
       "created_at": "2026-08-05T16:01:48.877874",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12796,
+        "ip": "123.123.123.123",
+        "mac": "12:31:23:12:31:23",
+        "serial": "123165465589",
+        "queue": null,
+        "interface": "VLAN101_AJS",
+        "created_at": "2026-08-06T14:01:40.043132",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167272,7 +167272,16 @@ const largeArraydata =
       "client_identification": "V30148131",
       "nap_box_name": "CTO-00041",
       "created_at": "2026-08-06T13:10:57.808219",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12799,
+        "ip": "10.16.233.2",
+        "mac": "20:12:23:12:18:00",
+        "serial": "OEMT3C6205CA",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-08-06T14:06:31.771421",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
