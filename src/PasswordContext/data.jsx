@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5424,
+  "count": 5425,
   "results": [
     {
       "id": 3063,
@@ -102768,8 +102768,8 @@ const largeArraydata =
       "id": 6662,
       "client_name": "CRISTIAN GIOVANNI LOPEZ ALFONZO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Terrazas de Paya",
@@ -156364,8 +156364,8 @@ const largeArraydata =
       "id": 8769,
       "client_name": "CLAUDITH JOSELIN PAEZ ACEVEDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Ezequiel Zamora",
@@ -167252,7 +167252,7 @@ const largeArraydata =
     },
     {
       "id": 9169,
-      "client_name": "LUIS ALEJANDRO  HIDALGO FLORES",
+      "client_name": "ESCUELA COMUNITARIA CARIBE",
       "client_type_name": "GRATIS",
       "client_subdivision": "POR INSTALAR_GRATIS",
       "status_name": "Por instalar",
@@ -167266,10 +167266,10 @@ const largeArraydata =
         "code": "FO-G80",
         "profile": "80M/80M"
       },
-      "client_mobile": "04128150454",
-      "client_email": "luishflores2609@gmail.com",
+      "client_mobile": "04267416390",
+      "client_email": "ecidcaribefutsal@gmail.com",
       "address": "calle 1 simon bolivar el macaro turmero",
-      "client_identification": "V30148131",
+      "client_identification": "V070815059",
       "nap_box_name": "CTO-00041",
       "created_at": "2026-08-06T13:10:57.808219",
       "service_detail": {
@@ -167307,6 +167307,40 @@ const largeArraydata =
       "nap_box_name": "CTO-00629",
       "created_at": "2026-08-06T15:03:35.869284",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9171,
+      "client_name": "INVERSIONES COLBOX VEN CA",
+      "client_type_name": "PYME",
+      "client_subdivision": "PAUSADO_PYME",
+      "status_name": "Pausado",
+      "cycle": 10,
+      "migrate": true,
+      "sector_name": "Guerito",
+      "plan": {
+        "id": 36,
+        "name": "RECURRENTE PYME PLAN 650M",
+        "cost": "70.18",
+        "code": "FOP650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04121998554",
+      "client_email": "INVERSIONESCOLBOXVEN@GMAIL.COM",
+      "address": "AV INTERCOMUNAL TURMERO MARACAY LOCAL NRO 4-B SECTOR SAMAN DE GUERE GALPON 3",
+      "client_identification": "J500445270",
+      "nap_box_name": "542",
+      "created_at": "2024-07-17T09:45:46.679900",
+      "service_detail": {
+        "id": 12800,
+        "ip": "10.17.59.2",
+        "mac": "JM:KG:C2:AD:05:52",
+        "serial": "JMKGC2AD0552",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-08-06T15:30:24.103403",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
