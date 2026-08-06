@@ -58011,8 +58011,8 @@ const largeArraydata =
       "id": 5122,
       "client_name": "JOSE GREGORIO HIDALGO MARIN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Durpa",
@@ -58029,7 +58029,16 @@ const largeArraydata =
       "client_identification": "V19277127",
       "nap_box_name": "CTO-00453",
       "created_at": "2024-07-01T10:21:50.061103",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12794,
+        "ip": "172.30.122.2",
+        "mac": "OE:MT:3C:62:56:E6",
+        "serial": "OEMT3C6256E6",
+        "queue": null,
+        "interface": "VLAN240_DURPA",
+        "created_at": "2026-08-06T11:14:17.680625",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
