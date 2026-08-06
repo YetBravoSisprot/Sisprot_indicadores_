@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5420,
+  "count": 5421,
   "results": [
     {
       "id": 3063,
@@ -66132,8 +66132,8 @@ const largeArraydata =
       "id": 5416,
       "client_name": "JENNY ROSEMERY HERNANDEZ ZAPATA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -167188,6 +167188,31 @@ const largeArraydata =
       "client_identification": "V24445141",
       "nap_box_name": "CTO-00676",
       "created_at": "2026-08-06T10:29:11.704887",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9167,
+      "client_name": "MARLES LUCIA ALFONZO BRETO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Prados I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144651737",
+      "client_email": "MARLESAL2023@GMAIL.COM",
+      "address": "PRADOS DE PAYA I CALLE 3 CASA NUMERO 6 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V22286655",
+      "nap_box_name": "587 DOS",
+      "created_at": "2026-08-06T12:28:17.783542",
       "service_detail": null,
       "installation_invoice_cost": null
     }
