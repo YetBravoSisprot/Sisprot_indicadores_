@@ -166568,8 +166568,8 @@ const largeArraydata =
       "id": 9170,
       "client_name": "CAROLINA DA COSTA DE ASCENCAO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -166586,7 +166586,16 @@ const largeArraydata =
       "client_identification": "V15129490",
       "nap_box_name": "CTO-00629",
       "created_at": "2026-08-06T15:03:35.869284",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12807,
+        "ip": "10.16.236.2",
+        "mac": "OE:MT:3C:62:59:22",
+        "serial": "OEMT3C625922",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-08-07T17:28:54.615840",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
