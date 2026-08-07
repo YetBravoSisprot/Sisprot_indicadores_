@@ -166441,7 +166441,16 @@ const largeArraydata =
       "client_identification": "V24445141",
       "nap_box_name": "CTO-00676",
       "created_at": "2026-08-06T10:29:11.704887",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12804,
+        "ip": "10.16.234.2",
+        "mac": "ZX:IC:C9:C6:1A:91",
+        "serial": "ZXICC9C61A91",
+        "queue": null,
+        "interface": "VLAN253_VALLE_VERDE",
+        "created_at": "2026-08-07T11:01:03.132758",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
