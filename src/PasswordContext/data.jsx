@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5425,
+  "count": 5427,
   "results": [
     {
       "id": 3063,
@@ -29623,8 +29623,8 @@ const largeArraydata =
       "id": 4106,
       "client_name": "YAZURI ANDRINA RIOS CHAVEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -34715,8 +34715,8 @@ const largeArraydata =
       "id": 4285,
       "client_name": "SILENNE ESTHER GALINDEZ MORALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -47013,8 +47013,8 @@ const largeArraydata =
       "id": 4715,
       "client_name": "PIERINA JOVANA URIBE ROSALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -47031,7 +47031,16 @@ const largeArraydata =
       "client_identification": "V12134146",
       "nap_box_name": "CTO-00215",
       "created_at": "2024-06-09T20:30:00.284767",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12806,
+        "ip": "172.21.166.2",
+        "mac": "TP:LG:B6:8B:58:AA",
+        "serial": "TPLGB68B58AA",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-08-07T16:56:11.062299",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -125130,8 +125139,8 @@ const largeArraydata =
       "id": 7560,
       "client_name": "GLEIMAR GEOVANINA ALBARRAN BELISARIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -153816,8 +153825,8 @@ const largeArraydata =
       "id": 8711,
       "client_name": "ARMANDO LUIS RAMOS VALERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Valle Fresco",
@@ -166612,6 +166621,65 @@ const largeArraydata =
         "created_at": "2026-08-06T15:30:24.103403",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9172,
+      "client_name": "RITA ELENA RAMIREZ CHIRINOS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243563113",
+      "client_email": "RITACHIRINIS1974@GMAIL.COM",
+      "address": "SECTOR SAMAN DE GUERE CALLE EL CARMEN CASA NUMERO 19 ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V12144491",
+      "nap_box_name": "303",
+      "created_at": "2026-08-07T15:41:09.409419",
+      "service_detail": {
+        "id": 12805,
+        "ip": "10.16.235.2",
+        "mac": "QX:TL:CB:66:A9:EC",
+        "serial": "QXTLCB66A9EC",
+        "queue": null,
+        "interface": "VLAN122_SAMAN_GUERE",
+        "created_at": "2026-08-07T16:52:46.253170",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9173,
+      "client_name": "RITA ELENA RAMIREZ CHIRINOS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243563113",
+      "client_email": "RITACHIRINIS1974@GMAIL.COM",
+      "address": "SECTOR SAMAN DE GUERE CALLE EL CARMEN CASA NUMERO 19 ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V12144491",
+      "nap_box_name": "303",
+      "created_at": "2026-08-07T15:58:13.417639",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
