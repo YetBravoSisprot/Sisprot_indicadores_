@@ -38594,8 +38594,8 @@ const largeArraydata =
       "id": 4424,
       "client_name": "ESTACION DE SERVICIOS EL TRIANGULO SRL",
       "client_type_name": "PYME",
-      "client_subdivision": "CANCELADO_PYME",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -38612,7 +38612,16 @@ const largeArraydata =
       "client_identification": "J075712048",
       "nap_box_name": "CTO-00030",
       "created_at": "2024-06-08T10:59:52.761911",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12811,
+        "ip": "172.28.184.2",
+        "mac": "HW:TC:3A:91:4A:A1",
+        "serial": "HWTC3A914AA1",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-08-08T17:28:23.857476",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
