@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5427,
+  "count": 5428,
   "results": [
     {
       "id": 3063,
@@ -154621,8 +154621,8 @@ const largeArraydata =
       "id": 8736,
       "client_name": "MOISES GIOVANNI MEDINA CELIS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "La Concepcion",
@@ -166688,6 +166688,31 @@ const largeArraydata =
       "client_identification": "V12144491",
       "nap_box_name": "303",
       "created_at": "2026-08-07T15:58:13.417639",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9174,
+      "client_name": "KAIRELIS DEL CARMEN TORO PEREZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04228152384",
+      "client_email": "TORKAIRELIS25@GMAIL.COM",
+      "address": "CALLE EL RINCON CASA NUMERO 25 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V31023107",
+      "nap_box_name": "CTO - 1118",
+      "created_at": "2026-08-07T22:16:07.956381",
       "service_detail": null,
       "installation_invoice_cost": null
     }
