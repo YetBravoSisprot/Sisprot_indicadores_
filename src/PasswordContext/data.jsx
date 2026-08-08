@@ -155349,8 +155349,8 @@ const largeArraydata =
       "id": 8759,
       "client_name": "ILDEMAR ALBERTO ALBARRAN BELISARIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Cambur",
@@ -155367,7 +155367,16 @@ const largeArraydata =
       "client_identification": "V15601363",
       "nap_box_name": "CTO-00150",
       "created_at": "2025-09-02T21:52:39.197263",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12810,
+        "ip": "10.16.25.2",
+        "mac": "HW:TC:96:A3:06:88",
+        "serial": "HWTC96A30688",
+        "queue": null,
+        "interface": "VLAN263_EL_CAMBUR",
+        "created_at": "2026-08-08T13:27:35.083109",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
