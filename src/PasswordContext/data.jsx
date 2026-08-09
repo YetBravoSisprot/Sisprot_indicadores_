@@ -122424,8 +122424,8 @@ const largeArraydata =
       "id": 7427,
       "client_name": "MIREYA MORA RONDON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vista Hermosa",
@@ -156504,13 +156504,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00593",
       "created_at": "2025-09-17T11:34:58.152679",
       "service_detail": {
-        "id": 12199,
+        "id": 12813,
         "ip": "10.16.60.2",
-        "mac": "OEMT3C6246DA",
+        "mac": "OE:MT:3C:62:46:DA",
         "serial": "OEMT3C6246DA",
         "queue": null,
-        "interface": "VLAN133_VILLA_TAMARINDOS",
-        "created_at": "2026-03-28T08:53:56.410569",
+        "interface": "VLAN225_TERRAZAS_TURMERO_OLT1",
+        "created_at": "2026-08-09T16:46:23.300798",
         "created_by_name": null
       },
       "installation_invoice_cost": null
