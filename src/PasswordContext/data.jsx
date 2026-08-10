@@ -121423,8 +121423,8 @@ const largeArraydata =
       "id": 7390,
       "client_name": "YOSELAY GABRIELA YEPEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Palmeras II",
@@ -121441,7 +121441,16 @@ const largeArraydata =
       "client_identification": "V20590361",
       "nap_box_name": "336",
       "created_at": "2025-01-13T16:05:07.362992",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12816,
+        "ip": "10.10.134.2",
+        "mac": "HW:TC:48:08:02:80",
+        "serial": "HWTC48080280",
+        "queue": null,
+        "interface": "VLAN119_PALMERAS_2",
+        "created_at": "2026-08-10T15:53:55.080913",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
