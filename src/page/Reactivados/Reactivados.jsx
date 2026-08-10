@@ -53,13 +53,13 @@ function Reactivados() {
             <div className="credential-item">
               <div className="credential-content">
                 <span className="credential-label">Contraseña:</span>
-                <span className="credential-value" id="pass-val">Sisprot.150725</span>
+                <span className="credential-value" id="pass-val">**********</span>
               </div>
               <button 
                 className="copy-btn" 
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigator.clipboard.writeText("Sisprot.150725");
+                  navigator.clipboard.writeText("Prueba123");
                   alert("Contraseña copiada");
                 }}
                 title="Copiar Contraseña"
