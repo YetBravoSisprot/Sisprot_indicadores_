@@ -35,7 +35,7 @@ function Reactivados() {
             <div className="credential-item">
               <div className="credential-content">
                 <span className="credential-label">Usuario:</span>
-                <span className="credential-value" id="user-val">ybravo@sisprotgf.com</span>
+                <span className="credential-value" id="user-val">*****@sispr****.com</span>
               </div>
               <button 
                 className="copy-btn" 
