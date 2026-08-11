@@ -36580,8 +36580,8 @@ const largeArraydata =
       "id": 4358,
       "client_name": "YADIXI NATHALIE ACERO NAVAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -36598,16 +36598,7 @@ const largeArraydata =
       "client_identification": "V16902614",
       "nap_box_name": "510 DOS",
       "created_at": "2024-06-08T08:26:40.974490",
-      "service_detail": {
-        "id": 5784,
-        "ip": "172.24.87.2",
-        "mac": "TPLGF4EFC2EA",
-        "serial": "TPLGF4EFC2EA",
-        "queue": "Plan_127744_1574_WispHub",
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2024-08-19T16:30:15.365487",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
