@@ -151312,13 +151312,13 @@ const largeArraydata =
       "nap_box_name": "CE-00254",
       "created_at": "2025-07-10T19:15:04.442432",
       "service_detail": {
-        "id": 12589,
-        "ip": "10.15.98.2",
+        "id": 12819,
+        "ip": "10.17.62.2",
         "mac": "OE:MT:3C:62:07:BA",
         "serial": "OEMT3C6207BA",
         "queue": null,
         "interface": "VLAN227_V_PARAISO_OLT1",
-        "created_at": "2026-06-06T12:55:21.467617",
+        "created_at": "2026-08-11T17:04:37.720757",
         "created_by_name": null
       },
       "installation_invoice_cost": null
