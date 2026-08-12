@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5428,
+  "count": 5435,
   "results": [
     {
       "id": 3063,
@@ -166750,6 +166750,217 @@ const largeArraydata =
         "created_at": "2026-08-08T18:45:39.430548",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9175,
+      "client_name": "Carmen Olida Contreras Ramirez",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04267319559",
+      "client_email": "carmenolidacontrerasramirez@gmail.com",
+      "address": "calle 2 casa numero 12 prados iii turmero aragua zona postal 2115",
+      "client_identification": "v10740876",
+      "nap_box_name": null,
+      "created_at": "2026-08-11T21:15:30.703083",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9176,
+      "client_name": "DOUBLEIBYS GREGORYS ROMERO TORBELLO",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Terrazas de Turmero",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04243594838",
+      "client_email": "DUBLEIBYSROMERO@GMAIL.COM",
+      "address": "urbanizacion terrazas de turmero calle 1 casa v22 turmero aragua zona postal 2115",
+      "client_identification": "V25880894",
+      "nap_box_name": "118",
+      "created_at": "2026-08-11T21:15:31.772492",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9177,
+      "client_name": "Liliana Mercedes Alvares Chacon",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04243572788",
+      "client_email": "lilianamercedes94@gmail.com",
+      "address": "urbanizacion mata caballo calle 11 casa numero 650-a turmero aragua zona postal 2115",
+      "client_identification": "v12336239",
+      "nap_box_name": "CTO-00022",
+      "created_at": "2026-08-11T21:15:33.134691",
+      "service_detail": {
+        "id": 12822,
+        "ip": "10.17.60.2",
+        "mac": "4cabfcb351a8",
+        "serial": "jmkgcb39264f",
+        "queue": null,
+        "interface": "219",
+        "created_at": "2026-08-11T21:15:33.417945",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9178,
+      "client_name": "FRANCYS LISMAR NIERES GUZMAN",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Saman Tarazonero I",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04127984169",
+      "client_email": "NIERESLISMAR4@GMAIL.COM",
+      "address": "calle 3 casa numero 12 barrio saman tarazonero i estado aragua zona postal 2115",
+      "client_identification": "V21269270",
+      "nap_box_name": "291",
+      "created_at": "2026-08-11T21:15:38.043098",
+      "service_detail": {
+        "id": 12823,
+        "ip": "10.17.61.2",
+        "mac": "4cabfc27eee0",
+        "serial": "jmkgc980cd0f",
+        "queue": null,
+        "interface": "140",
+        "created_at": "2026-08-11T21:15:38.324322",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9179,
+      "client_name": "Maria Carolina Rodriguez Coello",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04125238413",
+      "client_email": "lacatirarodriguez27@gmail.com",
+      "address": "calle principal el rincón paraguatan casa número #30",
+      "client_identification": "v25569371",
+      "nap_box_name": "CTO-00673",
+      "created_at": "2026-08-11T21:15:43.185861",
+      "service_detail": {
+        "id": 12824,
+        "ip": "10.16.237.2",
+        "mac": "68-9f-f0-2a-89-1f",
+        "serial": "zxiccdb301b9",
+        "queue": null,
+        "interface": "283",
+        "created_at": "2026-08-11T21:15:43.466694",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9180,
+      "client_name": "Jorge Manuel Rodriguez Gonzalez",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04144640773",
+      "client_email": "a23423815a@gmail.com",
+      "address": "calle principal el rincón paraguatan casa número #11",
+      "client_identification": "v19701565",
+      "nap_box_name": "CTO-00673",
+      "created_at": "2026-08-11T21:15:44.505874",
+      "service_detail": {
+        "id": 12825,
+        "ip": "10.17.63.2",
+        "mac": "4cabfc92f9ca",
+        "serial": "jmkgc82baf36",
+        "queue": null,
+        "interface": "283",
+        "created_at": "2026-08-11T21:15:44.790013",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9181,
+      "client_name": "Maria Carolina Rodriguez Coello",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04125238413",
+      "client_email": "lacatirarodriguez27@gmail.com",
+      "address": "calle principal el rincón paraguatan casa número #30",
+      "client_identification": "v25569371",
+      "nap_box_name": "CTO-00673",
+      "created_at": "2026-08-11T21:15:49.679748",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
