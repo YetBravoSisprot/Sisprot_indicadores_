@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5435,
+  "count": 5434,
   "results": [
     {
       "id": 3063,
@@ -166837,31 +166837,6 @@ const largeArraydata =
       "installation_invoice_cost": null
     },
     {
-      "id": 9178,
-      "client_name": "FRANCYS LISMAR NIERES GUZMAN",
-      "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Saman Tarazonero I",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04127984169",
-      "client_email": "NIERESLISMAR4@GMAIL.COM",
-      "address": "calle 3 casa numero 12 barrio saman tarazonero i estado aragua zona postal 2115",
-      "client_identification": "V21269270",
-      "nap_box_name": "291",
-      "created_at": "2026-08-11T21:15:38.043098",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
       "id": 9179,
       "client_name": "Maria Carolina Rodriguez Coello",
       "client_type_name": "PYME",
@@ -166936,7 +166911,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
         "id": 100,
