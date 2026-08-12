@@ -166825,13 +166825,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00022",
       "created_at": "2026-08-11T21:15:33.134691",
       "service_detail": {
-        "id": 12822,
+        "id": 12828,
         "ip": "10.17.60.2",
-        "mac": "4cabfcb351a8",
-        "serial": "jmkgcb39264f",
+        "mac": "4C:AB:FC:B3:51:A8",
+        "serial": "JMKGCB39264F",
         "queue": null,
-        "interface": "219",
-        "created_at": "2026-08-11T21:15:33.417945",
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-08-12T13:57:55.203140",
         "created_by_name": null
       },
       "installation_invoice_cost": null
