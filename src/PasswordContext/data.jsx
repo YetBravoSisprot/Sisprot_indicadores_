@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5434,
+  "count": 5435,
   "results": [
     {
       "id": 3063,
@@ -166858,16 +166858,7 @@ const largeArraydata =
       "client_identification": "V21269270",
       "nap_box_name": "291",
       "created_at": "2026-08-11T21:15:38.043098",
-      "service_detail": {
-        "id": 12823,
-        "ip": "10.17.61.2",
-        "mac": "4cabfc27eee0",
-        "serial": "jmkgc980cd0f",
-        "queue": null,
-        "interface": "140",
-        "created_at": "2026-08-11T21:15:38.324322",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166936,6 +166927,31 @@ const largeArraydata =
         "created_at": "2026-08-11T21:15:44.790013",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9182,
+      "client_name": "Yuleidys Carolina Marin Palma",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04224335759",
+      "client_email": "yuli7391marin@gmail.com",
+      "address": "centro de turmero calle rivas cruce con calle girardot numero 03 .",
+      "client_identification": "v20057472",
+      "nap_box_name": "CTO-00590",
+      "created_at": "2026-08-12T16:06:04.605949",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
