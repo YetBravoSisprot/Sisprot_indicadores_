@@ -127914,8 +127914,8 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "null",
-      "client_email": "null",
+      "client_mobile": "04128660145",
+      "client_email": "CAROLINAP2812@GMAIL.COM",
       "address": "URB VALLE PARAISO MANZANA 02 CASA 04 SAN PABLO",
       "client_identification": "V14211841",
       "nap_box_name": "CTO-0643",
