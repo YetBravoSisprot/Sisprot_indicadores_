@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5435,
+  "count": 5434,
   "results": [
     {
       "id": 3063,
@@ -156494,8 +156494,8 @@ const largeArraydata =
       "id": 8810,
       "client_name": "DOUBLEIBYS GREGORYS ROMERO TORBELLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Villa Los Tamarindos",
@@ -156512,16 +156512,7 @@ const largeArraydata =
       "client_identification": "V25880894",
       "nap_box_name": "CTO-00593",
       "created_at": "2025-09-17T11:34:58.152679",
-      "service_detail": {
-        "id": 12813,
-        "ip": "10.16.60.2",
-        "mac": "OE:MT:3C:62:46:DA",
-        "serial": "OEMT3C6246DA",
-        "queue": null,
-        "interface": "VLAN225_TERRAZAS_TURMERO_OLT1",
-        "created_at": "2026-08-09T16:46:23.300798",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -166759,7 +166750,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": null,
       "plan": {
         "id": 34,
@@ -166781,10 +166772,10 @@ const largeArraydata =
       "id": 9176,
       "client_name": "DOUBLEIBYS GREGORYS ROMERO TORBELLO",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Terrazas de Turmero",
       "plan": {
         "id": 34,
@@ -166799,7 +166790,16 @@ const largeArraydata =
       "client_identification": "V25880894",
       "nap_box_name": "118",
       "created_at": "2026-08-11T21:15:31.772492",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12827,
+        "ip": "10.16.60.2",
+        "mac": "OE:MT:3C:62:46:DA",
+        "serial": "OEMT3C6246DA",
+        "queue": null,
+        "interface": "VLAN225_TERRAZAS_TURMERO_OLT1",
+        "created_at": "2026-08-11T21:45:10.270243",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166809,7 +166809,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
         "id": 34,
@@ -166843,7 +166843,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 34,
@@ -166877,7 +166877,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
         "id": 34,
@@ -166911,7 +166911,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
         "id": 34,
@@ -166936,31 +166936,6 @@ const largeArraydata =
         "created_at": "2026-08-11T21:15:44.790013",
         "created_by_name": null
       },
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9181,
-      "client_name": "Maria Carolina Rodriguez Coello",
-      "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
-      "cycle": 1,
-      "migrate": false,
-      "sector_name": "Paraguatan",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04125238413",
-      "client_email": "lacatirarodriguez27@gmail.com",
-      "address": "calle principal el rincón paraguatan casa número #30",
-      "client_identification": "v25569371",
-      "nap_box_name": "CTO-00673",
-      "created_at": "2026-08-11T21:15:49.679748",
-      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
