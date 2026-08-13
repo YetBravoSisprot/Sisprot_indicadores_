@@ -149056,13 +149056,13 @@ const largeArraydata =
       "nap_box_name": "ce-968",
       "created_at": "2025-06-27T08:56:39.056987",
       "service_detail": {
-        "id": 9094,
+        "id": 12831,
         "ip": "10.15.156.2",
-        "mac": "QXTLCB9D8A6E",
-        "serial": "QXTLCB9D8A6E",
-        "queue": "queue1",
+        "mac": "68:9F:F0:2A:9B:6F",
+        "serial": "ZXICCDFF66F0",
+        "queue": null,
         "interface": "VLAN271_DIOS_ES_MI_REFUGIO_OLT1",
-        "created_at": "2025-06-27T11:15:49.311134",
+        "created_at": "2026-08-13T16:53:29.669629",
         "created_by_name": null
       },
       "installation_invoice_cost": null
