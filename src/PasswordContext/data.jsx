@@ -166892,24 +166892,15 @@ const largeArraydata =
       "client_identification": "v19701565",
       "nap_box_name": "CTO-00673",
       "created_at": "2026-08-11T21:15:44.505874",
-      "service_detail": {
-        "id": 12825,
-        "ip": "10.17.63.2",
-        "mac": "4cabfc92f9ca",
-        "serial": "jmkgc82baf36",
-        "queue": null,
-        "interface": "283",
-        "created_at": "2026-08-11T21:15:44.790013",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 9182,
       "client_name": "Yuleidys Carolina Marin Palma",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -166927,13 +166918,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00590",
       "created_at": "2026-08-12T16:06:04.605949",
       "service_detail": {
-        "id": 12833,
-        "ip": "10.17.61.2",
+        "id": 12835,
+        "ip": "10.17.63.2",
         "mac": "JM:KG:C8:2B:AF:36",
         "serial": "JMKGC82BAF36",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-08-13T18:08:29.289549",
+        "created_at": "2026-08-13T18:30:33.856837",
         "created_by_name": null
       },
       "installation_invoice_cost": null
