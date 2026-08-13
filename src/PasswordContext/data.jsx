@@ -166897,7 +166897,7 @@ const largeArraydata =
     },
     {
       "id": 9182,
-      "client_name": "Yuleidys Carolina Marin Palma",
+      "client_name": "YULEIDYS CAROLINA MARIN PALMA",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
