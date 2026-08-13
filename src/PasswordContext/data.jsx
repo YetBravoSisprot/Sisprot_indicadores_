@@ -166813,7 +166813,7 @@ const largeArraydata =
     },
     {
       "id": 9177,
-      "client_name": "Liliana Mercedes Alvares Chacon",
+      "client_name": "LILIANA MERCEDES ALVARES CHACON",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
