@@ -166926,7 +166926,16 @@ const largeArraydata =
       "client_identification": "v20057472",
       "nap_box_name": "CTO-00590",
       "created_at": "2026-08-12T16:06:04.605949",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12833,
+        "ip": "10.17.61.2",
+        "mac": "JM:KG:C8:2B:AF:36",
+        "serial": "JMKGC82BAF36",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-08-13T18:08:29.289549",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
