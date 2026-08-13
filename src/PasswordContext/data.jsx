@@ -36902,8 +36902,8 @@ const largeArraydata =
       "id": 4368,
       "client_name": "DISTRIBUIDORA JAQUE MARKET CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Antigua Hacienda De Paya",
@@ -36920,16 +36920,7 @@ const largeArraydata =
       "client_identification": "J504704792",
       "nap_box_name": "98",
       "created_at": "2024-06-08T08:52:06.921954",
-      "service_detail": {
-        "id": 3061,
-        "ip": "172.27.246.2",
-        "mac": "TPLGF9CD420C",
-        "serial": "TPLGF9CD420C",
-        "queue": "Plan_92036_15811_WispHub",
-        "interface": "VLAN220_PP_PAYA_OLT2",
-        "created_at": "2024-06-22T10:26:38.838627",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
