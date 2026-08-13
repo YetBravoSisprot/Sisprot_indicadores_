@@ -27100,11 +27100,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "El Macaro",
       "plan": {
-        "id": 2,
-        "name": "RECURRENTE RESIDENCIAL PLAN 30M",
-        "cost": "20.00",
-        "code": "FOR30",
-        "profile": "30M/30M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124571142",
       "client_email": "LUZMARIAFERNANDA81@GMAIL.COM",
@@ -129331,8 +129331,8 @@ const largeArraydata =
       "id": 7734,
       "client_name": "LUIS SEBASTIAN HERNANDEZ SUAREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Callejon Lim",
@@ -129349,7 +129349,16 @@ const largeArraydata =
       "client_identification": "V16384647",
       "nap_box_name": "TORRE AZUCENA",
       "created_at": "2025-03-18T16:52:39.019866",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12830,
+        "ip": "10.12.140.2",
+        "mac": "OE:MT:3C:62:00:CA",
+        "serial": "OEMT3C6200CA",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-08-13T12:17:19.589419",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
