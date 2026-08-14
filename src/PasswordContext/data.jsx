@@ -36929,7 +36929,16 @@ const largeArraydata =
       "client_identification": "J504704792",
       "nap_box_name": "98",
       "created_at": "2024-06-08T08:52:06.921954",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12841,
+        "ip": "172.27.246.2",
+        "mac": "TP:LG:F9:CD:42:0C",
+        "serial": "TPLGF9CD420C",
+        "queue": null,
+        "interface": "VLAN220_PP_PAYA_OLT2",
+        "created_at": "2026-08-14T17:40:56.379172",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
