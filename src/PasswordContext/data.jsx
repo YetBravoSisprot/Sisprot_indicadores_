@@ -36914,8 +36914,8 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04165435841",
-      "client_email": "ADMJAQUEMARKET@GMAIL.COM",
+      "client_mobile": "04243445527",
+      "client_email": "cca93384@GMAIL.COM",
       "address": "CRTA TURMERO PAYA CALLE ANPHILOQUIO LOCAL PARCELA P-2 NRO 1 SECTOR SANTIAGO MARIÑO MARACAY ARAGUA",
       "client_identification": "J504704792",
       "nap_box_name": "98",
