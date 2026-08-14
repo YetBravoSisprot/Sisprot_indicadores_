@@ -122083,7 +122083,7 @@ const largeArraydata =
         "profile": "150Mbps/150Mbps"
       },
       "client_mobile": "04124115396",
-      "client_email": "NEURYRIVERA@HOTMAIL.COM",
+      "client_email": "LUBRICANTESLS@GMAIL.COM",
       "address": "CTRA EL MACARO LOCAL PARCELA NRO 1-1 SECTOR EL MACARO TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "J407720716",
       "nap_box_name": "CE-00141",
