@@ -148327,8 +148327,8 @@ const largeArraydata =
       "id": 8473,
       "client_name": "LUIS MAGIN ESPINOZA MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Dios Es Mi Refugio",
@@ -161246,16 +161246,7 @@ const largeArraydata =
       "client_identification": "V18221823",
       "nap_box_name": "32",
       "created_at": "2026-02-05T20:11:47.533263",
-      "service_detail": {
-        "id": 12776,
-        "ip": "10.16.231.2",
-        "mac": "JM:KG:C2:AD:05:52",
-        "serial": "JMKGC2AD0552",
-        "queue": null,
-        "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2026-07-28T09:31:03.883130",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
