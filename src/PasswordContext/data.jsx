@@ -166756,7 +166756,16 @@ const largeArraydata =
       "client_identification": "v10740876",
       "nap_box_name": null,
       "created_at": "2026-08-11T21:15:30.703083",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12838,
+        "ip": "10.14.138.2",
+        "mac": "HW:TC:49:20:01:39",
+        "serial": "HWTC49200139",
+        "queue": null,
+        "interface": "VLAN236_PRADOS3",
+        "created_at": "2026-08-14T15:17:16.957244",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
