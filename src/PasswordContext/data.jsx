@@ -26781,8 +26781,8 @@ const largeArraydata =
       "id": 4003,
       "client_name": "NAIRYCH ALEJANDRA LEON HEREDIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -26799,7 +26799,16 @@ const largeArraydata =
       "client_identification": "V25895150",
       "nap_box_name": "CTO-00127",
       "created_at": "2024-04-20T08:56:08.031470",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12840,
+        "ip": "172.20.101.2",
+        "mac": "TP:LG:B4:46:F2:A6",
+        "serial": "TPLGB446F2A6",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-14T17:21:58.341471",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
