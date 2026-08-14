@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5434,
+  "count": 5435,
   "results": [
     {
       "id": 3063,
@@ -29830,8 +29830,8 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04145793686",
-      "client_email": "jmarinp2000@gmail.com",
+      "client_mobile": "04243403013",
+      "client_email": "yaidinliceloth@gmail.com",
       "address": "AV PPAL DEL MACARO EDIF CHIRIMOYA PISO 1 APTO 8 URB VILLAS EL CARMEN TURMERO ESTADO ARAGUA",
       "client_identification": "V13241710",
       "nap_box_name": "43",
@@ -58083,8 +58083,8 @@ const largeArraydata =
       "id": 5131,
       "client_name": "FRANCIA EMPERATRIZ PEREZ CHIRINOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Sur",
@@ -165983,8 +165983,8 @@ const largeArraydata =
       "id": 9152,
       "client_name": "MARIANA JOSEFINA MARTINEZ LOZADA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -166916,6 +166916,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN200_OLTs",
         "created_at": "2026-08-13T18:30:33.856837",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9183,
+      "client_name": "Karelys Nazaret Meneses Betancourt",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04144497495",
+      "client_email": "karelysmeneses0106@gmail.com",
+      "address": "polvorín calle 3 de mayo casa numero 29#a",
+      "client_identification": "v27520867",
+      "nap_box_name": null,
+      "created_at": "2026-08-14T13:23:06.045172",
+      "service_detail": {
+        "id": 12837,
+        "ip": "10.17.61.2",
+        "mac": "JM:KG:C9:80:CD:0F",
+        "serial": "JMKGC980CD0F",
+        "queue": null,
+        "interface": "VLAN280_POLVORIN",
+        "created_at": "2026-08-14T13:23:48.331110",
         "created_by_name": null
       },
       "installation_invoice_cost": null
