@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5435,
+  "count": 5437,
   "results": [
     {
       "id": 3063,
@@ -166952,6 +166952,65 @@ const largeArraydata =
         "created_at": "2026-08-14T13:23:48.331110",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9184,
+      "client_name": "MIGUEL EDUARDO RODRIGUEZ TOVAR",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129672963",
+      "client_email": "MIGUEL.ROD.96.MR@GMAIL.COM",
+      "address": "calle campo elias 12-2 paya abajo, rosario de paya turmero aragua zona postal 2115",
+      "client_identification": "V24930716",
+      "nap_box_name": null,
+      "created_at": "2026-08-14T16:40:30.447134",
+      "service_detail": {
+        "id": 12839,
+        "ip": "172.26.192.2",
+        "mac": "hwtc9065309b",
+        "serial": "hwtc9065309b",
+        "queue": null,
+        "interface": "vlan200_olts",
+        "created_at": "2026-08-14T16:40:30.727737",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9185,
+      "client_name": "Jenny Esther Moreno Arguizones",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4128154370",
+      "client_email": "jm1350267@gmail.com",
+      "address": "urbanizacion ezequiel zamora edificio urquia piso 2 apto 6 turmero aragua zona postal 2115",
+      "client_identification": "v14230844",
+      "nap_box_name": "CTO-00296",
+      "created_at": "2026-08-14T16:40:32.650951",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
