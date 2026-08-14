@@ -105887,7 +105887,7 @@ const largeArraydata =
     },
     {
       "id": 6787,
-      "client_name": "YAIDIN LICELOTH YEPEZ PEREZ",
+      "client_name": "JESUS SALVADOR MARIN PALACIOS",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -105904,7 +105904,7 @@ const largeArraydata =
       "client_mobile": "04145793686",
       "client_email": "jmarinp2000@gmail.com",
       "address": "LOS NISPEROS TORRE D APART 14",
-      "client_identification": "V13241710",
+      "client_identification": "V8819787",
       "nap_box_name": "TORRE D EDIF LOS NISPEROS",
       "created_at": "2024-10-18T10:18:18.904985",
       "service_detail": {
