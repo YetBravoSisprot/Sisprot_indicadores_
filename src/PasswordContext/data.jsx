@@ -108428,8 +108428,8 @@ const largeArraydata =
       "id": 6890,
       "client_name": "JUAN ERNESTO MORLA MARVAL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -108446,7 +108446,16 @@ const largeArraydata =
       "client_identification": "V15758946",
       "nap_box_name": "TORRE A EDIF LOS NISPEROS",
       "created_at": "2024-10-29T18:34:29.987944",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12849,
+        "ip": "10.10.15.2",
+        "mac": "HW:TC:45:A0:44:07",
+        "serial": "HWTC45A04407",
+        "queue": null,
+        "interface": "VLAN272_EDIF_NISPEROS_OLT3",
+        "created_at": "2026-08-15T18:03:01.078780",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
