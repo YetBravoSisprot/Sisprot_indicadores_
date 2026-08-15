@@ -155823,7 +155823,7 @@ const largeArraydata =
     },
     {
       "id": 8782,
-      "client_name": "LUIS EDUARDO ZAMORA PADRINO",
+      "client_name": "MAGGY SURAYA GHANAM CELIS",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -155837,8 +155837,8 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04122599664",
-      "client_email": "LUISZAMORAP13@GMAIL.COM",
+      "client_mobile": "04125791809",
+      "client_email": "MAGGYGHANAM95@GMAIL.COM",
       "address": "SECTOR PRADOS DE PAYA II, CALLE 2 CASA 8",
       "client_identification": "V19516432",
       "nap_box_name": "CTO-00205 DOS",
