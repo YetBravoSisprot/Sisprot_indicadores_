@@ -120197,8 +120197,8 @@ const largeArraydata =
       "id": 7330,
       "client_name": "JACKSON ANDRES GONZALEZ AVENDAÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -120215,7 +120215,16 @@ const largeArraydata =
       "client_identification": "V11939694",
       "nap_box_name": "TORRE A EDIF LOS NISPEROS",
       "created_at": "2024-12-17T14:50:11.736641",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12846,
+        "ip": "10.10.65.2",
+        "mac": "OE:MT:3C:62:45:72",
+        "serial": "OEMT3C624572",
+        "queue": null,
+        "interface": "VLAN272_EDIF_NISPEROS_OLT3",
+        "created_at": "2026-08-15T15:06:14.162459",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
