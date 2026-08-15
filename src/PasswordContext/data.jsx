@@ -61847,8 +61847,8 @@ const largeArraydata =
       "id": 5274,
       "client_name": "EMMAR NEYZMARIZ SUMOZA JUAREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -61865,7 +61865,16 @@ const largeArraydata =
       "client_identification": "V21426901",
       "nap_box_name": "CTO-00319",
       "created_at": "2024-07-16T10:20:17.926086",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12844,
+        "ip": "172.26.148.2",
+        "mac": "HW:TC:90:69:33:9B",
+        "serial": "HWTC9069339B",
+        "queue": null,
+        "interface": "VLAN231_PAYABAJO",
+        "created_at": "2026-08-15T14:17:16.995875",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -154775,8 +154784,8 @@ const largeArraydata =
       "id": 8740,
       "client_name": "YUNIOR JESUS TORTOZA APONCIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Cambur",
@@ -154793,7 +154802,16 @@ const largeArraydata =
       "client_identification": "V17247290",
       "nap_box_name": "CTO - 00521",
       "created_at": "2025-08-21T13:19:17.604617",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12845,
+        "ip": "10.16.6.2",
+        "mac": "VS:OL:00:52:2E:89",
+        "serial": "VSOL00522E89",
+        "queue": null,
+        "interface": "VLAN236_PRADOS3",
+        "created_at": "2026-08-15T14:19:03.051395",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -155829,7 +155847,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": "Prados II",
+      "sector_name": "Saman Tarazonero II",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -155839,8 +155857,8 @@ const largeArraydata =
       },
       "client_mobile": "04125791809",
       "client_email": "MAGGYGHANAM95@GMAIL.COM",
-      "address": "SECTOR PRADOS DE PAYA II, CALLE 2 CASA 8",
-      "client_identification": "V19516432",
+      "address": "Saman tarazonero ll manzana c2 casa numero 14 el macaro aragua zona postal 2115",
+      "client_identification": "V25067048",
       "nap_box_name": "CTO-00205 DOS",
       "created_at": "2025-09-08T15:52:40.982994",
       "service_detail": {
