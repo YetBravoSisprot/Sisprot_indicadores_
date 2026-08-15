@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5437,
+  "count": 5439,
   "results": [
     {
       "id": 3063,
@@ -154778,7 +154778,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "El Cambur",
       "plan": {
         "id": 100,
@@ -167029,6 +167029,74 @@ const largeArraydata =
       "nap_box_name": "CTO-00296",
       "created_at": "2026-08-14T16:40:32.650951",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9186,
+      "client_name": "Michell Yhainilin Velasquez Mariño",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243796480",
+      "client_email": "michelyhainilinmarinovelasques@gmail.com",
+      "address": "urbanizacion pantin calle 1 casa # 13",
+      "client_identification": "28187407",
+      "nap_box_name": null,
+      "created_at": "2026-08-15T14:09:04.376312",
+      "service_detail": {
+        "id": 12842,
+        "ip": "10.16.239.2",
+        "mac": "68-9f-f0-2a-76-6f",
+        "serial": "zxiccd350306",
+        "queue": null,
+        "interface": "229",
+        "created_at": "2026-08-15T14:09:04.655146",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9187,
+      "client_name": "Carolina Lisbeth Rattia Perez",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Pantin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4127764522",
+      "client_email": "carolinarattia1507@gmail.com",
+      "address": "urbanizacion pantin calle 17-b casa #36",
+      "client_identification": "20334399",
+      "nap_box_name": "CTO-00048",
+      "created_at": "2026-08-15T14:09:05.876790",
+      "service_detail": {
+        "id": 12843,
+        "ip": "10.16.240.2",
+        "mac": "4cabfc0f2368",
+        "serial": "jmkgc2f7efce",
+        "queue": null,
+        "interface": "229",
+        "created_at": "2026-08-15T14:09:06.149613",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
