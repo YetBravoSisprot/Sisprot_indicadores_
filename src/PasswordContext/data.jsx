@@ -104861,8 +104861,8 @@ const largeArraydata =
       "id": 6749,
       "client_name": "CARY MICHELL JIMENEZ LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -104879,7 +104879,16 @@ const largeArraydata =
       "client_identification": "V22948360",
       "nap_box_name": "CTO-00076 DOS",
       "created_at": "2024-10-08T14:55:41.902982",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12850,
+        "ip": "10.10.5.2",
+        "mac": "OE:MT:3C:62:26:EE",
+        "serial": "OEMT3C6226EE",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-15T18:22:21.289774",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167071,8 +167080,8 @@ const largeArraydata =
       "id": 9186,
       "client_name": "Michell Yhainilin Velasquez Mariño",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": null,
@@ -167090,13 +167099,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-08-15T14:09:04.376312",
       "service_detail": {
-        "id": 12842,
+        "id": 12851,
         "ip": "10.16.239.2",
-        "mac": "68-9f-f0-2a-76-6f",
+        "mac": "68:9f:f0:2a:76:6f",
         "serial": "zxiccd350306",
         "queue": null,
-        "interface": "229",
-        "created_at": "2026-08-15T14:09:04.655146",
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-15T18:31:01.375519",
         "created_by_name": null
       },
       "installation_invoice_cost": null
