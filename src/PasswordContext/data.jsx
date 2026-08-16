@@ -74308,13 +74308,13 @@ const largeArraydata =
       "nap_box_name": "390",
       "created_at": "2024-07-26T14:38:28.047093",
       "service_detail": {
-        "id": 7634,
+        "id": 12852,
         "ip": "172.17.210.2",
-        "mac": "VSOL00128941",
-        "serial": "VSOL00128941",
-        "queue": "queue1",
+        "mac": "QX:TL:CB:89:3A:57",
+        "serial": "QXTLCB893A57",
+        "queue": null,
         "interface": "VLAN267_LOS_MANGOS_ZTE",
-        "created_at": "2025-01-17T12:43:33.975571",
+        "created_at": "2026-08-15T20:10:24.143213",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167114,8 +167114,8 @@ const largeArraydata =
       "id": 9187,
       "client_name": "Carolina Lisbeth Rattia Perez",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
@@ -167133,13 +167133,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00048",
       "created_at": "2026-08-15T14:09:05.876790",
       "service_detail": {
-        "id": 12843,
+        "id": 12853,
         "ip": "10.16.240.2",
-        "mac": "4cabfc0f2368",
-        "serial": "jmkgc2f7efce",
+        "mac": "JM:KG:C2:F7:EF:CE",
+        "serial": "JMKGC2F7EFCE",
         "queue": null,
-        "interface": "229",
-        "created_at": "2026-08-15T14:09:06.149613",
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-15T20:24:55.083690",
         "created_by_name": null
       },
       "installation_invoice_cost": null
