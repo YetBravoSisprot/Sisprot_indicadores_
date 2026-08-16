@@ -117543,13 +117543,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00253 DOS",
       "created_at": "2024-12-04T14:21:16.932647",
       "service_detail": {
-        "id": 12586,
+        "id": 12854,
         "ip": "10.11.145.2",
-        "mac": "OE:MT:3C:62:4D:0A",
-        "serial": "OEMT3C624D0A",
+        "mac": "68:9F:f0:2a:6c:5f",
+        "serial": "ZXICCDA09119",
         "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2026-06-06T08:24:47.456639",
+        "created_at": "2026-08-16T18:17:58.026927",
         "created_by_name": null
       },
       "installation_invoice_cost": null
