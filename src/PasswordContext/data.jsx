@@ -40029,13 +40029,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00299",
       "created_at": "2024-06-08T15:13:26.416116",
       "service_detail": {
-        "id": 2996,
+        "id": 12856,
         "ip": "172.29.235.2",
-        "mac": "OEMT3C6261DE",
-        "serial": "OEMT3C6261DE",
-        "queue": "Plan_161900_30183_WispHub",
+        "mac": "QX:TL:CB:9E:78:1F",
+        "serial": "QXTLCB9E781F",
+        "queue": null,
         "interface": "VLAN236_PRADOS3",
-        "created_at": "2024-06-21T14:44:35.886290",
+        "created_at": "2026-08-17T11:09:09.090889",
         "created_by_name": null
       },
       "installation_invoice_cost": null
