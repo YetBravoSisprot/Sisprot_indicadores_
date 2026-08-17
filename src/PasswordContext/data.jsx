@@ -127551,13 +127551,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00233",
       "created_at": "2025-03-07T17:08:46.958703",
       "service_detail": {
-        "id": 11285,
+        "id": 12862,
         "ip": "10.16.220.2",
-        "mac": "OEMT3C62449E",
-        "serial": "OEMT3C62449E",
+        "mac": "QX:TL:CB:B1:0D:D7",
+        "serial": "QXTLCBB10DD7",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-01-21T18:17:51.375575",
+        "created_at": "2026-08-17T17:00:53.367075",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166886,13 +166886,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00673",
       "created_at": "2026-08-11T21:15:43.185861",
       "service_detail": {
-        "id": 12824,
+        "id": 12863,
         "ip": "10.16.237.2",
-        "mac": "68-9f-f0-2a-89-1f",
-        "serial": "zxiccdb301b9",
+        "mac": "JM:KG:C2:9E:EF:8D",
+        "serial": "JMKGC29EEF8D",
         "queue": null,
-        "interface": "283",
-        "created_at": "2026-08-11T21:15:43.466694",
+        "interface": "VLAN283_PARAGUATAN",
+        "created_at": "2026-08-17T17:04:20.991507",
         "created_by_name": null
       },
       "installation_invoice_cost": null
