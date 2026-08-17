@@ -167073,7 +167073,16 @@ const largeArraydata =
       "client_identification": "v14230844",
       "nap_box_name": "CTO-00296",
       "created_at": "2026-08-14T16:40:32.650951",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12860,
+        "ip": "10.17.65.2",
+        "mac": "JM:KG:CC:2E:77:72",
+        "serial": "JMKGCC2E7772",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-08-17T15:15:42.849598",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
