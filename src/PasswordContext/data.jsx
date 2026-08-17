@@ -163358,13 +163358,13 @@ const largeArraydata =
       "nap_box_name": "38",
       "created_at": "2026-04-28T10:03:52.436856",
       "service_detail": {
-        "id": 12424,
+        "id": 12859,
         "ip": "10.15.90.2",
-        "mac": "OEMT3C6244FA",
-        "serial": "OEMT3C6244FA",
+        "mac": "QX:TL:CB:00:50:FE",
+        "serial": "QXTLCB0050FE",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-04-28T12:28:49.648048",
+        "created_at": "2026-08-17T14:05:08.225519",
         "created_by_name": null
       },
       "installation_invoice_cost": null
