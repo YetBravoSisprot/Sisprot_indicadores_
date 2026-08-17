@@ -15500,8 +15500,8 @@ const largeArraydata =
       "id": 3606,
       "client_name": "JEANNETE MARGARITA MORENO GOTO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Magdalena",
@@ -15518,16 +15518,7 @@ const largeArraydata =
       "client_identification": "V7273115",
       "nap_box_name": "483",
       "created_at": "2024-04-15T16:19:59.716497",
-      "service_detail": {
-        "id": 9975,
-        "ip": "172.26.244.2",
-        "mac": "VSOL00D0DEF7",
-        "serial": "VSOL00D0DEF7",
-        "queue": null,
-        "interface": "VLAN114_MAGDALENA",
-        "created_at": "2025-11-11T12:12:08.074056",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -37956,7 +37947,7 @@ const largeArraydata =
         "profile": "1000Mbps/1000Mbps"
       },
       "client_mobile": "04124851552",
-      "client_email": "COMPRAS-AVITECNICA2011@HOTMAIL.COM",
+      "client_email": "compras@avitecnica.net.ve",
       "address": "CALLE NORTE LOCAL NRO 41-B ZONA INDUSTRIAL SAN PABLO TURMERO",
       "client_identification": "J304166761",
       "nap_box_name": "CTO-00322",
@@ -47834,8 +47825,8 @@ const largeArraydata =
       "id": 4744,
       "client_name": "JESUS GREGORIO PANTOJA NUÑEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Simon Bolivar",
@@ -47852,7 +47843,16 @@ const largeArraydata =
       "client_identification": "V22948621",
       "nap_box_name": "CTO-00044",
       "created_at": "2024-06-10T11:06:34.895958",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12861,
+        "ip": "172.20.96.2",
+        "mac": "HW:TC:91:1C:95:87",
+        "serial": "HWTC911C9587",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-08-17T15:18:20.653065",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -58262,8 +58262,8 @@ const largeArraydata =
       "id": 5136,
       "client_name": "FRANCISCO ALBERTO BUSTAMANTE URREA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -58280,16 +58280,7 @@ const largeArraydata =
       "client_identification": "V8080766",
       "nap_box_name": "CTO-00139",
       "created_at": "2024-07-02T14:56:06.342426",
-      "service_detail": {
-        "id": 3408,
-        "ip": "172.30.133.2",
-        "mac": "2012231218006538",
-        "serial": "OEMT3C62560E",
-        "queue": "Plan_161903_30183_WispHub",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2024-07-03T12:27:43.216810",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -87689,8 +87680,8 @@ const largeArraydata =
       "id": 6153,
       "client_name": "BIANETT JOSEFINA AGUILAR DE GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Prados I",
@@ -87707,16 +87698,7 @@ const largeArraydata =
       "client_identification": "V9438598",
       "nap_box_name": "CTO-00193",
       "created_at": "2024-08-02T15:56:35.768786",
-      "service_detail": {
-        "id": 4810,
-        "ip": "172.17.89.2",
-        "mac": "VSOL00520BC1",
-        "serial": "VSOL00520BC1",
-        "queue": "Plan_161891_30183_WispHub",
-        "interface": "VLAN239_PRADOS1",
-        "created_at": "2024-08-12T16:58:51.240121",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -104734,8 +104716,8 @@ const largeArraydata =
       "id": 6745,
       "client_name": "ISBET NARANJO DE MAGO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -104752,16 +104734,7 @@ const largeArraydata =
       "client_identification": "V5397710",
       "nap_box_name": "CTO-00440",
       "created_at": "2024-10-08T08:45:21.417334",
-      "service_detail": {
-        "id": 6798,
-        "ip": "10.10.9.2",
-        "mac": "OEMT3C62273E",
-        "serial": "OEMT3C62273E",
-        "queue": "Plan_92194_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-10-09T10:59:19.875755",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -120156,8 +120129,8 @@ const largeArraydata =
       "id": 7328,
       "client_name": "WILMAR  YECENIA PALACIOS ARENA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Las Rurales",
