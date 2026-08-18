@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5440,
+  "count": 5442,
   "results": [
     {
       "id": 3063,
@@ -167156,6 +167156,65 @@ const largeArraydata =
         "queue": null,
         "interface": "229",
         "created_at": "2026-08-17T07:44:44.934315",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9190,
+      "client_name": "RUFO JEAN PAUL MORALES TERAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "La Casona II Edificios",
+      "plan": {
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04125989734",
+      "client_email": "RUFOMORALESA@IRTLOK.ES",
+      "address": "PRUEBABASHBSNSNS",
+      "client_identification": "V21270403",
+      "nap_box_name": "CTO-00110 C/ 2-A",
+      "created_at": "2026-08-18T01:23:34.554941",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9192,
+      "client_name": "RUFO JEAN PAUL MORALES TERAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "La Casona II Edificios",
+      "plan": {
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04125989734",
+      "client_email": "RUFOMORALESA@IRTLOK.ES",
+      "address": "PRUEBABASHBSNSNS",
+      "client_identification": "V21270403",
+      "nap_box_name": "CTO-00110 C/ 2-A",
+      "created_at": "2026-08-18T01:31:45.100275",
+      "service_detail": {
+        "id": 12867,
+        "ip": "192.168.0.90",
+        "mac": "ZTE09092023",
+        "serial": "ZTE09092023",
+        "queue": null,
+        "interface": "VLAN101_AJS",
+        "created_at": "2026-08-18T01:31:45.102078",
         "created_by_name": null
       },
       "installation_invoice_cost": null
