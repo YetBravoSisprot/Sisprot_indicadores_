@@ -21684,11 +21684,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Villas El Carmen",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128869769",
       "client_email": "GE.ALE0503@GMAIL.COM",
