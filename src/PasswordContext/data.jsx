@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5445,
+  "count": 5447,
   "results": [
     {
       "id": 3063,
@@ -159482,13 +159482,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00388 DOS",
       "created_at": "2025-12-03T15:22:21.832334",
       "service_detail": {
-        "id": 12875,
-        "ip": "172.17.1.10",
+        "id": 12882,
+        "ip": "172.30.61.2",
         "mac": "HW:TC:46:34:EE:9B",
         "serial": "HWTC4634EE9B",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-08-18T15:17:05.495349",
+        "created_at": "2026-08-18T17:48:52.062848",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167300,14 +167300,73 @@ const largeArraydata =
       "client_identification": "v28514444",
       "nap_box_name": "TORRE D EDIF LOS NISPEROS",
       "created_at": "2026-08-18T15:57:20.900201",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9197,
+      "client_name": "Juan Francisco Yanes Morillo",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4262337637",
+      "client_email": "juanyanes908@gmail.com",
+      "address": "calle 7 casa número 21 barrio saman  tarazonero 1",
+      "client_identification": "7249187",
+      "nap_box_name": null,
+      "created_at": "2026-08-18T17:44:50.973880",
       "service_detail": {
-        "id": 12878,
-        "ip": "10.17.66.2",
-        "mac": "10.17.66.2",
-        "serial": "10.17.66.2",
+        "id": 12880,
+        "ip": "172.17.1.6",
+        "mac": "172.17.1.6",
+        "serial": "172.17.1.6",
         "queue": null,
-        "interface": "224",
-        "created_at": "2026-08-18T15:57:21.186288",
+        "interface": "140",
+        "created_at": "2026-08-18T17:44:51.321785",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9198,
+      "client_name": "Gleiger Del Carmen Torbello Murga",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": null,
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243071717",
+      "client_email": "gleigertorbello05@gmail.com",
+      "address": "paraguatan calle escalona casa#20",
+      "client_identification": "26336154",
+      "nap_box_name": null,
+      "created_at": "2026-08-18T17:44:53.164656",
+      "service_detail": {
+        "id": 12881,
+        "ip": "10.17.66.2",
+        "mac": "jmkgcb408003",
+        "serial": "jmkgcb408003",
+        "queue": null,
+        "interface": "283",
+        "created_at": "2026-08-18T17:44:53.504392",
         "created_by_name": null
       },
       "installation_invoice_cost": null
