@@ -159473,13 +159473,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00388 DOS",
       "created_at": "2025-12-03T15:22:21.832334",
       "service_detail": {
-        "id": 12872,
-        "ip": "172.30.61.2",
-        "mac": "HW:TC:46:34:EE:9B",
+        "id": 12874,
+        "ip": "172.16.1.6",
+        "mac": "26:51:65:16:51:15",
         "serial": "HWTC4634EE9B",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-08-18T13:51:20.043133",
+        "created_at": "2026-08-18T15:12:15.999260",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166994,8 +166994,8 @@ const largeArraydata =
       "id": 9184,
       "client_name": "MIGUEL EDUARDO RODRIGUEZ TOVAR",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": null,
