@@ -159473,13 +159473,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00388 DOS",
       "created_at": "2025-12-03T15:22:21.832334",
       "service_detail": {
-        "id": 11449,
+        "id": 12872,
         "ip": "172.30.61.2",
-        "mac": "HWTC4634EE9B",
+        "mac": "HW:TC:46:34:EE:9B",
         "serial": "HWTC4634EE9B",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-02-03T11:58:27.462091",
+        "created_at": "2026-08-18T13:51:20.043133",
         "created_by_name": null
       },
       "installation_invoice_cost": null
