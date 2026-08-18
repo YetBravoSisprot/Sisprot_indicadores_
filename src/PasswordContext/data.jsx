@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5444,
+  "count": 5445,
   "results": [
     {
       "id": 3063,
@@ -102878,8 +102878,8 @@ const largeArraydata =
       "id": 6679,
       "client_name": "NANCY JOSEFINA ROMERO POLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -102896,7 +102896,16 @@ const largeArraydata =
       "client_identification": "V6312888",
       "nap_box_name": "CTO-00511",
       "created_at": "2024-09-18T16:09:52.320645",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12876,
+        "ip": "172.31.205.2",
+        "mac": "OE:MT:3C:62:4A:96",
+        "serial": "OEMT3C624A96",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-08-18T15:30:56.296107",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -159473,13 +159482,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00388 DOS",
       "created_at": "2025-12-03T15:22:21.832334",
       "service_detail": {
-        "id": 12874,
-        "ip": "172.16.1.6",
-        "mac": "26:51:65:16:51:15",
+        "id": 12875,
+        "ip": "172.17.1.10",
+        "mac": "HW:TC:46:34:EE:9B",
         "serial": "HWTC4634EE9B",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-08-18T15:12:15.999260",
+        "created_at": "2026-08-18T15:17:05.495349",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167130,8 +167139,8 @@ const largeArraydata =
       "id": 9188,
       "client_name": "Maria Gabriela Perdomo Flores",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
@@ -167149,13 +167158,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00169",
       "created_at": "2026-08-17T07:44:44.645576",
       "service_detail": {
-        "id": 12855,
+        "id": 12877,
         "ip": "10.17.64.2",
-        "mac": "jmkgc19461a6",
-        "serial": "jmkgc19461a6",
+        "mac": "JM:KG:CD:D8:F3:80",
+        "serial": "JMKGCDD8F380",
         "queue": null,
-        "interface": "229",
-        "created_at": "2026-08-17T07:44:44.934315",
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-18T15:45:10.850605",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167265,6 +167274,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN101_AJS",
         "created_at": "2026-08-18T02:47:21.219524",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9196,
+      "client_name": "Enrique Eulijio Carrero Marrero",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4128971056",
+      "client_email": "carreroenrique707@gmail.com",
+      "address": "calle fergus edificio d el portal 10 apartamento  101 urb san pablo",
+      "client_identification": "v28514444",
+      "nap_box_name": "TORRE D EDIF LOS NISPEROS",
+      "created_at": "2026-08-18T15:57:20.900201",
+      "service_detail": {
+        "id": 12878,
+        "ip": "10.17.66.2",
+        "mac": "10.17.66.2",
+        "serial": "10.17.66.2",
+        "queue": null,
+        "interface": "224",
+        "created_at": "2026-08-18T15:57:21.186288",
         "created_by_name": null
       },
       "installation_invoice_cost": null
