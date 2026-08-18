@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5442,
+  "count": 5444,
   "results": [
     {
       "id": 3063,
@@ -162535,8 +162535,8 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04125989734",
-      "client_email": "RUFOMORALESA@IRTLOK.ES",
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
       "address": "PAYA VISTA HERMOSA CALLE LAS MANDARINAS CASA N#27",
       "client_identification": "V21270403",
       "nap_box_name": "CTO-00059",
@@ -167176,8 +167176,8 @@ const largeArraydata =
         "code": "FOR650M",
         "profile": "650M/650M"
       },
-      "client_mobile": "04125989734",
-      "client_email": "RUFOMORALESA@IRTLOK.ES",
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
       "address": "PRUEBABASHBSNSNS",
       "client_identification": "V21270403",
       "nap_box_name": "CTO-00110 C/ 2-A",
@@ -167201,20 +167201,70 @@ const largeArraydata =
         "code": "FOR650M",
         "profile": "650M/650M"
       },
-      "client_mobile": "04125989734",
-      "client_email": "RUFOMORALESA@IRTLOK.ES",
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
       "address": "PRUEBABASHBSNSNS",
       "client_identification": "V21270403",
       "nap_box_name": "CTO-00110 C/ 2-A",
       "created_at": "2026-08-18T01:31:45.100275",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9194,
+      "client_name": "RUFO JEAN PAUL MORALES TERAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "La Casona II Edificios",
+      "plan": {
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
+      "address": "PRUEBABASHBSNSNS",
+      "client_identification": "V21270403",
+      "nap_box_name": "CTO-00110 C/ 2-A",
+      "created_at": "2026-08-18T02:31:25.996667",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9195,
+      "client_name": "RUFO JEAN PAUL MORALES TERAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "La Casona II Edificios",
+      "plan": {
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
+      "address": "PRUEBABASHBSNSNS",
+      "client_identification": "V21270403",
+      "nap_box_name": "CTO-00110 C/ 2-A",
+      "created_at": "2026-08-18T02:47:21.215345",
       "service_detail": {
-        "id": 12867,
+        "id": 12870,
         "ip": "192.168.0.90",
         "mac": "ZTE09092023",
         "serial": "ZTE09092023",
         "queue": null,
         "interface": "VLAN101_AJS",
-        "created_at": "2026-08-18T01:31:45.102078",
+        "created_at": "2026-08-18T02:47:21.219524",
         "created_by_name": null
       },
       "installation_invoice_cost": null
