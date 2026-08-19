@@ -167375,8 +167375,8 @@ const largeArraydata =
       "id": 9199,
       "client_name": "Ana Lucía Rodriguez De Sulbaran",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Simon Bolivar",
@@ -167393,7 +167393,16 @@ const largeArraydata =
       "client_identification": "14149384",
       "nap_box_name": "CTO-00047",
       "created_at": "2026-08-18T21:02:47.409139",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12885,
+        "ip": "172.17.1.14",
+        "mac": "ZX:IC:CD:80:9E:18",
+        "serial": "ZXICCD809E18",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-08-18T21:29:31.481176",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
