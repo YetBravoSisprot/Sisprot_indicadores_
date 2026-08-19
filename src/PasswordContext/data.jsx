@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5447,
+  "count": 5448,
   "results": [
     {
       "id": 3063,
@@ -167037,8 +167037,8 @@ const largeArraydata =
       "id": 9185,
       "client_name": "Jenny Esther Moreno Arguizones",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Ezequiel Zamora",
@@ -167369,6 +167369,31 @@ const largeArraydata =
         "created_at": "2026-08-18T17:44:53.504392",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9199,
+      "client_name": "Ana Lucía Rodriguez De Sulbaran",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Simon Bolivar",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243103566",
+      "client_email": "aguabendita91@gmail.com",
+      "address": "simón bolivar calle 4 casa 56 el macaro",
+      "client_identification": "14149384",
+      "nap_box_name": "CTO-00047",
+      "created_at": "2026-08-18T21:02:47.409139",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
