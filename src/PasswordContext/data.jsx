@@ -29487,7 +29487,7 @@ const largeArraydata =
     },
     {
       "id": 4101,
-      "client_name": "MAGGY SURAYA GHANAM CELIS",
+      "client_name": "LUIS EDUARDO ZAMORA PADRINO",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -29501,10 +29501,10 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04125791809",
-      "client_email": "MAGGYGHANAM95@GMAIL.COM",
+      "client_mobile": "04122599664",
+      "client_email": "LUISZAMORAP13@GMAIL.COM",
       "address": "MANZANA  C-02 CASA NRO 14 SECTOR SAMAN  TARAZONERO II",
-      "client_identification": "V10735221",
+      "client_identification": "V25067048",
       "nap_box_name": "502",
       "created_at": "2024-04-20T15:03:09.178319",
       "service_detail": {
