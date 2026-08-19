@@ -166778,7 +166778,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
-      "sector_name": null,
+      "sector_name": "Antigua Hacienda De Paya",
       "plan": {
         "id": 34,
         "name": "RECURRENTE PYME PLAN 300M",
@@ -166973,7 +166973,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Antigua Hacienda De Paya",
       "plan": {
         "id": 21,
         "name": "RECURRENTE RESIDENCIAL PLAN 450M",
@@ -167007,7 +167007,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Antigua Hacienda De Paya",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -167075,7 +167075,7 @@ const largeArraydata =
       "status_name": "Suspendido",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Antigua Hacienda De Paya",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -167320,7 +167320,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -167354,7 +167354,7 @@ const largeArraydata =
       "status_name": "Por instalar",
       "cycle": 1,
       "migrate": false,
-      "sector_name": null,
+      "sector_name": "Paraguatan",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
