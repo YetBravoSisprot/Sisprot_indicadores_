@@ -155856,7 +155856,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": "Saman Tarazonero II",
+      "sector_name": "Prados II",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -155866,7 +155866,7 @@ const largeArraydata =
       },
       "client_mobile": "04122599664",
       "client_email": "LUISZAMORAP13@GMAIL.COM",
-      "address": "Saman tarazonero ll manzana c2 casa numero 14 el macaro aragua zona postal 2115",
+      "address": "SECTOR PRADOS DE PAYA II, CALLE 2 CASA 8",
       "client_identification": "V25067048",
       "nap_box_name": "CTO-00205 DOS",
       "created_at": "2025-09-08T15:52:40.982994",
