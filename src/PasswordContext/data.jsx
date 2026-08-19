@@ -162156,7 +162156,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Valle Paraiso",
       "plan": {
         "id": 100,
