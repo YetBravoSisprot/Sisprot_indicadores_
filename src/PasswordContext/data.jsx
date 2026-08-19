@@ -167300,15 +167300,24 @@ const largeArraydata =
       "client_identification": "v28514444",
       "nap_box_name": "TORRE D EDIF LOS NISPEROS",
       "created_at": "2026-08-18T15:57:20.900201",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12886,
+        "ip": "172.17.1.10",
+        "mac": "JM:KG:C1:94:61:A6",
+        "serial": "JMKGC19461A6",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-08-19T08:34:32.551256",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
       "id": 9197,
       "client_name": "Juan Francisco Yanes Morillo",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": null,
