@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5450,
+  "count": 5451,
   "results": [
     {
       "id": 3063,
@@ -167496,6 +167496,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
         "created_at": "2026-08-20T12:43:06.785643",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9203,
+      "client_name": "ARMANDO RAMON SAMUEL GRANADO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Pantin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124911853",
+      "client_email": "WILLYHERNAN47@GMAIL.COM",
+      "address": "CALLE 8, CASA 12 SECTOR PANTYN, ROSARIO DE PAYA, TURMEEO ESTADO ARAHUA",
+      "client_identification": "V7272479",
+      "nap_box_name": "CTO-00114 C/ 8",
+      "created_at": "2026-08-20T15:56:31.613298",
+      "service_detail": {
+        "id": 12893,
+        "ip": "172.17.1.26",
+        "mac": "JMKGC806AB33",
+        "serial": "JMKGC806AB33",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-20T15:56:31.617549",
         "created_by_name": null
       },
       "installation_invoice_cost": null
