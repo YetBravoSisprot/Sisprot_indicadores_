@@ -93930,7 +93930,7 @@ const largeArraydata =
         "profile": "80M/80M"
       },
       "client_mobile": "04267415025",
-      "client_email": "ANALISISVRARAGUA@GMAIL.COM",
+      "client_email": "RRHHSTARC@GMAIL.COM",
       "address": "ZONA INDUSTRIAL SAN PABLO CALLE INDUSTRIAL.TURMERO ARAGUA.",
       "client_identification": "G200093277",
       "nap_box_name": "55",
@@ -103161,7 +103161,7 @@ const largeArraydata =
         "profile": "80M/80M"
       },
       "client_mobile": "04267415025",
-      "client_email": "ANALISISVRARAGUA@GMAIL.COM",
+      "client_email": "RRHHSTARC@GMAIL.COM",
       "address": "COMISARÍA SAMÁN DE GÜERE INTERCOMUNAL TURMERO - MARACAY",
       "client_identification": "G200093277",
       "nap_box_name": "660",
