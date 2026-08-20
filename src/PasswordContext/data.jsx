@@ -167412,13 +167412,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00047",
       "created_at": "2026-08-18T21:02:47.409139",
       "service_detail": {
-        "id": 12885,
+        "id": 12888,
         "ip": "172.17.1.14",
-        "mac": "ZX:IC:CD:80:9E:18",
-        "serial": "ZXICCD809E18",
+        "mac": "JM:KG:CA:B0:42:0F",
+        "serial": "JMKGCAB0420F",
         "queue": null,
         "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
-        "created_at": "2026-08-18T21:29:31.481176",
+        "created_at": "2026-08-19T20:10:26.244781",
         "created_by_name": null
       },
       "installation_invoice_cost": null
