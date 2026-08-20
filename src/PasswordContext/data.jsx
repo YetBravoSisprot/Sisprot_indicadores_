@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5449,
+  "count": 5451,
   "results": [
     {
       "id": 3063,
@@ -167455,6 +167455,65 @@ const largeArraydata =
       "nap_box_name": "CTO-00687",
       "created_at": "2026-08-20T10:53:48.034851",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9201,
+      "client_name": "EFRAIN SANTIAGO MEJIAS LOPEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman Tarazonero I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243194031",
+      "client_email": "EFRAINMEJIAS2374@GMAIL.COM",
+      "address": "SAMAN TARAZONERO 2 MZNA.D-4 #11",
+      "client_identification": "12238121",
+      "nap_box_name": "CTO-00687",
+      "created_at": "2026-08-20T12:41:54.928256",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9202,
+      "client_name": "ZULAY EMILIA MADRID ZAMBRANO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Guerito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4125988392",
+      "client_email": "MADRIDZULAY54@GMAIL.COM",
+      "address": "COMUNIDAD LA TRINIDAD, SECTOR FUNDÓ SAN JOSÉ CALLE #2 MANZANA #4 CASA #47",
+      "client_identification": "10752157",
+      "nap_box_name": "CTO-00632",
+      "created_at": "2026-08-20T12:42:00.403209",
+      "service_detail": {
+        "id": 12890,
+        "ip": "172.17.1.22",
+        "mac": "JM:KG:C4:b5:45:53",
+        "serial": "JMKGC4b54553",
+        "queue": null,
+        "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
+        "created_at": "2026-08-20T12:43:06.785643",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
