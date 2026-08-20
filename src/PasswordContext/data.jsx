@@ -137820,8 +137820,8 @@ const largeArraydata =
       "id": 8042,
       "client_name": "GABRIELIS CAROLINA CALDERON ESPIDEA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -137838,7 +137838,16 @@ const largeArraydata =
       "client_identification": "V20336332",
       "nap_box_name": "CC VALLE LINDO",
       "created_at": "2025-04-28T19:43:19.855473",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12889,
+        "ip": "10.13.206.2",
+        "mac": "OE:MT:3C:62:0D:C6",
+        "serial": "OEMT3C620DC6",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-08-20T12:09:06.526016",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
