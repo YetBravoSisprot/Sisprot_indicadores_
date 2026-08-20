@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5447,
+  "count": 5448,
   "results": [
     {
       "id": 3063,
@@ -167421,6 +167421,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN229_PANTIN",
         "created_at": "2026-08-20T15:56:31.617549",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9204,
+      "client_name": "JOSE RAMON GARCIA MEDINA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Pantin",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243250891",
+      "client_email": "JG8490391@GMAIL.COM",
+      "address": "PANTIN CALLE 4B CASA # 7",
+      "client_identification": "V6445191",
+      "nap_box_name": "CTO-00076",
+      "created_at": "2026-08-20T18:31:15.409123",
+      "service_detail": {
+        "id": 12894,
+        "ip": "172.30.105.2",
+        "mac": "OEMT3C62619E",
+        "serial": "OEMT3C62619E",
+        "queue": null,
+        "interface": "229",
+        "created_at": "2026-08-20T18:31:15.757966",
         "created_by_name": null
       },
       "installation_invoice_cost": null
