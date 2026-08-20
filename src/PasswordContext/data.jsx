@@ -166787,7 +166787,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
-      "sector_name": "Antigua Hacienda De Paya",
+      "sector_name": "Prados III",
       "plan": {
         "id": 34,
         "name": "RECURRENTE PYME PLAN 300M",
@@ -166982,7 +166982,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": "Antigua Hacienda De Paya",
+      "sector_name": "Polvorin",
       "plan": {
         "id": 21,
         "name": "RECURRENTE RESIDENCIAL PLAN 450M",
@@ -167016,7 +167016,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": "Antigua Hacienda De Paya",
+      "sector_name": "Paya Abajo",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
@@ -167084,7 +167084,7 @@ const largeArraydata =
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
-      "sector_name": "Antigua Hacienda De Paya",
+      "sector_name": "Pantin",
       "plan": {
         "id": 100,
         "name": "RECURRENTE RESIDENCIAL PLAN 300M",
