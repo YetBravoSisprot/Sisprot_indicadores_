@@ -32322,13 +32322,13 @@ const largeArraydata =
       "nap_box_name": "102",
       "created_at": "2024-05-08T10:36:20.843269",
       "service_detail": {
-        "id": 12428,
+        "id": 12892,
         "ip": "172.21.147.2",
-        "mac": "ZXICCD841606",
-        "serial": "ZXICCD841606",
+        "mac": "ZX:IC:CD:BB:0C:97",
+        "serial": "ZXICCDBB0C97",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-04-29T10:05:56.270306",
+        "created_at": "2026-08-20T14:55:52.175960",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -93038,8 +93038,8 @@ const largeArraydata =
         "code": "FO-R80",
         "profile": "80M/80M"
       },
-      "client_mobile": "04143982797",
-      "client_email": "arseniojoselopez@gmail.com",
+      "client_mobile": "04144903699",
+      "client_email": "BLANCOGUZMANEDUINJOSE@GMAIL.COM",
       "address": "TURMERO, CALLE PETIÓN, EDIF CICPC TURMERO, FRENTE AL CONCEJO MUNICIPAL",
       "client_identification": "G200010320",
       "nap_box_name": "CAJA NAP BICENTENARIO",
@@ -93861,8 +93861,8 @@ const largeArraydata =
         "code": "FO-R80",
         "profile": "80M/80M"
       },
-      "client_mobile": "04143982797",
-      "client_email": "arseniojoselopez@gmail.com",
+      "client_mobile": "04144903699",
+      "client_email": "BLANCOGUZMANEDUINJOSE@GMAIL.COM",
       "address": "ZONA INDUSTRIAL SAN PABLO SEDE DE HOMICIDIOS CICPC TURMERO",
       "client_identification": "G200010320",
       "nap_box_name": "55",
