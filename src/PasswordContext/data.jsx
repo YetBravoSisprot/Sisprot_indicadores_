@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5451,
+  "count": 5450,
   "results": [
     {
       "id": 3063,
@@ -167436,8 +167436,8 @@ const largeArraydata =
       "id": 9200,
       "client_name": "EFRAIN SANTIAGO MEJIAS LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
@@ -167454,32 +167454,16 @@ const largeArraydata =
       "client_identification": "12238121",
       "nap_box_name": "CTO-00687",
       "created_at": "2026-08-20T10:53:48.034851",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9201,
-      "client_name": "EFRAIN SANTIAGO MEJIAS LOPEZ",
-      "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Saman Tarazonero I",
-      "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+      "service_detail": {
+        "id": 12891,
+        "ip": "172.17.1.18",
+        "mac": "JM:KG:CF:2F:EF:61",
+        "serial": "JMKGCF2FEF61",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-08-20T12:57:50.897253",
+        "created_by_name": null
       },
-      "client_mobile": "4243194031",
-      "client_email": "EFRAINMEJIAS2374@GMAIL.COM",
-      "address": "SAMAN TARAZONERO 2 MZNA.D-4 #11",
-      "client_identification": "12238121",
-      "nap_box_name": "CTO-00687",
-      "created_at": "2026-08-20T12:41:54.928256",
-      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
