@@ -167429,8 +167429,8 @@ const largeArraydata =
       "id": 9204,
       "client_name": "JOSE RAMON GARCIA MEDINA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -167448,13 +167448,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00076",
       "created_at": "2026-08-20T18:31:15.409123",
       "service_detail": {
-        "id": 12894,
+        "id": 12895,
         "ip": "172.30.105.2",
-        "mac": "OEMT3C62619E",
+        "mac": "OE:MT:3C:62:61:9E",
         "serial": "OEMT3C62619E",
         "queue": null,
-        "interface": "229",
-        "created_at": "2026-08-20T18:31:15.757966",
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-21T08:00:59.613002",
         "created_by_name": null
       },
       "installation_invoice_cost": null
