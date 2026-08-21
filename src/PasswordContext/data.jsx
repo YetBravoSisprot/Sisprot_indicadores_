@@ -102635,8 +102635,8 @@ const largeArraydata =
       "id": 6670,
       "client_name": "SAMUEL ABRAHAM MONTOYA MARQUEZ",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "CANCELADO_EMPLEADO",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_EMPLEADO",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "La Magdalena",
@@ -102653,7 +102653,16 @@ const largeArraydata =
       "client_identification": "V30073055",
       "nap_box_name": "CTO - 946",
       "created_at": "2024-09-17T14:23:33.805244",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12897,
+        "ip": "172.31.17.2",
+        "mac": "OE:MT:3C:62:26:62",
+        "serial": "OEMT3C622662",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-08-21T19:36:02.782516",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
