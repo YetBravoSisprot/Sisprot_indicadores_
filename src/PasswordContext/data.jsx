@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5448,
+  "count": 5449,
   "results": [
     {
       "id": 3063,
@@ -167464,6 +167464,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN229_PANTIN",
         "created_at": "2026-08-21T08:00:59.613002",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9205,
+      "client_name": "PEDRO PABLO INOJOSA GARCÍA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Payita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243352383",
+      "client_email": "PEDROINOJOSA6@GMAIL.COM",
+      "address": "PAYITA CALLEJÓN 96 CASA NÚMERO 2",
+      "client_identification": "V20336829",
+      "nap_box_name": "1",
+      "created_at": "2026-08-22T15:16:39.437948",
+      "service_detail": {
+        "id": 12898,
+        "ip": "172.17.1.34",
+        "mac": "172.17.1.34",
+        "serial": "172.17.1.34",
+        "queue": null,
+        "interface": "VLAN284_PAYITA",
+        "created_at": "2026-08-22T15:16:39.797170",
         "created_by_name": null
       },
       "installation_invoice_cost": null
