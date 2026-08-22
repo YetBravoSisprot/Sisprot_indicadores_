@@ -167472,8 +167472,8 @@ const largeArraydata =
       "id": 9205,
       "client_name": "PEDRO PABLO INOJOSA GARCÍA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Payita",
@@ -167491,13 +167491,13 @@ const largeArraydata =
       "nap_box_name": "1",
       "created_at": "2026-08-22T15:16:39.437948",
       "service_detail": {
-        "id": 12898,
+        "id": 12901,
         "ip": "172.17.1.34",
-        "mac": "172.17.1.34",
-        "serial": "172.17.1.34",
+        "mac": "JM:KG:C2:66:26:3A",
+        "serial": "JMKGC266263A",
         "queue": null,
         "interface": "VLAN284_PAYITA",
-        "created_at": "2026-08-22T15:16:39.797170",
+        "created_at": "2026-08-22T18:47:22.298343",
         "created_by_name": null
       },
       "installation_invoice_cost": null
