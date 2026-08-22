@@ -148999,13 +148999,13 @@ const largeArraydata =
       "nap_box_name": "80 DOS",
       "created_at": "2025-06-26T17:56:11.606064",
       "service_detail": {
-        "id": 12652,
+        "id": 12900,
         "ip": "10.15.146.2",
-        "mac": "QX:TL:CB:53:48:F1",
-        "serial": "QXTLCB5348F1",
+        "mac": "A8:BF:3C:62:4D:09",
+        "serial": "OEMT3C624D0A",
         "queue": null,
         "interface": "VLAN112_LA_MACARENA_ZTE",
-        "created_at": "2026-07-01T22:17:21.033513",
+        "created_at": "2026-08-22T16:12:54.528912",
         "created_by_name": null
       },
       "installation_invoice_cost": null
