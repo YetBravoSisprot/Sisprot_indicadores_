@@ -403,8 +403,8 @@ const largeArraydata =
       "id": 3082,
       "client_name": "WENDYS YIANITZA MORALES ZABALA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villa Los Tamarindos",
@@ -421,7 +421,16 @@ const largeArraydata =
       "client_identification": "V11845640",
       "nap_box_name": "121",
       "created_at": "2024-04-10T13:10:52.861334",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12903,
+        "ip": "172.24.64.2",
+        "mac": "VS:OL:00:13:AD:31",
+        "serial": "VSOL0013AD31",
+        "queue": null,
+        "interface": "VLAN133_VILLA_TAMARINDOS",
+        "created_at": "2026-08-23T18:57:10.982850",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
