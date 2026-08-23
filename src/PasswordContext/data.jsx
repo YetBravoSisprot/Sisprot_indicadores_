@@ -25601,11 +25601,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Casona II Edificios",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
       },
       "client_mobile": "04243385384",
       "client_email": "ANAPRIMERA78@GMAIL.COM",
