@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5449,
+  "count": 5450,
   "results": [
     {
       "id": 3063,
@@ -167498,6 +167498,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN284_PAYITA",
         "created_at": "2026-08-22T18:47:22.298343",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9206,
+      "client_name": "MARIA VICTORIA JARAMILLO SILVA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Vallecito",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04126029026",
+      "client_email": "VICTORIA10200822@GMAIL.COM",
+      "address": "CALLE EL BUSCARÉ CASA NUMERO 6 SECTOR VALLECITO ROSARIO DE PAYA",
+      "client_identification": "V22291225",
+      "nap_box_name": "CE - 406",
+      "created_at": "2026-08-22T23:06:56.036247",
+      "service_detail": {
+        "id": 12902,
+        "ip": "172.17.1.38",
+        "mac": "JMKGCF5BBAAB",
+        "serial": "JMKGCF5BBAAB",
+        "queue": null,
+        "interface": "VLAN258_VALLECITO",
+        "created_at": "2026-08-22T23:06:56.041875",
         "created_by_name": null
       },
       "installation_invoice_cost": null
