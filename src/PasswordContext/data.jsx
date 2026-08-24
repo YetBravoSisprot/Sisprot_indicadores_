@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5450,
+  "count": 5451,
   "results": [
     {
       "id": 3063,
@@ -167543,6 +167543,31 @@ const largeArraydata =
         "created_at": "2026-08-22T23:06:56.041875",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9207,
+      "client_name": "PNB TRANSITO ARC",
+      "client_type_name": "GRATIS",
+      "client_subdivision": "POR INSTALAR_GRATIS",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 86,
+        "name": "PLAN RECURRENTE 80M GRATIS",
+        "cost": "0.00",
+        "code": "FO-G80",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04267415025",
+      "client_email": "RRHHSTARC@GMAIL.COM",
+      "address": "ZONA INDUSTRIAL SAN PABLO CALLE INDUSTRIAL.TURMERO ARAGUA.",
+      "client_identification": "G200093277",
+      "nap_box_name": "1",
+      "created_at": "2026-08-24T12:53:17.843761",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
