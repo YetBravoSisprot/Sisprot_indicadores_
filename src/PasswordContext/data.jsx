@@ -167549,8 +167549,8 @@ const largeArraydata =
       "id": 9207,
       "client_name": "PNB TRANSITO ARC",
       "client_type_name": "GRATIS",
-      "client_subdivision": "POR INSTALAR_GRATIS",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "San Pablo",
@@ -167567,7 +167567,16 @@ const largeArraydata =
       "client_identification": "G200093277",
       "nap_box_name": "1",
       "created_at": "2026-08-24T12:53:17.843761",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12904,
+        "ip": "172.17.1.2",
+        "mac": "ZX:IC:CD:2D:9F:8f",
+        "serial": "ZXICCD2D9F8F",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-08-24T13:24:09.913498",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
