@@ -131183,13 +131183,13 @@ const largeArraydata =
       "nap_box_name": "Cto-92",
       "created_at": "2025-03-27T14:11:03.744191",
       "service_detail": {
-        "id": 8040,
+        "id": 12906,
         "ip": "10.12.223.2",
-        "mac": "OEMT3C620912",
-        "serial": "OEMT3C620912",
-        "queue": "Plan_107915_30181_WispHub",
+        "mac": "ZX:IC:CD:D8:B3:E2",
+        "serial": "ZXICCDD8B3E2",
+        "queue": null,
         "interface": "VLAN258_VALLECITO",
-        "created_at": "2025-03-27T15:00:27.064893",
+        "created_at": "2026-08-25T13:31:26.371967",
         "created_by_name": null
       },
       "installation_invoice_cost": null
