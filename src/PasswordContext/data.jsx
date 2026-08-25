@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5451,
+  "count": 5452,
   "results": [
     {
       "id": 3063,
@@ -167575,6 +167575,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
         "created_at": "2026-08-24T13:24:09.913498",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9208,
+      "client_name": "JORGE  ALBERTO MARTINEZ LIENDO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Payita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04145998098",
+      "client_email": "MARTINEZJ2362@GMAIL.COM",
+      "address": "CALLE PRINCIPAL DE PAYITA CALLEJON CANTE V CASA NUMERO 61-2 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V7235563",
+      "nap_box_name": "1",
+      "created_at": "2026-08-24T21:10:17.849077",
+      "service_detail": {
+        "id": 12905,
+        "ip": "10.15.94.2",
+        "mac": "QXTLCB6246FB",
+        "serial": "QXTLCB6246FB",
+        "queue": null,
+        "interface": "VLAN284_PAYITA",
+        "created_at": "2026-08-24T21:10:18.215733",
         "created_by_name": null
       },
       "installation_invoice_cost": null
