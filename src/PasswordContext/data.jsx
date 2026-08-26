@@ -62510,13 +62510,13 @@ const largeArraydata =
       "nap_box_name": "20",
       "created_at": "2024-07-16T17:18:23.518603",
       "service_detail": {
-        "id": 4082,
+        "id": 12908,
         "ip": "172.30.233.2",
-        "mac": "OEMT3C62556A",
-        "serial": "OEMT3C62556A",
-        "queue": "Plan_143067_15811_WispHub",
+        "mac": "ZX:IC:CD:90:6A:BD",
+        "serial": "ZXICCD906ABD",
+        "queue": null,
         "interface": "VLAN208_NISPERO_OLT1",
-        "created_at": "2024-07-22T10:17:08.971417",
+        "created_at": "2026-08-26T14:27:18.589278",
         "created_by_name": null
       },
       "installation_invoice_cost": null
