@@ -59462,8 +59462,8 @@ const largeArraydata =
       "id": 5186,
       "client_name": "CATHERINE GABRIELA GARCIA CAMPOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -59480,7 +59480,16 @@ const largeArraydata =
       "client_identification": "V24686295",
       "nap_box_name": "CE - 566",
       "created_at": "2024-07-08T16:07:30.335662",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12907,
+        "ip": "172.24.253.2",
+        "mac": "TP:LG:F9:CD:47:C4",
+        "serial": "TPLGF9CD47C4",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-08-26T11:30:26.277345",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
