@@ -61319,13 +61319,13 @@ const largeArraydata =
       "nap_box_name": "CE - 566",
       "created_at": "2024-07-15T14:48:32.749004",
       "service_detail": {
-        "id": 12779,
-        "ip": "172.19.186.2",
+        "id": 12913,
+        "ip": "172.17.1.66",
         "mac": "ZX:IC:CD:09:35:64",
         "serial": "ZXICCD093564",
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2026-07-31T13:32:59.674209",
+        "created_at": "2026-08-26T16:22:42.458292",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167250,7 +167250,7 @@ const largeArraydata =
     },
     {
       "id": 9197,
-      "client_name": "Juan Francisco Yanes Morillo",
+      "client_name": "JUAN FRANCISCO YANES MORILLO",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -167626,8 +167626,8 @@ const largeArraydata =
       "id": 9209,
       "client_name": "ISABEL MARIA RODRIGUEZ SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona I",
@@ -167645,13 +167645,13 @@ const largeArraydata =
       "nap_box_name": "530 edificio c",
       "created_at": "2026-08-26T14:55:03.283546",
       "service_detail": {
-        "id": 12909,
+        "id": 12912,
         "ip": "172.17.1.30",
-        "mac": "JMKGCA4A3F64",
+        "mac": "JM:KG:CA:4A:3F:64",
         "serial": "JMKGCA4A3F64",
         "queue": null,
-        "interface": "VLAN109_CASONA1",
-        "created_at": "2026-08-26T14:55:03.635424",
+        "interface": "VLAN109_CASONA_1",
+        "created_at": "2026-08-26T16:03:19.544151",
         "created_by_name": null
       },
       "installation_invoice_cost": null
