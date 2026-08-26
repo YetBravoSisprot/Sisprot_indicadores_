@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5452,
+  "count": 5457,
   "results": [
     {
       "id": 3063,
@@ -167592,8 +167592,8 @@ const largeArraydata =
       "id": 9208,
       "client_name": "JORGE  ALBERTO MARTINEZ LIENDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Payita",
@@ -167620,6 +167620,149 @@ const largeArraydata =
         "created_at": "2026-08-24T21:10:18.215733",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9209,
+      "client_name": "ISABEL MARIA RODRIGUEZ SANCHEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Casona I",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4120140532",
+      "client_email": "SUGEISMARIA1972@GMAIL.COM",
+      "address": "CASONA 1 EDIF 5C PLANTA BAJA APARTAMENTO NUMERO 6",
+      "client_identification": "V4546311",
+      "nap_box_name": "530 edificio c",
+      "created_at": "2026-08-26T14:55:03.283546",
+      "service_detail": {
+        "id": 12909,
+        "ip": "172.17.1.30",
+        "mac": "JMKGCA4A3F64",
+        "serial": "JMKGCA4A3F64",
+        "queue": null,
+        "interface": "VLAN109_CASONA1",
+        "created_at": "2026-08-26T14:55:03.635424",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9210,
+      "client_name": "CARMEN ROSA CONTRERAS CARRERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Concepcion",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4145434075",
+      "client_email": "CARMENROSACARRERO@GMAIL.COM",
+      "address": "URBANIZACION VISTA HERMOSA CASA B-6 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V17109604",
+      "nap_box_name": "CTO-00586",
+      "created_at": "2026-08-26T14:55:05.423419",
+      "service_detail": {
+        "id": 12910,
+        "ip": "172.17.1.42",
+        "mac": "JMKGCFCA476C",
+        "serial": "JMKGCFCA476C",
+        "queue": null,
+        "interface": "VLAN239_PRADO1",
+        "created_at": "2026-08-26T14:55:05.774689",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9211,
+      "client_name": "CRISTOFER RUSSELL MORILLO ROMERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4228480297",
+      "client_email": "CRISTOFERMORILLO43@GMAIL.COM",
+      "address": "POLVORÍN FRENTE LA IGLESIA",
+      "client_identification": "V30102702",
+      "nap_box_name": "CTO-00353",
+      "created_at": "2026-08-26T14:55:11.455160",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9212,
+      "client_name": "NAIROBI WILERMA DE LOURDES MACHADO REYES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4144863572",
+      "client_email": "NAIROBIMACHADO@HOTMAIL.COM",
+      "address": "AV PRINCIPAL MANZANA 11 CASA NRO  URB SAN PABLO TURMERO EDO ARAGUA",
+      "client_identification": "V15181008",
+      "nap_box_name": "CTO-00161",
+      "created_at": "2026-08-26T14:55:17.209230",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9213,
+      "client_name": "CLARIBEL LUGO YNOJOSA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Nispero",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "4128649477",
+      "client_email": "ASUNTOS.MUJER2009@GMAIL.COM",
+      "address": "LOS NÍSPERO ETAPA 1",
+      "client_identification": "V10756993",
+      "nap_box_name": "CTO-00720",
+      "created_at": "2026-08-26T14:57:19.712772",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
