@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5457,
+  "count": 5459,
   "results": [
     {
       "id": 3063,
@@ -167790,6 +167790,56 @@ const largeArraydata =
         "created_at": "2026-08-27T09:52:51.042888",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9214,
+      "client_name": "UNIDAD EDUCATIVA PRIVADA VERDAD Y VIDA ,C.A.",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243479920",
+      "client_email": "UEPVERDADYVIDA@GMAIL.COM",
+      "address": "VÍA PRINCIPAL GUAYABITA, SECTOR LAS TRES CRUCES, PARCELA 44",
+      "client_identification": "J312213310",
+      "nap_box_name": "1",
+      "created_at": "2026-08-27T12:42:53.012869",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9215,
+      "client_name": "ANA CONCEPCION BARRETO ARIAS",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4228156450",
+      "client_email": "ANABARRETO63@GMAIL",
+      "address": "CALLE DE DE MAYO #11 POLVORÍN FRENTE AL TERMINAL",
+      "client_identification": "V8488565",
+      "nap_box_name": "CTO-00353",
+      "created_at": "2026-08-27T12:42:59.367801",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
