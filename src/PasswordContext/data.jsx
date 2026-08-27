@@ -167250,7 +167250,7 @@ const largeArraydata =
     },
     {
       "id": 9197,
-      "client_name": "JUAN FRANCISCO YANES MORILLO",
+      "client_name": "JUAN FRANCISCO YANEZ MORILLO",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -167264,7 +167264,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "4262337637",
+      "client_mobile": "04262337637",
       "client_email": "juanyanes908@gmail.com",
       "address": "calle 7 casa número 21 barrio saman  tarazonero 1",
       "client_identification": "V7249187",
@@ -167719,8 +167719,8 @@ const largeArraydata =
       "id": 9212,
       "client_name": "NAIROBI WILERMA DE LOURDES MACHADO REYES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -167737,7 +167737,16 @@ const largeArraydata =
       "client_identification": "V15181008",
       "nap_box_name": "CTO-00161",
       "created_at": "2026-08-26T14:55:17.209230",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12915,
+        "ip": "172.17.1.54",
+        "mac": "JM:KG:CF:CA:47:6C",
+        "serial": "JMKGCFCA476C",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-08-27T09:16:06.773614",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
