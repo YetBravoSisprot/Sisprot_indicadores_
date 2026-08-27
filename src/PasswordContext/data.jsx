@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5460,
+  "count": 5461,
   "results": [
     {
       "id": 3063,
@@ -85748,7 +85748,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
         "id": 21,
@@ -121110,7 +121110,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": true,
+      "migrate": false,
       "sector_name": "Sabana Grande",
       "plan": {
         "id": 34,
@@ -167881,6 +167881,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN90_GESTION_OLT",
         "created_at": "2026-08-27T16:00:51.168259",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9217,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "19 de Abril",
+      "plan": {
+        "id": 8,
+        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
+        "cost": "49.50",
+        "code": "FOR750M",
+        "profile": "750M/750M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "JEKEHEKHEKEJEJWJWHW",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00142 C/ 9-A",
+      "created_at": "2026-08-27T17:20:08.030119",
+      "service_detail": {
+        "id": 12921,
+        "ip": "172.16.15.2",
+        "mac": "XNXNXN912929",
+        "serial": "XNXNXN912929",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-08-27T17:20:08.036644",
         "created_by_name": null
       },
       "installation_invoice_cost": null
