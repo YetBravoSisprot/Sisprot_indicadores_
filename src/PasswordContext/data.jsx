@@ -167286,8 +167286,8 @@ const largeArraydata =
       "id": 9198,
       "client_name": "Gleiger Del Carmen Torbello Murga",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Paraguatan",
@@ -167305,13 +167305,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-08-18T17:44:53.164656",
       "service_detail": {
-        "id": 12881,
+        "id": 12916,
         "ip": "10.17.66.2",
-        "mac": "jmkgcb408003",
-        "serial": "jmkgcb408003",
+        "mac": "JM:KG:CB:40:80:03",
+        "serial": "JMKGCB408003",
         "queue": null,
-        "interface": "283",
-        "created_at": "2026-08-18T17:44:53.504392",
+        "interface": "VLAN283_PARAGUATAN",
+        "created_at": "2026-08-27T09:50:28.553146",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167694,8 +167694,8 @@ const largeArraydata =
       "id": 9211,
       "client_name": "CRISTOFER RUSSELL MORILLO ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -167712,7 +167712,16 @@ const largeArraydata =
       "client_identification": "V30102702",
       "nap_box_name": "CTO-00353",
       "created_at": "2026-08-26T14:55:11.455160",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12917,
+        "ip": "172.17.1.50",
+        "mac": "JM:KG:CF:66:B5:CB",
+        "serial": "JMKGCF66B5CB",
+        "queue": null,
+        "interface": "VLAN280_POLVORIN",
+        "created_at": "2026-08-27T09:52:05.185563",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167753,8 +167762,8 @@ const largeArraydata =
       "id": 9213,
       "client_name": "CLARIBEL LUGO YNOJOSA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Nispero",
@@ -167771,7 +167780,16 @@ const largeArraydata =
       "client_identification": "V10756993",
       "nap_box_name": "CTO-00720",
       "created_at": "2026-08-26T14:57:19.712772",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12918,
+        "ip": "172.17.1.46",
+        "mac": "JM:KG:CA:FF:78:F4",
+        "serial": "JMKGCAFF78F4",
+        "queue": null,
+        "interface": "VLAN208_NISPERO_OLT1",
+        "created_at": "2026-08-27T09:52:51.042888",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
