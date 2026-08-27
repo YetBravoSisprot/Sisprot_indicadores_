@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5459,
+  "count": 5460,
   "results": [
     {
       "id": 3063,
@@ -167847,6 +167847,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN280_POLVORIN",
         "created_at": "2026-08-27T13:55:27.204789",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9216,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-08-27T16:00:51.163742",
+      "service_detail": {
+        "id": 12920,
+        "ip": "192.168.1.2",
+        "mac": "ZTE2012093012",
+        "serial": "ZTE2012093012",
+        "queue": null,
+        "interface": "VLAN90_GESTION_OLT",
+        "created_at": "2026-08-27T16:00:51.168259",
         "created_by_name": null
       },
       "installation_invoice_cost": null
