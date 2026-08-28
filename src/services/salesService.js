@@ -55,7 +55,8 @@ export const fetchDriveSales = async () => {
             const apellidoCliente = (cols[2] || "").trim().toUpperCase();
             const fullName = `${nombreCliente} ${apellidoCliente}`;
             const fullNameNorm = fullName.replace(/\s+/g, " ");
-            const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+            if (fullNameNorm.includes("FREDDY CARRILLO") || fullNameNorm.includes("BRYANT REYES")) return;
+            const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
             const isWhitelisted = whitelist.some(w => fullNameNorm.includes(w.toUpperCase().replace(/\s+/g, " ")));
             if (!validInstTypes.includes(instType)) return;
             if (!isWhitelisted && fullName.includes("PRUEBA")) return;
@@ -140,7 +141,8 @@ export const getDetailedSalesForMonth = async (year, monthIndex) => {
             const apellidoCliente = (cols[2] || "").trim().toUpperCase();
             const fullName = `${nombreCliente} ${apellidoCliente}`;
             const fullNameNorm = fullName.replace(/\s+/g, " ");
-            const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+            if (fullNameNorm.includes("FREDDY CARRILLO") || fullNameNorm.includes("BRYANT REYES")) return;
+            const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
             const isWhitelisted = whitelist.some(w => fullNameNorm.includes(w.toUpperCase().replace(/\s+/g, " ")));
             if (!validInstTypes.includes(instType)) return;
             if (!isWhitelisted && fullName.includes("PRUEBA")) return;
