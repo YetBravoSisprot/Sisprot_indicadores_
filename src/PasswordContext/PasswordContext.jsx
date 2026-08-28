@@ -1,10 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
 import largeArraydata from "../PasswordContext/data";
 
-// Filter out test contracts for "Freddy Carrillo"
+// Filter out test contracts for "Freddy Carrillo" and "Bryant Reyes"
 if (largeArraydata && Array.isArray(largeArraydata.results)) {
   largeArraydata.results = largeArraydata.results.filter(
-    client => client && client.client_name !== "Freddy Carrillo"
+    client => {
+      if (!client) return false;
+      const n = (client.client_name || "").toUpperCase().replace(/\s+/g, " ");
+      return !n.includes("FREDDY CARRILLO") && !n.includes("BRYANT REYES");
+    }
   );
 }
 
@@ -17,10 +21,11 @@ function PasswordProvider({ children }) {
   const getInitialFilteredData = () => {
     const jsonData = { ...largeArraydata };
     if (jsonData && jsonData.results) {
-      const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+      const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
       jsonData.results = jsonData.results.filter(cliente => {
         if (!cliente) return false;
         const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
+        if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
         const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
         if (isWhitelisted) return true;
 
@@ -273,10 +278,11 @@ function PasswordProvider({ children }) {
 
       // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
       if (jsonData && jsonData.results) {
-        const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+        const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
         jsonData.results = jsonData.results.filter(cliente => {
           if (!cliente) return false;
           const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
+          if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
           const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
           if (isWhitelisted) return true;
 
