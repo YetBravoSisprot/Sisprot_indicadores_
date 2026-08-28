@@ -133922,8 +133922,8 @@ const largeArraydata =
       "id": 7899,
       "client_name": "MARIA ELENA GUTIERREZ GRIBORIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Concepcion",
@@ -133940,16 +133940,7 @@ const largeArraydata =
       "client_identification": "V11290546",
       "nap_box_name": "CTO-00262",
       "created_at": "2025-04-09T14:18:36.804122",
-      "service_detail": {
-        "id": 8194,
-        "ip": "10.13.61.2",
-        "mac": "OEMT3C620256",
-        "serial": "OEMT3C620256",
-        "queue": "Plan_148293_24341_WispHub",
-        "interface": "VLAN143_STAEDUVIGES2",
-        "created_at": "2025-04-09T16:28:48.599886",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
