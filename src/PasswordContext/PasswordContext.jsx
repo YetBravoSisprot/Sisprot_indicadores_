@@ -20,8 +20,8 @@ function PasswordProvider({ children }) {
       const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
       jsonData.results = jsonData.results.filter(cliente => {
         if (!cliente) return false;
-        const name = (cliente.client_name || "").toUpperCase();
-        const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase()));
+        const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
+        const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
         if (isWhitelisted) return true;
 
         const searchFields = [
@@ -276,8 +276,8 @@ function PasswordProvider({ children }) {
         const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
         jsonData.results = jsonData.results.filter(cliente => {
           if (!cliente) return false;
-          const name = (cliente.client_name || "").toUpperCase();
-          const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase()));
+          const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
+          const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
           if (isWhitelisted) return true;
 
           const searchFields = [
