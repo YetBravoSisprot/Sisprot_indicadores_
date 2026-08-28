@@ -171,9 +171,10 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
     });
 
-    const whitelist = ["ELISAUL REYES", "BRYANT REYES", "THAIS BEJAS"];
+    const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
     dataset.filter(c => {
         const name = String(c.client_name || "").toUpperCase().replace(/\s+/g, " ");
+        if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
         const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
         if (isWhitelisted) return true;
         return !String(c.client_name || "").toUpperCase().includes("PRUEBA");
