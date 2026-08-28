@@ -167805,7 +167805,16 @@ const largeArraydata =
       "client_identification": "J312213310",
       "nap_box_name": "1",
       "created_at": "2026-08-27T12:42:53.012869",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12922,
+        "ip": "172.17.1.213",
+        "mac": "4C:AB:FC:11:EB:AB",
+        "serial": "JMKGC676F68C",
+        "queue": null,
+        "interface": "VLAN282_ZONA_AGRARIA",
+        "created_at": "2026-08-28T13:31:37.535510",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
