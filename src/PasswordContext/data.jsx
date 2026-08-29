@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5461,
+  "count": 5462,
   "results": [
     {
       "id": 3063,
@@ -167915,6 +167915,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN229_PANTIN",
         "created_at": "2026-08-27T17:20:08.036644",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9218,
+      "client_name": "MARIA ELENA GUTIERREZ GRIBORIO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Salto Angel",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04145995945",
+      "client_email": "MARIAGRIBORIO24@GMAIL.COM",
+      "address": "EL SAMÁN NÚMERO 14, SECTOR SANTO ANGEL, PARROQUIA SANTIAGO MARIÑO",
+      "client_identification": "V11290546",
+      "nap_box_name": null,
+      "created_at": "2026-08-29T10:25:10.162163",
+      "service_detail": {
+        "id": 12924,
+        "ip": "10.13.61.2",
+        "mac": "OEMT3C620256",
+        "serial": "OEMT3C620256",
+        "queue": null,
+        "interface": "VLAN143_STAEDUVIGES2",
+        "created_at": "2026-08-29T10:25:10.511623",
         "created_by_name": null
       },
       "installation_invoice_cost": null
