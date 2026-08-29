@@ -163983,7 +163983,7 @@ const largeArraydata =
     },
     {
       "id": 9087,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Freddy Carrillo",
       "client_type_name": null,
       "client_subdivision": "POR INSTALAR_SIN_TIPO",
       "status_name": "Por instalar",
@@ -163997,10 +163997,10 @@ const largeArraydata =
         "code": null,
         "profile": "0Mbps/0Mbps"
       },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
+      "client_mobile": "04241436934",
+      "client_email": "yet.brm@gmail.com",
       "address": "PRUEBA PRUEBA",
-      "client_identification": "V29808275",
+      "client_identification": "V28458411",
       "nap_box_name": "CTO-00037",
       "created_at": "2026-05-19T11:34:41.711640",
       "service_detail": null,
@@ -164008,7 +164008,7 @@ const largeArraydata =
     },
     {
       "id": 9088,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Freddy Carrillo",
       "client_type_name": null,
       "client_subdivision": "POR INSTALAR_SIN_TIPO",
       "status_name": "Por instalar",
@@ -164022,10 +164022,10 @@ const largeArraydata =
         "code": null,
         "profile": "0Mbps/0Mbps"
       },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
+      "client_mobile": "04241436934",
+      "client_email": "yet.brm@gmail.com",
       "address": "PRUEBA PRUEBA",
-      "client_identification": "V29808275",
+      "client_identification": "V28458411",
       "nap_box_name": "CTO-00037",
       "created_at": "2026-05-19T11:36:43.499351",
       "service_detail": null,
@@ -167853,7 +167853,7 @@ const largeArraydata =
     },
     {
       "id": 9216,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Freddy Carrillo",
       "client_type_name": "PYME",
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
@@ -167867,10 +167867,10 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
+      "client_mobile": "04241436934",
+      "client_email": "yet.brm@gmail.com",
       "address": "PRUEBA",
-      "client_identification": "V29808275",
+      "client_identification": "V28458411",
       "nap_box_name": "CTO-00180",
       "created_at": "2026-08-27T16:00:51.163742",
       "service_detail": {
@@ -167887,7 +167887,7 @@ const largeArraydata =
     },
     {
       "id": 9217,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
@@ -167901,10 +167901,10 @@ const largeArraydata =
         "code": "FOR750M",
         "profile": "750M/750M"
       },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
+      "client_mobile": "04241436934",
+      "client_email": "yet.brm@gmail.com",
       "address": "JEKEHEKHEKEJEJWJWHW",
-      "client_identification": "V29808275",
+      "client_identification": "V28458411",
       "nap_box_name": "CTO-00142 C/ 9-A",
       "created_at": "2026-08-27T17:20:08.030119",
       "service_detail": {
