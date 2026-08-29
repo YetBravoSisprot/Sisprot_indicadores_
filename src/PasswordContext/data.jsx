@@ -101989,13 +101989,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00214",
       "created_at": "2024-09-07T12:47:39.870548",
       "service_detail": {
-        "id": 6579,
+        "id": 12923,
         "ip": "172.31.179.2",
-        "mac": "",
-        "serial": "OEMT3C624D62",
-        "queue": "PLAN 250 TURMERO",
+        "mac": "68:9F:F0:2A:89:1F",
+        "serial": "ZXICCDB301B9",
+        "queue": null,
         "interface": "VLAN232_GUANARITO_OLT2",
-        "created_at": "2024-09-09T10:46:58.124249",
+        "created_at": "2026-08-29T09:54:44.546718",
         "created_by_name": null
       },
       "installation_invoice_cost": null
