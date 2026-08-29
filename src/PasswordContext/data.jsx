@@ -167923,8 +167923,8 @@ const largeArraydata =
       "id": 9218,
       "client_name": "MARIA ELENA GUTIERREZ GRIBORIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Salto Angel",
@@ -167942,13 +167942,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-08-29T10:25:10.162163",
       "service_detail": {
-        "id": 12924,
+        "id": 12929,
         "ip": "10.13.61.2",
-        "mac": "OEMT3C620256",
+        "mac": "OE:MT:3C:62:02:56",
         "serial": "OEMT3C620256",
         "queue": null,
-        "interface": "VLAN143_STAEDUVIGES2",
-        "created_at": "2026-08-29T10:25:10.511623",
+        "interface": "VLAN121_S_ANGEL",
+        "created_at": "2026-08-29T17:50:30.584322",
         "created_by_name": null
       },
       "installation_invoice_cost": null
