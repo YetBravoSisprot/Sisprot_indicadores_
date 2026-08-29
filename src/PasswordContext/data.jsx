@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5463,
+  "count": 5464,
   "results": [
     {
       "id": 3063,
@@ -167806,13 +167806,13 @@ const largeArraydata =
       "nap_box_name": "1",
       "created_at": "2026-08-27T12:42:53.012869",
       "service_detail": {
-        "id": 12922,
-        "ip": "172.17.1.213",
+        "id": 12928,
+        "ip": "172.17.1.214",
         "mac": "4C:AB:FC:11:EB:AB",
         "serial": "JMKGC676F68C",
         "queue": null,
         "interface": "VLAN282_ZONA_AGRARIA",
-        "created_at": "2026-08-28T13:31:37.535510",
+        "created_at": "2026-08-29T14:09:38.994275",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -167983,6 +167983,40 @@ const largeArraydata =
         "queue": null,
         "interface": "280",
         "created_at": "2026-08-29T13:46:36.628224",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9220,
+      "client_name": "NAYLIN DESIREE CORRO CAMACHO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Guerrero de Chavez",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4122989247",
+      "client_email": "NAILYNCORRO@GMAIL.COM",
+      "address": "SECTOR ROSARIO DE PAYA COMUNIDAD GERREROS DE CHÁVEZ CALLE 3 CASA 105",
+      "client_identification": "V22286603",
+      "nap_box_name": "CTO-00587",
+      "created_at": "2026-08-29T13:47:56.309560",
+      "service_detail": {
+        "id": 12926,
+        "ip": "172.17.1.70",
+        "mac": "4C:AB:FC:0F:23:6B",
+        "serial": "JMKGC2F7EFCE",
+        "queue": null,
+        "interface": "231",
+        "created_at": "2026-08-29T13:47:56.660082",
         "created_by_name": null
       },
       "installation_invoice_cost": null
