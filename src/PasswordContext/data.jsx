@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5462,
+  "count": 5463,
   "results": [
     {
       "id": 3063,
@@ -167685,8 +167685,8 @@ const largeArraydata =
       "id": 9211,
       "client_name": "CRISTOFER RUSSELL MORILLO ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -167787,8 +167787,8 @@ const largeArraydata =
       "id": 9214,
       "client_name": "UNIDAD EDUCATIVA PRIVADA VERDAD Y VIDA ,C.A.",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -167949,6 +167949,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN143_STAEDUVIGES2",
         "created_at": "2026-08-29T10:25:10.511623",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9219,
+      "client_name": "LUIS EDUARDO BETANCOURT",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4243582830",
+      "client_email": "IB6733646@GMAIL.COM",
+      "address": "POLVORIN CALLE MIRADOR CASA 1",
+      "client_identification": "V8736563",
+      "nap_box_name": null,
+      "created_at": "2026-08-29T13:46:36.283791",
+      "service_detail": {
+        "id": 12925,
+        "ip": "172.17.1.74",
+        "mac": "4C:AB:FC:38:43:2C",
+        "serial": "JMKGC5A1D486",
+        "queue": null,
+        "interface": "280",
+        "created_at": "2026-08-29T13:46:36.628224",
         "created_by_name": null
       },
       "installation_invoice_cost": null
