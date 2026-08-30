@@ -21687,8 +21687,8 @@ const largeArraydata =
       "id": 3830,
       "client_name": "GENESIS COROMOTO MUNOZ LARA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -21705,7 +21705,16 @@ const largeArraydata =
       "client_identification": "V20336276",
       "nap_box_name": "41",
       "created_at": "2024-04-18T13:03:13.948218",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12933,
+        "ip": "172.17.1.82",
+        "mac": "ZX:IC:CD:28:27:7B",
+        "serial": "ZXICCD28277B",
+        "queue": null,
+        "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
+        "created_at": "2026-08-30T10:40:40.790645",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
