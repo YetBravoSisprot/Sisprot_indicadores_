@@ -46263,13 +46263,13 @@ const largeArraydata =
       "nap_box_name": "411",
       "created_at": "2024-06-09T17:16:23.166123",
       "service_detail": {
-        "id": 5611,
-        "ip": "172.28.76.2",
-        "mac": "ZICGD171C234",
-        "serial": "ZICGD171C234",
-        "queue": "Plan_148293_24341_WispHub",
+        "id": 12930,
+        "ip": "172.17.1.78",
+        "mac": "ZX:IC:CD:5A:6E:9C",
+        "serial": "ZXICCD5A6E9C",
+        "queue": null,
         "interface": "VLAN109_CASONA_1",
-        "created_at": "2024-08-17T10:46:11.172439",
+        "created_at": "2026-08-30T09:15:08.619401",
         "created_by_name": null
       },
       "installation_invoice_cost": null
