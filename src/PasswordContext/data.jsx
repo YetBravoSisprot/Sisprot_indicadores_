@@ -12579,8 +12579,8 @@ const largeArraydata =
       "id": 3509,
       "client_name": "FLOR ELIANA GARCIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -12597,16 +12597,7 @@ const largeArraydata =
       "client_identification": "V12341848",
       "nap_box_name": "161 DOS",
       "created_at": "2024-04-15T09:53:43.754922",
-      "service_detail": {
-        "id": 6092,
-        "ip": "172.26.74.2",
-        "mac": "HWTC9088689B",
-        "serial": "HWTC9088689B",
-        "queue": "Plan_137413_1574_WispHub",
-        "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2024-08-22T14:35:57.313156",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -13228,8 +13219,8 @@ const largeArraydata =
       "id": 3533,
       "client_name": "ANGELO JOSE OCA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Guanarito",
@@ -13246,16 +13237,7 @@ const largeArraydata =
       "client_identification": "V24930120",
       "nap_box_name": "CTO-00214",
       "created_at": "2024-04-15T12:04:26.247976",
-      "service_detail": {
-        "id": 6644,
-        "ip": "172.27.235.2",
-        "mac": "TPLGF9CD4447",
-        "serial": "TPLGF9CD4447",
-        "queue": "Plan_147201_15811_WispHub",
-        "interface": "VLAN232_GUANARITO_OLT2",
-        "created_at": "2024-09-17T13:47:08.840249",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
