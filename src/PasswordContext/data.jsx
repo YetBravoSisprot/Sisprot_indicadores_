@@ -2235,13 +2235,13 @@ const largeArraydata =
       "nap_box_name": "480",
       "created_at": "2024-04-11T12:03:04.474298",
       "service_detail": {
-        "id": 7446,
+        "id": 12934,
         "ip": "172.25.242.2",
-        "mac": "VSOL00D10CB3",
-        "serial": "VSOL00D10CB3",
-        "queue": "Plan_107915_30181_WispHub",
+        "mac": "QX:TL:CB:B3:F8:18",
+        "serial": "QXTLCBB3F818",
+        "queue": null,
         "interface": "VLAN231_PAYABAJO",
-        "created_at": "2024-12-16T15:02:30.867736",
+        "created_at": "2026-08-30T14:28:45.306614",
         "created_by_name": null
       },
       "installation_invoice_cost": null
