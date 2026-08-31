@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5465,
+  "count": 5466,
   "results": [
     {
       "id": 3063,
@@ -167079,6 +167079,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN280_POLVORIN",
         "created_at": "2026-08-31T17:00:35.127204",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9222,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "La Guzman",
+      "plan": {
+        "id": 43,
+        "name": "RECURRENTE RESIDENCIAL PLAN 650M",
+        "cost": "46.00",
+        "code": "FOR650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "HGEBEJE",
+      "client_identification": "V29808275",
+      "nap_box_name": "Prueba",
+      "created_at": "2026-08-31T17:46:27.110271",
+      "service_detail": {
+        "id": 12939,
+        "ip": "172.10.1.2",
+        "mac": "LKSAKP0993",
+        "serial": "LKSAKP0993",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-08-31T17:46:27.113672",
         "created_by_name": null
       },
       "installation_invoice_cost": null
