@@ -166162,8 +166162,8 @@ const largeArraydata =
       "id": 9186,
       "client_name": "Michell Yhainilin Velasquez Mariño",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Pantin",
@@ -166180,16 +166180,7 @@ const largeArraydata =
       "client_identification": "28187407",
       "nap_box_name": null,
       "created_at": "2026-08-15T14:09:04.376312",
-      "service_detail": {
-        "id": 12851,
-        "ip": "10.16.239.2",
-        "mac": "68:9f:f0:2a:76:6f",
-        "serial": "zxiccd350306",
-        "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-08-15T18:31:01.375519",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
