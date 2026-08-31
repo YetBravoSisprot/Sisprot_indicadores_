@@ -52606,16 +52606,7 @@ const largeArraydata =
       "client_identification": "V12339072",
       "nap_box_name": "CTO-0642",
       "created_at": "2024-06-14T10:05:42.012056",
-      "service_detail": {
-        "id": 12815,
-        "ip": "172.25.160.2",
-        "mac": "QX:TL:CB:66:A9:EC",
-        "serial": "QXTLCB66A9EC",
-        "queue": null,
-        "interface": "VLAN227_V_PARAISO_OLT1",
-        "created_at": "2026-08-10T13:39:35.315623",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
