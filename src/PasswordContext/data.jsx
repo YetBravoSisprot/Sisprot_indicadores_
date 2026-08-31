@@ -165679,8 +165679,8 @@ const largeArraydata =
       "id": 9169,
       "client_name": "ESCUELA COMUNITARIA CARIBE",
       "client_type_name": "GRATIS",
-      "client_subdivision": "CANCELADO_GRATIS",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_GRATIS",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Simon Bolivar",
@@ -165697,7 +165697,16 @@ const largeArraydata =
       "client_identification": "V070815059",
       "nap_box_name": "CTO-00041",
       "created_at": "2026-08-06T13:10:57.808219",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12936,
+        "ip": "10.16.233.2",
+        "mac": "OE:MT:3C:62:05:CA",
+        "serial": "OEMT3C6205CA",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-08-31T12:15:08.531231",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
