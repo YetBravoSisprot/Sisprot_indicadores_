@@ -167053,8 +167053,8 @@ const largeArraydata =
       "id": 9221,
       "client_name": "ISAURA MIGUELINA FOFE COLINA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -167072,13 +167072,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00353",
       "created_at": "2026-08-31T16:39:13.906647",
       "service_detail": {
-        "id": 12937,
+        "id": 12938,
         "ip": "172.17.1.218",
-        "mac": "JMKGCCDC0577",
+        "mac": "JM:KG:CC:DC:05:77",
         "serial": "JMKGCCDC0577",
         "queue": null,
-        "interface": "280",
-        "created_at": "2026-08-31T16:39:14.263568",
+        "interface": "VLAN280_POLVORIN",
+        "created_at": "2026-08-31T17:00:35.127204",
         "created_by_name": null
       },
       "installation_invoice_cost": null
