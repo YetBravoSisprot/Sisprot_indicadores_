@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5464,
+  "count": 5465,
   "results": [
     {
       "id": 3063,
@@ -167045,6 +167045,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN231_PAYABAJO",
         "created_at": "2026-08-30T09:55:23.018472",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9221,
+      "client_name": "ISAURA MIGUELINA FOFE COLINA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4122078153",
+      "client_email": "JESUSES754@GMAIL.COM",
+      "address": "POLVORIN CALLEJON LOS MAGOS CASA #1",
+      "client_identification": "V16996651",
+      "nap_box_name": "CTO-00353",
+      "created_at": "2026-08-31T16:39:13.906647",
+      "service_detail": {
+        "id": 12937,
+        "ip": "172.17.1.218",
+        "mac": "JMKGCCDC0577",
+        "serial": "JMKGCCDC0577",
+        "queue": null,
+        "interface": "280",
+        "created_at": "2026-08-31T16:39:14.263568",
         "created_by_name": null
       },
       "installation_invoice_cost": null
