@@ -31463,8 +31463,8 @@ const largeArraydata =
       "id": 4174,
       "client_name": "INDUSTRIA PROCESADORA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -31481,16 +31481,7 @@ const largeArraydata =
       "client_identification": "J303931766",
       "nap_box_name": "56",
       "created_at": "2024-05-07T10:51:37.473504",
-      "service_detail": {
-        "id": 3446,
-        "ip": "172.18.204.2",
-        "mac": "TPLGB95502CA",
-        "serial": "TPLGB95502CA",
-        "queue": "Plan_92038_15811_WispHub",
-        "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2024-07-04T15:07:16.523995",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -31683,8 +31674,8 @@ const largeArraydata =
       "id": 4182,
       "client_name": "MOTORES SAN MARCOS XXI C.A",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -31701,16 +31692,7 @@ const largeArraydata =
       "client_identification": "J502103449",
       "nap_box_name": "83",
       "created_at": "2024-05-07T12:08:52.990557",
-      "service_detail": {
-        "id": 12780,
-        "ip": "172.19.117.2",
-        "mac": "c0:25:2f:36:a8:03",
-        "serial": "TPLGB954FB35",
-        "queue": null,
-        "interface": "VLAN100_OLTs",
-        "created_at": "2026-07-31T16:20:23.382841",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
