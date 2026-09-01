@@ -66548,13 +66548,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00178",
       "created_at": "2024-07-19T16:14:43.399954",
       "service_detail": {
-        "id": 5707,
+        "id": 12944,
         "ip": "172.22.24.2",
-        "mac": "TPLGB68B5830",
+        "mac": "TP:LG:B6:8B:58:30",
         "serial": "TPLGB68B5830",
-        "queue": "Plan_161889_30183_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-08-18T17:38:21.007489",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-09-01T12:06:12.766649",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -104898,7 +104898,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Narayola II",
       "plan": {
         "id": 100,
@@ -153370,11 +153370,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Valle Paraiso",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04242572382",
       "client_email": "JAVIERSOSA1970@GMAIL.COM",
