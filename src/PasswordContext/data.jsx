@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5466,
+  "count": 5471,
   "results": [
     {
       "id": 3063,
@@ -166942,8 +166942,8 @@ const largeArraydata =
       "id": 9218,
       "client_name": "MARIA ELENA GUTIERREZ GRIBORIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
+      "status_name": "Suspendido",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Salto Angel",
@@ -167106,6 +167106,131 @@ const largeArraydata =
         "created_at": "2026-08-31T17:46:27.113672",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9224,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-08-31T23:46:54.793717",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9225,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-08-31T23:55:59.576047",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9226,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-08-31T23:57:10.245142",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9227,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-08-31T23:59:30.015343",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9228,
+      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Edif. El Torreon",
+      "plan": {
+        "id": 34,
+        "name": "RECURRENTE PYME PLAN 300M",
+        "cost": "39.09",
+        "code": "FOP300M",
+        "profile": "300M/300M"
+      },
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
+      "address": "PRUEBA",
+      "client_identification": "V29808275",
+      "nap_box_name": "CTO-00180",
+      "created_at": "2026-09-01T00:15:18.553995",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
