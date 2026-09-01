@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5466,
+  "count": 5467,
   "results": [
     {
       "id": 3063,
@@ -166237,7 +166237,7 @@ const largeArraydata =
     },
     {
       "id": 9188,
-      "client_name": "Maria Gabriela Perdomo Flores",
+      "client_name": "MARIA GABRIELA PERDOMO FLORES",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -167131,6 +167131,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN100_OLTs",
         "created_at": "2026-08-31T17:46:27.113672",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9235,
+      "client_name": "KARELMA CAMACHO GOMEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04142892669",
+      "client_email": "KHARELMALACRISTALINA@GMAIL.COM",
+      "address": "SAN PABLO CALLE 4 CASA 8, TURMERO",
+      "client_identification": "V12640648",
+      "nap_box_name": "CTO-00583",
+      "created_at": "2026-09-01T13:03:12.936216",
+      "service_detail": {
+        "id": 12949,
+        "ip": "172.17.1.86",
+        "mac": "172.17.1.86",
+        "serial": "172.17.1.86",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-09-01T13:03:12.937961",
         "created_by_name": null
       },
       "installation_invoice_cost": null
