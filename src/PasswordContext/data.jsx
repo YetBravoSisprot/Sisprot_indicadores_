@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5467,
+  "count": 5466,
   "results": [
     {
       "id": 3063,
@@ -162070,7 +162070,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
         "id": 21,
@@ -165827,31 +165827,6 @@ const largeArraydata =
         "created_at": "2026-08-11T08:38:51.975996",
         "created_by_name": null
       },
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9173,
-      "client_name": "RITA ELENA RAMIREZ CHIRINOS",
-      "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Saman de Guere",
-      "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
-      },
-      "client_mobile": "04243563113",
-      "client_email": "RITACHIRINIS1974@GMAIL.COM",
-      "address": "SECTOR SAMAN DE GUERE CALLE EL CARMEN CASA NUMERO 19 ARAGUA ZONA POSTAL 2115",
-      "client_identification": "V12144491",
-      "nap_box_name": "303",
-      "created_at": "2026-08-07T15:58:13.417639",
-      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
