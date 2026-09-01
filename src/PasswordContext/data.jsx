@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5471,
+  "count": 5466,
   "results": [
     {
       "id": 3063,
@@ -13622,11 +13622,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Santa Eduviges",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124581419",
       "client_email": "YERRIKAGUZMAN@GMAIL.COM",
@@ -15051,11 +15051,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125972977",
       "client_email": "SEBISGM2006@GMAIL.COM",
@@ -16460,11 +16460,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04127761042",
       "client_email": "LAGUNAALBERTO70@GMAIL.COM",
@@ -19743,11 +19743,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Valle del Rosario",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128868417",
       "client_email": "JATM00@GMAIL.COM",
@@ -20984,11 +20984,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Taguapire",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121493605",
       "client_email": "JOANMARTINEZ1011@GMAIL.COM",
@@ -22855,11 +22855,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Villas El Carmen",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121486296",
       "client_email": "demb1209@gmail.com",
@@ -34768,11 +34768,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121486711",
       "client_email": "EDUARDOMARRERO1235@GMAIL.COM",
@@ -44696,11 +44696,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121588638",
       "client_email": "CORDEROODALYS32@GMAIL.COM",
@@ -73874,11 +73874,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Antonio Jose de Sucre",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121589459",
       "client_email": "KARE.JOSE2@GMAIL.COM",
@@ -78454,11 +78454,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Antonio Jose de Sucre",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04123868633",
       "client_email": "YMARTINEZCUENCA@GMAIL.COM",
@@ -79638,11 +79638,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125643082",
       "client_email": "GENESISMATHEUZ@GMAIL.COM",
@@ -83614,11 +83614,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Magdalena",
       "plan": {
-        "id": 8,
-        "name": "RECURRENTE RESIDENCIAL PLAN 750M",
-        "cost": "49.50",
-        "code": "FOR750M",
-        "profile": "750M/750M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "04128883635",
       "client_email": "JOHANF12@GMAIL.COM",
@@ -98373,11 +98373,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Esperanza",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128151824",
       "client_email": "GREYSLIGUEVARA84@GMAIL.COM",
@@ -104345,11 +104345,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04129130399",
       "client_email": "JIMENEZCARY5@GMAIL.COM",
@@ -104606,11 +104606,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243109718",
       "client_email": "KATGOMEZ2991@GMAIL.COM",
@@ -107009,11 +107009,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Rio Seco",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243377878",
       "client_email": "BETTYPICHARDO47@GMAIL.COM",
@@ -167106,131 +167106,6 @@ const largeArraydata =
         "created_at": "2026-08-31T17:46:27.113672",
         "created_by_name": null
       },
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9224,
-      "client_name": "BRYANT  REYES REYES AVILA",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Edif. El Torreon",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
-      "address": "PRUEBA",
-      "client_identification": "V29808275",
-      "nap_box_name": "CTO-00180",
-      "created_at": "2026-08-31T23:46:54.793717",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9225,
-      "client_name": "BRYANT  REYES REYES AVILA",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Edif. El Torreon",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
-      "address": "PRUEBA",
-      "client_identification": "V29808275",
-      "nap_box_name": "CTO-00180",
-      "created_at": "2026-08-31T23:55:59.576047",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9226,
-      "client_name": "BRYANT  REYES REYES AVILA",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Edif. El Torreon",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
-      "address": "PRUEBA",
-      "client_identification": "V29808275",
-      "nap_box_name": "CTO-00180",
-      "created_at": "2026-08-31T23:57:10.245142",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9227,
-      "client_name": "BRYANT  REYES REYES AVILA",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Edif. El Torreon",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
-      "address": "PRUEBA",
-      "client_identification": "V29808275",
-      "nap_box_name": "CTO-00180",
-      "created_at": "2026-08-31T23:59:30.015343",
-      "service_detail": null,
-      "installation_invoice_cost": null
-    },
-    {
-      "id": 9228,
-      "client_name": "BRYANT  REYES REYES AVILA",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
-      "cycle": 1,
-      "migrate": true,
-      "sector_name": "Edif. El Torreon",
-      "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
-      },
-      "client_mobile": "04124006962",
-      "client_email": "breyesve@gmail.com",
-      "address": "PRUEBA",
-      "client_identification": "V29808275",
-      "nap_box_name": "CTO-00180",
-      "created_at": "2026-09-01T00:15:18.553995",
-      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
