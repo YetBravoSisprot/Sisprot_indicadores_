@@ -162067,8 +162067,8 @@ const largeArraydata =
       "id": 9055,
       "client_name": "DOMINIC GREGOR CORTEZ CARAPAICA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -162085,7 +162085,16 @@ const largeArraydata =
       "client_identification": "V17513261",
       "nap_box_name": "282",
       "created_at": "2026-04-15T13:44:51.019239",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12950,
+        "ip": "10.16.186.2",
+        "mac": "OE:MT:3C:62:45:CE",
+        "serial": "OEMT3C6245CE",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-09-01T14:48:03.116879",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
