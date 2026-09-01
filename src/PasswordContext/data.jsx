@@ -128960,25 +128960,34 @@ const largeArraydata =
       "id": 7744,
       "client_name": "MIRIAM JOSEFINA RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados I",
       "plan": {
-        "id": 101,
-        "name": "RECURRENTE RESIDENCIAL PLAN 200M",
-        "cost": "19.00",
-        "code": "FOR200MB",
-        "profile": "200Mbps/200Mbps"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04144744379",
-      "client_email": "MIRIANRODRIGUEZ2404@GMAIL.COM",
+      "client_email": "garceslucena@gmail.com",
       "address": "PRADO 1 AV PRINCIPAL CASA 04",
       "client_identification": "V7221986",
       "nap_box_name": "CTO-00206",
       "created_at": "2025-03-19T17:17:25.811655",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12941,
+        "ip": "10.12.160.2",
+        "mac": "TP:LG:B7:65:62:80",
+        "serial": "TPLGB7656280",
+        "queue": null,
+        "interface": "VLAN239_PRADOS1",
+        "created_at": "2026-09-01T09:22:14.560376",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
