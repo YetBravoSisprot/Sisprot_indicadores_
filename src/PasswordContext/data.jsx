@@ -66548,13 +66548,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00178",
       "created_at": "2024-07-19T16:14:43.399954",
       "service_detail": {
-        "id": 12944,
-        "ip": "172.22.24.2",
+        "id": 12945,
+        "ip": "172.17.1.90",
         "mac": "TP:LG:B6:8B:58:30",
         "serial": "TPLGB68B5830",
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2026-09-01T12:06:12.766649",
+        "created_at": "2026-09-01T12:11:50.782884",
         "created_by_name": null
       },
       "installation_invoice_cost": null
