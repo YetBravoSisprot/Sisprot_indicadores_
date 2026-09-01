@@ -165890,7 +165890,7 @@ const largeArraydata =
     },
     {
       "id": 9175,
-      "client_name": "Carmen Olida Contreras Ramirez",
+      "client_name": "CARMEN OLIDA CONTRERAS RAMIREZ",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -165904,7 +165904,7 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04267319559",
+      "client_mobile": "04128972090",
       "client_email": "carmenolidacontrerasramirez@gmail.com",
       "address": "calle 2 casa numero 12 prados iii turmero aragua zona postal 2115",
       "client_identification": "v10740876",
