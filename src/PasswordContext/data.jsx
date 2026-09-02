@@ -115970,8 +115970,8 @@ const largeArraydata =
       "id": 7202,
       "client_name": "MAURA LEONIDES RODRIGUEZ OROPEZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -115988,7 +115988,16 @@ const largeArraydata =
       "client_identification": "V13426564",
       "nap_box_name": "CTO - 914",
       "created_at": "2024-12-03T14:59:19.640942",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12955,
+        "ip": "10.11.120.2",
+        "mac": "OE:MT:3C:62:4E:0A",
+        "serial": "OEMT3C624E0A",
+        "queue": null,
+        "interface": "VLAN261_1ERO_MAYO_ZTE",
+        "created_at": "2026-09-02T14:40:44.314744",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
