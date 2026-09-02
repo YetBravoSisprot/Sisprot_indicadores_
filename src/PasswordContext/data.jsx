@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5466,
+  "count": 5467,
   "results": [
     {
       "id": 3063,
@@ -167176,6 +167176,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
         "created_at": "2026-09-01T13:03:12.937961",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9236,
+      "client_name": "BRYANT JOSE ALEJANDRO VASQUEZ TORO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Ciudad Bendita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04163322046",
+      "client_email": "MACUTOFIJO@GMAIL.COM",
+      "address": "CALLE 3 CASA S/N CIUDAD BENDITA EL MACARO",
+      "client_identification": "V30415948",
+      "nap_box_name": "CTO - 1228",
+      "created_at": "2026-09-02T19:17:01.688866",
+      "service_detail": {
+        "id": 12958,
+        "ip": "172.17.1.102",
+        "mac": "JM:KG:CB:72:18:46",
+        "serial": "JMKGCB721846",
+        "queue": null,
+        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
+        "created_at": "2026-09-02T19:18:57.584936",
         "created_by_name": null
       },
       "installation_invoice_cost": null
