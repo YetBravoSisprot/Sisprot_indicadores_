@@ -160750,14 +160750,14 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04123099258",
       "client_email": "ANYELIYULI@GMAIL.COM",
@@ -165968,23 +165968,23 @@ const largeArraydata =
     {
       "id": 9179,
       "client_name": "Maria Carolina Rodriguez Coello",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125238413",
       "client_email": "lacatirarodriguez27@gmail.com",
       "address": "calle principal el rincón paraguatan casa número #30",
-      "client_identification": "v25569371",
+      "client_identification": "V23569371",
       "nap_box_name": "CTO-00673",
       "created_at": "2026-08-11T21:15:43.185861",
       "service_detail": {
