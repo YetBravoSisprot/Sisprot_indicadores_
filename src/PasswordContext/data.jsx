@@ -155612,13 +155612,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00207 DOS",
       "created_at": "2025-09-16T11:47:34.916993",
       "service_detail": {
-        "id": 12953,
+        "id": 12956,
         "ip": "10.16.56.2",
         "mac": "OE:MT:3C:62:11:1E",
         "serial": "OEMT3C62111E",
         "queue": null,
-        "interface": "VLAN251_RIO_SECO",
-        "created_at": "2026-09-02T12:39:59.964698",
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-09-02T16:59:39.649064",
         "created_by_name": null
       },
       "installation_invoice_cost": null
