@@ -2172,7 +2172,7 @@ const largeArraydata =
       "client_mobile": "04120488485",
       "client_email": "SABINACARIDAD7@GMAIL.COM",
       "address": "CALLE NRO 1 CASA NRO 20 SECTOR EL MACARO COMUNIDAD TIBISAY GUEVARA TURMERO ARAGUA ZONA POSTAL 2115",
-      "client_identification": "V15962913",
+      "client_identification": "V8737151",
       "nap_box_name": "CTO-00054",
       "created_at": "2024-04-11T11:55:28.128459",
       "service_detail": {
@@ -135784,8 +135784,8 @@ const largeArraydata =
       "id": 7996,
       "client_name": "JOHAN DAMIAN VIVAS CONTRERAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle lindo",
@@ -135802,7 +135802,16 @@ const largeArraydata =
       "client_identification": "V14786678",
       "nap_box_name": "CE - 952",
       "created_at": "2025-04-23T16:34:08.959717",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12954,
+        "ip": "10.13.149.2",
+        "mac": "OE:MT:3C:62:08:12",
+        "serial": "OEMT3C620812",
+        "queue": null,
+        "interface": "VLAN274_VALLELINDO",
+        "created_at": "2026-09-02T13:10:29.662633",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
