@@ -2155,7 +2155,7 @@ const largeArraydata =
     },
     {
       "id": 3141,
-      "client_name": "NORKIS KAREN BARCOS RODRIGUEZ",
+      "client_name": "SABINA CARIDAD RINCONES DE ARCILES",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
@@ -2169,13 +2169,22 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04125206048",
-      "client_email": "NORKIS2905AMOR@GMAIL.COM",
+      "client_mobile": "04120488485",
+      "client_email": "SABINACARIDAD7@GMAIL.COM",
       "address": "CALLE NRO 1 CASA NRO 20 SECTOR EL MACARO COMUNIDAD TIBISAY GUEVARA TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V15962913",
       "nap_box_name": "CTO-00054",
       "created_at": "2024-04-11T11:55:28.128459",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12952,
+        "ip": "172.17.1.94",
+        "mac": "30:C5:0F:52:C9:A6",
+        "serial": "HWTCC96B62A6",
+        "queue": null,
+        "interface": "VLAN248_TIBISAY_OLT2",
+        "created_at": "2026-09-02T11:41:49.737893",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
