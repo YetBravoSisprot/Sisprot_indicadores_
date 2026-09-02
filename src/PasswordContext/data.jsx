@@ -118628,20 +118628,20 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04121483297",
-      "client_email": "solorena21@GMAIL.COM",
+      "client_mobile": "04243434724",
+      "client_email": "CARLITOSORIA@GMAIL.COM",
       "address": "CALLE 05 CASA NRO 37 SECTOR RIO SECO ROSARIO DE PAYA ARAGUA ZONA POSTAL 2115",
       "client_identification": "V25841149",
       "nap_box_name": "611",
       "created_at": "2024-12-10T09:12:32.748172",
       "service_detail": {
-        "id": 12943,
+        "id": 12951,
         "ip": "10.10.48.2",
-        "mac": "HW:TC:47:31:05:26",
-        "serial": "HWTC47310526",
+        "mac": "HW:TC:49:20:01:33",
+        "serial": "HWTC49200133",
         "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2026-09-01T10:18:27.511722",
+        "created_at": "2026-09-02T10:33:38.019756",
         "created_by_name": null
       },
       "installation_invoice_cost": null
