@@ -46103,16 +46103,7 @@ const largeArraydata =
       "client_identification": "V22870140",
       "nap_box_name": "CE - 681",
       "created_at": "2024-06-09T17:30:39.784223",
-      "service_detail": {
-        "id": 5590,
-        "ip": "172.28.61.2",
-        "mac": "ZICGCB82E877",
-        "serial": "ZICGCB82E877",
-        "queue": "Plan: PLAN_A_FACTURAR_250M_N1_R2_PAYA - Router: R2_PAYA",
-        "interface": "VLAN246_NARANJAL",
-        "created_at": "2024-08-17T09:25:09.800791",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -165875,18 +165866,18 @@ const largeArraydata =
     {
       "id": 9175,
       "client_name": "CARMEN OLIDA CONTRERAS RAMIREZ",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados III",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04128972090",
       "client_email": "carmenolidacontrerasramirez@gmail.com",
