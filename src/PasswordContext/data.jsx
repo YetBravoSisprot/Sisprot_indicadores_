@@ -118707,7 +118707,7 @@ const largeArraydata =
     },
     {
       "id": 7298,
-      "client_name": "MERCEDES CAROLINA CARABALLO IZAGUIRRE",
+      "client_name": "MERCEDES CAROLINA CARABALLO IZQUIER",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -118715,11 +118715,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Taguapire",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04124758530",
       "client_email": "MERCEDESCARABALLO038@GMAIL.COM",
