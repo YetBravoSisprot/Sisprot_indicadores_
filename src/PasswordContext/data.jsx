@@ -109265,8 +109265,8 @@ const largeArraydata =
       "id": 6941,
       "client_name": "LYSANDER ERNESTO DIAZ VIELMA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Durpa",
@@ -167442,17 +167442,17 @@ const largeArraydata =
       "id": 9245,
       "client_name": "MIRIAM AYOLEIDA GONZALEZ GOMEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
       },
       "client_mobile": "4125429652",
       "client_email": "MIRIAM.TRABAJO2026@GMAIL.COM",
@@ -167460,7 +167460,16 @@ const largeArraydata =
       "client_identification": "V10377043",
       "nap_box_name": null,
       "created_at": "2026-09-06T03:45:56.060786",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12989,
+        "ip": "172.17.1.98",
+        "mac": "JM:KG:CB:9E:E5:CB",
+        "serial": "JMKGCB9EE5CB",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-09-06T11:04:40.177186",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
