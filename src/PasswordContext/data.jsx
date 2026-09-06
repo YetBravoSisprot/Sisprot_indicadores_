@@ -167155,13 +167155,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00353",
       "created_at": "2026-08-31T16:39:13.906647",
       "service_detail": {
-        "id": 12938,
+        "id": 12988,
         "ip": "172.17.1.218",
-        "mac": "JM:KG:CC:DC:05:77",
-        "serial": "JMKGCCDC0577",
+        "mac": "JM:KG:C0:28:7C:21",
+        "serial": "JMKGC0287C21",
         "queue": null,
         "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-08-31T17:00:35.127204",
+        "created_at": "2026-09-06T10:18:57.881401",
         "created_by_name": null
       },
       "installation_invoice_cost": null
