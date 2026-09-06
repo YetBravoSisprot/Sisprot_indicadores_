@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5473,
+  "count": 5477,
   "results": [
     {
       "id": 3063,
@@ -167460,6 +167460,106 @@ const largeArraydata =
       "client_identification": "V10377043",
       "nap_box_name": null,
       "created_at": "2026-09-06T03:45:56.060786",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9246,
+      "client_name": "WILSON ESNEIDER GORDILLO TELLEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Los Nisperos",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "4248838991",
+      "client_email": "WILLEGOTE@GMAIL.COM",
+      "address": "LOS NISPEROS TORRE A, APTO 45",
+      "client_identification": "E84274912",
+      "nap_box_name": null,
+      "created_at": "2026-09-06T03:56:49.127090",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9247,
+      "client_name": "WUILIAM ARMANDO BAYERA LOPEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle lindo",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04140528706",
+      "client_email": "WUILIAMBAYERA17@GMAIL.COM",
+      "address": "VALLE LINDO 2 AV 6 NORTE CASA 1-10 AL FRENTE DEL CEMENTERIO DE TURMERO",
+      "client_identification": "V15600195",
+      "nap_box_name": null,
+      "created_at": "2026-09-06T03:56:54.436909",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9248,
+      "client_name": "GLENNYS DEL CARMEN GUZMAN MARQUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128151244",
+      "client_email": "GLENNYSGM20@GMAIL.COM",
+      "address": "MATA CABALLO CALLE 10 APTO 632-A",
+      "client_identification": "V20758952",
+      "nap_box_name": null,
+      "created_at": "2026-09-06T03:59:29.050917",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9249,
+      "client_name": "MAYRA ALEJANDRA TORRENSE  PERAZA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Taguapire",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04243665402",
+      "client_email": "ALEJANDRASION30@GMAIL.COM",
+      "address": "TAGUAPIRE MODULO 6 APTO 57",
+      "client_identification": "V17471375",
+      "nap_box_name": null,
+      "created_at": "2026-09-06T03:59:30.842556",
       "service_detail": null,
       "installation_invoice_cost": null
     }
