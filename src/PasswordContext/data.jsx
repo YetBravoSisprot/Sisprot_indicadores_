@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5472,
+  "count": 5473,
   "results": [
     {
       "id": 3063,
@@ -167436,6 +167436,31 @@ const largeArraydata =
         "created_at": "2026-09-05T18:09:21.990956",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9245,
+      "client_name": "MIRIAM AYOLEIDA GONZALEZ GOMEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4125429652",
+      "client_email": "MIRIAM.TRABAJO2026@GMAIL.COM",
+      "address": "AV. SANTIAGO MARIÑO EDIF. PEGASO PISO 11 APTO. 11-A",
+      "client_identification": "V10377043",
+      "nap_box_name": null,
+      "created_at": "2026-09-06T03:45:56.060786",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
