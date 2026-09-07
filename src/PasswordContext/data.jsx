@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5478,
+  "count": 5479,
   "results": [
     {
       "id": 3063,
@@ -167620,6 +167620,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN122_SAMAN_GUERE",
         "created_at": "2026-09-07T10:36:57.965625",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9251,
+      "client_name": "FREDDY ANTONIO MORALES AZUAJE",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Ciudad Bendita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04224434489",
+      "client_email": "MORALESAZUAJEF@GMAIL.COM",
+      "address": "CALLE 2 CASA 24 CIUDAD BENDITA EL MACARO",
+      "client_identification": "V17175017",
+      "nap_box_name": "CTO - 1229",
+      "created_at": "2026-09-07T16:03:01.340260",
+      "service_detail": {
+        "id": 12993,
+        "ip": "172.17.1.246",
+        "mac": "JMKGACFD74E6",
+        "serial": "JMKGACFD74E6",
+        "queue": null,
+        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
+        "created_at": "2026-09-07T16:03:01.346396",
         "created_by_name": null
       },
       "installation_invoice_cost": null
