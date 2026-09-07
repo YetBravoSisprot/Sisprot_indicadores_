@@ -3334,8 +3334,8 @@ const largeArraydata =
       "id": 3179,
       "client_name": "ROSI YBETT ALEJANDRA ALDANA DIAZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Macarena",
@@ -3352,7 +3352,16 @@ const largeArraydata =
       "client_identification": "V14903751",
       "nap_box_name": "51",
       "created_at": "2024-04-11T13:33:27.579721",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12992,
+        "ip": "172.19.95.2",
+        "mac": "HW:TC:70:1A:AE:9B",
+        "serial": "HWTC701AAE9B",
+        "queue": null,
+        "interface": "VLAN112_LA_MACARENA_ZTE",
+        "created_at": "2026-09-07T14:54:08.499859",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
