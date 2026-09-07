@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5477,
+  "count": 5478,
   "results": [
     {
       "id": 3063,
@@ -68681,8 +68681,8 @@ const largeArraydata =
       "id": 5520,
       "client_name": "GENESIS JHOANNA SALINAS BARRETO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -117431,8 +117431,8 @@ const largeArraydata =
       "id": 7251,
       "client_name": "ANDRU ISAI CALDERON RODRIGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle Fresco",
@@ -156713,8 +156713,8 @@ const largeArraydata =
       "id": 8850,
       "client_name": "JOSE MAURICIO DE SOUSA SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Laguna Plaza",
@@ -167579,6 +167579,40 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-09-06T03:59:30.842556",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9250,
+      "client_name": "ELISA DEL CARMEN VALLADARES CORTES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4124509261",
+      "client_email": "VALLADARESELISA340@GMAIL.COM",
+      "address": "CALLE ISAÍAS MEDINA ANGARITA CASA #32-A",
+      "client_identification": "V283354942",
+      "nap_box_name": null,
+      "created_at": "2026-09-07T10:36:57.610804",
+      "service_detail": {
+        "id": 12991,
+        "ip": "172.17.1.118",
+        "mac": "XPON2311AE60",
+        "serial": "XPON2311AE60",
+        "queue": null,
+        "interface": "VLAN122_SAMAN_GUERE",
+        "created_at": "2026-09-07T10:36:57.965625",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
