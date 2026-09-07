@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5479,
+  "count": 5480,
   "results": [
     {
       "id": 3063,
@@ -34553,8 +34553,8 @@ const largeArraydata =
       "id": 4285,
       "client_name": "SILENNE ESTHER GALINDEZ MORALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -130992,8 +130992,8 @@ const largeArraydata =
       "id": 7815,
       "client_name": "YUSBELIS MARIA ARAUJO GRATEROL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -161860,8 +161860,8 @@ const largeArraydata =
       "id": 9046,
       "client_name": "‎ELIZMAR GABRIELA MENDEZ GONZALEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -167647,13 +167647,47 @@ const largeArraydata =
       "nap_box_name": "CTO - 1229",
       "created_at": "2026-09-07T16:03:01.340260",
       "service_detail": {
-        "id": 12993,
+        "id": 12996,
         "ip": "172.17.1.246",
-        "mac": "JMKGACFD74E6",
+        "mac": "JM:KG:AC:FD:74:E6",
         "serial": "JMKGACFD74E6",
         "queue": null,
         "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2026-09-07T16:03:01.346396",
+        "created_at": "2026-09-07T17:14:11.172912",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9253,
+      "client_name": "DEYSI ANDREINA LEON CASTILLO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Ciudad Bendita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128906171",
+      "client_email": "DEYSILEON170@GMAIL.COM",
+      "address": "CALLE 4 CASA 96 CIUDAD BENDITA DEL MACARO",
+      "client_identification": "V17016870",
+      "nap_box_name": "CTO - 1230",
+      "created_at": "2026-09-07T17:10:43.134581",
+      "service_detail": {
+        "id": 12997,
+        "ip": "172.17.1.242",
+        "mac": "ZX:IC:C9:C6:53:5D",
+        "serial": "ZXICC9C6535D",
+        "queue": null,
+        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
+        "created_at": "2026-09-07T17:15:21.614754",
         "created_by_name": null
       },
       "installation_invoice_cost": null
