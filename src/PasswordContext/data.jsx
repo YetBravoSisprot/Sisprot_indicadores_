@@ -3340,11 +3340,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Macarena",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.25",
-        "code": "FOR600M",
-        "profile": "600M/600M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125989390",
       "client_email": "meibersojo2@gmail.com",
@@ -143320,8 +143320,8 @@ const largeArraydata =
       "id": 8279,
       "client_name": "YOSIBEL LUISETT HERNANDEZ HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Saman Tarazonero I",
@@ -160107,7 +160107,7 @@ const largeArraydata =
     },
     {
       "id": 8967,
-      "client_name": "nelson jose cordero ramos",
+      "client_name": "NELSON JOSE CORDERO RAMOS",
       "client_type_name": "INTERCAMBIO",
       "client_subdivision": "ACTIVO_INTERCAMBIO",
       "status_name": "Activo",
