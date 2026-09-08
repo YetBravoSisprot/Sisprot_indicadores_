@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5480,
+  "count": 5481,
   "results": [
     {
       "id": 3063,
@@ -74703,7 +74703,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04121490165",
+      "client_mobile": "04121330453",
       "client_email": "ARIANA.ALEXANDRA.MATAMOROS.DIAZ@GMAIL.COM",
       "address": "CTRA EL MACARO CALLE 8 CASA NRO 16 URB VILLAS EL  CARMEN  TURMERO ARAGUA",
       "client_identification": "V20757228",
@@ -91496,8 +91496,8 @@ const largeArraydata =
       "id": 6295,
       "client_name": "MAURA MARIA PADILLA MORENO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Palmeras I",
@@ -120543,7 +120543,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Sabana Grande",
       "plan": {
         "id": 34,
@@ -167665,7 +167665,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ciudad Bendita",
       "plan": {
         "id": 100,
@@ -167688,6 +167688,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN104_EL_MACARO_OLT_ZTE",
         "created_at": "2026-09-07T17:15:21.614754",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9254,
+      "client_name": "FREDDY EDUARDO TERAN DIAZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Paraguatan",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243718609",
+      "client_email": "FT232487@GMAIL.COM",
+      "address": "PARAGUATAN CALLÉ ESCALONA CASA #23",
+      "client_identification": "V8585946",
+      "nap_box_name": "CTO-00673",
+      "created_at": "2026-09-08T12:26:27.899067",
+      "service_detail": {
+        "id": 12998,
+        "ip": "172.17.1.122",
+        "mac": "JMKGC84BA03D",
+        "serial": "JMKGC84BA03D",
+        "queue": null,
+        "interface": "VLAN283_PARAGUATAN",
+        "created_at": "2026-09-08T12:26:27.904192",
         "created_by_name": null
       },
       "installation_invoice_cost": null
