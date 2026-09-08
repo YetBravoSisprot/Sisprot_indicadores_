@@ -167435,16 +167435,7 @@ const largeArraydata =
       "client_identification": "V17471375",
       "nap_box_name": "CTO-00687 · Splitter 1",
       "created_at": "2026-09-05T18:09:21.987645",
-      "service_detail": {
-        "id": 12986,
-        "ip": "172.17.1.110",
-        "mac": "172.17.1.110",
-        "serial": "172.17.1.110",
-        "queue": null,
-        "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-09-05T18:09:21.990956",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -167587,7 +167578,16 @@ const largeArraydata =
       "client_identification": "V17471375",
       "nap_box_name": null,
       "created_at": "2026-09-06T03:59:30.842556",
-      "service_detail": null,
+      "service_detail": {
+        "id": 12999,
+        "ip": "172.17.1.110",
+        "mac": "JM:KG:CE:C4:3F:52",
+        "serial": "JMKGCEC43F52",
+        "queue": null,
+        "interface": "VLAN129_TAGUAPIRE_ZTE",
+        "created_at": "2026-09-08T15:22:54.934490",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
