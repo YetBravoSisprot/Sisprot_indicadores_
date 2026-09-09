@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5481,
+  "count": 5482,
   "results": [
     {
       "id": 3063,
@@ -141736,8 +141736,8 @@ const largeArraydata =
       "id": 8203,
       "client_name": "MEIL YOCONDA TOSTA BRICEÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -167722,6 +167722,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN283_PARAGUATAN",
         "created_at": "2026-09-08T12:26:27.904192",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9255,
+      "client_name": "MARIA HERMINIA ROMERO DE PIÑERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Haras de San Pablo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243441555",
+      "client_email": "MABELTERE23@GMAIL.COM",
+      "address": "HARÁS DE SAN PABLO MANZANA A NÚMERO 24 TURMERO EDO ARAGUA",
+      "client_identification": "V4590636",
+      "nap_box_name": "CTO-00597",
+      "created_at": "2026-09-09T11:41:29.425523",
+      "service_detail": {
+        "id": 13001,
+        "ip": "172.17.1.126",
+        "mac": "JMKG0A627384",
+        "serial": "JMKG0A627384",
+        "queue": null,
+        "interface": "VLAN210_HSP_OLT1",
+        "created_at": "2026-09-09T11:41:29.434240",
         "created_by_name": null
       },
       "installation_invoice_cost": null
