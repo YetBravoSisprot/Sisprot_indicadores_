@@ -162906,13 +162906,13 @@ const largeArraydata =
       "nap_box_name": "641",
       "created_at": "2026-05-06T13:06:02.811962",
       "service_detail": {
-        "id": 12475,
+        "id": 13000,
         "ip": "10.16.194.2",
-        "mac": "4C:AB:FC:65:64:D4",
-        "serial": "JMKGCEB4E4DA3",
+        "mac": "JM:KG:CB:4E:4D:A3",
+        "serial": "JMKGCB4E4DA3",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-05-07T13:31:58.387094",
+        "created_at": "2026-09-09T10:09:32.635735",
         "created_by_name": null
       },
       "installation_invoice_cost": null
