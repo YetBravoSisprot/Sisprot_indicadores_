@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5482,
+  "count": 5485,
   "results": [
     {
       "id": 3063,
@@ -167758,6 +167758,90 @@ const largeArraydata =
         "created_at": "2026-09-09T11:41:29.434240",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9256,
+      "client_name": "VANESSA NATHALY GUEVARA PADILLA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Floresta",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04140384659",
+      "client_email": "VANESSANGUEVARAP@GMAIL.COM",
+      "address": "URBANIZACIÓN LA FLORESTA CALLE 4 CASA H14",
+      "client_identification": "V21203192",
+      "nap_box_name": null,
+      "created_at": "2026-09-10T14:52:30.885321",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9257,
+      "client_name": "RINA VERENICE PENA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Vallecito",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "34.50",
+        "code": "FOR450M",
+        "profile": "450M/450M"
+      },
+      "client_mobile": "04125092260",
+      "client_email": "FRANCOANTONI28@GMAIL.COM",
+      "address": "ROSARIO DE PAYA SECTOR VALLECITO CALLE ARAGUANEY CASA #59",
+      "client_identification": "V13520156",
+      "nap_box_name": "CTO-00062",
+      "created_at": "2026-09-10T14:52:46.267200",
+      "service_detail": {
+        "id": 13002,
+        "ip": "172.17.1.134",
+        "mac": "JMKG5B243F6D",
+        "serial": "JMKG5B243F6D",
+        "queue": null,
+        "interface": "VLAN258_VALLECITO",
+        "created_at": "2026-09-10T14:52:47.293939",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9258,
+      "client_name": "KAREM PATROCIA RONDON RIVERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "San Pablo",
+      "plan": {
+        "id": 3,
+        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
+        "cost": "40.25",
+        "code": "FOR600M",
+        "profile": "600M/600M"
+      },
+      "client_mobile": "04253468373",
+      "client_email": "KAREMP.RONDON@GMAIL.COM",
+      "address": "URBANIZACIÓN SAN PABLO, CALLE HICELES NORTE, RESIDENCIAS CAMELOT, APARTAMENTO",
+      "client_identification": "V12957742",
+      "nap_box_name": "CTO-00049",
+      "created_at": "2026-09-10T14:53:02.077054",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
