@@ -126894,11 +126894,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Villeguita",
       "plan": {
-        "id": 38,
-        "name": "RECURRENTE PYME PLAN 800M",
-        "cost": "110.40",
-        "code": "FOP800M",
-        "profile": "800M/800M"
+        "id": 104,
+        "name": "RECURRENTE PYME PLAN 1GB",
+        "cost": "161.00",
+        "code": "FOP1GB",
+        "profile": "1000Mbps/1000Mbps"
       },
       "client_mobile": "04122988744",
       "client_email": "YOULINLOBOS@GRUPOFONTI.COM",
