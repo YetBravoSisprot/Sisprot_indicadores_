@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5485,
+  "count": 5486,
   "results": [
     {
       "id": 3063,
@@ -167851,6 +167851,40 @@ const largeArraydata =
       "nap_box_name": "CTO-00049",
       "created_at": "2026-09-10T14:53:02.077054",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9259,
+      "client_name": "WILMER ALFREDO VEGAS GUZMAN",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Prados de Cafetal",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128837771",
+      "client_email": "WILMERVEGAS16@GMAIL.COM",
+      "address": "URB PRADOS DE CAFETAL CALLE 4 PARCELA 25_1 AL FINAL DEL CALLEJÓN",
+      "client_identification": "V13134547",
+      "nap_box_name": "CTO-00731",
+      "created_at": "2026-09-11T15:50:20.329332",
+      "service_detail": {
+        "id": 13004,
+        "ip": "172.17.1.138",
+        "mac": "JMKGCD95C4F3",
+        "serial": "JMKGCD95C4F3",
+        "queue": null,
+        "interface": "VLAN221_CAFETAL_OLT1",
+        "created_at": "2026-09-11T15:50:20.334525",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
