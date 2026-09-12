@@ -81344,8 +81344,8 @@ const largeArraydata =
       "id": 5954,
       "client_name": "ROSMARDY KATHERINE HERNANDEZ RUIZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -81362,7 +81362,16 @@ const largeArraydata =
       "client_identification": "V24445735",
       "nap_box_name": "161 DOS",
       "created_at": "2024-08-01T15:03:50.201350",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13012,
+        "ip": "172.18.149.2",
+        "mac": "VS:OL:00:12:16:81",
+        "serial": "VSOL00121681",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-09-12T19:33:41.177865",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
