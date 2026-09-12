@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5486,
+  "count": 5487,
   "results": [
     {
       "id": 3063,
@@ -167841,8 +167841,8 @@ const largeArraydata =
       "id": 9258,
       "client_name": "KAREM PATROCIA RONDON RIVERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -167859,7 +167859,16 @@ const largeArraydata =
       "client_identification": "V12957742",
       "nap_box_name": "CTO-00049",
       "created_at": "2026-09-10T14:53:02.077054",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13008,
+        "ip": "172.17.1.255",
+        "mac": "JM:KG:41:8E:D5:03",
+        "serial": "JMKG418ED503",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-09-12T13:45:55.908917",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167892,6 +167901,40 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN221_CAFETAL_OLT1",
         "created_at": "2026-09-11T15:50:20.334525",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9260,
+      "client_name": "ARIANNA DEL VALLE GIL BENITEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124406266",
+      "client_email": "GILARIANNA1804@GMAIL.COM",
+      "address": "CALLE ISAÍAS MEDINA ANGARITA CASA #32-A",
+      "client_identification": "V33799195",
+      "nap_box_name": null,
+      "created_at": "2026-09-12T13:19:42.866450",
+      "service_detail": {
+        "id": 13007,
+        "ip": "172.17.1.250",
+        "mac": "8QGHJ8599295",
+        "serial": "8QGHJ8599295",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-09-12T13:19:43.747397",
         "created_by_name": null
       },
       "installation_invoice_cost": null
