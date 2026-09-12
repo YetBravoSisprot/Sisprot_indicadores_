@@ -167860,13 +167860,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00049",
       "created_at": "2026-09-10T14:53:02.077054",
       "service_detail": {
-        "id": 13008,
-        "ip": "172.17.1.255",
+        "id": 13010,
+        "ip": "172.17.1.254",
         "mac": "JM:KG:41:8E:D5:03",
         "serial": "JMKG418ED503",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-09-12T13:45:55.908917",
+        "created_at": "2026-09-12T13:55:35.872979",
         "created_by_name": null
       },
       "installation_invoice_cost": null
