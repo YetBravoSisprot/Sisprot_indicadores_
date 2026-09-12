@@ -133199,8 +133199,8 @@ const largeArraydata =
       "id": 7896,
       "client_name": "YURAIMA TERESA QUINTANA LUNA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -133217,7 +133217,16 @@ const largeArraydata =
       "client_identification": "V10759366",
       "nap_box_name": "CTO-00464",
       "created_at": "2025-04-09T11:01:36.492685",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13006,
+        "ip": "10.13.59.2",
+        "mac": "OE:MT:3C:62:08:1E",
+        "serial": "OEMT3C62081E",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-09-12T10:55:28.002434",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167860,7 +167869,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Prados de Cafetal",
       "plan": {
         "id": 100,
