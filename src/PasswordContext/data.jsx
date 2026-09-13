@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5487,
+  "count": 5489,
   "results": [
     {
       "id": 3063,
@@ -167946,6 +167946,65 @@ const largeArraydata =
         "created_at": "2026-09-12T13:19:43.747397",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9261,
+      "client_name": "GAUDY AMARÍA RÍOS HEENANDEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127176079",
+      "client_email": "GAUDYRIOS24@GMAIL.COM",
+      "address": "SAMAN DE GUERE FUNDA LIBERTADOR SECTOR APOLO CJON LOS MANGOS CASA 10",
+      "client_identification": "V14104430",
+      "nap_box_name": null,
+      "created_at": "2026-09-13T02:45:55.140369",
+      "service_detail": {
+        "id": 13013,
+        "ip": "172.17.2.6",
+        "mac": "ZXICC9CB4E70",
+        "serial": "ZXICC9CB4E70",
+        "queue": null,
+        "interface": "VLAN139_GUERITO",
+        "created_at": "2026-09-13T02:45:55.571909",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9262,
+      "client_name": "GAUDY AMARÍA RÍOS HEENANDEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04127176079",
+      "client_email": "GAUDYRIOS24@GMAIL.COM",
+      "address": "SAMAN DE GUERE FUNDA LIBERTADOR SECTOR APOLO CJON LOS MANGOS CASA 10",
+      "client_identification": "V14104430",
+      "nap_box_name": null,
+      "created_at": "2026-09-13T02:47:08.482872",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
