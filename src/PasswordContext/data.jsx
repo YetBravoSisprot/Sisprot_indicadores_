@@ -93743,13 +93743,13 @@ const largeArraydata =
       "nap_box_name": "357",
       "created_at": "2024-08-10T11:36:45.099223",
       "service_detail": {
-        "id": 8717,
+        "id": 13016,
         "ip": "172.23.185.2",
-        "mac": "GPON0097E166",
+        "mac": "GP:ON:00:97:E1:66",
         "serial": "GPON0097E166",
-        "queue": "queue1",
+        "queue": null,
         "interface": "VLAN251_RIO_SECO",
-        "created_at": "2025-05-20T17:28:02.644587",
+        "created_at": "2026-09-14T18:09:04.379148",
         "created_by_name": null
       },
       "installation_invoice_cost": null
