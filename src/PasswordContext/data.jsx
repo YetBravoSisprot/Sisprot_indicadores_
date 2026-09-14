@@ -64651,8 +64651,8 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04124619810",
-      "client_email": "MEJIASACCELL@GMAIL.COM",
+      "client_mobile": "04144933328",
+      "client_email": "miriamsenaida1954@gmail.com",
       "address": "PANTIN CALLE 14B CASA NRO 44",
       "client_identification": "V26095933",
       "nap_box_name": "CTO-00048",
