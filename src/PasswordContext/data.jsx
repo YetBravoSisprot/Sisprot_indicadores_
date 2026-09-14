@@ -20488,8 +20488,8 @@ const largeArraydata =
       "id": 3792,
       "client_name": "KARLA VANESSA ALVAREZ CELIS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Brisas de Paya",
@@ -153941,7 +153941,7 @@ const largeArraydata =
     },
     {
       "id": 8742,
-      "client_name": "INVERSIONES FRONTASUR CA",
+      "client_name": "INVERSIONES CERAMIPEGO CA",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -153955,10 +153955,10 @@ const largeArraydata =
         "code": "FOP650M",
         "profile": "650M/650M"
       },
-      "client_mobile": "04124552208",
-      "client_email": "INVFRONTASUR2017@GMAIL.COM",
+      "client_mobile": "04128907125",
+      "client_email": "ADMONCERAMIPEGO@GMAIL.COM",
       "address": "AV. INTERCOMUNAL DE PAYA, LOCAL LOTE «E», PARCELA NRO 35, SECTOR EL BOSQUE, LAS RURALES DE PAYA, TURMERO, EDO. ARAGUA.",
-      "client_identification": "J409485749",
+      "client_identification": "J295598599",
       "nap_box_name": "CTO-00241",
       "created_at": "2025-08-25T18:11:57.447886",
       "service_detail": {
