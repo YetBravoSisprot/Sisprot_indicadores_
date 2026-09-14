@@ -167857,10 +167857,10 @@ const largeArraydata =
     },
     {
       "id": 9258,
-      "client_name": "KAREM PATROCIA RONDON RIVERO",
+      "client_name": "KAREM PATRICIA RONDON RIVERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "San Pablo",
@@ -167871,7 +167871,7 @@ const largeArraydata =
         "code": "FOR600M",
         "profile": "600M/600M"
       },
-      "client_mobile": "04253468373",
+      "client_mobile": "04243468373",
       "client_email": "KAREMP.RONDON@GMAIL.COM",
       "address": "URBANIZACIÓN SAN PABLO, CALLE HICELES NORTE, RESIDENCIAS CAMELOT, APARTAMENTO",
       "client_identification": "V12957742",
