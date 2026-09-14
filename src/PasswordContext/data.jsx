@@ -167528,8 +167528,8 @@ const largeArraydata =
       "id": 9247,
       "client_name": "WUILIAM ARMANDO BAYERA LOPEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle lindo",
@@ -167546,7 +167546,16 @@ const largeArraydata =
       "client_identification": "V15600195",
       "nap_box_name": null,
       "created_at": "2026-09-06T03:56:54.436909",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13015,
+        "ip": "172.17.1.234",
+        "mac": "JM:KG:C6:05:7F:65",
+        "serial": "JMKGC6057F65",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-09-14T11:41:37.276936",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
