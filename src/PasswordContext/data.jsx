@@ -31073,8 +31073,8 @@ const largeArraydata =
       "id": 4161,
       "client_name": "FESTEJOS DAYANA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -31091,24 +31091,15 @@ const largeArraydata =
       "client_identification": "J307661810",
       "nap_box_name": "25",
       "created_at": "2024-05-06T13:57:48.892619",
-      "service_detail": {
-        "id": 9243,
-        "ip": "172.20.43.2",
-        "mac": "TPLGB7656518",
-        "serial": "TPLGB7656518",
-        "queue": "queue1",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-07-21T12:15:43.302326",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
       "id": 4162,
       "client_name": "FESTEJOS DAYANA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -31125,16 +31116,7 @@ const largeArraydata =
       "client_identification": "J307661810",
       "nap_box_name": "25",
       "created_at": "2024-05-06T14:00:28.630833",
-      "service_detail": {
-        "id": 3658,
-        "ip": "172.20.44.2",
-        "mac": "TPLG2ABDC7F2",
-        "serial": "TPLG2ABDC7F2",
-        "queue": "Plan_92036_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-07-11T18:19:06.534243",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -31674,8 +31656,8 @@ const largeArraydata =
       "id": 4182,
       "client_name": "MOTORES SAN MARCOS XXI C.A",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -31692,16 +31674,7 @@ const largeArraydata =
       "client_identification": "J502103449",
       "nap_box_name": "83",
       "created_at": "2024-05-07T12:08:52.990557",
-      "service_detail": {
-        "id": 12983,
-        "ip": "172.19.117.2",
-        "mac": "TP:LG:B9:54:FB:35",
-        "serial": "TPLGB954FB35",
-        "queue": null,
-        "interface": "VLAN100_OLTs",
-        "created_at": "2026-09-04T14:47:17.981664",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -31758,8 +31731,8 @@ const largeArraydata =
       "id": 4185,
       "client_name": "DISTRIBUIDORA DE BELLEZA GUADA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -31776,16 +31749,7 @@ const largeArraydata =
       "client_identification": "J412406850",
       "nap_box_name": "50",
       "created_at": "2024-05-07T13:47:52.278228",
-      "service_detail": {
-        "id": 3696,
-        "ip": "172.19.78.2",
-        "mac": "TPLGF5CB03A1",
-        "serial": "TPLGF5CB03A1",
-        "queue": "queue1",
-        "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
-        "created_at": "2024-07-11T20:50:44.559856",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -36407,8 +36371,8 @@ const largeArraydata =
       "id": 4359,
       "client_name": "CENTRO DE APUESTAS LOTTO FORTUNA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -36425,16 +36389,7 @@ const largeArraydata =
       "client_identification": "J503015365",
       "nap_box_name": "CE - 758",
       "created_at": "2024-06-08T08:33:51.183971",
-      "service_detail": {
-        "id": 3055,
-        "ip": "172.28.176.2",
-        "mac": "HWTC3BD007A1",
-        "serial": "HWTC3BD007A1",
-        "queue": "Plan_92036_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-06-22T09:56:09.661201",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -36856,8 +36811,8 @@ const largeArraydata =
       "id": 4373,
       "client_name": "EL CORDERO DE DIOS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Prados III",
@@ -36874,16 +36829,7 @@ const largeArraydata =
       "client_identification": "J407786318",
       "nap_box_name": "395",
       "created_at": "2024-06-08T09:01:54.993653",
-      "service_detail": {
-        "id": 3051,
-        "ip": "172.27.87.2",
-        "mac": "HWTCC1ADA49C",
-        "serial": "HWTCC1ADA49C",
-        "queue": "Plan_161886_30183_WispHub",
-        "interface": "VLAN236_PRADOS3",
-        "created_at": "2024-06-22T09:49:20.111688",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -38158,8 +38104,8 @@ const largeArraydata =
       "id": 4416,
       "client_name": "INVERSIONES J Y J 1000 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -38176,16 +38122,7 @@ const largeArraydata =
       "client_identification": "J317404904",
       "nap_box_name": "69",
       "created_at": "2024-06-08T10:44:44.472676",
-      "service_detail": {
-        "id": 12376,
-        "ip": "172.23.132.2",
-        "mac": "GPON0097EE46",
-        "serial": "GPON0097EE46",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2026-04-20T12:17:18.493493",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -53655,8 +53592,8 @@ const largeArraydata =
       "id": 4968,
       "client_name": "INVERSIONES Y REVESTIMIENTOS BLACK & WHITE CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -53673,16 +53610,7 @@ const largeArraydata =
       "client_identification": "J502603727",
       "nap_box_name": "CE - 846",
       "created_at": "2024-06-17T10:42:16.738796",
-      "service_detail": {
-        "id": 2846,
-        "ip": "172.29.7.2",
-        "mac": "OEMT3C62616E",
-        "serial": "OEMT3C62616E",
-        "queue": "queue1",
-        "interface": "VLAN261_1ERO_MAYO_ZTE",
-        "created_at": "2024-06-17T10:45:16.208655",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -64513,8 +64441,8 @@ const largeArraydata =
       "id": 5380,
       "client_name": "ACCELL ESTIBERS MEJIAS GALINDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -64531,7 +64459,16 @@ const largeArraydata =
       "client_identification": "V26095933",
       "nap_box_name": "CTO-00048",
       "created_at": "2024-07-19T08:31:53.141042",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13017,
+        "ip": "172.24.35.2",
+        "mac": "ZX:IC:CD:1B:60:FA",
+        "serial": "ZXICCD1B60FA",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-09-15T10:54:54.170167",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -80980,8 +80917,8 @@ const largeArraydata =
       "id": 5947,
       "client_name": "YELITZA MARIA AFONSO DE LINARES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Palmeras II",
@@ -96250,11 +96187,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04122482550",
       "client_email": "GUREPOSTA@GMAIL.COM",
@@ -145909,8 +145846,8 @@ const largeArraydata =
       "id": 8380,
       "client_name": "MONICA COROMOTO VELASQUEZ MARQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "San Pablo",
@@ -155045,8 +154982,8 @@ const largeArraydata =
       "id": 8785,
       "client_name": "MASA BISTRO CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Pantin",
@@ -155063,16 +155000,7 @@ const largeArraydata =
       "client_identification": "J410961740",
       "nap_box_name": "CE-00048",
       "created_at": "2025-09-09T09:49:46.540729",
-      "service_detail": {
-        "id": 9496,
-        "ip": "10.16.44.2",
-        "mac": "HWTC2D6601A1",
-        "serial": "HWTC2D6601A1",
-        "queue": "queue1",
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2025-09-09T10:57:05.868578",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -157835,8 +157763,8 @@ const largeArraydata =
       "id": 8892,
       "client_name": "REPRESENTACIONES FABIOLA FP",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -157853,16 +157781,7 @@ const largeArraydata =
       "client_identification": "V8586978",
       "nap_box_name": "CTO-00038",
       "created_at": "2025-11-20T16:14:08.849316",
-      "service_detail": {
-        "id": 10210,
-        "ip": "10.16.121.2",
-        "mac": "HWTCC82F154E",
-        "serial": "HWTCC82F154E",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-11-20T16:45:06.195954",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -158958,8 +158877,8 @@ const largeArraydata =
       "id": 8929,
       "client_name": "TRANSPORTE EMPRENDEDORES PECO SMITH SM 2025 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Guerito",
@@ -158976,16 +158895,7 @@ const largeArraydata =
       "client_identification": "J506122987",
       "nap_box_name": "CE-00099",
       "created_at": "2025-12-09T15:16:53.216909",
-      "service_detail": {
-        "id": 11841,
-        "ip": "10.16.140.2",
-        "mac": "HWTCD391A2A7",
-        "serial": "HWTCD391A2A7",
-        "queue": null,
-        "interface": "VLAN139_GUERITO",
-        "created_at": "2026-02-27T12:07:54.776035",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
