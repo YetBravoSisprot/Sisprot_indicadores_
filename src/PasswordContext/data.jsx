@@ -34973,7 +34973,16 @@ const largeArraydata =
       "client_identification": "V29808275",
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13022,
+        "ip": "172.17.1.250",
+        "mac": "ZX:IC:CD:FC:C6:C0",
+        "serial": "ZXICCDFCC6C0",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-09-15T17:58:39.533786",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
