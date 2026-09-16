@@ -38113,8 +38113,8 @@ const largeArraydata =
       "id": 4416,
       "client_name": "INVERSIONES J Y J 1000 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "CANCELADO_PYME",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -38131,7 +38131,16 @@ const largeArraydata =
       "client_identification": "J317404904",
       "nap_box_name": "69",
       "created_at": "2024-06-08T10:44:44.472676",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13024,
+        "ip": "172.23.132.2",
+        "mac": "GP:ON:00:97:EE:46",
+        "serial": "GPON0097EE46",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-09-16T08:53:47.820765",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
