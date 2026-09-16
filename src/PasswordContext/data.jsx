@@ -34983,13 +34983,13 @@ const largeArraydata =
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
       "service_detail": {
-        "id": 13025,
-        "ip": "172.17.2.5",
+        "id": 13027,
+        "ip": "172.17.2.10",
         "mac": "ZT:EG:DC:EF:63:3A",
         "serial": "ZTEGDCEF633A",
         "queue": null,
         "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
-        "created_at": "2026-09-16T10:17:03.933489",
+        "created_at": "2026-09-16T11:59:55.866106",
         "created_by_name": null
       },
       "installation_invoice_cost": null
