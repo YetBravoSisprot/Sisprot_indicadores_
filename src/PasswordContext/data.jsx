@@ -77551,8 +77551,8 @@ const largeArraydata =
       "id": 5833,
       "client_name": "RITZY ROZALYNN GALINDO CASTRO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Pantin",
@@ -77569,7 +77569,16 @@ const largeArraydata =
       "client_identification": "V14577933",
       "nap_box_name": "CTO-00110",
       "created_at": "2024-07-30T15:47:43.024484",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13023,
+        "ip": "172.17.1.250",
+        "mac": "TP:LG:BA:68:75:A1",
+        "serial": "TPLGBA6875A1",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-09-15T20:07:10.534543",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
