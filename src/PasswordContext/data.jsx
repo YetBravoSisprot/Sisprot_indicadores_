@@ -34955,8 +34955,8 @@ const largeArraydata =
       "id": 4301,
       "client_name": "BRYANT  REYES REYES AVILA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "El Macaro",
@@ -34973,7 +34973,16 @@ const largeArraydata =
       "client_identification": "V29808275",
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13025,
+        "ip": "172.17.2.5",
+        "mac": "ZT:EG:DC:EF:63:3A",
+        "serial": "ZTEGDCEF633A",
+        "queue": null,
+        "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
+        "created_at": "2026-09-16T10:17:03.933489",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
