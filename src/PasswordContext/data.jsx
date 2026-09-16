@@ -136177,8 +136177,8 @@ const largeArraydata =
       "id": 8012,
       "client_name": "MILEIBYS ANDREINA OSORIO SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona I",
@@ -136195,7 +136195,16 @@ const largeArraydata =
       "client_identification": "V22298891",
       "nap_box_name": "44",
       "created_at": "2025-04-24T17:43:48.801189",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13028,
+        "ip": "10.13.185.2",
+        "mac": "HW:TC:49:20:07:32",
+        "serial": "HWTC49200732",
+        "queue": null,
+        "interface": "VLAN109_CASONA_1",
+        "created_at": "2026-09-16T12:17:28.776495",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
