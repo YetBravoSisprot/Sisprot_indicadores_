@@ -31656,8 +31656,8 @@ const largeArraydata =
       "id": 4182,
       "client_name": "MOTORES SAN MARCOS XXI C.A",
       "client_type_name": "PYME",
-      "client_subdivision": "CANCELADO_PYME",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -31674,7 +31674,16 @@ const largeArraydata =
       "client_identification": "J502103449",
       "nap_box_name": "83",
       "created_at": "2024-05-07T12:08:52.990557",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13026,
+        "ip": "172.19.117.2",
+        "mac": "TP:LG:B9:54:FB:35",
+        "serial": "TPLGB954FB35",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-09-16T10:37:59.530858",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
