@@ -166589,8 +166589,8 @@ const largeArraydata =
       "id": 9211,
       "client_name": "CRISTOFER RUSSELL MORILLO ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -166607,16 +166607,7 @@ const largeArraydata =
       "client_identification": "V30102702",
       "nap_box_name": "CTO-00353",
       "created_at": "2026-08-26T14:55:11.455160",
-      "service_detail": {
-        "id": 12917,
-        "ip": "172.17.1.50",
-        "mac": "JM:KG:CF:66:B5:CB",
-        "serial": "JMKGCF66B5CB",
-        "queue": null,
-        "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-08-27T09:52:05.185563",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
