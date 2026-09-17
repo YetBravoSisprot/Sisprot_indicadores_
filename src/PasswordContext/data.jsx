@@ -39486,8 +39486,8 @@ const largeArraydata =
       "id": 4471,
       "client_name": "DESIREE DEL VALLE PEREZ GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -77792,13 +77792,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00058",
       "created_at": "2024-07-30T16:19:53.287832",
       "service_detail": {
-        "id": 11988,
+        "id": 13031,
         "ip": "172.22.129.2",
-        "mac": "TPLGBA687B83",
-        "serial": "TPLGBA687B83",
+        "mac": "ZX:IC:CD:EB:D3:8B",
+        "serial": "ZXICCDEBD38B",
         "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2026-03-06T12:56:20.596761",
+        "created_at": "2026-09-17T13:06:39.195895",
         "created_by_name": null
       },
       "installation_invoice_cost": null
