@@ -120404,18 +120404,18 @@ const largeArraydata =
     {
       "id": 7363,
       "client_name": "Freddy Carrillo",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Sabana Grande",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 97,
+        "name": "RECURRENTE RESIDENCIAL PLAN 10M",
+        "cost": "18.00",
+        "code": "[FOR10]",
+        "profile": "10Mbps/10Mbps"
       },
       "client_mobile": "04129950904",
       "client_email": "freddycarrillo1912@gmail.com",
