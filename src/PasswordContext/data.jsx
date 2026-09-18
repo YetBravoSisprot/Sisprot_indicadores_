@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5489,
+  "count": 5492,
   "results": [
     {
       "id": 3063,
@@ -167771,6 +167771,108 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-09-13T02:47:08.482872",
       "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9263,
+      "client_name": "CARMEN RAMONA LOPEZ MOSCADA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Saman de Guere",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04249280646",
+      "client_email": "CARMENLMNCD49@GMAIL.COM",
+      "address": "RESIDENCIAS TERRAZAS DE JUAN PABLO TURMERO CALLE LA LLANERA",
+      "client_identification": "V8628515",
+      "nap_box_name": "12",
+      "created_at": "2026-09-18T10:04:40.171804",
+      "service_detail": {
+        "id": 13035,
+        "ip": "172.17.1.158",
+        "mac": "JM:KG:71:60:D5:F4",
+        "serial": "JMKG7160D5F4",
+        "queue": null,
+        "interface": "VLAN130_TERRAZAS_JP",
+        "created_at": "2026-09-18T10:16:06.037074",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9264,
+      "client_name": "JESUS YSNARDO LAYA MOLINA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Laguna Plaza",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243069350",
+      "client_email": "INGENIEROLAYA05@GMAIL.COM",
+      "address": "URBANIZACION LAGUNA PLAZA PH3-17 TURMERO CALLE NEGRO PRIMERO",
+      "client_identification": "V12476951",
+      "nap_box_name": "CTO-00241",
+      "created_at": "2026-09-18T10:04:45.401620",
+      "service_detail": {
+        "id": 13033,
+        "ip": "172.17.1.154",
+        "mac": "HWTC8F7D9B61",
+        "serial": "HWTC8F7D9B61",
+        "queue": null,
+        "interface": "216",
+        "created_at": "2026-09-18T10:04:46.347534",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9265,
+      "client_name": "YUSBELIS MARIA ARAUJO GRATEROL",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Bosque",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04121407400",
+      "client_email": "ARAUJOZORELYS@GMAIL.COM",
+      "address": "TURMERO ROSARIO DE PAYA SECTOR EL BOSQUE CALLE FRANCISCO DE MIRANDA NUMERO A04",
+      "client_identification": "V15600638",
+      "nap_box_name": null,
+      "created_at": "2026-09-18T10:04:50.236809",
+      "service_detail": {
+        "id": 13034,
+        "ip": "172.17.1.162",
+        "mac": "ZTEGC45D78C0",
+        "serial": "ZTEGC45D78C0",
+        "queue": null,
+        "interface": "266",
+        "created_at": "2026-09-18T10:04:51.092779",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
