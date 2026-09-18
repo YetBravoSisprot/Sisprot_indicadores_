@@ -67818,8 +67818,8 @@ const largeArraydata =
       "id": 5497,
       "client_name": "MARIA TERESA LUIS CIFUENTES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -67836,7 +67836,16 @@ const largeArraydata =
       "client_identification": "V23410337",
       "nap_box_name": "545",
       "created_at": "2024-07-23T12:06:10.555240",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13040,
+        "ip": "172.19.171.2",
+        "mac": "TP:LG:B9:54:FB:FC",
+        "serial": "TPLGB954FBFC",
+        "queue": null,
+        "interface": "VLAN221_CAFETAL_OLT1",
+        "created_at": "2026-09-18T15:52:14.624795",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
