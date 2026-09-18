@@ -167236,13 +167236,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-09-06T03:45:56.060786",
       "service_detail": {
-        "id": 12989,
+        "id": 13039,
         "ip": "172.17.1.98",
-        "mac": "JM:KG:CB:9E:E5:CB",
-        "serial": "JMKGCB9EE5CB",
+        "mac": "JM:KG:63:94:FD:E0",
+        "serial": "JMKG6394FDE0",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-09-06T11:04:40.177186",
+        "created_at": "2026-09-18T14:55:32.852158",
         "created_by_name": null
       },
       "installation_invoice_cost": null
