@@ -167693,8 +167693,8 @@ const largeArraydata =
       "id": 9260,
       "client_name": "ARIANNA DEL VALLE GIL BENITEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman de Guere",
@@ -167711,16 +167711,7 @@ const largeArraydata =
       "client_identification": "V33799195",
       "nap_box_name": null,
       "created_at": "2026-09-12T13:19:42.866450",
-      "service_detail": {
-        "id": 13019,
-        "ip": "172.17.1.142",
-        "mac": "JM:KG:3F:C6:D4:28",
-        "serial": "JMKG3FC6D428",
-        "queue": null,
-        "interface": "VLAN139_GUERITO",
-        "created_at": "2026-09-15T12:26:19.614434",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
