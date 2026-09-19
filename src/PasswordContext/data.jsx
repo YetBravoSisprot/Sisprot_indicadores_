@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5492,
+  "count": 5498,
   "results": [
     {
       "id": 3063,
@@ -107142,8 +107142,8 @@ const largeArraydata =
       "id": 6859,
       "client_name": "FRANCISCO JOSE PADRON SUAREZ",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "CANCELADO_EMPLEADO",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_EMPLEADO",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Los Caobos",
@@ -107160,7 +107160,16 @@ const largeArraydata =
       "client_identification": "V13412296",
       "nap_box_name": "633",
       "created_at": "2024-10-25T17:18:47.872870",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13043,
+        "ip": "172.17.150.2",
+        "mac": "HW:TC:45:A0:27:47",
+        "serial": "HWTC45A02747",
+        "queue": null,
+        "interface": "VLAN116_CAOBOS",
+        "created_at": "2026-09-19T18:10:25.048170",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167880,6 +167889,174 @@ const largeArraydata =
         "queue": null,
         "interface": "VLAN266_EL_BOSQUE_ZTE",
         "created_at": "2026-09-18T10:36:50.912416",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9266,
+      "client_name": "MARIANGELA PLACENCIA GARBOZO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04129801582",
+      "client_email": "MARIANGELAPLACENCIAGARBOZA@OUTLOOK.ES",
+      "address": "CALLE CARREÑO CON SUCRE NÚMERO 24",
+      "client_identification": "V28256062",
+      "nap_box_name": "CTO-00266",
+      "created_at": "2026-09-19T17:55:19.296353",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9267,
+      "client_name": "SARA CASTRO FARIDE FATIMA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Jabillar",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144505675",
+      "client_email": "FARIDE893@GMAIL.COM",
+      "address": "CALLE MARIÑO VÍA EL MACARO, URB. EL JABILLAR TC, CONDOMINIO 9 CHAGUARAMOS, CASA 09-07 TURMERO ARAGUA",
+      "client_identification": "V7246893",
+      "nap_box_name": null,
+      "created_at": "2026-09-19T17:55:21.804713",
+      "service_detail": {
+        "id": 13045,
+        "ip": "172.17.2.10",
+        "mac": "68:9f:f0:2a:7f:ef",
+        "serial": "ZXICCD43BC52",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-09-19T18:17:00.027631",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9268,
+      "client_name": "CARMEN ARISTIDA BLADIN LOPEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Polvorin",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04120269044",
+      "client_email": "BLANDINCARMEN22@GMAIL.COM",
+      "address": "CALLE PRINCIPAL VIA EL RIO POLVORÍN CASA #43",
+      "client_identification": "V26320286",
+      "nap_box_name": null,
+      "created_at": "2026-09-19T17:55:24.402400",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9269,
+      "client_name": "JHON HARRISON MEJIAS URBINA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243794814",
+      "client_email": "YELITZAPEREIRAHIJO01@GMAIL.COM",
+      "address": "EZEQUIEL ZAMORA TORRE 20 PISO 4 APARTAMENTO 2",
+      "client_identification": "V15077604",
+      "nap_box_name": null,
+      "created_at": "2026-09-19T17:55:30.917397",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9270,
+      "client_name": "JOSE GREGORIO MENDEZ DOMINGUEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle Paraiso",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243130780",
+      "client_email": "JOSEGREGORIOMENDEZ391@GMAIL.COM",
+      "address": "CALLE PRINCIPAL CASA MI SUEÑO NRO 4 URB VALLE PARAISO. TURMERO EDO. ARAGUA",
+      "client_identification": "V8815509",
+      "nap_box_name": null,
+      "created_at": "2026-09-19T17:55:37.475997",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9271,
+      "client_name": "MAURIBEL TAISLENI URBINA UZTARIZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243328382",
+      "client_email": "MARIBELXXY@GMAIL.COM",
+      "address": "URBANIZACIÓN MATACABALLO CALLE 2 CASA 50",
+      "client_identification": "V13530166",
+      "nap_box_name": null,
+      "created_at": "2026-09-19T17:55:43.996522",
+      "service_detail": {
+        "id": 13044,
+        "ip": "172.17.2.14",
+        "mac": "30:86:39:4F:B7:D0",
+        "serial": "JMKG394FB7D0",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-09-19T18:13:56.878826",
         "created_by_name": null
       },
       "installation_invoice_cost": null
