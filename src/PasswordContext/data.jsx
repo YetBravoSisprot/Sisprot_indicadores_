@@ -34991,16 +34991,7 @@ const largeArraydata =
       "client_identification": "V29808275",
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
-      "service_detail": {
-        "id": 13027,
-        "ip": "172.17.2.10",
-        "mac": "ZT:EG:DC:EF:63:3A",
-        "serial": "ZTEGDCEF633A",
-        "queue": null,
-        "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
-        "created_at": "2026-09-16T11:59:55.866106",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -107160,16 +107151,7 @@ const largeArraydata =
       "client_identification": "V13412296",
       "nap_box_name": "633",
       "created_at": "2024-10-25T17:18:47.872870",
-      "service_detail": {
-        "id": 13043,
-        "ip": "172.17.150.2",
-        "mac": "HW:TC:45:A0:27:47",
-        "serial": "HWTC45A02747",
-        "queue": null,
-        "interface": "VLAN116_CAOBOS",
-        "created_at": "2026-09-19T18:10:25.048170",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -116724,8 +116706,8 @@ const largeArraydata =
       "id": 7230,
       "client_name": "MARIBEL PIMENTEL MARTINEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -159625,8 +159607,8 @@ const largeArraydata =
       "id": 8952,
       "client_name": "FRANCISCO JOSE PADRON SUAREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Los Caobos",
@@ -159643,7 +159625,16 @@ const largeArraydata =
       "client_identification": "V13412296",
       "nap_box_name": "CE - 546",
       "created_at": "2026-01-09T16:30:15.943846",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13046,
+        "ip": "172.17.150.2",
+        "mac": "HW:TC:45:A0:27:47",
+        "serial": "HWTC45A02747",
+        "queue": null,
+        "interface": "VLAN116_CAOBOS",
+        "created_at": "2026-09-19T18:23:57.173568",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -166548,8 +166539,8 @@ const largeArraydata =
       "id": 9209,
       "client_name": "ISABEL MARIA RODRIGUEZ SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona I",
