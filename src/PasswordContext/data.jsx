@@ -1408,8 +1408,8 @@ const largeArraydata =
       "id": 3115,
       "client_name": "GLEDYS MARILYN GUEDEZ RAMOS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -1426,7 +1426,16 @@ const largeArraydata =
       "client_identification": "V24929985",
       "nap_box_name": "272",
       "created_at": "2024-04-10T17:22:30.310137",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13041,
+        "ip": "172.28.29.2",
+        "mac": "TP:LG:F9:CD:46:C8",
+        "serial": "TPLGF9CD46C8",
+        "queue": null,
+        "interface": "VLAN231_PAYABAJO",
+        "created_at": "2026-09-19T09:27:51.915962",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
