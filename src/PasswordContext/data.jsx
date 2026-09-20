@@ -124687,13 +124687,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00127 DOS",
       "created_at": "2025-02-23T11:36:02.821144",
       "service_detail": {
-        "id": 12236,
+        "id": 13049,
         "ip": "10.12.22.2",
-        "mac": "HWTC49200629",
-        "serial": "HWTC49200629",
+        "mac": "JM:KG:F3:94:80:CD",
+        "serial": "JMKGF39480CD",
         "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2026-04-01T14:03:35.919972",
+        "created_at": "2026-09-20T12:07:14.227610",
         "created_by_name": null
       },
       "installation_invoice_cost": null
