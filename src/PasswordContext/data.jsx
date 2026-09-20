@@ -166422,13 +166422,13 @@ const largeArraydata =
       "nap_box_name": "1",
       "created_at": "2026-08-22T15:16:39.437948",
       "service_detail": {
-        "id": 12901,
+        "id": 13047,
         "ip": "172.17.1.34",
-        "mac": "JM:KG:C2:66:26:3A",
-        "serial": "JMKGC266263A",
+        "mac": "JM:KG:63:94:FD:E0",
+        "serial": "JMKG6394FDE0",
         "queue": null,
         "interface": "VLAN284_PAYITA",
-        "created_at": "2026-08-22T18:47:22.298343",
+        "created_at": "2026-09-20T09:43:16.946804",
         "created_by_name": null
       },
       "installation_invoice_cost": null
