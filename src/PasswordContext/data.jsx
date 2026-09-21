@@ -34992,13 +34992,13 @@ const largeArraydata =
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
       "service_detail": {
-        "id": 13053,
+        "id": 13054,
         "ip": "172.17.2.22",
         "mac": "ZT:EG:DC:EF:63:3A",
         "serial": "ZTEGDCEF633A",
         "queue": null,
-        "interface": "VLAN216_LAGUNA_PLAZA_OLT1",
-        "created_at": "2026-09-21T11:23:41.913975",
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-09-21T11:37:08.367821",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -88893,17 +88893,17 @@ const largeArraydata =
       "id": 6209,
       "client_name": "YUSGLEIDY ADRIANA LOPEZ MENDOZA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125975771",
       "client_email": "YUSGLEIDYLOPEZ@ICLOUD.COM",
@@ -88911,7 +88911,16 @@ const largeArraydata =
       "client_identification": "V19793820",
       "nap_box_name": "CTO-0639",
       "created_at": "2024-08-04T15:30:43.797460",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13055,
+        "ip": "172.17.63.2",
+        "mac": "VS:OL:00:13:B5:39",
+        "serial": "VSOL0013B539",
+        "queue": null,
+        "interface": "VLAN224_SAN_PABLO_OLT1",
+        "created_at": "2026-09-21T12:25:44.039675",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167381,13 +167390,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-09-06T03:59:30.842556",
       "service_detail": {
-        "id": 12999,
+        "id": 13056,
         "ip": "172.17.1.110",
-        "mac": "JM:KG:CE:C4:3F:52",
-        "serial": "JMKGCEC43F52",
+        "mac": "JM:KG:4A:ED:96:BC",
+        "serial": "JMKG4AED96BC",
         "queue": null,
         "interface": "VLAN129_TAGUAPIRE_ZTE",
-        "created_at": "2026-09-08T15:22:54.934490",
+        "created_at": "2026-09-21T12:34:25.756192",
         "created_by_name": null
       },
       "installation_invoice_cost": null
