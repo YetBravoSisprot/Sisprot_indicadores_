@@ -153487,8 +153487,8 @@ const largeArraydata =
       "id": 8727,
       "client_name": "BLOOM FASHION 2025 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -165446,16 +165446,7 @@ const largeArraydata =
       "client_identification": "V14344185",
       "nap_box_name": "12",
       "created_at": "2026-08-05T16:01:48.877874",
-      "service_detail": {
-        "id": 12796,
-        "ip": "123.123.123.123",
-        "mac": "12:31:23:12:31:23",
-        "serial": "123165465589",
-        "queue": null,
-        "interface": "VLAN101_AJS",
-        "created_at": "2026-08-06T14:01:40.043132",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
