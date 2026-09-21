@@ -166020,7 +166020,7 @@ const largeArraydata =
     },
     {
       "id": 9185,
-      "client_name": "Jenny Esther Moreno Arguizones",
+      "client_name": "JENNY ESTHER MORENO ARGUIZONES",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -166035,7 +166035,7 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "4128154370",
-      "client_email": "jm1350267@gmail.com",
+      "client_email": "JM1350267@GMAIL.COM",
       "address": "urbanizacion ezequiel zamora edificio urquia piso 2 apto 6 turmero aragua zona postal 2115",
       "client_identification": "v14230844",
       "nap_box_name": "CTO-00296",
@@ -167777,8 +167777,8 @@ const largeArraydata =
       "id": 9263,
       "client_name": "CARMEN RAMONA LOPEZ MOSCADA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman de Guere",
