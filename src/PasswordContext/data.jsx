@@ -165801,18 +165801,18 @@ const largeArraydata =
     {
       "id": 9176,
       "client_name": "DOUBLEIBYS GREGORYS ROMERO TORBELLO",
-      "client_type_name": "PYME",
-      "client_subdivision": "ACTIVO_PYME",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Terrazas de Turmero",
       "plan": {
-        "id": 34,
-        "name": "RECURRENTE PYME PLAN 300M",
-        "cost": "39.09",
-        "code": "FOP300M",
-        "profile": "300M/300M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243594838",
       "client_email": "DUBLEIBYSROMERO@GMAIL.COM",
@@ -165838,7 +165838,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 1,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
