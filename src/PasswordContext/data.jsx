@@ -144453,8 +144453,8 @@ const largeArraydata =
       "id": 8334,
       "client_name": "YESICA DEL CARMEN MORALES GIL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Betania",
@@ -165973,13 +165973,13 @@ const largeArraydata =
       "nap_box_name": null,
       "created_at": "2026-08-14T13:23:06.045172",
       "service_detail": {
-        "id": 12837,
+        "id": 13051,
         "ip": "10.17.61.2",
-        "mac": "JM:KG:C9:80:CD:0F",
-        "serial": "JMKGC980CD0F",
+        "mac": "JM:KG:8C:DB:F5:31",
+        "serial": "JMKG8CDBF531",
         "queue": null,
         "interface": "VLAN280_POLVORIN",
-        "created_at": "2026-08-14T13:23:48.331110",
+        "created_at": "2026-09-21T10:41:30.169744",
         "created_by_name": null
       },
       "installation_invoice_cost": null
