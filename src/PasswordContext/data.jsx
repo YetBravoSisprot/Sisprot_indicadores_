@@ -15478,8 +15478,8 @@ const largeArraydata =
       "id": 3608,
       "client_name": "CELINA ISABEL LOPEZ CARTAYA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -15496,7 +15496,16 @@ const largeArraydata =
       "client_identification": "V17197726",
       "nap_box_name": "505",
       "created_at": "2024-04-15T16:26:34.502222",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13066,
+        "ip": "172.19.76.2",
+        "mac": "TP:LG:B9:55:01:E9",
+        "serial": "TPLGB95501E9",
+        "queue": null,
+        "interface": "VLAN124_SMT2_ZTE",
+        "created_at": "2026-09-22T18:24:57.212800",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
