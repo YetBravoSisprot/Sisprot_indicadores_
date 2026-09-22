@@ -167439,8 +167439,8 @@ const largeArraydata =
       "id": 9251,
       "client_name": "FREDDY ANTONIO MORALES AZUAJE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Ciudad Bendita",
@@ -167457,16 +167457,7 @@ const largeArraydata =
       "client_identification": "V17175017",
       "nap_box_name": "CTO - 1229",
       "created_at": "2026-09-07T16:03:01.340260",
-      "service_detail": {
-        "id": 12996,
-        "ip": "172.17.1.246",
-        "mac": "JM:KG:AC:FD:74:E6",
-        "serial": "JMKGACFD74E6",
-        "queue": null,
-        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2026-09-07T17:14:11.172912",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
