@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5498,
+  "count": 5500,
   "results": [
     {
       "id": 3063,
@@ -32012,8 +32012,8 @@ const largeArraydata =
       "id": 4193,
       "client_name": "RENOVACION DE BATERIAS AUTOMO TRICES LOS TRES JUANES CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -33401,8 +33401,8 @@ const largeArraydata =
       "id": 4244,
       "client_name": "EDIGITALCELL CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -168050,6 +168050,56 @@ const largeArraydata =
         "created_at": "2026-09-19T18:13:56.878826",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9272,
+      "client_name": "NEYLIN MAYLIN GUZMAN MORONTA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128483037",
+      "client_email": "MAYLINGUZMAN1993@GMAIL.COM",
+      "address": "URBANISMO EZEQUIEL ZAMORA CALLE CRREÑO TORRE TIORA APARTAMENTO 06 PISO 2",
+      "client_identification": "V26535055",
+      "nap_box_name": "CTO-00296",
+      "created_at": "2026-09-22T13:43:04.913509",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9273,
+      "client_name": "LABORATORIO FONTI PHARMACEUTICAL CA",
+      "client_type_name": "PYME",
+      "client_subdivision": "POR INSTALAR_PYME",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La morita",
+      "plan": {
+        "id": 36,
+        "name": "RECURRENTE PYME PLAN 650M",
+        "cost": "70.18",
+        "code": "FOP650M",
+        "profile": "650M/650M"
+      },
+      "client_mobile": "04122988744",
+      "client_email": "YOULINLOBOS@GRUPOFONTI.COM",
+      "address": "CALLE PAEZ LOCAL NRO 17 VILLEGUITA TURMERO",
+      "client_identification": "J500370962",
+      "nap_box_name": null,
+      "created_at": "2026-09-22T13:43:21.585612",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
