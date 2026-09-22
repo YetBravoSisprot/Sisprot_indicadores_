@@ -35175,8 +35175,8 @@ const largeArraydata =
       "id": 4313,
       "client_name": "AGUSTIN ALEXANDER HURTADO CASTILLO F.P.",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -122513,8 +122513,8 @@ const largeArraydata =
       "id": 7472,
       "client_name": "GABRIEL JOSE MONTILLA CASTILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -122531,7 +122531,16 @@ const largeArraydata =
       "client_identification": "V22948625",
       "nap_box_name": "CTO-00032 DOS",
       "created_at": "2025-02-04T10:53:09.186381",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13063,
+        "ip": "10.10.211.2",
+        "mac": "HW:TC:49:20:03:69",
+        "serial": "HWTC49200369",
+        "queue": null,
+        "interface": "VLAN208_NISPERO_OLT1",
+        "created_at": "2026-09-22T15:52:12.872985",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -143938,8 +143947,8 @@ const largeArraydata =
       "id": 8306,
       "client_name": "FRANKLIN ALEIXIS PACHECO GUZMAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "La Casona II Edificios",
@@ -143956,7 +143965,16 @@ const largeArraydata =
       "client_identification": "V9679256",
       "nap_box_name": "CTO-0536",
       "created_at": "2025-06-03T13:00:30.539162",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13065,
+        "ip": "10.14.198.2",
+        "mac": "TP:LG:F9:CD:40:2A",
+        "serial": "TPLGF9CD402A",
+        "queue": null,
+        "interface": "VLAN110_CASONA_2",
+        "created_at": "2026-09-22T16:01:17.921493",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -168056,8 +168074,8 @@ const largeArraydata =
       "id": 9272,
       "client_name": "NEYLIN MAYLIN GUZMAN MORONTA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -168074,7 +168092,16 @@ const largeArraydata =
       "client_identification": "V26535055",
       "nap_box_name": "CTO-00296",
       "created_at": "2026-09-22T13:43:04.913509",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13064,
+        "ip": "172.17.1.170",
+        "mac": "JM:KG:CE:BF:5A:06",
+        "serial": "JMKGCEBF5A06",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-09-22T15:58:29.750252",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
