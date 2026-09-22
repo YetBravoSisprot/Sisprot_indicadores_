@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5500,
+  "count": 5501,
   "results": [
     {
       "id": 3063,
@@ -168081,8 +168081,8 @@ const largeArraydata =
       "id": 9273,
       "client_name": "LABORATORIO FONTI PHARMACEUTICAL CA",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La morita",
@@ -168099,7 +168099,50 @@ const largeArraydata =
       "client_identification": "J500370962",
       "nap_box_name": null,
       "created_at": "2026-09-22T13:43:21.585612",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13060,
+        "ip": "172.17.2.26",
+        "mac": "JM:KG:6A:CB:5E:0F",
+        "serial": "JMKG6ACB5E0F",
+        "queue": null,
+        "interface": "VLAN122_SAMAN_GUERE",
+        "created_at": "2026-09-22T13:54:41.372469",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9274,
+      "client_name": "ESTACION DE SERVICIO SAN LUIS C.A",
+      "client_type_name": "PYME",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 102,
+        "name": "RECURRENTE PYME PLAN 150M",
+        "cost": "27.60",
+        "code": "FOP150M",
+        "profile": "150Mbps/150Mbps"
+      },
+      "client_mobile": "04140528706",
+      "client_email": "WUILIAMBAYERA17@GMAIL.COM",
+      "address": "PRINCIPAL DEL MACARO SECTOR SAN LUIS NUMERO 28 TURMERO EL MACARO",
+      "client_identification": "J075398408",
+      "nap_box_name": null,
+      "created_at": "2026-09-22T13:55:53.464562",
+      "service_detail": {
+        "id": 13062,
+        "ip": "172.17.1.166",
+        "mac": "GP:ON:00:97:CA:86",
+        "serial": "GPON0097CA86",
+        "queue": null,
+        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
+        "created_at": "2026-09-22T13:57:36.119941",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
