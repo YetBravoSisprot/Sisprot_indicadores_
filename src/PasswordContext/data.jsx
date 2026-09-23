@@ -166340,13 +166340,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00687",
       "created_at": "2026-08-20T10:53:48.034851",
       "service_detail": {
-        "id": 12891,
+        "id": 13067,
         "ip": "172.17.1.18",
-        "mac": "JM:KG:CF:2F:EF:61",
-        "serial": "JMKGCF2FEF61",
+        "mac": "JM:KG:3F:C6:D4:28",
+        "serial": "JMKG3FC6D428",
         "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2026-08-20T12:57:50.897253",
+        "created_at": "2026-09-23T11:48:40.113818",
         "created_by_name": null
       },
       "installation_invoice_cost": null
