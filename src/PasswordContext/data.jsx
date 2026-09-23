@@ -167999,8 +167999,8 @@ const largeArraydata =
       "id": 9269,
       "client_name": "JHON HARRISON MEJIAS URBINA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -168017,7 +168017,16 @@ const largeArraydata =
       "client_identification": "V15077604",
       "nap_box_name": null,
       "created_at": "2026-09-19T17:55:30.917397",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13069,
+        "ip": "172.17.1.178",
+        "mac": "JM:KG:57:98:12:AD",
+        "serial": "JMKG579812AD",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-09-23T14:54:34.743802",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
