@@ -48738,7 +48738,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 100,
@@ -122522,8 +122522,8 @@ const largeArraydata =
       "id": 7472,
       "client_name": "GABRIEL JOSE MONTILLA CASTILLO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -143956,8 +143956,8 @@ const largeArraydata =
       "id": 8306,
       "client_name": "FRANKLIN ALEIXIS PACHECO GUZMAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "La Casona II Edificios",
@@ -146533,7 +146533,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Las Rurales",
       "plan": {
         "id": 100,
@@ -165145,7 +165145,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 2,
@@ -166002,7 +166002,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Polvorin",
       "plan": {
         "id": 21,
@@ -166036,7 +166036,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paya Abajo",
       "plan": {
         "id": 100,
@@ -166070,7 +166070,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ezequiel Zamora",
       "plan": {
         "id": 100,
@@ -166104,7 +166104,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
@@ -166129,7 +166129,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
@@ -166154,7 +166154,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
@@ -166188,7 +166188,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
         "id": 100,
@@ -166222,7 +166222,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
         "id": 100,
@@ -166256,7 +166256,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
         "id": 100,
@@ -166290,7 +166290,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Simon Bolivar",
       "plan": {
         "id": 100,
@@ -166392,7 +166392,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Pantin",
       "plan": {
         "id": 100,
@@ -166807,7 +166807,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Edif. El Torreon",
       "plan": {
         "id": 34,
@@ -166841,7 +166841,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "19 de Abril",
       "plan": {
         "id": 8,
@@ -166875,7 +166875,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Salto Angel",
       "plan": {
         "id": 100,
@@ -167011,7 +167011,7 @@ const largeArraydata =
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "La Guzman",
       "plan": {
         "id": 43,
@@ -167045,7 +167045,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "San Pablo",
       "plan": {
         "id": 100,
@@ -167079,7 +167079,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ciudad Bendita",
       "plan": {
         "id": 100,
@@ -167113,7 +167113,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ciudad Bendita",
       "plan": {
         "id": 100,
@@ -167249,7 +167249,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Taguapire",
       "plan": {
         "id": 3,
@@ -167274,7 +167274,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Casco de Turmero",
       "plan": {
         "id": 21,
@@ -167469,7 +167469,7 @@ const largeArraydata =
       "client_subdivision": "CANCELADO_RESIDENCIAL",
       "status_name": "Cancelado",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Ciudad Bendita",
       "plan": {
         "id": 100,
@@ -167528,7 +167528,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
         "id": 100,
@@ -167562,7 +167562,7 @@ const largeArraydata =
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Haras de San Pablo",
       "plan": {
         "id": 100,
