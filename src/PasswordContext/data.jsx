@@ -166628,13 +166628,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00586",
       "created_at": "2026-08-26T14:55:05.423419",
       "service_detail": {
-        "id": 12914,
+        "id": 13068,
         "ip": "172.17.1.42",
-        "mac": "ZX:IC:00:00:00:01",
-        "serial": "ZXIC00000001",
+        "mac": "JM:KG:A8:B2:5F:E0",
+        "serial": "JMKGA8B25FE0",
         "queue": null,
         "interface": "VLAN111_CONCEPCION",
-        "created_at": "2026-08-26T17:01:24.957416",
+        "created_at": "2026-09-23T12:56:47.547717",
         "created_by_name": null
       },
       "installation_invoice_cost": null
