@@ -168033,8 +168033,8 @@ const largeArraydata =
       "id": 9270,
       "client_name": "JOSE GREGORIO MENDEZ DOMINGUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle Paraiso",
@@ -168051,7 +168051,16 @@ const largeArraydata =
       "client_identification": "V8815509",
       "nap_box_name": null,
       "created_at": "2026-09-19T17:55:37.475997",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13071,
+        "ip": "172.17.1.168",
+        "mac": "JM:KG:0F:9B:4A:21",
+        "serial": "JMKG0F9B4A21",
+        "queue": null,
+        "interface": "VLAN227_V_PARAISO_OLT1",
+        "created_at": "2026-09-24T12:42:17.790126",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
