@@ -166721,13 +166721,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00720",
       "created_at": "2026-08-26T14:57:19.712772",
       "service_detail": {
-        "id": 13011,
+        "id": 13070,
         "ip": "172.17.1.46",
-        "mac": "JM:KG:CA:FF:78:F4",
-        "serial": "JMKGCAFF78F4",
+        "mac": "JM:KG:DE:4B:71:05",
+        "serial": "JMKGDE4B7105",
         "queue": null,
         "interface": "VLAN208_NISPERO_OLT1",
-        "created_at": "2026-09-12T14:28:44.039235",
+        "created_at": "2026-09-24T12:17:09.529926",
         "created_by_name": null
       },
       "installation_invoice_cost": null
