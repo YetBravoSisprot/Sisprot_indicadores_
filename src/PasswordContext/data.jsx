@@ -166784,10 +166784,10 @@ const largeArraydata =
     },
     {
       "id": 9216,
-      "client_name": "Freddy Carrillo",
+      "client_name": "BRYANT  REYES REYES AVILA",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Edif. El Torreon",
@@ -166798,10 +166798,10 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04129950904",
-      "client_email": "freddycarrillo1912@gmail.com",
+      "client_mobile": "04124006962",
+      "client_email": "breyesve@gmail.com",
       "address": "PRUEBA",
-      "client_identification": "V28458411",
+      "client_identification": "V29808275",
       "nap_box_name": "CTO-00180",
       "created_at": "2026-08-27T16:00:51.163742",
       "service_detail": {
