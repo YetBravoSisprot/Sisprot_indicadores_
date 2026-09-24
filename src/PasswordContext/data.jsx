@@ -161884,8 +161884,8 @@ const largeArraydata =
       "id": 9052,
       "client_name": "ELITE IMPORTS TURMERO",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -161902,16 +161902,7 @@ const largeArraydata =
       "client_identification": "J500339232",
       "nap_box_name": "CAJA NAP EDIFICIO ABUUT",
       "created_at": "2026-04-09T15:21:20.066912",
-      "service_detail": {
-        "id": 12590,
-        "ip": "10.17.21.2",
-        "mac": "ZX:IC:CD:D0:6A:18",
-        "serial": "ZXICCDD06A18",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2026-06-06T13:52:29.978449",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -163555,8 +163546,8 @@ const largeArraydata =
       "id": 9105,
       "client_name": "FERREAGRICOLAS LA COLONIA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -163573,16 +163564,7 @@ const largeArraydata =
       "client_identification": "J298962976",
       "nap_box_name": "CTO-00440",
       "created_at": "2026-06-05T15:24:09.931719",
-      "service_detail": {
-        "id": 12581,
-        "ip": "10.17.26.2",
-        "mac": "68:9f:f0:0a:f3:3f",
-        "serial": "ZXICCD0BAEEF",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2026-06-05T15:26:05.975238",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
