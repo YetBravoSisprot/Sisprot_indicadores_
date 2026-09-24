@@ -34980,7 +34980,7 @@ const largeArraydata =
     },
     {
       "id": 4301,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Sisprot Global Fiber C.A",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -166784,7 +166784,7 @@ const largeArraydata =
     },
     {
       "id": 9216,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Sisprot Global Fiber C.A",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -166988,7 +166988,7 @@ const largeArraydata =
     },
     {
       "id": 9222,
-      "client_name": "BRYANT  REYES REYES AVILA",
+      "client_name": "Sisprot Global Fiber C.A",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
