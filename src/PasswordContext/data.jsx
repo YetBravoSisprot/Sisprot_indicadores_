@@ -146369,8 +146369,8 @@ const largeArraydata =
       "id": 8393,
       "client_name": "MARTHA BELMIRA PINTO CARPIO",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "ACTIVO_EMPLEADO",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_EMPLEADO",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Rio Seco",
@@ -146387,16 +146387,7 @@ const largeArraydata =
       "client_identification": "V24169270",
       "nap_box_name": "474",
       "created_at": "2025-06-16T08:59:08.088461",
-      "service_detail": {
-        "id": 8943,
-        "ip": "172.26.157.2",
-        "mac": "HWTC46A4699B",
-        "serial": "HWTC46A4699B",
-        "queue": "queue1",
-        "interface": "VLAN251_RIO_SECO",
-        "created_at": "2025-06-16T09:03:38.956532",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -152543,8 +152534,8 @@ const largeArraydata =
       "id": 8695,
       "client_name": "LIDIA DEL ALBA MENDOZA LINARES",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "ACTIVO_EMPLEADO",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_EMPLEADO",
+      "status_name": "Cancelado",
       "cycle": 25,
       "migrate": false,
       "sector_name": "La Casona I",
@@ -152561,16 +152552,7 @@ const largeArraydata =
       "client_identification": "V26055433",
       "nap_box_name": "CTO-00139",
       "created_at": "2025-08-06T14:06:24.149297",
-      "service_detail": {
-        "id": 9321,
-        "ip": "10.15.178.2",
-        "mac": "QXTLCB345289",
-        "serial": "QXTLCB345289",
-        "queue": "queue1",
-        "interface": "VLAN109_CASONA_1",
-        "created_at": "2025-08-06T14:08:20.697910",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
