@@ -162989,13 +162989,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00182",
       "created_at": "2026-05-18T15:46:16.426821",
       "service_detail": {
-        "id": 12521,
-        "ip": "10.16.216.2",
-        "mac": "4CABFC61570D",
+        "id": 13076,
+        "ip": "172.17.1.190",
+        "mac": "4C:AB:FC:61:57:0D",
         "serial": "JMKGCF1BD962",
         "queue": null,
         "interface": "VLAN214_MONTANITA_OLT1",
-        "created_at": "2026-05-18T15:46:16.566487",
+        "created_at": "2026-09-25T12:22:38.901952",
         "created_by_name": null
       },
       "installation_invoice_cost": null
