@@ -34980,7 +34980,7 @@ const largeArraydata =
     },
     {
       "id": 4301,
-      "client_name": "Sisprot Global Fiber C.A",
+      "client_name": "Sisprot Taurus",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -34997,7 +34997,7 @@ const largeArraydata =
       "client_mobile": "04124006962",
       "client_email": "breyesve@gmail.com",
       "address": "VÍA EL MACARO",
-      "client_identification": "V29808275",
+      "client_identification": "J297241175",
       "nap_box_name": "32",
       "created_at": "2024-05-22T11:12:49.706266",
       "service_detail": {
@@ -152534,8 +152534,8 @@ const largeArraydata =
       "id": 8695,
       "client_name": "LIDIA DEL ALBA MENDOZA LINARES",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "CANCELADO_EMPLEADO",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_EMPLEADO",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "La Casona I",
