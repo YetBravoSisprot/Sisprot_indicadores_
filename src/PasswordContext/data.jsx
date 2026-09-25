@@ -166249,7 +166249,7 @@ const largeArraydata =
     },
     {
       "id": 9199,
-      "client_name": "Ana Lucía Rodriguez De Sulbaran",
+      "client_name": "ANA LUCIA RODRIGUEZ DE SULBARAN",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
