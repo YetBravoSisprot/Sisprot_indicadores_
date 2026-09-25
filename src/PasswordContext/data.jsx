@@ -166766,10 +166766,10 @@ const largeArraydata =
     },
     {
       "id": 9216,
-      "client_name": "Sisprot Global Fiber C.A",
+      "client_name": "Sisprot Taurus",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Edif. El Torreon",
@@ -166783,7 +166783,7 @@ const largeArraydata =
       "client_mobile": "04124006962",
       "client_email": "breyesve@gmail.com",
       "address": "PRUEBA",
-      "client_identification": "V29808275",
+      "client_identification": "J297241175",
       "nap_box_name": "CTO-00180",
       "created_at": "2026-08-27T16:00:51.163742",
       "service_detail": {
@@ -166970,7 +166970,7 @@ const largeArraydata =
     },
     {
       "id": 9222,
-      "client_name": "Sisprot Global Fiber C.A",
+      "client_name": "Sisprot Taurus",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "POR INSTALAR_RESIDENCIAL",
       "status_name": "Por instalar",
@@ -166987,7 +166987,7 @@ const largeArraydata =
       "client_mobile": "04124006962",
       "client_email": "breyesve@gmail.com",
       "address": "HGEBEJE",
-      "client_identification": "V29808275",
+      "client_identification": "J297241175",
       "nap_box_name": "Prueba",
       "created_at": "2026-08-31T17:46:27.110271",
       "service_detail": {
