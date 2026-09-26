@@ -34985,7 +34985,7 @@ const largeArraydata =
       "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
       "status_name": "Suspendido",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "El Macaro",
       "plan": {
         "id": 21,
