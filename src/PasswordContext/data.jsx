@@ -4698,13 +4698,13 @@ const largeArraydata =
       "nap_box_name": "510",
       "created_at": "2024-04-11T14:49:50.743405",
       "service_detail": {
-        "id": 13079,
+        "id": 13081,
         "ip": "172.27.41.2",
         "mac": "GP:ON:00:98:1F:66",
         "serial": "GPON00981F66",
         "queue": null,
         "interface": "VLAN124_SMT2_ZTE",
-        "created_at": "2026-09-26T15:55:18.965173",
+        "created_at": "2026-09-26T16:57:46.116634",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -109053,13 +109053,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00311",
       "created_at": "2024-11-05T10:45:37.428375",
       "service_detail": {
-        "id": 11335,
+        "id": 13080,
         "ip": "172.20.106.2",
-        "mac": "OEMT3C6253CA",
+        "mac": "OE:MT:3C:62:53:CA",
         "serial": "OEMT3C6253CA",
         "queue": null,
         "interface": "VLAN229_PANTIN",
-        "created_at": "2026-01-23T19:25:43.074341",
+        "created_at": "2026-09-26T16:42:17.804693",
         "created_by_name": null
       },
       "installation_invoice_cost": null
