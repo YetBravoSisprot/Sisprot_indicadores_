@@ -21598,13 +21598,13 @@ const largeArraydata =
       "nap_box_name": "41",
       "created_at": "2024-04-18T13:03:13.948218",
       "service_detail": {
-        "id": 12933,
+        "id": 13085,
         "ip": "172.17.1.82",
-        "mac": "ZX:IC:CD:28:27:7B",
-        "serial": "ZXICCD28277B",
+        "mac": "68:9F:F0:2A:CF:8F",
+        "serial": "ZXICCD9AC07F",
         "queue": null,
         "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
-        "created_at": "2026-08-30T10:40:40.790645",
+        "created_at": "2026-09-27T18:18:13.307686",
         "created_by_name": null
       },
       "installation_invoice_cost": null
