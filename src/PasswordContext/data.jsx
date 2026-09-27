@@ -46454,13 +46454,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00296",
       "created_at": "2024-06-09T20:04:39.001012",
       "service_detail": {
-        "id": 5574,
+        "id": 13083,
         "ip": "172.27.239.2",
-        "mac": "TPLGF9CD44D0",
+        "mac": "TP:LG:F9:CD:44:D0",
         "serial": "TPLGF9CD44D0",
-        "queue": "Plan_153953_15811_WispHub",
+        "queue": null,
         "interface": "VLAN209_ZAMORA_OLT1",
-        "created_at": "2024-08-17T08:46:13.155672",
+        "created_at": "2026-09-27T17:01:57.259705",
         "created_by_name": null
       },
       "installation_invoice_cost": null
