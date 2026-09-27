@@ -46758,13 +46758,13 @@ const largeArraydata =
       "nap_box_name": "291",
       "created_at": "2024-06-09T20:34:38.952012",
       "service_detail": {
-        "id": 13077,
+        "id": 13086,
         "ip": "172.17.2.34",
-        "mac": "JM:KG:F6:81:59:EA",
+        "mac": "30:86:f6:81:59:ea",
         "serial": "JMKGF68159EA",
         "queue": null,
         "interface": "VLAN140_SMT1_ZTE",
-        "created_at": "2026-09-26T13:46:01.218273",
+        "created_at": "2026-09-27T18:38:04.261674",
         "created_by_name": null
       },
       "installation_invoice_cost": null
