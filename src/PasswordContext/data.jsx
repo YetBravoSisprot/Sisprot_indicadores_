@@ -46737,7 +46737,7 @@ const largeArraydata =
     },
     {
       "id": 4717,
-      "client_name": "FRANCYS LISMAR NIERES GUZMAN",
+      "client_name": "FRANCYS LISBETH GUZMAN OLAVARRIA",
       "client_type_name": "RESIDENCIAL",
       "client_subdivision": "ACTIVO_RESIDENCIAL",
       "status_name": "Activo",
@@ -46751,7 +46751,7 @@ const largeArraydata =
         "code": "FOR450M",
         "profile": "450M/450M"
       },
-      "client_mobile": "04127984169",
+      "client_mobile": "04129686518",
       "client_email": "NIERESLISMAR4@GMAIL.COM",
       "address": "CALLE 3 CASA NRO 6 BARRIO SAMAN TARAZONERO I TURMERO",
       "client_identification": "V21269270",
