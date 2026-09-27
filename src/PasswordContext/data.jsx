@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5501,
+  "count": 5503,
   "results": [
     {
       "id": 3063,
@@ -168170,6 +168170,56 @@ const largeArraydata =
         "created_at": "2026-09-22T13:57:36.119941",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9275,
+      "client_name": "IRIS MERCEDES RAMIREZ CARPIO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Payita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04267488525",
+      "client_email": "MERCEDESIRIS73@GMAIL.COM",
+      "address": "RIOSECO CALLE 7 NRO 52",
+      "client_identification": "V1610040",
+      "nap_box_name": null,
+      "created_at": "2026-09-27T14:03:32.995890",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9276,
+      "client_name": "ANA CRISTINA GOMEZ SANCHEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243623014",
+      "client_email": "CG3534468@GMAIL.COM",
+      "address": "URBANIZACION MATA CABALLO CALLE #9 TETRA 599",
+      "client_identification": "V8685421",
+      "nap_box_name": null,
+      "created_at": "2026-09-27T14:03:35.197680",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
