@@ -167668,8 +167668,8 @@ const largeArraydata =
       "id": 9259,
       "client_name": "WILMER ALFREDO VEGAS GUZMAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -167687,13 +167687,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00731",
       "created_at": "2026-09-11T15:50:20.329332",
       "service_detail": {
-        "id": 13004,
+        "id": 13082,
         "ip": "172.17.1.138",
-        "mac": "JMKGCD95C4F3",
-        "serial": "JMKGCD95C4F3",
+        "mac": "JM:KG:32:76:54:DB",
+        "serial": "JMKG327654DB",
         "queue": null,
         "interface": "VLAN221_CAFETAL_OLT1",
-        "created_at": "2026-09-11T15:50:20.334525",
+        "created_at": "2026-09-27T12:01:33.820073",
         "created_by_name": null
       },
       "installation_invoice_cost": null
