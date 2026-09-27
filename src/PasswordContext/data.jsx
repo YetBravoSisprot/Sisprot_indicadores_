@@ -168201,8 +168201,8 @@ const largeArraydata =
       "id": 9276,
       "client_name": "ANA CRISTINA GOMEZ SANCHEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -168219,7 +168219,16 @@ const largeArraydata =
       "client_identification": "V8685421",
       "nap_box_name": null,
       "created_at": "2026-09-27T14:03:35.197680",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13084,
+        "ip": "172.17.2.38",
+        "mac": "JM:KG:2D:FE:A8:C3",
+        "serial": "JMKG2DFEA8C3",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-09-27T17:29:28.373899",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
