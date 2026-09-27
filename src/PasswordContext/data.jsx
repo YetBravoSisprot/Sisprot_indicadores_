@@ -46745,16 +46745,16 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04129686518",
       "client_email": "NIERESLISMAR4@GMAIL.COM",
       "address": "CALLE 3 CASA NRO 6 BARRIO SAMAN TARAZONERO I TURMERO",
-      "client_identification": "V21269270",
+      "client_identification": "V9698619",
       "nap_box_name": "291",
       "created_at": "2024-06-09T20:34:38.952012",
       "service_detail": {
