@@ -14591,8 +14591,8 @@ const largeArraydata =
       "id": 3579,
       "client_name": "MARTHA BELMIRA PINTO CARPIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -14609,7 +14609,16 @@ const largeArraydata =
       "client_identification": "V24169270",
       "nap_box_name": "474",
       "created_at": "2024-04-15T14:46:20.951327",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13089,
+        "ip": "172.26.157.2",
+        "mac": "HW:TC:46:A4:69:9B",
+        "serial": "HWTC46A4699B",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-09-28T15:54:36.360930",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
