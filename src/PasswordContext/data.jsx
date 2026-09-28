@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5503,
+  "count": 5504,
   "results": [
     {
       "id": 3063,
@@ -141413,7 +141413,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04123176700",
+      "client_mobile": "04243395141",
       "client_email": "RAYNEXUS@GMAIL.COM",
       "address": "CALLE LA CROQUERA CASA 11 SECTOR PAYITA TURMERO ARAGUA ZONA POSTAL 2115",
       "client_identification": "V18109276",
@@ -168229,6 +168229,31 @@ const largeArraydata =
         "created_at": "2026-09-27T17:29:28.373899",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9277,
+      "client_name": "IRIS YEHIMAR AVILA ALFONZO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Orquidea",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "4127767286",
+      "client_email": "IRISAVILA755@GMAIL.COM",
+      "address": "ORQUÍDEA CALLE 6 CASA 138",
+      "client_identification": "V30500236",
+      "nap_box_name": "CTO-00306",
+      "created_at": "2026-09-28T10:16:06.333162",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
