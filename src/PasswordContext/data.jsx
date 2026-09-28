@@ -77828,13 +77828,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00058",
       "created_at": "2024-07-30T16:19:53.287832",
       "service_detail": {
-        "id": 13031,
+        "id": 13090,
         "ip": "172.22.129.2",
-        "mac": "ZX:IC:CD:EB:D3:8B",
-        "serial": "ZXICCDEBD38B",
+        "mac": "JM:KG:C9:C1:4D:DA",
+        "serial": "JMKGC9C14DDA",
         "queue": null,
         "interface": "VLAN230_VISTA_HERMOSA",
-        "created_at": "2026-09-17T13:06:39.195895",
+        "created_at": "2026-09-28T17:00:47.454681",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -120014,8 +120014,8 @@ const largeArraydata =
       "id": 7345,
       "client_name": "JOSELINE YINSAUMMYY RIVAS LOBO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle Fresco",
