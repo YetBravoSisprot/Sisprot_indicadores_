@@ -44677,8 +44677,8 @@ const largeArraydata =
       "id": 4649,
       "client_name": "CRUZ MARINA MORILLO HERRERA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
-      "status_name": "Activo",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados I",
@@ -44695,16 +44695,7 @@ const largeArraydata =
       "client_identification": "V10356842",
       "nap_box_name": "CTO-0589",
       "created_at": "2024-06-09T15:08:16.589067",
-      "service_detail": {
-        "id": 3909,
-        "ip": "172.28.178.2",
-        "mac": "HWTC3BBE70A1",
-        "serial": "HWTC3BBE70A1",
-        "queue": "Plan_161906_30183_WispHub",
-        "interface": "VLAN239_PRADOS1",
-        "created_at": "2024-07-16T18:54:17.075501",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -46454,13 +46445,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00296",
       "created_at": "2024-06-09T20:04:39.001012",
       "service_detail": {
-        "id": 13083,
+        "id": 13087,
         "ip": "172.27.239.2",
-        "mac": "TP:LG:F9:CD:44:D0",
-        "serial": "TPLGF9CD44D0",
+        "mac": "JM:KG:C7:6E:6E:74",
+        "serial": "JMKGC76E6E74",
         "queue": null,
         "interface": "VLAN209_ZAMORA_OLT1",
-        "created_at": "2026-09-27T17:01:57.259705",
+        "created_at": "2026-09-28T11:45:32.622715",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -168235,8 +168226,8 @@ const largeArraydata =
       "id": 9277,
       "client_name": "IRIS YEHIMAR AVILA ALFONZO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Orquidea",
@@ -168253,7 +168244,16 @@ const largeArraydata =
       "client_identification": "V30500236",
       "nap_box_name": "CTO-00306",
       "created_at": "2026-09-28T10:16:06.333162",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13088,
+        "ip": "172.17.2.42",
+        "mac": "MO:NU:00:4A:CE:EF",
+        "serial": "MONU004ACEEF",
+        "queue": null,
+        "interface": "VLAN259_LA_ORQUIDEA",
+        "created_at": "2026-09-28T12:09:35.327668",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
