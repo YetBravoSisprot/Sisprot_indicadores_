@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5504,
+  "count": 5505,
   "results": [
     {
       "id": 3063,
@@ -168263,6 +168263,31 @@ const largeArraydata =
         "created_at": "2026-09-28T12:09:35.327668",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9278,
+      "client_name": "KRISBEL YANITZ BRICEÑO TALES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04141467952",
+      "client_email": "YANITZATALES@GMAIL.COM",
+      "address": "CALLE CARRENO EDIF 22 PISO 4 APT 2 URB HACIENDA EL NISPERO",
+      "client_identification": "V2294314",
+      "nap_box_name": null,
+      "created_at": "2026-09-29T12:00:48.530440",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
