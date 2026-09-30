@@ -120450,10 +120450,10 @@ const largeArraydata =
       "id": 7363,
       "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": true,
+      "migrate": false,
       "sector_name": "Sabana Grande",
       "plan": {
         "id": 97,
