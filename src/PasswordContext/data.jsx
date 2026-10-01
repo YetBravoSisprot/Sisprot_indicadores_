@@ -162262,13 +162262,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00734",
       "created_at": "2026-05-14T17:44:36.805214",
       "service_detail": {
-        "id": 12492,
+        "id": 13097,
         "ip": "10.16.246.2",
-        "mac": "4CABFCFEC277",
-        "serial": "JMKGCC874D1",
+        "mac": "JM:KG:C9:AD:14:70",
+        "serial": "JMKGC9AD1470",
         "queue": null,
         "interface": "VLAN234_R_MARINO_OLT2",
-        "created_at": "2026-05-14T17:44:36.957068",
+        "created_at": "2026-10-01T16:34:53.672508",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -164482,13 +164482,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0519",
       "created_at": "2026-07-20T09:06:36.783955",
       "service_detail": {
-        "id": 12757,
+        "id": 13098,
         "ip": "10.17.55.2",
-        "mac": "ZX:IC:CD:B4:9E:BC",
-        "serial": "ZXICCDB49EBC",
+        "mac": "ZX:IC:CD:B4:9E:6C",
+        "serial": "ZXICCDB49E6C",
         "queue": null,
         "interface": "VLAN234_R_MARINO_OLT2",
-        "created_at": "2026-07-20T12:37:41.109845",
+        "created_at": "2026-10-01T16:53:16.068759",
         "created_by_name": null
       },
       "installation_invoice_cost": null
