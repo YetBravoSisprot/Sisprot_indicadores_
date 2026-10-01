@@ -94732,11 +94732,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados I",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04243540635",
       "client_email": "MARIBEL.36.FLORES@GMAIL.COM",
@@ -132072,8 +132072,8 @@ const largeArraydata =
       "id": 7875,
       "client_name": "JEISMAR SARAI OROPEZA BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Santa Eduviges",
@@ -132090,7 +132090,16 @@ const largeArraydata =
       "client_identification": "V31970270",
       "nap_box_name": "CTO-00262",
       "created_at": "2025-04-06T15:25:43.273002",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13094,
+        "ip": "10.13.38.2",
+        "mac": "HW:TC:49:20:01:21",
+        "serial": "HWTC49200121",
+        "queue": null,
+        "interface": "VLAN143_STAEDUVIGES2",
+        "created_at": "2026-10-01T12:08:41.571316",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
