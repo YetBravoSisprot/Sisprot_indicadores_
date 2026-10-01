@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5505,
+  "count": 5508,
   "results": [
     {
       "id": 3063,
@@ -60043,8 +60043,8 @@ const largeArraydata =
       "id": 5229,
       "client_name": "MARK LOUIS TOVAR MILLAN",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -60061,7 +60061,16 @@ const largeArraydata =
       "client_identification": "V275971029",
       "nap_box_name": "41",
       "created_at": "2024-07-12T16:39:21.048969",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13100,
+        "ip": "172.30.200.2",
+        "mac": "OE:MT:3C:62:2B:3E",
+        "serial": "OEMT3C622B3E",
+        "queue": null,
+        "interface": "VLAN135_VILLAS_CARMEN_OLT_ZTE",
+        "created_at": "2026-10-01T16:57:43.833507",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167495,6 +167504,81 @@ const largeArraydata =
       "client_identification": "V2294314",
       "nap_box_name": null,
       "created_at": "2026-09-29T12:00:48.530440",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9279,
+      "client_name": "KRISBEL YANITZ BRICEÑO TALES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04141467952",
+      "client_email": "YANITZATALES@GMAIL.COM",
+      "address": "CALLE CARRENO EDIF 22 PISO 4 APT 2 URB HACIENDA EL NISPERO",
+      "client_identification": "V22943146",
+      "nap_box_name": null,
+      "created_at": "2026-10-01T17:11:18.319380",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9280,
+      "client_name": "JOSE RAFAEL BERBECIA BLANCO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243465908",
+      "client_email": "JOSERAFAELBERBECIABLANCO@GMAIL.COM",
+      "address": "MATACABALLO CALLE 4 CASA 203",
+      "client_identification": "V11242961",
+      "nap_box_name": "CTO-00274",
+      "created_at": "2026-10-01T17:11:20.390021",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9281,
+      "client_name": "HANDERSON GABRIEL ALEJOS LAGUNA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04125838282",
+      "client_email": "HANDERSON123ALEJOS@GMAIL.COM",
+      "address": "HACIENDA LOS NÍSPEROS EZEQUIEL ZAMORA, TORRE 17, APARTAMENTO #03, PISO 04",
+      "client_identification": "V29866284",
+      "nap_box_name": null,
+      "created_at": "2026-10-01T17:11:22.543183",
       "service_detail": null,
       "installation_invoice_cost": null
     }
