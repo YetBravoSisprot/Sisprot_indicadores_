@@ -46731,8 +46731,8 @@ const largeArraydata =
       "id": 4721,
       "client_name": "ZULEIMA YAMIRA RODRIGUEZ MONTEZUMA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Simon Bolivar",
@@ -46749,7 +46749,16 @@ const largeArraydata =
       "client_identification": "V9697743",
       "nap_box_name": "CTO-00023",
       "created_at": "2024-06-09T20:48:58.221659",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13092,
+        "ip": "172.21.129.2",
+        "mac": "TP:LG:B9:54:FC:AC",
+        "serial": "TPLGB954FCAC",
+        "queue": null,
+        "interface": "VLAN128_SIMON_BOLIVAR_ZTE",
+        "created_at": "2026-10-01T09:23:08.362126",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
