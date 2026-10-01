@@ -140853,13 +140853,13 @@ const largeArraydata =
       "nap_box_name": "CE - 861",
       "created_at": "2025-05-16T16:18:46.327905",
       "service_detail": {
-        "id": 8666,
+        "id": 13093,
         "ip": "10.14.102.2",
-        "mac": "QXTLCB24D47E",
+        "mac": "QX:TL:CB:24:D4:7E",
         "serial": "QXTLCB24D47E",
-        "queue": "queue1",
-        "interface": "VLAN284_PAYITA",
-        "created_at": "2025-05-16T16:32:37.765587",
+        "queue": null,
+        "interface": "VLAN274_VALLELINDO",
+        "created_at": "2026-10-01T11:25:43.386889",
         "created_by_name": null
       },
       "installation_invoice_cost": null
