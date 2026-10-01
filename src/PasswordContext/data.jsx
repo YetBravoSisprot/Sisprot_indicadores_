@@ -41067,11 +41067,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Marina Caribe",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04127405041",
       "client_email": "JORALDEL@GMAIL.COM",
@@ -45322,8 +45322,8 @@ const largeArraydata =
       "id": 4673,
       "client_name": "ANGIE ESTEFANIA DURAN LEON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -45340,7 +45340,16 @@ const largeArraydata =
       "client_identification": "V20098901",
       "nap_box_name": "CTO-00016",
       "created_at": "2024-06-09T15:47:13.622004",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13095,
+        "ip": "172.28.144.2",
+        "mac": "OE:MT:3C:62:09:0E",
+        "serial": "OEMT3C62090E",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-10-01T15:26:33.287216",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -156836,13 +156845,13 @@ const largeArraydata =
       "nap_box_name": "CE-00281",
       "created_at": "2025-11-12T10:07:44.856645",
       "service_detail": {
-        "id": 10101,
+        "id": 13096,
         "ip": "10.16.110.2",
-        "mac": "48575443915B0187",
-        "serial": "HWTC91580187",
+        "mac": "HW:TC:91:5B:01:87",
+        "serial": "HWTC915B0187",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2025-11-13T14:41:40.021845",
+        "created_at": "2026-10-01T16:07:54.804871",
         "created_by_name": null
       },
       "installation_invoice_cost": null
