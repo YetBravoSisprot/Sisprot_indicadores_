@@ -163921,7 +163921,7 @@ const largeArraydata =
     },
     {
       "id": 9138,
-      "client_name": "Ana Karina Garcia Ibarra",
+      "client_name": "ANA KARINA GARCIA IBARRA",
       "client_type_name": "GRATIS",
       "client_subdivision": "CANCELADO_GRATIS",
       "status_name": "Cancelado",
@@ -163946,7 +163946,7 @@ const largeArraydata =
     },
     {
       "id": 9139,
-      "client_name": "Ana Karina Garcia Ibarra",
+      "client_name": "ANA KARINA GARCIA IBARRA",
       "client_type_name": "GRATIS",
       "client_subdivision": "ACTIVO_GRATIS",
       "status_name": "Activo",
