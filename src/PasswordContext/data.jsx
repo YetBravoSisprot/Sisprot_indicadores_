@@ -157105,10 +157105,10 @@ const largeArraydata =
       "id": 8888,
       "client_name": "FRANCISCO JAVIER LEON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Turmerito",
       "plan": {
         "id": 100,
@@ -157123,7 +157123,16 @@ const largeArraydata =
       "client_identification": "V3377351",
       "nap_box_name": "CE-00250",
       "created_at": "2025-11-18T09:37:19.892481",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13102,
+        "ip": "10.16.120.2",
+        "mac": "HW:TC:5D:11:83:91",
+        "serial": "HWTC5D118391",
+        "queue": null,
+        "interface": "VLAN137_LA_ESPERANZA_OLT_ZTE",
+        "created_at": "2026-10-02T10:47:20.056390",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
