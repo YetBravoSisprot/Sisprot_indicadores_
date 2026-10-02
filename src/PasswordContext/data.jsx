@@ -159562,8 +159562,8 @@ const largeArraydata =
       "id": 8975,
       "client_name": "DANIEL GREGORIO LIENDO MONTENEGRO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Manirito",
@@ -159580,7 +159580,16 @@ const largeArraydata =
       "client_identification": "V7992349",
       "nap_box_name": "CTO - 1089",
       "created_at": "2026-01-30T09:58:24.553806",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13101,
+        "ip": "10.16.161.2",
+        "mac": "ZX:IC:CD:30:7B:7A",
+        "serial": "ZXICCD307B7A",
+        "queue": null,
+        "interface": "VLAN285_MANIRITO",
+        "created_at": "2026-10-02T08:20:55.580299",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
