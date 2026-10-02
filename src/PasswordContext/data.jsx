@@ -157636,7 +157636,7 @@ const largeArraydata =
     },
     {
       "id": 8905,
-      "client_name": "PROMOTUR ARAGUA 2010 CA",
+      "client_name": "PROMOTUR ARAGUA 2026., C.A",
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
@@ -157652,8 +157652,8 @@ const largeArraydata =
       },
       "client_mobile": "04125059654",
       "client_email": "PROMOTURARAGUA@GMAIL.COM",
-      "address": "ROSARIO DE PAYA SECTOR LAS RURALES CALLE SUCRE NÚMERO 27",
-      "client_identification": "J400059909",
+      "address": "CALLE SUCRE ENTRE RICAUTE Y CEDEÑO  CASA  NRO 28 SECTOR CENTRO TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "J508763580",
       "nap_box_name": "CTO-00361",
       "created_at": "2025-11-26T18:00:59.554013",
       "service_detail": {
