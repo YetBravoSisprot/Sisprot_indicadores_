@@ -110746,10 +110746,10 @@ const largeArraydata =
       "id": 7018,
       "client_name": "DERIAN ERNESTO LOPEZ CASANOVA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Vista Hermosa",
       "plan": {
         "id": 100,
@@ -110764,7 +110764,16 @@ const largeArraydata =
       "client_identification": "V26320699",
       "nap_box_name": "CTO-00058",
       "created_at": "2024-11-14T15:52:43.068949",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13103,
+        "ip": "172.21.5.2",
+        "mac": "HW:TC:45:B1:34:19",
+        "serial": "HWTC45B13419",
+        "queue": null,
+        "interface": "VLAN230_VISTA_HERMOSA",
+        "created_at": "2026-10-02T10:57:41.093683",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -147521,18 +147530,18 @@ const largeArraydata =
     {
       "id": 8501,
       "client_name": "JOSE ANGEL HERRERA FLORES",
-      "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "client_type_name": "EMPLEADO",
+      "client_subdivision": "ACTIVO_EMPLEADO",
       "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "La Macarena",
       "plan": {
-        "id": 100,
-        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
-        "cost": "27.60",
-        "code": "FOR300M",
-        "profile": "300Mbps/300Mbps"
+        "id": 78,
+        "name": "Plan empleado 80MB",
+        "cost": "0.00",
+        "code": "FO-80M",
+        "profile": "80M/80M"
       },
       "client_mobile": "04128380219",
       "client_email": "JOSEANGELHERRERAFLORES4@GMAIL.COM",
@@ -167529,8 +167538,8 @@ const largeArraydata =
       "id": 9279,
       "client_name": "KRISBEL YANITZ BRICEÑO TALES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -167547,15 +167556,24 @@ const largeArraydata =
       "client_identification": "V22943146",
       "nap_box_name": null,
       "created_at": "2026-10-01T17:11:18.319380",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13104,
+        "ip": "172.17.1.202",
+        "mac": "00:11:41:0f:a1:72",
+        "serial": "HWTCA20FA171",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-10-02T11:02:58.995036",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
       "id": 9280,
       "client_name": "JOSE RAFAEL BERBECIA BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -167572,15 +167590,24 @@ const largeArraydata =
       "client_identification": "V11242961",
       "nap_box_name": "CTO-00274",
       "created_at": "2026-10-01T17:11:20.390021",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13105,
+        "ip": "172.17.1.198",
+        "mac": "6c:68:a4:a7:d4:2b",
+        "serial": "VSOL00A7D422",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-10-02T11:04:12.522829",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
       "id": 9281,
       "client_name": "HANDERSON GABRIEL ALEJOS LAGUNA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -167597,7 +167624,16 @@ const largeArraydata =
       "client_identification": "V29866284",
       "nap_box_name": null,
       "created_at": "2026-10-01T17:11:22.543183",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13106,
+        "ip": "172.17.1.206",
+        "mac": "e0:ae:a2:69:9f:fd",
+        "serial": "HWTC1EA6CEB5",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-10-02T11:05:53.038010",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
