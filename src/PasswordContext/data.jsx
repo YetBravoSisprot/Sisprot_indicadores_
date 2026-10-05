@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5510,
+  "count": 5511,
   "results": [
     {
       "id": 3063,
@@ -47808,8 +47808,8 @@ const largeArraydata =
       "id": 4759,
       "client_name": "JOSE ANTONIO HERNADEZ BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Saman Tarazonero I",
@@ -61561,8 +61561,8 @@ const largeArraydata =
       "id": 5282,
       "client_name": "ARITZA YSABEL GALLARDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Antigua Hacienda De Paya II",
@@ -167747,6 +167747,31 @@ const largeArraydata =
         "created_at": "2026-10-03T19:26:34.614132",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9286,
+      "client_name": "JOSE ENRIQUE VARGAS BRAVO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "VILLAS DEL CARMEN",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04124589024",
+      "client_email": "ENRI3021@GMAIL.COM",
+      "address": "SECTOR EL MACARO, URB VILLAS DEL CARMEN, TORRE CUCHILLO, APTO NÚMERO 11, SEGUNDO PISO",
+      "client_identification": "V25953713",
+      "nap_box_name": "58",
+      "created_at": "2026-10-05T08:10:37.701277",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
