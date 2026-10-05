@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5511,
+  "count": 5512,
   "results": [
     {
       "id": 3063,
@@ -52426,7 +52426,16 @@ const largeArraydata =
       "client_identification": "V12339072",
       "nap_box_name": "CTO-0642",
       "created_at": "2024-06-14T10:05:42.012056",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13119,
+        "ip": "172.25.160.2",
+        "mac": "GP:ON:00:97:D9:26",
+        "serial": "GPON0097D926",
+        "queue": null,
+        "interface": "VLAN227_V_PARAISO_OLT1",
+        "created_at": "2026-10-05T13:52:52.227461",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -121318,8 +121327,8 @@ const largeArraydata =
       "id": 7421,
       "client_name": "KARINA YAMILET MATUTE BELISARIO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Rio Seco",
@@ -127148,8 +127157,8 @@ const largeArraydata =
       "id": 7693,
       "client_name": "TONY RAFAEL GAMEZ ALAMO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -167799,6 +167808,31 @@ const largeArraydata =
         "created_at": "2026-10-05T12:00:10.258245",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9287,
+      "client_name": "MIGUEL ALEJANDRO ALIENDRES BORGES",
+      "client_type_name": "EMPLEADO",
+      "client_subdivision": "POR INSTALAR_EMPLEADO",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": false,
+      "sector_name": "Valle Paraiso",
+      "plan": {
+        "id": 78,
+        "name": "Plan empleado 80MB",
+        "cost": "0.00",
+        "code": "FO-80M",
+        "profile": "80M/80M"
+      },
+      "client_mobile": "04124571643",
+      "client_email": "ALEJANDROALIENDRES490@GMAIL.COM",
+      "address": "FINAL AV SAN PABLO URB. VALLE PARAISO MANZANA 2 CASA #13",
+      "client_identification": "V31931519",
+      "nap_box_name": null,
+      "created_at": "2026-10-05T14:03:37.525834",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
