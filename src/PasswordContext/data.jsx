@@ -102367,8 +102367,8 @@ const largeArraydata =
       "id": 6687,
       "client_name": "ANA JAQUELIN GUAITA AVILA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
@@ -102385,7 +102385,16 @@ const largeArraydata =
       "client_identification": "V16268592",
       "nap_box_name": "CTO-00235",
       "created_at": "2024-09-19T08:20:38.708301",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13135,
+        "ip": "172.31.208.2",
+        "mac": "OE:MT:3C:62:53:EE",
+        "serial": "OEMT3C6253EE",
+        "queue": null,
+        "interface": "VLAN261_1ERO_MAYO_ZTE",
+        "created_at": "2026-10-07T16:51:32.624461",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
