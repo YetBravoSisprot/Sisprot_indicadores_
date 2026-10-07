@@ -20461,8 +20461,8 @@ const largeArraydata =
       "id": 3792,
       "client_name": "KARLA VANESSA ALVAREZ CELIS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Brisas de Paya",
@@ -165321,7 +165321,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "POR INSTALAR_PYME",
       "status_name": "Por instalar",
-      "cycle": 1,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Paraguatan",
       "plan": {
@@ -166176,7 +166176,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "CANCELADO_PYME",
       "status_name": "Cancelado",
-      "cycle": 1,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "Edif. El Torreon",
       "plan": {
@@ -167453,7 +167453,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 1,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "La morita",
       "plan": {
@@ -167487,7 +167487,7 @@ const largeArraydata =
       "client_type_name": "PYME",
       "client_subdivision": "ACTIVO_PYME",
       "status_name": "Activo",
-      "cycle": 1,
+      "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
       "plan": {
