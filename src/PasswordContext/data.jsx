@@ -115644,8 +115644,8 @@ const largeArraydata =
       "id": 7203,
       "client_name": "YESICA YESENIA CASTRO MORENO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Marcelota",
@@ -115662,7 +115662,16 @@ const largeArraydata =
       "client_identification": "V17511377",
       "nap_box_name": "CTO - 1060",
       "created_at": "2024-12-03T15:08:01.667861",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13129,
+        "ip": "10.11.117.2",
+        "mac": "HW:TC:48:08:01:19",
+        "serial": "HWTC48080119",
+        "queue": null,
+        "interface": "VLAN281_MARCELOTA",
+        "created_at": "2026-10-07T10:15:16.929916",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
