@@ -167757,8 +167757,8 @@ const largeArraydata =
       "id": 9284,
       "client_name": "DORIS IBONNE RONDON CHACON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Antonio Jose de Sucre",
@@ -167775,7 +167775,16 @@ const largeArraydata =
       "client_identification": "V12927991",
       "nap_box_name": null,
       "created_at": "2026-10-03T16:01:19.192850",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13132,
+        "ip": "172.17.1.210",
+        "mac": "1c:ef:03:c7:be:69",
+        "serial": "VSOL00C7BE68",
+        "queue": null,
+        "interface": "VLAN101_AJS",
+        "created_at": "2026-10-07T14:59:36.063311",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -167934,8 +167943,8 @@ const largeArraydata =
       "id": 9290,
       "client_name": "CONTRALORIA MUNICIPAL SANTIAGO MARIÑO",
       "client_type_name": "PYME",
-      "client_subdivision": "POR INSTALAR_PYME",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -167952,7 +167961,16 @@ const largeArraydata =
       "client_identification": "G200014474",
       "nap_box_name": "279",
       "created_at": "2026-10-07T12:37:12.179040",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13133,
+        "ip": "172.27.112.2",
+        "mac": "1c:ef:03:49:88:11",
+        "serial": "VSOL00498811",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-10-07T15:06:59.968495",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
