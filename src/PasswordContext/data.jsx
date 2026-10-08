@@ -29602,8 +29602,8 @@ const largeArraydata =
       "id": 4113,
       "client_name": "YAIDIN LICELOTH YEPEZ PEREZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Villas El Carmen",
@@ -29620,7 +29620,16 @@ const largeArraydata =
       "client_identification": "V13241710",
       "nap_box_name": "43",
       "created_at": "2024-04-20T16:28:19.313261",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13136,
+        "ip": "172.17.26.2",
+        "mac": "TP:LG:2A:BD:C6:59",
+        "serial": "TPLG2ABDC659",
+        "queue": null,
+        "interface": "VLAN100_OLTs",
+        "created_at": "2026-10-08T14:17:21.166628",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
