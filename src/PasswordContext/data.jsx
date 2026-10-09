@@ -31078,8 +31078,8 @@ const largeArraydata =
       "id": 4163,
       "client_name": "BENETTI Y ASOCIADOS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -31096,16 +31096,7 @@ const largeArraydata =
       "client_identification": "J306938559",
       "nap_box_name": "30",
       "created_at": "2024-05-06T14:19:29.541234",
-      "service_detail": {
-        "id": 3695,
-        "ip": "172.26.10.2",
-        "mac": "TPLGB7656665",
-        "serial": "TPLGB7656665",
-        "queue": "Plan_92033_1574_WispHub",
-        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2024-07-11T20:48:43.626298",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -31366,8 +31357,8 @@ const largeArraydata =
       "id": 4173,
       "client_name": "RM MATERIALES ELECTRICOS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -31384,16 +31375,7 @@ const largeArraydata =
       "client_identification": "J312523654",
       "nap_box_name": "CTO-00037",
       "created_at": "2024-05-07T10:36:52.125641",
-      "service_detail": {
-        "id": 3450,
-        "ip": "172.18.208.2",
-        "mac": "TPLGB954F6DB",
-        "serial": "TPLGB954F6DB",
-        "queue": "Plan_92037_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-07-04T16:40:36.146791",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -31484,8 +31466,8 @@ const largeArraydata =
       "id": 4177,
       "client_name": "MI DULCE REFUGIO 2002 CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -31502,16 +31484,7 @@ const largeArraydata =
       "client_identification": "J501019452",
       "nap_box_name": "CTO-00255",
       "created_at": "2024-05-07T11:53:22.690403",
-      "service_detail": {
-        "id": 3692,
-        "ip": "172.18.237.2",
-        "mac": "TPLGF5CB02DF",
-        "serial": "TPLGF5CB02DF",
-        "queue": "Plan_92034_1574_WispHub",
-        "interface": "VLAN100_OLTs",
-        "created_at": "2024-07-11T20:40:31.004827",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -37199,8 +37172,8 @@ const largeArraydata =
       "id": 4386,
       "client_name": "GIMNASIO GET PHISYCAL CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -37217,16 +37190,7 @@ const largeArraydata =
       "client_identification": "J502851267",
       "nap_box_name": "CAJA NAP BICENTENARIO",
       "created_at": "2024-06-08T09:36:56.320646",
-      "service_detail": {
-        "id": 9706,
-        "ip": "172.25.183.2",
-        "mac": "TPLGF9CD4318",
-        "serial": "TPLGF9CD4318",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-11-10T10:41:29.733250",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -37832,8 +37796,8 @@ const largeArraydata =
       "id": 4408,
       "client_name": "CARLA MODAS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -37850,16 +37814,7 @@ const largeArraydata =
       "client_identification": "J407334875",
       "nap_box_name": "CTO-00194",
       "created_at": "2024-06-08T10:28:51.020648",
-      "service_detail": {
-        "id": 9219,
-        "ip": "172.17.96.2",
-        "mac": "VSOL0013BCE1",
-        "serial": "VSOL0013BCE1",
-        "queue": "queue1",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2025-07-17T11:32:49.145511",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -58475,8 +58430,8 @@ const largeArraydata =
       "id": 5166,
       "client_name": "VIVALDESIGNERS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -58493,16 +58448,7 @@ const largeArraydata =
       "client_identification": "J502825177",
       "nap_box_name": "CTO-0650",
       "created_at": "2024-07-04T17:27:35.314296",
-      "service_detail": {
-        "id": 12630,
-        "ip": "172.28.8.2",
-        "mac": "TP:LG:F9:CD:40:2F",
-        "serial": "TPLGF9CD402F",
-        "queue": null,
-        "interface": "VLAN200_OLTs",
-        "created_at": "2026-06-22T17:41:07.878315",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -78588,8 +78534,8 @@ const largeArraydata =
       "id": 5869,
       "client_name": "INVERSIONES CRISTIAN LOPEZ FP",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -78606,16 +78552,7 @@ const largeArraydata =
       "client_identification": "V212038780",
       "nap_box_name": "CTO-00256",
       "created_at": "2024-07-31T10:43:30.782174",
-      "service_detail": {
-        "id": 4133,
-        "ip": "172.23.184.2",
-        "mac": "GPON0097B556",
-        "serial": "GPON0097B556",
-        "queue": "Plan_92036_15811_WispHub",
-        "interface": "VLAN200_OLTs",
-        "created_at": "2024-07-31T10:46:25.970073",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
@@ -112327,8 +112264,8 @@ const largeArraydata =
       "id": 7079,
       "client_name": "JHOERICAR MARIEDID NAZARETH CORRO MERIÑO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Polvorin",
@@ -121188,8 +121125,8 @@ const largeArraydata =
       "id": 7414,
       "client_name": "LUBRICANTES Y SERVICIOS LS CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "CANCELADO_PYME",
+      "status_name": "Cancelado",
       "cycle": 10,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -121206,16 +121143,7 @@ const largeArraydata =
       "client_identification": "J407720716",
       "nap_box_name": "CE-00141",
       "created_at": "2025-01-20T15:55:43.374543",
-      "service_detail": {
-        "id": 9446,
-        "ip": "10.10.156.2",
-        "mac": "TPLGB954FB97",
-        "serial": "TPLGB954FB97",
-        "queue": "queue1",
-        "interface": "VLAN104_EL_MACARO_OLT_ZTE",
-        "created_at": "2025-08-30T13:35:40.723759",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
