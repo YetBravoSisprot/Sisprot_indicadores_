@@ -121173,13 +121173,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00131",
       "created_at": "2025-01-20T15:47:44.474057",
       "service_detail": {
-        "id": 7646,
+        "id": 13139,
         "ip": "10.10.162.2",
-        "mac": "OEMT3C62530E",
-        "serial": "OEMT3C62530E",
-        "queue": "Plan_161900_30183_WispHub",
+        "mac": "ZX:IC:CD:EB:D3:8B",
+        "serial": "ZXICCDEBD38B",
+        "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2025-01-27T08:10:40.060869",
+        "created_at": "2026-10-09T12:19:35.053536",
         "created_by_name": null
       },
       "installation_invoice_cost": null
