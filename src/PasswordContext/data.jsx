@@ -34901,8 +34901,8 @@ const largeArraydata =
       "id": 4301,
       "client_name": "Sisprot Taurus",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "El Macaro",
@@ -41757,11 +41757,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
-        "id": 97,
-        "name": "RECURRENTE RESIDENCIAL PLAN 10M",
-        "cost": "18.00",
-        "code": "[FOR10]",
-        "profile": "10Mbps/10Mbps"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04129683809",
       "client_email": "YOSILE15@HOTMAIL.COM",
