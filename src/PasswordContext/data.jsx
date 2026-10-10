@@ -121674,8 +121674,8 @@ const largeArraydata =
       "id": 7433,
       "client_name": "KEYSLER ALBERTO ROJAS RONDON",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Orquidea",
@@ -121692,7 +121692,16 @@ const largeArraydata =
       "client_identification": "V31081059",
       "nap_box_name": "CTO-00306",
       "created_at": "2025-01-27T09:35:48.852371",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13144,
+        "ip": "10.10.178.2",
+        "mac": "HW:TC:49:20:08:27",
+        "serial": "HWTC49200827",
+        "queue": null,
+        "interface": "VLAN259_LA_ORQUIDEA",
+        "created_at": "2026-10-10T17:23:57.525746",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
