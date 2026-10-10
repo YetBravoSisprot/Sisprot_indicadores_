@@ -41769,7 +41769,16 @@ const largeArraydata =
       "client_identification": "V22343487",
       "nap_box_name": "CTO-00069",
       "created_at": "2024-06-09T09:40:13.264967",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13143,
+        "ip": "172.29.70.2",
+        "mac": "HW:TC:05:8A:AB:A1",
+        "serial": "HWTC058AABA1",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-10-10T13:54:12.525232",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -97530,8 +97539,8 @@ const largeArraydata =
       "id": 6519,
       "client_name": "RUSMELY ADRIANA BRICENO PERDOMO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Laguna Plaza",
