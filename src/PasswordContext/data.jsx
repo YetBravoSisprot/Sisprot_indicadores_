@@ -121693,13 +121693,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00306",
       "created_at": "2025-01-27T09:35:48.852371",
       "service_detail": {
-        "id": 13144,
+        "id": 13145,
         "ip": "10.10.178.2",
         "mac": "HW:TC:49:20:08:27",
         "serial": "HWTC49200827",
         "queue": null,
         "interface": "VLAN259_LA_ORQUIDEA",
-        "created_at": "2026-10-10T17:23:57.525746",
+        "created_at": "2026-10-10T18:33:10.195269",
         "created_by_name": null
       },
       "installation_invoice_cost": null
