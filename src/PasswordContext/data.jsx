@@ -94737,8 +94737,8 @@ const largeArraydata =
       "id": 6416,
       "client_name": "HECTOR JOSE MARTINEZ VASQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Valle Fresco",
@@ -94755,7 +94755,16 @@ const largeArraydata =
       "client_identification": "V14319426",
       "nap_box_name": "CTO VALLE FRESCO",
       "created_at": "2024-08-14T11:39:10.750638",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13148,
+        "ip": "172.31.81.2",
+        "mac": "OE:MT:3C:62:28:62",
+        "serial": "OEMT3C622862",
+        "queue": null,
+        "interface": "VLAN270_VALLE_FRESCO_OLT3",
+        "created_at": "2026-10-11T14:00:05.163225",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
