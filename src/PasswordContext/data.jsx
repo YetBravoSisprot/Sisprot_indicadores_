@@ -51336,13 +51336,13 @@ const largeArraydata =
       "nap_box_name": "CTO-0370",
       "created_at": "2024-06-13T14:42:34.213456",
       "service_detail": {
-        "id": 5077,
+        "id": 13146,
         "ip": "172.18.77.2",
-        "mac": "TPLGB446E8A9",
+        "mac": "TP:LG:B4:46:E8:A9",
         "serial": "TPLGB446E8A9",
-        "queue": "Plan_161903_30183_WispHub",
+        "queue": null,
         "interface": "VLAN239_PRADOS1",
-        "created_at": "2024-08-14T12:21:15.304518",
+        "created_at": "2026-10-11T12:39:41.653719",
         "created_by_name": null
       },
       "installation_invoice_cost": null
