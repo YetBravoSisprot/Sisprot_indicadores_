@@ -122638,8 +122638,8 @@ const largeArraydata =
       "id": 7486,
       "client_name": "IRVANI YASILDRY NIZAMA ZAMBRANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -122656,7 +122656,16 @@ const largeArraydata =
       "client_identification": "V25901061",
       "nap_box_name": "CTO-0559",
       "created_at": "2025-02-05T15:15:10.538334",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13150,
+        "ip": "10.10.214.2",
+        "mac": "HW:TC:49:20:03:90",
+        "serial": "HWTC49200390",
+        "queue": null,
+        "interface": "VLAN256_CACIQUES_OLT2",
+        "created_at": "2026-10-11T20:02:16.767353",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
