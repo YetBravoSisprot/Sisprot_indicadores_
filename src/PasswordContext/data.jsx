@@ -98544,8 +98544,8 @@ const largeArraydata =
       "id": 6553,
       "client_name": "MARIANYELI ANAIS SANCHEZ ROMERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados III",
@@ -106983,10 +106983,10 @@ const largeArraydata =
       "id": 6864,
       "client_name": "ANGEL EDUARDO AMADOR ANDRADE",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
-      "migrate": false,
+      "migrate": true,
       "sector_name": "Mata Caballo",
       "plan": {
         "id": 100,
@@ -107001,7 +107001,16 @@ const largeArraydata =
       "client_identification": "V28317298",
       "nap_box_name": "CTO-00179",
       "created_at": "2024-10-26T11:22:44.429610",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13156,
+        "ip": "172.24.10.2",
+        "mac": "OE:MT:3C:62:54:0E",
+        "serial": "OEMT3C62540E",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-10-12T19:09:20.098155",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
