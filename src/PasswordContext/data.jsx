@@ -36394,8 +36394,8 @@ const largeArraydata =
       "id": 4361,
       "client_name": "FERREMAT PAYA CA",
       "client_type_name": "PYME",
-      "client_subdivision": "SUSPENDIDO_PYME",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_PYME",
+      "status_name": "Activo",
       "cycle": 10,
       "migrate": true,
       "sector_name": "Paya Abajo",
@@ -144688,7 +144688,7 @@ const largeArraydata =
         "code": "FOR300M",
         "profile": "300Mbps/300Mbps"
       },
-      "client_mobile": "04143874237",
+      "client_mobile": "04243609069",
       "client_email": "ROSANGELYSOCAMPO5@GMAIL.COM",
       "address": "CALLE 5 CASA # 8 URBANIZACION VALLE LINDO SECTOR 4 CASCO TURMERO",
       "client_identification": "V30327058",
@@ -168002,8 +168002,8 @@ const largeArraydata =
       "id": 9292,
       "client_name": "SERVIRIA JOSEFINA RON PAEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Callejon Lim",
@@ -168020,7 +168020,16 @@ const largeArraydata =
       "client_identification": "V11087705",
       "nap_box_name": null,
       "created_at": "2026-10-12T09:34:44.966696",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13153,
+        "ip": "172.17.2.65",
+        "mac": "JM:KG:D0:7E:5A:2B",
+        "serial": "JMKGD07E5A2B",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-10-12T10:05:27.761196",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -168040,19 +168049,19 @@ const largeArraydata =
         "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04121485198",
-      "client_email": "045433@GMAIL.COM",
+      "client_email": "cv045433@GMAIL.COM",
       "address": "AVENIDA CALLEJÓN LIM VÍA PAYA EDIFICIO VIOLETA PISO 1 APARTAMENTO 5 URB VILLA DE TURMERO",
       "client_identification": "V4842199",
       "nap_box_name": null,
       "created_at": "2026-10-12T09:34:50.500644",
       "service_detail": {
-        "id": 13151,
-        "ip": "172.17.2.61",
+        "id": 13154,
+        "ip": "172.17.2.62",
         "mac": "JM:KG:B7:A0:FD:23",
         "serial": "JMKGB7A0FD23",
         "queue": null,
         "interface": "VLAN250_LIM_OLT2",
-        "created_at": "2026-10-12T09:37:56.268368",
+        "created_at": "2026-10-12T10:09:43.747765",
         "created_by_name": null
       },
       "installation_invoice_cost": null
