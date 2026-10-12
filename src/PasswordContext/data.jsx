@@ -38053,8 +38053,8 @@ const largeArraydata =
         "code": "FOP300M",
         "profile": "300M/300M"
       },
-      "client_mobile": "04243681729",
-      "client_email": "DEABREUJOAO1957@GMAIL.COM",
+      "client_mobile": "04129950904",
+      "client_email": "freddycarrillo1912@gmail.com",
       "address": "CALLE MARIÑO EDIF RESIDENCIAS MARIÑO PISO P-B LOCAL G-3 TURMERO",
       "client_identification": "J317404904",
       "nap_box_name": "69",
