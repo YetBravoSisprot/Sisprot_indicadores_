@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5515,
+  "count": 5519,
   "results": [
     {
       "id": 3063,
@@ -167971,6 +167971,115 @@ const largeArraydata =
         "created_at": "2026-10-07T15:06:59.968495",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9291,
+      "client_name": "BELEN TIBISAY JIMENEZ SARRIA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Prados de Cafetal",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128528979",
+      "client_email": "BELENJ932@GMAIL.COM",
+      "address": "URBANIZACIÓN PRADOS DEL CAFETAL CALLE TRANSVERSAL CASA 6_3_4_B",
+      "client_identification": "V8581914",
+      "nap_box_name": null,
+      "created_at": "2026-10-12T09:34:42.845811",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9292,
+      "client_name": "SERVIRIA JOSEFINA RON PAEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Callejon Lim",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04144895056",
+      "client_email": "SERVI.R11@HOTMAIL.COM",
+      "address": "CALLE LIM EDIFICIO VIOLETA PISO PLANTA BAJA APARTAMENTO PB1 URB VILLAS DE TURMERO",
+      "client_identification": "V11087705",
+      "nap_box_name": null,
+      "created_at": "2026-10-12T09:34:44.966696",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9293,
+      "client_name": "CARMEN OBDULIA VERA DE TORO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Callejon Lim",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04121485198",
+      "client_email": "045433@GMAIL.COM",
+      "address": "AVENIDA CALLEJÓN LIM VÍA PAYA EDIFICIO VIOLETA PISO 1 APARTAMENTO 5 URB VILLA DE TURMERO",
+      "client_identification": "V4842199",
+      "nap_box_name": null,
+      "created_at": "2026-10-12T09:34:50.500644",
+      "service_detail": {
+        "id": 13151,
+        "ip": "172.17.2.61",
+        "mac": "JM:KG:B7:A0:FD:23",
+        "serial": "JMKGB7A0FD23",
+        "queue": null,
+        "interface": "VLAN250_LIM_OLT2",
+        "created_at": "2026-10-12T09:37:56.268368",
+        "created_by_name": null
+      },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9294,
+      "client_name": "MERY MARIA ACOSTA NIEVES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Casco de Turmero",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04167201195",
+      "client_email": "ACOSTANIEVESMERYMARIA@GMAIL.COM",
+      "address": "CALLE CEDEÑO CASA 56",
+      "client_identification": "V12000699",
+      "nap_box_name": "CTO-00433",
+      "created_at": "2026-10-12T09:34:55.860103",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
