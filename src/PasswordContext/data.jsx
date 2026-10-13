@@ -134352,13 +134352,13 @@ const largeArraydata =
       "nap_box_name": "26",
       "created_at": "2025-04-17T10:13:25.507212",
       "service_detail": {
-        "id": 8305,
+        "id": 13158,
         "ip": "10.13.127.2",
-        "mac": "OEMT3C620AFA",
-        "serial": "OEMT3C620AFA",
-        "queue": "Plan_107915_15811_WispHub",
+        "mac": "JM:KG:C2:B4:EA:C5",
+        "serial": "JMKGC2B4EAC5",
+        "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2025-04-18T18:38:24.858133",
+        "created_at": "2026-10-13T13:04:12.583262",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -154384,8 +154384,8 @@ const largeArraydata =
       "id": 8769,
       "client_name": "CLAUDITH JOSELIN PAEZ ACEVEDO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Ezequiel Zamora",
@@ -154402,7 +154402,16 @@ const largeArraydata =
       "client_identification": "V13553731",
       "nap_box_name": "1",
       "created_at": "2025-09-04T22:35:53.098161",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13159,
+        "ip": "10.16.36.2",
+        "mac": "OE:MT:3C:62:0A:5A",
+        "serial": "OEMT3C620A5A",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-10-13T13:10:04.230988",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
