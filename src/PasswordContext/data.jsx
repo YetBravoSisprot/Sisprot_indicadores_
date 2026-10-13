@@ -167995,8 +167995,8 @@ const largeArraydata =
       "id": 9291,
       "client_name": "BELEN TIBISAY JIMENEZ SARRIA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Prados de Cafetal",
@@ -168013,7 +168013,16 @@ const largeArraydata =
       "client_identification": "V8581914",
       "nap_box_name": null,
       "created_at": "2026-10-12T09:34:42.845811",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13157,
+        "ip": "172.17.2.70",
+        "mac": "HW:TC:38:ED:38:A1",
+        "serial": "HWTC38ED38A1",
+        "queue": null,
+        "interface": "VLAN221_CAFETAL_OLT1",
+        "created_at": "2026-10-13T11:55:08.962950",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
