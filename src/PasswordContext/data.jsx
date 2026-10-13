@@ -107002,13 +107002,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00179",
       "created_at": "2024-10-26T11:22:44.429610",
       "service_detail": {
-        "id": 13156,
+        "id": 13161,
         "ip": "172.24.10.2",
-        "mac": "OE:MT:3C:62:54:0E",
-        "serial": "OEMT3C62540E",
+        "mac": "JM:KG:C2:B4:EA:C5",
+        "serial": "JMKGC2B4EAC5",
         "queue": null,
         "interface": "VLAN219_MATA_CABALLO",
-        "created_at": "2026-10-12T19:09:20.098155",
+        "created_at": "2026-10-13T13:18:42.953203",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -134352,13 +134352,13 @@ const largeArraydata =
       "nap_box_name": "26",
       "created_at": "2025-04-17T10:13:25.507212",
       "service_detail": {
-        "id": 13158,
+        "id": 13160,
         "ip": "10.13.127.2",
-        "mac": "JM:KG:C2:B4:EA:C5",
-        "serial": "JMKGC2B4EAC5",
+        "mac": "OE:MT:3C:62:0A:FA",
+        "serial": "OEMT3C620AFA",
         "queue": null,
         "interface": "VLAN200_OLTs",
-        "created_at": "2026-10-13T13:04:12.583262",
+        "created_at": "2026-10-13T13:16:58.800511",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -134848,8 +134848,8 @@ const largeArraydata =
       "id": 7976,
       "client_name": "YORIANGELIS CAROLINA CHIRINOS CHIQUITO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Concepcion",
@@ -134866,7 +134866,16 @@ const largeArraydata =
       "client_identification": "V30755354",
       "nap_box_name": "109",
       "created_at": "2025-04-21T17:18:20.260105",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13162,
+        "ip": "10.13.136.2",
+        "mac": "OE:MT:3C:62:06:1A",
+        "serial": "OEMT3C62061A",
+        "queue": null,
+        "interface": "VLAN111_CONCEPCION",
+        "created_at": "2026-10-13T13:25:47.787109",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
