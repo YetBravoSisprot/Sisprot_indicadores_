@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5519,
+  "count": 5522,
   "results": [
     {
       "id": 3063,
@@ -168133,6 +168133,81 @@ const largeArraydata =
       "client_identification": "V12000699",
       "nap_box_name": "CTO-00433",
       "created_at": "2026-10-12T09:34:55.860103",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9295,
+      "client_name": "MARIA ALEXANDRA NAVARRO DE NUÑEZ",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Casona II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243003540",
+      "client_email": "NAVARROALEXANDRA392@GMAIL.COM",
+      "address": "LA CASONA 2 CALLE 14 CASA NUMERO 64 TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V29502194",
+      "nap_box_name": "CTO-00120",
+      "created_at": "2026-10-13T18:54:30.179864",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9296,
+      "client_name": "EDWAR JESUS ESCALONA ZAMBRANO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Rio Seco",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128496508",
+      "client_email": "ELARQUITECTO.EEZ@GMAIL.COM",
+      "address": "RIO SECO CALLE 9 NUMERO 63 TURMERO ZONA POSTAL 2115",
+      "client_identification": "V27864140",
+      "nap_box_name": null,
+      "created_at": "2026-10-13T18:54:32.256963",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9297,
+      "client_name": "REBECA LEONOR PACHECO LOZADA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Mata Caballo",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243605238",
+      "client_email": "REBECAPACHECO3108@GMAIL.COM",
+      "address": "SECTOR MATA CABALLO CALLE 4 CASA NUMERO 224 ROSARIO DE PAYA TURMERO ARAGUA ZONA POSTAL 2115",
+      "client_identification": "V19269900",
+      "nap_box_name": "CTO-00265",
+      "created_at": "2026-10-13T18:54:33.985469",
       "service_detail": null,
       "installation_invoice_cost": null
     }
