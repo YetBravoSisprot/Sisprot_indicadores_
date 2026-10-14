@@ -168190,8 +168190,8 @@ const largeArraydata =
       "id": 9297,
       "client_name": "REBECA LEONOR PACHECO LOZADA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -168208,7 +168208,16 @@ const largeArraydata =
       "client_identification": "V19269900",
       "nap_box_name": "CTO-00265",
       "created_at": "2026-10-13T18:54:33.985469",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13163,
+        "ip": "10.11.85.2",
+        "mac": "HW:TC:45:B1:32:19",
+        "serial": "HWTC45B13219",
+        "queue": null,
+        "interface": "VLAN219_MATA_CABALLO",
+        "created_at": "2026-10-14T09:47:49.141653",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     }
   ]
