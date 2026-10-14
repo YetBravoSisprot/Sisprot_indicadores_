@@ -165190,13 +165190,13 @@ const largeArraydata =
       "nap_box_name": "542",
       "created_at": "2024-07-17T09:45:46.679900",
       "service_detail": {
-        "id": 12800,
+        "id": 13168,
         "ip": "10.17.59.2",
-        "mac": "JM:KG:C2:AD:05:52",
-        "serial": "JMKGC2AD0552",
+        "mac": "JM:KG:39:2C:DA:85",
+        "serial": "JMKG392CDA85",
         "queue": null,
         "interface": "VLAN139_GUERITO",
-        "created_at": "2026-08-06T15:30:24.103403",
+        "created_at": "2026-10-14T15:27:02.618409",
         "created_by_name": null
       },
       "installation_invoice_cost": null
