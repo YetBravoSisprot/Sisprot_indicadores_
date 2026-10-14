@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5522,
+  "count": 5524,
   "results": [
     {
       "id": 3063,
@@ -33187,13 +33187,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00078",
       "created_at": "2024-05-10T12:06:22.187200",
       "service_detail": {
-        "id": 5908,
+        "id": 13170,
         "ip": "172.28.177.2",
-        "mac": "HWTC2FCED8A1",
-        "serial": "HWTC2FCED8A1",
-        "queue": "Plan_153953_15811_WispHub",
+        "mac": "ZX:IC:CD:BE:67:56",
+        "serial": "ZXICCDBE6756",
+        "queue": null,
         "interface": "VLAN259_LA_ORQUIDEA",
-        "created_at": "2024-08-21T11:30:19.027113",
+        "created_at": "2026-10-14T15:57:57.034938",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -166761,8 +166761,8 @@ const largeArraydata =
       "id": 9248,
       "client_name": "GLENNYS DEL CARMEN GUZMAN MARQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Mata Caballo",
@@ -167294,8 +167294,8 @@ const largeArraydata =
       "id": 9266,
       "client_name": "MARIANGELA PLACENCIA GARBOZO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "CANCELADO_RESIDENCIAL",
+      "status_name": "Cancelado",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -168227,6 +168227,56 @@ const largeArraydata =
         "created_at": "2026-10-14T09:47:49.141653",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9298,
+      "client_name": "JUSNEIDY GABRIELA LARA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Betania",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04123987171",
+      "client_email": "JUSNEIDYLARA@GMAIL.COM",
+      "address": "ROSARIO DE PAYA COMUNIDAD BETANIA",
+      "client_identification": "V22511204",
+      "nap_box_name": "CTO-00376",
+      "created_at": "2026-10-14T16:45:34.265405",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9299,
+      "client_name": "KATHERYNE RAMIREZ LINARES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Esperanza",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128648484",
+      "client_email": "KATHERYNELINARESRAMIREZ@GMAIL.COM",
+      "address": "EL MACARO LA ESPERANZA CALLE 11",
+      "client_identification": "V26734645",
+      "nap_box_name": null,
+      "created_at": "2026-10-14T16:45:36.449221",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
