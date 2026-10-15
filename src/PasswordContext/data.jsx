@@ -61967,8 +61967,8 @@ const largeArraydata =
       "id": 5296,
       "client_name": "LUNA LUCIANA GOMEZ GRATEROL",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Lascenio Guerrero",
@@ -61985,7 +61985,16 @@ const largeArraydata =
       "client_identification": "V28010256",
       "nap_box_name": "431",
       "created_at": "2024-07-17T09:19:44.747313",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13176,
+        "ip": "172.22.201.2",
+        "mac": "TP:LG:BA:68:7C:87",
+        "serial": "TPLGBA687C87",
+        "queue": null,
+        "interface": "VLAN115_LG",
+        "created_at": "2026-10-15T16:19:44.974518",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
