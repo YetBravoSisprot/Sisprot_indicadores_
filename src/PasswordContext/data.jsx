@@ -168149,8 +168149,8 @@ const largeArraydata =
       "id": 9295,
       "client_name": "MARIA ALEXANDRA NAVARRO DE NUÑEZ",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "La Casona II",
@@ -168167,15 +168167,24 @@ const largeArraydata =
       "client_identification": "V29502194",
       "nap_box_name": "CTO-00120",
       "created_at": "2026-10-13T18:54:30.179864",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13174,
+        "ip": "172.17.2.58",
+        "mac": "HW:TC:CA:A6:0E:F8",
+        "serial": "HWTCCAA60EF8",
+        "queue": null,
+        "interface": "VLAN110_CASONA_2",
+        "created_at": "2026-10-15T11:10:35.004293",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
       "id": 9296,
       "client_name": "EDWAR JESUS ESCALONA ZAMBRANO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Rio Seco",
@@ -168192,7 +168201,16 @@ const largeArraydata =
       "client_identification": "V27864140",
       "nap_box_name": null,
       "created_at": "2026-10-13T18:54:32.256963",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13175,
+        "ip": "172.17.2.74",
+        "mac": "CI:OT:03:A5:47:28",
+        "serial": "CIOT03A54728",
+        "queue": null,
+        "interface": "VLAN251_RIO_SECO",
+        "created_at": "2026-10-15T11:11:38.045320",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
@@ -168233,8 +168251,8 @@ const largeArraydata =
       "id": 9298,
       "client_name": "JUSNEIDY GABRIELA LARA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Betania",
@@ -168251,7 +168269,16 @@ const largeArraydata =
       "client_identification": "V22511204",
       "nap_box_name": "CTO-00376",
       "created_at": "2026-10-14T16:45:34.265405",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13173,
+        "ip": "172.17.2.82",
+        "mac": "HW:TC:30:A9:06:93",
+        "serial": "HWTC30A90693",
+        "queue": null,
+        "interface": "VLAN260_BETANIA",
+        "created_at": "2026-10-15T10:52:36.446695",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
