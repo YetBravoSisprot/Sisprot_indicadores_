@@ -167913,8 +167913,8 @@ const largeArraydata =
       "id": 9287,
       "client_name": "MIGUEL ALEJANDRO ALIENDRES BORGES",
       "client_type_name": "EMPLEADO",
-      "client_subdivision": "POR INSTALAR_EMPLEADO",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_EMPLEADO",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Valle Paraiso",
@@ -167931,7 +167931,16 @@ const largeArraydata =
       "client_identification": "V31931519",
       "nap_box_name": null,
       "created_at": "2026-10-05T14:03:37.525834",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13179,
+        "ip": "172.17.2.90",
+        "mac": "JM:KG:CC:E4:8D:2E",
+        "serial": "JMKGCCE48D2E",
+        "queue": null,
+        "interface": "VLAN227_V_PARAISO_OLT1",
+        "created_at": "2026-10-16T14:53:56.674553",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
