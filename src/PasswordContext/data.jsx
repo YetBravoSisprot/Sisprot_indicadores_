@@ -166594,13 +166594,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00397",
       "created_at": "2026-09-03T16:13:15.723093",
       "service_detail": {
-        "id": 12976,
+        "id": 13178,
         "ip": "172.17.1.230",
-        "mac": "HW:TC:5D:51:B2:91",
-        "serial": "HWTC5D51B291",
+        "mac": "JM:KG:C3:1F:BD:94",
+        "serial": "JMKGC31FBD94",
         "queue": null,
         "interface": "VLAN283_PARAGUATAN",
-        "created_at": "2026-09-03T17:50:57.027461",
+        "created_at": "2026-10-16T12:23:46.491260",
         "created_by_name": null
       },
       "installation_invoice_cost": null
