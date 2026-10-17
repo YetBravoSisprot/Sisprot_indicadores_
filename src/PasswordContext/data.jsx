@@ -168142,8 +168142,8 @@ const largeArraydata =
       "id": 9294,
       "client_name": "MERY MARIA ACOSTA NIEVES",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -168160,7 +168160,16 @@ const largeArraydata =
       "client_identification": "V12000699",
       "nap_box_name": "CTO-00433",
       "created_at": "2026-10-12T09:34:55.860103",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13181,
+        "ip": "172.17.2.78",
+        "mac": "TP:LG:B9:54:EB:B4",
+        "serial": "TPLGB954EBB4",
+        "queue": null,
+        "interface": "VLAN200_OLTs",
+        "created_at": "2026-10-16T20:30:51.594395",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
