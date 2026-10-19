@@ -168423,8 +168423,8 @@ const largeArraydata =
       "id": 9314,
       "client_name": "CRUZ MANUEL GONZALEZ PIÑERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Las Rurales",
@@ -168441,7 +168441,16 @@ const largeArraydata =
       "client_identification": "V10459644",
       "nap_box_name": "468",
       "created_at": "2026-10-19T12:59:34.608577",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13198,
+        "ip": "172.17.2.102",
+        "mac": "JM:KG:B9:3A:78:25",
+        "serial": "JMKGB93A7825",
+        "queue": null,
+        "interface": "VLAN252_RURALES_PAYA",
+        "created_at": "2026-10-19T19:05:52.621353",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
