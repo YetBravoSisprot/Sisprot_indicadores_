@@ -10246,11 +10246,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Durpa",
       "plan": {
-        "id": 21,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "34.50",
-        "code": "FOR450M",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
       },
       "client_mobile": "04125972297",
       "client_email": "DANOANABLANCA89@GMAIL.COM",
@@ -120171,8 +120171,8 @@ const largeArraydata =
       "id": 7363,
       "client_name": "Freddy Carrillo",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Sabana Grande",
