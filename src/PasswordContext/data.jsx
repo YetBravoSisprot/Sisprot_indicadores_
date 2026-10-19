@@ -159667,8 +159667,8 @@ const largeArraydata =
       "id": 8972,
       "client_name": "KELVIN DAYERSON SANCHEZ VARGAS",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -159685,7 +159685,16 @@ const largeArraydata =
       "client_identification": "V23783510",
       "nap_box_name": "CTO-00256",
       "created_at": "2026-01-22T13:25:59.543176",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13196,
+        "ip": "172.17.2.142",
+        "mac": "70:2E:22:F3:F7:29",
+        "serial": "JMKGCBDC71AD",
+        "queue": null,
+        "interface": "VLAN229_PANTIN",
+        "created_at": "2026-10-19T14:18:45.723620",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
