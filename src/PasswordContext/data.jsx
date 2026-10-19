@@ -168382,16 +168382,7 @@ const largeArraydata =
       "client_identification": "V30148131",
       "nap_box_name": "CTO-00121 C/ 10-A",
       "created_at": "2026-10-17T19:21:56.534272",
-      "service_detail": {
-        "id": 13193,
-        "ip": "10.10.10.2",
-        "mac": "JMKGCBDC71AD",
-        "serial": "JMKGCBDC71AD",
-        "queue": null,
-        "interface": "VLAN229_PANTIN",
-        "created_at": "2026-10-17T19:21:56.535874",
-        "created_by_name": null
-      },
+      "service_detail": null,
       "installation_invoice_cost": null
     },
     {
