@@ -1,6 +1,6 @@
 const largeArraydata =
 {
-  "count": 5525,
+  "count": 5529,
   "results": [
     {
       "id": 3063,
@@ -168383,6 +168383,106 @@ const largeArraydata =
         "created_at": "2026-10-17T19:21:56.535874",
         "created_by_name": null
       },
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9313,
+      "client_name": "PEDRO EMILIO VEGA BUSCEMA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Ezequiel Zamora",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04243567999",
+      "client_email": "PEDRISEMI4@GMAIL.COM",
+      "address": "URBANISMO LOS NÍSPEROS N#14 TORRE 28 PISO 3",
+      "client_identification": "V18474196",
+      "nap_box_name": "CTO-00269",
+      "created_at": "2026-10-19T12:59:28.953305",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9314,
+      "client_name": "CRUZ MANUEL GONZALEZ PIÑERO",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Las Rurales",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128671300",
+      "client_email": "CRUZMANUELGP@GMAIL.COM",
+      "address": "ROSARIO DE PAYA CALLE 103 SECTOR LAS RURALES",
+      "client_identification": "V10459644",
+      "nap_box_name": "468",
+      "created_at": "2026-10-19T12:59:34.608577",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9315,
+      "client_name": "ANA MARIA MOGUERA MONTES",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "La Casona II",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04163425355",
+      "client_email": "ANAMARIAMOGUERA06@GMAIL.COM",
+      "address": "LA CASONA II CALLE 18",
+      "client_identification": "V18277990",
+      "nap_box_name": "CTO-00086",
+      "created_at": "2026-10-19T12:59:41.550725",
+      "service_detail": null,
+      "installation_invoice_cost": null
+    },
+    {
+      "id": 9316,
+      "client_name": "LUIS GUILLERMO MIJARES MOTA",
+      "client_type_name": "RESIDENCIAL",
+      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 1,
+      "migrate": true,
+      "sector_name": "Valle Fresco",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 300M",
+        "cost": "27.60",
+        "code": "FOR300M",
+        "profile": "300Mbps/300Mbps"
+      },
+      "client_mobile": "04128907334",
+      "client_email": "LUISGUILLERMOMIJARESS@GMAIL.COM",
+      "address": "VALLE FRESCO MANZANA: 16 CASA 4 TURMERO",
+      "client_identification": "V19834292",
+      "nap_box_name": null,
+      "created_at": "2026-10-19T12:59:53.228424",
+      "service_detail": null,
       "installation_invoice_cost": null
     }
   ]
