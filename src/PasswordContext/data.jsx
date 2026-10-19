@@ -168389,8 +168389,8 @@ const largeArraydata =
       "id": 9313,
       "client_name": "PEDRO EMILIO VEGA BUSCEMA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "POR INSTALAR_RESIDENCIAL",
-      "status_name": "Por instalar",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Ezequiel Zamora",
@@ -168407,7 +168407,16 @@ const largeArraydata =
       "client_identification": "V18474196",
       "nap_box_name": "CTO-00269",
       "created_at": "2026-10-19T12:59:28.953305",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13197,
+        "ip": "172.17.2.94",
+        "mac": "HW:TC:6C:89:BE:7E",
+        "serial": "HWTC49200728",
+        "queue": null,
+        "interface": "VLAN209_ZAMORA_OLT1",
+        "created_at": "2026-10-19T17:59:02.959390",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
