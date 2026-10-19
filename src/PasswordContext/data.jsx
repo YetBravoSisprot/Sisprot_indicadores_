@@ -10240,8 +10240,8 @@ const largeArraydata =
       "id": 3425,
       "client_name": "DARIANA CRUZELYS TOVAR BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "CANCELADO_RESIDENCIAL",
-      "status_name": "Cancelado",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Durpa",
@@ -10258,7 +10258,16 @@ const largeArraydata =
       "client_identification": "V19032891",
       "nap_box_name": "377",
       "created_at": "2024-04-12T14:27:02.222529",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13195,
+        "ip": "172.18.81.2",
+        "mac": "VS:OL:00:52:2C:F9",
+        "serial": "VSOL00522CF9",
+        "queue": null,
+        "interface": "VLAN240_DURPA",
+        "created_at": "2026-10-19T11:12:14.079275",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
