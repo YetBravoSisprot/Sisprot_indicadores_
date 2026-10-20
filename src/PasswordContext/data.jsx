@@ -166165,13 +166165,13 @@ const largeArraydata =
       "nap_box_name": "CTO-00161",
       "created_at": "2026-08-26T14:55:17.209230",
       "service_detail": {
-        "id": 12915,
+        "id": 13201,
         "ip": "172.17.1.54",
-        "mac": "JM:KG:CF:CA:47:6C",
-        "serial": "JMKGCFCA476C",
+        "mac": "JM:KG:1E:B8:4C:35",
+        "serial": "JMKG1EB84C35",
         "queue": null,
         "interface": "VLAN224_SAN_PABLO_OLT1",
-        "created_at": "2026-08-27T09:16:06.773614",
+        "created_at": "2026-10-20T10:16:15.112509",
         "created_by_name": null
       },
       "installation_invoice_cost": null
@@ -168432,8 +168432,8 @@ const largeArraydata =
       "id": 9314,
       "client_name": "CRUZ MANUEL GONZALEZ PIÑERO",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": true,
       "sector_name": "Las Rurales",
