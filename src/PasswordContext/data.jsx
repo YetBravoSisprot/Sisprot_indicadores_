@@ -160887,7 +160887,16 @@ const largeArraydata =
       "client_identification": "V28458411",
       "nap_box_name": "CTO-00038",
       "created_at": "2026-03-13T10:40:02.353081",
-      "service_detail": null,
+      "service_detail": {
+        "id": 13200,
+        "ip": "172.00.0.000",
+        "mac": "",
+        "serial": "AAAAAAAAAA",
+        "queue": null,
+        "interface": "INTERFACE_FAKE",
+        "created_at": "2026-10-19T19:05:52.621353",
+        "created_by_name": null
+      },
       "installation_invoice_cost": null
     },
     {
