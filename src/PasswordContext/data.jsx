@@ -93204,7 +93204,7 @@ const largeArraydata =
     },
     {
       "id": 6363,
-      "client_name": "PNB TRANSITO ARC",
+      "client_name": "PNB TRANSITO ARC INSPECTOR BRACHO",
       "client_type_name": "INTERCAMBIO",
       "client_subdivision": "ACTIVO_INTERCAMBIO",
       "status_name": "Activo",
@@ -102408,7 +102408,7 @@ const largeArraydata =
     },
     {
       "id": 6688,
-      "client_name": "PNB TRANSITO ARC",
+      "client_name": "PNB TRANSITO ARC INSPECTOR BRACHO",
       "client_type_name": "INTERCAMBIO",
       "client_subdivision": "ACTIVO_INTERCAMBIO",
       "status_name": "Activo",
@@ -150904,8 +150904,8 @@ const largeArraydata =
       "id": 8648,
       "client_name": "MARIELVYS INDIRA GUERRA PEÑA",
       "client_type_name": "RESIDENCIAL",
-      "client_subdivision": "SUSPENDIDO_RESIDENCIAL",
-      "status_name": "Suspendido",
+      "client_subdivision": "ACTIVO_RESIDENCIAL",
+      "status_name": "Activo",
       "cycle": 1,
       "migrate": false,
       "sector_name": "Villas Del Sur",
@@ -150916,7 +150916,7 @@ const largeArraydata =
         "code": "FOR600M",
         "profile": "600M/600M"
       },
-      "client_mobile": "04128861670",
+      "client_mobile": "04228861670",
       "client_email": "MARYGUERRA2104@GMAIL.COM",
       "address": "SECTOR LA CANDELARIA SUR II, CALLE PRINCIPAL II, CASA #24, ENTRANDO POR LA JULIA, LA CALLE ANTES DE KSA HOME CENTER",
       "client_identification": "V21466582",
@@ -165983,7 +165983,7 @@ const largeArraydata =
     },
     {
       "id": 9207,
-      "client_name": "PNB TRANSITO ARC",
+      "client_name": "PNB TRANSITO ARC INSPECTOR BRACHO",
       "client_type_name": "GRATIS",
       "client_subdivision": "ACTIVO_GRATIS",
       "status_name": "Activo",
