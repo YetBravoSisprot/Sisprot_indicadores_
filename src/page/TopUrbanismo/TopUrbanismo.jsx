@@ -364,6 +364,33 @@ function TopUrbanismo() {
 
   const pasaFiltros = useCallback(
     (servicio) => {
+      if (!servicio) return false;
+
+      // Exclusión de nombres específicos solicitados
+      const nombreUpper = String(servicio.client_name || "").toUpperCase().replace(/\s+/g, " ");
+      if (
+        nombreUpper.includes("FREDDY CARRILLO") ||
+        nombreUpper.includes("BRYANT REYES") ||
+        nombreUpper.includes("ELISAUL REYES")
+      ) {
+        return false;
+      }
+
+      // Exclusión: En contratos cancelados, no mostrar empleados
+      const esCancelado =
+        servicio.status === 34 ||
+        String(servicio.status_name).toUpperCase() === "CANCELADO" ||
+        (servicio.client_subdivision && String(servicio.client_subdivision).toUpperCase().includes("CANCELADO"));
+
+      const esEmpleado =
+        servicio.client_type_name === "EMPLEADO" ||
+        (servicio.client_subdivision && String(servicio.client_subdivision).toUpperCase().includes("EMPLEADO")) ||
+        (servicio.plan?.name && String(servicio.plan.name).toUpperCase().includes("EMPLEADO"));
+
+      if (esCancelado && esEmpleado) {
+        return false;
+      }
+
       let tipoFiltrado = false;
 
       if (estadosSeleccionadosType.includes("Todos")) {
@@ -451,6 +478,33 @@ function TopUrbanismo() {
 
   const pasaFiltroTotales = useCallback(
     (servicio) => {
+      if (!servicio) return false;
+
+      // Exclusión de nombres específicos solicitados
+      const nombreUpper = String(servicio.client_name || "").toUpperCase().replace(/\s+/g, " ");
+      if (
+        nombreUpper.includes("FREDDY CARRILLO") ||
+        nombreUpper.includes("BRYANT REYES") ||
+        nombreUpper.includes("ELISAUL REYES")
+      ) {
+        return false;
+      }
+
+      // Exclusión: En contratos cancelados, no mostrar empleados
+      const esCancelado =
+        servicio.status === 34 ||
+        String(servicio.status_name).toUpperCase() === "CANCELADO" ||
+        (servicio.client_subdivision && String(servicio.client_subdivision).toUpperCase().includes("CANCELADO"));
+
+      const esEmpleado =
+        servicio.client_type_name === "EMPLEADO" ||
+        (servicio.client_subdivision && String(servicio.client_subdivision).toUpperCase().includes("EMPLEADO")) ||
+        (servicio.plan?.name && String(servicio.plan.name).toUpperCase().includes("EMPLEADO"));
+
+      if (esCancelado && esEmpleado) {
+        return false;
+      }
+
       let estadoFiltrado = false;
 
       if (estadosSeleccionados.includes("Todos")) {
