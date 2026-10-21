@@ -175,23 +175,17 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
         url += `&status=${statusIds.join(",")}`;
     }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 120000); // 120s timeout para datasets grandes
-
     try {
         const response = await fetch(url, {
             method: "GET",
-            signal: controller.signal,
             headers: {
                 "X-API-KEY": (API_KEY || "").trim(),
                 "Accept": "application/json"
             }
         });
 
-        clearTimeout(timeoutId);
-
         if (!response.ok) {
-            throw new Error(`Error HTTP al consultar contratos: ${response.status} ${response.statusText}`);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -212,7 +206,6 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
             fromCache: false
         };
     } catch (err) {
-        clearTimeout(timeoutId);
         console.error("Error en fetchContractsByStatus:", err);
         throw err;
     }
