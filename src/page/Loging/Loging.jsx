@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import { useNavigate } from "react-router-dom";
+import fondoSisprot from "../../assets/fondo_Sisprot_BI.png";
+import logoSgf from "../../assets/logo_sgf.png";
 import "./Loging.css";
 
 function Loging() {
@@ -59,14 +61,14 @@ function Loging() {
   return (
     <div
       className="login-page-bg"
-      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/fondo_Sisprot_BI.png)` }}
+      style={{ backgroundImage: `url(${fondoSisprot})` }}
     >
       <div className="login-main-container">
         {/* Encabezado Superior con Logo y Título */}
         <header className="login-header animate-fade-in">
           <div className="login-brand-row">
             <img
-              src={`${process.env.PUBLIC_URL}/logo_sgf.png`}
+              src={logoSgf}
               alt="SGF"
               className="login-sgf-logo"
             />
