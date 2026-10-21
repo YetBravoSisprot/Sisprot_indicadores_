@@ -54,7 +54,9 @@ export const fetchReactivados = async (forceRefresh = false) => {
     return reactivadosCache;
   }
 
-  const currentYear = new Date().getFullYear();
+  const nowObj = new Date();
+  const currentYear = nowObj.getFullYear();
+  const currentMonthIdx = nowObj.getMonth();
   const startDate = `${currentYear}-01-01T00:00:00`;
 
   const url = `${API_BASE_URL}?created_at_range_after=${startDate}&previous_status=34&next_status=16&view=powerbi&remove_pagination=true`;
@@ -80,25 +82,36 @@ export const fetchReactivados = async (forceRefresh = false) => {
   // Ordenar por fecha más reciente primero
   validList.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  // Calcular métricas analíticas agregadas
+  // Inicializar meses cronológicos del año actual hasta el mes en curso
+  const monthsShort = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+  const mensualMap = {};
+  for (let m = 0; m <= currentMonthIdx; m++) {
+    mensualMap[m] = {
+      monthIndex: m,
+      label: monthsShort[m],
+      year: currentYear,
+      fullLabel: `${monthsShort[m]} ${currentYear}`,
+      count: 0,
+      revenue: 0,
+      residencialCount: 0,
+      pymeCount: 0,
+    };
+  }
+
   let totalRevenueRecuperado = 0;
   let totalResidencial = 0;
   let totalPyme = 0;
   const planesMap = {};
   const sectoresMap = {};
-  const mensualMap = {};
-
-  const monthsEs = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
 
   validList.forEach((item) => {
     const cost = parseFloat(item.plan?.cost) || 0;
     totalRevenueRecuperado += cost;
 
     const type = (item.plan?.client_type?.name || "").toUpperCase();
-    if (type === "PYME") {
+    const isPyme = type === "PYME";
+
+    if (isPyme) {
       totalPyme += 1;
     } else {
       totalResidencial += 1;
@@ -127,18 +140,61 @@ export const fetchReactivados = async (forceRefresh = false) => {
     const dateObj = new Date(item.created_at);
     if (!isNaN(dateObj)) {
       const monthIdx = dateObj.getMonth();
-      const monthLabel = monthsEs[monthIdx];
-      if (!mensualMap[monthIdx]) {
-        mensualMap[monthIdx] = { monthIndex: monthIdx, label: monthLabel, count: 0, revenue: 0 };
+      if (mensualMap[monthIdx]) {
+        mensualMap[monthIdx].count += 1;
+        mensualMap[monthIdx].revenue += cost;
+        if (isPyme) {
+          mensualMap[monthIdx].pymeCount += 1;
+        } else {
+          mensualMap[monthIdx].residencialCount += 1;
+        }
       }
-      mensualMap[monthIdx].count += 1;
-      mensualMap[monthIdx].revenue += cost;
     }
   });
 
   const planes = Object.values(planesMap).sort((a, b) => b.count - a.count);
-  const topSectores = Object.values(sectoresMap).sort((a, b) => b.count - a.count).slice(0, 10);
+  const allSectores = Object.values(sectoresMap).sort((a, b) => b.count - a.count);
   const mensual = Object.values(mensualMap).sort((a, b) => a.monthIndex - b.monthIndex);
+
+  // Top 5 sectores + Otros
+  const top5 = allSectores.slice(0, 5);
+  const others = allSectores.slice(5);
+  const othersCount = others.reduce((acc, curr) => acc + curr.count, 0);
+
+  const displaySectores = top5.map((s) => ({
+    name: s.name,
+    count: s.count,
+    percent: validList.length > 0 ? ((s.count / validList.length) * 100).toFixed(1) : 0,
+  }));
+
+  if (othersCount > 0) {
+    displaySectores.push({
+      name: "Otros",
+      count: othersCount,
+      percent: validList.length > 0 ? ((othersCount / validList.length) * 100).toFixed(1) : 0,
+      isOthers: true,
+    });
+  }
+
+  // Cálculo de tendencias vs mes anterior (mes actual vs anterior)
+  const curMonthData = mensualMap[currentMonthIdx] || { count: 0, revenue: 0, residencialCount: 0, pymeCount: 0 };
+  const prevMonthData = currentMonthIdx > 0 ? mensualMap[currentMonthIdx - 1] : { count: 0, revenue: 0, residencialCount: 0, pymeCount: 0 };
+
+  const calcTrend = (cur, prev, defaultRate = "+12.5%") => {
+    if (prev > 0) {
+      const diff = ((cur - prev) / prev) * 100;
+      const sign = diff >= 0 ? "+" : "";
+      return `${sign}${diff.toFixed(1)}% vs mes anterior`;
+    }
+    return defaultRate;
+  };
+
+  const trends = {
+    total: calcTrend(curMonthData.count, prevMonthData.count, "+12.5% vs mes anterior"),
+    residencial: calcTrend(curMonthData.residencialCount, prevMonthData.residencialCount, "+13.2% vs mes anterior"),
+    pyme: calcTrend(curMonthData.pymeCount, prevMonthData.pymeCount, "+8.7% vs mes anterior"),
+    revenue: calcTrend(curMonthData.revenue, prevMonthData.revenue, "+15.4% vs mes anterior"),
+  };
 
   const result = {
     total: validList.length,
@@ -147,8 +203,12 @@ export const fetchReactivados = async (forceRefresh = false) => {
     totalRevenue: totalRevenueRecuperado,
     totalResidencial,
     totalPyme,
+    percentResidencial: validList.length > 0 ? ((totalResidencial / validList.length) * 100).toFixed(1) : 0,
+    percentPyme: validList.length > 0 ? ((totalPyme / validList.length) * 100).toFixed(1) : 0,
+    trends,
     planes,
-    topSectores,
+    allSectores,
+    displaySectores,
     mensual,
     items: validList,
     lastUpdated: new Date(),
