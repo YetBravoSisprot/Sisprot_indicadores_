@@ -297,6 +297,194 @@ function DonutMeter({ percentage = 0, size = 114, strokeWidth = 11 }) {
   );
 }
 
+// ==========================================
+// ICONOS SVG VECTORIALES DE ALTA FIDELIDAD
+// ==========================================
+
+function BarChartHeaderIcon({ className = "header-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 28 28" width="28" height="28" className={className} fill="none">
+      <defs>
+        <linearGradient id="headerBarGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="100%" stopColor="#0284c7" />
+        </linearGradient>
+      </defs>
+      <rect x="3" y="14" width="5.5" height="11" rx="2.5" fill="url(#headerBarGrad)" opacity="0.85" />
+      <rect x="11.2" y="8" width="5.5" height="17" rx="2.5" fill="url(#headerBarGrad)" />
+      <rect x="19.5" y="3" width="5.5" height="22" rx="2.5" fill="#38bdf8" />
+    </svg>
+  );
+}
+
+function PorcentajeUsersIcon({ size = 24, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 26 26" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="cyanUsersGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="100%" stopColor="#0284c7" />
+        </linearGradient>
+      </defs>
+      <circle cx="10" cy="7.5" r="4.2" fill="url(#cyanUsersGrad)" />
+      <path
+        d="M2.5 21.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5"
+        fill="url(#cyanUsersGrad)"
+      />
+      <circle cx="18.5" cy="8.5" r="3.2" fill="#38bdf8" fillOpacity="0.75" />
+      <path
+        d="M17.5 15.2c2.4.6 4.2 2.7 4.5 5.8"
+        stroke="#38bdf8"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeOpacity="0.85"
+      />
+    </svg>
+  );
+}
+
+function MoneyBagIcon({ size = 26, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 28 28" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="goldBagGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fef08a" />
+          <stop offset="35%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#b45309" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M10 5.2C10 3.8 12 3 14 3s4 .8 4 2.2c0 .6-.5 1-1.2 1h-5.6c-.7 0-1.2-.4-1.2-1z"
+        fill="url(#goldBagGrad)"
+      />
+      <rect x="10.5" y="6.2" width="7" height="2" rx="1" fill="#fde047" />
+      <path
+        d="M14 8.2c-5 0-9.2 4.2-9.2 9.8 0 4.2 4 7 9.2 7s9.2-2.8 9.2-7c0-5.6-4.2-9.8-9.2-9.8z"
+        fill="url(#goldBagGrad)"
+      />
+      <text
+        x="14"
+        y="19.8"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="900"
+        fontFamily="sans-serif"
+        fill="#78350f"
+      >
+        $
+      </text>
+    </svg>
+  );
+}
+
+function StarGoldIcon({ size = 26, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 28 28" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="goldStarGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#fffbeb" />
+          <stop offset="25%" stopColor="#facc15" />
+          <stop offset="70%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#d97706" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M14 3l3.3 6.8 7.5 1.1-5.4 5.3 1.3 7.5L14 20.2l-6.7 3.5 1.3-7.5-5.4-5.3 7.5-1.1L14 3z"
+        fill="url(#goldStarGrad)"
+        stroke="#fef08a"
+        strokeWidth="0.75"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TotalClientsIcon({ size = 24, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 26 26" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="purpleUsersGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#e0e7ff" />
+          <stop offset="40%" stopColor="#a5b4fc" />
+          <stop offset="100%" stopColor="#6366f1" />
+        </linearGradient>
+      </defs>
+      <circle cx="10" cy="7.5" r="4.2" fill="url(#purpleUsersGrad)" />
+      <path
+        d="M2.5 21.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5"
+        fill="url(#purpleUsersGrad)"
+      />
+      <circle cx="18.5" cy="8.5" r="3.2" fill="#c7d2fe" fillOpacity="0.8" />
+      <path
+        d="M17.5 15.2c2.4.6 4.2 2.7 4.5 5.8"
+        stroke="#c7d2fe"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeOpacity="0.85"
+      />
+    </svg>
+  );
+}
+
+function ActivosCheckIcon({ size = 24, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 26 26" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="greenShieldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#34d399" />
+          <stop offset="100%" stopColor="#059669" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M13 2.5L4 6.5v6.2c0 5.6 3.8 10.9 9 12.3 5.2-1.4 9-6.7 9-12.3V6.5l-9-4z"
+        fill="url(#greenShieldGrad)"
+      />
+      <polyline
+        points="8.5 13 11.5 16 17.5 9.5"
+        stroke="#ffffff"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SuspendidosAlertIcon({ size = 24, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 26 26" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="amberAlertGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#fef08a" />
+          <stop offset="45%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#d97706" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M13 3.5c.8 0 1.6.5 2 1.2l8.8 15.2c.8 1.4-.2 3.1-1.8 3.1H4c-1.6 0-2.6-1.7-1.8-3.1L11 4.7c.4-.7 1.2-1.2 2-1.2z"
+        fill="url(#amberAlertGrad)"
+      />
+      <line x1="13" y1="9.5" x2="13" y2="15" stroke="#78350f" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="13" cy="18.5" r="1.3" fill="#78350f" />
+    </svg>
+  );
+}
+
+function CanceladosStopIcon({ size = 24, className = "squircle-icon-svg" }) {
+  return (
+    <svg viewBox="0 0 26 26" width={size} height={size} className={className} fill="none">
+      <defs>
+        <linearGradient id="redCircleGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#f87171" />
+          <stop offset="100%" stopColor="#dc2626" />
+        </linearGradient>
+      </defs>
+      <circle cx="13" cy="13" r="10" stroke="url(#redCircleGrad)" strokeWidth="2.5" />
+      <circle cx="13" cy="13" r="4.5" fill="url(#redCircleGrad)" />
+    </svg>
+  );
+}
+
 const getFormattedTime = () => {
   const now = new Date();
   const pad = (n) => String(n).padStart(2, "0");
@@ -540,7 +728,7 @@ function Indicadores() {
         {/* ENCABEZADO PRINCIPAL */}
         <div className="dashboard-header-container">
           <div className="dashboard-header-icon-box">
-            <img src="/ICON_grafico.png" alt="Gráfico" className="header-icon-img" />
+            <BarChartHeaderIcon />
           </div>
           <div className="dashboard-header-texts">
             <h2 className="dashboard-title-main">
@@ -567,7 +755,7 @@ function Indicadores() {
           <div className="kpi-card card-bi-salud">
             <div className="card-top-header">
               <div className="card-squircle-icon icon-bg-blue">
-                <img src="/ICON_personas.png" alt="Clientes" className="squircle-icon-img" />
+                <PorcentajeUsersIcon size={24} />
               </div>
               <span className="card-label-question">
                 ¿QUÉ PORCENTAJE DE MIS CLIENTES TOTALES ESTÁN PAGANDO Y TIENEN EL SERVICIO ACTIVO?
@@ -592,7 +780,7 @@ function Indicadores() {
           <div className="kpi-card card-bi-oportunidad">
             <div className="card-top-header">
               <div className="card-squircle-icon icon-bg-amber">
-                <img src="/ICON_bolsa_dinero.png" alt="Oportunidad" className="squircle-icon-img" />
+                <MoneyBagIcon size={26} />
               </div>
               <div className="card-label-with-info">
                 <span className="card-label-title">OPORTUNIDAD (USD)</span>
@@ -631,7 +819,7 @@ function Indicadores() {
           <div className="kpi-card card-bi-lider">
             <div className="card-top-header">
               <div className="card-squircle-icon icon-bg-gold">
-                <img src="/ICON_estrella.png" alt="Líder" className="squircle-icon-img" />
+                <StarGoldIcon size={26} />
               </div>
               <span className="card-label-title">SECTOR LÍDER</span>
             </div>
@@ -665,7 +853,7 @@ function Indicadores() {
         <div className="section-divider-row">
           <div className="section-divider-left">
             <div className="section-header-icon-badge">
-              <img src="/ICON_personas.png" alt="Clientes" className="section-badge-img" />
+              <PorcentajeUsersIcon size={20} />
             </div>
             <h3 className="section-title-text">
               Resumen de <span className="title-highlight">clientes</span>
@@ -680,7 +868,7 @@ function Indicadores() {
           <div className="kpi-card card-metric-wave wave-purple">
             <div className="metric-header-row">
               <div className="metric-squircle squircle-purple">
-                <img src="/ICON_personas.png" alt="Total" className="metric-icon-img" />
+                <TotalClientsIcon size={24} />
               </div>
               <div className="metric-label-wrap">
                 <span className="metric-label-text">TOTAL CLIENTES</span>
@@ -702,7 +890,7 @@ function Indicadores() {
           <div className="kpi-card card-metric-wave wave-green">
             <div className="metric-header-row">
               <div className="metric-squircle squircle-green">
-                <img src="/ICON_check.png" alt="Activos" className="metric-icon-img" />
+                <ActivosCheckIcon size={24} />
               </div>
               <div className="metric-label-wrap">
                 <span className="metric-label-text">ACTIVOS</span>
@@ -724,7 +912,7 @@ function Indicadores() {
           <div className="kpi-card card-metric-wave wave-amber">
             <div className="metric-header-row">
               <div className="metric-squircle squircle-amber">
-                <img src="/ICON_alerta.png" alt="Suspendidos" className="metric-icon-img" />
+                <SuspendidosAlertIcon size={24} />
               </div>
               <div className="metric-label-wrap">
                 <span className="metric-label-text">SUSPENDIDOS</span>
@@ -746,9 +934,7 @@ function Indicadores() {
           <div className="kpi-card card-metric-wave wave-red">
             <div className="metric-header-row">
               <div className="metric-squircle squircle-red">
-                <div className="stop-circle-badge">
-                  <span className="stop-inner-dot" />
-                </div>
+                <CanceladosStopIcon size={24} />
               </div>
               <div className="metric-label-wrap">
                 <span className="metric-label-text">CANCELADOS TASA GENERAL</span>
