@@ -823,18 +823,15 @@ function TopUrbanismo() {
 
   if (error) return <div>Error: {error.message}</div>;
 
+  if (showPasswordState) {
+    return <LogingForm />;
+  }
+
   return (
     <div className="contenedor">
       <LogoTitulo />
-      {showPasswordState ? (
-        <>
-          <h1>Inicia Sesion</h1>
-          <LogingForm />
-        </>
-      ) : (
-        <>
-          <DropdownMenu />
-          <PageNav />
+      <DropdownMenu />
+      <PageNav />
 
           <div className="filtros-panel">
             <div className="busqueda-contrato">
@@ -1139,9 +1136,7 @@ function TopUrbanismo() {
           ) : (
             <UrbanismoList urbanismos={topUrbanismos} />
           )}
-        </>
-      )}
-      {(isLoading || isUpdating) && (
+          {(isLoading || isUpdating) && (
         <div className="loading-overlay-blur">
           <div className="loading-card">
             <div className="loading-spinner"></div>
