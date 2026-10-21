@@ -117,14 +117,26 @@ export const normalizeContract = (item) => {
 export const filterValidContracts = (contractsList) => {
     if (!Array.isArray(contractsList)) return [];
 
-    const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
+    const excludedNames = ["FREDDY CARRILLO", "BRYANT REYES", "ELISAUL REYES"];
+    const whitelist = ["THAIS BEJAS"];
 
     return contractsList.filter(cliente => {
         if (!cliente) return false;
         const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
 
-        // Excluir pruebas de usuarios específicos
-        if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
+        // Excluir nombres específicos solicitados
+        if (excludedNames.some(ex => name.includes(ex))) return false;
+
+        // Excluir clientes empleados si están cancelados
+        const isCancelled = cliente.status === 34 || 
+                            String(cliente.status_name).toUpperCase() === "CANCELADO" || 
+                            (cliente.client_subdivision && String(cliente.client_subdivision).toUpperCase().includes("CANCELADO"));
+        const isEmpleado = cliente.client_type_name === "EMPLEADO" ||
+                           (cliente.client_subdivision && String(cliente.client_subdivision).toUpperCase().includes("EMPLEADO")) ||
+                           (cliente.plan?.name && String(cliente.plan.name).toUpperCase().includes("EMPLEADO"));
+        if (isCancelled && isEmpleado) {
+            return false;
+        }
 
         // Lista blanca permitida
         const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
