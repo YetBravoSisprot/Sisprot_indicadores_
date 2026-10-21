@@ -31,6 +31,12 @@
     --transition-medium: 0.3s ease;
 }
 
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: var(--font-family-base);
     background: radial-gradient(circle at 80% 20%, rgba(233, 161, 36, 0.12) 0%, transparent 45%),
@@ -42,6 +48,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 
 /* --- CLASE UTILITARIA GLASSMORPHISM --- */
 .glass {
@@ -111,9 +118,17 @@ body {
     animation: slideUp 0.5s ease-out forwards;
 }
 
-/* ==========================================================================
-   LAYOUT SHIFT FOR SIDEBAR COMPONENT
-   ========================================================================== */
+/* Hide duplicate top logo/title on dashboard pages since PageNav handles desktop and mobile headers */
+.contenedor > .container,
+.ventas-globales-page > .container,
+.admin-page > .container,
+.encuestas-page > .report-header-info,
+.reactivados-page > .report-header-info,
+div:has(> .indicadores-dashboard) > .container,
+div:has(> .ventas-dashboard) > .container {
+  display: none !important;
+}
+
 @media (min-width: 769px) {
   /* Push dashboards to the right to accommodate fixed sidebar */
   .indicadores-dashboard,
@@ -141,21 +156,10 @@ body {
     margin-left: 105px !important;
     max-width: calc(100% - 125px) !important;
   }
-
-  /* Hide duplicate top logo/title on dashboard pages on desktop since sidebar has it */
-  .contenedor > .container,
-  .ventas-globales-page > .container,
-  .admin-page > .container,
-  .encuestas-page > .report-header-info,
-  .reactivados-page > .report-header-info,
-  div:has(> .indicadores-dashboard) > .container,
-  div:has(> .ventas-dashboard) > .container {
-    display: none !important;
-  }
 }
 
 @media (max-width: 768px) {
-  /* Push dashboard content down to clear fixed mobile top header */
+  /* Reset left margins and push dashboard content down to clear fixed mobile top header */
   .indicadores-dashboard,
   .ventas-dashboard,
   .admin-dashboard,
@@ -164,9 +168,13 @@ body {
   .report-container,
   .survey-container,
   .filtros-panel {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
     padding-top: 80px !important;
     box-sizing: border-box;
   }
 }
+
 
 
