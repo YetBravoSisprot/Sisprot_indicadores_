@@ -1,53 +1,26 @@
-import React, { useContext, useMemo, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useContext, useMemo, useState } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
-import { fetchMigrationData } from "../../services/migrationService";
-import { fixSpellingErrors } from "../../utils/textUtils";
-import * as XLSX from "xlsx";
 import { exportPlanesToExcel } from "../../utils/ExcelExportPlan";
 import { exportToExcel } from "../../utils/ExcelExport";
 import "./ventas.css";
 
-const PLAN_MAPPING = {
-  100: "PLAN 300M",
-  21: "PLAN 450M",
-  3: "PLAN 600M",
-  43: "PLAN 650M",
-  8: "PLAN 750M",
-  16: "PLAN 800M",
-  19: "PLAN 1 GIGA",
-  101: "PLAN 200M"
-};
-
-const STATUS_TRANSLATION = {
-  "SCHEDULED": "Programado",
-  "APPLIED": "Ejecutado",
-  "Sincronizados": "Total Sincronizado",
-  "Activo": "Activo",
-  "Suspendido": "Suspendido",
-  "Desconocido": "Pendiente"
-};
-
 function Ventas() {
   const { showPasswordState, data } = useContext(PasswordContext);
-  const navigate = useNavigate(); // Hook for navigation
-  const [migrationData, setMigrationData] = useState(null);
-  const [loadingMigration, setLoadingMigration] = useState(true);
 
-  useEffect(() => {
-    if (!showPasswordState) {
-      const getMigration = async () => {
-        const result = await fetchMigrationData();
-        setMigrationData(result);
-        setLoadingMigration(false);
-      };
-      getMigration();
-    }
-  }, [showPasswordState]);
+  const [lastUpdatedTime] = useState(() => {
+    const now = new Date();
+    const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const mins = String(now.getMinutes()).padStart(2, "0");
+    return `${day} ${month} ${year}, ${hours}:${mins}`;
+  });
 
   const stats = useMemo(() => {
     if (!data || !data.results) return null;
@@ -80,11 +53,9 @@ function Ventas() {
     // Agrupación por plan con detalles de ingresos
     const planesData = activeClients.reduce((acc, curr) => {
       let planName = curr.plan?.name || "Sin Plan";
-      // Limpiar prefijos ruidosos
       planName = planName.replace(/RECURRENTE\s+/gi, "").replace(/PLAN\s+/gi, "").trim();
       const planCost = parseFloat(curr.plan?.cost) || 0;
 
-      // Identificar categoría usando el tipo de cliente real de forma idéntica a TopUrbanismo / Indicadores
       let category = null;
       let tipoServicio = null;
       if (curr.client_subdivision && curr.client_subdivision !== "") {
@@ -103,7 +74,7 @@ function Ventas() {
         category = "RESIDENCIAL";
       }
 
-      if (!category) return acc; // Excluir si no cae en PYME o RESIDENCIAL válido
+      if (!category) return acc;
 
       if (!acc[planName]) {
         acc[planName] = {
@@ -143,63 +114,7 @@ function Ventas() {
     return { topPlanes, allPlanes, nuevos, total, ...categoryStats };
   }, [data]);
 
-
-  const masterPlanData = useMemo(() => {
-    if (!data || !data.results) return [];
-
-    const TARGET_PLAN = "RECURRENTE RESIDENCIAL PLAN 200M";
-    const TARGET_COST = "19.00";
-
-    // 1. Filtrar clientes de la base general que tienen el plan
-    const baseClients = data.results.filter(c =>
-      c.plan?.name === TARGET_PLAN ||
-      (c.plan?.cost && String(c.plan.cost) === TARGET_COST)
-    );
-
-    // 2. Mapear con la data de migración para obtener fechas exactas
-    return baseClients.map(client => {
-      const migrationRecord = migrationData?.dailyLog?.find(m => String(m.contractId) === String(client.id));
-
-      return {
-        id: client.id,
-        name: client.client_name,
-        identification: client.client_identification,
-        mobile: client.client_mobile,
-        address: client.address,
-        status: client.status_name,
-        integrationDate: migrationRecord ? migrationRecord.date : "Alta Inicial",
-        isMigration: !!migrationRecord,
-        previousPlanName: migrationRecord ? (PLAN_MAPPING[migrationRecord.previousPlanId] || "Plan Anterior") : null,
-        newPlanName: migrationRecord ? (PLAN_MAPPING[migrationRecord.newPlanId] || "Plan 200M") : "Plan 200M",
-        notes: migrationRecord ? migrationRecord.notes : ""
-      };
-    }).sort((a, b) => {
-      if (a.integrationDate === "Alta Inicial") return 1;
-      if (b.integrationDate === "Alta Inicial") return -1;
-      return new Date(b.integrationDate) - new Date(a.integrationDate);
-    });
-  }, [data, migrationData]);
-
   const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true }).format(val) + " US$";
-
-  const handleExportExcel = () => {
-    if (!masterPlanData || masterPlanData.length === 0) return;
-
-    const exportData = masterPlanData.map(client => ({
-      "Cliente": client.name,
-      "Teléfono": client.mobile || "Sin Telf.",
-      "Cédula/RIF": client.identification,
-      "ID Contrato": client.id,
-      "Estatus": STATUS_TRANSLATION[client.status] || client.status,
-      "Motivo": fixSpellingErrors(client.notes) || "-",
-      "Integración": client.isMigration ? `${client.previousPlanName} -> ${client.newPlanName} (${client.integrationDate})` : "Contrato Original"
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Plan_200M");
-    XLSX.writeFile(workbook, "Plan_200M_Clientes.xlsx");
-  };
 
   const handleExportActiveClientsExcel = () => {
     if (!data || !data.results) return;
@@ -244,166 +159,244 @@ function Ventas() {
       <DropdownMenu />
       <PageNav />
 
-          <div className="ventas-dashboard animate-slide-up">
-            <h2 className="dashboard-title">Monitor de Operaciones</h2>
+      {/* SVG Gradients definitions */}
+      <svg width="0" height="0" style={{ position: "absolute", pointerEvents: "none" }} aria-hidden="true">
+        <defs>
+          <linearGradient id="goldCoinGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#fef08a" />
+            <stop offset="40%" stopColor="#f59e0b" />
+            <stop offset="100%" stopColor="#d97706" />
+          </linearGradient>
+          <linearGradient id="goldBagGradHead" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#fef08a" />
+            <stop offset="35%" stopColor="#f59e0b" />
+            <stop offset="100%" stopColor="#b45309" />
+          </linearGradient>
+        </defs>
+      </svg>
 
-            {stats ? (
-              <div className="ventas-content-layout">
-                {/* Contenedor para las tarjetas de KPI superiores para centrado exacto */}
-                <div className="kpi-shared-row">
-                  {/* Widget: Distribución de Planes */}
-                  <div className="ventas-card glass kpi-card">
-                    <div className="card-header-main" style={{ marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h3 style={{ margin: 0, border: 'none', padding: 0 }}>💰 Ingresos por Plan</h3>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <button 
-                          className="button" 
-                          onClick={() => exportPlanesToExcel(stats.allPlanes)}
-                          style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
-                          title="Descargar Resumen de Planes"
-                        >
-                          📊 Resumen
-                        </button>
-                        <button 
-                          className="button" 
-                          onClick={handleExportActiveClientsExcel}
-                          style={{ fontSize: '0.8rem', padding: '4px 8px', margin: 0 }}
-                          title="Descargar Detalle de Clientes Activos"
-                        >
-                          📥 Clientes
-                        </button>
-                      </div>
-                    </div>
-                    <div className="plans-scroll-container">
-                      <div className="plans-list">
-                        {stats.allPlanes.map((plan, index) => (
-                          <div key={plan.name} className={`plan-item ${plan.category?.toLowerCase()}`}>
-                            <div className="plan-info">
-                              <span className="plan-name">{index + 1}. {plan.name}</span>
-                              <div className="plan-details">
-                                <span className="plan-category-badge">{plan.category}</span>
-                                <span className="plan-meta">${plan.cost}</span>
-                                <span className="plan-count">{plan.count} cl.</span>
-                              </div>
-                            </div>
-                            
-                            <div className="plan-revenue-row">
-                              <span className="plan-revenue-label">Ingresos:</span>
-                              <span className="plan-revenue-value">{formatCurrency(plan.revenue)}</span>
-                            </div>
+      <div className="ventas-dashboard animate-slide-up">
+        {/* ENCABEZADO SUPERIOR */}
+        <div className="ventas-header-container">
+          <div className="ventas-header-left">
+            <div className="ventas-header-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#38bdf8" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2.5" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <div className="ventas-header-texts">
+              <h2 className="ventas-title-main">
+                Monitor de <span className="title-highlight">Operaciones</span>
+              </h2>
+              <p className="ventas-subtitle">
+                Seguimiento en tiempo real de los ingresos por plan.
+              </p>
+            </div>
+          </div>
 
-                            <div className="progress-bar-bg">
-                              <div
-                                className="progress-bar-fill"
-                                style={{ width: `${(plan.count / stats.total) * 100}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+          <div className="header-update-badge">
+            <div className="update-badge-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <div className="update-badge-texts">
+              <span className="update-badge-label">Última actualización</span>
+              <span className="update-badge-date">{lastUpdatedTime}</span>
+            </div>
+          </div>
+        </div>
 
-                    <div className="category-summary">
-                      <div className="category-stat">
-                        <span className="cat-label">Residencial:</span>
-                        <span className="cat-value">{formatCurrency(stats.residencialRevenue)}</span>
-                      </div>
-                      <div className="category-stat">
-                        <span className="cat-label">PYME:</span>
-                        <span className="cat-value">{formatCurrency(stats.pymeRevenue)}</span>
-                      </div>
-                      <div className="category-stat total">
-                        <span className="cat-label">Ingreso Total: &nbsp;</span>
-                        <span className="cat-value">{formatCurrency(stats.totalRevenue)}</span>
-                      </div>
+        {stats ? (
+          <div className="ventas-content-layout">
+            {/* TARJETA PRINCIPAL: INGRESOS POR PLAN */}
+            <div className="ventas-main-card">
+              <div className="card-top-header-row">
+                <div className="card-title-col">
+                  <div className="card-title-headline-wrap">
+                    <div className="card-title-icon-wrap">
+                      <svg viewBox="0 0 28 28" width="26" height="26" fill="none">
+                        <path d="M10 5.2C10 3.8 12 3 14 3s4 .8 4 2.2c0 .6-.5 1-1.2 1h-5.6c-.7 0-1.2-.4-1.2-1z" fill="url(#goldBagGradHead)" />
+                        <rect x="10.5" y="6.2" width="7" height="2" rx="1" fill="#fde047" />
+                        <path d="M14 8.2c-5 0-9.2 4.2-9.2 9.8 0 4.2 4 7 9.2 7s9.2-2.8 9.2-7c0-5.6-4.2-9.8-9.2-9.8z" fill="url(#goldBagGradHead)" />
+                        <text x="14" y="19.8" textAnchor="middle" fontSize="11" fontWeight="900" fontFamily="sans-serif" fill="#78350f">$</text>
+                      </svg>
                     </div>
+                    <h3 className="card-section-title">
+                      Ingresos <span className="title-highlight">por Plan</span>
+                    </h3>
                   </div>
+                  <p className="card-section-subtitle">
+                    Detalle de ingresos según tipo de plan residencial.
+                  </p>
                 </div>
 
-                {/* Widget: Migraciones Plan 200M (ENRIQUECIDO) */}
-                <div className="ventas-card glass master-directory-widget">
-                  <div className="card-header-main">
-                    <h3>🚀 Directorio Maestro: Plan 200M ($19.00)</h3>
-                    <div className="header-badges">
-                      <span className="badge-total">{masterPlanData.length} Clientes Totales</span>
-                      <span className="badge-revenue">{formatCurrency(masterPlanData.length * 19)}/mes</span>
-                      <button
-                        className="button"
-                        onClick={handleExportExcel}
-                        title="Descargar en Excel"
-                      >
-                        📥 Excel
-                      </button>
-                    </div>
-                  </div>
-
-                  {loadingMigration ? (
-                    <div className="loading-container">
-                      <span className="spinner-icon">⏳</span>
-                      <p className="loading-text">Sincronizando fuentes de datos...</p>
-                    </div>
-                  ) : (
-                    <div className="master-directory-container">
-                      <div className="directory-table-wrapper">
-                        <table className="directory-table">
-                          <thead>
-                            <tr>
-                              <th>Cliente</th>
-                              <th>Cédula/RIF</th>
-                              <th>ID Contrato</th>
-                              <th>Estatus</th>
-                              <th>Motivo</th>
-                              <th>Integración</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {masterPlanData.length > 0 ? (
-                              masterPlanData.map(client => (
-                                <tr key={client.id} className="directory-row">
-                                  <td data-label="Cliente">
-                                    <div className="client-info-cell">
-                                      <span className="client-name-cell">{client.name}</span>
-                                      <span className="client-tel-cell">{client.mobile || "Sin Telf."}</span>
-                                    </div>
-                                  </td>
-                                  <td data-label="Cédula/RIF">{client.identification}</td>
-                                  <td data-label="ID Contrato">{client.id}</td>
-                                  <td data-label="Estatus">
-                                    <span className={`status-pill ${client.status?.toLowerCase()}`}>
-                                      {STATUS_TRANSLATION[client.status] || client.status}
-                                    </span>
-                                  </td>
-                                  <td data-label="Motivo" className="notes-cell">{fixSpellingErrors(client.notes) || "-"}</td>
-                                  <td data-label="Integración">
-                                    {client.isMigration ? (
-                                      <div className="integration-cell">
-                                        <span className="transition-text">
-                                          {client.previousPlanName} <span className="arrow">→</span> {client.newPlanName}
-                                        </span>
-                                        <span className="date-text">{client.integrationDate}</span>
-                                      </div>
-                                    ) : (
-                                      <span className="date-cell initial">Contrato Original</span>
-                                    )}
-                                  </td>
-                                </tr>
-                              ))
-                            ) : (
-                              <tr>
-                                <td colSpan="5" className="no-data">No se encontraron clientes para este plan.</td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
+                <div className="card-actions-row">
+                  <button 
+                    className="btn-action-tab active"
+                    onClick={() => exportPlanesToExcel(stats.allPlanes)}
+                    title="Descargar Resumen de Planes"
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="20" x2="18" y2="10" />
+                      <line x1="12" y1="20" x2="12" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                    <span>Resumen</span>
+                  </button>
+                  <button 
+                    className="btn-action-tab"
+                    onClick={handleExportActiveClientsExcel}
+                    title="Descargar Detalle de Clientes Activos"
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <span>Clientes</span>
+                  </button>
                 </div>
               </div>
-            ) : (
-              <p>Cargando datos...</p>
-            )}
+
+              {/* LISTADO DE PLANES */}
+              <div className="operaciones-plans-list">
+                {stats.allPlanes.map((plan, index) => {
+                  const percent = stats.total > 0 ? Math.round((plan.count / stats.total) * 100) : 0;
+                  return (
+                    <div key={plan.name} className="operaciones-plan-card">
+                      <div className="plan-card-left">
+                        <span className="plan-number-index">{String(index + 1).padStart(2, "0")}</span>
+                        <div className="plan-details-col">
+                          <div className="plan-info-top-row">
+                            <span className="plan-title-text">{plan.name}</span>
+                            <span className={`plan-category-badge-pill ${plan.category?.toLowerCase()}`}>
+                              {plan.category}
+                            </span>
+                            <span className="plan-cost-pill">${plan.cost}</span>
+                            <span className="plan-clients-pill">{plan.count} cl</span>
+                          </div>
+                          <div className="plan-progress-bar-row">
+                            <span className="progress-label-text">INGRESOS:</span>
+                            <div className="progress-track-bg">
+                              <div 
+                                className="progress-fill-bar" 
+                                style={{ width: `${Math.min(100, Math.max(3, percent))}%` }} 
+                              />
+                            </div>
+                            <span className="progress-percentage-text">{percent}%</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="plan-card-right">
+                        <div className="plan-revenue-badge-card">
+                          <div className="revenue-icon-gold-circle">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+                              <circle cx="12" cy="12" r="10" fill="url(#goldCoinGrad)" />
+                              <text x="12" y="16.5" textAnchor="middle" fontSize="12" fontWeight="900" fontFamily="sans-serif" fill="#78350f">$</text>
+                            </svg>
+                          </div>
+                          <div className="revenue-texts-wrap">
+                            <span className="revenue-sub-label">Ingreso total</span>
+                            <span className="revenue-total-amount">{formatCurrency(plan.revenue)}</span>
+                          </div>
+                          <div className="revenue-decorative-bars" aria-hidden="true">
+                            <span className="rev-bar b1" />
+                            <span className="rev-bar b2" />
+                            <span className="rev-bar b3" />
+                            <span className="rev-bar b4" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* FILA DE 3 TARJETAS RESUMEN AL FONDO */}
+            <div className="operaciones-bottom-summary-grid">
+              {/* Card 1: Total Residencial */}
+              <div className="summary-stat-card card-residencial">
+                <div className="summary-icon-squircle icon-cyan-bg">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#38bdf8" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 10.5l9-7.5 9 7.5v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9z" />
+                    <polyline points="9 21 9 12 15 12 15 21" />
+                  </svg>
+                </div>
+                <div className="summary-info-col">
+                  <span className="summary-stat-label">Total Residencial</span>
+                  <span className="summary-stat-value">{formatCurrency(stats.residencialRevenue)}</span>
+                </div>
+                <div className="summary-ambient-bars bars-cyan" aria-hidden="true">
+                  <span className="abar a1" />
+                  <span className="abar a2" />
+                  <span className="abar a3" />
+                  <span className="abar a4" />
+                </div>
+              </div>
+
+              {/* Card 2: Total PYME */}
+              <div className="summary-stat-card card-pyme">
+                <div className="summary-icon-squircle icon-purple-bg">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c084fc" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                    <line x1="9" y1="6" x2="9" y2="6.01" />
+                    <line x1="15" y1="6" x2="15" y2="6.01" />
+                    <line x1="9" y1="10" x2="9" y2="10.01" />
+                    <line x1="15" y1="10" x2="15" y2="10.01" />
+                    <line x1="9" y1="14" x2="9" y2="14.01" />
+                    <line x1="15" y1="14" x2="15" y2="14.01" />
+                    <line x1="9" y1="18" x2="15" y2="18" />
+                  </svg>
+                </div>
+                <div className="summary-info-col">
+                  <span className="summary-stat-label">Total PYME</span>
+                  <span className="summary-stat-value">{formatCurrency(stats.pymeRevenue)}</span>
+                </div>
+                <div className="summary-ambient-bars bars-purple" aria-hidden="true">
+                  <span className="abar a1" />
+                  <span className="abar a2" />
+                  <span className="abar a3" />
+                  <span className="abar a4" />
+                </div>
+              </div>
+
+              {/* Card 3: INGRESO TOTAL */}
+              <div className="summary-stat-card card-total">
+                <div className="summary-icon-squircle icon-gold-bg">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="url(#goldCoinGrad)" />
+                    <text x="12" y="16.5" textAnchor="middle" fontSize="12" fontWeight="900" fontFamily="sans-serif" fill="#78350f">$</text>
+                  </svg>
+                </div>
+                <div className="summary-info-col">
+                  <span className="summary-stat-label text-gold-label">INGRESO TOTAL</span>
+                  <span className="summary-stat-value text-cyan-amount">{formatCurrency(stats.totalRevenue)}</span>
+                </div>
+                <div className="summary-ambient-bars bars-gold" aria-hidden="true">
+                  <span className="abar a1" />
+                  <span className="abar a2" />
+                  <span className="abar a3" />
+                  <span className="abar a4" />
+                </div>
+              </div>
+            </div>
           </div>
+        ) : (
+          <div className="ventas-loading-box">
+            <div className="status-spinner-circle" />
+            <p>Cargando datos de operaciones...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
