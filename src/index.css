@@ -137,6 +137,7 @@ div:has(> .ventas-dashboard) > .container {
   .ventas-globales-container,
   .report-fullscreen-container,
   .report-container,
+  .reactivados-dashboard,
   .survey-container,
   .filtros-panel {
     margin-left: 300px !important;
@@ -151,6 +152,7 @@ div:has(> .ventas-dashboard) > .container {
   body.sidebar-collapsed .ventas-globales-container,
   body.sidebar-collapsed .report-fullscreen-container,
   body.sidebar-collapsed .report-container,
+  body.sidebar-collapsed .reactivados-dashboard,
   body.sidebar-collapsed .survey-container,
   body.sidebar-collapsed .filtros-panel {
     margin-left: 105px !important;
@@ -166,6 +168,7 @@ div:has(> .ventas-dashboard) > .container {
   .ventas-globales-container,
   .report-fullscreen-container,
   .report-container,
+  .reactivados-dashboard,
   .survey-container,
   .filtros-panel {
     margin-left: 0 !important;
