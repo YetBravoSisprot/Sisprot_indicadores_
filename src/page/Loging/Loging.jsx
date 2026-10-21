@@ -162,7 +162,7 @@ function Loging() {
                 </div>
               </div>
 
-              {/* Fila Recordarme (Sin Olvido su contraseña) */}
+              {/* Fila Recordarme */}
               <div className="login-checkbox-row">
                 <label className="login-checkbox-label">
                   <input
