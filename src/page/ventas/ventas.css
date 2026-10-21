@@ -1,14 +1,16 @@
 /* ==========================================================================
-   MONITOR DE OPERACIONES (SGF / SISPROT BI) - STYLES
+   MONITOR DE OPERACIONES (SGF / SISPROT BI) - RESPONSIVE STYLES
    ========================================================================== */
 
 .ventas-dashboard {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   padding: 30px 24px 60px 24px;
   box-sizing: border-box;
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /* ==========================================================================
@@ -21,12 +23,15 @@
   gap: 18px;
   margin-bottom: 26px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .ventas-header-left {
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
+  flex: 1 1 320px;
 }
 
 .ventas-header-icon-box {
@@ -46,15 +51,17 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0;
 }
 
 .ventas-title-main {
-  font-size: 2.35rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.35rem);
   font-weight: 850;
   letter-spacing: -0.025em;
   color: #ffffff;
   margin: 0;
-  line-height: 1.15;
+  line-height: 1.18;
+  word-break: break-word;
 }
 
 .title-highlight {
@@ -63,11 +70,12 @@
 }
 
 .ventas-subtitle {
-  font-size: 0.96rem;
+  font-size: clamp(0.82rem, 1.1vw, 0.96rem);
   color: #94a3b8;
   margin: 0;
   font-weight: 450;
   letter-spacing: -0.005em;
+  line-height: 1.4;
 }
 
 /* Badge de última actualización */
@@ -78,9 +86,11 @@
   padding: 10px 18px;
   background: rgba(4, 25, 40, 0.75);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 180, 216, 0.25);
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  flex-shrink: 0;
 }
 
 .update-badge-icon {
@@ -109,6 +119,7 @@
   font-size: 0.88rem;
   font-weight: 750;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -126,10 +137,11 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(0, 180, 216, 0.22);
   border-radius: 20px;
-  padding: 28px;
+  padding: clamp(16px, 2.5vw, 28px);
   box-sizing: border-box;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   margin-bottom: 24px;
+  width: 100%;
 }
 
 .card-top-header-row {
@@ -139,12 +151,14 @@
   margin-bottom: 24px;
   gap: 16px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .card-title-col {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .card-title-headline-wrap {
@@ -167,7 +181,7 @@
 }
 
 .card-section-title {
-  font-size: 1.55rem;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
   font-weight: 850;
   color: #ffffff;
   margin: 0;
@@ -175,10 +189,11 @@
 }
 
 .card-section-subtitle {
-  font-size: 0.88rem;
+  font-size: clamp(0.8rem, 1vw, 0.88rem);
   color: #94a3b8;
   margin: 0;
   font-weight: 450;
+  line-height: 1.4;
 }
 
 /* Botones de acción (Resumen / Clientes) */
@@ -186,6 +201,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btn-action-tab {
@@ -203,6 +219,7 @@
   background: rgba(4, 25, 40, 0.7);
   border: 1px solid rgba(0, 180, 216, 0.25);
   color: #94a3b8;
+  white-space: nowrap;
 }
 
 .btn-action-tab:hover {
@@ -220,27 +237,29 @@
 }
 
 /* ==========================================================================
-   LISTADO DE FILAS DE PLANES (Cards Horizontales)
+   LISTADO DE FILAS DE PLANES (Cards Horizontales Adaptables)
    ========================================================================== */
 .operaciones-plans-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
 }
 
 .operaciones-plan-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 18px;
   background: linear-gradient(135deg, rgba(6, 26, 42, 0.65) 0%, rgba(3, 16, 27, 0.85) 100%);
   border: 1px solid rgba(0, 180, 216, 0.18);
   border-left: 4px solid #00d2ff;
   border-radius: 14px;
-  padding: 16px 22px;
+  padding: 16px 20px;
   box-sizing: border-box;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
 }
 
 .operaciones-plan-card:hover {
@@ -253,8 +272,9 @@
 .plan-card-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   flex: 1;
+  min-width: 0;
 }
 
 .plan-number-index {
@@ -263,6 +283,7 @@
   color: #e2e8f0;
   letter-spacing: -0.02em;
   min-width: 32px;
+  flex-shrink: 0;
 }
 
 .plan-details-col {
@@ -270,21 +291,24 @@
   flex-direction: column;
   gap: 9px;
   flex: 1;
+  min-width: 0;
 }
 
 .plan-info-top-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .plan-title-text {
-  font-size: 1.05rem;
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  word-break: break-word;
 }
 
 .plan-category-badge-pill {
@@ -294,6 +318,7 @@
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .plan-category-badge-pill.residencial {
@@ -314,21 +339,24 @@
   font-size: 0.82rem;
   font-weight: 750;
   color: #cbd5e1;
+  white-space: nowrap;
 }
 
 .plan-clients-pill {
   font-size: 0.82rem;
   font-weight: 600;
   color: #94a3b8;
+  white-space: nowrap;
 }
 
-/* Fila de progreso */
+/* Fila de barra de progreso */
 .plan-progress-bar-row {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   max-width: 540px;
+  min-width: 0;
 }
 
 .progress-label-text {
@@ -336,10 +364,12 @@
   font-weight: 800;
   color: #64748b;
   letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .progress-track-bg {
   flex: 1;
+  min-width: 50px;
   height: 6px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
@@ -358,7 +388,9 @@
   font-size: 0.82rem;
   font-weight: 750;
   color: #94a3b8;
-  min-width: 36px;
+  min-width: 34px;
+  text-align: right;
+  white-space: nowrap;
 }
 
 /* Lado derecho: Tarjeta de Ingreso Total */
@@ -378,7 +410,8 @@
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   position: relative;
-  min-width: 220px;
+  min-width: 210px;
+  box-sizing: border-box;
 }
 
 .revenue-icon-gold-circle {
@@ -398,21 +431,24 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .revenue-sub-label {
   font-size: 0.72rem;
   font-weight: 600;
   color: #94a3b8;
+  white-space: nowrap;
 }
 
 .revenue-total-amount {
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
   font-weight: 850;
   color: #00d2ff;
   letter-spacing: -0.01em;
   text-shadow: 0 0 16px rgba(0, 210, 255, 0.35);
   line-height: 1.15;
+  white-space: nowrap;
 }
 
 /* Mini barras decorativas ascendentes */
@@ -423,6 +459,7 @@
   height: 26px;
   opacity: 0.32;
   margin-left: 6px;
+  flex-shrink: 0;
 }
 
 .rev-bar {
@@ -437,11 +474,11 @@
 .b4 { height: 26px; }
 
 /* ==========================================================================
-   FILA DE 3 TARJETAS RESUMEN (BOTTOM GRID)
+   FILA DE 3 TARJETAS RESUMEN (BOTTOM GRID RESPONSIVE)
    ========================================================================== */
 .operaciones-bottom-summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   width: 100%;
 }
@@ -452,13 +489,15 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(0, 180, 216, 0.22);
   border-radius: 18px;
-  padding: 22px 24px;
+  padding: 20px 22px;
   display: flex;
   align-items: center;
   gap: 16px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+  box-sizing: border-box;
+  min-width: 0;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
@@ -506,20 +545,24 @@
   gap: 2px;
   position: relative;
   z-index: 2;
+  min-width: 0;
+  flex: 1;
 }
 
 .summary-stat-label {
   font-size: 0.85rem;
   font-weight: 700;
   color: #94a3b8;
+  white-space: nowrap;
 }
 
 .summary-stat-value {
-  font-size: 1.7rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
   font-weight: 850;
   color: #ffffff;
   letter-spacing: -0.015em;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .text-gold-label {
@@ -536,34 +579,39 @@
 /* Barras decorativas en esquinas de tarjetas resumen */
 .summary-ambient-bars {
   position: absolute;
-  right: 20px;
-  bottom: 16px;
+  right: 18px;
+  bottom: 14px;
   display: flex;
   align-items: flex-end;
   gap: 6px;
-  opacity: 0.24;
+  opacity: 0.22;
   pointer-events: none;
   z-index: 1;
 }
 
+.abar,
 .sbar {
-  width: 7px;
+  width: 6px;
   border-radius: 3px;
+  display: inline-block;
 }
 
-.s1 { height: 18px; }
-.s2 { height: 32px; }
-.s3 { height: 46px; }
-.s4 { height: 60px; }
+.a1, .s1 { height: 16px; }
+.a2, .s2 { height: 28px; }
+.a3, .s3 { height: 40px; }
+.a4, .s4 { height: 52px; }
 
+.bars-cyan .abar,
 .bars-cyan .sbar {
   background: linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.2) 100%);
 }
 
+.bars-purple .abar,
 .bars-purple .sbar {
   background: linear-gradient(180deg, #c084fc 0%, rgba(192, 132, 252, 0.2) 100%);
 }
 
+.bars-gold .abar,
 .bars-gold .sbar {
   background: linear-gradient(180deg, #fbbf24 0%, rgba(251, 191, 36, 0.2) 100%);
 }
@@ -595,18 +643,24 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (TABLETS & MOBILE)
+   RESPONSIVE DESIGN BREAKPOINTS
    ========================================================================== */
-@media (max-width: 992px) {
-  .operaciones-bottom-summary-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
 
+/* --- TABLETS / LAPTOPS CON SIDEBAR (Pantallas hasta 1220px) --- */
+@media screen and (max-width: 1220px) {
   .operaciones-plan-card {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
+    padding: 16px 18px;
+  }
+
+  .plan-card-left {
+    width: 100%;
+  }
+
+  .plan-progress-bar-row {
+    max-width: 100%;
   }
 
   .plan-card-right {
@@ -615,38 +669,233 @@
 
   .plan-revenue-badge-card {
     width: 100%;
+    min-width: unset;
     justify-content: space-between;
   }
 
-  .plan-progress-bar-row {
-    max-width: 100%;
+  .operaciones-bottom-summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
   }
 }
 
-@media (max-width: 640px) {
+/* --- TABLETS EN VERTICAL Y PANTALLAS MEDIANAS (Hasta 992px) --- */
+@media screen and (max-width: 992px) {
   .ventas-dashboard {
-    padding: 20px 14px 40px 14px;
+    padding: 24px 18px 50px 18px;
+  }
+
+  .operaciones-bottom-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* --- MÓVILES (Hasta 768px: Sidebar pasa a Drawer Oculto) --- */
+@media screen and (max-width: 768px) {
+  .ventas-dashboard {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 85px 14px 40px 14px !important; /* Espacio para el header fijo móvil de 60px */
+  }
+
+  .ventas-header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .ventas-header-left {
+    width: 100%;
+    gap: 14px;
+  }
+
+  .ventas-header-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+  }
+
+  .ventas-header-icon-box svg {
+    width: 24px;
+    height: 24px;
   }
 
   .ventas-title-main {
-    font-size: 1.85rem;
+    font-size: 1.65rem;
+  }
+
+  .header-update-badge {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 14px;
+    border-radius: 12px;
   }
 
   .ventas-main-card {
-    padding: 18px 16px;
+    padding: 16px 14px;
+    border-radius: 16px;
+    margin-bottom: 18px;
   }
 
   .card-top-header-row {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
   }
 
   .card-actions-row {
     width: 100%;
+    gap: 8px;
   }
 
   .btn-action-tab {
     flex: 1;
     justify-content: center;
+    padding: 9px 12px;
+    font-size: 0.84rem;
+  }
+
+  .operaciones-plans-list {
+    gap: 12px;
+  }
+
+  .operaciones-plan-card {
+    padding: 14px 14px;
+    border-radius: 12px;
+    gap: 14px;
+  }
+
+  .plan-card-left {
+    gap: 12px;
+  }
+
+  .plan-number-index {
+    font-size: 1.25rem;
+    min-width: 24px;
+  }
+
+  .plan-info-top-row {
+    gap: 8px;
+  }
+
+  .plan-title-text {
+    font-size: 0.94rem;
+  }
+
+  .plan-category-badge-pill {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+  }
+
+  .plan-cost-pill,
+  .plan-clients-pill {
+    font-size: 0.78rem;
+  }
+
+  .plan-revenue-badge-card {
+    padding: 9px 12px;
+  }
+
+  .revenue-icon-gold-circle {
+    width: 32px;
+    height: 32px;
+  }
+
+  .revenue-icon-gold-circle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .revenue-total-amount {
+    font-size: 1.2rem;
+  }
+
+  .operaciones-bottom-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .summary-stat-card {
+    padding: 16px 16px;
+    border-radius: 15px;
+  }
+
+  .summary-icon-squircle {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .summary-icon-squircle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .summary-stat-value {
+    font-size: 1.45rem;
+  }
+}
+
+/* --- MÓVILES PEQUEÑOS (Hasta 480px) --- */
+@media screen and (max-width: 480px) {
+  .ventas-dashboard {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .ventas-title-main {
+    font-size: 1.48rem;
+  }
+
+  .card-section-title {
+    font-size: 1.25rem;
+  }
+
+  .plan-revenue-badge-card {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+
+  .revenue-total-amount {
+    font-size: 1.08rem;
+  }
+
+  .revenue-decorative-bars {
+    display: none; /* Oculta mini barras decorativas en celulares para no apretar el monto */
+  }
+
+  .summary-ambient-bars {
+    display: none; /* Oculta barras decorativas de fondo para que no interfieran con cifras largas */
+  }
+
+  .summary-stat-value {
+    font-size: 1.35rem;
+  }
+}
+
+/* --- CELULARES ULTRA COMPACTOS (Hasta 360px) --- */
+@media screen and (max-width: 360px) {
+  .ventas-title-main {
+    font-size: 1.32rem;
+  }
+
+  .card-section-title {
+    font-size: 1.15rem;
+  }
+
+  .plan-title-text {
+    font-size: 0.88rem;
+  }
+
+  .revenue-total-amount {
+    font-size: 0.98rem;
+  }
+
+  .summary-stat-value {
+    font-size: 1.22rem;
   }
 }
