@@ -591,19 +591,21 @@
   100% { transform: rotate(360deg); }
 }
 
-/* --- ESTADO ÉXITO (Verde Limpio y Profesional) --- */
+/* --- ESTADO ÉXITO (Verde Limpio y Profesional en armonía con el fondo oscuro) --- */
 .status-banner-success {
-  background: rgba(235, 250, 242, 0.97);
-  border: 1px solid #86efac;
-  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
+  background: rgba(6, 78, 59, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .text-success {
-  color: #065f46 !important;
+  color: #34d399 !important;
 }
 
 .text-success-sub {
-  color: #047857 !important;
+  color: #a7f3d0 !important;
 }
 
 /* --- ESTADO ERROR (Rojo Alerta Suave) --- */
@@ -673,7 +675,7 @@
   align-items: center;
   gap: 6px;
   font-size: 0.88rem;
-  color: #065f46;
+  color: #a7f3d0;
   font-weight: 600;
 }
 
@@ -726,14 +728,14 @@
 }
 
 .btn-refresh {
-  background: rgba(4, 120, 87, 0.12);
-  color: #047857;
-  border: 1px solid rgba(4, 120, 87, 0.28);
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.35);
 }
 
 .btn-refresh:hover {
-  background: rgba(4, 120, 87, 0.22);
-  color: #065f46;
+  background: rgba(52, 211, 153, 0.28);
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
