@@ -259,13 +259,24 @@ function SisprotStatusBanner({ status, lastUpdatedTime, onRetry, onRefresh, erro
   return null;
 }
 
+const getFormattedTime = () => {
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const d = pad(now.getDate());
+  const m = pad(now.getMonth() + 1);
+  const y = now.getFullYear();
+  const h = pad(now.getHours());
+  const min = pad(now.getMinutes());
+  return `${d}/${m}/${y} ${h}:${min}`;
+};
+
 function Indicadores() {
   const { showPasswordState, data } = useContext(PasswordContext);
 
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState(staticSectorAgenciaMap);
   const [realtimeContracts, setRealtimeContracts] = useState(() => (data?.results && data.results.length > 0 ? data.results : []));
-  const [systemStatus, setSystemStatus] = useState("loading"); // "loading" | "success" | "error"
-  const [lastUpdatedTime, setLastUpdatedTime] = useState("");
+  const [systemStatus, setSystemStatus] = useState(() => (data?.results && data.results.length > 0 ? "success" : "loading"));
+  const [lastUpdatedTime, setLastUpdatedTime] = useState(() => getFormattedTime());
   const [errorContratos, setErrorContratos] = useState(null);
 
   const [tipoFiltro, setTipoFiltro] = useState("Todos");
@@ -273,21 +284,12 @@ function Indicadores() {
   const [sectorFiltro, setSectorFiltro] = useState("Todos");
   const [tipoClienteFiltro, setTipoClienteFiltro] = useState("Todos");
 
-  const getFormattedTime = () => {
-    const now = new Date();
-    const pad = (n) => String(n).padStart(2, "0");
-    const d = pad(now.getDate());
-    const m = pad(now.getMonth() + 1);
-    const y = now.getFullYear();
-    const h = pad(now.getHours());
-    const min = pad(now.getMinutes());
-    return `${d}/${m}/${y} ${h}:${min}`;
-  };
-
-  // Sincronizar datos del contexto si llegan inicialmente
+  // Sincronizar datos del contexto si llegan posteriormente
   useEffect(() => {
     if (data?.results && data.results.length > 0 && realtimeContracts.length === 0) {
       setRealtimeContracts(data.results);
+      setSystemStatus("success");
+      setLastUpdatedTime(getFormattedTime());
     }
   }, [data, realtimeContracts.length]);
 
@@ -340,11 +342,13 @@ function Indicadores() {
 
   // Carga en tiempo real de contratos desde el mismo endpoint que Top Urbanismo
   const cargarContratosEnTiempoReal = useCallback(async (forceRefresh = false) => {
-    setSystemStatus("loading");
+    // Si el usuario presiona 'Actualizar' o aún no hay datos en pantalla, mostramos el estado de carga
+    if (forceRefresh || !realtimeContracts || realtimeContracts.length === 0) {
+      setSystemStatus("loading");
+    }
     setErrorContratos(null);
 
     try {
-      // Usamos el mismo endpoint /api/public/contracts/ de contractService
       const res = await fetchContractsByStatus(["Todos"], forceRefresh);
       if (res && res.results && res.results.length > 0) {
         setRealtimeContracts(res.results);
@@ -354,13 +358,15 @@ function Indicadores() {
     } catch (err) {
       console.warn("No se pudo actualizar contratos en tiempo real en Indicadores:", err);
       setErrorContratos(err);
-      setSystemStatus("error");
+      // Si ya hay datos en pantalla, se mantiene funcional para no alarmar al usuario
+      setSystemStatus((prev) => (realtimeContracts && realtimeContracts.length > 0 ? "success" : "error"));
     }
-  }, []);
+  }, [realtimeContracts]);
 
   useEffect(() => {
     cargarContratosEnTiempoReal(false);
-  }, [cargarContratosEnTiempoReal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Al cambiar agencia, reseteamos sector
   useEffect(() => {
