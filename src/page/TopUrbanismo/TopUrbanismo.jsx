@@ -1295,6 +1295,61 @@ function TopUrbanismo() {
   );
 }
 
+function SectorRankBadge({ rank }) {
+  const [currentSrc, setCurrentSrc] = useState(() => {
+    if (rank === 1) return `${process.env.PUBLIC_URL}/ICON_primer-lugar.png`;
+    if (rank === 2) return `${process.env.PUBLIC_URL}/ICON_segundo-lugar.png`;
+    if (rank === 3) return `${process.env.PUBLIC_URL}/ICON_tercer-lugar.png`;
+    return null;
+  });
+  const [triedAlt, setTriedAlt] = useState(0);
+
+  const handleImageError = () => {
+    const word = rank === 1 ? "primer" : rank === 2 ? "segundo" : "tercer";
+    if (triedAlt === 0) {
+      // Intento 1: guión bajo _ (ICON_primer_lugar.png)
+      setTriedAlt(1);
+      setCurrentSrc(`${process.env.PUBLIC_URL}/ICON_${word}_lugar.png`);
+    } else if (triedAlt === 1) {
+      // Intento 2: extensión en mayúsculas .PNG (común en Linux/Vercel)
+      setTriedAlt(2);
+      setCurrentSrc(`${process.env.PUBLIC_URL}/ICON_${word}-lugar.PNG`);
+    } else if (triedAlt === 2) {
+      // Intento 3: guión bajo y mayúsculas (ICON_primer_lugar.PNG)
+      setTriedAlt(3);
+      setCurrentSrc(`${process.env.PUBLIC_URL}/ICON_${word}_lugar.PNG`);
+    } else if (triedAlt === 3) {
+      // Intento 4: extensión doble de Windows (ICON_primer-lugar.png.png)
+      setTriedAlt(4);
+      setCurrentSrc(`${process.env.PUBLIC_URL}/ICON_${word}-lugar.png.png`);
+    } else {
+      // Si el archivo no existe en el repositorio remoto, mostrar medalla visual de respaldo
+      setTriedAlt(5);
+    }
+  };
+
+  if (rank <= 3) {
+    if (triedAlt < 5 && currentSrc) {
+      return (
+        <img
+          src={currentSrc}
+          alt={`${rank}er Lugar`}
+          className="rank-medal-img"
+          onError={handleImageError}
+        />
+      );
+    }
+
+    return (
+      <div className={`rank-medal-fallback medal-rank-${rank}`}>
+        <span className="medal-fallback-num">{rank}</span>
+      </div>
+    );
+  }
+
+  return <div className="rank-number-badge">{rank}</div>;
+}
+
 function UrbanismoList({ urbanismos }) {
   const [urbanismoAbierto, setUrbanismoAbierto] = useState(null);
 
@@ -1324,27 +1379,7 @@ function UrbanismoList({ urbanismos }) {
             key={urbanismo.urbanismo || index}
           >
             <div className="sector-card-header">
-              {isRank1 ? (
-                <img
-                  src={`${process.env.PUBLIC_URL}/ICON_primer-lugar.png`}
-                  alt="1er Lugar"
-                  className="rank-medal-img"
-                />
-              ) : isRank2 ? (
-                <img
-                  src={`${process.env.PUBLIC_URL}/ICON_segundo-lugar.png`}
-                  alt="2do Lugar"
-                  className="rank-medal-img"
-                />
-              ) : isRank3 ? (
-                <img
-                  src={`${process.env.PUBLIC_URL}/ICON_tercer-lugar.png`}
-                  alt="3er Lugar"
-                  className="rank-medal-img"
-                />
-              ) : (
-                <div className="rank-number-badge">{index + 1}</div>
-              )}
+              <SectorRankBadge rank={index + 1} />
 
               <div className="sector-card-header-main">
                 <h4 className="sector-card-title" title={urbanismo.urbanismo}>
