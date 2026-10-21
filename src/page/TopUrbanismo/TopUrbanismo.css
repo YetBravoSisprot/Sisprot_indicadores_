@@ -959,4 +959,419 @@ option:checked {
   }
 }
 
+/* ==========================================================================
+   SISPROT BI STATUS BANNER (Loading / Success / Error)
+   ========================================================================== */
+
+.sisprot-status-banner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 28px auto;
+  border-radius: 16px;
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* --- ESTADO CARGANDO (Azul Tecnológico Profundo con Brillo Cyan) --- */
+.status-banner-loading {
+  background: linear-gradient(90deg, rgba(3, 40, 68, 0.95) 0%, rgba(6, 68, 105, 0.95) 100%);
+  border: 1px solid rgba(0, 210, 255, 0.45);
+  box-shadow: 0 8px 32px rgba(0, 76, 109, 0.45), inset 0 0 20px rgba(0, 210, 255, 0.1);
+}
+
+.status-spinner-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 210, 255, 0.18);
+  border-top-color: #00d2ff;
+  border-right-color: #00d2ff;
+  animation: banner-spin 0.9s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+  flex-shrink: 0;
+}
+
+@keyframes banner-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- ESTADO ÉXITO (Verde Limpio y Profesional) --- */
+.status-banner-success {
+  background: rgba(235, 250, 242, 0.97);
+  border: 1px solid #86efac;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
+}
+
+.text-success {
+  color: #065f46 !important;
+}
+
+.text-success-sub {
+  color: #047857 !important;
+}
+
+/* --- ESTADO ERROR (Rojo Alerta Suave) --- */
+.status-banner-error {
+  background: rgba(254, 242, 242, 0.97);
+  border: 1px solid #fca5a5;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
+}
+
+.text-error {
+  color: #991b1b !important;
+}
+
+.text-error-sub {
+  color: #b91c1c !important;
+}
+
+/* Estructura interna del Banner */
+.status-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.status-banner-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.status-banner-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.status-banner-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #93c5fd;
+  line-height: 1.35;
+}
+
+.status-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.status-banner-time-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+}
+
+.status-banner-timestamp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: #065f46;
+  font-weight: 600;
+}
+
+/* Iconos circulares para éxito y error */
+.status-badge-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-success {
+  background: #22c55e;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+
+.icon-error {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+/* Botones de acción en el banner */
+.status-banner-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-retry {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+}
+
+.btn-retry:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.btn-refresh {
+  background: rgba(4, 120, 87, 0.12);
+  color: #047857;
+  border: 1px solid rgba(4, 120, 87, 0.28);
+}
+
+.btn-refresh:hover {
+  background: rgba(4, 120, 87, 0.22);
+  color: #065f46;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   SKELETON DASHBOARD (Gráficos y Tarjetas Provisionales)
+   ========================================================================== */
+
+.skeleton-dashboard-grid {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 30px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.skeleton-card {
+  background: rgba(2, 26, 36, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+}
+
+.skeleton-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Animación shimmer para los esqueletos */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer-anim 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-shimmer-anim {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-title-bar {
+  width: 140px;
+  height: 16px;
+  border-radius: 6px;
+}
+
+.skeleton-badge-pill {
+  width: 50px;
+  height: 18px;
+  border-radius: 999px;
+}
+
+/* Skeleton Barras */
+.skeleton-bars-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.skeleton-bar-wrapper {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.skeleton-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  min-height: 20px;
+}
+
+.skeleton-axis-line {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Skeleton Donut */
+.skeleton-donut-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+  height: 130px;
+}
+
+.skeleton-donut-circle-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.skeleton-donut-ring {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 18px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+
+.skeleton-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skeleton-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.skeleton-line {
+  height: 10px;
+  border-radius: 4px;
+}
+
+/* Skeleton Filas / Tabla */
+.skeleton-rows-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.skeleton-row-line {
+  height: 12px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   INDICADORES TOTALES PILLS (Total de Clientes / Total de Ingresos)
+   ========================================================================== */
+
+.indicadores-totales-pills {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.indicador-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #e9a124 0%, #d48b13 100%);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(233, 161, 36, 0.35);
+  cursor: default;
+  user-select: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.indicador-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(233, 161, 36, 0.45);
+}
+
+.indicador-pill-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.indicador-pill-content {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.indicador-pill-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.indicador-pill-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+@media screen and (max-width: 768px) {
+  .sisprot-status-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 14px;
+  }
+  .status-banner-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .indicadores-totales-pills {
+    width: 100%;
+  }
+  .indicador-pill {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
 
