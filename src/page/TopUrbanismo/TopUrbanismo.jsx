@@ -62,11 +62,18 @@ function TopUrbanismo() {
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState({});
   const [urbanismosAprobados, setUrbanismosAprobados] = useState({});
 
-  // Estado para contratos obtenidos en tiempo real desde la API (reemplaza data.jsx)
-  const [realtimeContracts, setRealtimeContracts] = useState([]);
+  // Estado para contratos obtenidos en tiempo real (inicializa de inmediato para carga automática)
+  const [realtimeContracts, setRealtimeContracts] = useState(() => (data?.results && data.results.length > 0 ? data.results : []));
   const [isLoadingContracts, setIsLoadingContracts] = useState(false);
   const [realtimeStatusMsg, setRealtimeStatusMsg] = useState("");
   const [errorContratos, setErrorContratos] = useState(null);
+
+  // Asegurar que si data inicial llega del contexto, se cargue de inmediato en automático
+  useEffect(() => {
+    if (data?.results && data.results.length > 0 && realtimeContracts.length === 0) {
+      setRealtimeContracts(data.results);
+    }
+  }, [data, realtimeContracts.length]);
 
   useEffect(() => {
     const cargarSectores = async () => {
@@ -207,23 +214,26 @@ function TopUrbanismo() {
     });
   };
 
-  // Función para consultar contratos en tiempo real según el estatus seleccionado
+  // Función para consultar contratos en tiempo real según el estatus seleccionado (en segundo plano)
   const cargarContratosEnTiempoReal = useCallback(async (forceRefresh = false) => {
     setIsLoadingContracts(true);
     setErrorContratos(null);
 
     const statusNombres = estadosSeleccionados.includes("Todos") ? ["Todos"] : estadosSeleccionados;
-    setRealtimeStatusMsg(`🔄 Consultando contratos (${statusNombres.join(", ")}) en tiempo real...`);
+    setRealtimeStatusMsg(`🔄 Sincronizando contratos (${statusNombres.join(", ")})...`);
 
     try {
       const res = await fetchContractsByStatus(statusNombres, forceRefresh);
-      setRealtimeContracts(res.results);
-      const cacheNote = res.fromCache ? " (en caché)" : "";
-      setRealtimeStatusMsg(`✅ ${res.count.toLocaleString()} contratos en tiempo real${cacheNote}`);
+      if (res && res.results && res.results.length > 0) {
+        setRealtimeContracts(res.results);
+        const cacheNote = res.fromCache ? " (en caché)" : "";
+        setRealtimeStatusMsg(`✅ ${res.count.toLocaleString()} contratos actualizados${cacheNote}`);
+      }
     } catch (err) {
-      console.error("Error al cargar contratos desde la API:", err);
+      console.warn("No se pudo actualizar en tiempo real desde la API:", err);
       setErrorContratos(err);
-      setRealtimeStatusMsg(`⚠️ Error al consultar API en tiempo real: ${err.message}`);
+      // Mantener los datos actuales para que nunca quede en 0
+      setRealtimeStatusMsg(`ℹ️ Mostrando datos actuales (API: ${err.message})`);
     } finally {
       setIsLoadingContracts(false);
     }
@@ -887,13 +897,11 @@ function TopUrbanismo() {
           )}
         </>
       )}
-      {(isLoading || isUpdating || isLoadingContracts) && (
+      {(isLoading || isUpdating) && (
         <div className="loading-overlay-blur">
           <div className="loading-card">
             <div className="loading-spinner"></div>
-            <span className="loading-text">
-              {isLoadingContracts ? "Consultando contratos en tiempo real desde la API..." : "Cargando..."}
-            </span>
+            <span className="loading-text">Cargando...</span>
           </div>
         </div>
       )}
