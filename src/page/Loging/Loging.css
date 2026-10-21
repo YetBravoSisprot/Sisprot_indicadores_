@@ -5,7 +5,7 @@
 .login-page-bg {
   min-height: 100vh;
   width: 100vw;
-  background-image: url('/fondo_Sisprot_BI.png');
+  background-color: #021a24;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
