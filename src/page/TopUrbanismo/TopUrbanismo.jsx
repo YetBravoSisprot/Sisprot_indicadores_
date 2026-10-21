@@ -11,6 +11,7 @@ import DropdownMenu from "./../../Componentes/DropdownMenu";
 import { exportToExcel } from "../../utils/ExcelExport";
 import { exportExecutiveReport } from "../../utils/ExecutiveReport";
 import { mapCycleValue, getCycleLabel } from "../../utils/cycleHelper";
+import { fetchContractsByStatus } from "../../services/contractService";
 
 // ===================== HELPERS =====================
 const norm = (v) => (v == null ? "" : String(v).replace(/\u00a0/g, " ").trim());
@@ -60,6 +61,12 @@ function TopUrbanismo() {
 
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState({});
   const [urbanismosAprobados, setUrbanismosAprobados] = useState({});
+
+  // Estado para contratos obtenidos en tiempo real desde la API (reemplaza data.jsx)
+  const [realtimeContracts, setRealtimeContracts] = useState([]);
+  const [isLoadingContracts, setIsLoadingContracts] = useState(false);
+  const [realtimeStatusMsg, setRealtimeStatusMsg] = useState("");
+  const [errorContratos, setErrorContratos] = useState(null);
 
   useEffect(() => {
     const cargarSectores = async () => {
@@ -200,15 +207,43 @@ function TopUrbanismo() {
     });
   };
 
+  // Función para consultar contratos en tiempo real según el estatus seleccionado
+  const cargarContratosEnTiempoReal = useCallback(async (forceRefresh = false) => {
+    setIsLoadingContracts(true);
+    setErrorContratos(null);
+
+    const statusNombres = estadosSeleccionados.includes("Todos") ? ["Todos"] : estadosSeleccionados;
+    setRealtimeStatusMsg(`🔄 Consultando contratos (${statusNombres.join(", ")}) en tiempo real...`);
+
+    try {
+      const res = await fetchContractsByStatus(statusNombres, forceRefresh);
+      setRealtimeContracts(res.results);
+      const cacheNote = res.fromCache ? " (en caché)" : "";
+      setRealtimeStatusMsg(`✅ ${res.count.toLocaleString()} contratos en tiempo real${cacheNote}`);
+    } catch (err) {
+      console.error("Error al cargar contratos desde la API:", err);
+      setErrorContratos(err);
+      setRealtimeStatusMsg(`⚠️ Error al consultar API en tiempo real: ${err.message}`);
+    } finally {
+      setIsLoadingContracts(false);
+    }
+  }, [estadosSeleccionados]);
+
+  // Cargar contratos cada vez que cambien los estados seleccionados
+  useEffect(() => {
+    cargarContratosEnTiempoReal(false);
+  }, [cargarContratosEnTiempoReal]);
+
   const buscarPorContrato = () => {
-    if (!contratoBuscado || !data?.results) return;
+    if (!contratoBuscado || !realtimeContracts || realtimeContracts.length === 0) return;
 
     const searchStr = String(contratoBuscado).toLowerCase().trim();
 
-    const resultado = data.results.filter((cliente) => {
+    const resultado = realtimeContracts.filter((cliente) => {
       const matchId = String(cliente.id) === searchStr;
       const matchName = cliente.client_name && cliente.client_name.toLowerCase().includes(searchStr);
-      return matchId || matchName;
+      const matchIden = cliente.client_identification && String(cliente.client_identification).toLowerCase().includes(searchStr);
+      return matchId || matchName || matchIden;
     });
 
     setClientesPorContrato(resultado);
@@ -301,7 +336,7 @@ function TopUrbanismo() {
       const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
       const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : 'Analista';
 
-      await exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas, data?.results);
+      await exportExecutiveReport(serviciosParaExportar, filtroTextos, formattedName, columnasSeleccionadas, realtimeContracts);
     } catch (err) {
       console.error("Error al generar Reporte Ejecutivo:", err);
       alert("No se pudo generar el Reporte Ejecutivo por un error. Por favor intenta de nuevo.");
@@ -483,11 +518,11 @@ function TopUrbanismo() {
   );
 
   useEffect(() => {
-    if (!data?.results) return;
+    if (!realtimeContracts) return;
 
     const usarPasaFiltros = estadosSeleccionadosType.includes("Todos") ? pasaFiltroTotales : pasaFiltros;
 
-    const serviciosFiltrados = data.results.filter((servicio) => usarPasaFiltros(servicio));
+    const serviciosFiltrados = realtimeContracts.filter((servicio) => usarPasaFiltros(servicio));
     setServiciosParaExportar(serviciosFiltrados);
 
     const totalClientes = serviciosFiltrados.filter((s) => s.client_subdivision || s.status_name).length;
@@ -530,7 +565,7 @@ function TopUrbanismo() {
     const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
     setTopUrbanismos(topUrbanismosCalculados);
   }, [
-    data,
+    realtimeContracts,
     TopUrb,
     estadosSeleccionados,
     estadosSeleccionadosType,
@@ -582,13 +617,18 @@ function TopUrbanismo() {
               </button>
               <button 
                 className="button" 
-                onClick={() => fetchData(true)} 
-                disabled={isUpdating}
-                style={{ backgroundColor: isUpdating ? '#bdc3c7' : '#9b59b6', color: '#fff', marginLeft: '10px' }}
+                onClick={() => cargarContratosEnTiempoReal(true)} 
+                disabled={isLoadingContracts}
+                style={{ backgroundColor: isLoadingContracts ? '#bdc3c7' : '#9b59b6', color: '#fff', marginLeft: '10px' }}
               >
-                {isUpdating ? "🔄 Actualizando..." : "🔄 Actualizar Datos"}
+                {isLoadingContracts ? "🔄 Consultando API..." : "🔄 Actualizar Datos"}
               </button>
-              {connectionStatus && !isLoading && !isUpdating && (
+              {realtimeStatusMsg && !isLoadingContracts && (
+                <div style={{ fontSize: '0.9rem', color: realtimeStatusMsg.includes('✅') ? '#2ecc71' : realtimeStatusMsg.includes('🔄') ? '#3498db' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
+                  {realtimeStatusMsg}
+                </div>
+              )}
+              {connectionStatus && !realtimeStatusMsg && !isLoading && !isUpdating && (
                 <div style={{ fontSize: '0.9rem', color: connectionStatus.includes('✅') ? '#2ecc71' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
                   {connectionStatus}
                 </div>
@@ -847,11 +887,13 @@ function TopUrbanismo() {
           )}
         </>
       )}
-      {(isLoading || isUpdating) && (
+      {(isLoading || isUpdating || isLoadingContracts) && (
         <div className="loading-overlay-blur">
           <div className="loading-card">
             <div className="loading-spinner"></div>
-            <span className="loading-text">Cargando...</span>
+            <span className="loading-text">
+              {isLoadingContracts ? "Consultando contratos en tiempo real desde la API..." : "Cargando..."}
+            </span>
           </div>
         </div>
       )}
