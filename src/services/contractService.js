@@ -158,14 +158,34 @@ export const filterValidContracts = (contractsList) => {
     });
 };
 
+// Helpers para caché persistente en sesión
+const getFromSessionStorage = (key) => {
+    try {
+        if (typeof window !== "undefined" && window.sessionStorage) {
+            const raw = window.sessionStorage.getItem(`sisprot_contracts_${key}`);
+            if (raw) return JSON.parse(raw);
+        }
+    } catch (_) {}
+    return null;
+};
+
+const saveToSessionStorage = (key, data) => {
+    try {
+        if (typeof window !== "undefined" && window.sessionStorage) {
+            window.sessionStorage.setItem(`sisprot_contracts_${key}`, JSON.stringify(data));
+        }
+    } catch (_) {}
+};
+
 /**
  * Consulta los contratos en tiempo real por lista de estados (ej: ["Activo"], ["Suspendido"], o ["Todos"]).
  *
  * @param {string[]} selectedStatuses - Lista de nombres de estados ("Activo", "Suspendido", etc.)
  * @param {boolean} forceRefresh - Forzar actualización omitiendo caché
+ * @param {number} timeoutMs - Tiempo máximo de espera en ms (default 12s)
  * @returns {Promise<{ count: number, results: Array, fromCache: boolean }>}
  */
-export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false) => {
+export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false, timeoutMs = 12000) => {
     const isTodos = selectedStatuses.includes("Todos") || selectedStatuses.length === 0;
 
     // Convertir nombres a códigos numéricos
@@ -180,6 +200,7 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
 
     const cacheKey = isTodos ? "all" : statusIds.sort((a, b) => a - b).join(",");
 
+    // 1. Verificar caché en memoria
     if (!forceRefresh && contractsCache.has(cacheKey)) {
         return {
             count: contractsCache.get(cacheKey).length,
@@ -188,19 +209,37 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
         };
     }
 
+    // 2. Verificar caché en sessionStorage (rápido en recargas y navegación)
+    if (!forceRefresh) {
+        const sessionData = getFromSessionStorage(cacheKey);
+        if (sessionData && Array.isArray(sessionData) && sessionData.length > 0) {
+            contractsCache.set(cacheKey, sessionData);
+            return {
+                count: sessionData.length,
+                results: sessionData,
+                fromCache: true
+            };
+        }
+    }
+
     let url = `${API_BASE_URL}?remove_pagination=true&view=powerbi`;
     if (!isTodos && statusIds.length > 0) {
         url += `&status=${statusIds.join(",")}`;
     }
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
     try {
         const response = await fetch(url, {
             method: "GET",
+            signal: controller.signal,
             headers: {
                 "X-API-KEY": (API_KEY || "").trim(),
                 "Accept": "application/json"
             }
         });
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -215,8 +254,9 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
         // Aplicar filtro de registros de prueba
         const validResults = filterValidContracts(normalized);
 
-        // Guardar en caché
+        // Guardar en caché de memoria y sessionStorage
         contractsCache.set(cacheKey, validResults);
+        saveToSessionStorage(cacheKey, validResults);
 
         return {
             count: validResults.length,
@@ -224,14 +264,28 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
             fromCache: false
         };
     } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            console.warn("fetchContractsByStatus: Timeout de red alcanzado");
+            throw new Error("Tiempo de espera agotado al consultar la API de contratos");
+        }
         console.error("Error en fetchContractsByStatus:", err);
         throw err;
     }
 };
 
 /**
- * Limpia la caché en memoria de contratos.
+ * Limpia la caché en memoria y sesión de contratos.
  */
 export const clearContractsCache = () => {
     contractsCache.clear();
+    try {
+        if (typeof window !== "undefined" && window.sessionStorage) {
+            Object.keys(window.sessionStorage).forEach(k => {
+                if (k.startsWith("sisprot_contracts_")) {
+                    window.sessionStorage.removeItem(k);
+                }
+            });
+        }
+    } catch (_) {}
 };
