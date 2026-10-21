@@ -347,18 +347,15 @@ function Admin() {
     setSelectedClient(client);
   };
 
+  if (showPasswordState) {
+    return <LogingForm />;
+  }
+
   return (
     <div className="admin-page">
-      {showPasswordState ? (
-        <div className="login-container animate-fade-in">
-          <h1>Inicia Sesión</h1>
-          <LogingForm />
-        </div>
-      ) : (
-        <>
-          <LogoTitulo />
-          <DropdownMenu />
-          <PageNav />
+      <LogoTitulo />
+      <DropdownMenu />
+      <PageNav />
 
           {isPageLoading ? (
             <div className="dashboard-loading animate-fade-in">
@@ -794,8 +791,6 @@ function Admin() {
               </div>
             </div>
           )}
-        </>
-      )}
     </div>
   );
 }
