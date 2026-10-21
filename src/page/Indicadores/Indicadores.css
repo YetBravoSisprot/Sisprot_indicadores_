@@ -134,42 +134,42 @@
 }
 
 .card-squircle-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-squircle);
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
 .kpi-card:hover .card-squircle-icon {
-  transform: scale(1.06);
+  transform: translateY(-2px) scale(1.08);
 }
 
-.squircle-icon-img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+.squircle-icon-svg {
+  display: block;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
 }
 
 .icon-bg-blue {
-  background: rgba(14, 165, 233, 0.16);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 0 16px rgba(14, 165, 233, 0.2);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.08) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .icon-bg-amber {
-  background: rgba(245, 158, 11, 0.16);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .icon-bg-gold {
-  background: rgba(251, 191, 36, 0.16);
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.25);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.25) 0%, rgba(217, 119, 6, 0.1) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  box-shadow: 0 0 22px rgba(251, 191, 36, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .card-label-question {
@@ -442,20 +442,16 @@
 }
 
 .section-header-icon-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
-  background: rgba(56, 189, 248, 0.16);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.08) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.section-badge-img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .section-title-text {
@@ -496,62 +492,43 @@
 }
 
 .metric-squircle {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-squircle);
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.kpi-card:hover .metric-squircle {
+  transform: translateY(-2px) scale(1.08);
 }
 
 .squircle-purple {
-  background: rgba(99, 102, 241, 0.16);
-  border: 1px solid rgba(129, 140, 248, 0.35);
-  box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(79, 70, 229, 0.08) 100%);
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.16);
 }
 
 .squircle-green {
-  background: rgba(16, 185, 129, 0.16);
-  border: 1px solid rgba(52, 211, 153, 0.35);
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.16);
 }
 
 .squircle-amber {
-  background: rgba(245, 158, 11, 0.16);
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.16);
 }
 
 .squircle-red {
-  background: rgba(239, 68, 68, 0.16);
-  border: 1px solid rgba(248, 113, 113, 0.35);
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.2);
-}
-
-.metric-icon-img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-/* Indicador circular de parada para Cancelados */
-.stop-circle-badge {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2.5px solid #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-}
-
-.stop-inner-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(220, 38, 38, 0.08) 100%);
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.16);
 }
 
 .metric-label-wrap {
