@@ -1049,7 +1049,13 @@ function TopUrbanismo() {
 
             <div className="indicadores-totales-pills">
               <div className="indicador-pill">
-                <span className="indicador-pill-icon">👥</span>
+                <div className="indicador-pill-icon-wrap">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/ICON_personas.png`}
+                    alt="Clientes"
+                    className="indicador-pill-img"
+                  />
+                </div>
                 <div className="indicador-pill-content">
                   <span className="indicador-pill-label">Total de clientes:</span>
                   <span className="indicador-pill-value">
@@ -1061,7 +1067,13 @@ function TopUrbanismo() {
               </div>
 
               <div className="indicador-pill">
-                <span className="indicador-pill-icon">💰</span>
+                <div className="indicador-pill-icon-wrap">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/ICON_bolsa_dinero.png`}
+                    alt="Ingresos"
+                    className="indicador-pill-img"
+                  />
+                </div>
                 <div className="indicador-pill-content">
                   <span className="indicador-pill-label">
                     {estadosSeleccionados.includes("Cancelado") ? "Total de Pérdida:" : "Total de Ingresos:"}
@@ -1075,36 +1087,170 @@ function TopUrbanismo() {
               </div>
             </div>
 
-            <div style={{ backgroundColor: '#fdfcfe', padding: '20px', borderRadius: '12px', marginBottom: '25px', fontSize: '0.95rem', color: '#2c3e50', border: '1px solid #e1e8ed', textAlign: 'left', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <p style={{ margin: '0 0 12px 0', color: '#1f4e78', fontSize: '1.1rem' }}><strong>📊 Guía de Reportes Inteligentes:</strong></p>
-              <ul style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
-                <li style={{ marginBottom: '10px' }}>
-                  <strong>Reporte de Postventa / Atención al Cliente:</strong> Optimizado para el seguimiento de usuarios y gestión de contactos. Permite generar listas personalizadas para validar el estatus y la atención brindada.
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <strong>Reporte Ejecutivo (Dashboard):</strong> Es automático y visual. Genera gráficas de estatus, top de sectores e indicadores financieros, e incluye también el detalle de clientes con las columnas que hayas seleccionado.
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <strong>Lista Personalizada (Solo Columnas):</strong> Genera una lista simple en Excel que incluye únicamente las columnas que hayas seleccionado en el panel de filtros, sin pestañas adicionales ni reportes complejos.
-                </li>
-              </ul>
-            </div>
+            {/* SECCIÓN GUÍA DE REPORTES INTELIGENTES (3 Tarjetas Compactas + Acciones) */}
+            <div className="reportes-guia-section animate-fade-in">
+              <div className="reportes-guia-header">
+                <div className="reportes-header-icon-box">
+                  <img src={`${process.env.PUBLIC_URL}/ICON_grafico.png`} alt="Reportes" />
+                </div>
+                <div className="reportes-header-texts">
+                  <h3 className="reportes-header-title">
+                    Guía de <span className="highlight-text">Reportes Inteligentes</span>
+                  </h3>
+                  <p className="reportes-header-sub">
+                    Selecciona el tipo de reporte que deseas generar. Los reportes utilizan los filtros y criterios seleccionados en el panel superior.
+                  </p>
+                </div>
+              </div>
 
-            <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center', margin: '15px 0' }}>
-               <button className="buttonDescargar" onClick={handleDownloadExcelOperaciones} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#34495e' }}>
-                📂 Descargar Excel Postventa / Atención al Cliente
-              </button>
-              <button className="buttonDescargar" onClick={handleDownloadExcelExecutive} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#27ae60' }}>
-                📈 Descargar Reporte Ejecutivo
-              </button>
-              <button className="buttonDescargar" onClick={handleDownloadExcelSimple} style={{ width: 'auto', minWidth: '260px', backgroundColor: '#2980b9' }}>
-                📋 Descargar Lista Personalizada (Solo Columnas)
-              </button>
-            </div>
+              <div className="reportes-cards-grid">
+                {/* Tarjeta 1: Postventa */}
+                <div 
+                  className="report-card report-card-postventa"
+                  onClick={handleDownloadExcelOperaciones}
+                  title="Haz clic para descargar Reporte de Postventa"
+                >
+                  <div className="report-card-top">
+                    <div className="report-card-icon-badge badge-postventa">
+                      <img src={`${process.env.PUBLIC_URL}/ICON_personas.png`} alt="Postventa" />
+                    </div>
+                    <div className="report-card-info">
+                      <h4 className="report-card-title">Reporte de Postventa / Atención al Cliente</h4>
+                      <p className="report-card-desc">
+                        Obtén un listado completo de clientes con su estatus, contactos y atención brindada.
+                      </p>
+                    </div>
+                    <div className="report-card-arrow arrow-postventa">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="report-card-bottom bottom-postventa">
+                    <span className="bottom-format-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                      </svg>
+                      Formato: Excel
+                    </span>
+                    <span className="bottom-divider">|</span>
+                    <span className="bottom-desc">Información detallada de clientes</span>
+                  </div>
+                </div>
 
-            <span className="filtro-tip">
-              💡 <b>Tip de uso:</b> Ahora puedes <b>marcar directamente</b> las casillas para elegir los filtros. Si marcas una opción específica, se quitará la selección de "Todos" automáticamente.
-            </span>
+                {/* Tarjeta 2: Ejecutivo */}
+                <div 
+                  className="report-card report-card-ejecutivo"
+                  onClick={handleDownloadExcelExecutive}
+                  title="Haz clic para descargar Reporte Ejecutivo"
+                >
+                  <div className="report-card-top">
+                    <div className="report-card-icon-badge badge-ejecutivo">
+                      <img src={`${process.env.PUBLIC_URL}/ICON_grafico.png`} alt="Ejecutivo" />
+                    </div>
+                    <div className="report-card-info">
+                      <h4 className="report-card-title">Reporte Ejecutivo (Dashboard)</h4>
+                      <p className="report-card-desc">
+                        Visualiza de forma automática gráficas de estatus, top de sectores e indicadores financieros.
+                      </p>
+                    </div>
+                    <div className="report-card-arrow arrow-ejecutivo">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="report-card-bottom bottom-ejecutivo">
+                    <span className="bottom-format-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                      </svg>
+                      Formato: Dashboard
+                    </span>
+                    <span className="bottom-divider">|</span>
+                    <span className="bottom-desc">Vista visual e interactiva</span>
+                  </div>
+                </div>
+
+                {/* Tarjeta 3: Personalizada */}
+                <div 
+                  className="report-card report-card-personalizado"
+                  onClick={handleDownloadExcelSimple}
+                  title="Haz clic para descargar Lista Personalizada"
+                >
+                  <div className="report-card-top">
+                    <div className="report-card-icon-badge badge-personalizado">
+                      <img src={`${process.env.PUBLIC_URL}/ICON_calculadora.png`} alt="Personalizado" />
+                    </div>
+                    <div className="report-card-info">
+                      <h4 className="report-card-title">Lista Personalizada (Solo Columnas)</h4>
+                      <p className="report-card-desc">
+                        Genera un listado en Excel con únicamente las columnas que selecciones en los filtros.
+                      </p>
+                    </div>
+                    <div className="report-card-arrow arrow-personalizado">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="report-card-bottom bottom-personalizado">
+                    <span className="bottom-format-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                      </svg>
+                      Formato: Excel
+                    </span>
+                    <span className="bottom-divider">|</span>
+                    <span className="bottom-desc">A medida según tu necesidad</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botones de Descarga en Píldora */}
+              <div className="reportes-actions-row">
+                <button 
+                  className="report-download-btn btn-postventa" 
+                  onClick={handleDownloadExcelOperaciones}
+                  title="Descargar Excel Postventa / Atención al Cliente"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" style={{ marginRight: 8, flexShrink: 0 }}>
+                    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+                  </svg>
+                  Descargar Excel Postventa / Atención al Cliente
+                </button>
+                <button 
+                  className="report-download-btn btn-ejecutivo" 
+                  onClick={handleDownloadExcelExecutive}
+                  title="Descargar Reporte Ejecutivo"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" style={{ marginRight: 8, flexShrink: 0 }}>
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                  </svg>
+                  Descargar Reporte Ejecutivo
+                </button>
+                <button 
+                  className="report-download-btn btn-personalizado" 
+                  onClick={handleDownloadExcelSimple}
+                  title="Descargar Lista Personalizada (Solo Columnas)"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" style={{ marginRight: 8, flexShrink: 0 }}>
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                  </svg>
+                  Descargar Lista Personalizada (Solo Columnas)
+                </button>
+              </div>
+
+              {/* Indicación de filtros unificados */}
+              <div className="reportes-info-banner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>
+                  Los reportes se generan con los filtros y criterios seleccionados en el panel superior. Si no seleccionas una opción específica, se utilizarán todos los datos.
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* BANNER DE ESTADO DEL SISTEMA (Loading, Success o Error) */}
@@ -1117,7 +1263,8 @@ function TopUrbanismo() {
           />
 
           <div className="titulo-topurbanismos">
-            <h3 className="h3">Top Sectores</h3>
+            <h2 className="top-sectores-title">Top Sectores</h2>
+            <p className="top-sectores-subtitle">Ranking por cantidad de clientes e ingresos</p>
           </div>
 
           {systemStatus === "loading" ? (
@@ -1155,90 +1302,164 @@ function UrbanismoList({ urbanismos }) {
     setUrbanismoAbierto((prev) => (prev === index ? null : index));
   };
 
+  const maxClientes = useMemo(() => {
+    if (!urbanismos || urbanismos.length === 0) return 1;
+    return Math.max(...urbanismos.map((u) => u.cantidadClientes || 0), 1);
+  }, [urbanismos]);
+
   return (
     <ul className="urbanismos-grid">
-      {urbanismos.map((urbanismo, index) => (
-        <li className={`urbanismo-item ${urbanismoAbierto === index ? "expanded" : ""}`} key={index}>
-          <div className="card-header">
-            <span className="urbanismo-nombre">
-              {index + 1}. {urbanismo.urbanismo}
-            </span>
-          </div>
+      {urbanismos.map((urbanismo, index) => {
+        const isRank1 = index === 0;
+        const isRank2 = index === 1;
+        const isRank3 = index === 2;
+        const isTop3 = isRank1 || isRank2 || isRank3;
+        const percent = Math.min(100, Math.max(10, Math.round(((urbanismo.cantidadClientes || 0) / maxClientes) * 100)));
 
-          <div className="encabezados">
-            <span>
-              <strong>Clientes:</strong> {urbanismo.cantidadClientes}
-            </span>
-            {!((urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis")) && (
-              <span>
-                <strong>Ingreso:</strong> {Math.round(urbanismo.ingresosTotales)}$
-              </span>
-            )}
-          </div>
+        return (
+          <li
+            className={`urbanismo-item ${isTop3 ? `top-rank-${index + 1}` : ""} ${
+              urbanismoAbierto === index ? "expanded" : ""
+            }`}
+            key={urbanismo.urbanismo || index}
+          >
+            <div className="sector-card-header">
+              {isRank1 ? (
+                <img
+                  src={`${process.env.PUBLIC_URL}/ICON_primer-lugar.png`}
+                  alt="1er Lugar"
+                  className="rank-medal-img"
+                />
+              ) : isRank2 ? (
+                <img
+                  src={`${process.env.PUBLIC_URL}/ICON_segundo-lugar.png`}
+                  alt="2do Lugar"
+                  className="rank-medal-img"
+                />
+              ) : isRank3 ? (
+                <img
+                  src={`${process.env.PUBLIC_URL}/ICON_tercer-lugar.png`}
+                  alt="3er Lugar"
+                  className="rank-medal-img"
+                />
+              ) : (
+                <div className="rank-number-badge">{index + 1}</div>
+              )}
 
-          <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
-            {urbanismoAbierto === index ? "Ocultar Lista" : `Mostrar Lista (${urbanismo.cantidadClientes})`}
-          </button>
+              <div className="sector-card-header-main">
+                <h4 className="sector-card-title" title={urbanismo.urbanismo}>
+                  {urbanismo.urbanismo}
+                </h4>
+                <div className="sector-progress-track">
+                  <div
+                    className="sector-progress-fill"
+                    style={{ width: `${percent}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
 
-          {urbanismoAbierto === index && (
-            <div className="clientes-wrapper">
-              <div className="clientes-grid">
-                {urbanismo.clientes.map((cliente, idx) => {
-                  const planName = cliente.plan?.name || "N/A";
-                  const planCost = cliente.plan?.cost ?? "0";
+            <div className="sector-stats-row">
+              <div className="sector-stat-col">
+                <div className="sector-stat-icon client-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                  </svg>
+                </div>
+                <div className="sector-stat-data">
+                  <span className="sector-stat-label">Clientes</span>
+                  <span className="sector-stat-value">{urbanismo.cantidadClientes}</span>
+                </div>
+              </div>
 
-                  return (
-                    <article key={idx} className="cliente-card">
-                      <div className="cliente-header">
-                        <div className="cliente-nombre" title={cliente.client_name}>
-                          {cliente.client_name || "Sin nombre"}
-                        </div>
+              <div className="sector-stat-divider"></div>
 
-                        <span
-                          className={`badge-estado badge-${(cliente.status_name || "")
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
-                        >
-                          {cliente.status_name || "Sin estado"}
-                        </span>
-                      </div>
+              <div className="sector-stat-col">
+                <div className="sector-stat-icon money-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
+                  </svg>
+                </div>
+                <div className="sector-stat-data">
+                  <span className="sector-stat-label">Ingreso</span>
+                  <span className="sector-stat-value">
+                    {Math.round(urbanismo.ingresosTotales)}$
+                  </span>
+                </div>
+              </div>
+            </div>
 
-                      <div className="cliente-body">
-                        <div className="cliente-row">
-                          <span className="cliente-label">Sector</span>
-                          <span className="cliente-value">{cliente.sector_name || "N/A"}</span>
-                        </div>
+            <button
+              onClick={() => toggleMostrarLista(index)}
+              className="btn-ver-clientes"
+            >
+              {urbanismoAbierto === index ? "Ocultar clientes ↑" : "Ver clientes →"}
+            </button>
 
-                        <div className="cliente-row">
-                          <span className="cliente-label">Plan</span>
-                          <span className="cliente-value">
-                            {planName} (${planCost})
+            {urbanismoAbierto === index && (
+              <div className="clientes-wrapper animate-fade-in">
+                <div className="clientes-grid">
+                  {urbanismo.clientes.map((cliente, idx) => {
+                    const planName = cliente.plan?.name || "N/A";
+                    const planCost = cliente.plan?.cost ?? "0";
+
+                    return (
+                      <article key={idx} className="cliente-card">
+                        <div className="cliente-header">
+                          <div className="cliente-nombre" title={cliente.client_name}>
+                            {cliente.client_name || "Sin nombre"}
+                          </div>
+
+                          <span
+                            className={`badge-estado badge-${(cliente.status_name || "")
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
+                          >
+                            {cliente.status_name || "Sin estado"}
                           </span>
                         </div>
 
-                        <div className="cliente-row">
-                          <span className="cliente-label">Tel</span>
-                          <span className="cliente-value">{cliente.client_mobile || "N/A"}</span>
-                        </div>
+                        <div className="cliente-body">
+                          <div className="cliente-row">
+                            <span className="cliente-label">Sector</span>
+                            <span className="cliente-value">{cliente.sector_name || "N/A"}</span>
+                          </div>
 
-                        <div className="cliente-data">
-                          <span><strong>ID:</strong> {cliente.id}</span>
-                          <span><strong>Ciclo:</strong> {mapCycleValue(cliente.cycle, cliente)}</span>
-                        </div>
+                          <div className="cliente-row">
+                            <span className="cliente-label">Plan</span>
+                            <span className="cliente-value">
+                              {planName} (${planCost})
+                            </span>
+                          </div>
 
-                        <div className="cliente-row cliente-row-direccion">
-                          <span className="cliente-label">Dir</span>
-                          <span className="cliente-value">{cliente.address || "N/A"}</span>
+                          <div className="cliente-row">
+                            <span className="cliente-label">Tel</span>
+                            <span className="cliente-value">{cliente.client_mobile || "N/A"}</span>
+                          </div>
+
+                          <div className="cliente-data">
+                            <span>
+                              <strong>ID:</strong> {cliente.id}
+                            </span>
+                            <span>
+                              <strong>Ciclo:</strong> {mapCycleValue(cliente.cycle, cliente)}
+                            </span>
+                          </div>
+
+                          <div className="cliente-row cliente-row-direccion">
+                            <span className="cliente-label">Dir</span>
+                            <span className="cliente-value">{cliente.address || "N/A"}</span>
+                          </div>
                         </div>
-                      </div>
-                    </article>
-                  );
-                })}
+                      </article>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
-        </li>
-      ))}
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
