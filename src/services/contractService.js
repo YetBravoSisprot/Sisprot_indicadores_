@@ -1,0 +1,226 @@
+/**
+ * Servicio para consultar contratos en tiempo real desde la API de Sisprot (Gsoft).
+ * Endpoint: /api/public/contracts/
+ */
+
+const API_BASE_URL = process.env.REACT_APP_CONTRACTS_API_URL || "https://api.sisprotgf.com/api/public/contracts/";
+const API_KEY = process.env.REACT_APP_SISPROT_API_KEY || "kP4vL8nB1xM7zQ0wR9tY2sJ5hG6fD3aC9uE1iO7mN4rT2bV8xS";
+
+/**
+ * Códigos de estatus en Gsoft según especificación:
+ * 16 = Activo
+ * 18 = Por instalar
+ * 19 = Suspendido
+ * 20 = Pausado
+ * 34 = Cancelado
+ */
+export const STATUS_CODES = {
+    "Activo": 16,
+    "Por instalar": 18,
+    "Suspendido": 19,
+    "Pausado": 20,
+    "Cancelado": 34
+};
+
+export const CODE_TO_STATUS = {
+    16: "Activo",
+    18: "Por instalar",
+    19: "Suspendido",
+    20: "Pausado",
+    34: "Cancelado"
+};
+
+// Caché en memoria para evitar re-consultar innecesariamente al cambiar de filtros
+const contractsCache = new Map();
+
+/**
+ * Normaliza un contrato de la API al esquema utilizado por TopUrbanismo y exportadores.
+ */
+export const normalizeContract = (item) => {
+    if (!item) return null;
+
+    const fullName = `${item.name || ""} ${item.last_name || ""}`.trim() || item.client_name || "Sin nombre";
+    const idStr = String(item.identification || item.client_identification || "").toUpperCase();
+    const planName = String(item.plan_name || item.plan?.name || "").toUpperCase();
+
+    // Determinar tipo de cliente
+    let clientType = item.client_type_name || "";
+    if (!clientType) {
+        if (planName.includes("PYME") || idStr.startsWith("J") || idStr.startsWith("G")) {
+            clientType = "PYME";
+        } else if (planName.includes("EMPLEADO") || fullName.includes("BEJAS")) {
+            clientType = "EMPLEADO";
+        } else if (planName.includes("INTERCAMBIO")) {
+            clientType = "INTERCAMBIO";
+        } else if (planName.includes("GRATIS")) {
+            clientType = "GRATIS";
+        } else {
+            clientType = "RESIDENCIAL";
+        }
+    }
+
+    // Determinar nombre de estatus
+    let statusName = item.status_name || "";
+    if (!statusName && item.status !== undefined) {
+        statusName = CODE_TO_STATUS[Number(item.status)] || "Desconocido";
+    }
+
+    const clientSubdivision = `${statusName.toUpperCase()}_${clientType.toUpperCase()}`;
+
+    const planCost = item.plan_cost !== undefined ? item.plan_cost : (item.plan?.cost || 0);
+
+    return {
+        id: item.id,
+        client_id: item.client_id,
+        client_name: fullName,
+        client_type_name: clientType,
+        client_subdivision: clientSubdivision,
+        status_name: statusName,
+        status: item.status,
+        cycle: item.cycle !== undefined && item.cycle !== null ? item.cycle : 1,
+        cycle_old: item.cycle_old !== undefined ? item.cycle_old : null,
+        cycle_end: item.cycle_end !== undefined ? item.cycle_end : null,
+        migrate: Boolean(item.migrate),
+        sector_name: item.sector_name || "",
+        parish_name: item.parish_name || "",
+        installation_order: item.installation_order || "",
+        pin_code: item.pin_code || "",
+        plan: {
+            id: item.plan_id || item.plan?.id || null,
+            name: item.plan_name || item.plan?.name || "N/A",
+            cost: String(planCost)
+        },
+        client_mobile: item.mobile || item.client_mobile || "N/A",
+        client_email: item.email || item.client_email || "N/A",
+        address: item.address_tax || item.address || "",
+        address_tax: item.address_tax || "",
+        client_identification: item.identification || item.client_identification || "N/A",
+        created_at: item.created_at || null,
+        service_detail: item.service_detail || null,
+        nap_box_name: item.nap_box_name || "",
+        debt: item.debt !== undefined ? item.debt : 0,
+        debt_bs: item.debt_bs !== undefined ? item.debt_bs : 0,
+        bank_associated: item.bank_associated || null,
+        contract_detail_id: item.contract_detail_id || null
+    };
+};
+
+/**
+ * Filtra contratos de prueba y usuarios de prueba del sistema.
+ */
+export const filterValidContracts = (contractsList) => {
+    if (!Array.isArray(contractsList)) return [];
+
+    const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
+
+    return contractsList.filter(cliente => {
+        if (!cliente) return false;
+        const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
+
+        // Excluir pruebas de usuarios específicos
+        if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
+
+        // Lista blanca permitida
+        const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
+        if (isWhitelisted) return true;
+
+        const searchFields = [
+            cliente.client_name,
+            cliente.address,
+            cliente.sector_name,
+            cliente.client_mobile,
+            cliente.client_identification,
+            cliente.client_type_name,
+            cliente.plan?.name
+        ];
+
+        return !searchFields.some(val =>
+            val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
+        );
+    });
+};
+
+/**
+ * Consulta los contratos en tiempo real por lista de estados (ej: ["Activo"], ["Suspendido"], o ["Todos"]).
+ *
+ * @param {string[]} selectedStatuses - Lista de nombres de estados ("Activo", "Suspendido", etc.)
+ * @param {boolean} forceRefresh - Forzar actualización omitiendo caché
+ * @returns {Promise<{ count: number, results: Array, fromCache: boolean }>}
+ */
+export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false) => {
+    const isTodos = selectedStatuses.includes("Todos") || selectedStatuses.length === 0;
+
+    // Convertir nombres a códigos numéricos
+    let statusIds = [];
+    if (!isTodos) {
+        selectedStatuses.forEach(st => {
+            if (STATUS_CODES[st] !== undefined) {
+                statusIds.push(STATUS_CODES[st]);
+            }
+        });
+    }
+
+    const cacheKey = isTodos ? "all" : statusIds.sort((a, b) => a - b).join(",");
+
+    if (!forceRefresh && contractsCache.has(cacheKey)) {
+        return {
+            count: contractsCache.get(cacheKey).length,
+            results: contractsCache.get(cacheKey),
+            fromCache: true
+        };
+    }
+
+    let url = `${API_BASE_URL}?remove_pagination=true`;
+    if (!isTodos && statusIds.length > 0) {
+        url += `&status=${statusIds.join(",")}`;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000); // 120s timeout para datasets grandes
+
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            signal: controller.signal,
+            headers: {
+                "X-API-KEY": (API_KEY || "").trim(),
+                "Accept": "application/json"
+            }
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            throw new Error(`Error HTTP al consultar contratos: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const rawResults = Array.isArray(data) ? data : (data.results || []);
+
+        // Normalizar contratos al formato de la aplicación
+        const normalized = rawResults.map(normalizeContract).filter(Boolean);
+
+        // Aplicar filtro de registros de prueba
+        const validResults = filterValidContracts(normalized);
+
+        // Guardar en caché
+        contractsCache.set(cacheKey, validResults);
+
+        return {
+            count: validResults.length,
+            results: validResults,
+            fromCache: false
+        };
+    } catch (err) {
+        clearTimeout(timeoutId);
+        console.error("Error en fetchContractsByStatus:", err);
+        throw err;
+    }
+};
+
+/**
+ * Limpia la caché en memoria de contratos.
+ */
+export const clearContractsCache = () => {
+    contractsCache.clear();
+};
