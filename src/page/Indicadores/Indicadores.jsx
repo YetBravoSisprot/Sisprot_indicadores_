@@ -277,18 +277,15 @@ function Indicadores() {
 
 
 
+  if (showPasswordState) {
+    return <Loging />;
+  }
+
   return (
     <div>
-      {showPasswordState ? (
-        <>
-          <h1>Inicia Sesión</h1>
-          <Loging />
-        </>
-      ) : (
-        <>
-          <LogoTitulo />
-          <DropdownMenu />
-          <PageNav />
+      <LogoTitulo />
+      <DropdownMenu />
+      <PageNav />
 
           <div className="indicadores-dashboard animate-slide-up">
             <h2 className="dashboard-title">Resumen Estratégico</h2>
@@ -421,8 +418,6 @@ function Indicadores() {
               </div>
             </div>
           </div>
-        </>
-      )}
     </div>
   );
 }
