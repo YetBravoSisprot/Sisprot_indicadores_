@@ -55,6 +55,173 @@ function DropdownFilter({ label, placeholder, children }) {
   );
 }
 
+// Banner de estado del sistema (Loading / Success / Error)
+function SisprotStatusBanner({ status, lastUpdatedTime, onRetry, onRefresh, errorMessage }) {
+  if (status === "loading") {
+    return (
+      <div className="sisprot-status-banner status-banner-loading animate-fade-in">
+        <div className="status-banner-left">
+          <div className="status-spinner-circle" />
+          <div className="status-banner-texts">
+            <h4 className="status-banner-title">Actualizando información de Sisprot BI</h4>
+            <p className="status-banner-subtitle">
+              Conectando con el sistema y consultando los datos de clientes e ingresos…
+            </p>
+          </div>
+        </div>
+        <div className="status-banner-right">
+          <span className="status-banner-time-hint">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            Este proceso puede tardar unos segundos…
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "success") {
+    return (
+      <div className="sisprot-status-banner status-banner-success animate-fade-in">
+        <div className="status-banner-left">
+          <div className="status-badge-icon icon-success">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div className="status-banner-texts">
+            <h4 className="status-banner-title text-success">Datos actualizados correctamente</h4>
+            <p className="status-banner-subtitle text-success-sub">
+              Información disponible · Sisprot BI sincronizado
+            </p>
+          </div>
+        </div>
+        <div className="status-banner-right">
+          {lastUpdatedTime && (
+            <span className="status-banner-timestamp">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              Última actualización: {lastUpdatedTime}
+            </span>
+          )}
+          <button className="status-banner-action-btn btn-refresh" onClick={onRefresh} title="Actualizar datos nuevamente">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+            </svg>
+            Actualizar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="sisprot-status-banner status-banner-error animate-fade-in">
+        <div className="status-banner-left">
+          <div className="status-badge-icon icon-error">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <div className="status-banner-texts">
+            <h4 className="status-banner-title text-error">No fue posible actualizar los datos</h4>
+            <p className="status-banner-subtitle text-error-sub">
+              {errorMessage ? `Error: ${errorMessage}. ` : "Ocurrió un error al consultar la API. "}
+              Puedes reintentar nuevamente.
+            </p>
+          </div>
+        </div>
+        <div className="status-banner-right">
+          <button className="status-banner-action-btn btn-retry" onClick={onRetry}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+            </svg>
+            Reintentar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+// Esqueletos animados para gráficos y datos mientras carga
+function SkeletonDashboard() {
+  return (
+    <div className="skeleton-dashboard-grid animate-fade-in">
+      {/* Tarjeta 1: Gráfico de Barras */}
+      <div className="skeleton-card skeleton-card-bar">
+        <div className="skeleton-card-header">
+          <div className="skeleton-shimmer skeleton-title-bar" />
+          <div className="skeleton-shimmer skeleton-badge-pill" />
+        </div>
+        <div className="skeleton-bars-container">
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "42%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "76%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "54%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "92%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "68%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "84%" }} /></div>
+          <div className="skeleton-bar-wrapper"><div className="skeleton-shimmer skeleton-bar" style={{ height: "48%" }} /></div>
+        </div>
+        <div className="skeleton-axis-line" />
+      </div>
+
+      {/* Tarjeta 2: Gráfico Circular / Donut */}
+      <div className="skeleton-card skeleton-card-donut">
+        <div className="skeleton-card-header">
+          <div className="skeleton-shimmer skeleton-title-bar" style={{ width: "50%" }} />
+        </div>
+        <div className="skeleton-donut-layout">
+          <div className="skeleton-donut-circle-wrap">
+            <div className="skeleton-shimmer skeleton-donut-ring" />
+          </div>
+          <div className="skeleton-donut-legend">
+            <div className="skeleton-legend-item">
+              <span className="skeleton-shimmer skeleton-dot" />
+              <span className="skeleton-shimmer skeleton-line" style={{ width: "80px" }} />
+            </div>
+            <div className="skeleton-legend-item">
+              <span className="skeleton-shimmer skeleton-dot" />
+              <span className="skeleton-shimmer skeleton-line" style={{ width: "100px" }} />
+            </div>
+            <div className="skeleton-legend-item">
+              <span className="skeleton-shimmer skeleton-dot" />
+              <span className="skeleton-shimmer skeleton-line" style={{ width: "65px" }} />
+            </div>
+            <div className="skeleton-legend-item">
+              <span className="skeleton-shimmer skeleton-dot" />
+              <span className="skeleton-shimmer skeleton-line" style={{ width: "90px" }} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tarjeta 3: Métricas y Filas de Sectores */}
+      <div className="skeleton-card skeleton-card-rows">
+        <div className="skeleton-card-header">
+          <div className="skeleton-shimmer skeleton-title-bar" style={{ width: "60%" }} />
+        </div>
+        <div className="skeleton-rows-container">
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "100%" }} />
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "90%" }} />
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "95%" }} />
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "80%" }} />
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "88%" }} />
+          <div className="skeleton-shimmer skeleton-row-line" style={{ width: "70%" }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TopUrbanismo() {
   const location = useLocation();
   const { showPasswordState, data, isLoading, error, email, fetchData, isUpdating, connectionStatus } = useContext(PasswordContext);
@@ -62,11 +229,23 @@ function TopUrbanismo() {
   const [sectorAgenciaMap, setSectorAgenciaMap] = useState({});
   const [urbanismosAprobados, setUrbanismosAprobados] = useState({});
 
-  // Estado para contratos obtenidos en tiempo real (inicializa de inmediato para carga automática)
+  // Estado para contratos obtenidos en tiempo real
   const [realtimeContracts, setRealtimeContracts] = useState(() => (data?.results && data.results.length > 0 ? data.results : []));
   const [isLoadingContracts, setIsLoadingContracts] = useState(false);
-  const [realtimeStatusMsg, setRealtimeStatusMsg] = useState("");
+  const [systemStatus, setSystemStatus] = useState("loading"); // "loading" | "success" | "error"
+  const [lastUpdatedTime, setLastUpdatedTime] = useState("");
   const [errorContratos, setErrorContratos] = useState(null);
+
+  const getFormattedTime = () => {
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const d = pad(now.getDate());
+    const m = pad(now.getMonth() + 1);
+    const y = now.getFullYear();
+    const h = pad(now.getHours());
+    const min = pad(now.getMinutes());
+    return `${d}/${m}/${y} ${h}:${min}`;
+  };
 
   // Asegurar que si data inicial llega del contexto, se cargue de inmediato en automático
   useEffect(() => {
@@ -217,23 +396,22 @@ function TopUrbanismo() {
   // Función para consultar contratos en tiempo real según el estatus seleccionado (en segundo plano)
   const cargarContratosEnTiempoReal = useCallback(async (forceRefresh = false) => {
     setIsLoadingContracts(true);
+    setSystemStatus("loading");
     setErrorContratos(null);
 
     const statusNombres = estadosSeleccionados.includes("Todos") ? ["Todos"] : estadosSeleccionados;
-    setRealtimeStatusMsg(`🔄 Sincronizando contratos (${statusNombres.join(", ")})...`);
 
     try {
       const res = await fetchContractsByStatus(statusNombres, forceRefresh);
       if (res && res.results && res.results.length > 0) {
         setRealtimeContracts(res.results);
-        const cacheNote = res.fromCache ? " (en caché)" : "";
-        setRealtimeStatusMsg(`✅ ${res.count.toLocaleString()} contratos actualizados${cacheNote}`);
       }
+      setSystemStatus("success");
+      setLastUpdatedTime(getFormattedTime());
     } catch (err) {
       console.warn("No se pudo actualizar en tiempo real desde la API:", err);
       setErrorContratos(err);
-      // Mantener los datos actuales para que nunca quede en 0
-      setRealtimeStatusMsg(`ℹ️ Mostrando datos actuales (API: ${err.message})`);
+      setSystemStatus("error");
     } finally {
       setIsLoadingContracts(false);
     }
@@ -672,31 +850,13 @@ function TopUrbanismo() {
               </button>
             </div>
 
-            <div>
+            <div className="top-acciones-botones">
               <button className="button" onClick={handleTop10Urb}>
                 Top 10
               </button>
               <button className="button" onClick={handleTopUrb}>
                 Top Global
               </button>
-              <button 
-                className="button" 
-                onClick={() => cargarContratosEnTiempoReal(true)} 
-                disabled={isLoadingContracts}
-                style={{ backgroundColor: isLoadingContracts ? '#bdc3c7' : '#9b59b6', color: '#fff', marginLeft: '10px' }}
-              >
-                {isLoadingContracts ? "🔄 Consultando API..." : "🔄 Actualizar Datos"}
-              </button>
-              {realtimeStatusMsg && !isLoadingContracts && (
-                <div style={{ fontSize: '0.9rem', color: realtimeStatusMsg.includes('✅') ? '#2ecc71' : realtimeStatusMsg.includes('🔄') ? '#3498db' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
-                  {realtimeStatusMsg}
-                </div>
-              )}
-              {connectionStatus && !realtimeStatusMsg && !isLoading && !isUpdating && (
-                <div style={{ fontSize: '0.9rem', color: connectionStatus.includes('✅') ? '#2ecc71' : '#e67e22', marginTop: '10px', fontWeight: 'bold' }}>
-                  {connectionStatus}
-                </div>
-              )}
             </div>
 
             <div className="filtros-selects-grid">
@@ -890,13 +1050,33 @@ function TopUrbanismo() {
               </DropdownFilter>
             </div>
 
-            <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
+            <div className="indicadores-totales-pills">
+              <div className="indicador-pill">
+                <span className="indicador-pill-icon">👥</span>
+                <div className="indicador-pill-content">
+                  <span className="indicador-pill-label">Total de clientes:</span>
+                  <span className="indicador-pill-value">
+                    {systemStatus === "loading" && totalClientesGlobal === 0
+                      ? "..."
+                      : totalClientesGlobal.toLocaleString("es-ES")}
+                  </span>
+                </div>
+              </div>
 
-            <button className="buttonIngreso marginbutton">
-              {estadosSeleccionados.includes("Cancelado")
-                ? `Total de Perdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
-                : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
-            </button>
+              <div className="indicador-pill">
+                <span className="indicador-pill-icon">💰</span>
+                <div className="indicador-pill-content">
+                  <span className="indicador-pill-label">
+                    {estadosSeleccionados.includes("Cancelado") ? "Total de Pérdida:" : "Total de Ingresos:"}
+                  </span>
+                  <span className="indicador-pill-value">
+                    {systemStatus === "loading" && totalIngresos === 0
+                      ? "..."
+                      : `${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
+                  </span>
+                </div>
+              </div>
+            </div>
 
             <div style={{ backgroundColor: '#fdfcfe', padding: '20px', borderRadius: '12px', marginBottom: '25px', fontSize: '0.95rem', color: '#2c3e50', border: '1px solid #e1e8ed', textAlign: 'left', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
               <p style={{ margin: '0 0 12px 0', color: '#1f4e78', fontSize: '1.1rem' }}><strong>📊 Guía de Reportes Inteligentes:</strong></p>
@@ -930,12 +1110,22 @@ function TopUrbanismo() {
             </span>
           </div>
 
+          {/* BANNER DE ESTADO DEL SISTEMA (Loading, Success o Error) */}
+          <SisprotStatusBanner
+            status={systemStatus}
+            lastUpdatedTime={lastUpdatedTime}
+            errorMessage={errorContratos?.message}
+            onRetry={() => cargarContratosEnTiempoReal(true)}
+            onRefresh={() => cargarContratosEnTiempoReal(true)}
+          />
 
           <div className="titulo-topurbanismos">
             <h3 className="h3">Top Sectores</h3>
           </div>
 
-          {modoBusquedaContrato ? (
+          {systemStatus === "loading" ? (
+            <SkeletonDashboard />
+          ) : modoBusquedaContrato ? (
             <UrbanismoList
               urbanismos={[
                 {
