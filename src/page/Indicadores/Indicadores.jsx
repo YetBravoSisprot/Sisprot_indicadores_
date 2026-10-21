@@ -259,6 +259,44 @@ function SisprotStatusBanner({ status, lastUpdatedTime, onRetry, onRefresh, erro
   return null;
 }
 
+// Medidor circular de porcentaje (Donut Chart)
+function DonutMeter({ percentage = 0, size = 114, strokeWidth = 11 }) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const clampedPercent = Math.min(100, Math.max(0, percentage));
+  const strokeDashoffset = circumference - (clampedPercent / 100) * circumference;
+
+  return (
+    <div className="donut-meter-wrap" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="donut-svg">
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          className="donut-track"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          className="donut-fill"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+      </svg>
+      <div className="donut-center-text">
+        <span className="donut-percent-value">{clampedPercent.toFixed(1)}%</span>
+      </div>
+    </div>
+  );
+}
+
 const getFormattedTime = () => {
   const now = new Date();
   const pad = (n) => String(n).padStart(2, "0");
@@ -498,146 +536,314 @@ function Indicadores() {
       <DropdownMenu />
       <PageNav />
 
-          <div className="indicadores-dashboard animate-slide-up">
-            <h2 className="dashboard-title">Resumen Estratégico</h2>
+      <div className="indicadores-dashboard animate-slide-up">
+        {/* ENCABEZADO PRINCIPAL */}
+        <div className="dashboard-header-container">
+          <div className="dashboard-header-icon-box">
+            <img src="/ICON_grafico.png" alt="Gráfico" className="header-icon-img" />
+          </div>
+          <div className="dashboard-header-texts">
+            <h2 className="dashboard-title-main">
+              Resumen <span className="title-highlight">Estratégico</span>
+            </h2>
+            <p className="dashboard-subtitle">
+              Visión general del estado de la cartera de clientes y oportunidades de recuperación.
+            </p>
+          </div>
+        </div>
 
-            {/* Banner de sincronización de contratos en tiempo real */}
-            <SisprotStatusBanner
-              status={systemStatus}
-              lastUpdatedTime={lastUpdatedTime}
-              errorMessage={errorContratos?.message}
-              onRetry={() => cargarContratosEnTiempoReal(true)}
-              onRefresh={() => cargarContratosEnTiempoReal(true)}
-            />
+        {/* Banner de sincronización de contratos en tiempo real */}
+        <SisprotStatusBanner
+          status={systemStatus}
+          lastUpdatedTime={lastUpdatedTime}
+          errorMessage={errorContratos?.message}
+          onRetry={() => cargarContratosEnTiempoReal(true)}
+          onRefresh={() => cargarContratosEnTiempoReal(true)}
+        />
 
-            {/* SECCIÓN 1: MÉTRICAS DE INTELIGENCIA (BI) */}
-            <div className="kpi-grid section-intelligence">
-              <div className="kpi-card card-salud">
-                <div className="kpi-icon">📊</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">¿Qué porcentaje de mis clientes totales están pagando y tienen el servicio activo?</span>
-                  <p className="kpi-value">
-                    {biMetrics.salud.toFixed(1)}%
-                    <span className="kpi-count">({biMetrics.totalActivos.toLocaleString("es-ES")} Activos)</span>
-                  </p>
-                  <div className="health-meter" title="Barra de efectividad">
-                    <div className="health-fill" style={{ width: `${biMetrics.salud}%` }}></div>
-                  </div>
-                </div>
+        {/* SECCIÓN 1: TARJETAS SUPERIORES DE INTELIGENCIA ESTRATÉGICA (BI) */}
+        <div className="kpi-grid section-intelligence-top">
+          {/* Card 1: Porcentaje Activos */}
+          <div className="kpi-card card-bi-salud">
+            <div className="card-top-header">
+              <div className="card-squircle-icon icon-bg-blue">
+                <img src="/ICON_personas.png" alt="Clientes" className="squircle-icon-img" />
               </div>
-
-              <div className="kpi-card card-oportunidad">
-                <div className="kpi-icon">📈</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">Oportunidad (USD)</span>
-                  <p className="kpi-value">${biMetrics.recuperable.toLocaleString("es-ES", { minimumFractionDigits: 2 })}</p>
-                  <span className="bi-hint">Ingreso potencial mensual</span>
-                  <span className="bi-explanation">
-                    💡 Es la suma de los planes de todos los clientes <strong>Suspendidos</strong>.
-                    Representa lo que la empresa podría recuperar mensualmente
-                    si se reactivan esos servicios.
-                  </span>
-                </div>
-              </div>
-
-              {topSector && (
-                <div className="kpi-card card-top">
-                  <div className="kpi-icon">⭐️</div>
-                  <div className="kpi-content">
-                    <span className="kpi-label">Sector Líder</span>
-                    <p className="kpi-value-small">{topSector.name}</p>
-                    <div className="top-meta">
-                      <span className="tag-agencia">{topSector.agencia}</span>
-                      <span className="tag-ingreso">${topSector.total.toLocaleString("es-ES", { minimumFractionDigits: 2 })}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <span className="card-label-question">
+                ¿QUÉ PORCENTAJE DE MIS CLIENTES TOTALES ESTÁN PAGANDO Y TIENEN EL SERVICIO ACTIVO?
+              </span>
             </div>
 
-            <h3 className="section-divider-title">Resumen de Clientes</h3>
-
-            {/* SECCIÓN 2: CONTEOS BÁSICOS */}
-            <div className="kpi-grid section-counts">
-              <div className="kpi-card card-total">
-                <div className="kpi-icon">👥</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">Total Clientes</span>
-                  <p className="kpi-value">{conteos.Todos.toLocaleString("es-ES")}</p>
-                  <span className="bi-hint">{fmtMonto(montosPorEstado.Todos)} facturación total</span>
-                </div>
-              </div>
-
-              <div className="kpi-card card-activo">
-                <div className="kpi-icon">✅</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">Activos</span>
-                  <p className="kpi-value">{(conteos.Activo || 0).toLocaleString("es-ES")}</p>
-                  <span className="bi-hint">{fmtMonto(montosPorEstado.Activo)} ingreso mensual</span>
-                </div>
-              </div>
-
-              <div className="kpi-card card-suspendido">
-                <div className="kpi-icon">⚠️</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">Suspendidos</span>
-                  <p className="kpi-value">{(conteos.Suspendido || 0).toLocaleString("es-ES")}</p>
-                  <span className="bi-hint">{fmtMonto(montosPorEstado.Suspendido)} recuperable</span>
-                </div>
-              </div>
-
-              <div className="kpi-card card-cancelado">
-                <div className="kpi-icon">🛑</div>
-                <div className="kpi-content">
-                  <span className="kpi-label">Cancelados Tasa General</span>
-                  <p className="kpi-value">{(conteos.Cancelado || 0).toLocaleString("es-ES")}</p>
-                  <span className="bi-hint">{fmtMonto(montosPorEstado.Cancelado)} pérdida mensual</span>
-                </div>
-              </div>
-            </div>
-
-            {/* FILTROS */}
-            <div className="controls-bar">
-              <div className="filter-group">
-                <label>Seleccionar Agencia</label>
-                <select
-                  value={agenciaFiltro}
-                  onChange={(e) => setAgenciaFiltro(e.target.value)}
-                  className="select-premium"
-                >
-                  {listaAgencias.map(agencia => (
-                    <option key={agencia} value={agencia}>{agencia}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="filter-group">
-                <label>Seleccionar Sector</label>
-                <select
-                  value={sectorFiltro}
-                  onChange={(e) => setSectorFiltro(e.target.value)}
-                  className="select-premium"
-                >
-                  {listaSectores.map(sector => (
-                    <option key={sector} value={sector}>{sector}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="filter-group">
-                <label>Tipo de Cliente</label>
-                <select
-                  value={tipoClienteFiltro}
-                  onChange={(e) => setTipoClienteFiltro(e.target.value)}
-                  className="select-premium"
-                >
-                  {listaTiposCliente.map(tipo => (
-                    <option key={tipo} value={tipo}>{tipo === "RESIDENCIAL" ? "RESIDENCIAL (Ciclo 1)" : tipo === "PYME" ? "PYME (Ciclo 15/30)" : tipo}</option>
-                  ))}
-                </select>
+            <div className="card-salud-body">
+              <DonutMeter percentage={biMetrics.salud} size={114} strokeWidth={11} />
+              <div className="salud-stats-col">
+                <span className="salud-main-number">
+                  {biMetrics.totalActivos.toLocaleString("es-ES")}
+                </span>
+                <span className="salud-badge-text">Activos</span>
+                <span className="salud-context-text">
+                  de {conteos.Todos.toLocaleString("es-ES")} clientes
+                </span>
               </div>
             </div>
           </div>
+
+          {/* Card 2: Oportunidad USD */}
+          <div className="kpi-card card-bi-oportunidad">
+            <div className="card-top-header">
+              <div className="card-squircle-icon icon-bg-amber">
+                <img src="/ICON_bolsa_dinero.png" alt="Oportunidad" className="squircle-icon-img" />
+              </div>
+              <div className="card-label-with-info">
+                <span className="card-label-title">OPORTUNIDAD (USD)</span>
+                <span className="info-tooltip-badge" title="Monto acumulado por planes de clientes suspendidos">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <div className="card-oportunidad-body">
+              <p className="oportunidad-big-value">
+                ${biMetrics.recuperable.toLocaleString("es-ES", { minimumFractionDigits: 2 })}
+              </p>
+              <span className="card-sub-hint">Ingreso potencial mensual</span>
+
+              <div className="oportunidad-callout-box">
+                <div className="callout-trend-icon">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                    <polyline points="17 6 23 6 23 12" />
+                  </svg>
+                </div>
+                <p className="callout-text">
+                  Si la suma de los clientes de todos los clientes{" "}
+                  <strong className="highlight-green">Suspendidos</strong>, representa lo que tu empresa podria recuperar mensualmente si se reactiva en este análisis.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Sector Líder */}
+          <div className="kpi-card card-bi-lider">
+            <div className="card-top-header">
+              <div className="card-squircle-icon icon-bg-gold">
+                <img src="/ICON_estrella.png" alt="Líder" className="squircle-icon-img" />
+              </div>
+              <span className="card-label-title">SECTOR LÍDER</span>
+            </div>
+
+            <div className="card-lider-body">
+              <p className="lider-sector-name">
+                {topSector ? topSector.name : "Casco de Turmero"}
+              </p>
+
+              <div className="lider-meta-row">
+                <span className="tag-agencia-pill">
+                  {topSector ? topSector.agencia : "TURMERO"}
+                </span>
+                <span className="lider-amount-text">
+                  {topSector ? `$${topSector.total.toLocaleString("es-ES", { minimumFractionDigits: 2 })}` : "$0,00"}
+                </span>
+              </div>
+            </div>
+
+            {/* Barras decorativas ascendentes del fondo como en el diseño */}
+            <div className="sector-leader-bars-graphic" aria-hidden="true">
+              <span className="bar bar-1" />
+              <span className="bar bar-2" />
+              <span className="bar bar-3" />
+              <span className="bar bar-4" />
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN 2: RESUMEN DE CLIENTES */}
+        <div className="section-divider-row">
+          <div className="section-divider-left">
+            <div className="section-header-icon-badge">
+              <img src="/ICON_personas.png" alt="Clientes" className="section-badge-img" />
+            </div>
+            <h3 className="section-title-text">
+              Resumen de <span className="title-highlight">clientes</span>
+            </h3>
+          </div>
+          <div className="section-divider-line" />
+        </div>
+
+        {/* 4 TARJETAS: CONTEOS CON ONDAS AMBIENTALES */}
+        <div className="kpi-grid section-counts-grid">
+          {/* Total Clientes */}
+          <div className="kpi-card card-metric-wave wave-purple">
+            <div className="metric-header-row">
+              <div className="metric-squircle squircle-purple">
+                <img src="/ICON_personas.png" alt="Total" className="metric-icon-img" />
+              </div>
+              <div className="metric-label-wrap">
+                <span className="metric-label-text">TOTAL CLIENTES</span>
+                <span className="info-tooltip-badge" title={`Total de la base: ${fmtMonto(montosPorEstado.Todos)} en facturación`}>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <p className="metric-value-huge">{conteos.Todos.toLocaleString("es-ES")}</p>
+            <span className="metric-footer-text">Total de la base de clientes</span>
+            <div className="card-wave-bg wave-tint-purple" />
+          </div>
+
+          {/* Activos */}
+          <div className="kpi-card card-metric-wave wave-green">
+            <div className="metric-header-row">
+              <div className="metric-squircle squircle-green">
+                <img src="/ICON_check.png" alt="Activos" className="metric-icon-img" />
+              </div>
+              <div className="metric-label-wrap">
+                <span className="metric-label-text">ACTIVOS</span>
+                <span className="info-tooltip-badge" title={`Ingreso mensual activo: ${fmtMonto(montosPorEstado.Activo)}`}>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <p className="metric-value-huge">{(conteos.Activo || 0).toLocaleString("es-ES")}</p>
+            <span className="metric-footer-text">Total de clientes con servicio activo mensual</span>
+            <div className="card-wave-bg wave-tint-green" />
+          </div>
+
+          {/* Suspendidos */}
+          <div className="kpi-card card-metric-wave wave-amber">
+            <div className="metric-header-row">
+              <div className="metric-squircle squircle-amber">
+                <img src="/ICON_alerta.png" alt="Suspendidos" className="metric-icon-img" />
+              </div>
+              <div className="metric-label-wrap">
+                <span className="metric-label-text">SUSPENDIDOS</span>
+                <span className="info-tooltip-badge" title={`Monto recuperable mensual: ${fmtMonto(montosPorEstado.Suspendido)}`}>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <p className="metric-value-huge">{(conteos.Suspendido || 0).toLocaleString("es-ES")}</p>
+            <span className="metric-footer-text">Total de clientes suspendidos</span>
+            <div className="card-wave-bg wave-tint-amber" />
+          </div>
+
+          {/* Cancelados */}
+          <div className="kpi-card card-metric-wave wave-red">
+            <div className="metric-header-row">
+              <div className="metric-squircle squircle-red">
+                <div className="stop-circle-badge">
+                  <span className="stop-inner-dot" />
+                </div>
+              </div>
+              <div className="metric-label-wrap">
+                <span className="metric-label-text">CANCELADOS TASA GENERAL</span>
+                <span className="info-tooltip-badge" title={`Pérdida mensual por cancelaciones: ${fmtMonto(montosPorEstado.Cancelado)}`}>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <p className="metric-value-huge">{(conteos.Cancelado || 0).toLocaleString("es-ES")}</p>
+            <span className="metric-footer-text">Total de clientes cancelados mensual</span>
+            <div className="card-wave-bg wave-tint-red" />
+          </div>
+        </div>
+
+        {/* SECCIÓN 3: FILTROS DE CONSULTA (Barra horizontal unificada) */}
+        <div className="filtros-consulta-horizontal-bar">
+          <div className="filtros-bar-title-wrap">
+            <div className="filtros-funnel-squircle">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+            </div>
+            <span className="filtros-bar-heading">Filtros de consulta</span>
+          </div>
+
+          <div className="filtros-bar-controls-grid">
+            {/* Agencia */}
+            <div className="filtro-unit">
+              <label className="filtro-unit-label">SELECCIONAR AGENCIA</label>
+              <div className="filtro-select-box">
+                <select
+                  value={agenciaFiltro}
+                  onChange={(e) => setAgenciaFiltro(e.target.value)}
+                  className="filtro-custom-select"
+                >
+                  {listaAgencias.map((agencia) => (
+                    <option key={agencia} value={agencia}>{agencia}</option>
+                  ))}
+                </select>
+                <span className="filtro-select-chevron">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            {/* Sector */}
+            <div className="filtro-unit">
+              <label className="filtro-unit-label">SELECCIONAR SECTOR</label>
+              <div className="filtro-select-box">
+                <select
+                  value={sectorFiltro}
+                  onChange={(e) => setSectorFiltro(e.target.value)}
+                  className="filtro-custom-select"
+                >
+                  {listaSectores.map((sector) => (
+                    <option key={sector} value={sector}>{sector}</option>
+                  ))}
+                </select>
+                <span className="filtro-select-chevron">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            {/* Tipo de cliente */}
+            <div className="filtro-unit">
+              <label className="filtro-unit-label">TIPO DE CLIENTE</label>
+              <div className="filtro-select-box">
+                <select
+                  value={tipoClienteFiltro}
+                  onChange={(e) => setTipoClienteFiltro(e.target.value)}
+                  className="filtro-custom-select"
+                >
+                  {listaTiposCliente.map((tipo) => (
+                    <option key={tipo} value={tipo}>{tipo}</option>
+                  ))}
+                </select>
+                <span className="filtro-select-chevron">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
