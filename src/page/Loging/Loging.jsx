@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import { useNavigate } from "react-router-dom";
-import fondoSisprot from "../../assets/fondo_Sisprot_BI.png";
-import logoSgf from "../../assets/logo_sgf.png";
 import "./Loging.css";
 
 function Loging() {
@@ -14,6 +12,9 @@ function Loging() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(() => localStorage.getItem("rememberUser") === "true");
   const [error, setError] = useState("");
+
+  const fondoPath = process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/fondo_Sisprot_BI.png` : "/fondo_Sisprot_BI.png";
+  const logoPath = process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/logo_sgf.png` : "./logo_sgf.png";
 
   // Redirigir si ya está autenticado
   useEffect(() => {
@@ -61,14 +62,14 @@ function Loging() {
   return (
     <div
       className="login-page-bg"
-      style={{ backgroundImage: `url(${fondoSisprot})` }}
+      style={{ backgroundImage: `url(${fondoPath})` }}
     >
       <div className="login-main-container">
         {/* Encabezado Superior con Logo y Título */}
         <header className="login-header animate-fade-in">
           <div className="login-brand-row">
             <img
-              src={logoSgf}
+              src={logoPath}
               alt="SGF"
               className="login-sgf-logo"
             />
@@ -209,4 +210,3 @@ function Loging() {
 }
 
 export default Loging;
-
