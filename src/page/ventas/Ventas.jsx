@@ -234,18 +234,15 @@ function Ventas() {
     exportToExcel(activeClients, ["Clientes Activos PYME y Residencial"], columns, "general", "Reporte_Clientes_Activos.xlsx");
   };
 
+  if (showPasswordState) {
+    return <LogingForm />;
+  }
+
   return (
     <div>
-      {showPasswordState ? (
-        <>
-          <h1>Inicia Sesión</h1>
-          <LogingForm />
-        </>
-      ) : (
-        <>
-          <LogoTitulo />
-          <DropdownMenu />
-          <PageNav />
+      <LogoTitulo />
+      <DropdownMenu />
+      <PageNav />
 
           <div className="ventas-dashboard animate-slide-up">
             <h2 className="dashboard-title">Monitor de Operaciones</h2>
@@ -407,8 +404,6 @@ function Ventas() {
               <p>Cargando datos...</p>
             )}
           </div>
-        </>
-      )}
     </div>
   );
 }
