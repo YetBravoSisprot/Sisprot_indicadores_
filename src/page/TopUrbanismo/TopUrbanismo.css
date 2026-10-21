@@ -12,105 +12,274 @@
 }
 
 /* ================= TITULO ================= */
+/* ================= TITULO TOP SECTORES ================= */
 .titulo-topurbanismos {
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto 24px auto;
+  margin: 32px auto 20px auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  font-size: 24px;
-  color: var(--color-text-light);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  gap: 4px;
 }
 
-/* ================= GRID DE URBANISMOS ================= */
+.top-sectores-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #00d2ff;
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 210, 255, 0.35);
+}
+
+.top-sectores-subtitle {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ================= GRID DE URBANISMOS (TOP SECTORES) ================= */
 .urbanismos-grid {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 0 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 0 10px 40px 10px;
   align-items: start;
+  box-sizing: border-box;
 }
 
-/* ================= ITEM URBANISMO ================= */
+@media screen and (max-width: 1200px) {
+  .urbanismos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .urbanismos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .urbanismos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= ITEM URBANISMO (TARJETA SECTOR) ================= */
 .urbanismo-item {
   list-style-type: none;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: var(--border-radius-lg);
+  background: rgba(8, 28, 48, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   color: #ffffff;
-  padding: 15px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
-
-  /* Fix: mejor comportamiento al expandir */
-  justify-content: flex-start;
-
-  height: auto;
+  justify-content: space-between;
   min-height: 140px;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), grid-column 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-sizing: border-box;
+}
+
+.urbanismo-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 210, 255, 0.4);
+}
+
+/* Ranks destacados (Top 3) */
+.urbanismo-item.top-rank-1 {
+  border: 1px solid rgba(0, 210, 255, 0.75);
+  box-shadow: 0 0 18px rgba(0, 210, 255, 0.25), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.urbanismo-item.top-rank-2 {
+  border: 1px solid rgba(0, 210, 255, 0.55);
+  box-shadow: 0 0 14px rgba(0, 210, 255, 0.18), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.urbanismo-item.top-rank-3 {
+  border: 1px solid rgba(0, 210, 255, 0.55);
+  box-shadow: 0 0 14px rgba(0, 210, 255, 0.18), 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .urbanismo-item.expanded {
   grid-column: 1 / -1;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(10, 34, 58, 0.9);
+  border-color: rgba(0, 210, 255, 0.6);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
-.encabezados {
+/* Header dentro de la tarjeta (Medalla/Badge + Título + Barra de progreso) */
+.sector-card-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
-  margin: 10px 0;
-  color: #e0e0e0;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.encabezados strong {
+.rank-medal-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  object-fit: contain;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rank-number-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 750;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
-.urbanismo-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
+.sector-card-header-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.urbanismo-item strong {
-  font-size: 1.1rem;
+.sector-card-title {
+  font-size: 0.95rem;
   font-weight: 700;
-  margin-bottom: 8px;
   color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
-.urbanismo-item span {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-  color: #e0e0e0;
-}
-
-/* ================= BOTON MOSTRAR/OCULTAR ================= */
-.mostrar-ocultar {
-  background: rgba(255, 255, 255, 0.10);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.sector-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+  overflow: hidden;
 }
 
-.mostrar-ocultar:hover {
+.sector-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d2ff, #0070f3);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fila de estadísticas (Clientes + Divisor + Ingreso) */
+.sector-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  margin-bottom: 12px;
+}
+
+.sector-stat-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+}
+
+.sector-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sector-stat-icon.client-icon {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+}
+
+.sector-stat-icon.money-icon {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.16);
+}
+
+.sector-stat-data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sector-stat-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.sector-stat-value {
+  font-size: 1.05rem;
+  font-weight: 750;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.sector-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 4px;
+}
+
+/* Botón "Ver clientes →" */
+.btn-ver-clientes {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(0, 168, 255, 0.08);
+  border: 1px solid rgba(0, 168, 255, 0.3);
+  color: #e0f2fe;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.btn-ver-clientes:hover {
+  background: rgba(0, 168, 255, 0.22);
+  border-color: #00d2ff;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.25);
   transform: translateY(-1px);
-  filter: brightness(1.1);
+}
+
+.btn-ver-clientes:active {
+  transform: translateY(0);
 }
 
 /* ================= CLIENTES (DENTRO DEL URBANISMO EXPANDIDO) ================= */
@@ -1312,45 +1481,74 @@ option:checked {
   align-items: center;
 }
 
+/* ==========================================================================
+   INDICADORES TOTALES (Pills / Tarjetas Naranjas Superiores)
+   ========================================================================== */
+
+.indicadores-totales-pills {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .indicador-pill {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #e9a124 0%, #d48b13 100%);
+  gap: 12px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   color: #ffffff;
-  padding: 10px 20px;
-  border-radius: 999px;
-  box-shadow: 0 4px 14px rgba(233, 161, 36, 0.35);
+  padding: 8px 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
   cursor: default;
   user-select: none;
+  min-width: 175px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .indicador-pill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(233, 161, 36, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
 }
 
-.indicador-pill-icon {
-  font-size: 1.25rem;
-  line-height: 1;
+.indicador-pill-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.indicador-pill-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .indicador-pill-content {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .indicador-pill-label {
-  font-size: 0.88rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  opacity: 0.95;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .indicador-pill-value {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 @media screen and (max-width: 768px) {
@@ -1372,6 +1570,362 @@ option:checked {
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   GUÍA DE REPORTES INTELIGENTES (3 Tarjetas Compactas + Acciones)
+   ========================================================================== */
+
+.reportes-guia-section {
+  width: 100%;
+  margin: 16px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(6, 25, 45, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 168, 255, 0.35);
+  border-radius: 20px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+
+.reportes-guia-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+.reportes-header-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: #0070f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(0, 168, 255, 0.45);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.reportes-header-icon-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reportes-header-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.reportes-header-title {
+  font-size: 1.35rem;
+  font-weight: 750;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.reportes-header-title .highlight-text {
+  color: #00d2ff;
+  font-weight: 800;
+}
+
+.reportes-header-sub {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Grid de las 3 tarjetas */
+.reportes-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.report-card {
+  background: rgba(4, 28, 48, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  position: relative;
+  user-select: none;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Variantes de color por tipo de reporte */
+.report-card-postventa {
+  border: 1px solid rgba(16, 185, 129, 0.45);
+}
+.report-card-postventa:hover {
+  border-color: #10b981;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+}
+
+.report-card-ejecutivo {
+  border: 1px solid rgba(0, 168, 255, 0.45);
+}
+.report-card-ejecutivo:hover {
+  border-color: #00d2ff;
+  box-shadow: 0 8px 24px rgba(0, 210, 255, 0.28);
+}
+
+.report-card-personalizado {
+  border: 1px solid rgba(245, 158, 11, 0.45);
+}
+.report-card-personalizado:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
+}
+
+/* Contenido superior de la tarjeta */
+.report-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.report-card-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.badge-postventa {
+  background: #10b981;
+}
+.badge-postventa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: hue-rotate(95deg) saturate(1.4) brightness(1.05);
+}
+
+.badge-ejecutivo {
+  background: #0070f3;
+}
+.badge-ejecutivo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge-personalizado {
+  background: #f59e0b;
+}
+.badge-personalizado img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.report-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.report-card-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 5px 0;
+  line-height: 1.25;
+}
+
+.report-card-desc {
+  font-size: 0.81rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.report-card-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+  margin-top: 2px;
+}
+
+.arrow-postventa {
+  border: 1.5px solid rgba(0, 210, 255, 0.5);
+  color: #00d2ff;
+  background: rgba(0, 0, 0, 0.2);
+}
+.report-card-postventa:hover .arrow-postventa {
+  background: rgba(0, 210, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.arrow-ejecutivo {
+  border: 1.5px solid rgba(0, 210, 255, 0.5);
+  color: #00d2ff;
+  background: rgba(0, 0, 0, 0.2);
+}
+.report-card-ejecutivo:hover .arrow-ejecutivo {
+  background: rgba(0, 210, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.arrow-personalizado {
+  border: 1.5px solid rgba(245, 158, 11, 0.6);
+  color: #f59e0b;
+  background: rgba(0, 0, 0, 0.2);
+}
+.report-card-personalizado:hover .arrow-personalizado {
+  background: rgba(245, 158, 11, 0.2);
+  transform: scale(1.08);
+}
+
+/* Parte inferior con formato y descripción secundaria */
+.report-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 550;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bottom-format-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bottom-postventa {
+  color: #6ee7b7;
+}
+
+.bottom-ejecutivo {
+  color: #7dd3fc;
+}
+
+.bottom-personalizado {
+  color: #fcd34d;
+}
+
+.bottom-divider {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+
+.bottom-desc {
+  opacity: 0.9;
+}
+
+/* Botones de Descarga en Píldora */
+.reportes-actions-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.report-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.report-download-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.report-download-btn:active {
+  transform: translateY(0);
+}
+
+.btn-postventa {
+  background: linear-gradient(135deg, #2e475d 0%, #3e5a74 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-ejecutivo {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-personalizado {
+  background: linear-gradient(135deg, #0284c7 0%, #0099ff 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Banner inferior de filtros unificados */
+.reportes-info-banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 2px;
+  text-align: center;
+}
+
+.reportes-info-banner svg {
+  color: #00d2ff;
+  flex-shrink: 0;
+}
+
+/* Responsive para tablet y móvil */
+@media screen and (max-width: 1024px) {
+  .reportes-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .report-download-btn {
+    width: 100%;
+  }
+}
+
 
 
 
