@@ -39,12 +39,18 @@ const contractsCache = new Map();
 export const normalizeContract = (item) => {
     if (!item) return null;
 
-    const fullName = `${item.name || ""} ${item.last_name || ""}`.trim() || item.client_name || "Sin nombre";
-    const idStr = String(item.identification || item.client_identification || "").toUpperCase();
-    const planName = String(item.plan_name || item.plan?.name || "").toUpperCase();
+    // Soportar tanto formato plano como formato anidado (view=powerbi)
+    const clientObj = item.client || {};
+    const planObj = item.plan || {};
+    const sectorObj = item.sector || {};
+    const statusObj = typeof item.status === 'object' && item.status !== null ? item.status : null;
+
+    const fullName = clientObj.full_name || `${item.name || ""} ${item.last_name || ""}`.trim() || item.client_name || "Sin nombre";
+    const idStr = String(clientObj.identification || item.identification || item.client_identification || "").toUpperCase();
+    const planName = String(planObj.name || item.plan_name || "").toUpperCase();
 
     // Determinar tipo de cliente
-    let clientType = item.client_type_name || "";
+    let clientType = planObj.client_type?.name || item.client_type_name || "";
     if (!clientType) {
         if (planName.includes("PYME") || idStr.startsWith("J") || idStr.startsWith("G")) {
             clientType = "PYME";
@@ -59,43 +65,43 @@ export const normalizeContract = (item) => {
         }
     }
 
-    // Determinar nombre de estatus
-    let statusName = item.status_name || "";
-    if (!statusName && item.status !== undefined) {
-        statusName = CODE_TO_STATUS[Number(item.status)] || "Desconocido";
-    }
+    // Determinar nombre de estatus y código numérico
+    const statusCode = statusObj ? statusObj.id : (item.status !== undefined ? Number(item.status) : 16);
+    let statusName = statusObj?.name || item.status_name || CODE_TO_STATUS[statusCode] || "Activo";
 
     const clientSubdivision = `${statusName.toUpperCase()}_${clientType.toUpperCase()}`;
+    const planCost = item.plan_cost !== undefined ? item.plan_cost : (planObj.cost || 0);
 
-    const planCost = item.plan_cost !== undefined ? item.plan_cost : (item.plan?.cost || 0);
+    const sectorName = sectorObj.name || item.sector_name || "";
+    const parishName = sectorObj.parish?.name || item.parish_name || "";
 
     return {
         id: item.id,
-        client_id: item.client_id,
+        client_id: clientObj.id || item.client_id,
         client_name: fullName,
         client_type_name: clientType,
         client_subdivision: clientSubdivision,
         status_name: statusName,
-        status: item.status,
-        cycle: item.cycle !== undefined && item.cycle !== null ? item.cycle : 1,
+        status: statusCode,
+        cycle: item.cycle !== undefined && item.cycle !== null ? item.cycle : (clientType === "PYME" ? 10 : 1),
         cycle_old: item.cycle_old !== undefined ? item.cycle_old : null,
         cycle_end: item.cycle_end !== undefined ? item.cycle_end : null,
-        migrate: Boolean(item.migrate),
-        sector_name: item.sector_name || "",
-        parish_name: item.parish_name || "",
+        migrate: item.migrate !== undefined ? Boolean(item.migrate) : true,
+        sector_name: sectorName,
+        parish_name: parishName,
         installation_order: item.installation_order || "",
         pin_code: item.pin_code || "",
         plan: {
-            id: item.plan_id || item.plan?.id || null,
-            name: item.plan_name || item.plan?.name || "N/A",
+            id: planObj.id || item.plan_id || null,
+            name: planObj.name || item.plan_name || "N/A",
             cost: String(planCost)
         },
-        client_mobile: item.mobile || item.client_mobile || "N/A",
-        client_email: item.email || item.client_email || "N/A",
+        client_mobile: clientObj.mobile || item.mobile || item.client_mobile || "N/A",
+        client_email: clientObj.email || item.email || item.client_email || "N/A",
         address: item.address_tax || item.address || "",
         address_tax: item.address_tax || "",
-        client_identification: item.identification || item.client_identification || "N/A",
-        created_at: item.created_at || null,
+        client_identification: clientObj.identification || item.identification || item.client_identification || "N/A",
+        created_at: item.created_at || item.status_updated_at || null,
         service_detail: item.service_detail || null,
         nap_box_name: item.nap_box_name || "",
         debt: item.debt !== undefined ? item.debt : 0,
@@ -170,7 +176,7 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
         };
     }
 
-    let url = `${API_BASE_URL}?remove_pagination=true`;
+    let url = `${API_BASE_URL}?remove_pagination=true&view=powerbi`;
     if (!isTodos && statusIds.length > 0) {
         url += `&status=${statusIds.join(",")}`;
     }
