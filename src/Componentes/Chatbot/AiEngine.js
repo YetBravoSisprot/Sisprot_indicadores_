@@ -74,6 +74,114 @@ const sendToN8nLog = async (logData) => {
     }
 };
 
+// ─── PARSER UNIVERSAL DE FECHAS EN ESPAÑOL (Para soportar cualquier fecha o periodo) ───
+export const parseSpanishDateRange = (query = '', params = {}) => {
+    const q = (query || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const todayStr = now.toLocaleDateString('en-CA');
+    const toDateStr = (d) => d.toLocaleDateString('en-CA');
+
+    // 0. Si ya vienen startDate y endDate válidos
+    if (params?.startDate && params?.endDate) {
+        return { startDate: params.startDate, endDate: params.endDate };
+    }
+
+    const monthNames = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    ];
+    const dayNames = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+
+    // 1. Detección de día de la semana (ej: "el dia lunes de esta semana", "el martes", "el lunes pasado")
+    for (let targetDay = 0; targetDay < 7; targetDay++) {
+        const dName = dayNames[targetDay];
+        if (q.includes(dName)) {
+            const isLastWeek = q.includes('pasada') || q.includes('pasado') || q.includes('anterior');
+            const currentDayOfWeek = now.getDay();
+            const dayDiff = targetDay - currentDayOfWeek;
+            const targetDate = new Date(now);
+            targetDate.setDate(now.getDate() + dayDiff - (isLastWeek ? 7 : 0));
+            const dStr = toDateStr(targetDate);
+            return { startDate: dStr, endDate: dStr };
+        }
+    }
+
+    // 2. Días relativos: ayer, antier, hoy
+    if (q.includes('antier') || q.includes('anteayer')) {
+        const d = new Date(now);
+        d.setDate(now.getDate() - 2);
+        const s = toDateStr(d);
+        return { startDate: s, endDate: s };
+    }
+    if (q.includes('ayer') || params?.periodo === 'ayer') {
+        const d = new Date(now);
+        d.setDate(now.getDate() - 1);
+        const s = toDateStr(d);
+        return { startDate: s, endDate: s };
+    }
+    if (q.includes('hoy') || params?.periodo === 'hoy') {
+        return { startDate: todayStr, endDate: todayStr };
+    }
+
+    // 3. Semanas
+    if (q.includes('semana pasada')) {
+        const currentDay = now.getDay() || 7;
+        const lastMonday = new Date(now);
+        lastMonday.setDate(now.getDate() - currentDay - 6);
+        const lastSunday = new Date(now);
+        lastSunday.setDate(now.getDate() - currentDay);
+        return { startDate: toDateStr(lastMonday), endDate: toDateStr(lastSunday) };
+    }
+    if (q.includes('esta semana') || q.includes('en la semana') || params?.periodo === 'esta_semana') {
+        const currentDay = now.getDay() || 7;
+        const monday = new Date(now);
+        monday.setDate(now.getDate() - (currentDay - 1));
+        return { startDate: toDateStr(monday), endDate: todayStr };
+    }
+
+    // 4. Meses
+    if (q.includes('mes pasado') || q.includes('el mes anterior')) {
+        const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
+        const lastDayPrevMonth = new Date(currentYear, currentMonth, 0);
+        return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth) };
+    }
+    if (q.includes('este mes') || q.includes('del mes') || q.includes('en el mes') || q.includes('mes actual') || params?.periodo === 'este_mes' || params?.periodo === 'mes') {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        return { startDate: toDateStr(firstDay), endDate: todayStr };
+    }
+
+    // 5. Mes específico por nombre (ej: "en septiembre", "en agosto")
+    for (let mIdx = 0; mIdx < 12; mIdx++) {
+        const mName = monthNames[mIdx];
+        if (q.includes(mName)) {
+            const yearMatch = q.match(/\b(202\d)\b/);
+            const y = yearMatch ? parseInt(yearMatch[1], 10) : currentYear;
+            const firstDay = new Date(y, mIdx, 1);
+            const lastDay = (y === currentYear && mIdx === currentMonth)
+                ? now
+                : new Date(y, mIdx + 1, 0);
+            return { startDate: toDateStr(firstDay), endDate: toDateStr(lastDay) };
+        }
+    }
+
+    // 6. Últimos N días
+    if (q.includes('ultimos 7 dias') || q.includes('ultimos siete dias')) {
+        const d = new Date(now);
+        d.setDate(now.getDate() - 6);
+        return { startDate: toDateStr(d), endDate: todayStr };
+    }
+    if (q.includes('ultimos 30 dias') || q.includes('ultimos treinta dias')) {
+        const d = new Date(now);
+        d.setDate(now.getDate() - 29);
+        return { startDate: toDateStr(d), endDate: todayStr };
+    }
+
+    // Default: hoy
+    return { startDate: todayStr, endDate: todayStr };
+};
+
 // ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
 const bankPaymentsCache = {}; // Cache local en memoria para no repetir peticiones recientes
 
@@ -655,15 +763,11 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         else if (q.includes("mercantil")) detectedBank = "MERCANTIL";
         else if (q.includes("zelle")) detectedBank = "ZELLE";
 
-        let periodo = null;
-        if (q.includes("ayer")) periodo = "ayer";
-        else if (q.includes("hoy")) periodo = "hoy";
-        else if (q.includes("este mes") || q.includes("del mes") || q.includes("el mes") || q.includes("mes actual") || q.includes("este mes")) periodo = "este_mes";
-        else if (q.includes("semana")) periodo = "esta_semana";
+        const dateRange = parseSpanishDateRange(q);
 
         return {
             intent: 'INGRESOS_BANCOS',
-            parameters: { banco: detectedBank, bank: detectedBank, periodo },
+            parameters: { banco: detectedBank, bank: detectedBank, startDate: dateRange.startDate, endDate: dateRange.endDate },
             message: "Consultando cobranza bancaria registrada..."
         };
     }
@@ -750,7 +854,7 @@ INTENCIONES DISPONIBLES:
 - RECAUDACION_HISTORICA: Total acumulado histórico en estadísticas de Sisprot.
 - RESUMEN_KPIS: Resumen ejecutivo del panel administrativo.
 - EXPLICACION_REGLA: Diferencias conceptuales (ej: suspendido vs cancelado).
-- INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate, periodo). Si el usuario no menciona un banco particular o dice 'en los bancos' / 'en el banco', banco debe ser null (NUNCA poner 'todos' como banco). Si pregunta por ayer, periodo: 'ayer'. Si pregunta por hoy, periodo: 'hoy'. Si pregunta por este mes o el mes, periodo: 'este_mes'.
+- INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate, periodo). Soporta cualquier fecha, día de la semana (ej: lunes de esta semana, martes, etc.), semana, mes (este mes, meses anteriores) o año. Si el usuario no menciona un banco particular (o dice 'en los bancos' / 'en el banco'), banco debe ser null (NUNCA poner 'todos' como banco). Si menciona un día o fecha específica, establece startDate y endDate en formato YYYY-MM-DD.
 - INGRESOS: Dinero proyectado por planes de clientes activos.
 - SECTOR_METRICAS: Métricas de un sector o urbanismo específico (parameters: urbanismo).
 - RANKING_SECTORES: Sectores con más clientes o facturación.
@@ -1150,56 +1254,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
         }
     }
 
-    let dataLabel = isTodayQuery ? "Hoy" : "Ayer";
-
-    // --- CÁLCULO DINÁMICO DE AYER (Para evitar hardcoding) ---
+    let dataLabel = "En Vivo";
     const now = new Date();
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    const yesterdayLabel = yesterday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
-
-    // --- DETECTOR DE FECHAS NO DISPONIBLES PARA LISTAS DE CLIENTES INDIVIDUALES ---
-    // Solo aplica si el usuario pide explícitamente listados de clientes individuales (cédulas, nombres)
-    // para semanas/meses anteriores que no están en el snapshot actual.
-    const isClientListQuery = (query.includes("cliente") || query.includes("listado") || query.includes("cedula") || query.includes("quienes son") || query.includes("nombres")) && !query.includes("cuanto") && !query.includes("total");
-
-    const isBiModuleOrQuery = query.includes("ventas") || query.includes("historico") || 
-        query.includes("reactivad") || query.includes("recaud") || query.includes("ingreso") || 
-        query.includes("arpu") || query.includes("baja") || query.includes("churn") ||
-        query.includes("banco") || query.includes("bancos") || query.includes("cobro") || 
-        query.includes("cobros") || query.includes("pago") || query.includes("pagos") ||
-        query.includes("dinero") || query.includes("plata") || query.includes("entro") ||
-        currentPage.includes("Reactivados") || currentPage.includes("VentasGlobales") || 
-        currentPage.includes("Indicadores") || currentPage.includes("Admin");
-
-    const pastKeywords = ["semana pasada", "mes pasado", "ano pasado", "año pasado", "hace un mes", "hace 2 meses", "2024", "2023", "2022"];
-    const isOtherPastDate = isClientListQuery && !isBiModuleOrQuery && pastKeywords.some(w => {
-        const regex = new RegExp(`\\b${w}\\b`, "i");
-        return regex.test(query);
-    });
-
-    if (isOtherPastDate) {
-        return {
-            text: `Lo siento ${userName}, para listados de clientes individuales actualmente tengo visibilidad total del corte en vivo de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. Para métricas históricas agregadas, puedes consultarme por Ventas Globales, Contratos Reactivados, Recaudación o Cobros en Bancos.`,
-            isCard: false
-        };
-    }
-
-    // --- INTERCEPTOR: Clarificación Hoy/Ayer ---
-    if (lastBotMsg?.contextType === 'clarify_data_source' && (query.includes("hoy") || query.includes("ayer") || query.includes("16"))) {
-        intent = lastBotMsg.cardData.originalIntent;
-        parameters = lastBotMsg.cardData.savedParameters;
-        fromClarification = true;
-
-        if (query.includes("ayer") || query.includes("16")) {
-            isTodayQuery = false;
-        } else {
-            isTodayQuery = true;
-        }
-    }
-
-    // --- ETIQUETA DE PERIODO / CORTE ---
-    dataLabel = isTodayQuery ? `En Vivo (Sincronizado: ${getLastUpdateTime()})` : `Corte Ayer (${yesterdayLabel})`;
 
     // --- DETECTOR DE RESPALDO (Force Detection for Reunion Sectors) ---
     // Si la IA no extrajo urbanismos pero el mensaje los tiene, los forzamos
@@ -2958,39 +3014,10 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
                     const bankFilter = (!rawBank || invalidBankKeywords.includes(normalizeText(String(rawBank)).toLowerCase().trim())) ? null : rawBank;
                     const methodFilter = parameters?.metodo || parameters?.method || null;
-                    let startDate = parameters?.startDate || null;
-                    let endDate = parameters?.endDate || null;
-
-                    const now = new Date();
-                    const todayStr = now.toLocaleDateString('en-CA');
-                    const yesterdayDate = new Date(now);
-                    yesterdayDate.setDate(now.getDate() - 1);
-                    const yesterdayStr = yesterdayDate.toLocaleDateString('en-CA');
-
-                    const normQ = normalizeText(query);
-                    const periodo = (parameters?.periodo || '').toLowerCase();
-
-                    // Detección inteligente de rango de fecha si no viene preestablecido
-                    if (periodo === 'ayer' || (!startDate && (normQ.includes('ayer') || normQ.includes('de ayer')))) {
-                        startDate = yesterdayStr;
-                        endDate = yesterdayStr;
-                    } else if (periodo === 'hoy' || (!startDate && (normQ.includes('hoy') || normQ.includes('en vivo')))) {
-                        startDate = todayStr;
-                        endDate = todayStr;
-                    } else if (periodo === 'este_mes' || periodo === 'mes' || (!startDate && (normQ.includes('este mes') || normQ.includes('del mes') || normQ.includes('el mes') || normQ.includes('mes actual')))) {
-                        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString('en-CA');
-                        startDate = firstDay;
-                        endDate = todayStr;
-                    } else if (periodo === 'esta_semana' || (!startDate && normQ.includes('semana'))) {
-                        const dayOfWeek = now.getDay() || 7;
-                        const monday = new Date(now);
-                        monday.setDate(now.getDate() - (dayOfWeek - 1));
-                        startDate = monday.toLocaleDateString('en-CA');
-                        endDate = todayStr;
-                    } else if (!startDate) {
-                        startDate = todayStr;
-                        endDate = todayStr;
-                    }
+                    // Parser universal de fechas en español (soporta cualquier fecha, día de la semana, mes o periodo)
+                    const parsedDates = parseSpanishDateRange(message, parameters);
+                    const startDate = parsedDates.startDate;
+                    const endDate = parsedDates.endDate;
 
                     const { payments, startDate: sDate, endDate: eDate } = await fetchBankPayments(bankFilter, methodFilter, startDate, endDate);
 
