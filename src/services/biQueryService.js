@@ -373,6 +373,9 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
     let nextUrl = `${PAYMENTS_URL}?page_size=500&created_at_after=${start}&created_at_before=${end}`;
     let iterations = 0;
 
+    const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
+    const isGenericBank = !bank || invalidBankKeywords.includes(normalizeText(String(bank)).toLowerCase().trim());
+
     const bankAcronymMap = {
         'BNC': 'banco nacional de credito',
         'BDV': 'banco de venezuela',
@@ -389,35 +392,62 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
         'CHASE': 'chase',
     };
 
-    const resolvedBank = bank
-        ? (bankAcronymMap[normalizeText(bank).toUpperCase()] || normalizeText(bank))
-        : null;
+    const resolvedBank = isGenericBank
+        ? null
+        : (bankAcronymMap[normalizeText(bank).toUpperCase()] || normalizeText(bank));
 
-    while (nextUrl && iterations < 15) {
-        const response = await fetch(nextUrl, {
+    // Intentar primero con remove_pagination=true para respuesta ultrarrápida en 1 petición
+    try {
+        const directUrl = `${PAYMENTS_URL}?remove_pagination=true&created_at_after=${start}&created_at_before=${end}`;
+        const response = await fetch(directUrl, {
             headers: {
                 'x-api-key': TOKEN,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status} en pagos bancarios`);
+        if (response.ok) {
+            const raw = await response.json();
+            const list = Array.isArray(raw) ? raw : (raw.results || []);
+            allPayments = list.filter(p => {
+                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const methodOk = !method || normalizeText(p.method_name || '').includes(normalizeText(method));
+                return bankOk && methodOk;
+            });
         }
+    } catch (e) {
+        console.warn("remove_pagination failed in biQueryService, using paginated fallback:", e);
+    }
 
-        const raw = await response.json();
-        const pageData = Array.isArray(raw) ? raw[0] : raw;
-        const results = pageData.results || [];
+    if (allPayments.length === 0) {
+        while (nextUrl && iterations < 15) {
+            const response = await fetch(nextUrl, {
+                headers: {
+                    'x-api-key': TOKEN,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
 
-        const filtered = results.filter(p => {
-            const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
-            const methodOk = !method || normalizeText(p.method_name || '').includes(normalizeText(method));
-            return bankOk && methodOk;
-        });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} en pagos bancarios`);
+            }
 
-        allPayments.push(...filtered);
-        nextUrl = pageData.next || null;
-        iterations++;
+            const raw = await response.json();
+            const pageData = Array.isArray(raw) ? raw[0] : raw;
+            const results = pageData.results || [];
+
+            const filtered = results.filter(p => {
+                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const methodOk = !method || normalizeText(p.method_name || '').includes(normalizeText(method));
+                return bankOk && methodOk;
+            });
+
+            allPayments.push(...filtered);
+            nextUrl = pageData.next || null;
+            iterations++;
+        }
     }
 
     let totalUsd = 0;
