@@ -14,6 +14,28 @@
 import { getFullSalesMetrics } from './salesService.js';
 import { fetchReactivados } from './reactivadosService.js';
 import { getHistoricalRevenueData } from './revenueService.js';
+import { fetchContractsByStatus } from './contractService.js';
+
+let liveContractsMemoryCache = null;
+
+/**
+ * Obtiene contratos en tiempo real desde la API oficial de Sisprot (misma fuente que Top Urbanismo y Resumen BI).
+ */
+export const getLiveContracts = async (forceRefresh = false) => {
+    if (!forceRefresh && liveContractsMemoryCache && liveContractsMemoryCache.length > 0) {
+        return liveContractsMemoryCache;
+    }
+    try {
+        const res = await fetchContractsByStatus(["Todos"], forceRefresh);
+        if (res && res.results && res.results.length > 0) {
+            liveContractsMemoryCache = res.results;
+            return liveContractsMemoryCache;
+        }
+    } catch (e) {
+        console.warn("biQueryService: Error obteniendo contratos en tiempo real:", e);
+    }
+    return liveContractsMemoryCache || [];
+};
 
 // ==========================================
 // FORMATEADORES Y HELPERS OFICIALES
