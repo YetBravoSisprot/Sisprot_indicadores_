@@ -75,9 +75,11 @@ const sendToN8nLog = async (logData) => {
 };
 
 // ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
+const bankPaymentsCache = {}; // Cache local en memoria para no repetir peticiones recientes
+
 const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDate = null, endDate = null) => {
     const PAYMENTS_URL = "https://api.sisprotgf.com/api/public/payments/payment_company/";
-    const TOKEN = (process.env.REACT_APP_PAYMENTS_API_KEY || process.env.REACT_APP_SISPROT_API_KEY || "").trim();
+    const TOKEN = (process.env.REACT_APP_PAYMENTS_API_KEY || process.env.REACT_APP_SISPROT_API_KEY || "kP4vL8nB1xM7zQ0wR9tY2sJ5hG6fD3aC9uE1iO7mN4rT2bV8xS").trim();
 
     if (!TOKEN) {
         throw new Error("No hay API Key configurada para los cobros bancarios.");
@@ -90,15 +92,76 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
     const start = startDate || today;
     const end = endDate || today;
 
+    // Normalizar banco - Ignorar palabras genéricas que la IA o usuario confunden con nombres de bancos
+    const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
+    const isGenericBank = !bankFilter || invalidBankKeywords.includes(normalizeText(String(bankFilter)).toLowerCase().trim());
+
+    // Mapa de siglas → nombre completo
+    const bankAcronymMap = {
+        'BNC': 'banco nacional de credito',
+        'BDV': 'banco de venezuela',
+        'BFC': 'banco fondo comun',
+        'BBP': 'banco bicentenario',
+        'BANPLUS': 'banplus',
+        'BANESCO': 'banesco',
+        'MERCANTIL': 'mercantil',
+        'PROVINCIAL': 'provincial',
+        'EXTERIOR': 'exterior',
+        'SOFITASA': 'sofitasa',
+        'CARONI': 'caroni',
+        'ZELLE': 'zelle',
+        'CHASE': 'chase',
+    };
+    const resolvedBank = isGenericBank
+        ? null
+        : (bankAcronymMap[normalizeText(bankFilter).toUpperCase()] || normalizeText(bankFilter));
+
+    // Revisar caché en memoria (3 minutos de vigencia)
+    const cacheKey = `${start}_${end}_${resolvedBank || 'all'}_${methodFilter || 'all'}`;
+    const nowTs = Date.now();
+    if (bankPaymentsCache[cacheKey] && (nowTs - bankPaymentsCache[cacheKey].timestamp < 3 * 60 * 1000)) {
+        return { payments: bankPaymentsCache[cacheKey].data, startDate: start, endDate: end };
+    }
+
     let allPayments = [];
+
+    // Intento 1: remove_pagination=true (Ultrarrápido, 1 sola petición HTTP directa)
+    try {
+        const directUrl = `${PAYMENTS_URL}?remove_pagination=true&created_at_after=${start}&created_at_before=${end}`;
+        const response = await fetch(directUrl, {
+            headers: {
+                'x-api-key': TOKEN,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const raw = await response.json();
+            const list = Array.isArray(raw) ? raw : (raw.results || []);
+            allPayments = list.filter(p => {
+                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
+                return bankOk && methodOk;
+            });
+
+            bankPaymentsCache[cacheKey] = { data: allPayments, timestamp: nowTs };
+            return { payments: allPayments, startDate: start, endDate: end };
+        }
+    } catch (e) {
+        console.warn("fetchBankPayments con remove_pagination falló, pasando a paginación:", e);
+    }
+
+    // Intento 2: Paginado estándar en caso de fallo
     let nextUrl = `${PAYMENTS_URL}?page_size=500&created_at_after=${start}&created_at_before=${end}`;
     let iterations = 0;
 
-    while (nextUrl && iterations < 15) { // Aumentamos iteraciones para rangos más largos
+    while (nextUrl && iterations < 15) {
         const response = await fetch(nextUrl, {
             headers: {
                 'x-api-key': TOKEN,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         });
 
@@ -111,26 +174,6 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
         const pageData = Array.isArray(raw) ? raw[0] : raw;
         const results = pageData.results || [];
 
-        // Mapa de siglas → nombre completo
-        const bankAcronymMap = {
-            'BNC': 'banco nacional de credito',
-            'BDV': 'banco de venezuela',
-            'BFC': 'banco fondo comun',
-            'BBP': 'banco bicentenario',
-            'BANPLUS': 'banplus',
-            'BANESCO': 'banesco',
-            'MERCANTIL': 'mercantil',
-            'PROVINCIAL': 'provincial',
-            'EXTERIOR': 'exterior',
-            'SOFITASA': 'sofitasa',
-            'CARONI': 'caroni',
-            'ZELLE': 'zelle',
-            'CHASE': 'chase',
-        };
-        const resolvedBank = bankFilter
-            ? (bankAcronymMap[normalizeText(bankFilter).toUpperCase()] || normalizeText(bankFilter))
-            : null;
-
         const filtered = results.filter(p => {
             const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
             const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
@@ -142,6 +185,7 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
         iterations++;
     }
 
+    bankPaymentsCache[cacheKey] = { data: allPayments, timestamp: nowTs };
     return { payments: allPayments, startDate: start, endDate: end };
 };
 
@@ -600,7 +644,7 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
     }
 
     // 11. Detección de Bancos y Cobros
-    const bancosKeywords = ["bnc", "bdv", "venezuela", "provincial", "banplus", "banesco", "mercantil", "zelle", "sofitasa", "banco", "cobros", "pagos"];
+    const bancosKeywords = ["bnc", "bdv", "venezuela", "provincial", "banplus", "banesco", "mercantil", "zelle", "sofitasa", "banco", "bancos", "cobros", "cobro", "pagos", "pago", "recaudacion", "recaudo", "pago movil", "transferencia", "banca"];
     if (bancosKeywords.some(b => q.includes(b)) && !q.includes("arpu") && !q.includes("churn")) {
         let detectedBank = null;
         if (q.includes("bnc")) detectedBank = "BNC";
@@ -608,11 +652,18 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         else if (q.includes("provincial")) detectedBank = "PROVINCIAL";
         else if (q.includes("banesco")) detectedBank = "BANESCO";
         else if (q.includes("banplus")) detectedBank = "BANPLUS";
+        else if (q.includes("mercantil")) detectedBank = "MERCANTIL";
         else if (q.includes("zelle")) detectedBank = "ZELLE";
+
+        let periodo = null;
+        if (q.includes("ayer")) periodo = "ayer";
+        else if (q.includes("hoy")) periodo = "hoy";
+        else if (q.includes("este mes") || q.includes("del mes") || q.includes("el mes") || q.includes("mes actual") || q.includes("este mes")) periodo = "este_mes";
+        else if (q.includes("semana")) periodo = "esta_semana";
 
         return {
             intent: 'INGRESOS_BANCOS',
-            parameters: { bank: detectedBank },
+            parameters: { banco: detectedBank, bank: detectedBank, periodo },
             message: "Consultando cobranza bancaria registrada..."
         };
     }
@@ -699,7 +750,7 @@ INTENCIONES DISPONIBLES:
 - RECAUDACION_HISTORICA: Total acumulado histórico en estadísticas de Sisprot.
 - RESUMEN_KPIS: Resumen ejecutivo del panel administrativo.
 - EXPLICACION_REGLA: Diferencias conceptuales (ej: suspendido vs cancelado).
-- INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate).
+- INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate, periodo). Si el usuario no menciona un banco particular o dice 'en los bancos' / 'en el banco', banco debe ser null (NUNCA poner 'todos' como banco). Si pregunta por ayer, periodo: 'ayer'. Si pregunta por hoy, periodo: 'hoy'. Si pregunta por este mes o el mes, periodo: 'este_mes'.
 - INGRESOS: Dinero proyectado por planes de clientes activos.
 - SECTOR_METRICAS: Métricas de un sector o urbanismo específico (parameters: urbanismo).
 - RANKING_SECTORES: Sectores con más clientes o facturación.
@@ -1107,24 +1158,29 @@ export const processQuery = async (message, data, history = [], userName = "", c
     yesterday.setDate(now.getDate() - 1);
     const yesterdayLabel = yesterday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
 
-    // --- DETECTOR DE FECHAS NO DISPONIBLES (Semanas/Meses) ---
-    // Mejoramos el detector para evitar falsos positivos con "pymes"
-    const pastKeywords = ["semana", "mes", "pasado", "antier", "hace", "historico", "2024", "2023", "2022"];
-    const isOtherPastDate = pastKeywords.some(w => {
-        // Usamos regex para asegurar límites de palabra y evitar "pymes" -> "mes"
-        const regex = new RegExp(`\\b${w}\\b`, "i");
-        return regex.test(query);
-    }) && !query.includes("ayer") && !query.includes(yesterday.getDate().toString());
+    // --- DETECTOR DE FECHAS NO DISPONIBLES PARA LISTAS DE CLIENTES INDIVIDUALES ---
+    // Solo aplica si el usuario pide explícitamente listados de clientes individuales (cédulas, nombres)
+    // para semanas/meses anteriores que no están en el snapshot actual.
+    const isClientListQuery = (query.includes("cliente") || query.includes("listado") || query.includes("cedula") || query.includes("quienes son") || query.includes("nombres")) && !query.includes("cuanto") && !query.includes("total");
 
     const isBiModuleOrQuery = query.includes("ventas") || query.includes("historico") || 
         query.includes("reactivad") || query.includes("recaud") || query.includes("ingreso") || 
         query.includes("arpu") || query.includes("baja") || query.includes("churn") ||
+        query.includes("banco") || query.includes("bancos") || query.includes("cobro") || 
+        query.includes("cobros") || query.includes("pago") || query.includes("pagos") ||
+        query.includes("dinero") || query.includes("plata") || query.includes("entro") ||
         currentPage.includes("Reactivados") || currentPage.includes("VentasGlobales") || 
         currentPage.includes("Indicadores") || currentPage.includes("Admin");
 
-    if (isOtherPastDate && !isBiModuleOrQuery) {
+    const pastKeywords = ["semana pasada", "mes pasado", "ano pasado", "año pasado", "hace un mes", "hace 2 meses", "2024", "2023", "2022"];
+    const isOtherPastDate = isClientListQuery && !isBiModuleOrQuery && pastKeywords.some(w => {
+        const regex = new RegExp(`\\b${w}\\b`, "i");
+        return regex.test(query);
+    });
+
+    if (isOtherPastDate) {
         return {
-            text: `Lo siento ${userName}, para listados de clientes individuales actualmente tengo visibilidad total del corte en vivo de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. Para métricas históricas agregadas, puedes consultarme por Ventas Globales, Contratos Reactivados o Recaudación.`,
+            text: `Lo siento ${userName}, para listados de clientes individuales actualmente tengo visibilidad total del corte en vivo de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. Para métricas históricas agregadas, puedes consultarme por Ventas Globales, Contratos Reactivados, Recaudación o Cobros en Bancos.`,
             isCard: false
         };
     }
@@ -2898,20 +2954,42 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
             case 'INGRESOS_BANCOS': {
                 try {
-                    const bankFilter = parameters?.banco || null;
-                    const methodFilter = parameters?.metodo || null;
+                    const rawBank = parameters?.banco || parameters?.bank || null;
+                    const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
+                    const bankFilter = (!rawBank || invalidBankKeywords.includes(normalizeText(String(rawBank)).toLowerCase().trim())) ? null : rawBank;
+                    const methodFilter = parameters?.metodo || parameters?.method || null;
                     let startDate = parameters?.startDate || null;
                     let endDate = parameters?.endDate || null;
 
-                    // Si no traemos fecha específica pero sí un periodo relativo (Hoy/Ayer)
-                    if (!startDate && parameters?.periodo === 'ayer') {
-                        const d = new Date();
-                        d.setDate(d.getDate() - 1);
-                        startDate = d.toLocaleDateString('en-CA');
-                        endDate = startDate;
-                    } else if (!startDate && parameters?.periodo === 'hoy') {
-                        startDate = new Date().toLocaleDateString('en-CA');
-                        endDate = startDate;
+                    const now = new Date();
+                    const todayStr = now.toLocaleDateString('en-CA');
+                    const yesterdayDate = new Date(now);
+                    yesterdayDate.setDate(now.getDate() - 1);
+                    const yesterdayStr = yesterdayDate.toLocaleDateString('en-CA');
+
+                    const normQ = normalizeText(query);
+                    const periodo = (parameters?.periodo || '').toLowerCase();
+
+                    // Detección inteligente de rango de fecha si no viene preestablecido
+                    if (periodo === 'ayer' || (!startDate && (normQ.includes('ayer') || normQ.includes('de ayer')))) {
+                        startDate = yesterdayStr;
+                        endDate = yesterdayStr;
+                    } else if (periodo === 'hoy' || (!startDate && (normQ.includes('hoy') || normQ.includes('en vivo')))) {
+                        startDate = todayStr;
+                        endDate = todayStr;
+                    } else if (periodo === 'este_mes' || periodo === 'mes' || (!startDate && (normQ.includes('este mes') || normQ.includes('del mes') || normQ.includes('el mes') || normQ.includes('mes actual')))) {
+                        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString('en-CA');
+                        startDate = firstDay;
+                        endDate = todayStr;
+                    } else if (periodo === 'esta_semana' || (!startDate && normQ.includes('semana'))) {
+                        const dayOfWeek = now.getDay() || 7;
+                        const monday = new Date(now);
+                        monday.setDate(now.getDate() - (dayOfWeek - 1));
+                        startDate = monday.toLocaleDateString('en-CA');
+                        endDate = todayStr;
+                    } else if (!startDate) {
+                        startDate = todayStr;
+                        endDate = todayStr;
                     }
 
                     const { payments, startDate: sDate, endDate: eDate } = await fetchBankPayments(bankFilter, methodFilter, startDate, endDate);
@@ -2920,9 +2998,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
                     const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
 
-                    const labelFecha = sDate === eDate
-                        ? `el **${startLabel}**`
-                        : `desde el **${startLabel}** hasta el **${endLabel}**`;
+                    let labelFecha;
+                    if (sDate === eDate) {
+                        labelFecha = `el **${startLabel}**`;
+                    } else if (sDate.slice(0, 7) === eDate.slice(0, 7) && sDate.endsWith('-01')) {
+                        const monthName = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', { month: 'long', year: 'numeric' });
+                        labelFecha = `en el mes de **${monthName}** (hasta hoy)`;
+                    } else {
+                        labelFecha = `desde el **${startLabel}** hasta el **${endLabel}**`;
+                    }
 
                     if (payments.length === 0) {
                         let filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
@@ -2991,7 +3075,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         cardData: {
                             title: `💳 Balance de Ingresos`,
                             value: `$${formatUSD(totalUsd)} USD`,
-                            subtitle: cicloFilter ? `Ciclo ${cicloFilter} | ${totalPagos} pagos` : `${totalPagos} pagos registrados`,
+                            subtitle: cicloFilter ? `Ciclo ${cicloFilter} | ${totalPagos} pagos` : (bankFilter ? `${bankFilter} | ${totalPagos} pagos` : `Todos los bancos | ${totalPagos} pagos`),
                             color: '#2ecc71',
                             stats
                         }
