@@ -29,6 +29,15 @@ ChartJS.register(
     Filler
 );
 
+const YEAR_COLORS = {
+    "2026": "#00d2ff", // Cyan
+    "2025": "#1d8cf8", // Blue
+    "2024": "#a855f7", // Purple
+    "2023": "#f59e0b", // Amber / Gold
+    "2022": "#38bdf8", // Sky Blue
+    "2021": "#94a3b8", // Slate Gray
+};
+
 const VentasGlobales = () => {
     const [salesData, setSalesData] = useState(null);
     const [revenueData, setRevenueData] = useState(null);
@@ -55,13 +64,11 @@ const VentasGlobales = () => {
                 return;
             }
 
-            // Calculate total USD sum
             const totalUSD = data.reduce((acc, item) => {
                 const costNum = typeof item.costoNum === "number" ? item.costoNum : parseFloat(String(item.costoPlan || "").replace(/[$,]/g, "").trim());
                 return acc + (isNaN(costNum) ? 0 : costNum);
             }, 0);
 
-            // Convert to XLSX format with column mapping
             const formattedData = data.map(item => ({
                 "Contrato / ID": item.ordenInstalacion,
                 "Fecha Activación": item.fechaActivacion || "-",
@@ -78,24 +85,6 @@ const VentasGlobales = () => {
                 "Estado Anterior": item.estadoAnterior || "Por instalar",
                 "Nuevo Estado": item.estadoNuevo || "Activo"
             }));
-
-            // Append empty row and total row
-            formattedData.push({
-                "Contrato / ID": "",
-                "Fecha Activación": "",
-                "Cliente": "",
-                "Cédula / RIF": "",
-                "Teléfono": "",
-                "Correo": "",
-                "Sector": "",
-                "Parroquia": "",
-                "Municipio": "",
-                "Tipo de Cliente": "",
-                "Plan": "",
-                "Costo de Plan ($)": "",
-                "Estado Anterior": "",
-                "Nuevo Estado": ""
-            });
 
             formattedData.push({
                 "Contrato / ID": "",
@@ -118,7 +107,6 @@ const VentasGlobales = () => {
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Ventas");
 
-            // Auto-fit columns
             const maxLens = {};
             formattedData.forEach(row => {
                 Object.keys(row).forEach(key => {
@@ -163,52 +151,6 @@ const VentasGlobales = () => {
     const isRevenueMode = metricView === "revenue";
     const activeDataset = isRevenueMode ? revenueData : salesData;
 
-    const getChartData = () => {
-        if (!activeDataset) return { labels: meses, datasets: [] };
-        return {
-            labels: meses,
-            datasets: Object.entries(activeDataset).map(([year, yearData]) => {
-                const isSelected = year === selectedYear;
-                const isComparing = comparisonYears.includes(year) && !isSelected;
-
-                let color = "rgba(148, 163, 184, 0.35)"; // Fondo
-                let borderWidth = 2;
-                let pointRadius = 2;
-                let zOrder = 1;
-
-                if (isSelected) {
-                    color = isRevenueMode ? "#10b981" : "#00d2ff"; // Verde en revenue / Cian en units
-                    borderWidth = 4;
-                    pointRadius = 5;
-                    zOrder = 0;
-                } else if (isComparing) {
-                    color = "#f1c40f"; // Oro (Comparativo)
-                    borderWidth = 3;
-                    pointRadius = 4;
-                    zOrder = 0;
-                }
-
-                return {
-                    label: isRevenueMode ? `Ingresos ${year}` : `Ventas ${year}`,
-                    data: yearData,
-                    borderColor: color,
-                    backgroundColor: color.includes("#") ? `${color}22` : color.replace("0.35", "0.1"),
-                    tension: 0.4,
-                    fill: isComparing && !isSelected && year === "2026",
-                    borderWidth: borderWidth,
-                    pointRadius: pointRadius,
-                    pointHoverRadius: 6,
-                    order: zOrder,
-                };
-            })
-        };
-    };
-
-    // Normalización para Heatmap de la Tabla
-    const currentMatrix = isRevenueMode ? revenueData : salesData;
-    const maxSalesVal = currentMatrix ? Math.max(...Object.values(currentMatrix).flat(), 1) : 1;
-
-    // Lógica Unificada de Selección
     const handleYearSelection = (year) => {
         setComparisonYears(prev => {
             let newList = Array.isArray(prev) ? [...prev] : Array.from(prev);
@@ -226,35 +168,67 @@ const VentasGlobales = () => {
         });
     };
 
+    const getChartData = () => {
+        if (!activeDataset) return { labels: meses, datasets: [] };
+
+        const yearsList = ["2026", "2025", "2024", "2023", "2022", "2021"];
+
+        return {
+            labels: meses,
+            datasets: yearsList.filter(y => activeDataset[y]).map((year) => {
+                const isSelected = year === selectedYear;
+                const isComparing = comparisonYears.includes(year);
+                const baseColor = YEAR_COLORS[year] || "#94a3b8";
+
+                let borderColor = baseColor;
+                let borderWidth = 2.5;
+                let pointRadius = 3.5;
+                let pointHoverRadius = 7;
+                let zOrder = 1;
+
+                if (isSelected) {
+                    borderWidth = 4;
+                    pointRadius = 5.5;
+                    zOrder = 0;
+                } else if (!isComparing) {
+                    borderColor = `${baseColor}99`; // Muted when not comparing
+                    borderWidth = 1.8;
+                }
+
+                return {
+                    label: isRevenueMode ? `Ingresos ${year}` : `Ventas ${year}`,
+                    data: activeDataset[year],
+                    borderColor: borderColor,
+                    backgroundColor: `${borderColor}18`,
+                    tension: 0.4,
+                    fill: isSelected && year === "2026",
+                    borderWidth: borderWidth,
+                    pointRadius: pointRadius,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: borderColor,
+                    pointBorderWidth: 2,
+                    pointHoverRadius: pointHoverRadius,
+                    order: zOrder,
+                };
+            })
+        };
+    };
+
     const options = {
         responsive: true,
-        maintainAspectRatio: !isMobile,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: isMobile ? 'bottom' : 'top',
-                labels: {
-                    color: '#fff',
-                    usePointStyle: true,
-                    padding: isMobile ? 10 : 20,
-                    font: { size: isMobile ? 11 : 13 },
-                    cursor: 'pointer'
-                },
-                onClick: (e, legendItem) => {
-                    const parts = legendItem.text.split(" ");
-                    const year = parts[parts.length - 1];
-                    if (year) handleYearSelection(year);
-                }
-            },
-            title: {
-                display: true,
-                text: isRevenueMode
-                    ? "Evolución de Ingresos por Ventas ($ USD) (2025-2026)"
-                    : "Evolución de Ventas Mensuales (2021-2026)",
-                color: '#fff',
-                font: { size: isMobile ? 13 : 18 },
-                padding: { bottom: isMobile ? 8 : 16 }
+                display: false // Usamos nuestra leyenda visual personalizada idéntica a la referencia
             },
             tooltip: {
+                backgroundColor: 'rgba(5, 18, 30, 0.95)',
+                titleColor: '#00d2ff',
+                bodyColor: '#fff',
+                borderColor: 'rgba(0, 210, 255, 0.3)',
+                borderWidth: 1,
+                padding: 12,
+                boxPadding: 6,
                 callbacks: {
                     label: (context) => isRevenueMode
                         ? `${context.dataset.label}: $${Number(context.raw).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`
@@ -264,21 +238,21 @@ const VentasGlobales = () => {
         },
         scales: {
             y: {
-                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                grid: { color: 'rgba(255, 255, 255, 0.06)' },
                 ticks: {
-                    color: '#fff',
+                    color: '#94a3b8',
                     font: { size: isMobile ? 10 : 12 },
                     callback: (val) => isRevenueMode ? `$${val}` : val
                 }
             },
             x: {
-                grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                ticks: { color: '#fff', font: { size: isMobile ? 10 : 12 } }
+                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                ticks: { color: '#94a3b8', font: { size: isMobile ? 10 : 12 } }
             }
         }
     };
 
-    // Cálculos de Unidades e Ingresos
+    // Cálculos de Selección
     const yearSales = salesData?.[selectedYear] || new Array(12).fill(0);
     const currentValue = yearSales[selectedMonth] || 0;
     const janValue = yearSales[0] || 0;
@@ -286,33 +260,8 @@ const VentasGlobales = () => {
 
     const yearRevenue = revenueData?.[selectedYear] || new Array(12).fill(0);
     const currentRevenue = yearRevenue[selectedMonth] || 0;
-    const annualRevenue = yearRevenue.reduce((a, b) => a + b, 0);
-    const avgTicket = currentValue > 0 && currentRevenue > 0 ? (currentRevenue / currentValue) : 0;
 
-    // Análisis Trimestral (Impacto en Unidades e Ingresos)
-    const getQuarterData = () => {
-        if (!yearSales) return [0, 0, 0, 0];
-        return [
-            yearSales.slice(0, 3).reduce((a, b) => a + b, 0),
-            yearSales.slice(3, 6).reduce((a, b) => a + b, 0),
-            yearSales.slice(6, 9).reduce((a, b) => a + b, 0),
-            yearSales.slice(9, 12).reduce((a, b) => a + b, 0),
-        ];
-    };
-    const [q1, q2, q3, q4] = getQuarterData();
-
-    const getQuarterRevenue = () => {
-        if (!yearRevenue) return [0, 0, 0, 0];
-        return [
-            yearRevenue.slice(0, 3).reduce((a, b) => a + b, 0),
-            yearRevenue.slice(3, 6).reduce((a, b) => a + b, 0),
-            yearRevenue.slice(6, 9).reduce((a, b) => a + b, 0),
-            yearRevenue.slice(9, 12).reduce((a, b) => a + b, 0),
-        ];
-    };
-    const [qRev1, qRev2, qRev3, qRev4] = getQuarterRevenue();
-
-    // Proyección de Ventas Dinámica (2026)
+    // Proyección Dinámica (2026)
     const getProjectionData = () => {
         const defaultData = { total: 0, months: 0, avg: 0, result: 0 };
         if (!salesData?.["2026"]) return defaultData;
@@ -326,10 +275,11 @@ const VentasGlobales = () => {
         const avg = total / months;
         const result = Math.round(avg * 12);
 
-        return { total, months, avg: avg.toFixed(1), result };
+        return { total, months, avg: avg.toFixed(1).replace(".", ","), result };
     };
 
     const proj = getProjectionData();
+    const currentMatrix = isRevenueMode ? revenueData : salesData;
 
     return (
         <div className="ventas-globales-page">
@@ -338,318 +288,321 @@ const VentasGlobales = () => {
             <PageNav />
 
             <div className="ventas-globales-container animate-fade-in">
-                <header className="ventas-header">
-                    <div>
-                        <h1>Histórico de Ventas Globales</h1>
-                        <p>Análisis de impacto trimestral, ingresos y auditoría en tiempo real</p>
+                {/* ── ENCABEZADO SUPERIOR ── */}
+                <div className="ventas-header-box">
+                    <div className="ventas-header-icon-box">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
                     </div>
-                </header>
+                    <div className="ventas-header-texts">
+                        <h1 className="ventas-main-title">
+                            Histórico de <span className="title-cyan">Ventas Globales</span>
+                        </h1>
+                        <p className="ventas-sub-title">Análisis de impacto trimestral y tendencias reales</p>
+                    </div>
+                </div>
 
                 {loading ? (
                     <div className="loader-container">
                         <div className="loader-spinner"></div>
-                        <p>Sincronizando con API de Auditorías Sisprot...</p>
+                        <p>Sincronizando auditorías de red de Sisprot...</p>
                     </div>
                 ) : (
                     <>
-                        <div className="analysis-grid">
-                            {/* Tarjeta 1: Consulta Detallada y Descarga */}
-                            <div className="stat-card glass interactive-selector">
-                                <h3>Consulta Detallada</h3>
-                                <div className="selectors">
-                                    <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-                                        {Object.keys(salesData).reverse().map(y => <option key={y} value={y}>{y}</option>)}
-                                    </select>
-                                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(parseInt(e.target.value))}>
-                                        {meses.map((m, i) => <option key={m} value={i}>{m}</option>)}
-                                    </select>
-                                </div>
-                                <button 
-                                    className="download-excel-btn" 
-                                    onClick={handleDownloadExcel} 
-                                    disabled={downloading || !canDownload}
-                                    title={!canDownload ? "Registros exactos disponibles solo a partir de Julio 2025" : ""}
-                                >
-                                    {downloading ? "Descargando..." : "📊 Descargar Excel"}
-                                </button>
-                                {!canDownload && (
-                                    <span className="excel-disabled-warning">
-                                        Disponible desde Julio 2025
-                                    </span>
-                                )}
-                                <div className="result-val">{currentValue}</div>
-                                <span className="unit">Ventas en {meses[selectedMonth]} {selectedYear}</span>
-                            </div>
-
-                            {/* Tarjeta 2: Ingresos por Ventas ($ USD) */}
-                            <div className="stat-card glass revenue-card">
-                                <h3>Ingresos por Ventas</h3>
-                                <div className="revenue-val">
-                                    {currentRevenue > 0
-                                        ? `$${currentRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                                        : (currentValue > 0 && parseInt(selectedYear) <= 2025 && selectedMonth < 10 ? 'N/D' : '$0.00')}
-                                </div>
-                                <span className="unit">
-                                    {currentRevenue > 0 
-                                        ? `Facturación en ${meses[selectedMonth]} ${selectedYear}`
-                                        : (currentValue > 0 && parseInt(selectedYear) <= 2025 && selectedMonth < 10 
-                                            ? `Desglose en $ desde Nov 2025` 
-                                            : `Sin ingresos en ${meses[selectedMonth]} ${selectedYear}`)}
-                                </span>
-                                <div className="revenue-pills-row">
-                                    <div className="revenue-pill">
-                                        Año {selectedYear}: <strong>${annualRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+                        {/* ── GRID DE 3 TARJETAS PRINCIPALES (REFERENCIA VISUAL) ── */}
+                        <div className="ventas-cards-grid">
+                            {/* TARJETA 1: Consulta de ventas */}
+                            <div className="ref-card card-consulta">
+                                <div className="card-top-header">
+                                    <div className="card-mini-icon cyan-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
                                     </div>
-                                    {avgTicket > 0 && (
-                                        <div className="revenue-pill">
-                                            Ticket Prom.: <strong>${avgTicket.toFixed(2)}</strong>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Tarjeta 3: Variación vs Enero */}
-                            <div className={`stat-card glass variation-card ${diffToJan < 0 ? 'negative' : 'positive'}`}>
-                                <h3>Variación vs Enero {selectedYear}</h3>
-                                <div className="variation-val">
-                                    {diffToJan > 0 ? '+' : ''}{diffToJan.toFixed(1)}%
-                                </div>
-                                <p className="calc-explanation">Comparativa porcentual del mes seleccionado contra Enero de este año.</p>
-                                <div className="mini-trend">
-                                    {diffToJan < 0 ? '📉 Descenso' : '📈 Incremento'}
-                                </div>
-                            </div>
-
-                            {/* Tarjeta 4: Proyección Anual */}
-                            <div className="stat-card glass projection-card">
-                                <h3>Proyección Ventas 2026</h3>
-                                <div className="projection-val">{proj.result}</div>
-                                <span className="unit">Total Estimado Anual</span>
-                                <div className="calc-explanation-box">
-                                    <p><strong>Metodología de Proyección:</strong></p>
-                                    <p>1. Ventas reales registradas: <strong>{proj.total}</strong> uds.</p>
-                                    <p>2. Meses operados analizados: <strong>{proj.months}</strong> meses.</p>
-                                    <p>3. Promedio mensual actual: <strong>{proj.avg}</strong> uds.</p>
-                                    <p>4. Proyección (Promedio x 12): <strong>{proj.result}</strong> uds.</p>
-                                    <div className="dynamic-note">
-                                        ⚠️ <strong>Nota:</strong> Cálculo dinámico auditado en vivo con la API de Sisprot.
+                                    <div>
+                                        <h3 className="card-heading">Consulta de ventas</h3>
+                                        <p className="card-subheading">Seleccione el año y el mes para ver el detalle.</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        {/* Impacto Trimestral */}
-                        <div className="quarterly-analysis glass">
-                            <h3>Impacto Trimestral de Ventas {selectedYear}</h3>
-                            <div className="quarters-grid">
-                                <div className="q-item">
-                                    <span className="q-label">T1 (Ene-Mar)</span>
-                                    <div className="q-val">{q1}</div>
-                                    {qRev1 > 0 && <span className="q-subval">${qRev1.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</span>}
-                                </div>
-                                <div className="q-item">
-                                    <span className="q-label">T2 (Abr-Jun)</span>
-                                    <div className="q-val">{q2}</div>
-                                    {qRev2 > 0 && <span className="q-subval">${qRev2.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</span>}
-                                </div>
-                                <div className="q-item">
-                                    <span className="q-label">T3 (Jul-Sep)</span>
-                                    <div className="q-val">{q3}</div>
-                                    {qRev3 > 0 && <span className="q-subval">${qRev3.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</span>}
-                                </div>
-                                <div className="q-item">
-                                    <span className="q-label">T4 (Oct-Dic)</span>
-                                    <div className="q-val">{q4}</div>
-                                    {qRev4 > 0 && <span className="q-subval">${qRev4.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</span>}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Gráfico Principal */}
-                        <div className="chart-wrapper glass">
-                            {isMobile ? (
-                                <div className="mobile-chart-alt">
-                                    <h4 className="mobile-chart-title">
-                                        📊 {isRevenueMode ? "Comparativo de Ingresos por Año" : "Comparativo por Año"}
-                                    </h4>
-                                    <div className="year-bars">
-                                        {Object.entries(activeDataset)
-                                            .sort(([a], [b]) => b - a)
-                                            .map(([year, data]) => {
-                                                const total = data.reduce((a, b) => a + b, 0);
-                                                const maxTotal = Math.max(
-                                                    ...Object.values(activeDataset).map(d => d.reduce((a, b) => a + b, 0)),
-                                                    1
-                                                );
-                                                const isSelected = year === selectedYear;
-                                                const pct = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
-                                                return (
-                                                    <div
-                                                        key={year}
-                                                        className={`year-bar-row ${isSelected ? 'selected' : ''}`}
-                                                        onClick={() => handleYearSelection(year)}
-                                                    >
-                                                        <span className="year-bar-label">{year}</span>
-                                                        <div className="year-bar-track">
-                                                            <div
-                                                                className="year-bar-fill"
-                                                                style={{ width: `${pct}%`, background: isRevenueMode ? '#10b981' : undefined }}
-                                                            />
-                                                        </div>
-                                                        <span className="year-bar-total">
-                                                            {isRevenueMode ? `$${total.toFixed(0)}` : total}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
-                                    </div>
-
-                                    <h4 className="mobile-chart-title" style={{ marginTop: '22px' }}>
-                                        📅 {isRevenueMode ? `Ingresos Mensuales — ${selectedYear}` : `Mensual — ${selectedYear}`}
-                                    </h4>
-                                    <div className="month-bars">
-                                        {meses.map((mes, i) => {
-                                            const val = (activeDataset[selectedYear] || [])[i] || 0;
-                                            const maxVal = Math.max(...(activeDataset[selectedYear] || []), 1);
-                                            const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-                                            const isActive = i === selectedMonth;
-                                            return (
-                                                <div
-                                                    key={mes}
-                                                    className={`month-bar-col ${isActive ? 'active' : ''}`}
-                                                    onClick={() => setSelectedMonth(i)}
+                                <div className="card-consulta-body">
+                                    <div className="consulta-left-col">
+                                        <div className="selector-pills-row">
+                                            <div className="custom-select-pill">
+                                                <span className="pill-calendar-icon">📅</span>
+                                                <select 
+                                                    value={selectedYear} 
+                                                    onChange={(e) => setSelectedYear(e.target.value)}
+                                                    aria-label="Seleccionar Año"
                                                 >
-                                                    <div className="month-bar-wrap">
-                                                        <div
-                                                            className="month-bar-fill"
-                                                            style={{ height: `${Math.max(pct, 3)}%`, background: isRevenueMode ? '#10b981' : undefined }}
-                                                        />
-                                                    </div>
-                                                    <span className="month-bar-val">
-                                                        {isRevenueMode ? (val > 0 ? `$${val.toFixed(0)}` : '-') : (val || '-')}
-                                                    </span>
-                                                    <span className="month-bar-label">{mes}</span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                    <p className="mobile-chart-hint">Toca un año para seleccionarlo · Toca un mes para el detalle</p>
-                                </div>
-                            ) : (
-                                <Line data={getChartData()} options={options} />
-                            )}
-                        </div>
+                                                    {Object.keys(salesData).reverse().map(y => <option key={y} value={y}>{y}</option>)}
+                                                </select>
+                                                <span className="pill-arrow">⌄</span>
+                                            </div>
 
-                        {/* Tarjeta de Guía Interactiva */}
-                        <div className="info-guide-card glass animate-fade-in">
-                            <div className="guide-icon">💡</div>
-                            <div className="guide-text">
-                                <h4>Auditoría en Tiempo Real & Matriz Dinámica</h4>
-                                <p>Las ventas desde <strong>Noviembre 2025 y todo 2026</strong> se sincronizan directamente con las transiciones de estatus <code>Por instalar (18) ➔ Activo (16)</code> de Sisprot. Usa los botones superiores de la tabla para alternar entre <strong>Unidades Vendidas</strong> e <strong>Ingresos Facturados ($ USD)</strong>.</p>
+                                            <div className="custom-select-pill">
+                                                <span className="pill-calendar-icon">📅</span>
+                                                <select 
+                                                    value={selectedMonth} 
+                                                    onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+                                                    aria-label="Seleccionar Mes"
+                                                >
+                                                    {meses.map((m, i) => <option key={m} value={i}>{m}</option>)}
+                                                </select>
+                                                <span className="pill-arrow">⌄</span>
+                                            </div>
+                                        </div>
+
+                                        <button 
+                                            className="excel-green-btn" 
+                                            onClick={handleDownloadExcel} 
+                                            disabled={downloading || !canDownload}
+                                            title={!canDownload ? "Disponible desde Julio 2025" : ""}
+                                        >
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-4h2v4zm0-6h-2V7h2v4zm4 6h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
+                                            </svg>
+                                            <span>{downloading ? "Descargando..." : "Descargar Excel"}</span>
+                                        </button>
+                                        {!canDownload && (
+                                            <span className="excel-disabled-hint">Disponible desde Julio 2025</span>
+                                        )}
+                                    </div>
+
+                                    <div className="consulta-right-col">
+                                        <div className="big-stat-val">{currentValue}</div>
+                                        <div className="stat-unit-text">Ventas en {meses[selectedMonth]} {selectedYear}</div>
+                                        {currentRevenue > 0 && (
+                                            <div className="revenue-pill-tag">
+                                                💵 ${currentRevenue.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* TARJETA 2: Variación vs. enero {selectedYear} */}
+                            <div className={`ref-card card-variacion ${diffToJan < 0 ? 'border-red-glow' : 'border-green-glow'}`}>
+                                <div className="card-top-header">
+                                    <div className={`card-mini-icon ${diffToJan < 0 ? 'red-icon' : 'green-icon'}`}>
+                                        {diffToJan < 0 ? (
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff5c77" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                                <polyline points="17 18 23 18 23 12"></polyline>
+                                            </svg>
+                                        ) : (
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                                <polyline points="17 6 23 6 23 12"></polyline>
+                                            </svg>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h3 className="card-heading">Variación vs. enero {selectedYear}</h3>
+                                        <p className="card-subheading">Comparativa porcentual del mes seleccionado contra Enero de este año.</p>
+                                    </div>
+                                </div>
+
+                                <div className="card-variacion-body">
+                                    <div className={`big-stat-val ${diffToJan < 0 ? 'text-coral' : 'text-emerald'}`}>
+                                        {diffToJan > 0 ? '+' : ''}{diffToJan.toFixed(1)}%
+                                    </div>
+                                    <div className={`trend-chip ${diffToJan < 0 ? 'chip-red' : 'chip-green'}`}>
+                                        {diffToJan < 0 ? '↓ Descenso' : '↑ Incremento'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* TARJETA 3: Proyección de ventas 2026 */}
+                            <div className="ref-card card-proyeccion">
+                                <div className="card-top-header">
+                                    <div className="card-mini-icon gold-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="card-heading">Proyección de ventas 2026</h3>
+                                        <p className="card-subheading">Total estimado anual basado en ventas reales.</p>
+                                    </div>
+                                </div>
+
+                                <div className="card-proyeccion-body">
+                                    <div className="proyeccion-left-col">
+                                        <div className="big-stat-val text-gold">{proj.result}</div>
+                                        <div className="stat-unit-text">Total Estimado Anual</div>
+                                    </div>
+
+                                    <div className="proyeccion-right-col">
+                                        <div className="method-box">
+                                            <div className="method-title">Metodología de Proyección:</div>
+                                            <div className="method-item">1. Sumamos las ventas reales: <strong>{proj.total} uds.</strong></div>
+                                            <div className="method-item">2. Dividimos entre meses operativos: <strong>{proj.months} meses.</strong></div>
+                                            <div className="method-item">3. Promedio mensual actual: <strong>{proj.avg} uds.</strong></div>
+                                            <div className="method-item">4. Proyección (Promedio x 12): <strong>{proj.result} uds.</strong></div>
+                                            <div className="method-alert">
+                                                <span className="alert-icon">⚠️</span>
+                                                <span><strong>Nota:</strong> Este cálculo es dinámico. A medida que transcurra el año, el estimado ganará mayor precisión.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Matriz Comparativa con selector de Unidades / Ingresos */}
-                        <div className="data-table-container glass">
-                            <div className="table-header-row">
-                                <div>
-                                    <h3 className="premium-table-title">Matriz Comparativa</h3>
-                                    <p className="table-subtitle">
-                                        {isRevenueMode 
-                                            ? "Ingresos mensuales recaudados por activaciones en dólares ($ USD)"
-                                            : "Total de contratos nuevos activados mes a mes"}
-                                    </p>
+                        {/* ── GRÁFICO PRINCIPAL DE EVOLUCIÓN MENSUAL (2021 — 2026) ── */}
+                        <div className="ref-card chart-card-container">
+                            <div className="chart-header-row">
+                                <div className="chart-title-left">
+                                    <div className="card-mini-icon cyan-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <h3 className="chart-main-title">
+                                        {isRevenueMode ? "Evolución de ingresos mensuales ($ USD) · 2021 — 2026" : "Evolución de ventas mensuales · 2021 — 2026"}
+                                    </h3>
                                 </div>
-                                <div className="metric-toggle-pills">
+
+                                {/* Leyenda interactiva con puntos de color exactamente como la imagen */}
+                                <div className="custom-chart-legend">
+                                    {["2026", "2025", "2024", "2023", "2022", "2021"].map((yr) => {
+                                        const isSelected = selectedYear === yr;
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={yr}
+                                                className={`legend-pill ${isSelected ? 'legend-selected' : ''}`}
+                                                onClick={() => handleYearSelection(yr)}
+                                            >
+                                                <span className="legend-circle" style={{ backgroundColor: YEAR_COLORS[yr] }}></span>
+                                                <span className="legend-label">Ventas {yr}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="chart-canvas-wrapper">
+                                <Line data={getChartData()} options={options} height={320} />
+                            </div>
+                        </div>
+
+                        {/* ── BANNER: GUÍA DE USO DEL DASHBOARD ── */}
+                        <div className="ref-guide-card">
+                            <div className="guide-bulb">💡</div>
+                            <div className="guide-text-content">
+                                <h4>Guía de Uso del Dashboard</h4>
+                                <p>
+                                    Matriz dinámica: Clic en cualquier año en la tabla de abajo para enfocarlo automáticamente en el gráfico. El <strong>Resultado de Picos</strong> (fondos azules) muestra visualmente dónde hubo mayor éxito de ventas.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* ── MATRIZ COMPARATIVA DE VENTAS ── */}
+                        <div className="ref-card table-card-container">
+                            <div className="table-header-flex">
+                                <div className="table-title-left">
+                                    <div className="card-mini-icon cyan-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                                            <line x1="3" y1="15" x2="21" y2="15"></line>
+                                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                                            <line x1="15" y1="3" x2="15" y2="21"></line>
+                                        </svg>
+                                    </div>
+                                    <h3 className="table-card-heading">Matriz Comparativa de Ventas</h3>
+                                </div>
+
+                                <div className="metric-switch-pills">
                                     <button 
                                         type="button"
-                                        className={`metric-toggle-btn ${!isRevenueMode ? 'active' : ''}`}
+                                        className={`switch-pill ${!isRevenueMode ? 'active' : ''}`}
                                         onClick={() => setMetricView('units')}
                                     >
-                                        📦 Unidades (Ventas)
+                                        📦 Unidades
                                     </button>
                                     <button 
                                         type="button"
-                                        className={`metric-toggle-btn revenue-mode ${isRevenueMode ? 'active' : ''}`}
+                                        className={`switch-pill revenue ${isRevenueMode ? 'active' : ''}`}
                                         onClick={() => setMetricView('revenue')}
                                     >
-                                        💵 Facturación ($ USD)
+                                        💵 Facturación ($)
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="table-responsive">
-                                <table className="sales-table">
+                            <div className="custom-table-responsive">
+                                <table className="ref-sales-table">
                                     <thead>
                                         <tr>
-                                            <th>Año</th>
-                                            {meses.map(m => <th key={m}>{m}</th>)}
-                                            <th>Total</th>
+                                            <th>AÑO</th>
+                                            {meses.map(m => <th key={m}>{m.toUpperCase()}</th>)}
+                                            <th className="th-total">TOTAL</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {Object.entries(currentMatrix).reverse().map(([year, yearData]) => {
                                             const isMain = year === selectedYear;
-                                            const isComp = comparisonYears.includes(year) && !isMain;
                                             const yearTotal = yearData.reduce((a, b) => a + b, 0);
 
                                             return (
                                                 <tr
                                                     key={year}
-                                                    className={`
-                                                        table-row-premium
-                                                        ${isMain ? 'main-selected' : ''} 
-                                                        ${isComp ? 'comp-selected' : ''}
-                                                    `}
+                                                    className={`ref-table-row ${isMain ? 'row-selected' : ''}`}
                                                     onClick={() => handleYearSelection(year)}
                                                 >
-                                                    <td className="year-cell">{year}</td>
+                                                    <td className="year-cell-title">
+                                                        {isMain && <span className="year-indicator"></span>}
+                                                        {year}
+                                                    </td>
+
                                                     {year === '2021' && !isRevenueMode ? (
                                                         <>
-                                                            <td
-                                                                colSpan={5}
-                                                                className="heatmap-cell consolidated-cell has-value"
-                                                                style={{ "--intensity": 148 / maxSalesVal, textAlign: 'center' }}
-                                                            >
-                                                                <span className="cell-val">148</span>
+                                                            <td colSpan={5} className="cell-peak consolidated-peak">
+                                                                148
                                                             </td>
                                                             {yearData.slice(5).map((v, i) => (
-                                                                <td
-                                                                    key={i + 5}
-                                                                    style={{ "--intensity": v / maxSalesVal }}
-                                                                    className={`heatmap-cell ${v > 0 ? 'has-value' : 'is-zero'}`}
-                                                                >
-                                                                    <span className="cell-val">{v}</span>
+                                                                <td key={i + 5} className="cell-normal">
+                                                                    {v}
                                                                 </td>
                                                             ))}
                                                         </>
                                                     ) : (
                                                         yearData.map((v, i) => {
+                                                            const isSelectedCell = isMain && i === selectedMonth;
+                                                            // En la referencia visual, los picos altos (>=150) tienen fondo azul vibrante
+                                                            const isPeak = !isRevenueMode && v >= 150;
                                                             const displayVal = isRevenueMode 
-                                                                ? (v > 0 ? `$${v.toFixed(0)}` : '—') 
-                                                                : (v > 0 ? v : '0');
-                                                            const isHighlight = isMain && i === selectedMonth;
+                                                                ? (v > 0 ? `$${v.toFixed(0)}` : '0') 
+                                                                : (v || 0);
 
                                                             return (
                                                                 <td
                                                                     key={i}
-                                                                    style={{ "--intensity": v / maxSalesVal }}
-                                                                    title={isRevenueMode ? `$${v.toFixed(2)} USD` : `${v} ventas`}
                                                                     className={`
-                                                                        heatmap-cell
-                                                                        ${v > 0 ? 'has-value' : 'is-zero'} 
-                                                                        ${isHighlight ? 'highlight-cell' : ''}
-                                                                        ${isRevenueMode ? 'revenue-heatmap' : ''}
+                                                                        cell-data
+                                                                        ${isPeak ? 'cell-peak' : ''}
+                                                                        ${isSelectedCell ? 'cell-selected-outline' : ''}
                                                                     `}
+                                                                    title={isRevenueMode ? `$${v.toFixed(2)} USD` : `${v} ventas`}
                                                                 >
-                                                                    <span className="cell-val">{displayVal}</span>
+                                                                    {displayVal}
                                                                 </td>
                                                             );
                                                         })
                                                     )}
-                                                    <td className="total-cell">
+
+                                                    <td className="total-column-cell">
                                                         {isRevenueMode 
-                                                            ? (yearTotal > 0 ? `$${yearTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—')
+                                                            ? (yearTotal > 0 ? `$${yearTotal.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : '—')
                                                             : yearTotal}
                                                     </td>
                                                 </tr>
@@ -667,4 +620,5 @@ const VentasGlobales = () => {
 };
 
 export default VentasGlobales;
+
 
