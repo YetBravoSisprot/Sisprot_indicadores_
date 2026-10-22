@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import largeArraydata from "../PasswordContext/data";
+import { fetchContractsByStatus } from "../services/contractService";
 
 // Filter out test contracts for "Freddy Carrillo" and "Bryant Reyes"
 if (largeArraydata && Array.isArray(largeArraydata.results)) {
@@ -125,187 +126,24 @@ function PasswordProvider({ children }) {
       setIsLoading(true);
     }
     setError(null);
-
-    let apiResults = [];
-    const apiKey = "xK9pW2vM4zY0nR1tQ5sJ8hF3cD6aB1uE9iO2mN7rT4bV5xS8gL";
-    const urls = [
-      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=10&page=1&provisional=True&client_type=2",
-      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=25&page=1&provisional=True&client_type=2",
-      "https://api.sisprotgf.com/api/public/contracts/?status=16&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1",
-      "https://api.sisprotgf.com/api/public/contracts/?status=19&remove_pagination=True&cycle=1&page=1&provisional=True&client_type=1"
-    ];
-
-    setConnectionStatus("Conectando con la API...");
+    setConnectionStatus("Conectando con la API en tiempo real...");
 
     try {
-      let failedCount = 0;
-      let lastErrorMessage = "";
-
-      const fetchPromises = urls.map(async (url, idx) => {
-        const urlController = new AbortController();
-        const timeoutId = setTimeout(() => urlController.abort(), 30000); // 30 seconds timeout
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            signal: urlController.signal,
-            headers: {
-              "X-API-KEY": apiKey.trim(),
-              "Accept": "application/json"
-            }
-          });
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          const jsonData = await response.json();
-          clearTimeout(timeoutId);
-          return jsonData;
-        } catch (apiErr) {
-          clearTimeout(timeoutId);
-          failedCount++;
-          lastErrorMessage = apiErr.message || String(apiErr);
-          console.warn(`URL ${idx + 1} failed or timed out. Falling back to local data for this category.`, apiErr);
-          
-          if (largeArraydata && largeArraydata.results) {
-            if (idx === 0) {
-              // Pymes Activos Ciclo 10
-              return largeArraydata.results.filter(c => 
-                c.status_name === "Activo" && c.cycle === 10 && c.client_type_name === "PYME"
-              );
-            } else if (idx === 1) {
-              // Pymes Activos Ciclo 25
-              return largeArraydata.results.filter(c => 
-                c.status_name === "Activo" && c.cycle === 25 && c.client_type_name === "PYME"
-              );
-            } else if (idx === 2) {
-              // Residenciales Activos Ciclo 1
-              return largeArraydata.results.filter(c => 
-                c.status_name === "Activo" && c.cycle === 1 && c.client_type_name === "RESIDENCIAL"
-              );
-            } else if (idx === 3) {
-              // Suspendidos Residenciales Ciclo 1
-              return largeArraydata.results.filter(c => 
-                c.status_name === "Suspendido" && c.cycle === 1 && c.client_type_name === "RESIDENCIAL"
-              );
-            }
-          }
-          return [];
-        }
-      });
-      
-      const lists = await Promise.all(fetchPromises);
-      apiResults = lists.flat();
-
-      if (failedCount === 0) {
+      const res = await fetchContractsByStatus(["Todos"], false);
+      if (res && res.results && res.results.length > 0) {
+        setData({
+          count: res.results.length,
+          results: res.results
+        });
         setConnectionStatus("✅ Datos actualizados en tiempo real");
-      } else if (failedCount === urls.length) {
-        setConnectionStatus(`⚠️ Cargado offline (Error: ${lastErrorMessage})`);
-      } else {
-        setConnectionStatus(`⚠️ Conexión parcial (Fallaron ${failedCount} de 4 consultas. Error: ${lastErrorMessage})`);
+        return;
       }
     } catch (apiErr) {
-      console.error("General error in fetching process, falling back to all local data:", apiErr);
-      apiResults = largeArraydata.results;
-      setConnectionStatus("⚠️ Cargado offline (Error crítico en proceso de descarga)");
-    }
-
-    try {
-      // Map local data by ID for fast lookup
-      const localDataMap = new Map();
+      console.warn("fetchContractsByStatus falló en PasswordContext, usando respaldo local:", apiErr);
+      setConnectionStatus("⚠️ Cargado offline");
       if (largeArraydata && largeArraydata.results) {
-        largeArraydata.results.forEach(item => {
-          if (item && item.id) {
-            localDataMap.set(item.id, item);
-          }
-        });
+        setData(largeArraydata);
       }
-
-      // Merge API data with local data details
-      const mergedResults = apiResults.map(c => {
-        if (!c) return null;
-        if (c.client_name !== undefined) {
-          return c; // Already in local format if we fell back
-        }
-
-        const local = localDataMap.get(c.id) || {};
-        
-        const status = c.status_name || "N/A";
-        const clientType = c.client_type?.name || "N/A";
-        const clientSubdivision = `${status.toUpperCase()}_${clientType.toUpperCase()}`;
-
-        return {
-          id: c.id,
-          client_name: c.client?.full_name || local.client_name || "Sin nombre",
-          client_type_name: clientType,
-          client_subdivision: clientSubdivision,
-          status_name: status,
-          cycle: c.cycle !== undefined && c.cycle !== null ? c.cycle : local.cycle,
-          migrate: local.migrate !== undefined ? local.migrate : false,
-          sector_name: local.sector_name || "",
-          plan: c.plan || local.plan || { id: null, name: "N/A", cost: "0.00" },
-          client_mobile: c.client?.mobile || local.client_mobile || "N/A",
-          client_email: c.client?.email || local.client_email || "N/A",
-          address: local.address || "",
-          client_identification: c.client?.identification || local.client_identification || "N/A",
-          created_at: c.created_at || local.created_at || null,
-          service_detail: local.service_detail || null,
-          nap_box_name: local.nap_box_name || "",
-          ip_name: local.ip_name || "",
-          mac_address: local.mac_address || ""
-        };
-      }).filter(Boolean);
-
-      // Get all local clients that are NOT in the categories we fetch from the API
-      const nonApiLocalClients = (largeArraydata && largeArraydata.results)
-        ? largeArraydata.results.filter(client => {
-            if (!client) return false;
-            const status = (client.status_name || "").toUpperCase().trim();
-            const cycle = parseInt(client.cycle, 10);
-            const type = (client.client_type_name || "").toUpperCase().trim();
-
-            const isApiCategory1 = (status === "ACTIVO" && cycle === 10 && type === "PYME");
-            const isApiCategory2 = (status === "ACTIVO" && cycle === 25 && type === "PYME");
-            const isApiCategory3 = (status === "ACTIVO" && cycle === 1 && type === "RESIDENCIAL");
-            const isApiCategory4 = (status === "SUSPENDIDO" && cycle === 1 && type === "RESIDENCIAL");
-
-            return !(isApiCategory1 || isApiCategory2 || isApiCategory3 || isApiCategory4);
-          })
-        : [];
-
-      const finalResults = [...mergedResults, ...nonApiLocalClients];
-
-      const jsonData = {
-        count: finalResults.length,
-        results: finalResults
-      };
-
-      // Filtrar globalmente registros que contengan "PRUEBA" en cualquier campo relevante
-      if (jsonData && jsonData.results) {
-        const whitelist = ["ELISAUL REYES", "THAIS BEJAS"];
-        jsonData.results = jsonData.results.filter(cliente => {
-          if (!cliente) return false;
-          const name = (cliente.client_name || "").toUpperCase().replace(/\s+/g, " ");
-          if (name.includes("FREDDY CARRILLO") || name.includes("BRYANT REYES")) return false;
-          const isWhitelisted = whitelist.some(w => name.includes(w.toUpperCase().replace(/\s+/g, " ")));
-          if (isWhitelisted) return true;
-
-          const searchFields = [
-            cliente.client_name,
-            cliente.address,
-            cliente.sector_name,
-            cliente.client_mobile,
-            cliente.client_identification,
-            cliente.client_type_name,
-            cliente.plan?.name
-          ];
-          return !searchFields.some(val =>
-            val !== null && val !== undefined && String(val).toUpperCase().includes("PRUEBA")
-          );
-        });
-      }
-
-      setData(jsonData);
-    } catch (err) {
-      console.error("Critical error in data merging/processing, using local data raw:", err);
-      setError(err);
-      setData(largeArraydata);
     } finally {
       setIsLoading(false);
       setIsUpdating(false);
