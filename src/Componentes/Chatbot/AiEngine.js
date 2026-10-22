@@ -13,6 +13,7 @@ import {
     formatUSD,
     formatPercent
 } from '../../services/biQueryService.js';
+import { fetchContractsByStatus } from '../../services/contractService.js';
 
 
 
@@ -144,19 +145,9 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
     return { payments: allPayments, startDate: start, endDate: end };
 };
 
-// --- DATA HISTÓRICA (RESPALDO GITHUB): Fetch de snapshot del día anterior ---
+// --- DATA EN TIEMPO REAL: Los contratos se obtienen de la API oficial de Sisprot (misma fuente que Top Urbanismo y Resumen BI) ---
 const fetchHistoricalClients = async () => {
-    const RAW_URL = "https://raw.githubusercontent.com/YetBravoSisprot/data_json_dia_ayer/main/data%20empresa%2010-2.json.json";
-    try {
-        const response = await fetch(RAW_URL);
-        if (!response.ok) throw new Error("Error HTTP al recuperar histórico");
-        const rawJson = await response.json();
-        // El JSON de GitHub es un array directo de clientes
-        return Array.isArray(rawJson) ? rawJson : (rawJson.results || []);
-    } catch (e) {
-        console.error("Fallo al cargar data histórica de GitHub:", e);
-        return null;
-    }
+    return null;
 };
 
 // Nueva función unificada para registrar en local y n8n
@@ -1062,7 +1053,21 @@ const getLastUpdateTime = () => {
 };
 
 export const processQuery = async (message, data, history = [], userName = "", currentPage = "", userRole = "admin") => {
-    if (!data || !data.results) {
+    // 1. Cargar contratos en tiempo real desde la API oficial de Sisprot (misma fuente que Top Urbanismo y Resumen BI)
+    let liveContracts = [];
+    try {
+        const contractsRes = await fetchContractsByStatus(["Todos"], false);
+        if (contractsRes && contractsRes.results && contractsRes.results.length > 0) {
+            liveContracts = contractsRes.results;
+        }
+    } catch (e) {
+        console.warn("AiEngine: Error al obtener contratos en vivo desde contractService:", e);
+    }
+
+    // Usar prioritariamente los contratos en vivo de la API; si falla por red offline, usar data.results como respaldo
+    let clientes = liveContracts.length > 0 ? liveContracts : (data?.results || []);
+
+    if (!clientes || clientes.length === 0) {
         return { text: "Aún no tengo datos cargados para analizar. Por favor, asegúrate de haber iniciado sesión.", isCard: false };
     }
 
@@ -1071,7 +1076,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
     let parameters = null;
     let fromClarification = false;
     let query = normalizeText(message);
-    let clientes = data.results;
     // --- DETECTOR DE PERIODO (Persistencia) ---
     const explicitlyHoy = query.includes("hoy") || query.includes("17");
     const explicitlyAyer = query.includes("ayer") || query.includes("16") || query.includes("de ayer");
@@ -1138,16 +1142,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
         }
     }
 
-    // --- CARGA DE DATA SEGÚN SELECCIÓN ---
-    if (!isTodayQuery) {
-        const histData = await fetchHistoricalClients();
-        if (histData && histData.length > 0) {
-            clientes = histData;
-            dataLabel = "Corte Ayer (8:00 PM)";
-        }
-    } else {
-        dataLabel = `Hoy (Actualizado: ${getLastUpdateTime()})`;
-    }
+    // --- ETIQUETA DE PERIODO / CORTE ---
+    dataLabel = isTodayQuery ? `En Vivo (Sincronizado: ${getLastUpdateTime()})` : `Corte Ayer (${yesterdayLabel})`;
 
     // --- DETECTOR DE RESPALDO (Force Detection for Reunion Sectors) ---
     // Si la IA no extrajo urbanismos pero el mensaje los tiene, los forzamos
