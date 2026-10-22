@@ -818,3 +818,111 @@
     font-weight: 500;
 }
 
+/* Revenue Card Styling */
+.revenue-card {
+    border-top: 4px solid #10b981 !important;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 0, 0, 0.6)) !important;
+}
+
+.revenue-card .revenue-val {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #10b981;
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    margin-bottom: 5px;
+}
+
+.revenue-pills-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.revenue-pill {
+    padding: 5px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.revenue-pill strong {
+    color: #10b981;
+}
+
+.q-subval {
+    display: block;
+    font-size: 0.78rem;
+    color: #10b981;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Table Header Row & Toggle Pills */
+.table-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.table-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 4px 0 0 0;
+}
+
+.metric-toggle-pills {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.metric-toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.metric-toggle-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.metric-toggle-btn.active {
+    background: #00d2ff;
+    color: #0b1120;
+    box-shadow: 0 4px 12px rgba(0, 210, 255, 0.35);
+}
+
+.metric-toggle-btn.active.revenue-mode {
+    background: #10b981;
+    color: #0b1120;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+/* Revenue Heatmap cell tint */
+.heatmap-cell.revenue-heatmap.has-value {
+    background: rgba(16, 185, 129, calc(var(--intensity, 0) * 0.45 + 0.08)) !important;
+    color: #e6fffa;
+}
+
+.heatmap-cell.revenue-heatmap.is-zero {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+
