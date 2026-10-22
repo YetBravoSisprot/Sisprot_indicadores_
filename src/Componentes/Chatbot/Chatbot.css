@@ -1054,3 +1054,107 @@
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     border-color: #3b82f6;
 }
+
+/* ══════════════════════════════════════════════════════════
+   BARRA DE SUGERENCIAS CONTEXTUALES (Sisprot BI Moderno)
+   ══════════════════════════════════════════════════════════ */
+.chatbot-suggestions-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px 6px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 210, 255, 0.3) transparent;
+}
+
+.chatbot-suggestions-bar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.chatbot-suggestions-bar::-webkit-scrollbar-thumb {
+    background: rgba(0, 210, 255, 0.3);
+    border-radius: 4px;
+}
+
+.suggestion-chip {
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    color: #e2e8f0;
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion-chip:hover {
+    background: rgba(0, 210, 255, 0.18);
+    border-color: #00d2ff;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 210, 255, 0.35);
+}
+
+.suggestion-chip:active {
+    transform: translateY(0);
+}
+
+/* Indicador de Estado en Vivo en el Header */
+.header-status-indicator {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.status-indicator-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-indicator-dot.online {
+    background-color: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: pulse-green 2s infinite;
+}
+
+.header-status-text {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+}
+
+.live-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+    display: inline-block;
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
