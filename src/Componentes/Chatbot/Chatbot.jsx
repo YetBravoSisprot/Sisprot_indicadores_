@@ -7,7 +7,7 @@ import { exportExecutiveReport } from '../../utils/ExecutiveReport';
 import './Chatbot.css';
 
 const Chatbot = () => {
-    const { data, isAuthenticated, email } = useContext(PasswordContext);
+    const { data, isAuthenticated, email, role } = useContext(PasswordContext);
     const location = useLocation();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +20,58 @@ const Chatbot = () => {
     const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
+
+    // ── SUGERENCIAS CONTEXTUALES POR PÁGINA (Sisprot BI) ──
+    const getContextualSuggestions = () => {
+        const path = (location.pathname || '').toLowerCase();
+        if (path.includes("admin")) {
+            return [
+                "📊 Resume los principales KPIs",
+                "💰 ¿Cuál es el ARPU actual?",
+                "📉 ¿Cuál es la tasa de baja actual?",
+                "🏛️ ¿Cuánto hemos recaudado en total?",
+                "👥 ¿Cuántos clientes activos tenemos?"
+            ];
+        }
+        if (path.includes("ventasglobales")) {
+            return [
+                "📈 ¿Cuánto hemos vendido durante 2026?",
+                "🔄 Compara ventas de 2025 con 2026",
+                "🏆 ¿Cuál fue el mes con mayores ventas?",
+                "💵 ¿Cuánto ingresó por ventas en 2026?"
+            ];
+        }
+        if (path.includes("reactivados")) {
+            return [
+                "🔄 ¿Cuántos clientes se reactivaron este año?",
+                "💵 ¿Cuánto ingreso recuperado se registra?",
+                "📍 ¿Qué sectores tienen más reactivaciones?",
+                "👥 ¿Qué porcentaje son residenciales vs pymes?"
+            ];
+        }
+        if (path.includes("indicadores")) {
+            return [
+                "🛡️ ¿Cuál es la salud de la cartera?",
+                "💸 ¿Cuánto dinero tenemos pendiente de recuperar?",
+                "📉 ¿Cuál es la fuga de capital por cancelaciones?",
+                "❓ ¿Qué diferencia hay entre suspendidos y cancelados?"
+            ];
+        }
+        if (path.includes("topurbanismo")) {
+            return [
+                "🏙️ ¿Cuál es el sector con más clientes activos?",
+                "📋 ¿Cuántos suspendidos hay actualmente?",
+                "💳 ¿Qué plan genera más ingresos?",
+                "🏦 Ver balance de cobranza bancaria"
+            ];
+        }
+        return [
+            "📊 Resume los principales KPIs",
+            "👥 ¿Cuántos clientes activos tenemos?",
+            "💸 ¿Cuánto dinero tenemos pendiente de recuperar?",
+            "📈 ¿Cuánto hemos vendido durante 2026?"
+        ];
+    };
 
     // ── CONFIGURACIÓN DE VOZ (Texto a Voz) ──
     const speakInitial = (text) => {
@@ -181,7 +233,7 @@ const Chatbot = () => {
             const cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
             const formattedName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase() : '';
 
-            const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname);
+            const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname, role || "admin");
             setMessages(prev => [...prev, { sender: 'bot', ...aiResponse }]);
 
             // ── MANEJO DE DESCARGAS AUTOMÁTICAS (NUEVO) ──
@@ -332,9 +384,14 @@ const Chatbot = () => {
             {/* Ventana de Chat */}
             <div className={`chatbot-window glass ${isOpen ? 'active' : ''}`}>
                 <div className="chatbot-header">
+                    <div className="header-status-indicator">
+                        <span className="status-indicator-dot online" title="Sisprot BI sincronizado"></span>
+                    </div>
                     <div className="header-info">
-                        <h4>Chronos</h4>
-                        <p>Asistente Inteligente</p>
+                        <h4>Chronos BI</h4>
+                        <p className="header-status-text">
+                            <span className="live-pulse"></span> Asistente Analítico · En línea
+                        </p>
                     </div>
                     <button
                         className="reset-chat-btn"
@@ -459,6 +516,21 @@ const Chatbot = () => {
                 </div>
 
                 <form className="chatbot-input-area" onSubmit={handleSendMessage}>
+                    {/* Barra de Sugerencias Contextuales por Pantalla */}
+                    <div className="chatbot-suggestions-bar">
+                        {getContextualSuggestions().map((sug, i) => (
+                            <button
+                                key={i}
+                                type="button"
+                                className="suggestion-chip"
+                                onClick={() => handleSendMessage(null, sug)}
+                                title="Enviar esta consulta"
+                            >
+                                {sug}
+                            </button>
+                        ))}
+                    </div>
+
                     <div className="chatbot-input-container">
                         <button
                             type="button"
