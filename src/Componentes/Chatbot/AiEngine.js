@@ -1,7 +1,19 @@
 /**
  * Motor Híbrido: NLP por Gemini + Filtrado y Cálculos Locales
  */
-import { getFullSalesData } from '../../services/salesService';
+import { getFullSalesData } from '../../services/salesService.js';
+import { 
+    getExecutiveKpis, 
+    getHealthAndOpportunityMetrics, 
+    getSalesMetrics, 
+    getReactivationMetrics, 
+    getHistoricalRevenueMetrics,
+    getBankPaymentsMetrics,
+    getSectorClientsDetail,
+    formatUSD,
+    formatPercent
+} from '../../services/biQueryService.js';
+
 
 
 const normalizeText = (text) => {
@@ -19,9 +31,7 @@ const formatCurrency = (value) => {
     return `${formatted} US$`;
 };
 
-const formatUSD = (value) => {
-    return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value || 0);
-};
+
 
 const isPymeClient = (cliente) => {
     if (!cliente) return false;
@@ -463,151 +473,296 @@ const pageKnowledge = {
     }
 };
 
-// Función para llamar a OpenAI
+// --- MOTOR NLU LOCAL DETERMINÍSTICO (Resiliencia Total Ante Fallos de Red o Clave) ---
+export const parseQueryLocally = (rawQuery, history = [], currentPage = "", userName = "") => {
+    const q = normalizeText(rawQuery);
+
+    // 0. Saludos y Agradecimientos
+    if (/^(hola|buenos dias|buenas tardes|buenas noches|saludos|que tal|hey)\b/i.test(q)) {
+        return { intent: 'SALUDO', parameters: {}, message: "¡Hola! ¿En qué puedo asistirte hoy?" };
+    }
+    if (/^(gracias|muchas gracias|vale gracias|perfecto gracias|listo gracias)\b/i.test(q)) {
+        return { intent: 'AGRADECIMIENTO', parameters: {}, message: "¡A tu orden siempre!" };
+    }
+
+    // 1. Detección de Reactivados (Transición 34 -> 16 desde 2026)
+    if (q.includes("reactivad") || q.includes("reactivaron") || q.includes("reactivacion") || q.includes("recuperados") || (currentPage.includes("Reactivados") && (q.includes("mes") || q.includes("sector") || q.includes("cuanto") || q.includes("cuantos")))) {
+        const monthMap = { enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5, julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11 };
+        let detectedMonth = null;
+        for (const [mName, mIdx] of Object.entries(monthMap)) {
+            if (q.includes(mName)) { detectedMonth = mIdx; break; }
+        }
+        if (q.includes("este mes")) {
+            detectedMonth = new Date().getMonth();
+        }
+        return {
+            intent: 'REACTIVADOS',
+            parameters: { month: detectedMonth },
+            message: `Consultando contratos reactivados...`
+        };
+    }
+
+    // 2. Detección de Comparativa de Ventas o Histórico de Ventas
+    if (q.includes("venta") || q.includes("vendido") || q.includes("vendimos") || (currentPage.includes("VentasGlobales") && (q.includes("202") || q.includes("ano") || q.includes("mes") || q.includes("proyeccion") || q.includes("como estuvo") || q.includes("y 202")))) {
+        const years = q.match(/\b(202[1-6])\b/g) || [];
+        let year = "2026";
+        let compareYear = null;
+
+        if (years.length >= 2) {
+            year = years[1];
+            compareYear = years[0];
+        } else if (years.length === 1) {
+            year = years[0];
+            if (q.includes("compara") || q.includes("vs") || q.includes("diferencia") || q.includes("respecto a")) {
+                compareYear = year === "2026" ? "2025" : "2026";
+            }
+        } else if (q.includes("ano pasado") || q.includes("anterior")) {
+            year = "2026";
+            compareYear = "2025";
+        }
+
+        const isComparison = q.includes("compara") || q.includes("vs") || q.includes("diferencia") || compareYear !== null;
+
+        const monthMap = { enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5, julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11 };
+        let detectedMonth = null;
+        for (const [mName, mIdx] of Object.entries(monthMap)) {
+            if (q.includes(mName)) { detectedMonth = mIdx; break; }
+        }
+
+        return {
+            intent: isComparison ? 'COMPARAR_VENTAS' : 'ANALISIS_VENTAS',
+            parameters: { year, compareYear, month: detectedMonth },
+            message: isComparison ? `Comparando ventas entre ${compareYear} y ${year}...` : `Consultando análisis de ventas para ${year}...`
+        };
+    }
+
+    // 3. Detección de Ingresos Recuperables / Oportunidad
+    if (q.includes("recuperar") || q.includes("recuperable") || q.includes("oportunidad") || (q.includes("pendiente") && q.includes("dinero")) || (currentPage.includes("Indicadores") && q.includes("oportunidad"))) {
+        return {
+            intent: 'INGRESOS_RECUPERABLES',
+            parameters: {},
+            message: "Calculando la oportunidad de ingresos recuperables..."
+        };
+    }
+
+    // 4. Detección de Fuga de Capital / Cancelaciones
+    if (q.includes("fuga") || (q.includes("perdida") && q.includes("cancel")) || (q.includes("dinero") && q.includes("cancelad")) || (currentPage.includes("Indicadores") && q.includes("fuga"))) {
+        return {
+            intent: 'FUGA_CAPITAL',
+            parameters: {},
+            message: "Calculando la fuga de capital por clientes cancelados..."
+        };
+    }
+
+    // 5. Detección de Salud de Cartera
+    if (q.includes("salud") || (q.includes("porcentaje") && q.includes("activo")) || q.includes("porcentaje pagando") || (currentPage.includes("Indicadores") && q.includes("salud"))) {
+        return {
+            intent: 'SALUD_CARTERA',
+            parameters: {},
+            message: "Calculando la salud de la cartera de clientes..."
+        };
+    }
+
+    // 6. Detección de ARPU / Ticket Promedio
+    if (q.includes("arpu") || q.includes("ticket promedio") || q.includes("ingreso promedio") || (q.includes("promedio") && q.includes("cliente"))) {
+        return {
+            intent: 'ARPU_METRICA',
+            parameters: {},
+            message: "Calculando el Ticket Promedio (ARPU) de Sisprot BI..."
+        };
+    }
+
+    // 7. Detección de Tasa de Baja / Churn
+    if (q.includes("tasa de baja") || q.includes("churn") || q.includes("tasa de cancelacion") || q.includes("tasa de abandono")) {
+        return {
+            intent: 'CHURN_METRICA',
+            parameters: {},
+            message: "Calculando la Tasa de Baja (Churn Rate)..."
+        };
+    }
+
+    // 8. Detección de Recaudación Histórica Total
+    if (q.includes("recaudado en total") || q.includes("total recaudado") || q.includes("recaudacion historica") || q.includes("ingresos acumulados")) {
+        return {
+            intent: 'RECAUDACION_HISTORICA',
+            parameters: {},
+            message: "Consultando el total histórico recaudado..."
+        };
+    }
+
+    // 9. Detección de Resumen de KPIs
+    if (q.includes("resume los principales kpis") || q.includes("resumen kpi") || q.includes("resumen general") || q.includes("kpis principales") || q.includes("resumen administrativo") || (currentPage.includes("Admin") && q.includes("resume"))) {
+        return {
+            intent: 'RESUMEN_KPIS',
+            parameters: {},
+            message: "Generando resumen ejecutivo de KPIs..."
+        };
+    }
+
+    // 10. Detección de Diferencias conceptuales
+    if (q.includes("diferencia") && (q.includes("suspendido") || q.includes("cancelado"))) {
+        return {
+            intent: 'EXPLICACION_REGLA',
+            parameters: { tema: "suspendido_vs_cancelado" },
+            message: "Explicando la diferencia entre clientes suspendidos y cancelados..."
+        };
+    }
+
+    // 11. Detección de Bancos y Cobros
+    const bancosKeywords = ["bnc", "bdv", "venezuela", "provincial", "banplus", "banesco", "mercantil", "zelle", "sofitasa", "banco", "cobros", "pagos"];
+    if (bancosKeywords.some(b => q.includes(b)) && !q.includes("arpu") && !q.includes("churn")) {
+        let detectedBank = null;
+        if (q.includes("bnc")) detectedBank = "BNC";
+        else if (q.includes("venezuela") || q.includes("bdv")) detectedBank = "BDV";
+        else if (q.includes("provincial")) detectedBank = "PROVINCIAL";
+        else if (q.includes("banesco")) detectedBank = "BANESCO";
+        else if (q.includes("banplus")) detectedBank = "BANPLUS";
+        else if (q.includes("zelle")) detectedBank = "ZELLE";
+
+        return {
+            intent: 'INGRESOS_BANCOS',
+            parameters: { bank: detectedBank },
+            message: "Consultando cobranza bancaria registrada..."
+        };
+    }
+
+    // 12. Detección de Sector Específico / Ranking Sectores
+    if (q.includes("sector con mas") || q.includes("top sector") || q.includes("mejores sectores") || q.includes("urbanismo con mas")) {
+        return {
+            intent: 'RANKING_SECTORES',
+            parameters: {},
+            message: "Consultando ranking de sectores..."
+        };
+    }
+
+    // 13. Detección de Planes
+    if (q.includes("que plan") || q.includes("plan genera mas") || q.includes("plan mas vendido") || q.includes("top planes")) {
+        return {
+            intent: 'PLANES',
+            parameters: {},
+            message: "Consultando métricas de planes..."
+        };
+    }
+
+    // 14. Estatus específicos de clientes
+    if (q.includes("activo") || q.includes("activos")) {
+        return { intent: 'TOTAL_CLIENTES', parameters: { status: 'Activo' }, message: "Consultando clientes activos..." };
+    }
+    if (q.includes("suspendido") || q.includes("suspendidos") || q.includes("cortados")) {
+        return { intent: 'TOTAL_CLIENTES', parameters: { status: 'Suspendido' }, message: "Consultando clientes suspendidos..." };
+    }
+    if (q.includes("cancelado") || q.includes("cancelados") || q.includes("cancelaron")) {
+        return { intent: 'TOTAL_CLIENTES', parameters: { status: 'Cancelado' }, message: "Consultando clientes cancelados..." };
+    }
+    if (q.includes("pausado") || q.includes("pausados")) {
+        return { intent: 'TOTAL_CLIENTES', parameters: { status: 'Pausado' }, message: "Consultando clientes pausados..." };
+    }
+
+    return {
+        intent: 'UNKNOWN',
+        parameters: {},
+        message: null
+    };
+};
+
+// Función para llamar a Gemini / OpenAI con Fallback Automático Resiliente
 const callOpenAI = async (query, history, currentPage = "", userName = "") => {
     const apiKey = process.env.REACT_APP_GEMINI_API_KEY || process.env.REACT_APP_OPENAI_API_KEY;
     const context = pageKnowledge[currentPage] || null;
 
     if (!apiKey) {
-        throw new Error("No hay API Key configurada. Por favor declara REACT_APP_GEMINI_API_KEY en tu .env");
+        console.warn("No hay API Key configurada. Usando motor NLU local.");
+        return parseQueryLocally(query, history, currentPage, userName);
     }
 
-    const allSectionsContext = Object.entries(pageKnowledge).map(([path, info]) => {
-        return `- **${info.name}** (Ruta: ${path}): ${info.description} Muestra: ${info.data}`;
-    }).join('\n');
+    try {
+        const allSectionsContext = Object.entries(pageKnowledge).map(([path, info]) => {
+            return `- **${info.name}** (Ruta: ${path}): ${info.description} Muestra: ${info.data}`;
+        }).join('\n');
 
-    let dynamicContextPrompt = `\nCONOCIMIENTO DE LAS SECCIONES DE LA APP:
-Aquí tienes lo que hace cada parte del sistema. Úsalo para responder si te preguntan por otras secciones:
+        let dynamicContextPrompt = `\nCONOCIMIENTO DE LAS SECCIONES DE LA APP:
+Aquí tienes lo que hace cada parte del sistema:
 ${allSectionsContext}
 
-Actualmente el usuario se encuentra físicamente en la sección: "${context ? context.name : 'Desconocida'}".`;
+Actualmente el usuario se encuentra en: "${context ? context.name : 'Desconocida'}".`;
 
-    const todayDate = new Date().toLocaleDateString('en-CA');
-    const systemPrompt = `NO DEBES INVENTAR DATOS NUMÉRICOS. Tu tarea es doble: 
-1. Identificar la intención y parámetros técnicos para que el sistema busque la data.
-2. Redactar una respuesta humana, amable y contextualizada en el campo "message".
+        const todayDate = new Date().toLocaleDateString('en-CA');
+        const systemPrompt = `NO DEBES INVENTAR DATOS NUMÉRICOS. Tu tarea es identificar la intención y parámetros técnicos para que el sistema busque la data real en Sisprot BI.
 
-DEBES DEVOLVER UN JSON ESTRICTO CON LA SIGUIENTE ESTRUCTURA:
-{"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta humanizada aquí"}
+DEBES DEVOLVER UN JSON ESTRICTO:
+{"intent": "NOMBRE_DEL_INTENT", "parameters": { "param_name": "param_value" }, "message": "Tu respuesta amable aquí"}
 
-FECHA ACTUAL DEL SISTEMA (USA ESTO PARA CALCULAR 'HOY' O 'AYER'): ${todayDate}
+FECHA ACTUAL: ${todayDate}
 ${dynamicContextPrompt}
+
 INTENCIONES DISPONIBLES:
-- TOTAL_CLIENTES: Conteo de clientes (Solo si tienes el Estatus Y el Periodo).
-- INGRESOS: Dinero proyectado (Facturación de planes. Solo si tienes el Estatus Y el Periodo).
-- INGRESOS_BANCOS: Cobros reales registrados en bancos (BNC, Venezuela/BDV, Provincial, etc.). Se activa cuando piden "ingresos en el banco X", "cuanto cayó en BNC", "cobros de hoy".
-- AMBOS_METRICAS: Conteo + Facturación (Solo si tienes el Estatus Y el Periodo).
-- AMBIGUEDAD_INGRESOS: Se usa cuando el usuario pide "Ingresos" sin especificar si se refiere a la **Facturación Proyectada** (planes) o a la **Recaudación Real** (en bancos como BNC).
-- PLANES: Detalle por planes de internet.
-- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico. Extraer "contrato" (ID de contrato), "cedula" (identificación), o "nombres" / "nombre" (nombre del cliente) según corresponda.
+- TOTAL_CLIENTES: Conteo de clientes por estado (status: Activo, Suspendido, Pausado, Cancelado).
+- REACTIVADOS: Clientes reactivados de 34 (Cancelado) a 16 (Activo) desde 2026 (parameters: month, sector).
+- ANALISIS_VENTAS: Ventas anuales, unidades e ingresos (parameters: year, month).
+- COMPARAR_VENTAS: Comparación de ventas entre dos años (parameters: year, compareYear).
+- INGRESOS_RECUPERABLES: Dinero pendiente de recuperar por clientes suspendidos (oportunidad USD).
+- FUGA_CAPITAL: Dinero mensual perdido por clientes cancelados (bajas definitivas).
+- SALUD_CARTERA: Porcentaje de clientes activos al día con su servicio.
+- ARPU_METRICA: Ticket promedio o ingreso mensual por cliente activo.
+- CHURN_METRICA: Tasa de baja / deserción de clientes.
+- RECAUDACION_HISTORICA: Total acumulado histórico en estadísticas de Sisprot.
+- RESUMEN_KPIS: Resumen ejecutivo del panel administrativo.
+- EXPLICACION_REGLA: Diferencias conceptuales (ej: suspendido vs cancelado).
+- INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate).
+- INGRESOS: Dinero proyectado por planes de clientes activos.
+- SECTOR_METRICAS: Métricas de un sector o urbanismo específico (parameters: urbanismo).
+- RANKING_SECTORES: Sectores con más clientes o facturación.
+- PLANES: Detalle y ranking por planes de internet.
+- BUSCAR_CONTRATO / BUSCAR_CEDULA / BUSCAR_NOMBRE: Búsqueda de cliente específico.
 - DATA_MAESTRA: Universo total de la base de datos.
-- ANALISIS_VENTAS: Resumen global de ventas, proyecciones 2026, análisis trimestral y tendencias. Se activa con "como van las ventas", "proyección de ventas", "análisis de ventas".
-- HISTORICO_VENTAS: Detalle de ventas por mes y año específico.
-- GENERAR_EXCEL: Si el usuario pide descargar el archivo.
-- SALUDO / AGRADECIMIENTO / UNKNOWN.
+- GENERAR_EXCEL: Descarga de archivo Excel.
+- SALUDO / AGRADECIMIENTO / UNKNOWN.`;
 
-REGLA DE FILTRADO COMERCIAL:
-Solo procesamos clientes PYME y RESIDENCIAL. Ignora empleados, gratis, etc.
-- "status": Activo, Suspendido, Pausado, Cancelado.
-- "periodo": hoy, ayer.
+        const recentHistory = history.slice(-5).map(msg => ({
+            role: msg.sender === 'bot' ? 'model' : 'user',
+            parts: [{ text: msg.text || "(Mostrando tarjeta de datos UI)" }]
+        }));
 
-DEFINICIÓN TÉCNICA DE DATA MAESTRA:
-- La "Data Maestra" incluye a **TODOS** los clientes sin excepción: Activos, Suspendidos, Pausados, Cancelados y Por Instalar.
-- Incluye el ciclo único (1).
-- Incluye migrados y no migrados.
-- **Si el usuario te pide la "Data Maestra", no le preguntes por estatus ni filtros, entrégale el resumen total directamente.**
+        const contents = [
+            ...recentHistory,
+            { role: "user", parts: [{ text: query }] }
+        ];
 
-REGLA DE EXCLUSIVIDAD DE CLIENTES COMERCIALES:
-- **IMPORTANTE**: Al usuario solo le interesan los clientes de tipo **PYME** y **RESIDENCIAL**. 
-- Siempre que el usuario pregunte por cantidad de clientes o ingresos, el sistema DEBE filtrar automáticamente para excluir: Empleados, Gratuitos, Institucionales, Cortesía y Proyectos. 
-- A nadie le importa la data de esas categorías no comerciales en las consultas rápidas.
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                contents: contents,
+                generationConfig: {
+                    temperature: 0.1,
+                    responseMimeType: "application/json"
+                }
+            })
+        });
 
-REGLA DE FLUJO INTELIGENTE:
-- No limites ni bloquees al usuario con preguntas repetitivas o aclaraciones paso a paso si no son necesarias.
-- Tolerancia a errores de escritura (typos): Si el usuario escribe con faltas de ortografía o comete errores de tipeo (ej: 'diapgo', 'cleintes', 'ingreos'), dedúcelo inteligentemente según el contexto y el sentido común, interpretando su verdadera intención. No lo marques como UNKNOWN si es comprensible.
-- Si falta el periodo (hoy/ayer), asume "hoy" por defecto.
-- Si falta el estatus (activo/suspendido/etc.), no lo pidas; procesa la consulta general y el sistema le mostrará un balance completo con todos los estatus a la vez.
-- Si falta el ciclo, no lo asumas por defecto (deja que el sistema procese todos los ciclos).
-- Responde directamente a lo que pida el usuario con amabilidad y claridad.
-
-REGLA DE PARÁMETROS:
-- "status": Activo, Suspendido, Pausado, Cancelado.
-- "ciclo": Ciclo de facturación comercial ("1" para Residencial, o "15" / "30" para Pyme). Solo incluir si se menciona explícitamente en la consulta.
-- "periodo": hoy, ayer.
-- "urbanismo": Nombre del sector.
-- "tipo": "Pyme" o "Residencial" (especificar solo si el usuario lo menciona).
-- "banco": BNC, Venezuela / BDV, Provincial, etc.
-- "metodo": Pago Móvil, Zelle, Transferencia, Efectivo.
-- "startDate" / "endDate": YYYY-MM-DD (Usa si piden fechas específicas o rangos). 
-- "nombre" / "nombres": Nombre(s) o apellido(s) del cliente a buscar (en caso de BUSCAR_NOMBRE).
-
-REGLA DE EXCEL Y REPORTES:
-- El bot **SOLO** genera el **Reporte Ejecutivo**. No genera el excel de operaciones ni el de planes.
-- **Solo ofrece el reporte si el usuario lo pide explícitamente** (ej: "genérame un excel", "descarga el reporte", "pásame un archivo"). No lo ofrezcas por iniciativa propia.
-- Al ofrecer el Reporte Ejecutivo, explícale con detalle que incluye: 
-    1️⃣ **Dashboard Visual**: Con KPIs de Clientes, Ingresos y Ticket Promedio.
-    2️⃣ **Análisis Gráfico**: Distribución de estatus y el Top de Urbanismos.
-    3️⃣ **Detalle de Clientes**: Una hoja con la lista exacta de clientes y las columnas que él elija.
-- Si pide el **Excel de Operaciones** (técnico con IP/MAC): Explícale que ese archivo se descarga en la sección **Top Urbanismos**.
-- Si pide el **Excel de Planes**: Explícale que se descarga en la sección **Ventas**.
-
-REGLA DE DISTINCIÓN DE INGRESOS:
-- Si mencionan "BNC", "Venezuela", "Provincial", "Banco", "Zelle", "Cobros", "Recaudación" o "Pagos": Usa **INGRESOS_BANCOS**. (No preguntes estatus aquí).
-- Si mencionan "Facturación", "Ingresos de clientes", "Ingresos Mensuales": Usa **INGRESOS**. (Aquí sí preguntar estatus si falta).
-
-REGLA DE HUMANIZACIÓN:
-- Sé directo, natural, empático y amable. Llama al usuario por su nombre: **${userName}**.
-- Si de verdad no entiendes la consulta por ser sumamente confusa o estar fuera de contexto, usa "UNKNOWN" y dile con amabilidad algo como: "Dime con claridad qué intentaste decir para entenderte mejor...". Evita sonar robótico.
-- **No uses markdown exagerado**, mantén la elegancia.`;
-
-
-    const recentHistory = history.slice(-5).map(msg => ({
-        role: msg.sender === 'bot' ? 'model' : 'user',
-        parts: [{ text: msg.text || "(Mostrando tarjeta de datos UI)" }]
-    }));
-
-    const contents = [
-        ...recentHistory,
-        { role: "user", parts: [{ text: query }] }
-    ];
-
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            systemInstruction: { parts: [{ text: systemPrompt }] },
-            contents: contents,
-            generationConfig: {
-                temperature: 0.1,
-                responseMimeType: "application/json"
-            }
-        })
-    });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Gemini API Error Detail:", response.status, errorText);
-        try {
-            const errorData = JSON.parse(errorText);
-            throw new Error(errorData.error?.message || `Error HTTP: ${response.status}. Detalle: ${errorText}`);
-        } catch (e) {
-            throw new Error(`Error HTTP: ${response.status}. Respuesta: ${errorText.substring(0, 100)}`);
+        if (!response.ok) {
+            console.warn(`Gemini API Error (HTTP ${response.status}). Activando NLU local determinístico.`);
+            return parseQueryLocally(query, history, currentPage, userName);
         }
-    }
 
-    const result = await response.json();
-    if (result.error) {
-        throw new Error(result.error.message);
-    }
+        const result = await response.json();
+        if (result.error || !result.candidates || result.candidates.length === 0) {
+            console.warn("Respuesta inválida de Gemini. Activando NLU local.");
+            return parseQueryLocally(query, history, currentPage, userName);
+        }
 
-    if (!result.candidates || result.candidates.length === 0) {
-        throw new Error("No se obtuvo respuesta del modelo");
+        const content = result.candidates[0].content.parts[0].text.trim();
+        const parsed = JSON.parse(content);
+        if (parsed.intent === 'UNKNOWN') {
+            const localCheck = parseQueryLocally(query, history, currentPage, userName);
+            if (localCheck.intent !== 'UNKNOWN') return localCheck;
+        }
+        return parsed;
+    } catch (err) {
+        console.warn("Excepción al consultar Gemini. Activando NLU local determinístico:", err.message);
+        return parseQueryLocally(query, history, currentPage, userName);
     }
-
-    const content = result.candidates[0].content.parts[0].text.trim();
-    return JSON.parse(content);
 };
 
 
@@ -906,7 +1061,7 @@ const getLastUpdateTime = () => {
     return "4:00 PM";
 };
 
-export const processQuery = async (message, data, history = [], userName = "", currentPage = "") => {
+export const processQuery = async (message, data, history = [], userName = "", currentPage = "", userRole = "admin") => {
     if (!data || !data.results) {
         return { text: "Aún no tengo datos cargados para analizar. Por favor, asegúrate de haber iniciado sesión.", isCard: false };
     }
@@ -957,9 +1112,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
         return regex.test(query);
     }) && !query.includes("ayer") && !query.includes(yesterday.getDate().toString());
 
-    if (isOtherPastDate && !query.includes("ventas") && !query.includes("historico")) {
+    const isBiModuleOrQuery = query.includes("ventas") || query.includes("historico") || 
+        query.includes("reactivad") || query.includes("recaud") || query.includes("ingreso") || 
+        query.includes("arpu") || query.includes("baja") || query.includes("churn") ||
+        currentPage.includes("Reactivados") || currentPage.includes("VentasGlobales") || 
+        currentPage.includes("Indicadores") || currentPage.includes("Admin");
+
+    if (isOtherPastDate && !isBiModuleOrQuery) {
         return {
-            text: `Lo siento ${userName}, en el chatbot actualmente tengo visibilidad total de la data de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. No cuento con acceso directo a históricos de semanas o meses anteriores para clientes específicos por ahora, pero puedo darte un resumen de hoy muy detallado.`,
+            text: `Lo siento ${userName}, para listados de clientes individuales actualmente tengo visibilidad total del corte en vivo de **Hoy** y el cierre de **Ayer (${yesterdayLabel})**. Para métricas históricas agregadas, puedes consultarme por Ventas Globales, Contratos Reactivados o Recaudación.`,
             isCard: false
         };
     }
@@ -1575,15 +1736,23 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const hasSpecificType = parameters?.tipo || appliedFiltersText.some(t => t.includes("Tipo:"));
                         const finalAppliedLabel = hasSpecificType ? appliedFiltersText.join(', ') : `${appliedFiltersText.join(', ')} | Pyme y Residencial`;
 
+                        const percentOfTotal = clientes.length > 0 ? ((filteredClientes.length / clientes.length) * 100).toFixed(1) : 0;
+                        const statusNameShow = parameters?.status || "Activo";
+
                         return {
-                            text: `Excelente ${userName}, he filtrado la base de clientes según lo solicitado: \n(${finalAppliedLabel.trim()})\n\n**Si necesitas el reporte detallado en Excel, solo dímelo.**`,
+                            text: `Actualmente hay **${filteredClientes.length}** clientes **${String(statusNameShow).toLowerCase()}s** de un total de **${clientes.length}** clientes registrados en Sisprot BI, equivalente al **${percentOfTotal}%** de la cartera.\n\nFiltros aplicados: ${finalAppliedLabel.trim()}. Consulta actualizada con los datos disponibles del sistema.`,
                             isCard: true,
                             cardData: {
                                 periodPreference: isTodayQuery ? "Hoy" : yesterdayLabel,
-                                title: dataLabel.startsWith("Hoy") ? (appliedFiltersText.length > 0 ? "Reporte Filtrado" : "Total Clientes") : `Reporte: ${dataLabel}`,
+                                title: `Clientes ${statusNameShow}s`,
                                 value: filteredClientes.length,
-                                subtitle: appliedFiltersText.length > 0 ? appliedFiltersText.join(" | ") : (dataLabel.startsWith("Hoy") ? "clientes totales" : "Snapshot histórico"),
-                                color: "#3498db",
+                                subtitle: `${percentOfTotal}% del total (${clientes.length} contratos)`,
+                                color: String(statusNameShow).toLowerCase().includes("activo") ? "#2ecc71" : String(statusNameShow).toLowerCase().includes("suspendido") ? "#f1c40f" : "#e74c3c",
+                                stats: [
+                                    { label: `Total ${statusNameShow}s`, value: filteredClientes.length, color: String(statusNameShow).toLowerCase().includes("activo") ? "#2ecc71" : "#f1c40f" },
+                                    { label: "Cartera General", value: clientes.length, color: "#00d2ff" },
+                                    { label: "Porcentaje", value: `${percentOfTotal}%`, color: "#a855f7" }
+                                ],
                                 parameters: parameters,
                                 savedDataset: filteredClientes,
                                 filtersText: appliedFiltersText
@@ -1742,78 +1911,141 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 };
             }
 
+            case 'COMPARAR_VENTAS': {
+                try {
+                    const year1 = parameters?.year ? String(parameters.year) : "2026";
+                    const year2 = parameters?.compareYear ? String(parameters.compareYear) : (year1 === "2026" ? "2025" : "2026");
+
+                    const sales = await getSalesMetrics({ year: year1, compareYear: year2 });
+                    const comp = sales.comparison;
+
+                    if (!comp) {
+                        return {
+                            text: `No se pudo contrastar las ventas entre ${year1} y ${year2}. Verifica que ambos años estén disponibles (2021 a 2026).`,
+                            isCard: false
+                        };
+                    }
+
+                    const isPositiveUnits = comp.diffUnits >= 0;
+                    const isPositiveRev = comp.diffRev >= 0;
+
+                    const msgText = `**${userName}**, aquí tienes la **Comparativa de Ventas (${comp.compareYear} vs ${comp.targetYear})**:\n\n` +
+                        `• **Ventas en ${comp.targetYear}:** **${comp.targetTotalUnits} unidades vendidas** | **$${formatUSD(comp.targetTotalRev)} USD** facturados.\n` +
+                        `• **Ventas en ${comp.compareYear}:** **${comp.compareTotalUnits} unidades vendidas** | **$${formatUSD(comp.compareTotalRev)} USD** facturados.\n` +
+                        `• **Variación en Unidades:** **${isPositiveUnits ? '+' : ''}${comp.diffUnits} ventas** (${comp.percentUnits}%).\n` +
+                        `• **Variación en Ingresos:** **${isPositiveRev ? '+' : ''}$${formatUSD(comp.diffRev)} USD** (${comp.percentRev}%).\n\n` +
+                        `Fuente oficial: Auditorías de red de Sisprot (transición 18 "Por instalar" ➔ 16 "Activo") para 2025-2026 y registro histórico consolidado para 2021-2024.`;
+
+                    return {
+                        text: msgText,
+                        isCard: true,
+                        cardData: {
+                            title: `Ventas ${comp.compareYear} vs ${comp.targetYear}`,
+                            value: `${comp.targetTotalUnits} Ventas`,
+                            subtitle: `${comp.diffUnits >= 0 ? '+' : ''}${comp.diffUnits} vs ${comp.compareYear}`,
+                            color: comp.diffUnits >= 0 ? "#2ecc71" : "#e74c3c",
+                            stats: [
+                                { label: `Total ${comp.targetYear}`, value: `${comp.targetTotalUnits} unds | $${formatUSD(comp.targetTotalRev)}`, color: "#00d2ff" },
+                                { label: `Total ${comp.compareYear}`, value: `${comp.compareTotalUnits} unds | $${formatUSD(comp.compareTotalRev)}`, color: "#1d8cf8" },
+                                { label: "Crecimiento Unidades", value: `${comp.percentUnits}%`, color: isPositiveUnits ? "#2ecc71" : "#e74c3c" },
+                                { label: "Crecimiento Ingresos", value: `${comp.percentRev}%`, color: isPositiveRev ? "#2ecc71" : "#e74c3c" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al comparar ventas: ${e.message}`, isCard: false };
+                }
+            }
+
             case 'HISTORICO_VENTAS':
             case 'ANALISIS_VENTAS': {
                 try {
-                    const salesData = await getFullSalesData();
-                    const year = parameters?.year ? String(parameters.year) : "2026";
-                    const monthIdx = parameters?.month ? parseInt(parameters.month) - 1 : new Date().getMonth();
+                    const yearParam = parameters?.year ? String(parameters.year) : "2026";
+                    const monthParam = parameters?.month !== undefined && parameters?.month !== null ? Number(parameters.month) : null;
+                    const compareParam = parameters?.compareYear ? String(parameters.compareYear) : null;
+
+                    const sales = await getSalesMetrics({ year: yearParam, month: monthParam, compareYear: compareParam });
+
+                    if (sales.comparison) {
+                        const comp = sales.comparison;
+                        const isPosU = comp.diffUnits >= 0;
+                        const isPosR = comp.diffRev >= 0;
+                        return {
+                            text: `**${userName}**, aquí tienes la comparativa de ventas **${comp.compareYear} vs ${comp.targetYear}**:\n\n` +
+                                `• **Ventas en ${comp.targetYear}:** **${comp.targetTotalUnits} ventas** ($${formatUSD(comp.targetTotalRev)} USD)\n` +
+                                `• **Ventas en ${comp.compareYear}:** **${comp.compareTotalUnits} ventas** ($${formatUSD(comp.compareTotalRev)} USD)\n` +
+                                `• **Variación en Unidades:** **${isPosU ? '+' : ''}${comp.diffUnits} ventas** (${comp.percentUnits}%)\n` +
+                                `• **Variación en Ingresos:** **${isPosR ? '+' : ''}$${formatUSD(comp.diffRev)} USD** (${comp.percentRev}%)\n\n` +
+                                `Datos obtenidos de la auditoría de red de Sisprot en tiempo real.`,
+                            isCard: true,
+                            cardData: {
+                                title: `Comparativa ${comp.compareYear} vs ${comp.targetYear}`,
+                                value: `${comp.targetTotalUnits} Ventas`,
+                                subtitle: `${comp.diffUnits >= 0 ? '+' : ''}${comp.diffUnits} vs ${comp.compareYear}`,
+                                color: comp.diffUnits >= 0 ? "#2ecc71" : "#e74c3c",
+                                stats: [
+                                    { label: `Total ${comp.targetYear}`, value: `${comp.targetTotalUnits} unds | $${formatUSD(comp.targetTotalRev)}`, color: "#00d2ff" },
+                                    { label: `Total ${comp.compareYear}`, value: `${comp.compareTotalUnits} unds | $${formatUSD(comp.compareTotalRev)}`, color: "#1d8cf8" },
+                                    { label: "Crecimiento Unidades", value: `${comp.percentUnits}%`, color: isPosU ? "#2ecc71" : "#e74c3c" },
+                                    { label: "Crecimiento Ingresos", value: `${comp.percentRev}%`, color: isPosR ? "#2ecc71" : "#e74c3c" }
+                                ]
+                            }
+                        };
+                    }
+
                     const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-                    const yearData = salesData[year] || new Array(12).fill(0);
-                    const currentValue = yearData[monthIdx] || 0;
-                    const totalYear = yearData.reduce((a, b) => a + b, 0);
+                    if (sales.monthDetail) {
+                        const md = sales.monthDetail;
+                        return {
+                            text: `**${userName}**, en **${md.monthName} de ${sales.year}** registramos **${md.units} ventas** con una facturación generada de **$${formatUSD(md.revenueUSD)} USD**.\n\n` +
+                                `El acumulado del año **${sales.year}** alcanza **${sales.totalUnits} ventas** ($${formatUSD(sales.totalRevenueUSD)} USD).`,
+                            isCard: true,
+                            cardData: {
+                                title: `Ventas ${md.monthName} ${sales.year}`,
+                                value: `${md.units} Ventas`,
+                                subtitle: `$${formatUSD(md.revenueUSD)} USD facturados`,
+                                color: "#00d2ff",
+                                stats: [
+                                    { label: "Acumulado Anual", value: `${sales.totalUnits} ventas`, color: "#3498db" },
+                                    { label: "Ingreso Anual", value: `$${formatUSD(sales.totalRevenueUSD)}`, color: "#2ecc71" }
+                                ]
+                            }
+                        };
+                    }
 
-                    // --- Cálculos de Impacto Trimestral ---
-                    const q1 = yearData.slice(0, 3).reduce((a, b) => a + b, 0);
-                    const q2 = yearData.slice(3, 6).reduce((a, b) => a + b, 0);
-                    const q3 = yearData.slice(6, 9).reduce((a, b) => a + b, 0);
-                    const q4 = yearData.slice(9, 12).reduce((a, b) => a + b, 0);
-
-                    // --- Proyección 2026 ---
-                    const currentYearData = salesData["2026"] || [];
-                    const validMonths = currentYearData.filter(v => v > 0);
+                    const validMonths = sales.unitsMonthly.filter(v => v > 0);
                     let projection2026 = 0;
                     if (validMonths.length > 0) {
                         const totalActual = validMonths.reduce((a, b) => a + b, 0);
                         projection2026 = Math.round((totalActual / validMonths.length) * 12);
                     }
 
-                    // --- Variación vs Enero ---
-                    const janValue = yearData[0] || 0;
-                    const diffToJan = janValue > 0 ? ((currentValue - janValue) / janValue) * 100 : 0;
-                    const variationText = diffToJan !== 0
-                        ? `Representa una variación del **${diffToJan > 0 ? '+' : ''}${diffToJan.toFixed(1)}%** respecto a enero de ${year}.`
-                        : "";
+                    const q1 = sales.unitsMonthly.slice(0, 3).reduce((a, b) => a + b, 0);
+                    const q2 = sales.unitsMonthly.slice(3, 6).reduce((a, b) => a + b, 0);
+                    const q3 = sales.unitsMonthly.slice(6, 9).reduce((a, b) => a + b, 0);
+                    const q4 = sales.unitsMonthly.slice(9, 12).reduce((a, b) => a + b, 0);
 
-                    if (intent === 'HISTORICO_VENTAS') {
-                        return {
-                            text: `Claro ${userName}, he consultado el histórico de ventas. En **${mesesNombres[monthIdx]} de ${year}** cerramos con **${currentValue} ventas**.\n\n` +
-                                `En el año **${year}** acumulamos **${totalYear} ventas** totales. ${variationText}`,
-                            isCard: true,
-                            cardData: {
-                                title: `Ventas ${mesesNombres[monthIdx]} ${year}`,
-                                value: currentValue,
-                                subtitle: `Acumulado ${year}: ${totalYear}`,
-                                color: "#e67e22",
-                                stats: [
-                                    { label: "Trimestre Actual", value: monthIdx < 3 ? q1 : monthIdx < 6 ? q2 : monthIdx < 9 ? q3 : q4 },
-                                    { label: "Variación vs Ene", value: `${diffToJan.toFixed(1)}%`, color: diffToJan < 0 ? "#ff6b6b" : "#2ecc71" }
-                                ]
-                            }
-                        };
-                    }
-
-                    // Caso ANALISIS_VENTAS (Resumen Completo)
                     return {
-                        text: `¡Hola ${userName}! Aquí tienes el análisis de **Ventas Globales**:\n\n` +
-                            `📊 **Proyección 2026**: Basado en el promedio actual, estimamos cerrar el año con **${projection2026} ventas**.\n` +
-                            `📉 **Rendimiento Anual**: En lo que va de ${year}, llevamos **${totalYear} ventas** registradas.\n\n` +
-                            `**Impacto Trimestral (${year}):**\n` +
-                            `- **T1**: ${q1} | **T2**: ${q2}\n` +
-                            `- **T3**: ${q3} | **T4**: ${q4}\n\n` +
-                            `¿Deseas profundizar en algún mes o año en particular?`,
+                        text: `**${userName}**, aquí tienes el informe de **Ventas Globales para ${sales.year}**:\n\n` +
+                            `• **Total de Ventas:** **${sales.totalUnits} activaciones** (transición de "Por instalar" a "Activo").\n` +
+                            `• **Ingresos por Ventas:** **$${formatUSD(sales.totalRevenueUSD)} USD** generados.\n` +
+                            (sales.year === "2026" ? `• **Proyección Estimada 2026:** **${projection2026} ventas** al cierre del año (basado en el promedio mensual).\n` : "") +
+                            `• **Distribución Trimestral:**\n` +
+                            `  - T1 (Ene-Mar): **${q1}** | T2 (Abr-Jun): **${q2}**\n` +
+                            `  - T3 (Jul-Sep): **${q3}** | T4 (Oct-Dic): **${q4}**\n\n` +
+                            `¿Deseas comparar estas cifras con otro año o consultar un mes específico?`,
                         isCard: true,
                         cardData: {
-                            title: `Análisis Global de Ventas`,
-                            value: projection2026,
-                            subtitle: `Proyección Estimada 2026`,
+                            title: `Ventas Globales ${sales.year}`,
+                            value: `${sales.totalUnits} Ventas`,
+                            subtitle: `$${formatUSD(sales.totalRevenueUSD)} USD facturados`,
                             color: "#00d2ff",
                             stats: [
-                                { label: "Total Acumulado", value: totalYear },
-                                { label: "Impacto T1/T2", value: `${q1} | ${q2}` },
-                                { label: "Impacto T3/T4", value: `${q3} | ${q4}` },
-                                { label: "Variación Mensual", value: `${diffToJan.toFixed(1)}%` }
+                                { label: "Proyección Cierre", value: projection2026 > 0 ? `${projection2026} ventas` : `${sales.totalUnits} ventas`, color: "#00d2ff" },
+                                { label: "Trimestres T1 / T2", value: `${q1} | ${q2}`, color: "#3498db" },
+                                { label: "Trimestres T3 / T4", value: `${q3} | ${q4}`, color: "#a855f7" },
+                                { label: "Facturación Ventas", value: `$${formatUSD(sales.totalRevenueUSD)}`, color: "#2ecc71" }
                             ]
                         }
                     };
@@ -1821,6 +2053,322 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     console.error("Error en ANALISIS_VENTAS:", err);
                     return { text: `Lo siento ${userName}, hubo un problema al obtener los datos de ventas: ${err.message}`, isCard: false };
                 }
+            }
+
+            case 'REACTIVADOS': {
+                try {
+                    const monthParam = parameters?.month !== undefined ? parameters.month : (parameters?.mes !== undefined ? parameters.mes : null);
+                    const sectorParam = parameters?.urbanismo || parameters?.sector || null;
+                    const react = await getReactivationMetrics({ month: monthParam, sector: sectorParam });
+
+                    const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    const monthLabel = monthParam !== null && monthParam >= 0 && monthParam < 12 ? ` del mes de **${mesesNombres[Number(monthParam)]}**` : ` en lo que va de **2026**`;
+                    const sectorLabel = sectorParam ? ` en el sector **${sectorParam}**` : "";
+
+                    let topSectoresText = "";
+                    if (react.topSectores && react.topSectores.length > 0) {
+                        topSectoresText = react.topSectores.map(s => `${s.name} (${s.count})`).join(", ");
+                    }
+
+                    const msgText = `**${userName}**, he consultado el servicio de auditoría de red de Sisprot para contratos reactivados${monthLabel}${sectorLabel}:\n\n` +
+                        `• **Total Reactivados:** **${react.total} clientes** rescatados (transición 34 'Cancelado' ➔ 16 'Activo').\n` +
+                        `• **Facturación Recuperada:** **$${formatUSD(react.totalRevenue)} USD** mensuales incorporados nuevamente a la cartera.\n` +
+                        `• **Distribución por Tipo:** **${react.totalResidencial} Residenciales** (${react.percentResidencial}%) y **${react.totalPyme} Pymes** (${react.percentPyme}%).\n` +
+                        (topSectoresText ? `• **Sectores con más reactivaciones:** ${topSectoresText}.\n` : "") +
+                        `• **Regla de negocio aplicada:** Rango desde 01/01/2026, excluyendo cuentas internas (Freddy, Bryant, Elisaul) y empleados según normativa oficial.`;
+
+                    const stats = [
+                        { label: "💰 Ingreso Recuperado", value: `$${formatUSD(react.totalRevenue)}`, color: "#2ecc71" },
+                        { label: "🏠 Residencial", value: `${react.totalResidencial} (${react.percentResidencial}%)`, color: "#00d2ff" },
+                        { label: "🏢 Pyme", value: `${react.totalPyme} (${react.percentPyme}%)`, color: "#f39c12" }
+                    ];
+
+                    if (react.trends && react.trends.total) {
+                        stats.push({ label: "📈 Tendencia", value: react.trends.total, color: "#a855f7" });
+                    }
+
+                    return {
+                        text: msgText,
+                        isCard: true,
+                        cardData: {
+                            title: "Control de Reactivados 2026",
+                            value: `${react.total} Clientes`,
+                            subtitle: `$${formatUSD(react.totalRevenue)} USD / mes recuperados`,
+                            color: "#2ecc71",
+                            stats,
+                            dataset: react.items,
+                            filtersText: [`Reactivados 2026`, monthLabel.replace(/\*/g, '').trim()]
+                        }
+                    };
+                } catch (reactErr) {
+                    console.error("Error REACTIVADOS:", reactErr);
+                    return {
+                        text: `Lo siento ${userName}, ocurrió un error al consultar los contratos reactivados: ${reactErr.message}`,
+                        isCard: false
+                    };
+                }
+            }
+
+            case 'INGRESOS_RECUPERABLES': {
+                try {
+                    const metrics = getHealthAndOpportunityMetrics(clientes);
+                    return {
+                        text: `**${userName}**, de acuerdo a los datos de Sisprot BI:\n\n` +
+                            `• **Oportunidad / Ingresos Recuperables:** **$${formatUSD(metrics.recuperable)} USD mensuales**.\n` +
+                            `• **Población en riesgo:** Corresponde a **${metrics.totalSuspendidos} clientes** en estado **Suspendido** (ID 19).\n\n` +
+                            `💡 **Regla de negocio:** Este monto representa la facturación mensual recurrente de clientes que mantienen contratos en la red pero tienen el servicio inhabilitado por morosidad. **No representa dinero cobrado**, sino ingresos potenciales a recuperar mediante gestión de cobranza.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Oportunidad de Recuperación",
+                            value: `$${formatUSD(metrics.recuperable)} USD`,
+                            subtitle: `${metrics.totalSuspendidos} clientes suspendidos`,
+                            color: "#f39c12",
+                            stats: [
+                                { label: "Clientes Suspendidos", value: metrics.totalSuspendidos, color: "#f39c12" },
+                                { label: "Cartera Total", value: metrics.totalCartera, color: "#00d2ff" },
+                                { label: "Tasa de Mora", value: `${((metrics.totalSuspendidos / (metrics.totalCartera || 1)) * 100).toFixed(1)}%`, color: "#e74c3c" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al calcular ingresos recuperables: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'FUGA_CAPITAL': {
+                try {
+                    const metrics = getHealthAndOpportunityMetrics(clientes);
+                    return {
+                        text: `**${userName}**, el análisis de bajas definitivas arroja lo siguiente:\n\n` +
+                            `• **Fuga de Capital:** **$${formatUSD(metrics.fuga)} USD mensuales**.\n` +
+                            `• **Clientes Cancelados:** **${metrics.totalCancelados} clientes** en estado **Cancelado** (ID 34).\n\n` +
+                            `💡 **Impacto:** Esta cartera representa contratos desincorporados de la red. Para recuperarlos es necesario procesar una **Reactivación** de servicio formal.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Fuga de Capital (Bajas)",
+                            value: `$${formatUSD(metrics.fuga)} USD`,
+                            subtitle: `${metrics.totalCancelados} clientes cancelados`,
+                            color: "#e74c3c",
+                            stats: [
+                                { label: "Clientes Cancelados", value: metrics.totalCancelados, color: "#e74c3c" },
+                                { label: "Porcentaje de Fuga", value: `${((metrics.totalCancelados / (metrics.totalCartera || 1)) * 100).toFixed(1)}%`, color: "#e74c3c" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al calcular fuga de capital: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'SALUD_CARTERA': {
+                try {
+                    const metrics = getHealthAndOpportunityMetrics(clientes);
+                    return {
+                        text: `**${userName}**, el índice de salud de cartera es del **${formatPercent(metrics.salud)}**:\n\n` +
+                            `• **Clientes Activos:** **${metrics.totalActivos} clientes** al día disfrutando del servicio.\n` +
+                            `• **Cartera Total Registrada:** **${metrics.totalCartera} clientes**.\n` +
+                            `• **Clientes en Suspensión:** **${metrics.totalSuspendidos}** (${formatPercent((metrics.totalSuspendidos / (metrics.totalCartera || 1)) * 100)}).\n` +
+                            `• **Clientes Cancelados:** **${metrics.totalCancelados}** (${formatPercent((metrics.totalCancelados / (metrics.totalCartera || 1)) * 100)}).`,
+                        isCard: true,
+                        cardData: {
+                            title: "Salud de Cartera",
+                            value: `${formatPercent(metrics.salud)}`,
+                            subtitle: `${metrics.totalActivos} de ${metrics.totalCartera} activos`,
+                            color: "#00d2ff",
+                            stats: [
+                                { label: "Activos", value: metrics.totalActivos, color: "#2ecc71" },
+                                { label: "Suspendidos", value: metrics.totalSuspendidos, color: "#f39c12" },
+                                { label: "Cancelados", value: metrics.totalCancelados, color: "#e74c3c" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al calcular salud de cartera: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'ARPU_METRICA': {
+                try {
+                    const kpis = getExecutiveKpis(clientes, userRole);
+                    return {
+                        text: `**${userName}**, el **ARPU actual (Ticket Promedio)** en Sisprot BI es de **$${formatUSD(kpis.ticketPromedio)} USD** por cliente activo.\n\n` +
+                            `• **Metodología oficial de cálculo:**\n` +
+                            `  ARPU = Facturación Mensual Proyectada ($${formatUSD(kpis.ingresosTotales)} USD) / Total Clientes Activos (${kpis.activos}).\n` +
+                            `• **Población considerada:** Clientes comerciales activos (Residencial y Pyme), excluyendo empleados y pruebas.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Ticket Promedio (ARPU)",
+                            value: `$${formatUSD(kpis.ticketPromedio)} USD`,
+                            subtitle: "Promedio mensual por cliente activo",
+                            color: "#9b59b6",
+                            stats: [
+                                { label: "Facturación Proyectada", value: `$${formatUSD(kpis.ingresosTotales)}`, color: "#2ecc71" },
+                                { label: "Clientes Activos", value: kpis.activos, color: "#00d2ff" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al calcular ARPU: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'CHURN_METRICA': {
+                try {
+                    const kpis = getExecutiveKpis(clientes, userRole);
+                    return {
+                        text: `**${userName}**, la **Tasa de Baja (Churn Rate)** oficial registrada en el Panel Administrativo es del **${formatPercent(kpis.churnRate)}**.\n\n` +
+                            `• **Fórmula oficial en Sisprot BI:**\n` +
+                            `  Churn Rate = ((Suspendidos + Cancelados) / Total Cartera) * 100\n` +
+                            `• **Valores considerados:**\n` +
+                            `  - Suspendidos: **${kpis.suspendidos}** (${kpis.percentSuspendidos}%)\n` +
+                            `  - Cancelados: **${kpis.cancelados}** (${kpis.percentCancelados}%)\n` +
+                            `  - Total en Mora o Baja: **${kpis.suspendidos + kpis.cancelados} clientes** de un universo de **${kpis.totalClientes}**.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Tasa de Baja (Churn Rate)",
+                            value: `${formatPercent(kpis.churnRate)}`,
+                            subtitle: `${kpis.suspendidos + kpis.cancelados} de ${kpis.totalClientes} clientes`,
+                            color: "#e67e22",
+                            stats: [
+                                { label: "Suspendidos", value: kpis.suspendidos, color: "#f39c12" },
+                                { label: "Cancelados", value: kpis.cancelados, color: "#e74c3c" },
+                                { label: "Total Cartera", value: kpis.totalClientes, color: "#00d2ff" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al calcular Churn Rate: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'RECAUDACION_HISTORICA': {
+                try {
+                    const hist = await getHistoricalRevenueMetrics();
+                    return {
+                        text: `**${userName}**, la **recaudación histórica total acumulada** en Sisprot BI asciende a **$${formatUSD(hist.totalAccumulated)} USD** (registrada desde enero de 2025 hasta la fecha).\n\n` +
+                            `• **Fuente:** Endpoint de estadísticas de ingresos agrupados por tipo de servicio y migración (\`/statistics/income/\`).\n` +
+                            `• **Corte analizado:** Enero 2025 a la fecha actual.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Recaudación Total Acumulada",
+                            value: `$${formatUSD(hist.totalAccumulated)} USD`,
+                            subtitle: "Histórico consolidado en bancos y estadísticas",
+                            color: "#2ecc71",
+                            stats: [
+                                { label: "Total Acumulado", value: `$${formatUSD(hist.totalAccumulated)}`, color: "#2ecc71" },
+                                { label: "Meses Registrados", value: hist.chartLabels?.length || 0, color: "#00d2ff" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al consultar recaudación histórica: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'RESUMEN_KPIS': {
+                try {
+                    const kpis = getExecutiveKpis(clientes, userRole);
+                    const health = getHealthAndOpportunityMetrics(clientes);
+
+                    const isAdmin = userRole === "admin";
+                    const revText = isAdmin ? `• **Facturación Mensual Proyectada:** **$${formatUSD(kpis.ingresosTotales)} USD**\n• **ARPU (Ticket Promedio):** **$${formatUSD(kpis.ticketPromedio)} USD**\n` : "";
+
+                    return {
+                        text: `**${userName}**, aquí tienes el **Resumen Ejecutivo de Sisprot BI** con datos sincronizados:\n\n` +
+                            `• **Cartera Total:** **${kpis.totalClientes} contratos**\n` +
+                            `• **Clientes Activos:** **${kpis.activos}** (${kpis.percentActivos}% - Salud de Cartera)\n` +
+                            `• **Suspendidos:** **${kpis.suspendidos}** (Oportunidad recuperable: **$${formatUSD(health.recuperable)} USD**)\n` +
+                            `• **Cancelados:** **${kpis.cancelados}** (Fuga mensual: **$${formatUSD(health.fuga)} USD**)\n` +
+                            `• **Tasa de Baja (Churn Rate):** **${formatPercent(kpis.churnRate)}**\n` +
+                            revText +
+                            `• **Top Sector:** **${kpis.topSectores[0]?.name || 'N/A'}** (${kpis.topSectores[0]?.count || 0} clientes activos).\n\n` +
+                            `Consulta actualizada con la base de datos oficial de Sisprot BI.`,
+                        isCard: true,
+                        cardData: {
+                            title: "Resumen Estratégico BI",
+                            value: `${kpis.activos} Activos`,
+                            subtitle: `${kpis.percentActivos}% de ${kpis.totalClientes} clientes`,
+                            color: "#00d2ff",
+                            stats: [
+                                { label: "Suspendidos", value: kpis.suspendidos, color: "#f39c12" },
+                                { label: "Cancelados", value: kpis.cancelados, color: "#e74c3c" },
+                                { label: "Salud Cartera", value: `${formatPercent(kpis.saludCartera)}`, color: "#2ecc71" },
+                                { label: "ARPU", value: isAdmin ? `$${formatUSD(kpis.ticketPromedio)}` : "Restringido", color: "#9b59b6" }
+                            ]
+                        }
+                    };
+                } catch (e) {
+                    return { text: `Error al generar resumen de KPIs: ${e.message}`, isCard: false };
+                }
+            }
+
+            case 'EXPLICACION_REGLA': {
+                const health = getHealthAndOpportunityMetrics(clientes);
+                return {
+                    text: `**${userName}**, en Sisprot BI existen diferencias fundamentales entre los estados de cliente:\n\n` +
+                        `• **Suspendido (ID 19):** El cliente mantiene su contrato y equipos instalados en la red, pero su servicio de internet ha sido cortado temporalmente por falta de pago o trámite operativo. Su valor se clasifica como **Oportunidad / Ingreso Recuperable** ($${formatUSD(health.recuperable)} USD) porque se reactiva de inmediato al liquidar el saldo pendiente.\n\n` +
+                        `• **Cancelado (ID 34):** El contrato ha sido rescindido definitivamente de la cartera. Se cuantifica como **Fuga de Capital** ($${formatUSD(health.fuga)} USD). Para volver a contar con servicio debe pasar por un proceso formal de **Reactivación de Contrato** (auditoría 34 ➔ 16).\n\n` +
+                        `• **Cálculo de Churn:** Para medir la deserción total de la cartera, Sisprot BI suma ambos estados sobre el total de clientes: \`((Suspendidos + Cancelados) / Total) * 100\`.`,
+                    isCard: false
+                };
+            }
+
+            case 'SECTOR_METRICAS': {
+                const secName = parameters?.urbanismo || parameters?.sector || null;
+                if (!secName) {
+                    return { text: `¿De qué sector o urbanismo te gustaría consultar las métricas? Por ejemplo: El Macaro, Turmero, Saman Tarazonero, Pantin, etc.`, isCard: false };
+                }
+
+                const secDetail = getSectorClientsDetail(clientes, secName);
+                if (!secDetail) {
+                    return { text: `No encontré ningún sector o urbanismo que coincida con "${secName}". ¿Podrías verificar el nombre?`, isCard: false };
+                }
+
+                return {
+                    text: `**${userName}**, métricas del sector **${secDetail.sectorName}** (${secDetail.parishName}):\n\n` +
+                        `• **Total Contratos:** **${secDetail.total} clientes**\n` +
+                        `• **Clientes Activos:** **${secDetail.activosCount}** ($${formatUSD(secDetail.facturacionActivos)} USD/mes en facturación)\n` +
+                        `• **Suspendidos:** **${secDetail.suspendidosCount}** (Oportunidad recuperable: $${formatUSD(secDetail.ingresoRecuperable)} USD)\n` +
+                        `• **Cancelados:** **${secDetail.canceladosCount}**\n` +
+                        `• **Tasa de Salud Local:** ${formatPercent((secDetail.activosCount / secDetail.total) * 100)}`,
+                    isCard: true,
+                    cardData: {
+                        title: secDetail.sectorName,
+                        value: `${secDetail.activosCount} Activos`,
+                        subtitle: `${secDetail.total} clientes en total | ${secDetail.parishName}`,
+                        color: "#00d2ff",
+                        stats: [
+                            { label: "Facturación Activa", value: `$${formatUSD(secDetail.facturacionActivos)}`, color: "#2ecc71" },
+                            { label: "Suspendidos", value: secDetail.suspendidosCount, color: "#f39c12" },
+                            { label: "Cancelados", value: secDetail.canceladosCount, color: "#e74c3c" }
+                        ],
+                        dataset: secDetail.clients,
+                        filtersText: [`Sector: ${secDetail.sectorName}`]
+                    }
+                };
+            }
+
+            case 'RANKING_SECTORES': {
+                const kpis = getExecutiveKpis(clientes, userRole);
+                const top5 = kpis.topSectores || [];
+
+                const listText = top5.map((s, i) => `${i + 1}) **${s.name}**: **${s.count} clientes activos** ($${formatUSD(s.revenue)} USD facturados)`).join("\n");
+
+                return {
+                    text: `**${userName}**, los sectores con mayor facturación y presencia de clientes activos en Sisprot BI son:\n\n${listText}\n\n¿Deseas ver el detalle completo de alguno de estos sectores?`,
+                    isCard: true,
+                    cardData: {
+                        title: "Top 5 Sectores por Facturación",
+                        value: top5[0]?.name || "N/A",
+                        subtitle: `${top5[0]?.count || 0} clientes activos ($${formatUSD(top5[0]?.revenue || 0)} USD)`,
+                        color: "#00d2ff",
+                        stats: top5.slice(0, 4).map(s => ({
+                            label: s.name,
+                            value: `${s.count} clis | $${formatUSD(s.revenue)}`,
+                            color: "#2ecc71"
+                        }))
+                    }
+                };
             }
 
             case 'TOP_URBANISMO': {
