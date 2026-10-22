@@ -185,7 +185,7 @@ const saveToSessionStorage = (key, data) => {
  * @param {number} timeoutMs - Tiempo máximo de espera en ms (default 12s)
  * @returns {Promise<{ count: number, results: Array, fromCache: boolean }>}
  */
-export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false, timeoutMs = 12000) => {
+export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false, timeoutMs = 30000) => {
     const isTodos = selectedStatuses.includes("Todos") || selectedStatuses.length === 0;
 
     // Convertir nombres a códigos numéricos
