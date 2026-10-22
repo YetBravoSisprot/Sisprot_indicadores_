@@ -6,6 +6,51 @@ import { exportToExcel } from '../../utils/ExcelExport';
 import { exportExecutiveReport } from '../../utils/ExecutiveReport';
 import './Chatbot.css';
 
+const CHRONOS_ICON = `${process.env.PUBLIC_URL}/ICON_chatbot.png`;
+
+// Iconos SVG en línea (trazo uniforme, heredan el color del texto)
+const ICON_PATHS = {
+    money: <><circle cx="12" cy="12" r="9" /><path d="M14.5 9.2c-.5-.8-1.4-1.2-2.5-1.2-1.5 0-2.5.8-2.5 1.9 0 2.7 5.2 1.4 5.2 4 0 1.1-1.1 2-2.7 2-1.2 0-2.2-.5-2.7-1.4M12 6.5V8m0 8v1.5" /></>,
+    users: <><circle cx="9" cy="8" r="3.2" /><path d="M3 19c.4-3.2 2.8-5 6-5s5.6 1.8 6 5" /><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M17.5 14.3c2 .5 3.2 2.2 3.5 4.7" /></>,
+    refresh: <><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5" /><path d="M4 4v4.5h4.5" /><path d="M4 13a8 8 0 0 0 14.3 4.5L20 15.5" /><path d="M20 20v-4.5h-4.5" /></>,
+    chart: <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />,
+    send: <path d="M12 19V5M5 12l7-7 7 7" />,
+    mic: <><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></>,
+    stop: <rect x="6" y="6" width="12" height="12" rx="2" />,
+    speakerOn: <><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" /></>,
+    speakerOff: <><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M17 9l4 6M21 9l-4 6" /></>,
+    close: <path d="M6 6l12 12M18 6L6 18" />,
+    reset: <><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /></>
+};
+
+const Icon = ({ name, size = 20 }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        focusable="false"
+    >
+        {ICON_PATHS[name]}
+    </svg>
+);
+
+// Accesos rápidos de la bienvenida: cada uno dispara una consulta real al motor BI
+const getWelcomeActions = () => {
+    const year = new Date().getFullYear();
+    return [
+        { id: 'ingresos', icon: 'money', label: 'Consultar ingresos', hint: 'Recaudación total acumulada', query: '¿Cuánto hemos recaudado en total?' },
+        { id: 'clientes', icon: 'users', label: 'Contar clientes', hint: 'Activos sobre la cartera', query: '¿Cuántos clientes activos tenemos?' },
+        { id: 'reactivaciones', icon: 'refresh', label: 'Ver reactivaciones', hint: `Cancelados recuperados en ${year}`, query: `¿Cuántos clientes se reactivaron en ${year}?` },
+        { id: 'ventas', icon: 'chart', label: 'Comparar ventas', hint: `${year - 1} vs ${year}`, query: `Compara las ventas de ${year - 1} con las de ${year}` }
+    ];
+};
+
 const Chatbot = () => {
     const { data, isAuthenticated, email, role } = useContext(PasswordContext);
     const location = useLocation();
@@ -18,8 +63,10 @@ const Chatbot = () => {
     const [showResetModal, setShowResetModal] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
+    const [isOnline, setIsOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
+    const inputRef = useRef(null);
 
     // ── SUGERENCIAS CONTEXTUALES POR PÁGINA (Sisprot BI) ──
     const getContextualSuggestions = () => {
@@ -84,45 +131,41 @@ const Chatbot = () => {
         window.speechSynthesis.speak(utterance);
     };
 
-    // ── Función de saludo reutilizable (useEffect + confirmReset) ──
-    const buildGreetingMessage = () => {
-        let cleanName = null;
-        if (email) {
-            const baseName = email.split('@')[0];
-            cleanName = baseName.replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
-            if (cleanName) {
-                cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
-            }
-        }
-        const intro = cleanName
-            ? `Hola **${cleanName}**, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`
-            : `Hola, un gusto saludarte. Soy tu asistente analítico, puedo ayudarte con:`;
+    // ── Nombre para la bienvenida (la bienvenida se renderiza como vista, no como mensaje) ──
+    const displayName = (() => {
+        if (!email) return '';
+        const first = email.split('@')[0].replace(/[\._0-9]/g, ' ').trim().split(' ')[0];
+        return first ? first.charAt(0).toUpperCase() + first.slice(1).toLowerCase() : '';
+    })();
 
-        return `${intro}
-
-• **Consultar Ingresos**: Ingresos proyectados por sector o agencia.
-• **Contar Clientes**: Totales, activos, pymes o suspendidos.
-• **Búsqueda Detallada**: Buscar clientes por nombre o contrato.
-• **Reportes Personalizados**: Generar archivos Excel a tu medida.
-• **Datos Técnicos**: Consultar IP, MAC o filtrar por ciclos (15/30).
-
-¿En qué te puedo ayudar hoy?`;
-    };
-
-    // Configurar saludo inicial dinámico
+    // Estado de conexión real del navegador (se refleja en el encabezado y la burbuja)
     useEffect(() => {
-        if (!isAuthenticated) return;
-        const newGreeting = buildGreetingMessage();
-        setMessages(prev => {
-            if (prev.length === 0) {
-                return [{ sender: 'bot', text: newGreeting, isCard: false }];
-            }
-            if (prev.length === 1 && prev[0].sender === 'bot' && !prev[0].text.includes('**')) {
-                return [{ sender: 'bot', text: newGreeting, isCard: false }];
-            }
-            return prev;
-        });
-    }, [isAuthenticated, email]);
+        const goOnline = () => setIsOnline(true);
+        const goOffline = () => setIsOnline(false);
+        window.addEventListener('online', goOnline);
+        window.addEventListener('offline', goOffline);
+        return () => {
+            window.removeEventListener('online', goOnline);
+            window.removeEventListener('offline', goOffline);
+        };
+    }, []);
+
+    // Textarea que crece con el contenido (máx. 120px)
+    useEffect(() => {
+        const el = inputRef.current;
+        if (!el) return;
+        el.style.height = 'auto';
+        el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
+    }, [inputValue, isOpen]);
+
+    // Enfocar el campo al abrir (solo en dispositivos con puntero preciso para no abrir el teclado móvil)
+    useEffect(() => {
+        if (!isOpen) return;
+        const canHover = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+        if (!canHover) return;
+        const t = setTimeout(() => inputRef.current?.focus(), 350);
+        return () => clearTimeout(t);
+    }, [isOpen]);
 
     // Auto-scroll al final cuando hay nuevos mensajes
     const scrollToBottom = () => {
@@ -132,21 +175,15 @@ const Chatbot = () => {
     useEffect(() => {
         if (!isOpen) return;
 
-        // Si solo está el saludo inicial, forzamos el scroll AL INICIO
-        if (messages.length <= 1) {
-            if (messagesContainerRef.current) {
-                setTimeout(() => {
-                    if (messagesContainerRef.current) {
-                        messagesContainerRef.current.scrollTop = 0;
-                    }
-                }, 100);
-            }
+        // Sin mensajes: se muestra la bienvenida desde el inicio
+        if (messages.length === 0) {
+            if (messagesContainerRef.current) messagesContainerRef.current.scrollTop = 0;
             return;
         }
 
-        // Si hay más mensajes (interacción), scroll AL FINAL
+        // Con conversación activa, scroll AL FINAL
         scrollToBottom();
-    }, [messages, isOpen]);
+    }, [messages, isOpen, isTyping]);
 
 
     const handleToggle = () => setIsOpen(!isOpen);
@@ -156,9 +193,9 @@ const Chatbot = () => {
     };
 
     const confirmReset = () => {
-        // Reinicia el chat pero restaura el mensaje de bienvenida inicial
-        const welcomeBack = buildGreetingMessage();
-        setMessages([{ sender: 'bot', text: welcomeBack, isCard: false }]);
+        // Reinicia el chat: al quedar vacío vuelve a mostrarse la bienvenida con accesos rápidos
+        setMessages([]);
+        setInputValue('');
         setShowResetModal(false);
     };
 
@@ -204,11 +241,13 @@ const Chatbot = () => {
     if (isMinimized) {
         return (
             <button
+                type="button"
                 className="chatbot-restore-btn animate-pop-in"
                 onClick={() => setIsMinimized(false)}
                 title="Abrir Asistente Chronos"
+                aria-label="Abrir asistente Chronos"
             >
-                🤖
+                <img src={CHRONOS_ICON} alt="" className="fab-icon" draggable="false" />
             </button>
         );
     }
@@ -217,6 +256,8 @@ const Chatbot = () => {
 
     const handleSendMessage = async (e, directValue = null) => {
         if (e) e.preventDefault();
+        // Evita envíos duplicados mientras Chronos consulta los datos
+        if (isTyping) return;
 
         const messageToProcess = directValue !== null ? directValue : inputValue.trim();
         if (!messageToProcess) return;
@@ -269,9 +310,23 @@ const Chatbot = () => {
             }
         } catch (error) {
             console.error("Error AI:", error);
-            setMessages(prev => [...prev, { sender: 'bot', text: "Ocurrió un error de conexión con el motor IA. Intenta de nuevo.", isCard: false }]);
+            setMessages(prev => [...prev, {
+                sender: 'bot',
+                text: "No pude completar la consulta en este momento. Puedes reintentarla.",
+                isCard: false,
+                isError: true,
+                retryQuery: userMsg
+            }]);
         } finally {
             setIsTyping(false);
+        }
+    };
+
+    // Enter envía; Shift+Enter inserta salto de línea (respeta la composición IME)
+    const handleInputKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+            e.preventDefault();
+            handleSendMessage(null);
         }
     };
 
@@ -349,66 +404,113 @@ const Chatbot = () => {
                     </div>
                 </div>
             )}
-            {/* Avatar Flotante del Robot */}
-            <div className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
-                {!isOpen ? (
-                    <svg
-                        viewBox="0 0 100 100"
-                        className="robot-avatar-svg"
-                        title="Chronos"
-                        style={{ width: '70%', height: '70%' }}
-                    >
-                        {/* Antenas */}
-                        <rect x="22" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
-                        <rect x="74" y="38" width="4" height="20" rx="2" fill="#ff4a70" />
-                        <circle cx="24" cy="35" r="4.5" fill="#fcd12a" />
-                        <circle cx="76" cy="35" r="4.5" fill="#fcd12a" />
-
-                        {/* Cuerpo/Cabeza de robot */}
-                        <rect x="28" y="32" width="44" height="8" rx="3" fill="#fcd12a" />
-                        <rect x="26" y="38" width="48" height="42" rx="14" fill="#b9bedf" />
-
-                        {/* Visor / Ojos */}
-                        <rect x="33" y="47" width="34" height="15" rx="7.5" fill="#0f172a" />
-                        <rect x="39" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
-                        <rect x="55" y="51" width="6" height="7" rx="3" fill="#00d2ff" />
-
-                        {/* Boca */}
-                        <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#5c638c" />
-                    </svg>
-                ) : (
-                    <div className="close-btn">✕</div>
-                )}
-            </div>
+            {/* Burbuja flotante premium: robot Chronos + halo animado + señal de disponibilidad */}
+            <button
+                type="button"
+                className={`chatbot-toggle-wrapper ${isOpen ? 'open' : ''} ${isOnline ? '' : 'offline'}`}
+                onClick={handleToggle}
+                aria-label={isOpen ? 'Cerrar asistente Chronos' : 'Abrir asistente Chronos'}
+                aria-expanded={isOpen}
+                aria-controls="chronos-panel"
+                title={isOpen ? 'Cerrar' : 'Chronos · Asistente de inteligencia de negocios'}
+            >
+                <span className="fab-halo" aria-hidden="true"></span>
+                <span className="fab-halo delay" aria-hidden="true"></span>
+                <span className="fab-core">
+                    {isOpen ? (
+                        <span className="close-btn"><Icon name="close" size={24} /></span>
+                    ) : (
+                        <>
+                            <img src={CHRONOS_ICON} alt="" className="fab-icon" draggable="false" />
+                            {isOnline && <span className="fab-presence-pulse" aria-hidden="true"></span>}
+                        </>
+                    )}
+                </span>
+            </button>
 
             {/* Ventana de Chat */}
-            <div className={`chatbot-window glass ${isOpen ? 'active' : ''}`}>
-                <div className="chatbot-header">
-                    <div className="header-status-indicator">
-                        <span className="status-indicator-dot online" title="Sisprot BI sincronizado"></span>
+            <div
+                id="chronos-panel"
+                role="dialog"
+                aria-label="Chronos, asistente de inteligencia de negocios"
+                aria-hidden={!isOpen}
+                className={`chatbot-window glass ${isOpen ? 'active' : ''}`}
+                onKeyDown={(e) => { if (e.key === 'Escape') setIsOpen(false); }}
+            >
+                <header className="chatbot-header">
+                    <div className="chronos-avatar-wrap">
+                        <img src={CHRONOS_ICON} alt="" className="chronos-avatar" draggable="false" />
+                        <span className={`chronos-presence ${isOnline ? 'online' : 'offline'}`} aria-hidden="true"></span>
                     </div>
                     <div className="header-info">
-                        <h4>Chronos BI</h4>
-                        <p className="header-status-text">
-                            <span className="live-pulse"></span> Asistente Analítico · En línea
+                        <h4>Chronos</h4>
+                        <p className="header-subtitle">Tu asistente de inteligencia de negocios</p>
+                        <p className={`header-status-text ${isOnline ? '' : 'offline'}`} role="status">
+                            <span className="live-pulse"></span> {isOnline ? 'Conectado' : 'Sin conexión'}
                         </p>
                     </div>
                     <button
+                        type="button"
                         className="reset-chat-btn"
                         onClick={handleResetChat}
+                        disabled={messages.length === 0}
                         title="Reiniciar conversación"
+                        aria-label="Reiniciar conversación"
                     >
-                        🔄
+                        <Icon name="reset" size={18} />
                     </button>
-                </div>
+                </header>
 
-                <div className="chatbot-messages" ref={messagesContainerRef}>
+                <div className="chatbot-messages" ref={messagesContainerRef} aria-live="polite">
+                    {/* Bienvenida breve con accesos rápidos: cada uno lanza una consulta real */}
+                    {messages.length === 0 && (
+                        <div className="chronos-welcome">
+                            <img src={CHRONOS_ICON} alt="" className="welcome-orb" draggable="false" />
+                            <h3>Hola{displayName ? <>, <span className="welcome-accent">{displayName}</span></> : ''}</h3>
+                            <p>Soy Chronos. Pregúntame por los datos de Sisprot BI o elige una consulta rápida.</p>
+                            <div className="welcome-actions">
+                                {getWelcomeActions().map(action => (
+                                    <button
+                                        key={action.id}
+                                        type="button"
+                                        className="welcome-action"
+                                        onClick={() => handleSendMessage(null, action.query)}
+                                        disabled={isTyping}
+                                        title={action.query}
+                                    >
+                                        <span className="welcome-action-icon"><Icon name={action.icon} size={20} /></span>
+                                        <span className="welcome-action-text">
+                                            <strong>{action.label}</strong>
+                                            <small>{action.hint}</small>
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     {messages.map((msg, idx) => (
                         <div key={idx} className={`chat-bubble-wrapper ${msg.sender}`}>
+                            {msg.sender === 'bot' && (
+                                <img src={CHRONOS_ICON} alt="" className="msg-avatar" draggable="false" />
+                            )}
+                            <div className="msg-body">
                             {msg.text && (
                                 <div className={`chat-bubble ${msg.sender}`}>
                                     {renderFormattedText(msg.text)}
                                 </div>
+                            )}
+
+                            {/* Reintento ante un error de consulta (solo en el último mensaje) */}
+                            {msg.isError && msg.retryQuery && idx === messages.length - 1 && (
+                                <button
+                                    type="button"
+                                    className="retry-btn"
+                                    onClick={() => handleSendMessage(null, msg.retryQuery)}
+                                    disabled={isTyping}
+                                >
+                                    <Icon name="refresh" size={14} /> Reintentar
+                                </button>
                             )}
 
                             {/* Renderizado de una Data Card si la respuesta de IA lo incluye */}
@@ -500,15 +602,20 @@ const Chatbot = () => {
                                     )}
                                 </div>
                             )}
+                            </div>
                         </div>
                     ))}
 
                     {isTyping && (
-                        <div className="chat-bubble-wrapper bot">
-                            <div className="chat-bubble bot typing">
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
+                        <div className="chat-bubble-wrapper bot" role="status" aria-live="polite">
+                            <img src={CHRONOS_ICON} alt="" className="msg-avatar" draggable="false" />
+                            <div className="msg-body">
+                                <div className="chat-bubble bot typing">
+                                    <span className="dot"></span>
+                                    <span className="dot"></span>
+                                    <span className="dot"></span>
+                                    <span className="typing-label">Chronos está consultando los datos…</span>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -516,50 +623,77 @@ const Chatbot = () => {
                 </div>
 
                 <form className="chatbot-input-area" onSubmit={handleSendMessage}>
-                    {/* Barra de Sugerencias Contextuales por Pantalla */}
-                    <div className="chatbot-suggestions-bar">
-                        {getContextualSuggestions().map((sug, i) => (
-                            <button
-                                key={i}
-                                type="button"
-                                className="suggestion-chip"
-                                onClick={() => handleSendMessage(null, sug)}
-                                title="Enviar esta consulta"
-                            >
-                                {sug}
-                            </button>
-                        ))}
-                    </div>
+                    {/* Sugerencias contextuales por pantalla (una vez iniciada la conversación; antes las cubre la bienvenida) */}
+                    {messages.length > 0 && (
+                        <div className="chatbot-suggestions-bar">
+                            {getContextualSuggestions().map((sug, i) => (
+                                <button
+                                    key={i}
+                                    type="button"
+                                    className="suggestion-chip"
+                                    onClick={() => handleSendMessage(null, sug)}
+                                    disabled={isTyping}
+                                    title="Enviar esta consulta"
+                                >
+                                    {sug}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Indicador visible mientras Chronos consulta los datos */}
+                    {isTyping && <div className="composer-progress" aria-hidden="true"></div>}
 
                     <div className="chatbot-input-container">
-                        <button
-                            type="button"
-                            className={`voice-toggle-btn ${isVoiceEnabled ? 'active' : ''}`}
-                            onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
-                            title={isVoiceEnabled ? "Desactivar voz" : "Activar lectura de voz (Accesibilidad)"}
-                        >
-                            {isVoiceEnabled ? '🔊' : '🔈'}
-                        </button>
-
-                        <input
-                            type="text"
-                            placeholder={isListening ? "Escuchando..." : "Mensaje a Chronos..."}
+                        <textarea
+                            ref={inputRef}
+                            rows={1}
+                            maxLength={500}
+                            placeholder={isListening ? "Escuchando..." : "Pregúntale a Chronos sobre tus métricas…"}
+                            aria-label="Mensaje para Chronos"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleInputKeyDown}
                             className={isListening ? 'listening' : ''}
                         />
 
-                        <button
-                            type="button"
-                            className={`mic-btn ${isListening ? 'listening' : ''}`}
-                            onClick={handleVoiceInput}
-                            title="Hablar (Dictar mensaje)"
-                        >
-                            {isListening ? '🛑' : '🎤'}
-                        </button>
+                        <div className="composer-actions">
+                            <button
+                                type="button"
+                                className={`voice-toggle-btn ${isVoiceEnabled ? 'active' : ''}`}
+                                onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
+                                title={isVoiceEnabled ? "Desactivar lectura en voz alta" : "Activar lectura en voz alta (accesibilidad)"}
+                                aria-label={isVoiceEnabled ? "Desactivar lectura en voz alta" : "Activar lectura en voz alta"}
+                                aria-pressed={isVoiceEnabled}
+                            >
+                                <Icon name={isVoiceEnabled ? 'speakerOn' : 'speakerOff'} size={18} />
+                            </button>
 
-                        <button type="submit" className="send-btn" title="Enviar">➤</button>
+                            <button
+                                type="button"
+                                className={`mic-btn ${isListening ? 'listening' : ''}`}
+                                onClick={handleVoiceInput}
+                                title="Dictar mensaje"
+                                aria-label="Dictar mensaje por voz"
+                            >
+                                <Icon name={isListening ? 'stop' : 'mic'} size={18} />
+                            </button>
+
+                            <span className="composer-spacer"></span>
+
+                            <button
+                                type="submit"
+                                className={`send-btn ${isTyping ? 'busy' : ''}`}
+                                disabled={isTyping || !inputValue.trim()}
+                                title="Enviar (Enter)"
+                                aria-label="Enviar mensaje"
+                            >
+                                {isTyping ? <span className="send-spinner" aria-hidden="true"></span> : <Icon name="send" size={16} />}
+                                <span>{isTyping ? 'Consultando' : 'Enviar'}</span>
+                            </button>
+                        </div>
                     </div>
+                    <p className="composer-hint">Enter para enviar · Shift + Enter para nueva línea</p>
                 </form>
             </div>
         </>
