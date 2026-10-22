@@ -280,8 +280,8 @@
    ========================================================================== */
 .admin-four-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
   margin-bottom: 24px;
   width: 100%;
 }
@@ -386,15 +386,19 @@
   font-weight: 700;
   color: #94a3b8;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kpi-big-value {
-  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  font-size: clamp(1.25rem, 1.6vw, 1.65rem);
   font-weight: 850;
   color: #ffffff;
   letter-spacing: -0.02em;
   line-height: 1.15;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kpi-trend-row {
@@ -402,11 +406,13 @@
   align-items: center;
   gap: 4px;
   margin-top: 2px;
+  min-width: 0;
 }
 
 .trend-arrow-up {
   color: #10b981;
   font-size: 0.65rem;
+  flex-shrink: 0;
 }
 
 .trend-text-green {
@@ -414,6 +420,8 @@
   font-size: 0.72rem;
   font-weight: 750;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kpi-sub-desc {
@@ -421,18 +429,21 @@
   color: #64748b;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 4 Barras decorativas en la esquina de cada KPI */
 .kpi-mini-bars {
   position: absolute;
-  right: 16px;
-  bottom: 14px;
+  right: 14px;
+  bottom: 12px;
   display: flex;
   align-items: flex-end;
-  gap: 4px;
-  opacity: 0.35;
+  gap: 3px;
+  opacity: 0.22;
   pointer-events: none;
+  z-index: 0;
 }
 
 .akbar {
@@ -565,10 +576,14 @@
    ========================================================================== */
 .admin-middle-double-grid {
   display: grid;
-  grid-template-columns: 310px 1fr;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
   gap: 20px;
   margin-bottom: 24px;
   width: 100%;
+}
+
+.admin-middle-double-grid > div {
+  min-width: 0;
 }
 
 /* Card Recaudación Total */
@@ -688,9 +703,13 @@
    ========================================================================== */
 .admin-bottom-double-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
   width: 100%;
+}
+
+.admin-bottom-double-grid > div {
+  min-width: 0;
 }
 
 /* Card Ingresos por Tipo */
@@ -1262,28 +1281,46 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (TABLETS & MOBILE)
+   RESPONSIVE DESIGN (DESKTOP, TABLETS & MOBILE)
    ========================================================================== */
-@media screen and (max-width: 1200px) {
+
+/* Laptops estándar (1366px, 1280px con escalado de Windows) */
+@media screen and (max-width: 1380px) {
   .admin-four-kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
+  .admin-kpi-card {
+    padding: 16px 18px;
+  }
+}
+
+/* Pantallas medianas y tablets horizontales (<= 1140px) */
+@media screen and (max-width: 1140px) {
   .admin-middle-double-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .admin-bottom-double-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card-recaudacion-total {
+    min-height: auto;
   }
 }
 
+/* Tablets verticales y móviles grandes (<= 768px) */
 @media screen and (max-width: 768px) {
   .admin-dashboard {
     padding: 85px 14px 40px 14px !important;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .admin-header-container {
@@ -1300,6 +1337,7 @@
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
   .admin-search-pill-wrapper {
@@ -1312,17 +1350,125 @@
     box-sizing: border-box;
   }
 
+  .btn-ai-training-trigger {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .admin-four-kpi-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
+  }
+
+  .admin-kpi-card {
+    padding: 14px 16px;
+  }
+
+  .admin-card {
+    padding: 18px 16px;
+    border-radius: 16px;
   }
 
   .chart-canvas-wrapper {
-    height: 200px;
+    height: 220px;
   }
 
   .card-top-title-row.justify-between {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+
+  .segmented-range-pills {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-range-pill {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.78rem;
+  }
+
+  .type-progress-row {
+    gap: 10px;
+  }
+
+  .type-name-label {
+    width: 80px;
+    font-size: 0.76rem;
+  }
+
+  .top-sector-row-item {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .sector-rank-revenue {
+    font-size: 0.86rem;
+  }
+
+  .sector-rank-clients-badge {
+    font-size: 0.76rem;
+    min-width: 55px;
+  }
+}
+
+/* Móviles compactos (<= 480px) */
+@media screen and (max-width: 480px) {
+  .admin-dashboard {
+    padding: 75px 10px 40px 10px !important;
+  }
+
+  .admin-title-main {
+    font-size: 1.55rem;
+  }
+
+  .admin-kpi-card {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .kpi-icon-squircle {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+  }
+
+  .kpi-big-value {
+    font-size: 1.35rem;
+  }
+
+  .kpi-mini-bars {
+    display: none;
+  }
+
+  .total-accumulated-highlight-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .total-accumulated-big-amount {
+    font-size: 1.15rem;
+  }
+
+  .yearly-breakdown-single-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .top-sector-row-item {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sector-rank-name {
+    width: 100%;
+    flex: none;
   }
 }
