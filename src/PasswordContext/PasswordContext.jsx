@@ -47,7 +47,7 @@ function PasswordProvider({ children }) {
     return jsonData;
   };
 
-  const [data, setData] = useState(getInitialFilteredData());
+  const [data, setData] = useState(() => getInitialFilteredData());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [role, setRole] = useState(localStorage.getItem("userRole") || null);
