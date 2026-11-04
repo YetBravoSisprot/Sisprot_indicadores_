@@ -257,6 +257,18 @@ function TopUrbanismo() {
   useEffect(() => {
     const cargarSectores = async () => {
       try {
+        const cachedRaw = window.sessionStorage?.getItem("sisprot_sectors_cache_v1");
+        if (cachedRaw) {
+          const parsed = JSON.parse(cachedRaw);
+          if (parsed?.sectorAgenciaMap && parsed?.urbanismosAprobados) {
+            setSectorAgenciaMap(parsed.sectorAgenciaMap);
+            setUrbanismosAprobados(parsed.urbanismosAprobados);
+            return;
+          }
+        }
+      } catch (_) {}
+
+      try {
         const url = process.env.REACT_APP_SECTORS_API_URL || "https://api.sisprotgf.com/api/public/zones/sectors/?remove_pagination=true";
         const apiKey = process.env.REACT_APP_SECTORS_API_KEY || "v7R2mK9pXqWjL5bZ1nT8sH4dC6fV3gY0xM9aB2iE7uN1oP4rS5";
         
@@ -312,6 +324,16 @@ function TopUrbanismo() {
         
         setSectorAgenciaMap(newSectorAgenciaMap);
         setUrbanismosAprobados(newUrbanismosAprobados);
+
+        try {
+          window.sessionStorage?.setItem(
+            "sisprot_sectors_cache_v1",
+            JSON.stringify({
+              sectorAgenciaMap: newSectorAgenciaMap,
+              urbanismosAprobados: newUrbanismosAprobados,
+            })
+          );
+        } catch (_) {}
       } catch (err) {
         console.error("Error al cargar sectores dinámicamente:", err);
       }
@@ -1267,7 +1289,7 @@ function TopUrbanismo() {
             <p className="top-sectores-subtitle">Ranking por cantidad de clientes e ingresos</p>
           </div>
 
-          {systemStatus === "loading" ? (
+          {systemStatus === "loading" && topUrbanismos.length === 0 ? (
             <SkeletonDashboard />
           ) : modoBusquedaContrato ? (
             <UrbanismoList
@@ -1283,14 +1305,14 @@ function TopUrbanismo() {
           ) : (
             <UrbanismoList urbanismos={topUrbanismos} />
           )}
-          {(isLoading || isUpdating) && (
-        <div className="loading-overlay-blur">
-          <div className="loading-card">
-            <div className="loading-spinner"></div>
-            <span className="loading-text">Cargando...</span>
-          </div>
-        </div>
-      )}
+          {isLoading && realtimeContracts.length === 0 && (
+            <div className="loading-overlay-blur">
+              <div className="loading-card">
+                <div className="loading-spinner"></div>
+                <span className="loading-text">Cargando...</span>
+              </div>
+            </div>
+          )}
     </div>
   );
 }
