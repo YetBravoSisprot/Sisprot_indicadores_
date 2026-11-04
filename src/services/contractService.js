@@ -158,23 +158,86 @@ export const filterValidContracts = (contractsList) => {
     });
 };
 
-// Helpers para caché persistente en sesión
-const getFromSessionStorage = (key) => {
+// Promesas en vuelo y configuración de caché persistente (IndexedDB + sessionStorage)
+const inFlightRequests = new Map();
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutos de vigencia para caché persistente
+
+const IDB_NAME = "sisprot_bi_cache_db";
+const IDB_STORE = "contracts_store";
+
+const openCacheDB = () => {
+    return new Promise((resolve, reject) => {
+        if (typeof window === "undefined" || !window.indexedDB) {
+            return reject(new Error("IndexedDB no disponible"));
+        }
+        const request = window.indexedDB.open(IDB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(IDB_STORE)) {
+                db.createObjectStore(IDB_STORE);
+            }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+const getFromPersistentCache = async (key) => {
+    // 1. Intentar sessionStorage primero (para listas pequeñas)
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
             const raw = window.sessionStorage.getItem(`sisprot_contracts_${key}`);
-            if (raw) return JSON.parse(raw);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            }
         }
     } catch (_) {}
-    return null;
+
+    // 2. Intentar IndexedDB (soporta payloads > 5MB como "all")
+    try {
+        const db = await openCacheDB();
+        return await new Promise((resolve) => {
+            const tx = db.transaction(IDB_STORE, "readonly");
+            const store = tx.objectStore(IDB_STORE);
+            const req = store.get(`sisprot_contracts_${key}`);
+            req.onsuccess = () => {
+                const record = req.result;
+                if (record && Array.isArray(record.data) && record.data.length > 0) {
+                    if (!record.timestamp || (Date.now() - record.timestamp) < CACHE_TTL_MS) {
+                        resolve(record.data);
+                        return;
+                    }
+                }
+                resolve(null);
+            };
+            req.onerror = () => resolve(null);
+        });
+    } catch (_) {
+        return null;
+    }
 };
 
-const saveToSessionStorage = (key, data) => {
+const saveToPersistentCache = async (key, data) => {
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
             window.sessionStorage.setItem(`sisprot_contracts_${key}`, JSON.stringify(data));
         }
+    } catch (_) {
+        // Si supera la cuota de 5MB de sessionStorage, IndexedDB actúa como respaldo principal
+    }
+
+    try {
+        const db = await openCacheDB();
+        const tx = db.transaction(IDB_STORE, "readwrite");
+        const store = tx.objectStore(IDB_STORE);
+        store.put({ timestamp: Date.now(), data }, `sisprot_contracts_${key}`);
     } catch (_) {}
+};
+
+const filterContractsByStatusIds = (contracts, statusIds) => {
+    if (!statusIds || statusIds.length === 0) return contracts;
+    return contracts.filter(c => statusIds.includes(Number(c.status)));
 };
 
 /**
@@ -182,7 +245,7 @@ const saveToSessionStorage = (key, data) => {
  *
  * @param {string[]} selectedStatuses - Lista de nombres de estados ("Activo", "Suspendido", etc.)
  * @param {boolean} forceRefresh - Forzar actualización omitiendo caché
- * @param {number} timeoutMs - Tiempo máximo de espera en ms (default 12s)
+ * @param {number} timeoutMs - Tiempo máximo de espera en ms (default 30s)
  * @returns {Promise<{ count: number, results: Array, fromCache: boolean }>}
  */
 export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forceRefresh = false, timeoutMs = 30000) => {
@@ -200,26 +263,57 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
 
     const cacheKey = isTodos ? "all" : statusIds.sort((a, b) => a - b).join(",");
 
-    // 1. Verificar caché en memoria
-    if (!forceRefresh && contractsCache.has(cacheKey)) {
-        return {
-            count: contractsCache.get(cacheKey).length,
-            results: contractsCache.get(cacheKey),
-            fromCache: true
-        };
-    }
-
-    // 2. Verificar caché en sessionStorage (rápido en recargas y navegación)
+    // 1. Verificar caché en memoria (exacta o derivada de "all")
     if (!forceRefresh) {
-        const sessionData = getFromSessionStorage(cacheKey);
-        if (sessionData && Array.isArray(sessionData) && sessionData.length > 0) {
-            contractsCache.set(cacheKey, sessionData);
+        if (contractsCache.has(cacheKey)) {
+            const cached = contractsCache.get(cacheKey);
             return {
-                count: sessionData.length,
-                results: sessionData,
+                count: cached.length,
+                results: cached,
                 fromCache: true
             };
         }
+        if (!isTodos && contractsCache.has("all")) {
+            const allCached = contractsCache.get("all");
+            const derived = filterContractsByStatusIds(allCached, statusIds);
+            contractsCache.set(cacheKey, derived);
+            return {
+                count: derived.length,
+                results: derived,
+                fromCache: true
+            };
+        }
+    }
+
+    // 2. Verificar caché persistente (sessionStorage / IndexedDB)
+    if (!forceRefresh) {
+        const persisted = await getFromPersistentCache(cacheKey);
+        if (persisted && Array.isArray(persisted) && persisted.length > 0) {
+            contractsCache.set(cacheKey, persisted);
+            return {
+                count: persisted.length,
+                results: persisted,
+                fromCache: true
+            };
+        }
+        if (!isTodos) {
+            const persistedAll = await getFromPersistentCache("all");
+            if (persistedAll && Array.isArray(persistedAll) && persistedAll.length > 0) {
+                contractsCache.set("all", persistedAll);
+                const derived = filterContractsByStatusIds(persistedAll, statusIds);
+                contractsCache.set(cacheKey, derived);
+                return {
+                    count: derived.length,
+                    results: derived,
+                    fromCache: true
+                };
+            }
+        }
+    }
+
+    // 3. Reutilizar petición en curso si otro componente ya la disparó
+    if (!forceRefresh && inFlightRequests.has(cacheKey)) {
+        return inFlightRequests.get(cacheKey);
     }
 
     let url = `${API_BASE_URL}?remove_pagination=true&view=powerbi`;
@@ -227,51 +321,58 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
         url += `&status=${statusIds.join(",")}`;
     }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    const fetchPromise = (async () => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    try {
-        const response = await fetch(url, {
-            method: "GET",
-            signal: controller.signal,
-            headers: {
-                "X-API-KEY": (API_KEY || "").trim(),
-                "Accept": "application/json"
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                signal: controller.signal,
+                headers: {
+                    "X-API-KEY": (API_KEY || "").trim(),
+                    "Accept": "application/json"
+                }
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-        });
-        clearTimeout(timeoutId);
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const data = await response.json();
+            const rawResults = Array.isArray(data) ? data : (data.results || []);
+
+            // Normalizar contratos al formato de la aplicación
+            const normalized = rawResults.map(normalizeContract).filter(Boolean);
+
+            // Aplicar filtro de registros de prueba
+            const validResults = filterValidContracts(normalized);
+
+            // Guardar en caché de memoria y almacenamiento persistente
+            contractsCache.set(cacheKey, validResults);
+            saveToPersistentCache(cacheKey, validResults);
+
+            return {
+                count: validResults.length,
+                results: validResults,
+                fromCache: false
+            };
+        } catch (err) {
+            clearTimeout(timeoutId);
+            if (err.name === "AbortError") {
+                console.warn("fetchContractsByStatus: Timeout de red alcanzado");
+                throw new Error("Tiempo de espera agotado al consultar la API de contratos");
+            }
+            console.error("Error en fetchContractsByStatus:", err);
+            throw err;
+        } finally {
+            inFlightRequests.delete(cacheKey);
         }
+    })();
 
-        const data = await response.json();
-        const rawResults = Array.isArray(data) ? data : (data.results || []);
-
-        // Normalizar contratos al formato de la aplicación
-        const normalized = rawResults.map(normalizeContract).filter(Boolean);
-
-        // Aplicar filtro de registros de prueba
-        const validResults = filterValidContracts(normalized);
-
-        // Guardar en caché de memoria y sessionStorage
-        contractsCache.set(cacheKey, validResults);
-        saveToSessionStorage(cacheKey, validResults);
-
-        return {
-            count: validResults.length,
-            results: validResults,
-            fromCache: false
-        };
-    } catch (err) {
-        clearTimeout(timeoutId);
-        if (err.name === "AbortError") {
-            console.warn("fetchContractsByStatus: Timeout de red alcanzado");
-            throw new Error("Tiempo de espera agotado al consultar la API de contratos");
-        }
-        console.error("Error en fetchContractsByStatus:", err);
-        throw err;
-    }
+    inFlightRequests.set(cacheKey, fetchPromise);
+    return fetchPromise;
 };
 
 /**
@@ -279,6 +380,7 @@ export const fetchContractsByStatus = async (selectedStatuses = ["Activo"], forc
  */
 export const clearContractsCache = () => {
     contractsCache.clear();
+    inFlightRequests.clear();
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
             Object.keys(window.sessionStorage).forEach(k => {
@@ -287,5 +389,11 @@ export const clearContractsCache = () => {
                 }
             });
         }
+    } catch (_) {}
+    try {
+        openCacheDB().then(db => {
+            const tx = db.transaction(IDB_STORE, "readwrite");
+            tx.objectStore(IDB_STORE).clear();
+        }).catch(() => {});
     } catch (_) {}
 };
