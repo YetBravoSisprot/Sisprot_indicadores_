@@ -44,6 +44,7 @@ const Icon = ({ name, size = 20 }) => (
 const getWelcomeActions = () => {
     const year = new Date().getFullYear();
     return [
+        { id: 'bancos', icon: 'money', label: 'Cobros Bancaribe / Bancos', hint: 'Desglose día a día de ingresos', query: 'Desglósame los ingresos de Bancaribe de todo el mes día a día' },
         { id: 'ingresos', icon: 'money', label: 'Consultar ingresos', hint: 'Recaudación total acumulada', query: '¿Cuánto hemos recaudado en total?' },
         { id: 'clientes', icon: 'users', label: 'Contar clientes', hint: 'Activos sobre la cartera', query: '¿Cuántos clientes activos tenemos?' },
         { id: 'reactivaciones', icon: 'refresh', label: 'Ver reactivaciones', hint: `Cancelados recuperados en ${year}`, query: `¿Cuántos clientes se reactivaron en ${year}?` },
@@ -67,6 +68,43 @@ const Chatbot = () => {
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const inputRef = useRef(null);
+
+    // ── ESTADO PARA EL PANEL DE CONSULTA RÁPIDA Y DESGLOSE BANCARIO ──
+    const [showBankWidget, setShowBankWidget] = useState(false);
+    const [selectedBank, setSelectedBank] = useState("Bancaribe");
+    const [selectedPeriod, setSelectedPeriod] = useState("todo_el_mes");
+    const [customStartDate, setCustomStartDate] = useState(() => {
+        const d = new Date();
+        d.setDate(1);
+        return d.toLocaleDateString('en-CA');
+    });
+    const [customEndDate, setCustomEndDate] = useState(() => new Date().toLocaleDateString('en-CA'));
+
+    const handleExecuteBankQuery = () => {
+        let queryText = "";
+        const bName = selectedBank === "todos" ? "todos los bancos" : selectedBank;
+
+        if (selectedPeriod === "hoy") {
+            queryText = `¿Cuánto ingresó por ${bName} hoy?`;
+        } else if (selectedPeriod === "ayer") {
+            queryText = `¿Cuánto ingresó por ${bName} ayer?`;
+        } else if (selectedPeriod === "hace_2_dias") {
+            queryText = `¿Cuánto ingresó por ${bName} hace 2 días?`;
+        } else if (selectedPeriod === "hace_3_dias") {
+            queryText = `¿Cuánto ingresó por ${bName} hace 3 días?`;
+        } else if (selectedPeriod === "ultimos_7_dias") {
+            queryText = `Desglósame los ingresos de ${bName} de los últimos 7 días día a día`;
+        } else if (selectedPeriod === "todo_el_mes") {
+            queryText = `Desglósame los ingresos de ${bName} de todo el mes día a día`;
+        } else if (selectedPeriod === "mes_anterior") {
+            queryText = `Desglósame los ingresos de ${bName} del mes pasado`;
+        } else if (selectedPeriod === "personalizado") {
+            queryText = `Ingresos de ${bName} desde ${customStartDate} hasta ${customEndDate} desglosado día a día`;
+        }
+
+        setShowBankWidget(false);
+        handleSendMessage(null, queryText);
+    };
 
     // ── SUGERENCIAS CONTEXTUALES POR PÁGINA (Sisprot BI) ──
     const getContextualSuggestions = () => {
@@ -638,6 +676,116 @@ const Chatbot = () => {
                                     {sug}
                                 </button>
                             ))}
+                        </div>
+                    )}
+
+                    {/* Barra de Filtro Rápido Bancario interactivo */}
+                    <div className="bank-widget-toggle-bar">
+                        <button
+                            type="button"
+                            className={`bank-widget-pill-btn ${showBankWidget ? 'active' : ''}`}
+                            onClick={() => setShowBankWidget(!showBankWidget)}
+                            title="Abrir panel interactivo para desglosar cobros por banco"
+                        >
+                            <span>🏦</span>
+                            <span>{showBankWidget ? '✕ Ocultar Filtro Bancario' : 'Filtro Rápido Bancos (Bancaribe, etc.)'}</span>
+                        </button>
+                    </div>
+
+                    {/* Panel Interactivo de Desglose de Bancos */}
+                    {showBankWidget && (
+                        <div className="bank-widget-panel animate-fade-in">
+                            <div className="bank-widget-header">
+                                <span className="bank-widget-title">
+                                    <span>🏦</span> Consulta y Desglose Bancario en Tiempo Real
+                                </span>
+                                <button
+                                    type="button"
+                                    className="bank-widget-close"
+                                    onClick={() => setShowBankWidget(false)}
+                                    title="Cerrar panel"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            <div className="bank-widget-grid">
+                                <div className="bank-widget-field">
+                                    <label className="bank-widget-label">Entidad Bancaria:</label>
+                                    <select
+                                        className="bank-widget-select"
+                                        value={selectedBank}
+                                        onChange={(e) => setSelectedBank(e.target.value)}
+                                    >
+                                        <option value="Bancaribe">⭐ Bancaribe</option>
+                                        <option value="BNC">BNC (Banco Nacional de Crédito)</option>
+                                        <option value="BDV">Banco de Venezuela (BDV)</option>
+                                        <option value="Banesco">Banesco</option>
+                                        <option value="Mercantil">Mercantil</option>
+                                        <option value="Provincial">Banco Provincial (BBVA)</option>
+                                        <option value="Banplus">Banplus</option>
+                                        <option value="BFC">Banco Fondo Común (BFC)</option>
+                                        <option value="Bicentenario">Banco Bicentenario</option>
+                                        <option value="Exterior">Banco Exterior</option>
+                                        <option value="Caroni">Banco Caroní</option>
+                                        <option value="Plaza">Banco Plaza</option>
+                                        <option value="Sofitasa">Sofitasa</option>
+                                        <option value="Zelle">Zelle</option>
+                                        <option value="todos">Todos los Bancos</option>
+                                    </select>
+                                </div>
+
+                                <div className="bank-widget-field">
+                                    <label className="bank-widget-label">Periodo / Fecha:</label>
+                                    <select
+                                        className="bank-widget-select"
+                                        value={selectedPeriod}
+                                        onChange={(e) => setSelectedPeriod(e.target.value)}
+                                    >
+                                        <option value="todo_el_mes">📅 Todo el mes (Día a Día)</option>
+                                        <option value="hoy">⭐ Hoy</option>
+                                        <option value="ayer">⏮️ Ayer</option>
+                                        <option value="hace_2_dias">📅 Hace 2 días (Anteayer)</option>
+                                        <option value="hace_3_dias">📅 Hace 3 días</option>
+                                        <option value="ultimos_7_dias">📊 Últimos 7 días</option>
+                                        <option value="mes_anterior">🗓️ Mes anterior</option>
+                                        <option value="personalizado">🔍 Rango personalizado...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {selectedPeriod === 'personalizado' && (
+                                <div className="bank-widget-custom-dates">
+                                    <div className="bank-widget-field">
+                                        <label className="bank-widget-label">Desde:</label>
+                                        <input
+                                            type="date"
+                                            className="bank-widget-input"
+                                            value={customStartDate}
+                                            onChange={(e) => setCustomStartDate(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="bank-widget-field">
+                                        <label className="bank-widget-label">Hasta:</label>
+                                        <input
+                                            type="date"
+                                            className="bank-widget-input"
+                                            value={customEndDate}
+                                            onChange={(e) => setCustomEndDate(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            <button
+                                type="button"
+                                className="bank-widget-btn"
+                                onClick={handleExecuteBankQuery}
+                                disabled={isTyping}
+                            >
+                                <span>📊</span>
+                                <span>Desglosar Ingresos en Pantalla</span>
+                            </button>
                         </div>
                     )}
 
