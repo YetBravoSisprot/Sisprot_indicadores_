@@ -357,6 +357,68 @@ export const getHistoricalRevenueMetrics = async () => {
 // ==========================================
 // 6. COBROS BANCARIOS EN VIVO (BANCOS / MÉTODOS)
 // ==========================================
+export const matchBankName = (recordBankName, targetBank) => {
+    if (!targetBank) return true;
+    const rec = normalizeText(recordBankName);
+    const target = normalizeText(targetBank);
+    if (!rec) return false;
+    if (rec.includes(target) || target.includes(rec)) return true;
+
+    // Bancaribe / Banco del Caribe
+    if (target.includes("bancaribe") || target.includes("caribe")) {
+        return rec.includes("bancaribe") || rec.includes("caribe");
+    }
+    // BDV / Banco de Venezuela
+    if (target.includes("bdv") || target.includes("venezuela")) {
+        return rec.includes("venezuela") || rec.includes("bdv");
+    }
+    // BNC / Banco Nacional de Crédito
+    if (target.includes("bnc") || target.includes("nacional de credito")) {
+        return rec.includes("bnc") || rec.includes("nacional de credito");
+    }
+    // Provincial / BBVA
+    if (target.includes("provincial") || target.includes("bbva")) {
+        return rec.includes("provincial") || rec.includes("bbva");
+    }
+    // BFC / Banco Fondo Común
+    if (target.includes("bfc") || target.includes("fondo comun")) {
+        return rec.includes("bfc") || rec.includes("fondo comun");
+    }
+    // BBP / Bicentenario
+    if (target.includes("bicentenario") || target.includes("bbp")) {
+        return rec.includes("bicentenario") || rec.includes("bbp");
+    }
+    // Banplus
+    if (target.includes("banplus")) {
+        return rec.includes("banplus");
+    }
+    // Banesco
+    if (target.includes("banesco")) {
+        return rec.includes("banesco");
+    }
+    // Mercantil
+    if (target.includes("mercantil")) {
+        return rec.includes("mercantil");
+    }
+    // Sofitasa
+    if (target.includes("sofitasa")) {
+        return rec.includes("sofitasa");
+    }
+    // Caroní
+    if (target.includes("caroni")) {
+        return rec.includes("caroni");
+    }
+    // Plaza
+    if (target.includes("plaza")) {
+        return rec.includes("plaza");
+    }
+    // 100% Banco
+    if (target.includes("100%")) {
+        return rec.includes("100%");
+    }
+    return false;
+};
+
 export const getBankPaymentsMetrics = async ({ bank = null, method = null, startDate = null, endDate = null } = {}) => {
     const PAYMENTS_URL = "https://api.sisprotgf.com/api/public/payments/payment_company/";
     const TOKEN = (process.env.REACT_APP_PAYMENTS_API_KEY || process.env.REACT_APP_SISPROT_API_KEY || "").trim();
@@ -377,17 +439,24 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
     const isGenericBank = !bank || invalidBankKeywords.includes(normalizeText(String(bank)).toLowerCase().trim());
 
     const bankAcronymMap = {
+        'BANCARIBE': 'bancaribe',
+        'CARIBE': 'bancaribe',
         'BNC': 'banco nacional de credito',
         'BDV': 'banco de venezuela',
+        'VENEZUELA': 'banco de venezuela',
         'BFC': 'banco fondo comun',
         'BBP': 'banco bicentenario',
+        'BICENTENARIO': 'banco bicentenario',
         'BANPLUS': 'banplus',
         'BANESCO': 'banesco',
         'MERCANTIL': 'mercantil',
         'PROVINCIAL': 'provincial',
+        'BBVA': 'provincial',
         'EXTERIOR': 'exterior',
         'SOFITASA': 'sofitasa',
         'CARONI': 'caroni',
+        'PLAZA': 'plaza',
+        '100% BANCO': '100% banco',
         'ZELLE': 'zelle',
         'CHASE': 'chase',
     };
@@ -411,7 +480,7 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
             const raw = await response.json();
             const list = Array.isArray(raw) ? raw : (raw.results || []);
             allPayments = list.filter(p => {
-                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const bankOk = !resolvedBank || matchBankName(p.bank_name, resolvedBank);
                 const methodOk = !method || normalizeText(p.method_name || '').includes(normalizeText(method));
                 return bankOk && methodOk;
             });
@@ -439,7 +508,7 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
             const results = pageData.results || [];
 
             const filtered = results.filter(p => {
-                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const bankOk = !resolvedBank || matchBankName(p.bank_name, resolvedBank);
                 const methodOk = !method || normalizeText(p.method_name || '').includes(normalizeText(method));
                 return bankOk && methodOk;
             });
@@ -453,6 +522,7 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
     let totalUsd = 0;
     let totalBs = 0;
     const byBank = {};
+    const byDate = {};
 
     allPayments.forEach(p => {
         const u = parseFloat(p.amount_data?.amount_usd || 0);
@@ -468,6 +538,17 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
 
         const mName = p.method_name || "Otro";
         byBank[bName].methods[mName] = (byBank[bName].methods[mName] || 0) + 1;
+
+        const dateKey = p.created_at ? p.created_at.split('T')[0] : (p.date || 'Sin fecha');
+        if (!byDate[dateKey]) byDate[dateKey] = { date: dateKey, count: 0, totalUsd: 0, totalBs: 0, byBank: {}, methods: {} };
+        byDate[dateKey].count++;
+        byDate[dateKey].totalUsd += u;
+        byDate[dateKey].totalBs += b;
+        if (!byDate[dateKey].byBank[bName]) byDate[dateKey].byBank[bName] = { count: 0, totalUsd: 0, totalBs: 0 };
+        byDate[dateKey].byBank[bName].count++;
+        byDate[dateKey].byBank[bName].totalUsd += u;
+        byDate[dateKey].byBank[bName].totalBs += b;
+        byDate[dateKey].methods[mName] = (byDate[dateKey].methods[mName] || 0) + 1;
     });
 
     return {
@@ -477,6 +558,7 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
         startDate: start,
         endDate: end,
         byBank,
+        byDate,
         payments: allPayments
     };
 };
