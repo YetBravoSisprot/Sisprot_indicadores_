@@ -160,15 +160,18 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         return { startDate: toDateStr(monday), endDate: todayStr, isRange: true };
     }
 
-    // 4. Meses (todo el mes, este mes, etc.)
-    if (q.includes('todo el mes') || q.includes('en todo el mes') || q.includes('este mes') || q.includes('del mes') || q.includes('en el mes') || q.includes('mes actual') || params?.periodo === 'este_mes' || params?.periodo === 'mes' || params?.periodo === 'todo_el_mes') {
-        const firstDay = new Date(currentYear, currentMonth, 1);
-        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
-    }
-    if (q.includes('mes pasado') || q.includes('el mes anterior')) {
+    // 4. Meses
+    // 4.1 Mes pasado / Mes anterior (DEBE EVALUARSE ANTES de este mes para evitar colisión con 'del mes')
+    if (q.includes('mes pasado') || q.includes('mes anterior') || q.includes('el mes previo') || params?.periodo === 'mes_anterior' || params?.periodo === 'mes_pasado') {
         const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
         const lastDayPrevMonth = new Date(currentYear, currentMonth, 0);
         return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth), isRange: true, isMonth: true };
+    }
+
+    // 4.2 Mes actual / Este mes
+    if (q.includes('todo el mes') || q.includes('en todo el mes') || q.includes('este mes') || q.includes('mes actual') || q.includes('en el mes actual') || (q.includes('del mes') && !q.includes('pasado') && !q.includes('anterior')) || (q.includes('en el mes') && !q.includes('pasado') && !q.includes('anterior')) || params?.periodo === 'este_mes' || params?.periodo === 'mes' || params?.periodo === 'todo_el_mes') {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
     }
 
     // 5. Mes específico por nombre (ej: "en septiembre", "en agosto")
@@ -3113,7 +3116,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         const m = p.method_name || 'Otro';
                         byBank[banco].methods[m] = (byBank[banco].methods[m] || 0) + 1;
 
-                        const dateKey = p.created_at ? p.created_at.split('T')[0] : (p.date || sDate);
+                        const rawDate = p.created_at || p.payment_date || p.date || p.datetime || p.created || p.status_updated_at || p.fecha;
+                        const matchDate = rawDate ? String(rawDate).match(/\d{4}-\d{2}-\d{2}/) : null;
+                        const dateKey = matchDate ? matchDate[0] : (sDate || 'Fecha');
                         if (!byDate[dateKey]) byDate[dateKey] = { date: dateKey, count: 0, totalUsd: 0, totalBs: 0, byBank: {}, methods: {} };
                         byDate[dateKey].count++;
                         byDate[dateKey].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
@@ -3141,9 +3146,15 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     let responseText = "";
                     const datesSortedDesc = Object.keys(byDate).sort((a, b) => b.localeCompare(a));
                     const hasMultipleDays = datesSortedDesc.length > 1;
+                    const isRangeQuery = (sDate !== eDate) || parsedDates.isRange || parsedDates.isMonth ||
+                        normalizeText(message).includes('mes') ||
+                        normalizeText(message).includes('desglos') ||
+                        normalizeText(message).includes('semana') ||
+                        normalizeText(message).includes('dias') ||
+                        normalizeText(message).includes('historico');
 
-                    // Si hay múltiples días o el usuario pidió desglose/mes: TABLA DÍA POR DÍA
-                    if (hasMultipleDays) {
+                    // Si hay múltiples días o el usuario pidió desglose/mes/rango: TABLA DÍA POR DÍA
+                    if (hasMultipleDays || isRangeQuery) {
                         responseText = `**${userName}**, aquí tienes el **desglose día por día** de cobros en **${targetBankName}** ${labelFecha}:\n\n`;
                         
                         // Encabezado de tabla Markdown compatible con Chatbot
