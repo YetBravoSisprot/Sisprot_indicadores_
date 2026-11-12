@@ -1384,3 +1384,172 @@
     }
 }
 
+/* ══════════════════════════════════════════════════════════
+   WIDGET INTERACTIVO DE CONSULTA Y DESGLOSE BANCARIO
+   ══════════════════════════════════════════════════════════ */
+.bank-widget-toggle-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 14px 4px;
+    gap: 8px;
+}
+
+.bank-widget-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(6, 182, 212, 0.12));
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    color: #bae6fd;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bank-widget-pill-btn:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.35), rgba(6, 182, 212, 0.25));
+    border-color: #38bdf8;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+}
+
+.bank-widget-pill-btn.active {
+    background: linear-gradient(135deg, #0284c7, #0891b2);
+    border-color: #67e8f9;
+    color: #ffffff;
+}
+
+.bank-widget-panel {
+    background: rgba(10, 25, 47, 0.95);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin: 0 14px 6px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: bankPanelFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bankPanelFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bank-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+    padding-bottom: 6px;
+}
+
+.bank-widget-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #7dd3fc;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bank-widget-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.bank-widget-close:hover {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.bank-widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.bank-widget-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bank-widget-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bank-widget-select,
+.bank-widget-input {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #f1f5f9;
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.bank-widget-select:focus,
+.bank-widget-input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+
+.bank-widget-custom-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 2px;
+}
+
+.bank-widget-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    border: none;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+.bank-widget-btn:hover {
+    background: linear-gradient(135deg, #0369a1, #0891b2);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+    transform: translateY(-1px);
+}
+
+.bank-widget-btn:active {
+    transform: translateY(0);
+}
+
+
