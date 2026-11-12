@@ -539,7 +539,9 @@ export const getBankPaymentsMetrics = async ({ bank = null, method = null, start
         const mName = p.method_name || "Otro";
         byBank[bName].methods[mName] = (byBank[bName].methods[mName] || 0) + 1;
 
-        const dateKey = p.created_at ? p.created_at.split('T')[0] : (p.date || 'Sin fecha');
+        const rawDate = p.created_at || p.payment_date || p.date || p.datetime || p.created || p.status_updated_at || p.fecha;
+        const matchDate = rawDate ? String(rawDate).match(/\d{4}-\d{2}-\d{2}/) : null;
+        const dateKey = matchDate ? matchDate[0] : (start || 'Sin fecha');
         if (!byDate[dateKey]) byDate[dateKey] = { date: dateKey, count: 0, totalUsd: 0, totalBs: 0, byBank: {}, methods: {} };
         byDate[dateKey].count++;
         byDate[dateKey].totalUsd += u;
