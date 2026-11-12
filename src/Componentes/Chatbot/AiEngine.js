@@ -9,6 +9,7 @@ import {
     getReactivationMetrics, 
     getHistoricalRevenueMetrics,
     getBankPaymentsMetrics,
+    matchBankName,
     getSectorClientsDetail,
     formatUSD,
     formatPercent
@@ -85,7 +86,11 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
 
     // 0. Si ya vienen startDate y endDate válidos
     if (params?.startDate && params?.endDate) {
-        return { startDate: params.startDate, endDate: params.endDate };
+        return { 
+            startDate: params.startDate, 
+            endDate: params.endDate,
+            isRange: params.startDate !== params.endDate
+        };
     }
 
     const monthNames = [
@@ -93,6 +98,20 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
     ];
     const dayNames = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+
+    // Detección "hace N días" (ej: "hace dos dias", "hace 2 dias", "hace 3 dias", "hace tres dias", "hace 5 dias")
+    const wordsToNum = { 'un': 1, 'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10, 'quince': 15 };
+    const haceDiasMatch = q.match(/hace\s+(\d+|un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|quince)\s+d[ií]as?/);
+    if (haceDiasMatch) {
+        const valStr = haceDiasMatch[1];
+        const daysAgo = wordsToNum[valStr] !== undefined ? wordsToNum[valStr] : parseInt(valStr, 10);
+        if (!isNaN(daysAgo) && daysAgo > 0) {
+            const d = new Date(now);
+            d.setDate(now.getDate() - daysAgo);
+            const s = toDateStr(d);
+            return { startDate: s, endDate: s, isRange: false, relativeDays: daysAgo };
+        }
+    }
 
     // 1. Detección de día de la semana (ej: "el dia lunes de esta semana", "el martes", "el lunes pasado")
     for (let targetDay = 0; targetDay < 7; targetDay++) {
@@ -104,25 +123,25 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
             const targetDate = new Date(now);
             targetDate.setDate(now.getDate() + dayDiff - (isLastWeek ? 7 : 0));
             const dStr = toDateStr(targetDate);
-            return { startDate: dStr, endDate: dStr };
+            return { startDate: dStr, endDate: dStr, isRange: false };
         }
     }
 
-    // 2. Días relativos: ayer, antier, hoy
-    if (q.includes('antier') || q.includes('anteayer')) {
+    // 2. Días relativos: ayer, antier, anteayer, hoy
+    if (q.includes('antier') || q.includes('anteayer') || q.includes('ante antier')) {
         const d = new Date(now);
         d.setDate(now.getDate() - 2);
         const s = toDateStr(d);
-        return { startDate: s, endDate: s };
+        return { startDate: s, endDate: s, isRange: false, relativeDays: 2 };
     }
     if (q.includes('ayer') || params?.periodo === 'ayer') {
         const d = new Date(now);
         d.setDate(now.getDate() - 1);
         const s = toDateStr(d);
-        return { startDate: s, endDate: s };
+        return { startDate: s, endDate: s, isRange: false, relativeDays: 1 };
     }
     if (q.includes('hoy') || params?.periodo === 'hoy') {
-        return { startDate: todayStr, endDate: todayStr };
+        return { startDate: todayStr, endDate: todayStr, isRange: false, relativeDays: 0 };
     }
 
     // 3. Semanas
@@ -132,24 +151,24 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         lastMonday.setDate(now.getDate() - currentDay - 6);
         const lastSunday = new Date(now);
         lastSunday.setDate(now.getDate() - currentDay);
-        return { startDate: toDateStr(lastMonday), endDate: toDateStr(lastSunday) };
+        return { startDate: toDateStr(lastMonday), endDate: toDateStr(lastSunday), isRange: true };
     }
     if (q.includes('esta semana') || q.includes('en la semana') || params?.periodo === 'esta_semana') {
         const currentDay = now.getDay() || 7;
         const monday = new Date(now);
         monday.setDate(now.getDate() - (currentDay - 1));
-        return { startDate: toDateStr(monday), endDate: todayStr };
+        return { startDate: toDateStr(monday), endDate: todayStr, isRange: true };
     }
 
-    // 4. Meses
+    // 4. Meses (todo el mes, este mes, etc.)
+    if (q.includes('todo el mes') || q.includes('en todo el mes') || q.includes('este mes') || q.includes('del mes') || q.includes('en el mes') || q.includes('mes actual') || params?.periodo === 'este_mes' || params?.periodo === 'mes' || params?.periodo === 'todo_el_mes') {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
+    }
     if (q.includes('mes pasado') || q.includes('el mes anterior')) {
         const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
         const lastDayPrevMonth = new Date(currentYear, currentMonth, 0);
-        return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth) };
-    }
-    if (q.includes('este mes') || q.includes('del mes') || q.includes('en el mes') || q.includes('mes actual') || params?.periodo === 'este_mes' || params?.periodo === 'mes') {
-        const firstDay = new Date(currentYear, currentMonth, 1);
-        return { startDate: toDateStr(firstDay), endDate: todayStr };
+        return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth), isRange: true, isMonth: true };
     }
 
     // 5. Mes específico por nombre (ej: "en septiembre", "en agosto")
@@ -162,24 +181,30 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
             const lastDay = (y === currentYear && mIdx === currentMonth)
                 ? now
                 : new Date(y, mIdx + 1, 0);
-            return { startDate: toDateStr(firstDay), endDate: toDateStr(lastDay) };
+            return { startDate: toDateStr(firstDay), endDate: toDateStr(lastDay), isRange: true, isMonth: true };
         }
     }
 
     // 6. Últimos N días
-    if (q.includes('ultimos 7 dias') || q.includes('ultimos siete dias')) {
+    if (q.includes('ultimos 7 dias') || q.includes('ultimos siete dias') || params?.periodo === 'ultimos_7_dias') {
         const d = new Date(now);
         d.setDate(now.getDate() - 6);
-        return { startDate: toDateStr(d), endDate: todayStr };
+        return { startDate: toDateStr(d), endDate: todayStr, isRange: true };
     }
-    if (q.includes('ultimos 30 dias') || q.includes('ultimos treinta dias')) {
+    if (q.includes('ultimos 30 dias') || q.includes('ultimos treinta dias') || params?.periodo === 'ultimos_30_dias') {
         const d = new Date(now);
         d.setDate(now.getDate() - 29);
-        return { startDate: toDateStr(d), endDate: todayStr };
+        return { startDate: toDateStr(d), endDate: todayStr, isRange: true };
+    }
+
+    // Si pide expresamente desglose o histórico de cobros, asumimos todo el mes
+    if (q.includes('desglos') || q.includes('dia a dia') || q.includes('dia por dia')) {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
     }
 
     // Default: hoy
-    return { startDate: todayStr, endDate: todayStr };
+    return { startDate: todayStr, endDate: todayStr, isRange: false };
 };
 
 // ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
@@ -204,19 +229,26 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
     const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
     const isGenericBank = !bankFilter || invalidBankKeywords.includes(normalizeText(String(bankFilter)).toLowerCase().trim());
 
-    // Mapa de siglas → nombre completo
+    // Mapa de siglas → nombre completo o alias
     const bankAcronymMap = {
+        'BANCARIBE': 'bancaribe',
+        'CARIBE': 'bancaribe',
         'BNC': 'banco nacional de credito',
         'BDV': 'banco de venezuela',
+        'VENEZUELA': 'banco de venezuela',
         'BFC': 'banco fondo comun',
         'BBP': 'banco bicentenario',
+        'BICENTENARIO': 'banco bicentenario',
         'BANPLUS': 'banplus',
         'BANESCO': 'banesco',
         'MERCANTIL': 'mercantil',
         'PROVINCIAL': 'provincial',
+        'BBVA': 'provincial',
         'EXTERIOR': 'exterior',
         'SOFITASA': 'sofitasa',
         'CARONI': 'caroni',
+        'PLAZA': 'plaza',
+        '100% BANCO': '100% banco',
         'ZELLE': 'zelle',
         'CHASE': 'chase',
     };
@@ -248,7 +280,7 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
             const raw = await response.json();
             const list = Array.isArray(raw) ? raw : (raw.results || []);
             allPayments = list.filter(p => {
-                const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+                const bankOk = !resolvedBank || matchBankName(p.bank_name, resolvedBank);
                 const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
                 return bankOk && methodOk;
             });
@@ -283,7 +315,7 @@ const fetchBankPayments = async (bankFilter = null, methodFilter = null, startDa
         const results = pageData.results || [];
 
         const filtered = results.filter(p => {
-            const bankOk = !resolvedBank || normalizeText(p.bank_name || '').includes(resolvedBank);
+            const bankOk = !resolvedBank || matchBankName(p.bank_name, resolvedBank);
             const methodOk = !methodFilter || normalizeText(p.method_name || '').includes(normalizeText(methodFilter));
             return bankOk && methodOk;
         });
@@ -751,24 +783,39 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         };
     }
 
-    // 11. Detección de Bancos y Cobros
-    const bancosKeywords = ["bnc", "bdv", "venezuela", "provincial", "banplus", "banesco", "mercantil", "zelle", "sofitasa", "banco", "bancos", "cobros", "cobro", "pagos", "pago", "recaudacion", "recaudo", "pago movil", "transferencia", "banca"];
+    // 11. Detección de Bancos y Cobros (Bancaribe, BNC, BDV, Banesco, Mercantil, etc.)
+    const bancosKeywords = [
+        "bancaribe", "caribe", "bnc", "bdv", "venezuela", "provincial", "bbva",
+        "banplus", "banesco", "mercantil", "zelle", "sofitasa", "bfc", "fondo comun",
+        "bicentenario", "bbp", "exterior", "caroni", "plaza", "100% banco",
+        "banco", "bancos", "cobros", "cobro", "pagos", "pago", "recaudacion", "recaudo",
+        "pago movil", "transferencia", "banca", "ingresos bancos", "desglose bancos",
+        "cuanto habia en", "cuanto hay en", "cuanto ingreso en", "cuanto entro en"
+    ];
     if (bancosKeywords.some(b => q.includes(b)) && !q.includes("arpu") && !q.includes("churn")) {
         let detectedBank = null;
-        if (q.includes("bnc")) detectedBank = "BNC";
+        if (q.includes("bancaribe") || q.includes("caribe")) detectedBank = "BANCARIBE";
+        else if (q.includes("bnc") || q.includes("nacional de credito")) detectedBank = "BNC";
         else if (q.includes("venezuela") || q.includes("bdv")) detectedBank = "BDV";
-        else if (q.includes("provincial")) detectedBank = "PROVINCIAL";
+        else if (q.includes("provincial") || q.includes("bbva")) detectedBank = "PROVINCIAL";
         else if (q.includes("banesco")) detectedBank = "BANESCO";
         else if (q.includes("banplus")) detectedBank = "BANPLUS";
         else if (q.includes("mercantil")) detectedBank = "MERCANTIL";
         else if (q.includes("zelle")) detectedBank = "ZELLE";
+        else if (q.includes("bfc") || q.includes("fondo comun")) detectedBank = "BFC";
+        else if (q.includes("bicentenario") || q.includes("bbp")) detectedBank = "BBP";
+        else if (q.includes("exterior")) detectedBank = "EXTERIOR";
+        else if (q.includes("caroni")) detectedBank = "CARONI";
+        else if (q.includes("plaza")) detectedBank = "PLAZA";
+        else if (q.includes("sofitasa")) detectedBank = "SOFITASA";
+        else if (q.includes("100%")) detectedBank = "100% BANCO";
 
         const dateRange = parseSpanishDateRange(q);
 
         return {
             intent: 'INGRESOS_BANCOS',
             parameters: { banco: detectedBank, bank: detectedBank, startDate: dateRange.startDate, endDate: dateRange.endDate },
-            message: "Consultando cobranza bancaria registrada..."
+            message: detectedBank ? `Consultando cobranza en ${detectedBank}...` : "Consultando cobranza bancaria registrada..."
         };
     }
 
@@ -874,7 +921,7 @@ INTENCIONES DISPONIBLES:
             { role: "user", parts: [{ text: query }] }
         ];
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -3014,7 +3061,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const invalidBankKeywords = ['todos', 'todo', 'all', 'bancos', 'banco', 'general', 'cualquiera', 'ninguno', 'total'];
                     const bankFilter = (!rawBank || invalidBankKeywords.includes(normalizeText(String(rawBank)).toLowerCase().trim())) ? null : rawBank;
                     const methodFilter = parameters?.metodo || parameters?.method || null;
-                    // Parser universal de fechas en español (soporta cualquier fecha, día de la semana, mes o periodo)
+                    
+                    // Parser universal de fechas en español
                     const parsedDates = parseSpanishDateRange(message, parameters);
                     const startDate = parsedDates.startDate;
                     const endDate = parsedDates.endDate;
@@ -3026,44 +3074,58 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
 
                     let labelFecha;
-                    if (sDate === eDate) {
+                    const isSingleDay = (sDate === eDate);
+                    if (isSingleDay) {
                         labelFecha = `el **${startLabel}**`;
                     } else if (sDate.slice(0, 7) === eDate.slice(0, 7) && sDate.endsWith('-01')) {
                         const monthName = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', { month: 'long', year: 'numeric' });
-                        labelFecha = `en el mes de **${monthName}** (hasta hoy)`;
+                        labelFecha = `en el mes de **${monthName}** (del 1 al ${new Date(eDate + 'T12:00:00').getDate()})`;
                     } else {
                         labelFecha = `desde el **${startLabel}** hasta el **${endLabel}**`;
                     }
 
+                    const targetBankName = bankFilter ? bankFilter.toUpperCase() : "TODOS LOS BANCOS";
+
                     if (payments.length === 0) {
-                        let filtroMsg = bankFilter ? ` para **${bankFilter}**` : '';
+                        let filtroMsg = bankFilter ? ` para **${targetBankName}**` : '';
                         return {
-                            text: `Revisé el sistema de cobros ${userName} y no encontré pagos registrados ${labelFecha}${filtroMsg}.\n\n¿Deseas que consulte otro banco o fecha?`,
+                            text: `Revisé el sistema de cobros ${userName} y no encontré pagos registrados ${labelFecha}${filtroMsg}.\n\n¿Deseas que consulte otro banco o rango de fecha?`,
                             isCard: false
                         };
                     }
 
-                    // --- Agrupar por banco ---
-                    const introLabel = labelFecha;
-                    const cicloFilter = parameters?.ciclo || null;
-
+                    // --- Métricas globales ---
                     const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
                     const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
                     const totalPagos = payments.length;
 
                     // --- Agrupar por banco ---
-                    const byBank = payments.reduce((acc, p) => {
-                        const banco = p.bank_name || 'Desconocido';
-                        if (!acc[banco]) acc[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
-                        acc[banco].count++;
-                        acc[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
-                        acc[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
-                        const m = p.method_name || 'Otro';
-                        acc[banco].methods[m] = (acc[banco].methods[m] || 0) + 1;
-                        return acc;
-                    }, {});
+                    const byBank = {};
+                    // --- Agrupar por fecha (día a día) ---
+                    const byDate = {};
 
-                    // --- Nombres legibles para métodos de pago ---
+                    payments.forEach(p => {
+                        const banco = p.bank_name || 'Desconocido';
+                        if (!byBank[banco]) byBank[banco] = { count: 0, totalUsd: 0, totalBs: 0, methods: {} };
+                        byBank[banco].count++;
+                        byBank[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
+                        byBank[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
+                        const m = p.method_name || 'Otro';
+                        byBank[banco].methods[m] = (byBank[banco].methods[m] || 0) + 1;
+
+                        const dateKey = p.created_at ? p.created_at.split('T')[0] : (p.date || sDate);
+                        if (!byDate[dateKey]) byDate[dateKey] = { date: dateKey, count: 0, totalUsd: 0, totalBs: 0, byBank: {}, methods: {} };
+                        byDate[dateKey].count++;
+                        byDate[dateKey].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
+                        byDate[dateKey].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
+                        if (!byDate[dateKey].byBank[banco]) byDate[dateKey].byBank[banco] = { count: 0, totalUsd: 0, totalBs: 0 };
+                        byDate[dateKey].byBank[banco].count++;
+                        byDate[dateKey].byBank[banco].totalUsd += parseFloat(p.amount_data?.amount_usd || 0);
+                        byDate[dateKey].byBank[banco].totalBs += parseFloat(p.amount_data?.amount_bs || 0);
+                        byDate[dateKey].methods[m] = (byDate[dateKey].methods[m] || 0) + 1;
+                    });
+
+                    // Formato legible de métodos
                     const methodLabel = (m) => {
                         const map = {
                             'PAGO MOVIL': 'Pago Móvil',
@@ -3076,33 +3138,84 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         return map[m] || m;
                     };
 
-                    // --- Texto del desglose ---
-                    const bancosSorted = Object.entries(byBank).sort((a, b) => b[1].totalUsd - a[1].totalUsd);
-                    let desglose = '';
-                    bancosSorted.forEach(([banco, d]) => {
-                        const metodos = Object.entries(d.methods)
-                            .map(([m, c]) => `${methodLabel(m)}: ${c}`)
-                            .join(' | ');
-                        desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${formatUSD(d.totalUsd)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
-                    });
+                    let responseText = "";
+                    const datesSortedDesc = Object.keys(byDate).sort((a, b) => b.localeCompare(a));
+                    const hasMultipleDays = datesSortedDesc.length > 1;
+
+                    // Si hay múltiples días o el usuario pidió desglose/mes: TABLA DÍA POR DÍA
+                    if (hasMultipleDays) {
+                        responseText = `**${userName}**, aquí tienes el **desglose día por día** de cobros en **${targetBankName}** ${labelFecha}:\n\n`;
+                        
+                        // Encabezado de tabla Markdown compatible con Chatbot
+                        responseText += `| Fecha | Banco(s) | Pagos | Monto USD | Monto Bs | Métodos Principales |\n`;
+                        responseText += `| :--- | :--- | :---: | :---: | :---: | :--- |\n`;
+
+                        const todayYMD = new Date().toLocaleDateString('en-CA');
+                        const yesterdayYMD = new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
+                        const twoDaysAgoYMD = new Date(Date.now() - 2 * 86400000).toLocaleDateString('en-CA');
+
+                        datesSortedDesc.forEach(dateKey => {
+                            const dInfo = byDate[dateKey];
+                            let friendlyDate = dateKey;
+                            try {
+                                const dObj = new Date(dateKey + 'T12:00:00');
+                                const dayName = dObj.toLocaleDateString('es-VE', { weekday: 'short' });
+                                const dayNum = dObj.getDate();
+                                const monthShort = dObj.toLocaleDateString('es-VE', { month: 'short' });
+                                friendlyDate = `${dayName} ${dayNum} ${monthShort}`;
+                            } catch (_) {}
+
+                            if (dateKey === todayYMD) friendlyDate = `⭐ **Hoy** (${friendlyDate})`;
+                            else if (dateKey === yesterdayYMD) friendlyDate = `⏮️ **Ayer** (${friendlyDate})`;
+                            else if (dateKey === twoDaysAgoYMD) friendlyDate = `📅 **Hace 2 días** (${friendlyDate})`;
+
+                            const banksList = Object.keys(dInfo.byBank).join(', ') || targetBankName;
+                            const topMethods = Object.entries(dInfo.methods)
+                                .sort((a, b) => b[1] - a[1])
+                                .slice(0, 2)
+                                .map(([m, c]) => `${methodLabel(m)} (${c})`)
+                                .join(', ');
+
+                            responseText += `| ${friendlyDate} | ${banksList} | ${dInfo.count} | **$${formatUSD(dInfo.totalUsd)}** | Bs ${dInfo.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${topMethods || '—'} |\n`;
+                        });
+
+                        // Fila de Total Acumulado
+                        responseText += `| 🏆 **TOTAL ACUMULADO** | **${targetBankName}** | **${totalPagos}** | **$${formatUSD(totalUsd)}** | **Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **Consolidado** |\n\n`;
+
+                        responseText += `📊 **Resumen Global:**\n`;
+                        responseText += `- 💰 **Total Recaudado:** **$${formatUSD(totalUsd)} USD** / **Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
+                        responseText += `- 🧾 **Total de Pagos Procesados:** **${totalPagos} transacciones**\n`;
+                        responseText += `- 📈 **Promedio diario:** **$${formatUSD(totalUsd / datesSortedDesc.length)} USD/día** (${(totalPagos / datesSortedDesc.length).toFixed(1)} pagos/día)`;
+
+                    } else {
+                        // Un solo día (hoy, ayer, antier, etc.)
+                        const bancosSorted = Object.entries(byBank).sort((a, b) => b[1].totalUsd - a[1].totalUsd);
+                        let desglose = '';
+                        bancosSorted.forEach(([banco, d]) => {
+                            const metodos = Object.entries(d.methods)
+                                .map(([m, c]) => `${methodLabel(m)}: ${c}`)
+                                .join(' | ');
+                            desglose += `\n🏦 **${banco}** — **${d.count} pago(s)**\n     $${formatUSD(d.totalUsd)} USD | Bs ${d.totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })} — ${metodos}`;
+                        });
+
+                        responseText = `**${userName}**, aquí tienes el balance de cobranza en **${targetBankName}** ${labelFecha}:\n${desglose}\n\n📉 **Balance Final:**\n- 💰 **Recaudado Total:** **$${formatUSD(totalUsd)} USD** | Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2 })}\n- 🧾 **Total de Operaciones:** **${totalPagos} pagos registrados**`;
+                    }
 
                     // --- Stats para la tarjeta visual ---
                     const stats = [
-                        { label: '💰 Monto Recaudado', value: `$${totalUsd.toLocaleString('es-VE', { minimumFractionDigits: 2 })}`, color: '#2ecc71' }
+                        { label: '💰 Monto Recaudado (USD)', value: `$${formatUSD(totalUsd)}`, color: '#2ecc71' },
+                        { label: '🇻🇪 Monto en Bolívares (Bs)', value: `Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, color: '#3498db' },
+                        { label: '📊 Cantidad de Pagos', value: `${totalPagos} operaciones`, color: '#f39c12' },
+                        { label: '🏦 Entidad Financiera', value: targetBankName, color: '#9b59b6' }
                     ];
 
-                    // El indicador especial que pidió el jefe (badge inferior)
-                    stats.push({ label: '📊 Total de pagos registrados', value: totalPagos, color: '#3498db' });
-
-                    const cycleText = cicloFilter ? ` del **Ciclo ${cicloFilter}**` : '';
-
                     return {
-                        text: `**${userName}**, aquí tiene el balance de cobranza${cycleText} ${introLabel}:\n${desglose}\n\n📉 **Balance Final:**\n- Recaudado: **$${formatUSD(totalUsd)}** (${totalPagos} pagos)`,
+                        text: responseText,
                         isCard: true,
                         cardData: {
-                            title: `💳 Balance de Ingresos`,
+                            title: `💳 Balance de Ingresos Bancarios`,
                             value: `$${formatUSD(totalUsd)} USD`,
-                            subtitle: cicloFilter ? `Ciclo ${cicloFilter} | ${totalPagos} pagos` : (bankFilter ? `${bankFilter} | ${totalPagos} pagos` : `Todos los bancos | ${totalPagos} pagos`),
+                            subtitle: `${targetBankName} · ${labelFecha.replace(/\*\*/g, '')}`,
                             color: '#2ecc71',
                             stats
                         }
