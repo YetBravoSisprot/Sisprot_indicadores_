@@ -579,6 +579,63 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
     // Filas de detalle
     validClients.forEach((cliente, index) => {
         const tipoCliente = getClientType(cliente);
+
+        const resolvedAddress =
+            cliente.address ||
+            cliente.address_tax ||
+            cliente.client?.address ||
+            cliente.client?.address_tax ||
+            cliente.client?.address_commercial ||
+            cliente.address_commercial ||
+            cliente.direction ||
+            cliente.client?.direction ||
+            cliente.address_detail ||
+            cliente.client?.address_detail ||
+            cliente.raw?.address ||
+            cliente.raw?.address_tax ||
+            cliente.raw?.client?.address ||
+            cliente.raw?.client?.address_tax ||
+            cliente.raw?.client?.address_commercial ||
+            "";
+
+        const resolvedIp =
+            cliente.service_detail?.ip ||
+            cliente.ip ||
+            cliente.ip_address ||
+            cliente.ip_name ||
+            cliente.service?.ip ||
+            (Array.isArray(cliente.service_details) && cliente.service_details[0]?.ip) ||
+            (Array.isArray(cliente.services) && cliente.services[0]?.ip) ||
+            cliente.contract_detail?.ip ||
+            cliente.contract_detail?.service_detail?.ip ||
+            cliente.client?.ip ||
+            cliente.client?.ip_address ||
+            cliente.raw?.service_detail?.ip ||
+            cliente.raw?.ip ||
+            cliente.raw?.ip_address ||
+            cliente.raw?.ip_name ||
+            cliente.raw?.contract_detail?.ip ||
+            cliente.raw?.client?.ip ||
+            "";
+
+        const resolvedMac =
+            cliente.service_detail?.mac ||
+            cliente.mac ||
+            cliente.mac_address ||
+            cliente.service?.mac ||
+            (Array.isArray(cliente.service_details) && cliente.service_details[0]?.mac) ||
+            (Array.isArray(cliente.services) && cliente.services[0]?.mac) ||
+            cliente.contract_detail?.mac ||
+            cliente.contract_detail?.service_detail?.mac ||
+            cliente.client?.mac ||
+            cliente.client?.mac_address ||
+            cliente.raw?.service_detail?.mac ||
+            cliente.raw?.mac ||
+            cliente.raw?.mac_address ||
+            cliente.raw?.contract_detail?.mac ||
+            cliente.raw?.client?.mac ||
+            "";
+
         const row = sheetDetalle.addRow({
             num: index + 1,
             contrato: cliente.id || "N/A",
@@ -595,9 +652,9 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
             estatus: norm(cliente.status_name) || "Activo",
             ciclo: mapCycleValue(cliente.cycle, cliente),
             migrado: cliente.migrate ? "Si" : "No",
-            ip: cliente.service_detail?.ip || cliente.ip_name || "N/A",
-            mac: cliente.service_detail?.mac || cliente.mac_address || "N/A",
-            direccion: norm(cliente.address_tax || cliente.address) || "N/A"
+            ip: norm(resolvedIp) || "N/A",
+            mac: norm(resolvedMac) || "N/A",
+            direccion: norm(resolvedAddress) || "N/A"
         });
 
         row.height = 20;
