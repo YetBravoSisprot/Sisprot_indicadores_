@@ -4,8 +4,7 @@ import LogoTitulo from "../../Componentes/LogoTitulo";
 import DropdownMenu from "../../Componentes/DropdownMenu";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
 import LogingForm from "../../Componentes/LogingForm";
-import { exportPlanesToExcel } from "../../utils/ExcelExportPlan";
-import { exportToExcel } from "../../utils/ExcelExport";
+import { exportPlanesToExcel, exportActiveClientsReport } from "../../utils/ExcelExportPlan";
 import "./ventas.css";
 
 function Ventas() {
@@ -141,12 +140,7 @@ function Ventas() {
       return tipoServicio === "PYME" || tipoServicio === "RESIDENCIAL";
     });
 
-    const columns = [
-      "Contrato", "Cedula", "IP", "MAC", "Estatus", "Cliente",
-      "Teléfono", "Correo", "Sector", "Plan", "Costo", "Migrado",
-      "Ciclo", "Tipo_Cliente", "Dirección"
-    ];
-    exportToExcel(activeClients, ["Clientes Activos PYME y Residencial"], columns, "general", "Reporte_Clientes_Activos.xlsx");
+    exportActiveClientsReport(activeClients, "Reporte_Clientes_Activos.xlsx");
   };
 
   if (showPasswordState) {
@@ -252,7 +246,7 @@ function Ventas() {
                   <button 
                     className="btn-action-tab"
                     onClick={handleExportActiveClientsExcel}
-                    title="Descargar Detalle de Clientes Activos"
+                    title="Descargar Reporte de Clientes Activos (Resumen por Plan y Detalle)"
                   >
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
