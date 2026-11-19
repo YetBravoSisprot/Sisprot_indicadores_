@@ -112,9 +112,9 @@ const Chatbot = () => {
         if (path.includes("admin")) {
             return [
                 "📊 Resume los principales KPIs",
+                "🏦 Cuentas recaudadoras y movimientos",
+                "🏛️ Plan de bancos y segregación",
                 "💰 ¿Cuál es el ARPU actual?",
-                "📉 ¿Cuál es la tasa de baja actual?",
-                "🏛️ ¿Cuánto hemos recaudado en total?",
                 "👥 ¿Cuántos clientes activos tenemos?"
             ];
         }
@@ -152,9 +152,9 @@ const Chatbot = () => {
         }
         return [
             "📊 Resume los principales KPIs",
-            "👥 ¿Cuántos clientes activos tenemos?",
-            "💸 ¿Cuánto dinero tenemos pendiente de recuperar?",
-            "📈 ¿Cuánto hemos vendido durante 2026?"
+            "🏦 Cuentas recaudadoras",
+            "🏛️ Plan de bancos y segregación",
+            "💸 ¿Cuánto dinero tenemos pendiente de recuperar?"
         ];
     };
 
