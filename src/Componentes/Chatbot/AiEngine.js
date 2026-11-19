@@ -25,7 +25,7 @@ import {
     getCuentasDivisas,
     findCuentaByLastDigits,
     findCuentasByBanco
-} from '../../data/planDeBancos.js';
+} from './planDeBancos.js';
 
 
 
