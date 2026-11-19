@@ -15,6 +15,17 @@ import {
     formatPercent
 } from '../../services/biQueryService.js';
 import { fetchContractsByStatus } from '../../services/contractService.js';
+import {
+    PLAN_DE_BANCOS,
+    CUENTAS_CONTABLES_V6,
+    POLITICAS_TESORERIA,
+    PROCEDIMIENTO_PAGOS,
+    getCuentasRecaudadoras,
+    getCuentasPagadoras,
+    getCuentasDivisas,
+    findCuentaByLastDigits,
+    findCuentasByBanco
+} from '../../data/planDeBancos.js';
 
 
 
@@ -786,6 +797,111 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         };
     }
 
+    // 10.1 Detección de Consulta Técnica por Dígitos de Cuenta Bancaria (ej: "cuenta 3732", "cuenta 9469", "cuenta 4588")
+    const cuentaDigitsMatch = q.match(/(?:cuenta|cta|banco)?\s*(?:n[º°o]?\s*)?\b(3732|2731|9469|4588|6895|6820|9957|9572|5080|6937|6929|5695|5703|6339|6271|6229)\b/);
+    if (cuentaDigitsMatch && !q.includes("contrato") && !q.includes("cliente")) {
+        const digits = cuentaDigitsMatch[1];
+        return {
+            intent: 'DETALLE_CUENTA_BANCO',
+            parameters: { ultimos4: digits },
+            message: `Consultando información técnica de la cuenta bancaria terminada en ${digits}...`
+        };
+    }
+
+    // 10.2 Detección de Procedimiento Contable y Depósitos no Identificados (SGF V6 · ERP A2)
+    if (
+        q.includes("procedimiento contable") ||
+        q.includes("deposito no identificado") ||
+        q.includes("depositos no identificados") ||
+        q.includes("pago no identificado") ||
+        q.includes("pagos no identificados") ||
+        q.includes("por identificar") ||
+        q.includes("2.1.04.01.004") ||
+        q.includes("momentos contables") ||
+        q.includes("momento contable") ||
+        (q.includes("integracion") && q.includes("a2")) ||
+        (q.includes("asiento") && (q.includes("banco") || q.includes("pago"))) ||
+        q.includes("reclasificacion de pagos") ||
+        q.includes("como se registran los pagos")
+    ) {
+        return {
+            intent: 'PROCEDIMIENTO_CONTABLE_BANCOS',
+            parameters: {},
+            message: "Consultando el procedimiento contable oficial de pagos bancarios (SGF V6 / A2)..."
+        };
+    }
+
+    // 10.3 Detección de Cuentas Pagadoras (Nómina RRHH 9469, Tributos BDV 9572)
+    if (
+        q.includes("cuenta pagadora") ||
+        q.includes("cuentas pagadoras") ||
+        q.includes("cuenta de nomina") ||
+        q.includes("cuenta nomina") ||
+        q.includes("cuenta para nomina") ||
+        q.includes("cuenta de rrhh") ||
+        q.includes("cuenta rrhh") ||
+        q.includes("cuenta de impuestos") ||
+        q.includes("cuenta para impuestos") ||
+        q.includes("cuenta seniat") ||
+        q.includes("cuenta tributos")
+    ) {
+        return {
+            intent: 'CUENTAS_PAGADORAS',
+            parameters: {},
+            message: "Consultando cuentas pagadoras autorizadas (Nómina y Tributos)..."
+        };
+    }
+
+    // 10.4 Detección de Cuentas Recaudadoras / Saldos o Movimientos de Recaudadoras
+    if (
+        q.includes("recaudadora") ||
+        q.includes("recaudadoras") ||
+        q.includes("cuentas recaudadoras") ||
+        q.includes("cuenta recaudadora") ||
+        q.includes("cuentas de recaudacion") ||
+        q.includes("cuenta de recaudacion") ||
+        q.includes("saldos o movimientos de las cuentas recaudadoras") ||
+        q.includes("saldos o movimientos de cuentas recaudadoras") ||
+        q.includes("movimientos de las cuentas recaudadoras") ||
+        q.includes("movimientos de las recaudadoras") ||
+        q.includes("movimientos cuentas recaudadoras") ||
+        q.includes("saldo de las cuentas recaudadoras") ||
+        q.includes("saldo de las recaudadoras") ||
+        q.includes("saldos de cuentas recaudadoras") ||
+        q.includes("saldos cuentas recaudadoras") ||
+        q.includes("cuentas para cobrar") ||
+        q.includes("cuentas autorizadas para cobrar") ||
+        q.includes("donde cobran los clientes")
+    ) {
+        const dateRange = parseSpanishDateRange(q);
+        return {
+            intent: 'CUENTAS_RECAUDADORAS',
+            parameters: { startDate: dateRange.startDate, endDate: dateRange.endDate },
+            message: "Consultando cuentas recaudadoras oficiales y movimientos registrados..."
+        };
+    }
+
+    // 10.5 Detección de Plan de Bancos / Matriz de Segregación
+    if (
+        q.includes("plan de banco") ||
+        q.includes("plan de bancos") ||
+        q.includes("segregacion de cuenta") ||
+        q.includes("segregacion de cuentas") ||
+        q.includes("segregacion bancaria") ||
+        q.includes("cuentas de la empresa") ||
+        q.includes("cuentas bancarias de la empresa") ||
+        q.includes("todas las cuentas bancarias") ||
+        q.includes("catalogo de bancos") ||
+        q.includes("cuantas cuentas bancarias") ||
+        q.includes("matriz de bancos")
+    ) {
+        return {
+            intent: 'PLAN_DE_BANCOS',
+            parameters: {},
+            message: "Consultando el Plan de Bancos y la matriz de segregación SGF..."
+        };
+    }
+
     // 11. Detección de Bancos y Cobros (Bancaribe, BNC, BDV, Banesco, Mercantil, etc.)
     const bancosKeywords = [
         "bancaribe", "caribe", "bnc", "bdv", "venezuela", "provincial", "bbva",
@@ -904,6 +1020,11 @@ INTENCIONES DISPONIBLES:
 - RECAUDACION_HISTORICA: Total acumulado histórico en estadísticas de Sisprot.
 - RESUMEN_KPIS: Resumen ejecutivo del panel administrativo.
 - EXPLICACION_REGLA: Diferencias conceptuales (ej: suspendido vs cancelado).
+- CUENTAS_RECAUDADORAS: Consulta de cuentas bancarias recaudadoras autorizadas de Sisprot (BNC 3732, Provincial 4588, Banplus 6895, BNC 2731 POS, Bancaribe 9957), cobros registrados y estado de saldos en tiempo real / integración API directa (parameters: startDate, endDate).
+- PLAN_DE_BANCOS: Matriz maestra del Plan de Bancos SGF V6 (24 cuentas: 4 recaudadoras, 2 híbridas, 2 pagadoras nómina/tributos, 8 cuentas custodia divisas USD, cuentas en desincorporación).
+- CUENTAS_PAGADORAS: Cuentas dedicadas estrictamente a egresos, nómina (BNC 9469) y tributos fiscales (BDV 9572). Prohibido recibir fondos de clientes.
+- PROCEDIMIENTO_CONTABLE_BANCOS: Procedimiento oficial SGF de depósitos bancarios no identificados, los 3 momentos contables (cuenta de pasivo transitorio 2.1.04.01.004), anticipos y facturación fiscal en ERP A2.
+- DETALLE_CUENTA_BANCO: Consulta técnica de una cuenta bancaria específica por sus últimos 4 dígitos (ej: 3732, 9469, 4588, 2731, 9957, etc.) (parameters: ultimos4).
 - INGRESOS_BANCOS: Cobros reales registrados en bancos (banco, metodo, startDate, endDate, periodo). Soporta cualquier fecha, día de la semana (ej: lunes de esta semana, martes, etc.), semana, mes (este mes, meses anteriores) o año. Si el usuario no menciona un banco particular (o dice 'en los bancos' / 'en el banco'), banco debe ser null (NUNCA poner 'todos' como banco). Si menciona un día o fecha específica, establece startDate y endDate en formato YYYY-MM-DD.
 - INGRESOS: Dinero proyectado por planes de clientes activos.
 - SECTOR_METRICAS: Métricas de un sector o urbanismo específico (parameters: urbanismo).
@@ -1271,10 +1392,6 @@ export const processQuery = async (message, data, history = [], userName = "", c
 
     // Usar prioritariamente los contratos en vivo de la API; si falla por red offline, usar data.results como respaldo
     let clientes = liveContracts.length > 0 ? liveContracts : (data?.results || []);
-
-    if (!clientes || clientes.length === 0) {
-        return { text: "Aún no tengo datos cargados para analizar. Por favor, asegúrate de haber iniciado sesión.", isCard: false };
-    }
 
     const lastBotMsg = history.length > 0 ? history[history.length - 1] : null;
     let intent = null;
@@ -1669,6 +1786,19 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 // Interceptor de Periodo deshabilitado para permitir respuestas directas con el día de hoy por defecto.
 
             }
+        }
+
+        // Verificación de contratos solo para intents que realmente requieren el universo de clientes
+        const contractRequiredIntents = [
+            'TOTAL_CLIENTES', 'ESTADOS', 'TIPOS_CLIENTE', 'INGRESOS',
+            'SECTOR_METRICAS', 'AMBOS_METRICAS', 'RANKING_SECTORES', 'PLANES',
+            'BUSCAR_CONTRATO', 'BUSCAR_CEDULA', 'BUSCAR_NOMBRE', 'GENERAR_EXCEL'
+        ];
+        if ((!clientes || clientes.length === 0) && contractRequiredIntents.includes(intent)) {
+            return {
+                text: `Aún no tengo la lista de contratos cargada en memoria ${userName}. Por favor, asegúrate de haber iniciado sesión o espera unos segundos mientras se sincronizan los contratos.`,
+                isCard: false
+            };
         }
 
         // --- 2. EJECUCIÓN DE LOGICA (POST-IA & INTERCEPTORES) ---
@@ -3054,6 +3184,292 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         savedDataset: filtered,
                         filtersText: appliedTexts,
                         reportType: reportType
+                    }
+                };
+            }
+
+            // ── NUEVOS INTENTS: PLAN DE BANCOS, CUENTAS RECAUDADORAS Y PROCEDIMIENTO SGF ──
+            case 'CUENTAS_RECAUDADORAS': {
+                try {
+                    const parsedDates = parseSpanishDateRange(message, parameters);
+                    const isDateExplicit = message.includes('hoy') || message.includes('ayer') || message.includes('antier') ||
+                        message.includes('semana') || message.includes('mes') || message.includes('del 202') ||
+                        parameters?.startDate;
+
+                    let sDate = parsedDates.startDate;
+                    let eDate = parsedDates.endDate;
+
+                    if (!isDateExplicit) {
+                        const nowLocal = new Date();
+                        const firstDay = new Date(nowLocal.getFullYear(), nowLocal.getMonth(), 1);
+                        sDate = firstDay.toLocaleDateString('en-CA');
+                        eDate = nowLocal.toLocaleDateString('en-CA');
+                    }
+
+                    const { payments } = await fetchBankPayments(null, null, sDate, eDate);
+
+                    // Agrupar cobros registrados por banco
+                    const bankTotals = {};
+                    payments.forEach(p => {
+                        const bName = (p.bank_name || '').toUpperCase();
+                        let key = 'OTRO';
+                        if (bName.includes('CREDITO') || bName.includes('BNC')) key = 'BNC';
+                        else if (bName.includes('PROVINCIAL') || bName.includes('BBVA')) key = 'PROVINCIAL';
+                        else if (bName.includes('BANPLUS')) key = 'BANPLUS';
+                        else if (bName.includes('CARIBE') || bName.includes('BANCARIBE')) key = 'BANCARIBE';
+                        else if (bName.includes('VENEZUELA') || bName.includes('BDV')) key = 'BDV';
+                        else if (bName.includes('BANESCO')) key = 'BANESCO';
+                        else if (bName.includes('MERCANTIL')) key = 'MERCANTIL';
+
+                        if (!bankTotals[key]) bankTotals[key] = { usd: 0, bs: 0, count: 0 };
+                        bankTotals[key].usd += parseFloat(p.amount_data?.amount_usd || 0);
+                        bankTotals[key].bs += parseFloat(p.amount_data?.amount_bs || 0);
+                        bankTotals[key].count++;
+                    });
+
+                    const totalUsd = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_usd || 0), 0);
+                    const totalBs = payments.reduce((s, p) => s + parseFloat(p.amount_data?.amount_bs || 0), 0);
+                    const totalPagos = payments.length;
+
+                    const formatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+                    const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    const labelPeriodo = (sDate === eDate)
+                        ? `el **${startLabel}**`
+                        : `del **${startLabel}** al **${endLabel}**`;
+
+                    const bncData = bankTotals['BNC'] || { usd: 0, bs: 0, count: 0 };
+                    const provData = bankTotals['PROVINCIAL'] || { usd: 0, bs: 0, count: 0 };
+                    const banplusData = bankTotals['BANPLUS'] || { usd: 0, bs: 0, count: 0 };
+                    const caribeData = bankTotals['BANCARIBE'] || { usd: 0, bs: 0, count: 0 };
+
+                    let responseText = `**${userName}**, según el **Plan de Bancos SGF V6** y la matriz de segregación de tesorería, estas son las **cuentas recaudadoras oficiales** autorizadas para cobro a clientes y sus movimientos registrados ${labelPeriodo}:\n\n`;
+
+                    responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol / Propósito Autorizado | Recaudación USD | Recaudación Bs | Pagos | Saldo Disponible |\n`;
+                    responseText += `| :--- | :---: | :---: | :--- | :---: | :---: | :---: | :---: |\n`;
+                    responseText += `| 🏦 **BNC** | \`...3732\` | \`1.1.01.02.001\` | **Recaudadora Principal Clientes** (Mensualidades/Prorrateos) | **$${formatUSD(bncData.usd)}** | Bs ${bncData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${bncData.count} | ⏳ *En integración API* |\n`;
+                    responseText += `| 🏦 **Provincial** | \`...4588\` | \`1.1.01.02.008\` | **Recaudadora Clientes** (Cobranza recurrente) | **$${formatUSD(provData.usd)}** | Bs ${provData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${provData.count} | ⏳ *En integración API* |\n`;
+                    responseText += `| 🏦 **Banplus** | \`...6895\` | \`1.1.01.02.004\` | **Recaudadora Clientes** (Cobranza recurrente) | **$${formatUSD(banplusData.usd)}** | Bs ${banplusData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${banplusData.count} | ⏳ *En integración API* |\n`;
+                    responseText += `| 💳 **BNC (Taquilla)** | \`...2731\` | \`1.1.01.02.002\` | **Híbrida: POS y Débito Inmediato** (Taquilla y débito) | *(Ver cobros POS)* | — | — | ⏳ *En integración API* |\n`;
+                    responseText += `| 🌐 **Bancaribe** | \`...9957\` | \`1.1.01.02.009\` | **Híbrida: Cobro Instalaciones** (Contratos nuevos) | **$${formatUSD(caribeData.usd)}** | Bs ${caribeData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${caribeData.count} | ⏳ *En integración API* |\n`;
+                    responseText += `| 🏆 **TOTAL REGISTRADO** | **Cuentas Recaudadoras** | **SGF V6** | **Cobranza Consolidada** | **$${formatUSD(totalUsd)}** | **Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${totalPagos}** | **—** |\n\n`;
+
+                    responseText += `ℹ️ **Directrices de Tesorería y Estado de Saldos:**\n`;
+                    responseText += `- 🔌 **Integración API Bancaria en curso**: Bryant se encuentra desarrollando la conexión API directa con **BNC, Banco Provincial, Bancaribe y Banplus** para sincronizar saldos contables y disponibles en tiempo real.\n`;
+                    responseText += `- 📑 **Conciliación Diaria (Freddy)**: Se envían diariamente todos los estados de cuenta bancarios para cotejo manual con extractos y conciliación contable.\n`;
+                    responseText += `- 🚫 **Segregación Estricta**: La cuenta de Nómina (**BNC 9469**) y la cuenta de Impuestos (**BDV 9572**) tienen **estrictamente prohibido** recibir cobros de clientes.`;
+
+                    const stats = [
+                        { label: '💰 Total Recaudado', value: `$${formatUSD(totalUsd)} USD`, color: '#2ecc71' },
+                        { label: '🏦 BNC Principal (3732)', value: `$${formatUSD(bncData.usd)}`, color: '#3498db' },
+                        { label: '🏛️ Provincial (4588)', value: `$${formatUSD(provData.usd)}`, color: '#16a085' },
+                        { label: '⚡ Banplus (6895)', value: `$${formatUSD(banplusData.usd)}`, color: '#e67e22' }
+                    ];
+
+                    return {
+                        text: responseText,
+                        isCard: true,
+                        cardData: {
+                            title: '🏦 Cuentas Recaudadoras Oficiales (SGF V6)',
+                            value: `$${formatUSD(totalUsd)} USD`,
+                            subtitle: `Recaudación registrada ${labelPeriodo.replace(/\*\*/g, '')} · 5 Cuentas Autorizadas`,
+                            color: '#27ae60',
+                            stats
+                        }
+                    };
+                } catch (errRecaudadoras) {
+                    console.error('Error CUENTAS_RECAUDADORAS:', errRecaudadoras);
+                    return {
+                        text: `Disculpa ${userName}, ocurrió un error al consultar las cuentas recaudadoras: ${errRecaudadoras.message}.`,
+                        isCard: false
+                    };
+                }
+            }
+
+            case 'PLAN_DE_BANCOS': {
+                const recaudadoras = getCuentasRecaudadoras();
+                const pagadoras = getCuentasPagadoras();
+                const divisas = getCuentasDivisas();
+                const totalCuentas = PLAN_DE_BANCOS.length;
+
+                let responseText = `**${userName}**, aquí tienes la **Matriz Maestra del Plan de Bancos SGF V6** y la estructura de segregación aprobada para **SISPROT GLOBAL FIBER C.A** (RIF J501260087):\n\n`;
+
+                responseText += `### 1. 📥 Cuentas Recaudadoras en Bolívares (Cobro a Clientes)\n`;
+                responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol / Función | Estado |\n`;
+                responseText += `| :--- | :---: | :---: | :--- | :---: |\n`;
+                responseText += `| **BNC** | \`0191-0199-1221-0010-3732\` (\`...3732\`) | \`1.1.01.02.001\` | Recaudadora Principal Clientes (Mensualidades) | ✅ Activa |\n`;
+                responseText += `| **Banco Provincial** | \`0108-0941-0101-0003-4588\` (\`...4588\`) | \`1.1.01.02.008\` | Recaudadora Clientes | ✅ Activa |\n`;
+                responseText += `| **Banplus** | \`0174-0101-1010-1430-6895\` (\`...6895\`) | \`1.1.01.02.004\` | Recaudadora Clientes | ✅ Activa |\n`;
+                responseText += `| **Banplus (2)** | \`0174-0101-1110-1430-6820\` (\`...6820\`) | \`1.1.01.02.005\` | Recaudadora Secundaria / Transitoria | ⚠️ En revisión |\n\n`;
+
+                responseText += `### 2. 🔄 Cuentas Híbridas en Bolívares (Control Dual)\n`;
+                responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol / Función | Estado |\n`;
+                responseText += `| :--- | :---: | :---: | :--- | :---: |\n`;
+                responseText += `| **BNC** | \`0191-0199-1021-0011-2731\` (\`...2731\`) | \`1.1.01.02.002\` | Punto de Venta (POS) en taquilla y débito inmediato | ✅ Activa |\n`;
+                responseText += `| **Bancaribe** | \`0114-0502-1450-2005-9957\` (\`...9957\`) | \`1.1.01.02.009\` | Cobros de Instalaciones / Nuevos contratos y egresos de obra | ✅ Activa |\n\n`;
+
+                responseText += `### 3. 📤 Cuentas Pagadoras en Bolívares (Egresos Estrictos · Prohibido Cobrar Clientes)\n`;
+                responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol Exclusivo | Restricción |\n`;
+                responseText += `| :--- | :---: | :---: | :--- | :--- |\n`;
+                responseText += `| **BNC** | \`0191-0199-1021-0011-9469\` (\`...9469\`) | \`1.1.01.02.003\` | **Nómina y RRHH**: Sueldos, viáticos, vacaciones, liquidaciones | 🚫 **Prohibido cobros de clientes** (C02) |\n`;
+                responseText += `| **BDV** | \`0102-0491-1000-0035-9572\` (\`...9572\`) | — | **Tributos**: SENIAT, Alcaldías, CONATEL, IVSS, FAOV, INCES | 🚫 **Exclusiva para obligaciones fiscales** (C05) |\n\n`;
+
+                responseText += `### 4. 💵 Cuentas en Divisas USD (Custodia / V6: 1.1.01.03.001 - 008)\n`;
+                responseText += `Disponemos de **8 cuentas en moneda extranjera (USD)** en: BNC, Banplus, Banco Provincial, Bancaribe, BFC, Bancamiga, Sofitasa y Banco Plaza.\n\n`;
+
+                responseText += `### 5. 🧹 Regularización Patrimonial (Cuentas a Desincorporar / Personas Naturales)\n`;
+                responseText += `Se encuentran en proceso de desincorporación formal las cuentas personales (Elisaul 5695, Diego 5703, Bryant 6339, Sebastian 6271, Susana 6229) y cuentas inactivas (BFC 5080, Banplus 6937, 6929) según la política **C08**, para erradicar mezcla patrimonial con la persona jurídica.\n\n`;
+
+                responseText += `💡 *Puedes consultarme por cualquier cuenta específica (ej: "¿qué uso tiene la cuenta 3732?" o "cuenta 9469") o por el "procedimiento contable de depósitos por identificar".*`;
+
+                return {
+                    text: responseText,
+                    isCard: true,
+                    cardData: {
+                        title: '🏛️ Matriz Plan de Bancos SGF V6',
+                        value: `${totalCuentas} Cuentas Registradas`,
+                        subtitle: 'SISPROT GLOBAL FIBER C.A · Segregación Tesorería',
+                        color: '#3498db',
+                        stats: [
+                            { label: '📥 Recaudadoras Activas', value: `${recaudadoras.length} cuentas`, color: '#2ecc71' },
+                            { label: '🔄 Híbridas (POS/Inst)', value: '2 cuentas', color: '#9b59b6' },
+                            { label: '📤 Pagadoras (RRHH/Trib)', value: `${pagadoras.length} cuentas`, color: '#e74c3c' },
+                            { label: '💵 Divisas USD (Custodia)', value: `${divisas.length} cuentas`, color: '#f39c12' }
+                        ]
+                    }
+                };
+            }
+
+            case 'CUENTAS_PAGADORAS': {
+                let responseText = `**${userName}**, bajo las **Políticas de Tesorería SGF V6**, las **cuentas pagadoras** están rigurosamente segregadas para proteger los fondos operativos y cumplir con las normativas laborales y tributarias:\n\n`;
+
+                responseText += `### 1. 💼 BNC Cta. Nómina y RRHH N° 9469 (\`1.1.01.02.003\`)\n`;
+                responseText += `- **N° Completo:** \`0191-0199-1021-0011-9469\`\n`;
+                responseText += `- **Titular:** SISPROT GLOBAL FIBER C.A (RIF: J501260087)\n`;
+                responseText += `- **Uso Exclusivo:** Nómina regular del personal, complementos salariales, bonos de transporte, uniformes, vacaciones, utilidades, liquidaciones, médico ocupacional y préstamos a trabajadores.\n`;
+                responseText += `- **Entradas Autorizadas:** Únicamente traslados internos de fondos programados desde las cuentas recaudadoras/híbridas.\n`;
+                responseText += `- 🚫 **RESTRICCIÓN CRÍTICA (Política C02):** Está **estrictamente prohibido** recibir cobros de clientes o transferencias comerciales en esta cuenta.\n\n`;
+
+                responseText += `### 2. 🏛️ Banco de Venezuela (BDV) Cta. Tributos N° 9572\n`;
+                responseText += `- **N° Completo:** \`0102-0491-1000-0035-9572\`\n`;
+                responseText += `- **Titular:** SISPROT GLOBAL FIBER C.A (RIF: J501260087)\n`;
+                responseText += `- **Uso Exclusivo:** Pago y liquidación de tributos nacionales (SENIAT - IVA, ISLR), tributos municipales (Alcaldías), telecomunicaciones (CONATEL) y aportes parafiscales (IVSS, FAOV, INCES).\n`;
+                responseText += `- **Entradas Autorizadas:** Fondos transferidos para la provisión fiscal.\n`;
+                responseText += `- 🚫 **RESTRICCIÓN CRÍTICA (Política C05):** No debe utilizarse para cobros comerciales ni egresos ordinarios a proveedores.\n\n`;
+
+                responseText += `### 3. ⚙️ Cuentas Híbridas para Pagos a Proveedores\n`;
+                responseText += `Los pagos a contratistas y proveedores autorizados por gerencia se liquidan a través de las cuentas híbridas con control dual:\n`;
+                responseText += `- **BNC 2731** (\`1.1.01.02.002\`): Proveedores y servicios generales.\n`;
+                responseText += `- **Bancaribe 9957** (\`1.1.01.02.009\`): Proveedores de fibra, despliegue de obras e infraestructura.`;
+
+                return {
+                    text: responseText,
+                    isCard: true,
+                    cardData: {
+                        title: '📤 Cuentas Pagadoras Segregadas (SGF V6)',
+                        value: '2 Cuentas Dedicadas',
+                        subtitle: 'BNC 9469 (Nómina) · BDV 9572 (Tributos)',
+                        color: '#e74c3c',
+                        stats: [
+                            { label: '💼 BNC 9469 (RRHH)', value: 'Nómina y Personal', color: '#e74c3c' },
+                            { label: '🏛️ BDV 9572 (Fiscal)', value: 'SENIAT / Alcaldía', color: '#34495e' },
+                            { label: '🚫 Prohibición', value: 'Cobros de Clientes', color: '#c0392b' },
+                            { label: '📑 Conciliación', value: 'Diaria (Freddy)', color: '#27ae60' }
+                        ]
+                    }
+                };
+            }
+
+            case 'PROCEDIMIENTO_CONTABLE_BANCOS': {
+                let responseText = `**${userName}**, este es el **Procedimiento Contable y Administrativo Oficial** de SGF para depósitos bancarios pendientes de identificación y su integración con el Plan de Cuentas V6 y el **ERP A2**:\n\n`;
+
+                responseText += `### 🕒 Momento 1: Acreditación Bancaria Inicial (Sin Identificar)\n`;
+                responseText += `- **Suceso:** El banco (BNC, Provincial, Banplus, etc.) acredita fondos por transferencia o pago móvil, pero en ese instante no se conoce el cliente ni el contrato asociado.\n`;
+                responseText += `- **Asiento Contable en Tesorería:**\n`;
+                responseText += `  - **DEBE:** \`1.1.01.02.xxx\` (Banco Recaudador correspondiente)\n`;
+                responseText += `  - **HABER:** \`2.1.04.01.004\` **Depósitos bancarios recibidos pendientes de identificación o devolución**\n`;
+                responseText += `- **Efecto Contable:** Aumenta el saldo del activo en bancos y se reconoce un **pasivo transitorio**. *NO genera venta, NO afecta cuentas por cobrar y NO se emite factura fiscal en A2 hasta su identificación.*\n\n`;
+
+                responseText += `### 📱 Momento 2: Reporte del Cliente en Portal Sisprot\n`;
+                responseText += `- **Suceso:** El cliente ingresa a la plataforma web/app de Sisprot, carga la referencia bancaria, fecha, monto y comprobante asociado a su contrato.\n`;
+                responseText += `- **Asiento Contable:** **NINGUNO**.\n`;
+                responseText += `- **Efecto Administrativo:** La transacción queda en estatus *"Reportado / En validación"*. Constituye un soporte documental y administrativo para auditoría, pero no altera saldos contables.\n\n`;
+
+                responseText += `### ⚖️ Momento 3: Validación por Tesorería y Facturación Fiscal (A2)\n`;
+                responseText += `- **Suceso:** Tesorería (Freddy / Equipo) coteja el reporte contra el extracto bancario diario, valida fecha, monto, titular, referencia y ausencia de duplicados.\n`;
+                responseText += `- **Asiento Contable de Regularización:**\n`;
+                responseText += `  - **DEBE:** \`2.1.04.01.004\` **Depósitos bancarios pendientes de identificación** *(se cancela el pasivo transitorio)*\n`;
+                responseText += `  - **HABER:** \`2.1.06.01.001 / 002\` **Mensualidades cobradas por anticipado** (Residencial / PyME) o \`1.1.02.01.xxx\` (Cuentas por Cobrar Clientes).\n`;
+                responseText += `- **Facturación Fiscal en ERP A2:**\n`;
+                responseText += `  - Se emite la factura legal devengando el servicio:\n`;
+                responseText += `    - **DEBE:** Anticipo de Clientes (\`2.1.06.01.xxx\`)\n`;
+                responseText += `    - **HABER:** Débito Fiscal IVA 16% (\`2.1.03.01.xxx\`)\n`;
+                responseText += `    - **HABER:** Ingreso Operacional Servicio Internet (\`4.1.01.01.xxx\`)\n\n`;
+
+                responseText += `📌 **Regla de Oro:** Ningún ingreso no identificado puede asentarse como venta definitiva ni como aporte de socios sin la debida conciliación con el extracto bancario.`;
+
+                return {
+                    text: responseText,
+                    isCard: true,
+                    cardData: {
+                        title: '📑 Procedimiento Contable de Pagos (SGF V6 / A2)',
+                        value: '3 Momentos Contables',
+                        subtitle: 'Tratamiento de Cobros No Identificados y Facturación',
+                        color: '#8e44ad',
+                        stats: [
+                            { label: '🕒 Momento 1', value: 'Debe Banco / Haber 2.1.04.01.004', color: '#3498db' },
+                            { label: '📱 Momento 2', value: 'Soporte Documental (Sin Asiento)', color: '#f39c12' },
+                            { label: '⚖️ Momento 3', value: 'Reclasificación + Factura Fiscal A2', color: '#2ecc71' },
+                            { label: '🏛️ Cuenta Pasivo', value: '2.1.04.01.004 Transitoria', color: '#e74c3c' }
+                        ]
+                    }
+                };
+            }
+
+            case 'DETALLE_CUENTA_BANCO': {
+                const raw4 = parameters?.ultimos4 || extractNumber(message);
+                const cuenta = findCuentaByLastDigits(raw4);
+
+                if (!cuenta) {
+                    return {
+                        text: `Disculpa ${userName}, no encontré ninguna cuenta bancaria registrada con la terminación **"${raw4 || 'indicada'}"** en el Plan de Bancos SGF V6.\n\nLas cuentas principales registradas son:\n- **BNC Recaudadora:** 3732\n- **BNC POS/Débito:** 2731\n- **BNC Nómina/RRHH:** 9469\n- **Provincial Recaudadora:** 4588\n- **Banplus Recaudadora:** 6895\n- **Bancaribe Instalaciones:** 9957\n- **BDV Tributos:** 9572`,
+                        isCard: false
+                    };
+                }
+
+                const badgeRol = cuenta.esRecaudadora ? '📥 Recaudadora' : (cuenta.esPagadora ? '📤 Pagadora' : (cuenta.esHibrida ? '🔄 Híbrida' : '💵 Custodia'));
+
+                let responseText = `**${userName}**, aquí tienes la ficha técnica oficial de la cuenta **${cuenta.banco} (...${cuenta.ultimos4})** según el **Plan de Bancos SGF V6**:\n\n`;
+                responseText += `### 🏦 ${cuenta.bancoNombre || cuenta.banco} — Cuenta N° ${cuenta.ultimos4}\n`;
+                responseText += `- **Número Completo:** \`${cuenta.numeroCuenta}\`\n`;
+                responseText += `- **Titular:** **${cuenta.titular}** (${cuenta.rif})\n`;
+                responseText += `- **Moneda:** **${cuenta.moneda}** (${cuenta.moneda === 'VES' ? 'Bolívares' : 'Dólares USD'})\n`;
+                responseText += `- **Rol Oficial:** **${badgeRol}** (${cuenta.rol})\n`;
+                responseText += `- **Código Contable V6:** \`${cuenta.codigoContableV6 || 'En asignación'}\`\n`;
+                responseText += `- **Cuenta Contable V6:** *${cuenta.cuentaContableV6 || cuenta.bancoNombre}*\n`;
+                responseText += `- **Estatus Operativo:** **${cuenta.estado}**\n\n`;
+
+                responseText += `📋 **Reglas de Operación:**\n`;
+                responseText += `- 🟢 **Entradas Permitidas:** ${cuenta.entradasPermitidas}\n`;
+                responseText += `- 🔴 **Salidas Permitidas:** ${cuenta.salidasPermitidas}\n`;
+                if (cuenta.observaciones) {
+                    responseText += `- ℹ️ **Observaciones:** ${cuenta.observaciones}\n`;
+                }
+
+                return {
+                    text: responseText,
+                    isCard: true,
+                    cardData: {
+                        title: `🏦 Ficha de Cuenta ${cuenta.banco} (...${cuenta.ultimos4})`,
+                        value: badgeRol,
+                        subtitle: `${cuenta.numeroCuenta} · ${cuenta.titular}`,
+                        color: cuenta.esRecaudadora ? '#2ecc71' : (cuenta.esPagadora ? '#e74c3c' : '#3498db'),
+                        stats: [
+                            { label: '🏛️ Banco', value: cuenta.banco, color: '#3498db' },
+                            { label: '🔢 Código V6', value: cuenta.codigoContableV6 || 'N/A', color: '#9b59b6' },
+                            { label: '💰 Moneda', value: cuenta.moneda, color: '#f39c12' },
+                            { label: '⚙️ Estado', value: cuenta.estado, color: cuenta.estado === 'Activa' ? '#2ecc71' : '#e67e22' }
+                        ]
                     }
                 };
             }
