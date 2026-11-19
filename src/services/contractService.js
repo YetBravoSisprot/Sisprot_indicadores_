@@ -75,6 +75,64 @@ export const normalizeContract = (item) => {
     const sectorName = sectorObj.name || item.sector_name || "";
     const parishName = sectorObj.parish?.name || item.parish_name || "";
 
+    // Resolver dirección soportando tanto formato plano como anidado (item y clientObj)
+    const resolvedAddress = 
+        item.address ||
+        item.address_tax ||
+        clientObj.address ||
+        clientObj.address_tax ||
+        clientObj.address_commercial ||
+        item.address_commercial ||
+        item.direction ||
+        clientObj.direction ||
+        item.address_detail ||
+        clientObj.address_detail ||
+        "";
+
+    // Resolver detalles de servicio / networking (IP, MAC, Interface)
+    const serviceDetailObj = 
+        item.service_detail ||
+        (Array.isArray(item.service_details) && item.service_details[0]) ||
+        item.service ||
+        (Array.isArray(item.services) && item.services[0]) ||
+        item.contract_detail?.service_detail ||
+        clientObj.service_detail ||
+        null;
+
+    const resolvedIp = 
+        serviceDetailObj?.ip ||
+        item.ip ||
+        item.ip_address ||
+        item.ip_name ||
+        item.contract_detail?.ip ||
+        clientObj.ip ||
+        clientObj.ip_address ||
+        "";
+
+    const resolvedMac = 
+        serviceDetailObj?.mac ||
+        item.mac ||
+        item.mac_address ||
+        item.contract_detail?.mac ||
+        clientObj.mac ||
+        clientObj.mac_address ||
+        "";
+
+    const resolvedInterface = 
+        serviceDetailObj?.interface ||
+        item.interface ||
+        item.vlan ||
+        "N/A";
+
+    const finalServiceDetail = serviceDetailObj 
+        ? { 
+            ...serviceDetailObj, 
+            ip: serviceDetailObj.ip || resolvedIp, 
+            mac: serviceDetailObj.mac || resolvedMac, 
+            interface: serviceDetailObj.interface || resolvedInterface 
+          }
+        : (resolvedIp || resolvedMac ? { ip: resolvedIp, mac: resolvedMac, interface: resolvedInterface } : null);
+
     return {
         id: item.id,
         client_id: clientObj.id || item.client_id,
@@ -98,16 +156,22 @@ export const normalizeContract = (item) => {
         },
         client_mobile: clientObj.mobile || item.mobile || item.client_mobile || "N/A",
         client_email: clientObj.email || item.email || item.client_email || "N/A",
-        address: item.address_tax || item.address || "",
-        address_tax: item.address_tax || "",
+        address: resolvedAddress,
+        address_tax: item.address_tax || clientObj.address_tax || resolvedAddress,
+        ip: resolvedIp,
+        mac: resolvedMac,
+        ip_address: resolvedIp,
+        mac_address: resolvedMac,
         client_identification: clientObj.identification || item.identification || item.client_identification || "N/A",
         created_at: item.created_at || item.status_updated_at || null,
-        service_detail: item.service_detail || null,
+        service_detail: finalServiceDetail,
         nap_box_name: item.nap_box_name || "",
         debt: item.debt !== undefined ? item.debt : 0,
         debt_bs: item.debt_bs !== undefined ? item.debt_bs : 0,
         bank_associated: item.bank_associated || null,
-        contract_detail_id: item.contract_detail_id || null
+        contract_detail_id: item.contract_detail_id || null,
+        client: clientObj,
+        raw: item
     };
 };
 
@@ -162,7 +226,7 @@ export const filterValidContracts = (contractsList) => {
 const inFlightRequests = new Map();
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutos de vigencia para caché persistente
 
-const IDB_NAME = "sisprot_bi_cache_db";
+const IDB_NAME = "sisprot_bi_cache_db_v2";
 const IDB_STORE = "contracts_store";
 
 const openCacheDB = () => {
@@ -186,7 +250,7 @@ const getFromPersistentCache = async (key) => {
     // 1. Intentar sessionStorage primero (para listas pequeñas)
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
-            const raw = window.sessionStorage.getItem(`sisprot_contracts_${key}`);
+            const raw = window.sessionStorage.getItem(`sisprot_contracts_v2_${key}`);
             if (raw) {
                 const parsed = JSON.parse(raw);
                 if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -200,7 +264,7 @@ const getFromPersistentCache = async (key) => {
         return await new Promise((resolve) => {
             const tx = db.transaction(IDB_STORE, "readonly");
             const store = tx.objectStore(IDB_STORE);
-            const req = store.get(`sisprot_contracts_${key}`);
+            const req = store.get(`sisprot_contracts_v2_${key}`);
             req.onsuccess = () => {
                 const record = req.result;
                 if (record && Array.isArray(record.data) && record.data.length > 0) {
@@ -221,7 +285,7 @@ const getFromPersistentCache = async (key) => {
 const saveToPersistentCache = async (key, data) => {
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
-            window.sessionStorage.setItem(`sisprot_contracts_${key}`, JSON.stringify(data));
+            window.sessionStorage.setItem(`sisprot_contracts_v2_${key}`, JSON.stringify(data));
         }
     } catch (_) {
         // Si supera la cuota de 5MB de sessionStorage, IndexedDB actúa como respaldo principal
@@ -231,7 +295,7 @@ const saveToPersistentCache = async (key, data) => {
         const db = await openCacheDB();
         const tx = db.transaction(IDB_STORE, "readwrite");
         const store = tx.objectStore(IDB_STORE);
-        store.put({ timestamp: Date.now(), data }, `sisprot_contracts_${key}`);
+        store.put({ timestamp: Date.now(), data }, `sisprot_contracts_v2_${key}`);
     } catch (_) {}
 };
 
@@ -384,7 +448,7 @@ export const clearContractsCache = () => {
     try {
         if (typeof window !== "undefined" && window.sessionStorage) {
             Object.keys(window.sessionStorage).forEach(k => {
-                if (k.startsWith("sisprot_contracts_")) {
+                if (k.startsWith("sisprot_contracts_") || k.startsWith("sisprot_contracts_v2_")) {
                     window.sessionStorage.removeItem(k);
                 }
             });
