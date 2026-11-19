@@ -537,20 +537,18 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
     const columnsDetalle = [
         { header: "N°", key: "num", width: 6 },
         { header: "CONTRATO", key: "contrato", width: 14 },
-        { header: "CÉDULA", key: "ci_rif", width: 16 },
+        { header: "CÉDULA / RIF", key: "ci_rif", width: 16 },
         { header: "CLIENTE", key: "cliente", width: 38 },
         { header: "TELÉFONO", key: "telefono", width: 16 },
-        { header: "CORREO", key: "email", width: 28 },
-        { header: "SECTOR", key: "sector", width: 22 },
+        { header: "CORREO", key: "email", width: 30 },
+        { header: "SECTOR", key: "sector", width: 24 },
+        { header: "PARROQUIA", key: "parroquia", width: 22 },
         { header: "PLAN", key: "plan", width: 28 },
         { header: "COSTO ($)", key: "costo", width: 15 },
         { header: "TIPO CLIENTE", key: "tipo_cliente", width: 16 },
         { header: "ESTATUS", key: "estatus", width: 14 },
         { header: "CICLO", key: "ciclo", width: 10 },
-        { header: "MIGRADO", key: "migrado", width: 12 },
-        { header: "IP", key: "ip", width: 18 },
-        { header: "MAC", key: "mac", width: 20 },
-        { header: "DIRECCIÓN", key: "direccion", width: 40 }
+        { header: "MIGRADO", key: "migrado", width: 12 }
     ];
 
     sheetDetalle.columns = columnsDetalle;
@@ -576,85 +574,42 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
         to: { row: 1, column: columnsDetalle.length }
     };
 
-    // Filas de detalle
+    // Filas de detalle (exclusivamente datos reales provistos por la API)
     validClients.forEach((cliente, index) => {
         const tipoCliente = getClientType(cliente);
 
-        const resolvedAddress =
-            cliente.address ||
-            cliente.address_tax ||
-            cliente.client?.address ||
-            cliente.client?.address_tax ||
-            cliente.client?.address_commercial ||
-            cliente.address_commercial ||
-            cliente.direction ||
-            cliente.client?.direction ||
-            cliente.address_detail ||
-            cliente.client?.address_detail ||
-            cliente.raw?.address ||
-            cliente.raw?.address_tax ||
-            cliente.raw?.client?.address ||
-            cliente.raw?.client?.address_tax ||
-            cliente.raw?.client?.address_commercial ||
-            "";
+        const resolvedEmail =
+            (cliente.client_email && String(cliente.client_email).toUpperCase() !== "N/A")
+                ? norm(cliente.client_email)
+                : (cliente.email && String(cliente.email).toUpperCase() !== "N/A")
+                    ? norm(cliente.email)
+                    : "N/A";
 
-        const resolvedIp =
-            cliente.service_detail?.ip ||
-            cliente.ip ||
-            cliente.ip_address ||
-            cliente.ip_name ||
-            cliente.service?.ip ||
-            (Array.isArray(cliente.service_details) && cliente.service_details[0]?.ip) ||
-            (Array.isArray(cliente.services) && cliente.services[0]?.ip) ||
-            cliente.contract_detail?.ip ||
-            cliente.contract_detail?.service_detail?.ip ||
-            cliente.client?.ip ||
-            cliente.client?.ip_address ||
-            cliente.raw?.service_detail?.ip ||
-            cliente.raw?.ip ||
-            cliente.raw?.ip_address ||
-            cliente.raw?.ip_name ||
-            cliente.raw?.contract_detail?.ip ||
-            cliente.raw?.client?.ip ||
-            "";
+        const resolvedMobile =
+            norm(cliente.client_mobile) && norm(cliente.client_mobile) !== "N/A"
+                ? norm(cliente.client_mobile)
+                : norm(cliente.mobile) || "N/A";
 
-        const resolvedMac =
-            cliente.service_detail?.mac ||
-            cliente.mac ||
-            cliente.mac_address ||
-            cliente.service?.mac ||
-            (Array.isArray(cliente.service_details) && cliente.service_details[0]?.mac) ||
-            (Array.isArray(cliente.services) && cliente.services[0]?.mac) ||
-            cliente.contract_detail?.mac ||
-            cliente.contract_detail?.service_detail?.mac ||
-            cliente.client?.mac ||
-            cliente.client?.mac_address ||
-            cliente.raw?.service_detail?.mac ||
-            cliente.raw?.mac ||
-            cliente.raw?.mac_address ||
-            cliente.raw?.contract_detail?.mac ||
-            cliente.raw?.client?.mac ||
-            "";
+        const resolvedIdentification =
+            norm(cliente.client_identification) && norm(cliente.client_identification) !== "N/A"
+                ? norm(cliente.client_identification)
+                : norm(cliente.identification) || "N/A";
 
         const row = sheetDetalle.addRow({
             num: index + 1,
             contrato: cliente.id || "N/A",
-            ci_rif: norm(cliente.client_identification) || "N/A",
+            ci_rif: resolvedIdentification,
             cliente: norm(cliente.client_name) || "N/A",
-            telefono: norm(cliente.client_mobile) || "N/A",
-            email: (cliente.client_email && String(cliente.client_email).toUpperCase() !== "N/A")
-                ? norm(cliente.client_email)
-                : norm(cliente.email) || "N/A",
-            sector: norm(cliente._displaySector || cliente.sector_name) || "N/A",
+            telefono: resolvedMobile,
+            email: resolvedEmail,
+            sector: norm(cliente._displaySector || cliente.sector_name || cliente.sector?.name) || "N/A",
+            parroquia: norm(cliente.parish_name || cliente.sector?.parish?.name) || "N/A",
             plan: cleanPlanName(cliente.plan?.name),
             costo: parseFloat(cliente.plan?.cost || 0),
             tipo_cliente: tipoCliente,
-            estatus: norm(cliente.status_name) || "Activo",
+            estatus: norm(cliente.status_name || cliente.status?.name) || "Activo",
             ciclo: mapCycleValue(cliente.cycle, cliente),
-            migrado: cliente.migrate ? "Si" : "No",
-            ip: norm(resolvedIp) || "N/A",
-            mac: norm(resolvedMac) || "N/A",
-            direccion: norm(resolvedAddress) || "N/A"
+            migrado: cliente.migrate !== undefined ? (cliente.migrate ? "Si" : "No") : "Si"
         });
 
         row.height = 20;
@@ -669,7 +624,7 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
             };
 
             const key = columnsDetalle[colIndex - 1]?.key;
-            if (["num", "contrato", "ci_rif", "telefono", "tipo_cliente", "estatus", "ciclo", "migrado", "ip", "mac"].includes(key)) {
+            if (["num", "contrato", "ci_rif", "telefono", "tipo_cliente", "estatus", "ciclo", "migrado"].includes(key)) {
                 cell.alignment = { horizontal: "center", vertical: "middle" };
             } else if (key === "costo") {
                 cell.alignment = { horizontal: "right", vertical: "middle" };
@@ -690,15 +645,13 @@ export const exportActiveClientsReport = async (activeClients, customFileName = 
         telefono: "",
         email: "",
         sector: "",
+        parroquia: "",
         plan: "TOTAL FACTURADO:",
-        costo: { formula: `SUM(I2:I${lastDetailRow})`, result: totalIngresosGeneral },
+        costo: { formula: `SUM(J2:J${lastDetailRow})`, result: totalIngresosGeneral },
         tipo_cliente: "",
         estatus: "",
         ciclo: "",
-        migrado: "",
-        ip: "",
-        mac: "",
-        direccion: ""
+        migrado: ""
     });
 
     totalDetailRow.height = 26;
