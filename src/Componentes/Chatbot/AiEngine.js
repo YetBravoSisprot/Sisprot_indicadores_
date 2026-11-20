@@ -26,6 +26,7 @@ import {
     findCuentaByLastDigits,
     findCuentasByBanco
 } from './planDeBancos.js';
+import { getBankMovementsSummary, fetchBankMovements } from './bankMovementService.js';
 
 
 
@@ -902,6 +903,29 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         };
     }
 
+    // 10.6 Detección de Movimientos Bancarios Generales e Ingresos/Egresos (Endpoint bank-movements de Freddy)
+    if (
+        q.includes("movimientos bancarios") ||
+        q.includes("movimiento bancario") ||
+        q.includes("movimientos de bancos") ||
+        q.includes("movimientos bancario") ||
+        q.includes("ingresos y egresos") ||
+        q.includes("egresos bancarios") ||
+        q.includes("flujo de caja") ||
+        q.includes("flujo de bancos") ||
+        q.includes("movimientos de todas las cuentas") ||
+        q.includes("extractos bancarios") ||
+        q.includes("extracto bancario") ||
+        q.includes("movimientos del banco")
+    ) {
+        const dateRange = parseSpanishDateRange(q);
+        return {
+            intent: 'MOVIMIENTOS_BANCARIOS',
+            parameters: { startDate: dateRange.startDate, endDate: dateRange.endDate },
+            message: "Consultando movimientos bancarios oficiales (ingresos, egresos y depósitos pendientes)..."
+        };
+    }
+
     // 11. Detección de Bancos y Cobros (Bancaribe, BNC, BDV, Banesco, Mercantil, etc.)
     const bancosKeywords = [
         "bancaribe", "caribe", "bnc", "bdv", "venezuela", "provincial", "bbva",
@@ -1021,6 +1045,7 @@ INTENCIONES DISPONIBLES:
 - RESUMEN_KPIS: Resumen ejecutivo del panel administrativo.
 - EXPLICACION_REGLA: Diferencias conceptuales (ej: suspendido vs cancelado).
 - CUENTAS_RECAUDADORAS: Consulta de cuentas bancarias recaudadoras autorizadas de Sisprot (BNC 3732, Provincial 4588, Banplus 6895, BNC 2731 POS, Bancaribe 9957), cobros registrados y estado de saldos en tiempo real / integración API directa (parameters: startDate, endDate).
+- MOVIMIENTOS_BANCARIOS: Consulta oficial de movimientos bancarios detallados (ingresos, egresos, comisiones, impuestos, flujo neto y depósitos no identificados por cuenta bancaria) (parameters: startDate, endDate).
 - PLAN_DE_BANCOS: Matriz maestra del Plan de Bancos SGF V6 (24 cuentas: 4 recaudadoras, 2 híbridas, 2 pagadoras nómina/tributos, 8 cuentas custodia divisas USD, cuentas en desincorporación).
 - CUENTAS_PAGADORAS: Cuentas dedicadas estrictamente a egresos, nómina (BNC 9469) y tributos fiscales (BDV 9572). Prohibido recibir fondos de clientes.
 - PROCEDIMIENTO_CONTABLE_BANCOS: Procedimiento oficial SGF de depósitos bancarios no identificados, los 3 momentos contables (cuenta de pasivo transitorio 2.1.04.01.004), anticipos y facturación fiscal en ERP A2.
@@ -3281,6 +3306,86 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     console.error('Error CUENTAS_RECAUDADORAS:', errRecaudadoras);
                     return {
                         text: `Disculpa ${userName}, ocurrió un error al consultar las cuentas recaudadoras: ${errRecaudadoras.message}.`,
+                        isCard: false
+                    };
+                }
+            }
+
+            case 'MOVIMIENTOS_BANCARIOS': {
+                try {
+                    const parsedDates = parseSpanishDateRange(message, parameters);
+                    const isDateExplicit = message.includes('hoy') || message.includes('ayer') || message.includes('antier') ||
+                        message.includes('semana') || message.includes('mes') || message.includes('del 202') ||
+                        parameters?.startDate;
+
+                    let sDate = parsedDates.startDate;
+                    let eDate = parsedDates.endDate;
+
+                    if (!isDateExplicit) {
+                        const nowLocal = new Date();
+                        const firstDay = new Date(nowLocal.getFullYear(), nowLocal.getMonth(), 1);
+                        sDate = firstDay.toLocaleDateString('en-CA');
+                        eDate = nowLocal.toLocaleDateString('en-CA');
+                    }
+
+                    const summary = await getBankMovementsSummary(sDate, eDate);
+
+                    const formatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+                    const startLabel = new Date(sDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    const endLabel = new Date(eDate + 'T12:00:00').toLocaleDateString('es-VE', formatOptions);
+                    const labelPeriodo = (sDate === eDate)
+                        ? `el **${startLabel}**`
+                        : `del **${startLabel}** al **${endLabel}**`;
+
+                    if (summary.totalMovements === 0) {
+                        return {
+                            text: `No encontré movimientos bancarios registrados ${labelPeriodo} en la ruta de Freddy.\n\nPuedes probar consultando otro rango de fechas o el mes en curso.`,
+                            isCard: false
+                        };
+                    }
+
+                    let responseText = `**${userName}**, este es el **Reporte Consolidado de Movimientos Bancarios (Extractos)** registrado ${labelPeriodo} según el nuevo endpoint de Tesorería:\n\n`;
+
+                    responseText += `| Banco / Cuenta | Terminación | Rol / Código V6 | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Movimientos | Por Identificar |\n`;
+                    responseText += `| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n`;
+
+                    summary.byAccount.forEach(acc => {
+                        const netAccount = acc.incomeBs - acc.expenseBs;
+                        const netSign = netAccount >= 0 ? '+' : '';
+                        responseText += `| 🏦 **${acc.banco}** | \`...${acc.last4}\` | ${acc.rol} | Bs ${acc.incomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Bs ${acc.expenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | **${netSign}Bs ${netAccount.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | ${acc.totalTransactions} | ${acc.unusedCount > 0 ? `⚠️ **${acc.unusedCount}**` : '0'} |\n`;
+                    });
+
+                    const netSignTotal = summary.netFlowBs >= 0 ? '+' : '';
+                    responseText += `| 🏆 **TOTAL GENERAL** | **Todas** | **Consolidado** | **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${summary.totalMovements}** | **${summary.totalUnusedCount}** |\n\n`;
+
+                    responseText += `📊 **Resumen Financiero y Contable:**\n`;
+                    responseText += `- 📥 **Ingresos Totales en Bancos:** **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
+                    responseText += `- 📤 **Egresos Totales en Bancos:** **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** (Comisiones, pagos de nómina y transferencias)\n`;
+                    responseText += `- ⚖️ **Flujo Neto Bancario:** **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
+                    responseText += `- 🔍 **Depósitos Pendientes por Identificar (Momento 1):** **${summary.totalUnusedCount} depósitos** (\`is_used: false\`) por aplicar contablemente a la cuenta transitoria \`2.1.04.01.004\`.\n`;
+
+                    const stats = [
+                        { label: '📥 Ingresos Totales', value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: '#2ecc71' },
+                        { label: '📤 Egresos Totales', value: `Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: '#e74c3c' },
+                        { label: '⚖️ Flujo Neto', value: `Bs ${summary.netFlowBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: summary.netFlowBs >= 0 ? '#3498db' : '#e67e22' },
+                        { label: '🔍 Por Identificar', value: `${summary.totalUnusedCount} pagos`, color: '#f39c12' }
+                    ];
+
+                    return {
+                        text: responseText,
+                        isCard: true,
+                        cardData: {
+                            title: '📑 Movimientos Bancarios (Extractos Oficiales)',
+                            value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`,
+                            subtitle: `${summary.totalMovements} Movimientos ${labelPeriodo.replace(/\*\*/g, '')}`,
+                            color: '#3498db',
+                            stats
+                        }
+                    };
+                } catch (errMov) {
+                    console.error('Error MOVIMIENTOS_BANCARIOS:', errMov);
+                    return {
+                        text: `Disculpa ${userName}, ocurrió un error al consultar los movimientos bancarios: ${errMov.message}.`,
                         isCard: false
                     };
                 }
