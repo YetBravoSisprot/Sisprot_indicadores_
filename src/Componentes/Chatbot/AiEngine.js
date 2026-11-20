@@ -1781,11 +1781,26 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 }
             }
 
-            // --- LLAMADA PRINCIPAL A IA ---
+            // --- LLAMADA PRINCIPAL A IA (con prioridad local determinística para Tesorería y Bancos) ---
             if (!fromClarification) {
-                const openAIResult = await callOpenAI(message, history, currentPage, userName);
-                intent = openAIResult.intent;
-                parameters = openAIResult.parameters || {};
+                const localCheck = parseQueryLocally(message, history, currentPage, userName);
+                const deterministicBankingIntents = [
+                    'PLAN_DE_BANCOS',
+                    'CUENTAS_RECAUDADORAS',
+                    'MOVIMIENTOS_BANCARIOS',
+                    'CUENTAS_PAGADORAS',
+                    'PROCEDIMIENTO_CONTABLE_BANCOS',
+                    'DETALLE_CUENTA_BANCO'
+                ];
+
+                if (localCheck && deterministicBankingIntents.includes(localCheck.intent)) {
+                    intent = localCheck.intent;
+                    parameters = localCheck.parameters || {};
+                } else {
+                    const openAIResult = await callOpenAI(message, history, currentPage, userName);
+                    intent = openAIResult.intent;
+                    parameters = openAIResult.parameters || {};
+                }
 
                 // Sanitización
                 ['ciclo', 'urbanismo', 'tipo', 'agencia'].forEach(key => {
@@ -3280,8 +3295,9 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     responseText += `| 🏆 **TOTAL REGISTRADO** | **Cuentas Recaudadoras** | **SGF V6** | **Cobranza Consolidada** | **$${formatUSD(totalUsd)}** | **Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${totalPagos}** | **—** |\n\n`;
 
                     responseText += `ℹ️ **Directrices de Tesorería y Estado de Saldos:**\n`;
-                    responseText += `- 🔌 **Integración API Bancaria en curso**: Bryant se encuentra desarrollando la conexión API directa con **BNC, Banco Provincial, Bancaribe y Banplus** para sincronizar saldos contables y disponibles en tiempo real.\n`;
-                    responseText += `- 📑 **Conciliación Diaria (Freddy)**: Se envían diariamente todos los estados de cuenta bancarios para cotejo manual con extractos y conciliación contable.\n`;
+                    responseText += `- 🔌 **Saldos en tiempo real**: Bryant se encuentra desarrollando la conexión API directa con **BNC, Banco Provincial, Bancaribe y Banplus** para extraer saldos contables y disponibles directamente de las entidades bancarias.\n`;
+                    responseText += `- 📑 **Extractos Bancarios en BD (Freddy)**: Si deseas ver los movimientos registrados en la base de datos (Ingresos, Egresos y Flujo Neto de cada cuenta), pregúntame: **"movimientos bancarios de este mes"**.\n`;
+                    responseText += `- 🏛️ **Matriz Completa SGF**: Para ver las 24 cuentas (recaudadoras, nómina, tributos, divisas USD y cuentas a desincorporar), pregúntame: **"plan de bancos"**.\n`;
                     responseText += `- 🚫 **Segregación Estricta**: La cuenta de Nómina (**BNC 9469**) y la cuenta de Impuestos (**BDV 9572**) tienen **estrictamente prohibido** recibir cobros de clientes.`;
 
                     const stats = [
