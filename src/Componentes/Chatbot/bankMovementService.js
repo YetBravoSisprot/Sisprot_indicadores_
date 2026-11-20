@@ -5,7 +5,7 @@
  * Autor: Sisprot GF / Freddy & Bryant Integration
  */
 
-import { PLAN_DE_BANCOS, findCuentaByLastDigits } from '../Componentes/Chatbot/planDeBancos.js';
+import { PLAN_DE_BANCOS, findCuentaByLastDigits } from './planDeBancos.js';
 
 const BANK_MOVEMENTS_URL = 'https://api.sisprotgf.com/api/public/payments/bank-movements/';
 const BANK_ASSOCIATED_URL = 'https://api.sisprotgf.com/api/public/payments/bank_associated/';
