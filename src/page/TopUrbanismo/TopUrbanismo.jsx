@@ -1053,9 +1053,9 @@ function TopUrbanismo() {
                   <span>📋 Ver Todas</span>
                 </label>
                 {[
-                  "Contrato", "Cedula", "IP", "MAC", "Estatus", "Estado Final", "Cliente",
+                  "Contrato", "Cedula", "Estatus", "Estado Final", "Cliente",
                   "Teléfono", "Correo", "Sector", "Plan", "Costo", "Migrado", "Ciclo",
-                  "Tipo_Cliente", "Dirección", "Interface", "Fecha_Creación", "Días Hábiles"
+                  "Tipo_Cliente", "Dirección"
                 ].map((col) => (
                   <label key={col} className="columna-item-check">
                     <input
