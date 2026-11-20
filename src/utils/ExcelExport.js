@@ -103,16 +103,11 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
         { header: "TELEFONO", key: "telefono", width: 15, ui: "Teléfono" },
         { header: "CORREO", key: "email", width: 25, ui: "Correo" },
         { header: "DIRECCIÓN", key: "direccion", width: 35, ui: "Dirección" },
-        { header: "INTERFACE", key: "interface", width: 25, ui: "Interface" },
         { header: "SECTOR", key: "sector", width: 20, ui: "Sector" },
         { header: "MIGRADO", key: "migrado", width: 10, ui: "Migrado" },
         { header: "CICLO", key: "ciclo", width: 8, ui: "Ciclo" },
         { header: "PLAN", key: "plan", width: 25, ui: "Plan" },
         { header: "COSTO", key: "costo", width: 14, ui: "Costo" },
-        { header: "IP", key: "ip", width: 15, ui: "IP" },
-        { header: "MAC", key: "mac", width: 20, ui: "MAC" },
-        { header: "FECHA CREACIÓN", key: "fecha_creacion", width: 15, ui: "Fecha_Creación" },
-        { header: "DÍAS HÁBILES", key: "dias_habiles", width: 15, ui: "Días Hábiles" },
         { header: "TIPO CLIENTE", key: "tipo_cliente", width: 15, ui: "Tipo_Cliente" }
     ];
 
@@ -130,7 +125,7 @@ export const exportToExcel = async (dataset, appliedFiltersText = [], selectedCo
 
     const standardOrder = [
         "estado_inicial", "estado_final", "contrato", "cliente", "ci_rif", "telefono", 
-        "email", "sector", "migrado", "ciclo", "plan", "costo", "ip", "mac"
+        "email", "sector", "migrado", "ciclo", "plan", "costo"
     ];
 
     const isAll = selectedColumns.includes("Todas");
