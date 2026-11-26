@@ -3294,7 +3294,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         responseText = `**${userName}**, según el **Plan de Bancos SGF V6** y la matriz de segregación de tesorería, estas son las **cuentas recaudadoras oficiales** autorizadas para cobro a clientes y sus movimientos registrados ${labelPeriodo}:\n\n`;
                     }
 
-                    responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol / Propósito Autorizado | Recaudación USD | Recaudación Bs | Pagos | Saldo Disponible |\n`;
+                    responseText += `| Banco | Cuenta | Código V6 | Rol Autorizado | Recaudación USD | Recaudación Bs | Pagos | Saldo Disp. |\n`;
                     responseText += `| :--- | :---: | :---: | :--- | :---: | :---: | :---: | :---: |\n`;
                     responseText += `| 🏦 **BNC** | \`...3732\` | \`1.1.01.02.001\` | **Recaudadora Principal Clientes** (Mensualidades/Prorrateos) | **$${formatUSD(bncData.usd)}** | Bs ${bncData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${bncData.count} | ⏳ *En integración API* |\n`;
                     responseText += `| 🏦 **Provincial** | \`...4588\` | \`1.1.01.02.008\` | **Recaudadora Clientes** (Cobranza recurrente) | **$${formatUSD(provData.usd)}** | Bs ${provData.bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | ${provData.count} | ⏳ *En integración API* |\n`;
@@ -3381,7 +3381,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         responseText = `**${userName}**, este es el **Reporte Consolidado de Movimientos Bancarios (Extractos)** registrado ${labelPeriodo} en los extractos oficiales de Tesorería:\n\n`;
                     }
 
-                    responseText += `| Banco / Cuenta | Terminación | Rol / Código V6 | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Movimientos | Por Identificar |\n`;
+                    responseText += `| Banco | Cuenta | Rol SGF | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Movs | Pendientes |\n`;
                     responseText += `| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n`;
 
                     summary.byAccount.forEach(acc => {
