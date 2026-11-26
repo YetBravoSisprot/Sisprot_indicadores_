@@ -3381,21 +3381,23 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         responseText = `**${userName}**, este es el **Reporte Consolidado de Movimientos Bancarios (Extractos)** registrado ${labelPeriodo} en los extractos oficiales de Tesorería:\n\n`;
                     }
 
-                    responseText += `| Banco | Cuenta | Rol SGF | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Movs | Pendientes |\n`;
+                    responseText += `| Banco | Cuenta | Rol SGF | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Operaciones (Ing/Egr) | Pendientes |\n`;
                     responseText += `| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n`;
 
                     summary.byAccount.forEach(acc => {
                         const netAccount = acc.incomeBs - acc.expenseBs;
                         const netSign = netAccount >= 0 ? '+' : '';
-                        responseText += `| 🏦 **${acc.banco}** | \`...${acc.last4}\` | ${acc.rol} | Bs ${acc.incomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Bs ${acc.expenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | **${netSign}Bs ${netAccount.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | ${acc.totalTransactions} | ${acc.unusedCount > 0 ? `⚠️ **${acc.unusedCount}**` : '0'} |\n`;
+                        const opsDetail = `${acc.totalTransactions} (${acc.incomeCount} 📥 / ${acc.expenseCount} 📤)`;
+                        responseText += `| 🏦 **${acc.banco}** | \`...${acc.last4}\` | ${acc.rol} | Bs ${acc.incomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Bs ${acc.expenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | **${netSign}Bs ${netAccount.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | ${opsDetail} | ${acc.unusedCount > 0 ? `⚠️ **${acc.unusedCount}**` : '0'} |\n`;
                     });
 
                     const netSignTotal = summary.netFlowBs >= 0 ? '+' : '';
-                    responseText += `| 🏆 **TOTAL GENERAL** | **Todas** | **Consolidado** | **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${summary.totalMovements}** | **${summary.totalUnusedCount}** |\n\n`;
+                    const totalOpsDetail = `${summary.totalMovements} (${summary.totalIncomeCount} 📥 / ${summary.totalExpenseCount} 📤)`;
+                    responseText += `| 🏆 **TOTAL GENERAL** | **Todas** | **Consolidado** | **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${totalOpsDetail}** | **${summary.totalUnusedCount}** |\n\n`;
 
                     responseText += `📊 **Resumen Financiero y Contable:**\n`;
-                    responseText += `- 📥 **Ingresos Totales en Bancos:** **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
-                    responseText += `- 📤 **Egresos Totales en Bancos:** **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** (Comisiones, pagos de nómina y transferencias)\n`;
+                    responseText += `- 📥 **Ingresos Totales en Bancos:** **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** (${summary.totalIncomeCount.toLocaleString('es-VE')} movimientos de ingreso)\n`;
+                    responseText += `- 📤 **Egresos Totales en Bancos:** **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** (${summary.totalExpenseCount.toLocaleString('es-VE')} movimientos de egreso / pagos / comisiones)\n`;
                     responseText += `- ⚖️ **Flujo Neto Bancario:** **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
                     responseText += `- 🔍 **Depósitos Pendientes por Identificar (Momento 1):** **${summary.totalUnusedCount} depósitos** (\`is_used: false\`) por aplicar contablemente a la cuenta transitoria \`2.1.04.01.004\`.\n\n`;
 
@@ -3404,8 +3406,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     }
 
                     const stats = [
-                        { label: '📥 Ingresos Totales', value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: '#2ecc71' },
-                        { label: '📤 Egresos Totales', value: `Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: '#e74c3c' },
+                        { label: '📥 Ingresos Totales', value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })} (${summary.totalIncomeCount} movs)`, color: '#2ecc71' },
+                        { label: '📤 Egresos Totales', value: `Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })} (${summary.totalExpenseCount} movs)`, color: '#e74c3c' },
                         { label: '⚖️ Flujo Neto', value: `Bs ${summary.netFlowBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: summary.netFlowBs >= 0 ? '#3498db' : '#e67e22' },
                         { label: '🔍 Por Identificar', value: `${summary.totalUnusedCount} pagos`, color: '#f39c12' }
                     ];
@@ -3416,7 +3418,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         cardData: {
                             title: '📑 Movimientos Bancarios (Extractos Oficiales)',
                             value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`,
-                            subtitle: `${summary.totalMovements} Movimientos ${labelPeriodo.replace(/\*\*/g, '')}`,
+                            subtitle: `${summary.totalMovements} Movimientos (${summary.totalIncomeCount} Ingresos · ${summary.totalExpenseCount} Egresos) ${labelPeriodo.replace(/\*\*/g, '')}`,
                             color: '#3498db',
                             stats
                         }
