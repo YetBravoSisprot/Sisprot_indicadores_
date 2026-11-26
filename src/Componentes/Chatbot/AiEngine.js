@@ -101,7 +101,8 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         return { 
             startDate: params.startDate, 
             endDate: params.endDate,
-            isRange: params.startDate !== params.endDate
+            isRange: params.startDate !== params.endDate,
+            isExplicit: params?.isExplicit !== undefined ? Boolean(params.isExplicit) : true
         };
     }
 
@@ -121,7 +122,7 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
             const d = new Date(now);
             d.setDate(now.getDate() - daysAgo);
             const s = toDateStr(d);
-            return { startDate: s, endDate: s, isRange: false, relativeDays: daysAgo };
+            return { startDate: s, endDate: s, isRange: false, relativeDays: daysAgo, isExplicit: true };
         }
     }
 
@@ -135,7 +136,7 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
             const targetDate = new Date(now);
             targetDate.setDate(now.getDate() + dayDiff - (isLastWeek ? 7 : 0));
             const dStr = toDateStr(targetDate);
-            return { startDate: dStr, endDate: dStr, isRange: false };
+            return { startDate: dStr, endDate: dStr, isRange: false, isExplicit: true };
         }
     }
 
@@ -144,16 +145,16 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         const d = new Date(now);
         d.setDate(now.getDate() - 2);
         const s = toDateStr(d);
-        return { startDate: s, endDate: s, isRange: false, relativeDays: 2 };
+        return { startDate: s, endDate: s, isRange: false, relativeDays: 2, isExplicit: true };
     }
     if (q.includes('ayer') || params?.periodo === 'ayer') {
         const d = new Date(now);
         d.setDate(now.getDate() - 1);
         const s = toDateStr(d);
-        return { startDate: s, endDate: s, isRange: false, relativeDays: 1 };
+        return { startDate: s, endDate: s, isRange: false, relativeDays: 1, isExplicit: true };
     }
     if (q.includes('hoy') || params?.periodo === 'hoy') {
-        return { startDate: todayStr, endDate: todayStr, isRange: false, relativeDays: 0 };
+        return { startDate: todayStr, endDate: todayStr, isRange: false, relativeDays: 0, isExplicit: true };
     }
 
     // 3. Semanas
@@ -163,13 +164,13 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
         lastMonday.setDate(now.getDate() - currentDay - 6);
         const lastSunday = new Date(now);
         lastSunday.setDate(now.getDate() - currentDay);
-        return { startDate: toDateStr(lastMonday), endDate: toDateStr(lastSunday), isRange: true };
+        return { startDate: toDateStr(lastMonday), endDate: toDateStr(lastSunday), isRange: true, isExplicit: true };
     }
     if (q.includes('esta semana') || q.includes('en la semana') || params?.periodo === 'esta_semana') {
         const currentDay = now.getDay() || 7;
         const monday = new Date(now);
         monday.setDate(now.getDate() - (currentDay - 1));
-        return { startDate: toDateStr(monday), endDate: todayStr, isRange: true };
+        return { startDate: toDateStr(monday), endDate: todayStr, isRange: true, isExplicit: true };
     }
 
     // 4. Meses
@@ -177,13 +178,13 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
     if (q.includes('mes pasado') || q.includes('mes anterior') || q.includes('el mes previo') || params?.periodo === 'mes_anterior' || params?.periodo === 'mes_pasado') {
         const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
         const lastDayPrevMonth = new Date(currentYear, currentMonth, 0);
-        return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth), isRange: true, isMonth: true };
+        return { startDate: toDateStr(prevMonthDate), endDate: toDateStr(lastDayPrevMonth), isRange: true, isMonth: true, isExplicit: true };
     }
 
     // 4.2 Mes actual / Este mes
     if (q.includes('todo el mes') || q.includes('en todo el mes') || q.includes('este mes') || q.includes('mes actual') || q.includes('en el mes actual') || (q.includes('del mes') && !q.includes('pasado') && !q.includes('anterior')) || (q.includes('en el mes') && !q.includes('pasado') && !q.includes('anterior')) || params?.periodo === 'este_mes' || params?.periodo === 'mes' || params?.periodo === 'todo_el_mes') {
         const firstDay = new Date(currentYear, currentMonth, 1);
-        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
+        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true, isExplicit: true };
     }
 
     // 5. Mes específico por nombre (ej: "en septiembre", "en agosto")
@@ -196,7 +197,7 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
             const lastDay = (y === currentYear && mIdx === currentMonth)
                 ? now
                 : new Date(y, mIdx + 1, 0);
-            return { startDate: toDateStr(firstDay), endDate: toDateStr(lastDay), isRange: true, isMonth: true };
+            return { startDate: toDateStr(firstDay), endDate: toDateStr(lastDay), isRange: true, isMonth: true, isExplicit: true };
         }
     }
 
@@ -204,22 +205,22 @@ export const parseSpanishDateRange = (query = '', params = {}) => {
     if (q.includes('ultimos 7 dias') || q.includes('ultimos siete dias') || params?.periodo === 'ultimos_7_dias') {
         const d = new Date(now);
         d.setDate(now.getDate() - 6);
-        return { startDate: toDateStr(d), endDate: todayStr, isRange: true };
+        return { startDate: toDateStr(d), endDate: todayStr, isRange: true, isExplicit: true };
     }
     if (q.includes('ultimos 30 dias') || q.includes('ultimos treinta dias') || params?.periodo === 'ultimos_30_dias') {
         const d = new Date(now);
         d.setDate(now.getDate() - 29);
-        return { startDate: toDateStr(d), endDate: todayStr, isRange: true };
+        return { startDate: toDateStr(d), endDate: todayStr, isRange: true, isExplicit: true };
     }
 
     // Si pide expresamente desglose o histórico de cobros, asumimos todo el mes
     if (q.includes('desglos') || q.includes('dia a dia') || q.includes('dia por dia')) {
         const firstDay = new Date(currentYear, currentMonth, 1);
-        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true };
+        return { startDate: toDateStr(firstDay), endDate: todayStr, isRange: true, isMonth: true, isExplicit: true };
     }
 
-    // Default: hoy
-    return { startDate: todayStr, endDate: todayStr, isRange: false };
+    // Default: hoy (pero marcado como NO explícito para que las consultas generales puedan usar el mes en curso)
+    return { startDate: todayStr, endDate: todayStr, isRange: false, isExplicit: false };
 };
 
 // ─── PAGOS BANCARIOS: Fetch de cobros con soporte para rangos de fechas ──────────
@@ -877,7 +878,11 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         const dateRange = parseSpanishDateRange(q);
         return {
             intent: 'CUENTAS_RECAUDADORAS',
-            parameters: { startDate: dateRange.startDate, endDate: dateRange.endDate },
+            parameters: { 
+                startDate: dateRange.startDate, 
+                endDate: dateRange.endDate, 
+                isExplicit: dateRange.isExplicit 
+            },
             message: "Consultando cuentas recaudadoras oficiales y movimientos registrados..."
         };
     }
@@ -903,7 +908,7 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         };
     }
 
-    // 10.6 Detección de Movimientos Bancarios Generales e Ingresos/Egresos (Endpoint bank-movements de Freddy)
+    // 10.6 Detección de Movimientos Bancarios Generales e Ingresos/Egresos (Extractos Oficiales de Tesorería)
     if (
         q.includes("movimientos bancarios") ||
         q.includes("movimiento bancario") ||
@@ -921,7 +926,11 @@ export const parseQueryLocally = (rawQuery, history = [], currentPage = "", user
         const dateRange = parseSpanishDateRange(q);
         return {
             intent: 'MOVIMIENTOS_BANCARIOS',
-            parameters: { startDate: dateRange.startDate, endDate: dateRange.endDate },
+            parameters: { 
+                startDate: dateRange.startDate, 
+                endDate: dateRange.endDate, 
+                isExplicit: dateRange.isExplicit 
+            },
             message: "Consultando movimientos bancarios oficiales (ingresos, egresos y depósitos pendientes)..."
         };
     }
@@ -1657,14 +1666,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             "direccion": "Dirección", "ubicacion": "Dirección", "dir": "Dirección",
                             "urbanismo": "Urbanismo", "sector": "Urbanismo", "zona": "Urbanismo",
                             "estatus": "Estatus", "estado": "Estatus",
-                            "dias": "Días Hábiles", "tiempo": "Días Hábiles",
                             "tipo": "Tipo_Cliente", "categoria": "Tipo_Cliente", "esquema": "Tipo_Cliente",
                             "plan": "Plan", "paquete": "Plan", "renta": "Plan",
                             "costo": "Costo", "precio": "Costo", "valor": "Costo",
-                            "ip": "IP", "mac": "MAC", "ciclo": "Ciclo", "migrado": "Migrado",
-                            "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula",
-                            "interface": "Interface", "vlan": "Interface", "red": "Interface",
-                            "fecha": "Fecha_Creación", "creado": "Fecha_Creación"
+                            "ciclo": "Ciclo", "migrado": "Migrado",
+                            "cedula": "Cedula", "identidad": "Cedula", "dni": "Cedula"
                         };
 
                         let matchedCols = [];
@@ -2403,7 +2409,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         `• **Facturación Recuperada:** **$${formatUSD(react.totalRevenue)} USD** mensuales incorporados nuevamente a la cartera.\n` +
                         `• **Distribución por Tipo:** **${react.totalResidencial} Residenciales** (${react.percentResidencial}%) y **${react.totalPyme} Pymes** (${react.percentPyme}%).\n` +
                         (topSectoresText ? `• **Sectores con más reactivaciones:** ${topSectoresText}.\n` : "") +
-                        `• **Regla de negocio aplicada:** Rango desde 01/01/2026, excluyendo cuentas internas (Freddy, Bryant, Elisaul) y empleados según normativa oficial.`;
+                        `• **Regla de negocio aplicada:** Rango desde 01/01/2026, excluyendo cuentas internas de pruebas y empleados según normativa oficial.`;
 
                     const stats = [
                         { label: "💰 Ingreso Recuperado", value: `$${formatUSD(react.totalRevenue)}`, color: "#2ecc71" },
@@ -3232,14 +3238,12 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'CUENTAS_RECAUDADORAS': {
                 try {
                     const parsedDates = parseSpanishDateRange(message, parameters);
-                    const isDateExplicit = message.includes('hoy') || message.includes('ayer') || message.includes('antier') ||
-                        message.includes('semana') || message.includes('mes') || message.includes('del 202') ||
-                        parameters?.startDate;
+                    const hasExplicitDate = parsedDates.isExplicit === true;
 
                     let sDate = parsedDates.startDate;
                     let eDate = parsedDates.endDate;
 
-                    if (!isDateExplicit) {
+                    if (!hasExplicitDate) {
                         const nowLocal = new Date();
                         const firstDay = new Date(nowLocal.getFullYear(), nowLocal.getMonth(), 1);
                         sDate = firstDay.toLocaleDateString('en-CA');
@@ -3283,7 +3287,12 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     const banplusData = bankTotals['BANPLUS'] || { usd: 0, bs: 0, count: 0 };
                     const caribeData = bankTotals['BANCARIBE'] || { usd: 0, bs: 0, count: 0 };
 
-                    let responseText = `**${userName}**, según el **Plan de Bancos SGF V6** y la matriz de segregación de tesorería, estas son las **cuentas recaudadoras oficiales** autorizadas para cobro a clientes y sus movimientos registrados ${labelPeriodo}:\n\n`;
+                    let responseText = '';
+                    if (!hasExplicitDate) {
+                        responseText = `**${userName}**, según el **Plan de Bancos SGF V6** y la matriz de segregación de tesorería, estas son las **cuentas recaudadoras oficiales** autorizadas para cobro a clientes y su recaudación acumulada del **mes en curso (${startLabel} al ${endLabel})**:\n\n`;
+                    } else {
+                        responseText = `**${userName}**, según el **Plan de Bancos SGF V6** y la matriz de segregación de tesorería, estas son las **cuentas recaudadoras oficiales** autorizadas para cobro a clientes y sus movimientos registrados ${labelPeriodo}:\n\n`;
+                    }
 
                     responseText += `| Banco | N° Cuenta / Terminación | Código V6 | Rol / Propósito Autorizado | Recaudación USD | Recaudación Bs | Pagos | Saldo Disponible |\n`;
                     responseText += `| :--- | :---: | :---: | :--- | :---: | :---: | :---: | :---: |\n`;
@@ -3295,8 +3304,8 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     responseText += `| 🏆 **TOTAL REGISTRADO** | **Cuentas Recaudadoras** | **SGF V6** | **Cobranza Consolidada** | **$${formatUSD(totalUsd)}** | **Bs ${totalBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** | **${totalPagos}** | **—** |\n\n`;
 
                     responseText += `ℹ️ **Directrices de Tesorería y Estado de Saldos:**\n`;
-                    responseText += `- 🔌 **Saldos en tiempo real**: Bryant se encuentra desarrollando la conexión API directa con **BNC, Banco Provincial, Bancaribe y Banplus** para extraer saldos contables y disponibles directamente de las entidades bancarias.\n`;
-                    responseText += `- 📑 **Extractos Bancarios en BD (Freddy)**: Si deseas ver los movimientos registrados en la base de datos (Ingresos, Egresos y Flujo Neto de cada cuenta), pregúntame: **"movimientos bancarios de este mes"**.\n`;
+                    responseText += `- 🔌 **Saldos en tiempo real**: Se encuentra en desarrollo la integración API directa con **BNC, Banco Provincial, Bancaribe y Banplus** para sincronizar saldos en línea directamente de las entidades bancarias.\n`;
+                    responseText += `- 📑 **Extractos Bancarios de Tesorería**: Para ver los movimientos oficiales registrados (Ingresos, Egresos y Flujo Neto de cada cuenta), pregúntame: **"ingresos y egresos de los bancos"** o **"movimientos bancarios de este mes"**.\n`;
                     responseText += `- 🏛️ **Matriz Completa SGF**: Para ver las 24 cuentas (recaudadoras, nómina, tributos, divisas USD y cuentas a desincorporar), pregúntame: **"plan de bancos"**.\n`;
                     responseText += `- 🚫 **Segregación Estricta**: La cuenta de Nómina (**BNC 9469**) y la cuenta de Impuestos (**BDV 9572**) tienen **estrictamente prohibido** recibir cobros de clientes.`;
 
@@ -3330,14 +3339,12 @@ export const processQuery = async (message, data, history = [], userName = "", c
             case 'MOVIMIENTOS_BANCARIOS': {
                 try {
                     const parsedDates = parseSpanishDateRange(message, parameters);
-                    const isDateExplicit = message.includes('hoy') || message.includes('ayer') || message.includes('antier') ||
-                        message.includes('semana') || message.includes('mes') || message.includes('del 202') ||
-                        parameters?.startDate;
+                    const hasExplicitDate = parsedDates.isExplicit === true;
 
                     let sDate = parsedDates.startDate;
                     let eDate = parsedDates.endDate;
 
-                    if (!isDateExplicit) {
+                    if (!hasExplicitDate) {
                         const nowLocal = new Date();
                         const firstDay = new Date(nowLocal.getFullYear(), nowLocal.getMonth(), 1);
                         sDate = firstDay.toLocaleDateString('en-CA');
@@ -3354,13 +3361,25 @@ export const processQuery = async (message, data, history = [], userName = "", c
                         : `del **${startLabel}** al **${endLabel}**`;
 
                     if (summary.totalMovements === 0) {
-                        return {
-                            text: `No encontré movimientos bancarios registrados ${labelPeriodo} en la ruta de Freddy.\n\nPuedes probar consultando otro rango de fechas o el mes en curso.`,
-                            isCard: false
-                        };
+                        if (hasExplicitDate) {
+                            return {
+                                text: `**${userName}**, no encontré movimientos bancarios registrados ${labelPeriodo} en los extractos de Tesorería.\n\n¿De qué fecha o período te gustaría consultar la información? Puedes indicarme por ejemplo:\n- 📅 **"Movimientos de este mes"** (noviembre de 2026)\n- 📆 **"Ingresos de la semana pasada"**\n- 📌 O una fecha específica como **"15 de noviembre"**.`,
+                                isCard: false
+                            };
+                        } else {
+                            return {
+                                text: `**${userName}**, no encontré movimientos bancarios registrados en los extractos de Tesorería para el período actual.\n\n¿De qué fecha o período deseas consultar los movimientos? Puedes decirme por ejemplo: **"movimientos de este mes"**, **"ingresos de la semana pasada"** o indicarme una fecha específica.`,
+                                isCard: false
+                            };
+                        }
                     }
 
-                    let responseText = `**${userName}**, este es el **Reporte Consolidado de Movimientos Bancarios (Extractos)** registrado ${labelPeriodo} según el nuevo endpoint de Tesorería:\n\n`;
+                    let responseText = '';
+                    if (!hasExplicitDate) {
+                        responseText = `**${userName}**, como no especificaste una fecha o período, te presento el **balance consolidado del mes en curso** (del **${startLabel}** al **${endLabel}**) en los extractos bancarios de Tesorería:\n\n`;
+                    } else {
+                        responseText = `**${userName}**, este es el **Reporte Consolidado de Movimientos Bancarios (Extractos)** registrado ${labelPeriodo} en los extractos oficiales de Tesorería:\n\n`;
+                    }
 
                     responseText += `| Banco / Cuenta | Terminación | Rol / Código V6 | Ingresos (Bs.) | Egresos (Bs.) | Flujo Neto (Bs.) | Movimientos | Por Identificar |\n`;
                     responseText += `| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n`;
@@ -3378,7 +3397,11 @@ export const processQuery = async (message, data, history = [], userName = "", c
                     responseText += `- 📥 **Ingresos Totales en Bancos:** **Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
                     responseText += `- 📤 **Egresos Totales en Bancos:** **Bs ${summary.totalExpenseBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}** (Comisiones, pagos de nómina y transferencias)\n`;
                     responseText += `- ⚖️ **Flujo Neto Bancario:** **${netSignTotal}Bs ${summary.netFlowBs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}**\n`;
-                    responseText += `- 🔍 **Depósitos Pendientes por Identificar (Momento 1):** **${summary.totalUnusedCount} depósitos** (\`is_used: false\`) por aplicar contablemente a la cuenta transitoria \`2.1.04.01.004\`.\n`;
+                    responseText += `- 🔍 **Depósitos Pendientes por Identificar (Momento 1):** **${summary.totalUnusedCount} depósitos** (\`is_used: false\`) por aplicar contablemente a la cuenta transitoria \`2.1.04.01.004\`.\n\n`;
+
+                    if (!hasExplicitDate) {
+                        responseText += `💡 *Si deseas consultar otra fecha o período puntual (ej: "ingresos de hoy", "movimientos de ayer", "la semana pasada" o un día específico), solo indícamelo.*`;
+                    }
 
                     const stats = [
                         { label: '📥 Ingresos Totales', value: `Bs ${summary.totalIncomeBs.toLocaleString('es-VE', { maximumFractionDigits: 0 })}`, color: '#2ecc71' },
@@ -3495,7 +3518,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                             { label: '💼 BNC 9469 (RRHH)', value: 'Nómina y Personal', color: '#e74c3c' },
                             { label: '🏛️ BDV 9572 (Fiscal)', value: 'SENIAT / Alcaldía', color: '#34495e' },
                             { label: '🚫 Prohibición', value: 'Cobros de Clientes', color: '#c0392b' },
-                            { label: '📑 Conciliación', value: 'Diaria (Freddy)', color: '#27ae60' }
+                            { label: '📑 Conciliación', value: 'Diaria (Tesorería)', color: '#27ae60' }
                         ]
                     }
                 };
@@ -3517,7 +3540,7 @@ export const processQuery = async (message, data, history = [], userName = "", c
                 responseText += `- **Efecto Administrativo:** La transacción queda en estatus *"Reportado / En validación"*. Constituye un soporte documental y administrativo para auditoría, pero no altera saldos contables.\n\n`;
 
                 responseText += `### ⚖️ Momento 3: Validación por Tesorería y Facturación Fiscal (A2)\n`;
-                responseText += `- **Suceso:** Tesorería (Freddy / Equipo) coteja el reporte contra el extracto bancario diario, valida fecha, monto, titular, referencia y ausencia de duplicados.\n`;
+                responseText += `- **Suceso:** El equipo de Tesorería coteja el reporte contra el extracto bancario diario, valida fecha, monto, titular, referencia y ausencia de duplicados.\n`;
                 responseText += `- **Asiento Contable de Regularización:**\n`;
                 responseText += `  - **DEBE:** \`2.1.04.01.004\` **Depósitos bancarios pendientes de identificación** *(se cancela el pasivo transitorio)*\n`;
                 responseText += `  - **HABER:** \`2.1.06.01.001 / 002\` **Mensualidades cobradas por anticipado** (Residencial / PyME) o \`1.1.02.01.xxx\` (Cuentas por Cobrar Clientes).\n`;
