@@ -2,7 +2,7 @@
  * SGF · Servicio de Movimientos Bancarios en Vivo
  * 
  * Fuente: API Pública Sisprot /api/public/payments/bank-movements/
- * Autor: Sisprot GF / Freddy & Bryant Integration
+ * Autor: Sisprot GF / Tesorería & Finanzas
  */
 
 import { PLAN_DE_BANCOS, findCuentaByLastDigits } from './planDeBancos.js';
