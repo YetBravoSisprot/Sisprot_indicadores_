@@ -20,6 +20,24 @@ const movementsCache = {};
 const catalogCache = { data: null, timestamp: 0 };
 
 /**
+ * Mapeo de terminación de cuenta a ID oficial en Sisprot (bank_account en Django/Postgres)
+ */
+export const BANK_ASSOCIATED_ID_MAP = {
+    '3732': 2,   // BNC Recaudadora Principal
+    '2731': 30,  // BNC Híbrida / Taquilla / POS
+    '9469': 35,  // BNC Pagadora Nómina / RRHH
+    '4588': 34,  // Banco Provincial Recaudadora
+    '9957': 33,  // Bancaribe Cobros
+    '9572': 32,  // BDV Cta. Jurídica / Impuestos
+    '5080': 31,  // BFC Recaudadora
+    '6895': 19,  // Banplus Recaudadora
+    '6820': 24,  // Banplus Transitoria
+    '6929': 23,  // Banplus
+    '6846': 22,  // Banplus
+    '6937': 25   // Banplus
+};
+
+/**
  * Consulta el catálogo de cuentas bancarias asociadas en Sisprot
  */
 export const fetchBankAssociated = async () => {
@@ -51,15 +69,19 @@ export const fetchBankAssociated = async () => {
 
 /**
  * Consulta los movimientos bancarios reales según filtros y fechas
- * @param {Object} options Filtros: { dateFrom, dateTo, destinationAccount, bankCode, movementType, category, isUsed, removePagination }
+ * @param {Object} options Filtros: { dateFrom, dateTo, bankAccount, bank_account, destinationAccount, bankCode, movementType, methodName, method_name, category, isUsed, removePagination }
  */
 export const fetchBankMovements = async (options = {}) => {
     const {
         dateFrom = null,
         dateTo = null,
+        bankAccount = null,
+        bank_account = null,
         destinationAccount = null,
         bankCode = null,
         movementType = null,
+        methodName = null,
+        method_name = null,
         category = null,
         isUsed = null,
         removePagination = true
@@ -68,9 +90,11 @@ export const fetchBankMovements = async (options = {}) => {
     const todayStr = new Date().toLocaleDateString('en-CA');
     const start = dateFrom || todayStr;
     const end = dateTo || todayStr;
+    const accountId = bankAccount || bank_account;
+    const method = methodName || method_name;
 
     // Generar clave de caché
-    const cacheKey = `${start}_${end}_${destinationAccount || 'all'}_${bankCode || 'all'}_${movementType || 'all'}_${category || 'all'}_${isUsed !== null ? isUsed : 'all'}`;
+    const cacheKey = `${start}_${end}_${accountId || 'all'}_${destinationAccount || 'all'}_${bankCode || 'all'}_${movementType || 'all'}_${method || 'all'}_${category || 'all'}_${isUsed !== null ? isUsed : 'all'}`;
     const now = Date.now();
     if (movementsCache[cacheKey] && now - movementsCache[cacheKey].timestamp < 3 * 60 * 1000) {
         return movementsCache[cacheKey].data;
@@ -83,6 +107,9 @@ export const fetchBankMovements = async (options = {}) => {
     if (removePagination) {
         params.append('remove_pagination', 'true');
     }
+    if (accountId) {
+        params.append('bank_account', String(accountId));
+    }
     if (destinationAccount) {
         params.append('destination_account_number', destinationAccount);
     }
@@ -91,6 +118,9 @@ export const fetchBankMovements = async (options = {}) => {
     }
     if (movementType) {
         params.append('movement_type', movementType);
+    }
+    if (method) {
+        params.append('method_name', method);
     }
     if (category) {
         params.append('category', category);
@@ -113,8 +143,16 @@ export const fetchBankMovements = async (options = {}) => {
             const raw = await response.json();
             const list = Array.isArray(raw) ? raw : (raw.results || []);
 
+            // Filtrar entradas de pruebas sintéticas / seeders internos que no correspondan a operaciones reales
+            const cleanList = list.filter(m => {
+                const desc = (m.description || '').toLowerCase();
+                if (desc.includes('seed_a2') || desc.includes('prueba a2')) return false;
+                if (m.destination_account_number === '01910000000000003732') return false;
+                return true;
+            });
+
             // Enriquecer cada movimiento con la información del Plan de Bancos
-            const enriched = list.map(m => {
+            const enriched = cleanList.map(m => {
                 const last4 = m.destination_account_number ? String(m.destination_account_number).slice(-4) : null;
                 const cuentaInfo = findCuentaByLastDigits(last4);
                 return {
@@ -145,10 +183,13 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
 
     let totalIncomeBs = 0;
     let totalExpenseBs = 0;
+    let totalIncomeCount = 0;
+    let totalExpenseCount = 0;
     let totalUnusedCount = 0;
     let totalUnusedBs = 0;
 
     const byAccount = {};
+    const byMethod = {};
 
     movements.forEach(m => {
         const last4 = m.last4 || 'otro';
@@ -164,6 +205,7 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
             byAccount[last4] = {
                 last4,
                 accountNumber: m.destination_account_number || 'N/A',
+                bankAccountId: BANK_ASSOCIATED_ID_MAP[last4] || null,
                 banco: info.banco || m.bank_name,
                 rol: info.rol || 'No clasificada',
                 codigoContableV6: info.codigoContableV6 || 'N/A',
@@ -173,7 +215,8 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
                 expenseCount: 0,
                 unusedCount: 0,
                 unusedBs: 0,
-                totalTransactions: 0
+                totalTransactions: 0,
+                byMethod: {}
             };
         }
 
@@ -183,6 +226,21 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
             byAccount[last4].incomeBs += amt;
             byAccount[last4].incomeCount++;
             totalIncomeBs += amt;
+            totalIncomeCount++;
+
+            // Mapeo por método de pago (pago móvil, transferencia, débito inmediato, etc.)
+            const met = (m.method_name || 'Sin especificar').trim().toLowerCase();
+            if (!byMethod[met]) {
+                byMethod[met] = { count: 0, amountBs: 0, label: m.method_name || 'Sin especificar' };
+            }
+            byMethod[met].count++;
+            byMethod[met].amountBs += amt;
+
+            if (!byAccount[last4].byMethod[met]) {
+                byAccount[last4].byMethod[met] = { count: 0, amountBs: 0, label: m.method_name || 'Sin especificar' };
+            }
+            byAccount[last4].byMethod[met].count++;
+            byAccount[last4].byMethod[met].amountBs += amt;
 
             // Depósito pendiente de identificar (is_used === false)
             if (m.is_used === false) {
@@ -195,6 +253,7 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
             byAccount[last4].expenseBs += amt;
             byAccount[last4].expenseCount++;
             totalExpenseBs += amt;
+            totalExpenseCount++;
         }
     });
 
@@ -207,9 +266,12 @@ export const getBankMovementsSummary = async (dateFrom, dateTo) => {
         totalMovements: movements.length,
         totalIncomeBs,
         totalExpenseBs,
+        totalIncomeCount,
+        totalExpenseCount,
         netFlowBs,
         totalUnusedCount,
         totalUnusedBs,
+        byMethod,
         byAccount: Object.values(byAccount).sort((a, b) => b.incomeBs - a.incomeBs)
     };
 };
