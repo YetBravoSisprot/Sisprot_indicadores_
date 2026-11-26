@@ -20,7 +20,9 @@ const ICON_PATHS = {
     speakerOn: <><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" /></>,
     speakerOff: <><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M17 9l4 6M21 9l-4 6" /></>,
     close: <path d="M6 6l12 12M18 6L6 18" />,
-    reset: <><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /></>
+    reset: <><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /></>,
+    expand: <><path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" /></>,
+    compress: <><path d="M4 14h6v6" /><path d="M20 10h-6V4" /><path d="M14 10l7-7" /><path d="M10 14L3 21" /></>
 };
 
 const Icon = ({ name, size = 20 }) => (
@@ -57,6 +59,7 @@ const Chatbot = () => {
     const location = useLocation();
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -315,6 +318,13 @@ const Chatbot = () => {
             const aiResponse = await processQuery(userMsg, data, currentMessages, formattedName, location.pathname, role || "admin");
             setMessages(prev => [...prev, { sender: 'bot', ...aiResponse }]);
 
+            // Si la respuesta trae una tabla o informe detallado, auto-expandir a vista amplia en pantallas de escritorio
+            if (aiResponse?.text && aiResponse.text.includes('|') && aiResponse.text.includes('\n|')) {
+                if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+                    setIsExpanded(true);
+                }
+            }
+
             // ── MANEJO DE DESCARGAS AUTOMÁTICAS (NUEVO) ──
             if (aiResponse.action === 'download_excel_executive' && (aiResponse.cardData?.dataset || aiResponse.cardData?.savedDataset)) {
                 setTimeout(() => {
@@ -384,29 +394,51 @@ const Chatbot = () => {
 
                 return (
                     <div className="chat-table-container" key={i}>
-                        <table>
-                            <thead>
-                                <tr>
-                                    {header.map((h, index) => <th key={index}>{h.trim()}</th>)}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {body.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                        {row.map((cell, cellIndex) => (
-                                            <td key={cellIndex}>
-                                                {cell.trim().split(/(\*\*.*?\*\*)/).map((p, k) => {
-                                                    if (p.startsWith("**") && p.endsWith("**")) {
-                                                        return <strong key={k}>{p.slice(2, -2)}</strong>;
-                                                    }
-                                                    return p;
-                                                })}
-                                            </td>
-                                        ))}
+                        <div className="chat-table-header-bar">
+                            <span className="chat-table-badge">📊 Vista Financiera / Bancaria</span>
+                            <button
+                                type="button"
+                                className="chat-table-expand-btn"
+                                onClick={() => setIsExpanded(prev => !prev)}
+                                title={isExpanded ? "Reducir ventana a vista compacta" : "Expandir ventana a pantalla completa"}
+                            >
+                                <Icon name={isExpanded ? "compress" : "expand"} size={13} />
+                                <span>{isExpanded ? "Vista Compacta" : "Expandir Ventana"}</span>
+                            </button>
+                        </div>
+                        <div className="chat-table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        {header.map((h, index) => <th key={index} className={`col-${index}`}>{h.trim()}</th>)}
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {body.map((row, rowIndex) => {
+                                        const rowStr = row.join(' ').toUpperCase();
+                                        const isTotalRow = rowStr.includes('TOTAL GENERAL') || rowStr.includes('TOTAL REGISTRADO') || rowStr.includes('TOTAL');
+                                        return (
+                                            <tr key={rowIndex} className={isTotalRow ? 'total-row' : ''}>
+                                                {row.map((cell, cellIndex) => {
+                                                    const trimmed = cell.trim();
+                                                    const isNumeric = trimmed.startsWith('Bs') || trimmed.startsWith('$') || trimmed.startsWith('+') || (trimmed.startsWith('-') && !trimmed.startsWith('—'));
+                                                    return (
+                                                        <td key={cellIndex} className={`col-${cellIndex} ${isNumeric ? 'numeric-cell' : ''}`}>
+                                                            {trimmed.split(/(\*\*.*?\*\*)/).map((p, k) => {
+                                                                if (p.startsWith("**") && p.endsWith("**")) {
+                                                                    return <strong key={k}>{p.slice(2, -2)}</strong>;
+                                                                }
+                                                                return p;
+                                                            })}
+                                                        </td>
+                                                    );
+                                                })}
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 );
             }
@@ -472,7 +504,7 @@ const Chatbot = () => {
                 role="dialog"
                 aria-label="Chronos, asistente de inteligencia de negocios"
                 aria-hidden={!isOpen}
-                className={`chatbot-window glass ${isOpen ? 'active' : ''}`}
+                className={`chatbot-window glass ${isOpen ? 'active' : ''} ${isExpanded ? 'expanded' : ''}`}
                 onKeyDown={(e) => { if (e.key === 'Escape') setIsOpen(false); }}
             >
                 <header className="chatbot-header">
@@ -487,16 +519,27 @@ const Chatbot = () => {
                             <span className="live-pulse"></span> {isOnline ? 'Conectado' : 'Sin conexión'}
                         </p>
                     </div>
-                    <button
-                        type="button"
-                        className="reset-chat-btn"
-                        onClick={handleResetChat}
-                        disabled={messages.length === 0}
-                        title="Reiniciar conversación"
-                        aria-label="Reiniciar conversación"
-                    >
-                        <Icon name="reset" size={18} />
-                    </button>
+                    <div className="header-actions">
+                        <button
+                            type="button"
+                            className="expand-chat-btn"
+                            onClick={() => setIsExpanded(prev => !prev)}
+                            title={isExpanded ? "Reducir ventana a vista compacta" : "Expandir ventana a vista amplia"}
+                            aria-label={isExpanded ? "Reducir ventana" : "Ampliar ventana"}
+                        >
+                            <Icon name={isExpanded ? "compress" : "expand"} size={17} />
+                        </button>
+                        <button
+                            type="button"
+                            className="reset-chat-btn"
+                            onClick={handleResetChat}
+                            disabled={messages.length === 0}
+                            title="Reiniciar conversación"
+                            aria-label="Reiniciar conversación"
+                        >
+                            <Icon name="reset" size={17} />
+                        </button>
+                    </div>
                 </header>
 
                 <div className="chatbot-messages" ref={messagesContainerRef} aria-live="polite">
